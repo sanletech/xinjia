@@ -1,4 +1,74 @@
-a {
-  background-color: #000; }
+.home {
+  margin: 0 auto;
+  width: 80%; }
+  .home .home_top h1 {
+    text-align: center; }
+  .home .home_top .home_sou {
+    width: 70%;
+    margin: 30px auto; }
+    .home .home_top .home_sou ul {
+      height: 40px; }
+      .home .home_top .home_sou ul li {
+        float: left;
+        padding: 0 10px;
+        height: 100%;
+        line-height: 40px; }
+        .home .home_top .home_sou ul li:hover {
+          cursor: pointer; }
+        .home .home_top .home_sou ul li:nth-child(1) {
+          color: #fff;
+          background-color: #0491EA; }
+    .home .home_top .home_sou #bar1 {
+      position: relative;
+      widows: 100%;
+      height: 44px; }
+      .home .home_top .home_sou #bar1 input {
+        outline: none;
+        border: 2px solid #0491EA;
+        height: 42px;
+        padding-left: 13px;
+        float: left;
+        position: relative;
+        z-index: 1; }
+      .home .home_top .home_sou #bar1 button {
+        border: none;
+        outline: none;
+        width: 85px;
+        height: 42px;
+        cursor: pointer;
+        color: #fff;
+        background-color: #0491EA;
+        position: absolute;
+        top: 0px;
+        right: 0;
+        z-index: 2; }
+      .home .home_top .home_sou #bar1 .yun {
+        border-left: 0;
+        margin-left: -4px; }
+      .home .home_top .home_sou #bar1 .ding {
+        border-right: 0; }
+      .home .home_top .home_sou #bar1 span {
+        float: left;
+        margin-top: 12px;
+        position: relative;
+        z-index: 2; }
+  .home .home_center > div {
+    float: left;
+    width: 45%;
+    padding: 20px; }
+  .home .home_center .tu {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #000; }
+  .home .home_center .home_le ul li > div {
+    float: left; }
+  .home .home_center .home_le ul li .date {
+    padding: 15px 0;
+    width: 75px;
+    text-align: center;
+    background-color: #0491EA;
+    color: #fff; }
+    .home .home_center .home_le ul li .date strong {
+      font-size: 25px; }
 
 /*# sourceMappingURL=index.css.map */

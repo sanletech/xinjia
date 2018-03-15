@@ -3,7 +3,7 @@
   <head>
 
     <meta charset="utf-8">
-    <title></title>
+    <title>首页</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -11,19 +11,49 @@
     <link rel="stylesheet" href="css/index.css">
   </head>
   <body>
-    <button class="layui-btn layui-btn-normal">百搭按钮</button>
+    <div class="home">
+      <!-- 搜索 -->
+      <div class="home_top">
+        <h1>全球集装箱跟踪&nbsp;&nbsp;&nbsp;&nbsp;尽在海浪互联平台</h1>
+        <div class="home_sou">
+          <ul>
+            <li>集装箱查询</li>
+            <li>船舶GPS定位</li>
+            <li>查询历史记录</li>
+          </ul>
+          <form id='bar1'>
+            <input class="ding layui-col-xs5" type="text" placeholder="请输入您的订单号">
+            <span>|</span>
+            <input  class="yun layui-col-xs6" type="text" placeholder="请输入您的运单号">
+            <button type="submit">搜索</button>
+        </form>
+        </div>
+      </div>
+      <!-- 新闻咨询 -->
+      <div class="home_center">
 
+        <div class="home_le">
+          <div class="tu">图片</div>
+          <ul>
+            <li>
+                <div class="date">
+                  <strong>05</strong>
+                  <p>2018-03</p>
+                </div>
+                <div class="xw">
+                  <h3>2018年，跨境电商们的机遇与挑战</h3>
+                  <p>2018已经到来随机的分了洒家啊了房间撒开了家房客了洒家房客了洒离开的分家啊洒开来房客了洒进店分啊开来随机的分了</p>
+                </div>
+            </li>
+            <li>2</li>
+            <li>3</li>
+          </ul>
+        </div>
 
-
-
-    <script src="layui/layui.js"></script>
-    <script type="text/javascript">
-    layui.use(['layer', 'form'], function(){
-      var layer = layui.layer
-      ,form = layui.form;
-
-      layer.msg('Hello World');
-    });
-    </script>
+        <div class="home_rig">
+          <div class="tu">图片</div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
