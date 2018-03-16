@@ -1,0 +1,28 @@
+@charset "UTF-8";
+.head_hy {
+  width: 80%;
+  margin: 0 auto; }
+  .head_hy .gnhy {
+    width: 50%;
+    border: 1px solid #000;
+    height: 500px; }
+    .head_hy .gnhy .gnhy_top {
+      text-align: center;
+      color: #fff;
+      background: #0491e8;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      font-family: "Microsoft YaHei", "微软雅黑"; }
+    .head_hy .gnhy .gnhy_nei {
+      padding: 20px; }
+      .head_hy .gnhy .gnhy_nei input {
+        height: 40px;
+        padding-left: 13px;
+        margin: 15px 0; }
+      .head_hy .gnhy .gnhy_nei .a {
+        padding-right: 10px; }
+      .head_hy .gnhy .gnhy_nei .b {
+        padding-left: 10px; }
+
+/*# sourceMappingURL=hyyj.css.map */
