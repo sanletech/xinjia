@@ -12,25 +12,85 @@
   <body>
 
     <div class="head_hy">
+      <!-- 查询表单 -->
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
         <div class="gnhy_nei layui-row">
-          <input type="text" name="title" placeholder="请输入起始地" class="layui-col-xs12">
-          <input type="text" name="title" placeholder="请输入目的地" class="layui-col-xs12">
+          <input type="text" name="qi" placeholder="请输入起始地" class="layui-col-xs12">
+          <input type="text" name="mu" placeholder="请输入目的地" class="layui-col-xs12">
 
           <div class="layui-col-xs6 a">
-            <input type="text" name="title" placeholder="请输入货物名称" class="layui-col-xs12 ">
+            <input type="text" name="huo" placeholder="请输入货物名称" class="layui-col-xs12 ">
           </div>
           <div class="layui-col-xs6 b">
-            <input type="text" name="title" placeholder="请输入重量" class="layui-col-xs12">
+            <input type="text" name="zhong" placeholder="请输入重量" class="layui-col-xs12">
           </div>
 
-          <input type="text" name="title" placeholder="装货时间" class="layui-col-xs12">
+          <input type="text" name="date" placeholder="装货时间" class="layui-col-xs12">
+        </div>
+        <div class="gnhy_di">
+          <div class="di_zuo">
+            <a href="" style="margin-right:50px;">不接货物</a><a href="">国家禁运品声明</a>
+          </div>
+          <div class="di_you">
+            <button>查价</button>
+          </div>
+        </div>
+    </div>
+
+    <!-- 查询内容 -->
+    <div class="cen_nei">
+      <!-- 查询导航 -->
+      <div class="nei_dao">
+        <ul>
+          <li>航公司</li>
+          <li>接单时间</li>
+          <li>预计开船日期</li>
+          <li>航线</li>
+          <li>预计到港日期</li>
+          <li>预计送货日期</li>
+          <li>20GP</li>
+          <li>40HQ</li>
+          <li>操作</li>
+        </ul>
+      </div>
+      <!-- 查询内容 -->
+      <div class="nei_nei">
+        <div class="hang_nei">
+          <div class="nei_le">
+            <ul>
+              <li>
+                中远海船务
+                <div class="dian">直航</div>
+              </li>
+              <li>3月6日</li>
+              <li>
+                3月10日
+                <div class="dian">南沙</div>
+              </li>
+              <li>IC9</li>
+              <li>
+                3月15日
+                <div class="dian">天津</div>
+              </li>
+              <li>3月17日</li>
+              <li>￥3000</li>
+              <li>￥5000</li>
+            </ul>
+          </div>
+
+          <div class="nei_rig">
+            <button>下单</button>
+            <button>航线详情</button>
+          </div>
+
+          <div class="sm">
+            截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp;
+            说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp;
+            价格说明：已含们到门所有费用，不含开票。
+          </div>
         </div>
 
-
-      <div class="cen_nei">
-        1
       </div>
     </div>
 
