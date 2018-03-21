@@ -1,4 +1,7 @@
 @charset "UTF-8";
+button:hover {
+  cursor: pointer; }
+
 .head_hy {
   width: 80%;
   margin: 0 auto; }
@@ -76,17 +79,19 @@
     .cen_nei .nei_nei .hang_nei .nei_rig {
       width: 11%;
       float: right; }
-      .cen_nei .nei_nei .hang_nei .nei_rig button {
-        border: 0;
+      .cen_nei .nei_nei .hang_nei .nei_rig a {
+        display: inline-block;
         width: 100px;
         height: 40px;
+        line-height: 40px;
         margin-left: 15px;
+        text-align: center;
         border: 1px solid #ff9f19; }
-        .cen_nei .nei_nei .hang_nei .nei_rig button:nth-child(1) {
+        .cen_nei .nei_nei .hang_nei .nei_rig a:nth-child(1) {
           margin-bottom: 20px;
           background-color: #ff9f19;
           color: #fff; }
-        .cen_nei .nei_nei .hang_nei .nei_rig button:nth-child(2) {
+        .cen_nei .nei_nei .hang_nei .nei_rig a:nth-child(2) {
           background-color: #fff;
           color: #ff9f19; }
     .cen_nei .nei_nei .hang_nei .sm {
@@ -96,5 +101,44 @@
       margin-top: 10px;
       line-height: 55px;
       color: #808080; }
+
+.mo_cen {
+  height: 100px;
+  padding: 50px 0;
+  position: relative; }
+  .mo_cen .xian {
+    border: 1px solid #2E8DE6;
+    position: absolute;
+    height: 0px;
+    width: 495px;
+    top: 50%;
+    left: 50%;
+    margin-left: -276px; }
+  .mo_cen .mo_nei {
+    height: 100px;
+    width: 600px; }
+    .mo_cen .mo_nei .nn {
+      width: 40px;
+      height: 30px;
+      background-color: #fff;
+      margin: 0 auto; }
+    .mo_cen .mo_nei .yuan {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #2E8DE6;
+      border-radius: 50%;
+      position: relative;
+      margin-left: 50%;
+      left: -10px; }
+    .mo_cen .mo_nei .la:nth-last-child(1) .guan {
+      float: right; }
+    .mo_cen .mo_nei .guan {
+      width: 80px;
+      text-align: center; }
+      .mo_cen .mo_nei .guan .y {
+        background-color: #2E8DE6; }
+    .mo_cen .mo_nei .chuan {
+      margin: 0 auto;
+      margin-top: 38px; }
 
 /*# sourceMappingURL=hyyj.css.map */

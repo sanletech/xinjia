@@ -1,3 +1,6 @@
+button:hover{
+  cursor:pointer;
+}
 .head_hy{
   width: 80%;
   margin: 0 auto;
@@ -98,11 +101,13 @@
       .nei_rig{
         width: 11%;
         float: right;
-        button{
-          border:0;
+        a{
+          display: inline-block;
           width:100px;
           height:40px;
+          line-height:40px;
           margin-left: 15px;
+          text-align: center;
           border:1px solid #ff9f19;
           &:nth-child(1){
             margin-bottom:20px;
@@ -123,6 +128,57 @@
         line-height:55px;
         color:#808080;
       }
+    }
+  }
+}
+
+// 模态窗口样式
+.mo_cen{
+  height:100px;
+  padding:50px 0;
+  position: relative;
+  .xian{
+    border:1px solid #2E8DE6;
+    position: absolute;
+    height: 0px;
+    width:495px;
+    top:50%;
+    left: 50%;
+    margin-left: -276px;
+  }
+  .mo_nei{
+    height:100px;
+    width: 600px;
+    .nn{
+      width: 40px;
+      height: 30px;
+      background-color: #fff;
+      margin: 0 auto;
+    }
+    .yuan{
+      width: 20px;
+      height: 20px;
+      border:2px solid #2E8DE6;
+      border-radius:50%;
+      position: relative;
+      margin-left: 50%;
+      left:-10px;
+    }
+    .la:nth-last-child(1){
+      .guan{
+        float: right;
+      }
+    }
+    .guan{
+      width:80px;
+      text-align: center;
+      .y{
+        background-color: #2E8DE6;
+      }
+    }
+    .chuan{
+      margin: 0 auto;
+      margin-top:38px;
     }
   }
 }

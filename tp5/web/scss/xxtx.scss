@@ -1,0 +1,157 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+.xxtx{
+  width: 80%;
+  margin: 0 auto;
+  // 订单信息
+  .xxtx_dd{
+    border: 1px solid #808080;
+    padding:0 10px;
+    .xx{
+      padding:10px 0;
+      border-bottom:1px solid #808080;
+    }
+    .dd{
+      height: 250px;
+      padding:20px 0;
+      .tu{
+        height: 100%;
+      }
+      .dd_nei{
+        height: 80%;
+        //路线
+        .dd_yu{
+          padding:0px 23px;
+        }
+        .bian{
+          border-left: 1px solid #808080;
+        }
+        .dd_lu{
+          font-size: 16px;
+          height: 35px;
+          line-height: 35px;
+          padding:5px 0;
+          margin-bottom:50px;
+          border-bottom:1px solid #808080;
+          span:nth-child(1){
+            color:#808080;
+            float: left;
+          }
+          span:nth-child(2){
+            float: right;
+          }
+          i{
+            color:#808080;
+          }
+          .a{
+            strong{
+              margin-right: 20px;
+            }
+          }
+          .b{
+            strong{
+              margin-left: 20px;
+            }
+          }
+          .c{
+            text-align: center;
+            i{
+              color:$lan;
+            }
+          }
+        }
+        //下单日期
+        .yj{
+          border-bottom:1px solid #808080;
+          >div{
+            margin:10px 0;
+            height: 30px;
+            span:nth-child(1){
+              color:#808080;
+              float: left;
+            }
+            span:nth-child(2){
+              float: right;
+            }
+          }
+        }
+      }
+      // 航次
+      .dd_ming{
+        height: 20%;
+        padding:5px 30px;
+        span{
+          color:$lan;
+        }
+        >div:nth-child(2){
+          text-align: center;
+        }
+        >div:nth-child(3){
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  //货物信息填写
+  .er{
+    margin-top:50px;
+    overflow: hidden;
+    .er_zhuang{
+      height: 50px;
+      padding:10px 0;
+
+      span{
+        color:red;
+      }
+      input{
+        width: 150px;
+        height:30px;
+      }
+      &:nth-child(3){
+        text-align: center;
+      }
+      &:nth-last-child(-n+2){
+        text-align: right;
+      }
+    }
+    .money{
+      overflow: hidden;
+      color:$cheng;
+      text-align: right;
+      height: 50px;
+      line-height: 50px;
+    }
+    //按钮
+    .er_an{
+      height: 40px;
+      margin-bottom:20px;
+      .an_cen{
+        width: 30%;
+        height: 100%;
+        margin:0 auto;
+        button{
+          float: left;
+          border:0;
+          color:#fff;
+          background-color: $cheng;
+          width: 100px;
+          height: 40px;
+          line-height: 40px;
+        }
+        a{
+          float: right;
+          border:0;
+          color:#fff;
+          background-color: #aaa;
+          width: 100px;
+          height: 40px;
+          line-height: 40px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  //航线介绍
+}

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <link rel="stylesheet" href="css/hyyj.css">
+    <link rel="stylesheet" type="text/css" href="css/iziModal.css">
   </head>
   <body>
 
@@ -80,8 +81,8 @@
           </div>
 
           <div class="nei_rig">
-            <button>下单</button>
-            <button>航线详情</button>
+            <a href="#">下单</a>
+            <a href="#" class="trigger-default">航线详情</a>
           </div>
 
           <div class="sm">
@@ -94,5 +95,42 @@
       </div>
     </div>
 
+    <!-- 模态窗口 -->
+    <div id="modal-default" class="iziModal">
+        <div class="mo_cen">
+          <div class="xian"></div>
+          <div class="mo_nei layui-row">
+            <div class="layui-col-xs4 la">
+              <!-- 进过地址加y类样式 -->
+              <div class="guan">广州<br/>3018-03-14 <div class="nn"><div class="yuan y"></div></div></div>
+            </div>
+            <div class="layui-col-xs4 la">
+              <!-- 航船经过加chuan类样式 -->
+              <div class="guan chuan"><div class="nn"><div class="yuan">船</div></div>中转地<br/>3018-03-14 </div>
+            </div>
+
+            <div class="layui-col-xs4 la">
+              <div class="guan">天津<br/>3018-03-14 <div class="nn"><div class="yuan"></div></div></div>
+            </div>
+          </div>
+       </div>
+    </div>
+
+    <script src="js/jquery-1.9.0.min.js"></script>
+    <script src="js/iziModal.min.js"></script>
+    <script type="text/javascript">
+    //模态窗口基本设置
+    $("#modal-default").iziModal({
+        title: "航线详情",
+        iconClass: 'icon-announcement',
+        width: 700,
+        padding: 20
+    });
+    //启动模态窗
+    $(document).on('click', '.trigger-default', function (event) {
+        event.preventDefault();
+        $('#modal-default').iziModal('open');
+    });
+    </script>
 </body>
 </html>
