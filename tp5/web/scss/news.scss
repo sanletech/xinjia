@@ -1,0 +1,99 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+$bian:1px solid #000;
+.news{
+  width: 80%;
+  margin: 0 auto;
+  .news_top{
+    .hh1{
+      margin: 0 auto;
+      h1{
+        text-align: center;
+        color:#2CA5F7;
+      }
+      .heng{
+        width: 30px;
+        margin: 10px auto;
+        border:2px solid #2CA5F7;
+      }
+    }
+  }
+  .news_nei{
+    margin:30px 0;
+    overflow: hidden;
+    //新闻切换
+    #xinwen{
+      width: 55%;
+      height: 30px;
+      margin: 0 auto;
+      li{
+        width: 100px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        float: left;
+        &:nth-child(n+2){
+          margin-left: 15px;
+        }
+        &:hover{
+          background: $cheng;
+          color:#fff;
+          cursor: pointer;
+        }
+      }
+      .n{
+        background: $cheng;
+        color:#fff;
+      }
+    }
+
+    .xw{
+      display: none;
+      margin: 30px 0;
+      .xw_tou{
+        .xw_tu{
+          height: 300px;
+          border: $bian;
+        }
+        .tou_ti{
+          margin: 50px 0 0 10px;
+          p{
+            margin:20px 0;
+            color:#808080;
+          }
+        }
+      }
+      //新闻的内容
+      .xw_nei{
+        overflow: hidden;
+        ul{
+          overflow: hidden;
+          li{
+            overflow: hidden;
+            margin: 20px 0;
+            .date{
+              padding-top:10px;
+              width: 70px;
+              height: 60px;
+              text-align: center;
+              background-color: #0491EA;
+              color:#fff;
+              margin-right:20px;
+              strong{
+                font-size: 25px;
+              }
+            }
+            .xw_n{
+              p{
+                margin:10px 0;
+                color:#808080;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  //合作
+}

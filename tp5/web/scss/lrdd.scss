@@ -1,5 +1,13 @@
 $lan:#2e8de5;
 $cheng:#ff9f19;
+$hui:#aaa;
+button{
+  cursor: pointer;
+}
+.se{
+  background-color: $lan;
+  color:#fff;
+}
 .xxtx{
   width: 80%;
   margin: 0 auto;
@@ -10,7 +18,7 @@ $cheng:#ff9f19;
     .xx{
       padding:10px 0;
       border-bottom:1px solid #808080;
-      margin-bottom: 20px;
+      margin-bottom:20px;
     }
     .dd{
       height: 250px;
@@ -93,65 +101,76 @@ $cheng:#ff9f19;
     }
   }
 
-  //货物信息填写
+  //委托信息
   .er{
     margin-top:50px;
     overflow: hidden;
-    .er_zhuang{
-      height: 50px;
-      padding:10px 0;
-
-      span{
-        color:red;
-      }
-      input{
-        width: 150px;
+    .er_anniu{
+      float: right;
+      margin-top:-5px;
+      button{
+        width: 100px;
         height:30px;
+        border:0;
       }
-      &:nth-child(3){
-        text-align: center;
-      }
-      &:nth-last-child(-n+2){
+    }
+    .grid-demo{
+      height: 35px;
+      margin:25px 0;
+      >.layui-col-xs3,.layui-col-xs4{
         text-align: right;
+        height: 35px;
+        line-height: 35px;
+        span{
+          color:red;
+        }
       }
-    }
-    .money{
-      overflow: hidden;
-      color:$cheng;
-      text-align: right;
-      height: 50px;
-      line-height: 50px;
-    }
-    //按钮
-    .er_an{
-      height: 40px;
-      margin-bottom:20px;
-      .an_cen{
-        width: 30%;
-        height: 100%;
-        margin:0 auto;
-        button{
-          float: left;
-          border:0;
-          color:#fff;
-          background-color: $cheng;
-          width: 100px;
-          height: 40px;
-          line-height: 40px;
+      input,.select{
+        width:80%;
+        height: 30px;
+        padding-left: 13px;
+      }
+      .select{
+        border-radius: 0;
+        select{
+          padding:3px;
         }
-        a{
-          float: right;
-          border:0;
-          color:#fff;
-          background-color: #aaa;
-          width: 100px;
-          height: 40px;
-          line-height: 40px;
-          text-align: center;
+        &:before{
+          top:9px;
+          right: 1.5em;
         }
+      }
+      d{
+        border:1px solid #808080;
+        display: inline-block;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin-right: 9px;
       }
     }
   }
 
   //航线介绍
+  .hx{
+    margin-bottom: 20px;
+    height: 100px;
+    overflow: auto;
+  }
+
+  .tjiao{
+    width: 30%;
+    margin:50px auto;
+    button{
+      height: 30px;
+      width: 100px;
+      color:#fff;
+      background-color: $cheng;
+      border: 0;
+      &:nth-child(2){
+        float: right;
+      }
+    }
+  }
 }

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery-1.9.0.min.js"></script>
   </head>
   <body>
     <div class="home">
@@ -15,7 +16,7 @@
       <div class="home_top">
         <h1>全球集装箱跟踪&nbsp;&nbsp;&nbsp;&nbsp;尽在海浪互联平台</h1>
         <div class="home_sou">
-          <ul>
+          <ul id="jzx">
             <li>集装箱查询</li>
             <li>船舶GPS定位</li>
             <li>查询历史记录</li>
@@ -112,7 +113,7 @@
             <div class="di_sp">
                               视频
               <video id="myvideo">
-                <source src="./test.mp4">视频</source>
+                <source src="#">视频</source>
               </video>
             </div>
             <div class="di_xw">新闻</div>
@@ -126,5 +127,11 @@
 
       <!-- 底部 -->
     </div>
+    <script type="text/javascript">
+      $('#jzx li').eq(0).addClass('xuan');
+      $('#jzx li').click(function(event) {
+        $(this).addClass('xuan').siblings().removeClass('xuan');
+      });
+    </script>
   </body>
 </html>

@@ -15,9 +15,9 @@
         line-height: 40px; }
         .home .home_top .home_sou ul li:hover {
           cursor: pointer; }
-        .home .home_top .home_sou ul li:nth-child(1) {
-          color: #fff;
-          background-color: #0491EA; }
+      .home .home_top .home_sou ul .xuan {
+        color: #fff;
+        background-color: #0491EA; }
     .home .home_top .home_sou #bar1 {
       position: relative;
       widows: 100%;
