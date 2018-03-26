@@ -1,0 +1,54 @@
+.sale {
+  width: 80%;
+  margin: 0 auto; }
+  .sale .sale_top .hh1 {
+    margin: 0 auto; }
+    .sale .sale_top .hh1 h1 {
+      text-align: center;
+      color: #2e8de5; }
+    .sale .sale_top .hh1 .heng {
+      width: 30px;
+      margin: 10px auto;
+      border: 2px solid #2e8de5; }
+  .sale #ghuo {
+    overflow: hidden;
+    margin: 0 auto;
+    width: 60%; }
+    .sale #ghuo li {
+      float: left;
+      width: 120px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px; }
+      .sale #ghuo li:nth-child(n+2) {
+        margin-left: 10px; }
+      .sale #ghuo li:hover {
+        cursor: pointer;
+        color: #fff;
+        background: #ff9f19; }
+    .sale #ghuo .ys {
+      color: #fff;
+      background: #ff9f19; }
+  .sale .jzxcs {
+    overflow: hidden;
+    display: none; }
+    .sale .jzxcs li {
+      padding: 5px;
+      float: left;
+      width: 30%;
+      margin: 25px 0;
+      margin-left: 3%;
+      box-shadow: 0px 5px 5px #888888; }
+      .sale .jzxcs li:nth-child(3n+1) {
+        margin-left: 0%; }
+      .sale .jzxcs li .tu {
+        width: 100%;
+        padding: 30% 0;
+        border: 1px solid #000; }
+      .sale .jzxcs li .qx {
+        padding: 10px 0; }
+        .sale .jzxcs li .qx span {
+          float: right;
+          color: #ff9f19; }
+
+/*# sourceMappingURL=container.css.map */
