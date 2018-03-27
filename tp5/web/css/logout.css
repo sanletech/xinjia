@@ -1,3 +1,59 @@
-
+.zhuce {
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+  box-shadow: 0px 3px 10px #888;
+  position: relative;
+  top: 50px; }
+  .zhuce ul {
+    height: 40px; }
+    .zhuce ul li {
+      cursor: pointer;
+      float: left;
+      text-align: center;
+      height: 40px;
+      line-height: 40px;
+      background: #ddd;
+      font-size: 15px;
+      position: relative; }
+      .zhuce ul li div {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        bottom: -15px;
+        border-top: 15px dashed transparent;
+        border-right: 10px dashed transparent;
+        border-left: 10px dashed transparent; }
+    .zhuce ul .yan {
+      background-color: #2e8de5;
+      color: #fff; }
+      .zhuce ul .yan .jiao {
+        border-top: 15px solid #2e8de5; }
+  .zhuce .fm {
+    display: none;
+    width: 550px;
+    height: auto;
+    margin: 0 auto;
+    padding: 30px 0; }
+    .zhuce .fm input {
+      height: 38px;
+      padding-left: 13px;
+      margin: 15px 0; }
+    .zhuce .fm .yanz button {
+      cursor: pointer;
+      border: 1px solid #ddd;
+      background-color: transparent;
+      padding: 8px 25px;
+      float: right;
+      margin-top: 15px; }
+    .zhuce .fm .sub {
+      margin-top: 35px;
+      margin-bottom: 10px; }
+      .zhuce .fm .sub button {
+        background-color: #2e8de5; }
+    .zhuce .fm .zh {
+      color: #808080; }
+      .zhuce .fm .zh a {
+        color: #2e8de5; }
 
 /*# sourceMappingURL=logout.css.map */

@@ -12,6 +12,78 @@
     <script src="layui/layui.js"></script>
   </head>
   <body>
+    <div class="zhuce">
+      <ul class="layui-row" id="zc">
+        <li class="layui-col-xs6">
+          <div class="jiao"></div>
+          个人注册
+        </li>
+        <li class="layui-col-xs6">
+          <div class="jiao"></div>
+          企业注册
+        </li>
+      </ul>
+      <div class="fm layui-row">
+        <form class="" action="index.html" method="post">
+          <input type="text" name="title" placeholder="请输入您的用户名" class="layui-col-xs12">
+          <input type="text" name="title" placeholder="请输入您的邮箱" class="layui-col-xs12">
+          <input type="text" name="title" placeholder="请输入您的手机号码" class="layui-col-xs12">
 
+          <div class="yanz layui-col-xs12">
+            <input type="text" name="title" placeholder="请输入您的短信验证码" class="layui-col-xs9">
+            <button type="button" name="button" class="">
+              获取验证码
+            </button>
+          </div>
+
+          <input type="password" name="title" placeholder="请设置密码" class="layui-col-xs12">
+          <input type="password" name="title" placeholder="请再次确认密码" class="layui-col-xs12">
+
+          <div class="sub layui-col-xs12">
+            <button type="submit" class="layui-btn layui-btn-fluid" name="button">登陆</button>
+          </div>
+
+          <div class="zh">
+            <span>没有帐号？<a href="#">立即注册</a></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="fm layui-row">
+        <form class="" action="index.html" method="post">
+          <input type="text" name="title" placeholder="请输入您的企业名" class="layui-col-xs12">
+          <input type="text" name="title" placeholder="请输入您的用户名" class="layui-col-xs12">
+          <input type="text" name="title" placeholder="请输入您的邮箱" class="layui-col-xs12">
+          <input type="text" name="title" placeholder="请输入您的手机号码" class="layui-col-xs12">
+
+          <div class="yanz layui-col-xs12">
+            <input type="text" name="title" placeholder="请输入您的短信验证码" class="layui-col-xs9">
+            <button type="button" name="button" class="">
+              获取验证码
+            </button>
+          </div>
+
+          <input type="password" name="title" placeholder="请设置密码" class="layui-col-xs12">
+          <input type="password" name="title" placeholder="请再次确认密码" class="layui-col-xs12">
+
+          <div class="sub layui-col-xs12">
+            <button type="submit" class="layui-btn layui-btn-fluid" name="button">登陆</button>
+          </div>
+
+          <div class="zh">
+            <span>没有帐号？<a href="#">立即注册</a></span>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    <script type="text/javascript">
+      $('#zc li').eq(0).addClass('yan');
+      $('.fm').eq(0).show();
+      $('#zc li').click(function(event) {
+        $(this).addClass('yan').siblings('li').removeClass('yan');
+        $('.fm').eq($(this).index()).show().siblings('.fm').hide();
+      });
+    </script>
  </body>
 </html>
