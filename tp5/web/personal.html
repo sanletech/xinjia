@@ -52,9 +52,9 @@
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">所有商品</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="javascript:;">列表三</a></dd>
+            <dd><a href="help.html" target="myFrame">列表一</a></dd>
+            <dd><a href="check.html" target="myFrame">列表二</a></dd>
+            <dd><a href="index.html" target="myFrame">列表三</a></dd>
             <dd><a href="">超链接</a></dd>
           </dl>
         </li>
@@ -74,9 +74,7 @@
 
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div style="padding: 15px;">
-      内容主体区域
-    </div>
+    <iframe width="100%" height="" name="myFrame"  id="iframeId" scrolling="no"  frameborder="0" ></iframe>
   </div>
 
   <div class="layui-footer">
@@ -86,6 +84,10 @@
 </div>
 
 <script>
+console.log($(window).height());
+console.log($(document).height()-60-44-6);
+console.log(window.screen.availHeight-60-44-39);
+$('#iframeId').height(window.screen.availHeight-60-44-39);
 
 //JavaScript代码区域
 layui.use('element', function(){

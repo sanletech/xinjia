@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "",
-"sources": [],
+"mappings": "AAAA,MAAM;EACJ,MAAM,EAAC,cAAc",
+"sources": ["../scss/personal.scss"],
 "names": [],
 "file": "personal.css"
 }
