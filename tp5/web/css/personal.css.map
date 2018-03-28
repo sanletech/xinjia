@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,MAAM;EACJ,MAAM,EAAC,cAAc",
+"mappings": "AAAA,MAAM;EACJ,MAAM,EAAC,cAAc;;AAGvB,WAAW;EACT,QAAQ,EAAE,OAAO",
 "sources": ["../scss/personal.scss"],
 "names": [],
 "file": "personal.css"
