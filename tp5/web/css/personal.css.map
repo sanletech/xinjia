@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,MAAM;EACJ,MAAM,EAAC,cAAc;;AAGvB,WAAW;EACT,QAAQ,EAAE,OAAO",
+"mappings": "AAIA,kBAAkB;EAChB,KAAK,EAAE,KAAK;;AAGd,SAAS;EACP,UAAU,EATP,OAAO;;AAYZ,UAAU;EACR,gBAAgB,EAbb,OAAO;;AAgBZ,8BAA8B;EAC5B,gBAAgB,EAhBX,OAAO;;AAsBd,SAAS;EACP,OAAO,EAAC,IAAI",
 "sources": ["../scss/personal.scss"],
 "names": [],
 "file": "personal.css"

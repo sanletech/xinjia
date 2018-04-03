@@ -1,0 +1,23 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+$bian:1px solid #ccc;
+.invalid{
+  width: 98%;
+  height: auto;
+}
+.btn_select{
+  width: 100px;
+  height: 37px;
+  background-color: $lan;
+}
+.layui-form-label{
+  width: 60px;
+  padding:10px 5px;
+}
+.layui-form-item .layui-inline{
+  margin-right: 0;
+}
+.layui-form-item .layui-input-inline{
+  width: 170px;
+}

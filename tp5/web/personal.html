@@ -22,7 +22,7 @@
       <li class="layui-nav-item"><a href="">商品管理</a></li>
       <li class="layui-nav-item"><a href="">用户</a></li>
       <li class="layui-nav-item">
-        <a href="javascript:;">其它系统</a>
+        <a href="#">其它系统</a>
         <dl class="layui-nav-child">
           <dd><a href="">邮件管理</a></dd>
           <dd><a href="">消息管理</a></dd>
@@ -32,7 +32,7 @@
     </ul>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
-        <a href="javascript:;">
+        <a href="#">
           <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
           贤心
         </a>
@@ -45,36 +45,40 @@
     </ul>
   </div>
 
-  <div class="layui-side layui-bg-black">
+  <div class="layui-side layui-bg">
     <div class="layui-side-scroll">
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">所有商品</a>
+        <li class="layui-nav-item"><a href="personal/steward.html" target="myFrame">物流管家</a></li>
+        <li class="layui-nav-item">
+          <a class="" href="javascript:;">订单中心</a>
           <dl class="layui-nav-child">
-            <dd><a href="help.html" target="myFrame">列表一</a></dd>
-            <dd><a href="check.html" target="myFrame">列表二</a></dd>
-            <dd><a href="index.html" target="myFrame">列表三</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd><a href="personal/all_order.html" target="myFrame">所有订单</a></dd>
+            <dd><a href="personal/invalid.html" target="myFrame">作废订单</a></dd>
           </dl>
         </li>
         <li class="layui-nav-item">
-          <a href="javascript:;">解决方案</a>
+          <a href="javascript:;" target="myFrame">账单中心</a>
           <dl class="layui-nav-child">
-            <dd><a href="javascript:;">列表一</a></dd>
-            <dd><a href="javascript:;">列表二</a></dd>
-            <dd><a href="">超链接</a></dd>
+            <dd><a href="index.html" target="myFrame">列表一</a></dd>
+            <dd><a href="#" target="myFrame">列表二</a></dd>
           </dl>
         </li>
-        <li class="layui-nav-item"><a href="">云市场</a></li>
-        <li class="layui-nav-item"><a href="">发布商品</a></li>
+
+        <li class="layui-nav-item">
+          <a href="javascript:;">企业中心</a>
+          <dl class="layui-nav-child">
+            <dd><a href="#" target="myFrame">列表一</a></dd>
+            <dd><a href="#" target="myFrame">列表二</a></dd>
+          </dl>
+        </li>
       </ul>
     </div>
   </div>
 
-  <div class="layui-body">
+  <div class="layui-body body_nei">
     <!-- 内容主体区域 -->
-    <iframe src="index.html" width="100%" height="600px" name="myFrame" frameborder="0" scrolling="auto" id="mainiframe" onload="iframeAutoFit(test)" ></iframe>
+    <iframe src="personal/steward.html" width="100%" height="0" name="myFrame" frameborder="0" scrolling="auto" id="mainiframe" ></iframe>
   </div>
 
   <div class="layui-footer" style="z-index:999">
@@ -86,10 +90,11 @@
 <script>
 function changeFrameHeight(){
         var ifm= document.getElementById("mainiframe");
-        ifm.height=document.documentElement.clientHeight-56;
+        ifm.height=document.documentElement.clientHeight-220;
     }
     window.onresize=function(){ changeFrameHeight();}
     $(function(){changeFrameHeight();});
+
 //JavaScript代码区域
 layui.use('element', function(){
   var element = layui.element;
