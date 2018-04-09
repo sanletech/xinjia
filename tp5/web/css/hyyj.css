@@ -2,14 +2,18 @@
 button:hover {
   cursor: pointer; }
 
-.head_hy {
-  width: 80%;
-  margin: 0 auto; }
-  .head_hy .gnhy {
-    width: 50%;
-    border: 1px solid #000;
+.banner {
+  width: auto;
+  height: 500px;
+  background: url(../image/banner.jpg);
+  background-size: 100% 100%;
+  padding: 20px 10%;
+  margin-bottom: 80px; }
+  .banner .gnhy {
+    width: 45%;
+    background: #fff;
     height: 460px; }
-    .head_hy .gnhy .gnhy_top {
+    .banner .gnhy .gnhy_top {
       text-align: center;
       color: #fff;
       background: #2e8de5;
@@ -17,31 +21,35 @@ button:hover {
       line-height: 40px;
       font-size: 16px;
       font-family: "Microsoft YaHei", "微软雅黑"; }
-    .head_hy .gnhy .gnhy_nei {
+    .banner .gnhy .gnhy_nei {
       padding: 20px;
       overflow: hidden; }
-      .head_hy .gnhy .gnhy_nei input {
+      .banner .gnhy .gnhy_nei input {
         height: 40px;
         padding-left: 13px;
         margin: 15px 0; }
-      .head_hy .gnhy .gnhy_nei .a {
+      .banner .gnhy .gnhy_nei .a {
         padding-right: 10px; }
-      .head_hy .gnhy .gnhy_nei .b {
+      .banner .gnhy .gnhy_nei .b {
         padding-left: 10px; }
-    .head_hy .gnhy .gnhy_di {
+    .banner .gnhy .gnhy_di {
       padding: 20px;
       height: 40px;
       line-height: 40px; }
-      .head_hy .gnhy .gnhy_di .di_zuo {
+      .banner .gnhy .gnhy_di .di_zuo {
         float: left; }
-      .head_hy .gnhy .gnhy_di .di_you {
+      .banner .gnhy .gnhy_di .di_you {
         float: right; }
-        .head_hy .gnhy .gnhy_di .di_you button {
+        .banner .gnhy .gnhy_di .di_you button {
           border: 0;
           width: 100px;
           height: 40px;
           color: #fff;
           background-color: #ff9f19; }
+
+.head_hy {
+  width: 80%;
+  margin: 0 auto; }
 
 .cen_nei {
   margin: 30px 0; }

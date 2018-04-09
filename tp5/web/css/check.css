@@ -22,10 +22,11 @@
         color: #fff;
         background-color: #2b7eda; }
   .select .rig {
-    height: 700px; }
+    height: auto; }
     .select .rig .head {
       background-color: #fff;
-      height: 30%;
+      height: auto;
+      overflow: hidden;
       padding: 20px; }
       .select .rig .head .head_le ul {
         list-style: none;
@@ -53,7 +54,8 @@
       .select .rig .head .head_rig .gong {
         margin-right: 4%; }
     .select .rig .foot {
-      height: 60%;
+      height: auto;
+      overflow: hidden;
       background-color: #fff;
       margin-top: 20px;
       padding: 20px; }

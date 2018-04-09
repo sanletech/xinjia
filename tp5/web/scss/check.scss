@@ -30,11 +30,12 @@
   }
 
   .rig{
-    height: 700px;
+    height: auto;
     //查询输入框
     .head{
       background-color: #fff;
-      height: 30%;
+      height: auto;
+      overflow: hidden;
       padding:20px;
       .head_le{
         ul{
@@ -78,7 +79,8 @@
 
     //查询内容
     .foot{
-      height:60%;
+      height:auto;
+      overflow: hidden;
       background-color: #fff;
       margin-top:20px;
       padding:20px;

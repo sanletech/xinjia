@@ -1,3 +1,10 @@
+.banner {
+  width: 100%;
+  height: 500px;
+  background-image: url(../image/banner.jpg);
+  background-size: 100% 100%;
+  margin-bottom: 80px; }
+
 .help {
   width: 80%;
   margin: 0 auto; }

@@ -1,0 +1,42 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+$bian:1px solid #000;
+
+footer{
+  margin-top: 40px;
+  background: $lan;
+  color:#fff;
+  padding:30px 0;
+  height: 196px;
+  .foot{
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+    .lx{
+      float: left;
+      p{
+        margin:15px 0;
+      }
+    }
+    .rwm{
+      float: right;
+      width: auto;
+      margin-top:18px;
+      >div{
+        width: 140px;
+        height: 140px;
+        float: left;
+        img{
+          width: 100%;
+        }
+        p{
+          text-align: center;
+        }
+      }
+      .r1{
+        margin-right: 10px;
+      }
+    }
+  }
+}

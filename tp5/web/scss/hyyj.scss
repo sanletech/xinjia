@@ -1,13 +1,17 @@
 button:hover{
   cursor:pointer;
 }
-.head_hy{
-  width: 80%;
-  margin: 0 auto;
-  //表单
+//表单
+.banner{
+  width: auto;
+  height: 500px;
+  background:url(../image/banner.jpg);
+  background-size: 100% 100%;
+  padding: 20px 10%;
+  margin-bottom: 80px;
   .gnhy{
-    width: 50%;
-    border: 1px solid #000;
+    width: 45%;
+    background: #fff;
     height:460px;
     .gnhy_top{
       text-align: center;
@@ -52,6 +56,10 @@ button:hover{
       }
     }
   }
+}
+.head_hy{
+  width: 80%;
+  margin: 0 auto;
 }
 
 //内容

@@ -21,11 +21,15 @@
             <li>船舶GPS定位</li>
             <li>查询历史记录</li>
           </ul>
-          <form id='bar1'>
+          <form class="ss" action="#" method="post">
             <input class="ding layui-col-xs5" type="text" placeholder="请输入您的订单号">
             <span>|</span>
             <input  class="yun layui-col-xs6" type="text" placeholder="请输入您的运单号">
             <button type="submit">搜索</button>
+        </form>
+        <form class="ss" action="#" method="post" >
+          <input  class="ding layui-col-xs11" type="text" placeholder="请输入您的运单号">
+          <button type="submit">搜索</button>
         </form>
         </div>
       </div>
@@ -34,7 +38,7 @@
 
         <div class="home_le">
 
-          <div class="tu"><img src="" alt="图片"></div>
+          <div class="tu"><img src="image/index/xw.jpg" alt="图片" style="width:100%;"></div>
           <ul>
             <li>
                 <div class="date">
@@ -74,7 +78,7 @@
 
         <!-- 通知通告 -->
         <div class="home_rig">
-          <div class="tu"><img src="" alt="图片"></div>
+          <div class="tu"><img src="image/index/gg.jpg" alt="图片" style="width:100%;"></div>
           <div class="tong">
             <ul>
               <li>
@@ -127,11 +131,15 @@
 
       <!-- 底部 -->
     </div>
+      <iframe src="foot.html" width="99.7%" height="295" marginwidth="0" margintop="0px" frameborder="0"></iframe>
     <script type="text/javascript">
       $('#jzx li').eq(0).addClass('xuan');
+      $('.home_top .ss').eq(0).show();
       $('#jzx li').click(function(event) {
         $(this).addClass('xuan').siblings().removeClass('xuan');
+        $('.home_top .ss').eq($(this).index()).show().siblings('.ss').hide();
       });
+
     </script>
   </body>
 </html>
