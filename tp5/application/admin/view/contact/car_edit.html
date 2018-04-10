@@ -1,0 +1,135 @@
+<{include file='./public/header'/}>
+  
+  <body>
+    <div class="x-body">
+       
+        <form  id="editform" method="post">
+            <input type="hidden"  name="id" class="layui-input" value="<{$carinfo.id}>">
+          <div class="layui-form-item">
+              <label  class="layui-form-label">
+                  <span class="x-red">*</span>港口
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="username" class="layui-input" value="<{$carinfo.port}>">
+              </div>
+              
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>合作船公司
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="phone" class="layui-input" value="<{$carinfo.ship_id}>">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队名字
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队老板
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div>
+           <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队财务
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队调度
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div> 
+       
+           <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队跟单
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队地址
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div> 
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队公司
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div> 
+             <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>合作关系
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="email" class="layui-input" value="<{$carinfo.car_name}>">
+              </div>
+          </div> 
+            <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="x-red">*</span>状态
+            </label>
+            <div class="layui-input-block">
+                <input type="radio" name="status" value="1" title="正常" 
+                       <?php var_dump($carinfo);exit;  if($carinfo['status']==1)
+                       {echo 'checked';}else{echo'';} ?>  >
+                <input type="radio" name="sex" value="0" title="禁用" 
+                         <?php if($carinfo['status']==0)
+                       {echo 'checked';}else{echo'';} ?>     >
+            </div>
+          </div>
+       
+          <div class="layui-form-item">
+              <label  class="layui-form-label">
+              </label>
+              <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
+          </div>
+      </form>
+    </div>
+  <script>
+  
+      
+       function toajax (){   
+                $.ajax({
+                    type:'POST',
+                    url:"<{:url('admin/member/mupdate')}>",    
+                    data:$("#editform").serialize(),
+                    dataType:"json",
+                      success:function(data){
+                        if(data.status==1){
+                             alert(data.message,{icon:1,time:1000});
+                        }else{
+                            alert(data.message,{icon:1,time:1000});
+                            }
+                        }
+                     })
+                 }
+      
+      
+     
+</script>
+  </body>
+
+</html>
