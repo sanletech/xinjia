@@ -2,7 +2,8 @@
   margin: 0 auto;
   width: 80%; }
   .home .home_top h1 {
-    text-align: center; }
+    text-align: center;
+    margin-bottom: 50px; }
   .home .home_top .home_sou {
     width: 70%;
     margin: 30px auto; }

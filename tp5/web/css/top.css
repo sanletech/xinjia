@@ -3,7 +3,7 @@
   padding: 0; }
 
 #top {
-  margin: 30px 0;
+  margin: 30px 0 102px;
   overflow: hidden; }
   #top .logo {
     width: 246px;
@@ -11,7 +11,7 @@
     float: left;
     margin-top: -15px; }
   #top ul {
-    width: 800px;
+    width: 920px;
     height: 40px;
     line-height: 40px;
     text-align: center;

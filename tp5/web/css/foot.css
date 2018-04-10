@@ -26,5 +26,13 @@ footer {
           text-align: center; }
       footer .foot .rwm .r1 {
         margin-right: 10px; }
+  footer .bp {
+    background-color: #0063b4;
+    height: 25px;
+    line-height: 25px;
+    margin-top: 10px; }
+    footer .bp div {
+      width: 80%;
+      margin: 0 auto; }
 
 /*# sourceMappingURL=foot.css.map */
