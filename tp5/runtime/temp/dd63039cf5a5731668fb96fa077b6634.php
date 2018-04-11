@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\contact\car_list.html";i:1523356598;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1523271793;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\contact\car_list.html";i:1523356598;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1523418150;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/static/admin/css/font.css">
     <link rel="stylesheet" href="/static/admin/css/layui.css">
-	<link rel="stylesheet" href="/static/admin/css/xadmin.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
         
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>

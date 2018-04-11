@@ -55,12 +55,13 @@ class Contact extends Base
         $sql="select * from hl_cardata where id=$id";
         $carinfo=Db::query($sql);
         
-        //获取对应ID的symbiosis信息
-        $symbiosis= ContactM::get($id);
-        $sb= $symbiosis->symbiosis;
+//        //获取对应ID的symbiosis信息
+//        $symbiosis= ContactM::get($id);
+//        $sb= $symbiosis->symbiosis;
+//        $this->view->assign('symbiosis',$sb);
         
         $this->view->assign('carinfo',$carinfo);
-         $this->view->assign('symbiosis',$sb);
+         
         return $this->view->fetch('contact\car_edit'); 
     }
     

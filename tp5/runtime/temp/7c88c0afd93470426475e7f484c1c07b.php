@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1523172899;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\contact\car_edit.html";i:1523357726;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1523271793;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1523172899;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\contact\car_edit.html";i:1523428523;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1523418150;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/static/admin/css/font.css">
     <link rel="stylesheet" href="/static/admin/css/layui.css">
-	<link rel="stylesheet" href="/static/admin/css/xadmin.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
         
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
@@ -41,6 +41,9 @@
               <div class="layui-input-inline">
                   <input type="text"  name="ship_id" class="layui-input" value="<?php echo $car['ship_id']; ?>">
               </div>
+              <input type="checkbox" name="" title="写作" lay-skin="primary" checked>dd
+              <input type="checkbox" name="" title="发呆" lay-skin="primary"> dd
+              <input type="checkbox" name="" title="禁用" lay-skin="primary" disabled> ddd
           </div>
           <div class="layui-form-item">
               <label class="layui-form-label">
@@ -104,10 +107,17 @@
                   <span class="x-red">*</span>合作关系
               </label>
               <div class="layui-input-inline">
-                  
-                  <input type="text"  name="symbiosis" class="layui-input" value="<?php echo $symbiosis; ?>">
+                   <input type="hidden"  id='ifsb' name="ifsb" value="<?php echo $car['symbiosis']; ?>">
+                   <select name="symbiosis" style="height: 42px" >
+                            <option value="1" >长期合作</option>
+                            <option value="2" >临时合作</option>
+                            <option value="3">暂无合作</option>
+                            <option value="4">中止合作</option>
+                        </select>  
+                  <!--<input type="text"  name="symbiosis" class="layui-input" value="">-->
               </div>
           </div> 
+       
             <div class="layui-form-item">
             <label class="layui-form-label">
                 <span class="x-red">*</span>使用状态
@@ -130,8 +140,37 @@
       </form>
        <?php endforeach; endif; else: echo "" ;endif; ?>
     </div>
+      
   <script>
   
+        function addLoadEvent(func){
+            // 这里是一个中转储存变量
+		 var oldonload= window.onload;
+		
+		 
+		if((typeof oldonload) != 'function'){
+			  window.onload=func;
+		}else{
+			window.onload = function(){
+                            oldonload();
+                            func();
+			}
+                    }		
+	}
+        addLoadEvent(ifsb);
+        function ifsb(){
+            var id= document.getElementById('ifsb').value;
+            var op = document.getElementsByTagName('option');
+            for(var j=0;j<op.length;j++ ){
+                if( op[j].value==id){
+                      op[j].setAttribute("selected","selected")
+                }
+            }
+        }
+         
+     
+      
+      
       
        function toajax (){   
                 $.ajax({

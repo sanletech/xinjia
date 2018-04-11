@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:71:"E:\xampp\htdocs\tp5\public/../application/admin\view\public\middle.html";i:1523172899;s:69:"E:\xampp\htdocs\tp5\public/../application/admin\view\index\index.html";i:1523153940;s:61:"E:\xampp\htdocs\tp5\application\admin\view\public\header.html";i:1523271793;s:61:"E:\xampp\htdocs\tp5\application\admin\view\public\middle.html";i:1523172899;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1523172899;s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1523153940;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1523418150;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1523172899;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/static/admin/css/font.css">
     <link rel="stylesheet" href="/static/admin/css/layui.css">
-	<link rel="stylesheet" href="/static/admin/css/xadmin.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
         
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
