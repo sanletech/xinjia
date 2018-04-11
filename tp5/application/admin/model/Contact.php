@@ -10,7 +10,7 @@ class Contact extends Model
     public function carlist() {
 
     //1.将车队的信息赋值分页展示
-    $res= Db::name('cardata')->where('status',1)->paginate(10);
+    $res= Db::name('cardata')->where('id','>',0)->paginate(10);
     // 获取分页显示
 
     return $res;
@@ -31,7 +31,12 @@ class Contact extends Model
 
     }
 
-    
+     public function getSymbiosisAttr($value)
+    {
+    $status = [1=>'长期合作',2=>'临时合作',3=>'暂无合作',4=>'中止合作'];
+     return $status[$value];
+
+    }
 }
 
 

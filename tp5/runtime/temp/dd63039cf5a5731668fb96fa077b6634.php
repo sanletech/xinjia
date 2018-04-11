@@ -1,4 +1,24 @@
-<{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\contact\car_list.html";i:1523356598;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1523271793;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+	<link rel="stylesheet" href="/static/admin/css/xadmin.css">
+        
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+
+</head>
   
   <body>
     <div class="x-nav">
@@ -31,8 +51,8 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url("")}>',600,400)"><i class="layui-icon"></i>添加</button>
-     <span class="x-right" style="line-height:40px">总共有<{$count}>条记录</span>
+     <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(""); ?>',600,400)"><i class="layui-icon"></i>添加</button>
+     <span class="x-right" style="line-height:40px">总共有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -54,8 +74,7 @@
             <th>操作</th></tr>
         </thead>
     <tbody >
-      <{volist name="carlist" id="vo"}>
-        <?php   //将status(1正常0禁用) 和 symbiosis(1长期合作2临时合作3无合作) 的状态转成汉字
+      <?php if(is_array($carlist) || $carlist instanceof \think\Collection || $carlist instanceof \think\Paginator): $i = 0; $__LIST__ = $carlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;  //将status(1正常0禁用) 和 symbiosis(1长期合作2临时合作3无合作) 的状态转成汉字
                 $vo['status']==1? $vo['status']='正常':$vo['status']='禁用';
                 if($vo['symbiosis']==1){
                     $vo['symbiosis']='长期合作'; 
@@ -68,36 +87,36 @@
         ?>
          <tr >
             <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.port}></td>
-            <td><{$vo.ship_id}></td>
-            <td><{$vo.car_name}></td>
-            <td><{$vo.boss}></td>
-            <td><{$vo.finance}></td>
-            <td><{$vo.car_plan}></td>
-            <td><{$vo.order_follow}></td>
-            <td><{$vo.address}></td>
+            <td class="tdata"><?php echo $vo['id']; ?></td>
+            <td><?php echo $vo['port']; ?></td>
+            <td><?php echo $vo['ship_id']; ?></td>
+            <td><?php echo $vo['car_name']; ?></td>
+            <td><?php echo $vo['boss']; ?></td>
+            <td><?php echo $vo['finance']; ?></td>
+            <td><?php echo $vo['car_plan']; ?></td>
+            <td><?php echo $vo['order_follow']; ?></td>
+            <td><?php echo $vo['address']; ?></td>
             
              <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini"><{$vo.status}></span></td>
-            <td><{$vo.symbiosis}></td>
+              <span class="layui-btn layui-btn-normal layui-btn-mini"><?php echo $vo['status']; ?></span></td>
+            <td><?php echo $vo['symbiosis']; ?></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('Contact/car_edit')}>?id=<{$vo.id}>',600,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','<?php echo url('Contact/car_edit'); ?>?id=<?php echo $vo['id']; ?>',600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
-        <{/volist}>          
+        <?php endforeach; endif; else: echo "" ;endif; ?>          
         </tbody> 
       </table>
       <div class="page">
         <div>
-           <{$carlist->render()}>
+           <?php echo $carlist->render(); ?>
         </div>
       </div>
 
@@ -107,7 +126,7 @@
     function search(){
          $.ajax({
                 type:'post',
-                url:"<{:url('admin/Contact/search')}>",     
+                url:"<?php echo url('admin/Contact/search'); ?>",     
                 data:$("#searchform").serialize(),
                 dataType:"json",
                 success:function(data){
@@ -165,7 +184,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<?php echo url('admin/member/toDel'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){

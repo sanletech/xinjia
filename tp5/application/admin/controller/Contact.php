@@ -48,14 +48,19 @@ class Contact extends Base
       return $this->view->fetch('contact\car_list'); 
     }
     public function  car_edit(){
-        //获取需要修改的车队id
+          //获取需要修改的车队id
         $id= $this->request->get('id'); 
         
         //获取对应ID的信息
         $sql="select * from hl_cardata where id=$id";
         $carinfo=Db::query($sql);
-         //$carinfo 是个二维数组 取值给模版
-        $this->view->assign('carinfo',$carinfo['0']);
+        
+        //获取对应ID的symbiosis信息
+        $symbiosis= ContactM::get($id);
+        $sb= $symbiosis->symbiosis;
+        
+        $this->view->assign('carinfo',$carinfo);
+         $this->view->assign('symbiosis',$sb);
         return $this->view->fetch('contact\car_edit'); 
     }
     
