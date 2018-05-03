@@ -1,0 +1,38 @@
+footer {
+  margin-top: 40px;
+  background: #2e8de5;
+  color: #fff;
+  padding: 30px 0;
+  height: 196px; }
+  footer .foot {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden; }
+    footer .foot .lx {
+      float: left; }
+      footer .foot .lx p {
+        margin: 15px 0; }
+    footer .foot .rwm {
+      float: right;
+      width: auto;
+      margin-top: 18px; }
+      footer .foot .rwm > div {
+        width: 140px;
+        height: 140px;
+        float: left; }
+        footer .foot .rwm > div img {
+          width: 100%; }
+        footer .foot .rwm > div p {
+          text-align: center; }
+      footer .foot .rwm .r1 {
+        margin-right: 10px; }
+  footer .bp {
+    background-color: #0063b4;
+    height: 25px;
+    line-height: 25px;
+    margin-top: 10px; }
+    footer .bp div {
+      width: 80%;
+      margin: 0 auto; }
+
+/*# sourceMappingURL=foot.css.map */
