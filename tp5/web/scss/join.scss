@@ -1,0 +1,194 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+$bian:1px solid #ccc;
+.banner{
+  width: 100%;
+  height: 260px;
+  background-image: url(../image/join/banner.png);
+  background-size: 100% 100%;
+  margin-bottom:80px;
+  .wrapper{
+    overflow: hidden;
+    color:#fff;
+    width: 80%;
+    margin:0 auto;
+    .box{
+      margin-top:64px;
+      >div{
+        float: left;
+      }
+      .title{
+        b{
+          font-size: 100px;
+        }
+      }
+      .subtitle{
+        margin-top: 28px;
+        margin-left: 32px;
+        h3{
+          font-size: 30px;
+        }
+        h4{
+          font-size: 20px;
+          margin-top: 17px;
+        }
+      }
+    }
+  }
+  .apply{
+    height: 47px;
+    color:#fff;
+    line-height: 47px;
+    background-color: rgba(0,0,0,0.2);
+    div{
+      width: 80%;
+      font-size: 16px;
+      margin: 0 auto;
+    }
+  }
+}
+.join{
+  width: 100%;
+  margin: 0 auto;
+  //招聘标题
+  .layui-col-md5{
+    position: relative;
+    .bt{
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      background: $cheng;
+      color:#fff;
+      text-align: center;
+      line-height: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      top: -25px;
+    }
+  }
+  //招聘内容
+  .layui-col-space10{
+    min-height: 289px;
+    max-width: 80%;
+    padding:15px 10%;
+    &:nth-child(2n){
+      background-color: #f9f9f9;
+      .qiu{
+        background-color: $lan;
+      }
+      .jobs-list{
+        li:hover{
+          .link-detail{
+            background-color: $lan;
+          }
+        }
+      }
+      .bt{
+        background-color: $lan;
+      }
+    }
+  }
+
+  .jobs-list{
+    overflow: hidden;
+    li{
+      &:hover{
+        cursor:pointer;
+        .link-detail{
+          background: $cheng;
+          span{
+            color:#fff;
+          }
+        }
+      }
+      list-style: none;
+      font-size: .8rem;
+      line-height: 1.4rem;
+      max-height: 1.4rem;
+      overflow: hidden;
+      padding: .9rem 1rem;
+      border-bottom: 1px solid #e4e4e4;
+      transition:all 0.5s linear 0s;
+      .link-detail{
+          float: right;
+          font-size: .7rem;
+          color: #999;
+          background-color: #e4e4e4;
+          border-radius: .7rem;
+          -moz-border-radius: .7rem;
+          -webkit-border-radius: .7rem;
+          padding: 0 .5rem;
+          transition: all 0.2s;
+          -webkit-transition: all 0.2s;
+          -moz-transition: all 0.2s;
+          -o-transition: all 0.2s;
+          width: 4.5rem;
+          height: 1.4rem;
+          overflow: hidden;
+          position: relative;
+          .jt{
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-bottom:1px solid #999;
+            border-right: 1px solid #999;
+            top: 3px;
+            right: 10px;
+            transform: rotate(45deg);
+          }
+      }
+      .job-detail{
+            margin-top: 1rem;
+      }
+    }
+    .hi{
+      display: none;
+    }
+    //展开内容
+    .xian{
+      max-height: 1280px;
+      background-color: #f9f9f9;
+      transition:all 1s linear;
+    }
+  }
+
+  //橙色下拉图标
+  .heng{
+    width: 100%;
+    height: 50px;
+    margin-top:20px;
+    .qiu{
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: $cheng;
+      float: right;
+      &:hover{
+        cursor: pointer;
+      }
+      div{
+        height: 12px;
+        width: 12px;
+        border-top: 4px solid #fff;
+        border-left: 4px solid #fff;
+        position: relative;
+        top: 17px;
+        left: 15px;
+        transform: rotate(45deg);
+      }
+      .la{
+        height: 12px;
+        width: 12px;
+        border-top: 0px solid #fff;
+        border-left: 0px solid #fff;
+        border-bottom: 4px solid #fff;
+        border-right: 4px solid #fff;
+        position: relative;
+        top: 12px;
+        left: 15px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}

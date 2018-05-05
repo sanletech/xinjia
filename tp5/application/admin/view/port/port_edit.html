@@ -1,0 +1,177 @@
+<{include file='./public/header'/}>
+  
+  <body>
+    <div class="x-body">
+       <{volist name="carinfo" id="car"}>
+        <form  id="editform" method="post">
+            <input type="hidden"  name="id" class="layui-input" value="<{$car.id}>">
+          <div class="layui-form-item">
+              <label  class="layui-form-label">
+                  <span class="x-red">*</span>所属港口
+              </label>
+              <div class="layui-input-inline">
+                  
+                     <input type="checkbox" name="port"   checked>daa
+              </div>
+              
+          </div> 
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>合作船公司
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="ship_id" class="layui-input" value="<{$car.ship_id}>">
+              </div>
+              <input type="checkbox" name="" title="写作" lay-skin="primary" checked>dd
+              <input type="checkbox" name="" title="发呆" lay-skin="primary"> dd
+              <input type="checkbox" name="" title="禁用" lay-skin="primary" disabled> ddd
+          </div>
+          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队名字
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="car_name" class="layui-input" value="<{$car.car_name}>">
+              </div>
+          </div>
+<!--          <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队老板
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="boss" class="layui-input" value="<{$car.boss}>">
+              </div>
+          </div>
+           <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队财务
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="finance" class="layui-input" value="<{$car.finance}>">
+              </div>
+          </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队调度
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="car_plan" class="layui-input" value="<{$car.car_plan}>">
+              </div>
+          </div> 
+       
+           <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队跟单
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="order_follow" class="layui-input" value="<{$car.order_follow}>">
+              </div>
+          </div>-->
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队地址
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="address" class="layui-input" value="<{$car.address}>">
+              </div>
+          </div> 
+<!--            <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>车队公司
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text"  name="company_name" class="layui-input" value="<{$car.company_name}>">
+              </div>
+          </div> -->
+             <div class="layui-form-item">
+              <label class="layui-form-label">
+                  <span class="x-red">*</span>合作关系
+              </label>
+              <div class="layui-input-inline">
+                   <input type="hidden"  id='ifsb' name="ifsb" value="<{$car.symbiosis}>">
+                   <select name="symbiosis" style="height: 42px" >
+                            <option value="1" >长期合作</option>
+                            <option value="2" >临时合作</option>
+                            <option value="3">暂无合作</option>
+                            <option value="4">中止合作</option>
+                        </select>  
+                  <!--<input type="text"  name="symbiosis" class="layui-input" value="">-->
+              </div>
+          </div> 
+       
+            <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="x-red">*</span>使用状态
+            </label>
+                <div class="layui-input-block" style="line-height: 42px" >
+                    <{switch name="car.status"}>   <{case value="1"}>
+                   <input type="radio" name="status" value="1"  checked>正常
+                   <input type="radio" name="status" value="0"   >禁用
+                    <{/case}>   <{case value="0"}>
+                   <input type="radio" name="status" value="1" >正常
+                   <input type="radio" name="status" value="0" checked  >禁用
+                    <{/case}><{/switch}>
+                </div>
+          </div>
+          <div class="layui-form-item">
+              <label  class="layui-form-label">
+              </label>
+              <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
+          </div>
+      </form>
+       <{/volist}>
+    </div>
+      
+  <script>
+  
+        function addLoadEvent(func){
+            // 这里是一个中转储存变量
+		 var oldonload= window.onload;
+		
+		 
+		if((typeof oldonload) != 'function'){
+			  window.onload=func;
+		}else{
+			window.onload = function(){
+                            oldonload();
+                            func();
+			}
+                    }		
+	}
+        addLoadEvent(ifsb);
+        function ifsb(){
+            var id= document.getElementById('ifsb').value;
+            var op = document.getElementsByTagName('option');
+            for(var j=0;j<op.length;j++ ){
+                if( op[j].value==id){
+                      op[j].setAttribute("selected","selected")
+                }
+            }
+        }
+         
+     
+      
+      
+      
+       function toajax (){   
+                $.ajax({
+                    type:'POST',
+                    url:"<{:url('admin/member/mupdate')}>",    
+                    data:$("#editform").serialize(),
+                    dataType:"json",
+                      success:function(data){
+                        if(data.status==1){
+                             alert(data.message,{icon:1,time:1000});
+                        }else{
+                            alert(data.message,{icon:1,time:1000});
+                            }
+                        }
+                     })
+                 }
+      
+      
+     
+</script>
+  </body>
+
+</html>

@@ -1,0 +1,251 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#8c8c8c;
+$bian:1px solid #ccc;
+$hei:#4c4c4c;
+
+button:hover{
+  cursor:pointer;
+}
+.se{
+  color: $cheng;
+}
+//表单
+.banner{
+  width: auto;
+  height: 500px;
+  background:url(../image/banner.jpg);
+  background-size: 100% 100%;
+  padding: 20px 10%;
+  margin-bottom: 80px;
+  .gnhy{
+    width: 520px;
+    background: #fff;
+    height:400px;
+    .gnhy_top{
+      text-align: center;
+      color:#fff;
+      background: #2e8de5;
+      height:50px;
+      line-height: 50px;
+      font-size: 16px;
+      font-family: "Microsoft YaHei", "微软雅黑";
+      border-bottom:2px solid $cheng;
+    }
+    .gnhy_nei{
+      padding:30px 30px 15px;
+      overflow: hidden;
+      input{
+        height:40px;
+        padding-left: 13px;
+        margin:10px 0;
+      }
+      .a{
+        padding-right:10px;
+      }
+      .b{
+        padding-left: 10px;
+      }
+    }
+    .gnhy_di{
+      padding:0 30px;
+      height:40px;
+      line-height: 40px;
+      .di_zuo{
+        float: left;
+        a{
+          i{
+            color: red;
+          }
+        }
+        .c{
+          color: $cheng;
+        }
+      }
+      .di_you{
+        float: right;
+        button{
+          border:0;
+          width: 100px;
+          height:35px;
+          color:#fff;
+          background-color:#ff9f19;
+        }
+      }
+    }
+  }
+}
+.head_hy{
+  width: 80%;
+  margin: 0 auto;
+}
+
+//内容
+.cen_nei{
+  margin:30px 0;
+  //导航
+  .nei_dao{
+    margin:30px 0;
+    ul{
+      background-color: #2e8de5;
+      width: 100%;
+      height:50px;
+      li{
+        float: left;
+        text-align: center;
+        height: 100%;
+        width: 11%;
+        line-height: 50px;
+        font-size: 16px;
+        color:#fff;
+        i{
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  //内容
+  .nei_nei{
+    margin-bottom: 30px;
+    color:$hei;
+    position: relative;
+    .tj{
+      width: 50px;
+      height: 50px;
+      position: absolute;
+    }
+    .hang_nei{
+      height: 135px;
+      box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.15);
+      background-color: rgb(255, 255, 255);
+      padding:40px 15px 28px;
+      // 查询导航
+      .nei_le{
+        width: 89%;
+        float: left;
+        ul{
+          height: 100px;
+          border-bottom:1px dashed #e5e5e5;
+          li{
+            margin-bottom:30px;
+            float: left;
+            width: 12.5%;
+            text-align: center;
+            .dian{
+              margin-top:20px;
+              span{
+                display: inline-block;
+                position: relative;
+                top: -4px;
+              }
+            }
+            i{
+              font-size: 25px;
+            }
+          }
+          .hui{
+            color:$hui;
+          }
+          .zhi{
+            position: relative;
+            top: -13px;
+            div{
+                &:nth-child(2){
+                  margin:3px 0;
+                  border-bottom:1px solid #cccccc;
+                  .j{
+                    border-top: 8px dotted transparent;
+                    border-left:16px solid #cccccc;
+                    position: absolute;
+                    right: 0;
+                    top: 16px;
+                  }
+                }
+            }
+          }
+        }
+      }
+      .nei_rig{
+        width: 11%;
+        float: right;
+        a{
+          display: inline-block;
+          width:100px;
+          height:35px;
+          line-height:35px;
+          margin-left: 15px;
+          text-align: center;
+          border:1px solid #ff9f19;
+          &:nth-child(1){
+            margin-bottom:20px;
+            background-color: #ff9f19;
+            color:#fff;
+          }
+          &:nth-child(2){
+            background-color: #fff;
+            color: #ff9f19;
+          }
+        }
+      }
+      .sm{
+        overflow: hidden;
+        height:55px;
+        width: 100%;
+        margin-top:10px;
+        line-height:55px;
+        color:$hui;
+      }
+    }
+  }
+}
+
+// 模态窗口样式
+.mo_cen{
+  height:100px;
+  padding:50px 0;
+  position: relative;
+  .xian{
+    border:1px solid #2E8DE6;
+    position: absolute;
+    height: 0px;
+    width:495px;
+    top:50%;
+    left: 50%;
+    margin-left: -276px;
+  }
+  .mo_nei{
+    height:100px;
+    width: 600px;
+    .nn{
+      width: 40px;
+      height: 30px;
+      background-color: #fff;
+      margin: 0 auto;
+    }
+    .yuan{
+      width: 20px;
+      height: 20px;
+      border:2px solid #2E8DE6;
+      border-radius:50%;
+      position: relative;
+      margin-left: 50%;
+      left:-10px;
+    }
+    .la:nth-last-child(1){
+      .guan{
+        float: right;
+      }
+    }
+    .guan{
+      width:80px;
+      text-align: center;
+      .y{
+        background-color: #2E8DE6;
+      }
+    }
+    .chuan{
+      margin: 0 auto;
+      margin-top:38px;
+    }
+  }
+}

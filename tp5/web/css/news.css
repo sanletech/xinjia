@@ -1,0 +1,74 @@
+.banner {
+  width: 100%;
+  height: 500px;
+  background-image: url(../image/banner.jpg);
+  background-size: 100% 100%;
+  margin-bottom: 80px; }
+
+.news {
+  width: 80%;
+  margin: 0 auto; }
+  .news .news_top .hh1 {
+    margin: 0 auto; }
+    .news .news_top .hh1 h1 {
+      text-align: center;
+      color: #2CA5F7; }
+    .news .news_top .hh1 .heng {
+      width: 30px;
+      margin: 10px auto;
+      border: 2px solid #2CA5F7; }
+  .news .news_nei {
+    margin: 30px 0;
+    overflow: hidden; }
+    .news .news_nei #xinwen {
+      width: 55%;
+      height: 30px;
+      margin: 0 auto; }
+      .news .news_nei #xinwen li {
+        width: 100px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        float: left; }
+        .news .news_nei #xinwen li:nth-child(n+2) {
+          margin-left: 15px; }
+        .news .news_nei #xinwen li:hover {
+          background: #ff9f19;
+          color: #fff;
+          cursor: pointer; }
+      .news .news_nei #xinwen .n {
+        background: #ff9f19;
+        color: #fff; }
+    .news .news_nei .xw {
+      display: none;
+      margin: 30px 0; }
+      .news .news_nei .xw .xw_tou .xw_tu {
+        height: 300px;
+        border: 1px solid #000; }
+      .news .news_nei .xw .xw_tou .tou_ti {
+        margin: 50px 0 0 10px; }
+        .news .news_nei .xw .xw_tou .tou_ti p {
+          margin: 20px 0;
+          color: #808080; }
+      .news .news_nei .xw .xw_nei {
+        overflow: hidden; }
+        .news .news_nei .xw .xw_nei ul {
+          overflow: hidden; }
+          .news .news_nei .xw .xw_nei ul li {
+            overflow: hidden;
+            margin: 20px 0; }
+            .news .news_nei .xw .xw_nei ul li .date {
+              padding-top: 10px;
+              width: 70px;
+              height: 60px;
+              text-align: center;
+              background-color: #0491EA;
+              color: #fff;
+              margin-right: 20px; }
+              .news .news_nei .xw .xw_nei ul li .date strong {
+                font-size: 25px; }
+            .news .news_nei .xw .xw_nei ul li .xw_n p {
+              margin: 10px 0;
+              color: #808080; }
+
+/*# sourceMappingURL=news.css.map */
