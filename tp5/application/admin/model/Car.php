@@ -44,8 +44,13 @@ class Car extends Model
     //执行删除
     public function todel($data) {
         $data = implode(',', $data);
-        $sql="delete A,B from hl_cardata A left join hl_car_ship_port B  on A.id = B.car_data_id  where A.id in ($data) ";
-        $res = Db::execute($sql);
+        //获取相应的车队id
+        $car_id =  Db::name('car_port')->where('id','in',$data)->select('car_id');
+        $car_id_arr;
+        //删除car_port的id
+        $res = Db::name('car_port')->where('id','in',$data)->delete();
+        //根据car_id 删除相应的car_ship car_city 的数据
+        $res1 = Db::name('car_ship')->where(id)
         if($res >0){
             $status=1;
         }else{$status=0;}
@@ -54,21 +59,51 @@ class Car extends Model
     
     //执行修改
     public function toedit($car_data,$port_data,$ship_data,$city_data) {
+        $response = array();
         //修改car_data表
         $car_data['id']=$car_data['car_id'];
+        unset($car_data['car_id']);
         $car_data['mtime']=  time();
-        $res1=Db::name('car_data')->update($car_data);
-        //car_ship表
+        $res1=Db::name('cardata')->update($car_data);
+        if($res1>0){$response['success'][]='修改car_data表';}else{$response['fail'][]='修改car_data表';}
+        
+        //修改car_port表
+        $port_data = array_values($port_data);
+        $res2 = Db::name('car_port')->update(['port_id'=>$port_data[0],'id'=>$port_data[1]]);
+        //if($res2>0){$response['success'][]='修改car_port表';}else{$response['fail'][]='修改car_port表';}
+         
+        //修改car_ship表
         //先获取对应car_id 的主键id
-        $cs_id = Db::name('car_ship')->where('car_id',$car_data['car_id'])->select();
+        $cs_id = Db::name('car_ship')->where('car_id',$car_data['id'])->column('id');
         //执行添加修改ship_id的数据 
-        function addlist($value,$key,$p){
+        $ship_id=array_values($ship_data);
+        for($i=0;$i<count($ship_id);$i++){
+            $ShipAddList[$i]=array('ship_id'=>$ship_id[$i],'car_id'=>$car_data['id']);
         }
-
-        echo '再次修改啊啊啊啊啊啊啊';
-        $res2 = Db::name('car_ship');
+        $res3 = Db::name('car_ship')->insertAll($ShipAddList);
+        if($res3>0){
+            $response['success'][]='修改car_ship表'; 
+            $res4=Db::name('car_ship')->delete($cs_id); 
+        }  else { $response['fail'][]='修改car_ship表';}  
+     
+        //修改car_city表
+        //先获取对应car_id 的主键id
+        $cc_id=Db::name('car_city')->where('car_id',$car_data['id'])->column('id');
+         //执行添加修改city_id的数据 
+        $city_id = array_values($city_data);
+        $city_name = array_keys($city_data);
+        for($i=0;$i<count($city_data);$i++){
+            $CityAddList[$i]=array('city_id'=>$city_id[$i],'city_name'=>$city_name[$i],'car_id'=>$car_data['id']);
+        }
+        $res5 = Db::name('car_city')->insertAll($CityAddList);
+        if($res5>0){
+            $response['success'][]='修改car_city表'; 
+            $res6 =Db::name('car_city')->delete($cc_id);  
+        } else { $response['fail'][]='修改car_city表';}  
+	
+        return $response ;
     }
- 
+  
 
     
     /*
@@ -81,30 +116,8 @@ class Car extends Model
     }
     
     
-    
-   /*
-    * 对港口的关联查询
-    */
-      //belongsToMany(‘关联模型名’,’中间表名’,’外键名’,’当前模型关联键名’,[‘模型别名定义’]);
-      public function port ()
-    {
-      return $this->belongsToMany('Port', 'car_ship_port','port_id','car_data_id');
-    }
-    
-    /*
-    * 对港口的关联查询
-    */
-      //belongsToMany(‘关联模型名’,’中间表名’,’外键名’,’当前模型关联键名’,[‘模型别名定义’]);
-      public function ship ()
-    {
-      return $this->belongsToMany('Ship', 'car_ship_port','ship_id','car_data_id');
-    }
-    
-    
-  
+
 
 }
-
-
 
 ?>

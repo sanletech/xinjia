@@ -59,7 +59,7 @@ class Car extends Base
         $data['city_name']= explode(',', $data['city_name']);
         $data['ship_id']= explode(',', $data['ship_id']);
         $data['ship_short_name']= explode(',', $data['ship_short_name']);
-        $this->_p($data);
+        //$this->_p($data);
         
         //根据车队$car_id  获取对应hl_cardata信息
         $car_id = $data['car_id'];
@@ -89,7 +89,6 @@ class Car extends Base
     //执行车队的修改
      public function  toEdit(){
         $data= array_filter($this->request->param());
-        $this->_p($data);exit;
         //修改car_data信息表
         $car_data=$data['0'];
          //修改对应id的car_ship/port/city表
@@ -97,8 +96,13 @@ class Car extends Base
         $ship_data=$data['ship'];
         $city_data=$data['city']; 
         
-        $editM=new ContactM;
-        $status =$editM->toedit($car_data,$port_data,$ship_data, $city_data);
+        $editM=new CarM;
+        $response =$editM->toedit($car_data,$port_data,$ship_data, $city_data);
+        if(!array_key_exists('fail', $response)){
+            $status =1; 
+        }else {
+            $status =0;  
+              }
         json_encode($status);   
         return $status;  
      }
@@ -151,7 +155,7 @@ class Car extends Base
     //执行车队信息的删除
     public function toDel(){
         $data= array_filter($this->request->param());
-        $del=new ContactM;
+        $del=new CarM;
         $status = $del->todel($data['id']);
         json_encode($status);
         return $status;
