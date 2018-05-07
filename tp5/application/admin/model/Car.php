@@ -65,7 +65,7 @@ class Car extends Model
         function addlist($value,$key,$p){
         }
 
-        echo '再次修改';
+        echo '再次修改啊啊啊啊啊啊啊';
         $res2 = Db::name('car_ship');
     }
  
