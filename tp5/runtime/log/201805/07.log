@@ -1,0 +1,772 @@
+---------------------------------------------------------------
+[ 2018-05-07T09:25:58+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.093600s][吞吐率：10.68req/s] [内存消耗：1,625.41kb] [文件加载：44]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:26:33+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.032000s][吞吐率：31.25req/s] [内存消耗：1,484.83kb] [文件加载：42]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:26:37+08:00 ] 127.0.0.1 GET /admin.php/admin/login/index.html
+[ info ] www.tp5.com/admin.php/admin/login/index.html [运行时间：0.058000s][吞吐率：17.24req/s] [内存消耗：1,610.84kb] [文件加载：42]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\admin\controller\Login->index[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Login.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\login\login.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:44:03+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：1,484.77kb] [文件加载：42]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:44:06+08:00 ] 127.0.0.1 GET /admin.php/admin/login/index.html
+[ info ] www.tp5.com/admin.php/admin/login/index.html [运行时间：0.030000s][吞吐率：33.33req/s] [内存消耗：1,468.96kb] [文件加载：40]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'PHPSESSID=3sfu5bugv4r0rq40l13hg4d0f3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\admin\controller\Login->index[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Login.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\login\login.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:44:06+08:00 ] 127.0.0.1 GET /static/admin/favicon.ico
+[ info ] www.tp5.com/static/admin/favicon.ico [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：1,138.19kb] [文件加载：32]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'static',
+    1 => 'admin',
+    2 => 'favicon.ico',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'PHPSESSID=3sfu5bugv4r0rq40l13hg4d0f3',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:45:03+08:00 ] 127.0.0.1 POST /admin.php/admin/login/check.html
+[ info ] www.tp5.com/admin.php/admin/login/check.html [运行时间：0.624000s][吞吐率：1.60req/s] [内存消耗：2,498.07kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'check',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/login/index.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '29',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=3sfu5bugv4r0rq40l13hg4d0f3',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'loginname' => 'aaa',
+  'password' => '123456',
+)
+[ info ] [ RUN ] app\admin\controller\Login->check[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Login.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015600s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_user` [ RunTime:0.031200s ]
+[ sql ] [ SQL ] SELECT * FROM `hl_user` WHERE  `loginname` = 'aaa' LIMIT 1 [ RunTime:0.015600s ]
+[ sql ] [ SQL ] UPDATE `hl_user`  SET `logintime`=1525657503,`update_time`=2018  WHERE  `id` = 3 [ RunTime:0.046800s ]
+---------------------------------------------------------------
+[ 2018-05-07T09:45:05+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.093600s][吞吐率：10.68req/s] [内存消耗：2,378.51kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/login/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=3sfu5bugv4r0rq40l13hg4d0f3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015600s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.015600s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-05-07T09:45:05+08:00 ] 127.0.0.1 GET /admin.php/admin/index/welcome.html
+[ info ] www.tp5.com/admin.php/admin/index/welcome.html [运行时间：0.078000s][吞吐率：12.82req/s] [内存消耗：2,338.98kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'welcome',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=3sfu5bugv4r0rq40l13hg4d0f3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Index->welcome[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\welcome.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.015600s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-05-07T09:45:07+08:00 ] 127.0.0.1 GET /admin.php/admin/car/car_list.html
+[ info ] www.tp5.com/admin.php/admin/car/car_list.html [运行时间：0.078000s][吞吐率：12.82req/s] [内存消耗：2,272.68kb] [文件加载：50]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'car',
+    2 => 'car_list',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'PHPSESSID=3sfu5bugv4r0rq40l13hg4d0f3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Car->car_list[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Car.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.015600s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+[ error ] [4]语法错误: unexpected '类能访问子函数吗' (T_STRING)[E:\xampp\htdocs\xinjia\tp5\application\admin\model\Car.php:66]
+---------------------------------------------------------------
+[ 2018-05-07T09:52:06+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.094600s][吞吐率：10.57req/s] [内存消耗：1,484.85kb] [文件加载：42]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:52:10+08:00 ] 127.0.0.1 GET /admin.php/admin/login/index.html
+[ info ] www.tp5.com/admin.php/admin/login/index.html [运行时间：0.031200s][吞吐率：32.05req/s] [内存消耗：1,469.12kb] [文件加载：40]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\admin\controller\Login->index[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Login.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\login\login.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:52:47+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.038000s][吞吐率：26.32req/s] [内存消耗：1,484.85kb] [文件加载：42]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:53:53+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.031200s][吞吐率：32.05req/s] [内存消耗：1,484.77kb] [文件加载：42]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl [ array (
+  0 => 'code',
+  1 => 'msg',
+  2 => 'data',
+  3 => 'url',
+  4 => 'wait',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:53:56+08:00 ] 127.0.0.1 GET /admin.php/admin/login/index.html
+[ info ] www.tp5.com/admin.php/admin/login/index.html [运行时间：0.031200s][吞吐率：32.05req/s] [内存消耗：1,468.96kb] [文件加载：40]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'PHPSESSID=n51cpalvee7a7mju4ovqduf5f1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\admin\controller\Login->index[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Login.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\login\login.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:53:57+08:00 ] 127.0.0.1 GET /static/admin/favicon.ico
+[ info ] www.tp5.com/static/admin/favicon.ico [运行时间：0.031200s][吞吐率：32.05req/s] [内存消耗：1,138.13kb] [文件加载：32]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'static',
+    1 => 'admin',
+    2 => 'favicon.ico',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'PHPSESSID=n51cpalvee7a7mju4ovqduf5f1',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-05-07T09:54:03+08:00 ] 127.0.0.1 POST /admin.php/admin/login/check.html
+[ info ] www.tp5.com/admin.php/admin/login/check.html [运行时间：0.124800s][吞吐率：8.01req/s] [内存消耗：2,498.07kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'login',
+    2 => 'check',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/login/index.html',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '29',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=n51cpalvee7a7mju4ovqduf5f1',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'loginname' => 'aaa',
+  'password' => '123456',
+)
+[ info ] [ RUN ] app\admin\controller\Login->check[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Login.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ CACHE ] INIT File
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015600s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_user` [ RunTime:0.015600s ]
+[ sql ] [ SQL ] SELECT * FROM `hl_user` WHERE  `loginname` = 'aaa' LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] UPDATE `hl_user`  SET `logintime`=1525658043,`update_time`=2018  WHERE  `id` = 3 [ RunTime:0.046800s ]
+---------------------------------------------------------------
+[ 2018-05-07T09:54:05+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.046800s][吞吐率：21.37req/s] [内存消耗：2,196.63kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/login/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=n51cpalvee7a7mju4ovqduf5f1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-05-07T09:54:05+08:00 ] 127.0.0.1 GET /admin.php/admin/index/welcome.html
+[ info ] www.tp5.com/admin.php/admin/index/welcome.html [运行时间：0.046800s][吞吐率：21.37req/s] [内存消耗：2,188.66kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'welcome',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; PHPSESSID=n51cpalvee7a7mju4ovqduf5f1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Index->welcome[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\welcome.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-05-07T09:54:06+08:00 ] 127.0.0.1 GET /admin.php/admin/car/car_list.html
+[ info ] www.tp5.com/admin.php/admin/car/car_list.html [运行时间：0.078000s][吞吐率：12.82req/s] [内存消耗：2,282.64kb] [文件加载：50]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'car',
+    2 => 'car_list',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:59.0) Gecko/20100101 Firefox/59.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'PHPSESSID=n51cpalvee7a7mju4ovqduf5f1',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Car->car_list[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Car.php ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.015600s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+[ error ] [4]语法错误: unexpected '}'[E:\xampp\htdocs\xinjia\tp5\application\admin\model\Car.php:71]

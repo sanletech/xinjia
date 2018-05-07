@@ -1,0 +1,37 @@
+<?php
+namespace app\admin\model;
+use think\Model;
+class CarPort extends Model
+{
+ 
+      protected $table = 'hl_car_ship_port';
+    
+}
+
+
+var day=0;
+var timer=setInterval("dayChanges()",(24*60*60*1000)); //定时器，
+function dayChanges(){
+day++;
+} //每过24小时 次函数运行一次，我的年龄又多了一天
+------------ 下面的代码就是一个比较常见的闭包。
+function isMyHome(){ //我家 
+var myAge=0; //我的身份证信息
+if(day%365==0){ //我的年龄变化
+myAge+=1;
+}
+function myHomeKey(){ // 我家钥匙
+return myAge; //return 就是间谍猫
+}
+return myHomeKey; //给你我家的钥匙。
+}
+var key=isMyHome(); //你拿到我家钥匙
+var you=key();     //得到年龄。
+
+作者：闫俊虎
+链接：https://www.zhihu.com/question/34547104/answer/59127023
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+?>

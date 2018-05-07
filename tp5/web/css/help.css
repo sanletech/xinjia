@@ -1,0 +1,59 @@
+.banner {
+  width: 100%;
+  height: 500px;
+  background-image: url(../image/banner.jpg);
+  background-size: 100% 100%;
+  margin-bottom: 80px; }
+
+.help {
+  width: 80%;
+  margin: 0 auto; }
+  .help .help_top .hh1 {
+    margin: 0 auto; }
+    .help .help_top .hh1 h1 {
+      text-align: center;
+      color: #2e8de5; }
+    .help .help_top .hh1 .heng {
+      width: 30px;
+      margin: 10px auto;
+      border: 2px solid #2e8de5; }
+  .help .help_cen {
+    margin: 30px; }
+    .help .help_cen > div:nth-child(1) {
+      border: 1px solid #000;
+      height: 477px; }
+    .help .help_cen .bz {
+      margin-left: 20px; }
+      .help .help_cen .bz #bzhu {
+        overflow: hidden;
+        width: 55%;
+        margin: 0  auto; }
+        .help .help_cen .bz #bzhu li {
+          float: left;
+          width: 100px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px; }
+          .help .help_cen .bz #bzhu li:hover {
+            cursor: pointer;
+            background-color: #ff9f19;
+            color: #fff; }
+          .help .help_cen .bz #bzhu li:nth-child(n+2) {
+            margin-left: 5px; }
+        .help .help_cen .bz #bzhu .bb {
+          background-color: #ff9f19;
+          color: #fff; }
+    .help .help_cen .bz_nei {
+      display: none; }
+      .help .help_cen .bz_nei ul li {
+        height: 20px;
+        margin: 10px 5px 20px 0;
+        border-bottom: 1px dashed #808080;
+        padding-bottom: 16px; }
+        .help .help_cen .bz_nei ul li h3 {
+          float: left; }
+        .help .help_cen .bz_nei ul li p {
+          float: right;
+          color: #808080; }
+
+/*# sourceMappingURL=help.css.map */

@@ -1,0 +1,148 @@
+.banner {
+  width: 100%;
+  height: 260px;
+  background-image: url(../image/join/banner.png);
+  background-size: 100% 100%;
+  margin-bottom: 80px; }
+  .banner .wrapper {
+    overflow: hidden;
+    color: #fff;
+    width: 80%;
+    margin: 0 auto; }
+    .banner .wrapper .box {
+      margin-top: 64px; }
+      .banner .wrapper .box > div {
+        float: left; }
+      .banner .wrapper .box .title b {
+        font-size: 100px; }
+      .banner .wrapper .box .subtitle {
+        margin-top: 28px;
+        margin-left: 32px; }
+        .banner .wrapper .box .subtitle h3 {
+          font-size: 30px; }
+        .banner .wrapper .box .subtitle h4 {
+          font-size: 20px;
+          margin-top: 17px; }
+  .banner .apply {
+    height: 47px;
+    color: #fff;
+    line-height: 47px;
+    background-color: rgba(0, 0, 0, 0.2); }
+    .banner .apply div {
+      width: 80%;
+      font-size: 16px;
+      margin: 0 auto; }
+
+.join {
+  width: 100%;
+  margin: 0 auto; }
+  .join .layui-col-md5 {
+    position: relative; }
+    .join .layui-col-md5 .bt {
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      background: #ff9f19;
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      top: -25px; }
+  .join .layui-col-space10 {
+    min-height: 289px;
+    max-width: 80%;
+    padding: 15px 10%; }
+    .join .layui-col-space10:nth-child(2n) {
+      background-color: #f9f9f9; }
+      .join .layui-col-space10:nth-child(2n) .qiu {
+        background-color: #2e8de5; }
+      .join .layui-col-space10:nth-child(2n) .jobs-list li:hover .link-detail {
+        background-color: #2e8de5; }
+      .join .layui-col-space10:nth-child(2n) .bt {
+        background-color: #2e8de5; }
+  .join .jobs-list {
+    overflow: hidden; }
+    .join .jobs-list li {
+      list-style: none;
+      font-size: .8rem;
+      line-height: 1.4rem;
+      max-height: 1.4rem;
+      overflow: hidden;
+      padding: .9rem 1rem;
+      border-bottom: 1px solid #e4e4e4;
+      transition: all 0.5s linear 0s; }
+      .join .jobs-list li:hover {
+        cursor: pointer; }
+        .join .jobs-list li:hover .link-detail {
+          background: #ff9f19; }
+          .join .jobs-list li:hover .link-detail span {
+            color: #fff; }
+      .join .jobs-list li .link-detail {
+        float: right;
+        font-size: .7rem;
+        color: #999;
+        background-color: #e4e4e4;
+        border-radius: .7rem;
+        -moz-border-radius: .7rem;
+        -webkit-border-radius: .7rem;
+        padding: 0 .5rem;
+        transition: all 0.2s;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        width: 4.5rem;
+        height: 1.4rem;
+        overflow: hidden;
+        position: relative; }
+        .join .jobs-list li .link-detail .jt {
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          border-bottom: 1px solid #999;
+          border-right: 1px solid #999;
+          top: 3px;
+          right: 10px;
+          transform: rotate(45deg); }
+      .join .jobs-list li .job-detail {
+        margin-top: 1rem; }
+    .join .jobs-list .hi {
+      display: none; }
+    .join .jobs-list .xian {
+      max-height: 1280px;
+      background-color: #f9f9f9;
+      transition: all 1s linear; }
+  .join .heng {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px; }
+    .join .heng .qiu {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background-color: #ff9f19;
+      float: right; }
+      .join .heng .qiu:hover {
+        cursor: pointer; }
+      .join .heng .qiu div {
+        height: 12px;
+        width: 12px;
+        border-top: 4px solid #fff;
+        border-left: 4px solid #fff;
+        position: relative;
+        top: 17px;
+        left: 15px;
+        transform: rotate(45deg); }
+      .join .heng .qiu .la {
+        height: 12px;
+        width: 12px;
+        border-top: 0px solid #fff;
+        border-left: 0px solid #fff;
+        border-bottom: 4px solid #fff;
+        border-right: 4px solid #fff;
+        position: relative;
+        top: 12px;
+        left: 15px;
+        transform: rotate(45deg); }
+
+/*# sourceMappingURL=join.css.map */
