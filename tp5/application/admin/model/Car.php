@@ -66,7 +66,7 @@ class Car extends Model
          echo"修改了此行";
         }
 
-   
+        echo '再次修改';
         $res2 = Db::name('car_ship');
     }
  
