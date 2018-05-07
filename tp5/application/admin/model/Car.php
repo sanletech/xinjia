@@ -67,6 +67,7 @@ class Car extends Model
 
    
         $res2 = Db::name('car_ship');
+		alert(132);
     }
  
 
