@@ -63,7 +63,6 @@ class Car extends Model
         $cs_id = Db::name('car_ship')->where('car_id',$car_data['car_id'])->select();
         //执行添加修改ship_id的数据 
         function addlist($value,$key,$p){
-         echo"修改了此行";
         }
 
    
