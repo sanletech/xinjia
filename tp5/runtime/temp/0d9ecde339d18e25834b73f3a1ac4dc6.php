@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"E:\xampp\htdocs\tp5\public/../application/admin\view\public\middle.html";i:1525251612;s:70:"E:\xampp\htdocs\tp5\public/../application/admin\view\Car\car_list.html";i:1525584292;s:61:"E:\xampp\htdocs\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525251612;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_list.html";i:1525498906;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
     <!doctype html>
 <html lang="en">
 <head>
@@ -37,7 +37,7 @@
       <div class="layui-row">
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
-            <input type="text" name="car_name"  value="<?php echo !empty($searchcar)?$searchcar : '';; ?>"  placeholder="请输入优势路线" autocomplete="off" class="layui-input">
+            <input type="text" name="car_name"  value="<?php echo !empty($searchcar)?$searchcar : '';; ?>"  placeholder="请输入船队名字" autocomplete="off" class="layui-input">
           <input type="text" name="port"    value="<?php echo !empty($searchport)?$searchport : '';; ?>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -54,49 +54,28 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>车队名</th>
-            <th>所属港口</th>
-            <th>合作船公司</th>
-            <th>优势路线</th>
+            <th>船公司名</th>
+            <th>所属城市</th>
+            <th>业务港口</th>
             <th>公司地址</th>
-            <th>状态</th>
-            <th>合作关系</th>
             <th>操作</th></tr>
         </thead>
     <tbody >
-       
-
-      <?php if(is_array($carlist) || $carlist instanceof \think\Collection || $carlist instanceof \think\Paginator): $i = 0; $__LIST__ = $carlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;  //将status(1禁用2正常) 和 symbiosis(1为中止2为暂无3临时4长期合作) 的状态转成汉字
-                $vo['status']==1? $vo['status']='禁用':$vo['status']='正常';
-                if($vo['symbiosis']==1){
-                    $vo['symbiosis']='中止合作'; 
-                }elseif($vo['symbiosis']==2)
-                {
-                    $vo['symbiosis']='暂无合作'; 
-                }elseif($vo['symbiosis']==3){
-                    $vo['symbiosis']='临时合作'; 
-                }else{
-                    $vo['symbiosis']='长期合作'; 
-                     }
-        ?>
+        <?php if(is_array($shiplist) || $shiplist instanceof \think\Collection || $shiplist instanceof \think\Paginator): $i = 0; $__LIST__ = $shiplist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
          <tr >
             <td>
              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata"><?php echo $vo['id']; ?></td>
-            <td><?php echo $vo['car_name']; ?></td>
+             <td><?php echo $vo['ship_short_name']; ?></td>
+            <td><?php echo $vo['city']; ?></td>
             <td><?php echo $vo['port_name']; ?></td>
-            <td><?php echo $vo['ship_short_name']; ?></td>
-            <td><?php echo $vo['city_name']; ?></td>
-            <td><?php echo $vo['address']; ?></td>
-             <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini"><?php echo $vo['status']; ?></span></td>
-            <td><?php echo $vo['symbiosis']; ?></td>
+            <td><?php echo $vo['ship_address']; ?></td>
             <td class="td-manage">
-              <a title="查看" onclick="x_admin_show('查看 <?php echo $vo['car_name']; ?>','<?php echo url('Car/car_info'); ?>?id=<?php echo $vo['id']; ?>',700,400)" href="javascript:;">
+              <a title="查看" onclick="x_admin_show('查看','<?php echo url('Ship/ship_info'); ?>?id=<?php echo $vo['id']; ?>',700,400)" href="javascript:;">
                   <i class="layui-icon">&#xe649;</i>
               </a>  
-              <a title="编辑"  onclick="x_admin_show('编辑 <?php echo $vo['car_name']; ?>','<?php echo url('Car/car_edit'); ?>?id=<?php echo $vo['id']; ?>',800,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','<?php echo url('Ship/ship_edit'); ?>?id=<?php echo $vo['id']; ?>',800,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
@@ -109,10 +88,10 @@
       </table>
       <div class="page">
         <div>
-           <?php echo $page; ?>
+           <?php echo $shiplist->render(); ?>
         </div>
       </div>
-
+  
     </div>
       <div>
           <?php 
@@ -123,7 +102,6 @@
           <div>
     <script>
            /*执行搜索车队或者港口*/
-           
     function search(){
          $.ajax({
                 type:'get',
@@ -140,10 +118,10 @@
                  }
                          
                }, error: function(XMLHttpRequest, textStatus, errorThrown) {
- console.log(XMLHttpRequest.status);
-console.log(XMLHttpRequest.readyState);
-console.log(textStatus);
-   },
+                console.log(XMLHttpRequest.status);
+               console.log(XMLHttpRequest.readyState);
+               console.log(textStatus);
+                  },
 
         });
         return 1;

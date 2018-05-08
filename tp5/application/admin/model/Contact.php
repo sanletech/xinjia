@@ -16,7 +16,7 @@ class Car extends Model
                 . "left join hl_shipcompany SC on SC.id =  CS.id"     //查询船公司名字
                 . "left join hl_port P on P.id = CP.port_id"          //查询对应的港口名字
                 . "left join hl_cardata CD on CD.id = CP.car_id "
-                . "where CP .id ='1'"  
+                . "where CP .id ='1'"  ;
         
         
         

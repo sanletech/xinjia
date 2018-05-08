@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"E:\xampp\htdocs\tp5\public/../application/admin\view\public\middle.html";i:1525251612;s:70:"E:\xampp\htdocs\tp5\public/../application/admin\view\car\car_edit.html";i:1525584873;s:61:"E:\xampp\htdocs\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525251612;s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_add.html";i:1525749371;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -84,15 +84,13 @@
                 <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
             <div class="layui-form-item" id ="search_city">
             </div> 
-            
-            <?php if(is_array($car_data) || $car_data instanceof \think\Collection || $car_data instanceof \think\Paginator): $i = 0; $__LIST__ = $car_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$car): $mod = ($i % 2 );++$i;?>
-            <input type="hidden"  name="id" class="layui-input" value="<?php echo $car['id']; ?>">
+            <input type="hidden"  name="id" class="layui-input" value="">
             <div class="layui-form-item">
                 <label class="layui-form-label">
                     <span class="x-red">*</span>车队名字
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="car_name" name="car_name" class="layui-input" value="<?php echo $car['car_name']; ?>">
+                    <input type="text" id="car_name" name="car_name" class="layui-input" value="">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -100,7 +98,7 @@
                     <span class="x-red">*</span>车队地址
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="address" name="address" class="layui-input" value="<?php echo $car['address']; ?>">
+                    <input type="text" id="address" name="address" class="layui-input" value="">
                 </div>
             </div> 
             <div class="layui-form-item">
@@ -109,10 +107,10 @@
                 </label>
                 <div class="layui-input-inline">
                     <select id="symbiosis" name="symbiosis">
-                        <option value="1"  <?php if($car['symbiosis']==1){echo"selected='selected'";} ?> >中止合作</option>
-                        <option value="2"  <?php if($car['symbiosis']==2){echo"selected='selected'";} ?> >暂无合作</option>
-                        <option value="3"  <?php if($car['symbiosis']==3){echo"selected='selected'";} ?> >临时合作</option>
-                        <option value="4"   <?php if($car['symbiosis']==4){echo"selected='selected'";} ?>>长期合作</option>
+                        <option value="1"  >中止合作</option>
+                        <option value="2"  >暂无合作</option>
+                        <option value="3"  >临时合作</option>
+                        <option value="4"  >长期合作</option>
                     </select>  
                 </div>
             </div> 
@@ -122,17 +120,11 @@
                     </label>
                     <div class="layui-input-inline">
                      <select id="status" name="status">
-                         <?php 
-                         if($car['status']==1){
-                           echo "<option value='1' selected='selected'>禁止使用</option><option value='2'>正常使用</option>";
-                           }else{
-                             echo "<option value='1'>禁止使用</option><option value='2'  selected='selected'>正常使用</option>";
-                           } 
-                         ?>
+                        <option value='1'>禁止使用</option>
+                        <option value='2'>正常使用</option>
                     </select>  
                     </div>
             </div>
-            <?php endforeach; endif; else: echo "" ;endif; ?>
                     <div class="layui-form-item">
                         <label  class="layui-form-label">
                         </label>
@@ -146,9 +138,6 @@
  <script type="text/javascript" src="/static/admin/js/area.js"></script>
  <script>
 
-    // //展示原有的船公司和港口和优势路线
-        var shipPort='<?php echo json_encode($data); ?>'
-        shipPort=JSON.parse(shipPort); 
     //加载 所有的船公司名字简称和相应的id
         var js_ship = '<?php echo $js_ship; ?>';
         js_ship=JSON.parse(js_ship);    
@@ -156,10 +145,10 @@
         var js_port = '<?php echo $js_port; ?>';
             js_port=JSON.parse(js_port);    
         //ajax url生成
-       var url='<?php echo url('admin/Car/toEdit'); ?>';
-       //修改的车队ID 港口车队cp_id
-       var carID='<?php echo $car['id']; ?>';
-       var cpID ='<?php echo $data['id']; ?>';
+       var url="<?php echo url('admin/Car/toAdd'); ?>";
+      //修改的车队ID 港口车队cp_id
+       var carID='';
+       var cpID ='';
   //初始数据
         var areaData = Area;
         var $form;
@@ -169,13 +158,10 @@
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
-            loadProvince();  
-            TwoloadProvince(); 
-           // mode();  //加载选择合作关系的函数
-           // searchStatus(); //加载选择使用状态的函数
+            loadProvince();  //选择港口
+            TwoloadProvince(); //选择优势路线的城市
             loadship();//选择船公司 
-            loadPort();
-            oldshipPort();//原有的船公司和港口
+           // oldshipPort();//原有的船公司和港口
             
         });     
      

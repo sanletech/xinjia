@@ -9,12 +9,8 @@ class Ship extends Model
     protected $table = 'hl_shipcompany';
     
     public function shiplist($pages=5){
-        $sql = "select S.id , S.ship_short_name , S.ship_address ,C.city,GROUP_CONCAT(P.port_name) port_name "
-                . "from hl_shipcompany S left join hl_ship_port SP on S.id = SP.ship_id"
-                . " left join hl_city C on S.ship_city_code = C.city_id "
-                . "left join hl_port P on SP.port_id = P.id group by S.ship_short_name order by S.id";
-      
-        $list =Db::name('shipcompany')->alias('S')
+     
+        $list =Db::name('ship_port_city')->alias('SPC')
                 ->join('hl_ship_port SP','S.id = SP.ship_id','left')
                 ->join('hl_city C','S.ship_city_code = C.city_id','left')
                 ->join('hl_port P','SP.port_id = P.id','left')

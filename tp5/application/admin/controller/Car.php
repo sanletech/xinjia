@@ -15,18 +15,39 @@ class Car extends Base
     }
     
     public function car_list() 
-    {               
+    {    
+        $data= array_filter($this->request->param());
         $car= new CarM;
-         //接受搜索提供的搜索条件
-        $list= $car->carlist();
-        //每页数量
-        $count = count($list);
-        // 获取分 页显示
-        $page = $list->render();
+        //接受搜索提供的搜索条件
+        $data= $this->request->param();
+        $search =  array_filter($data);//过滤下空的参数;
+        //var_dump($search);
+        //给页面展示保留搜索内容
+        $bz=0; //设置一个判断标记
+        if(array_key_exists('port', $data)){
+        $bz=1;
+        $this->view->assign('searchport',$data['port']); 
+        }
+        if(array_key_exists('city', $data)){
+        $bz=1;    
+        $this->view->assign('searchcity',$data['city']); 
+        }
+        //展示分页内容
+        //  传参数展示分页carlist第一个参数是搜索条件 第二个参数是分页数量
+        if($bz){
+             $carlist= $car->carlist($search);
+        }else {
+             $carlist= $car->carlist();
+        }
       
-       // $this->_p($list); 
+        //每页数量
+        $count = count($carlist);
+        // 获取分 页显示
+        $page = $carlist->render();
+      
+       // $this->_p($carlist); 
         $this->view->assign('count',$count);
-        $this->view->assign('carlist',$list);
+        $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);
         return $this->view->fetch('Car/car_list'); 
     }
@@ -87,7 +108,7 @@ class Car extends Base
     }
     
     //执行车队的修改
-     public function  toEdit(){
+    public function  toEdit(){
         $data= array_filter($this->request->param());
         //修改car_data信息表
         $car_data=$data['0'];
@@ -97,7 +118,7 @@ class Car extends Base
         $city_data=$data['city']; 
         
         $editM=new CarM;
-        $response =$editM->toedit($car_data,$port_data,$ship_data, $city_data);
+        $response =$editM->toedit($car_data,$ship_data,$port_data,$city_data);
         if(!array_key_exists('fail', $response)){
             $status =1; 
         }else {
@@ -123,21 +144,27 @@ class Car extends Base
         
         $this->view->assign('js_port',$js_port);
         $this->view->assign('js_ship',$js_ship);
-        return $this->view->fetch('contact/car_add');
+        return $this->view->fetch('Car/car_add');
     }
     
     //执行车队的添加
     public function toAdd() {
-         $data= array_filter($this->request->param());
-          //需要添加的car_data信息表
+        $data= array_filter($this->request->param());
+        //$this->_p($data);
+        //需要添加的car_data信息表
         $car_data=$data['0'];
-         //需要添加的car_ship_port表
+         //需要添加的car_ship/port/city表
         $port_data=$data['port'];
         $ship_data=$data['ship'];
-         
-        $editM=new ContactM;
-        $status =$editM->toadd($car_data,$port_data,$ship_data);
-        json_encode($status);
+        $city_data=$data['city'];
+        $editM=new CarM;
+        $response =$editM->toadd($car_data,$ship_data,$port_data,$city_data);
+        if(!array_key_exists('fail', $response)){
+            $status =1; 
+        }else {
+            $status =0;  
+              }
+        json_encode($status);   
         return $status;  
     }
     
@@ -156,42 +183,16 @@ class Car extends Base
     public function toDel(){
         $data= array_filter($this->request->param());
         $del=new CarM;
-        $status = $del->todel($data['id']);
+        $response  = $del->todel($data['id']);
+         if(!array_key_exists('fail', $response)){
+            $status =1; 
+        }else {
+            $status =0;  
+              }
         json_encode($status);
         return $status;
     }
 
 
-    public function search() {
-       
-        $data= array_filter($this->request->param());
-        $search =new ContactM;
-        $search->carlist($data);
-    }
-    
-        // 废弃
-    public function car_list_bak() 
-    {
-        $car= new ContactM;
-        $carlist= $car->carlist();
-        $count = count($carlist); 
-         
-        foreach ($carlist as $key=> $value) {
-            //根据分页 循环 调用port_id和shipcy_id获取器处理成汉字数组 
-            $port_array[] =  $value->port_id;
-            $shipcy_array[] =  $value->shipcy_id; 
-        
-        }
-        
-//        $this->_p($port_array);
-//        $this->_p($shipcy_array);
-        //将车队信息赋值给模板
-        $this->view->assign('port_array',$port_array);
-        $this->view->assign('shipcy_array',$shipcy_array);
-        $this->view->assign('count',$count);
-        $this->view->assign('carlist',$carlist);
-    
-      return $this->view->fetch('contact/car_list'); 
-    }
     
 } 
