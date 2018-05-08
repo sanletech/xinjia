@@ -1,5 +1,5 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:71:"E:\xampp\htdocs\tp5\public/../application/admin\view\public\middle.html";i:1525251612;s:70:"E:\xampp\htdocs\tp5\public/../application/admin\view\Car\car_list.html";i:1525584292;s:61:"E:\xampp\htdocs\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
-    <!doctype html>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525676300;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1525677509;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">

@@ -1,5 +1,5 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525676300;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1525677509;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
-<!doctype html>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525251612;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1525770747;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+    <!doctype html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -37,14 +37,14 @@
       <div class="layui-row">
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
-            <input type="text" name="car_name"  value="<?php echo !empty($searchcar)?$searchcar : '';; ?>"  placeholder="请输入优势路线" autocomplete="off" class="layui-input">
+            <input type="text" name="city"  value="<?php echo !empty($searchcity)?$searchcity : '';; ?>"  placeholder="请输入优势路线" autocomplete="off" class="layui-input">
           <input type="text" name="port"    value="<?php echo !empty($searchport)?$searchport : '';; ?>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<?php echo url('Contact/car_add'); ?>',800,726)"><i class="layui-icon"></i>添加</button>
+     <button class="layui-btn" onclick="x_admin_show('添加车队','<?php echo url('Car/car_add'); ?>',800,726)"><i class="layui-icon"></i>添加</button>
      <span class="x-right" style="line-height:40px"> 本页有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
@@ -93,12 +93,12 @@
               <span class="layui-btn layui-btn-normal layui-btn-mini"><?php echo $vo['status']; ?></span></td>
             <td><?php echo $vo['symbiosis']; ?></td>
             <td class="td-manage">
-              <a title="查看" onclick="x_admin_show('查看 <?php echo $vo['car_name']; ?>','<?php echo url('Car/car_info'); ?>?id=<?php echo $vo['id']; ?>',700,400)" href="javascript:;">
+              <a title="查看" onclick="x_admin_show('查看 <?php echo $vo['car_name']; ?>','<?php echo url('Car/car_info'); ?>?car_id=<?php echo $vo['car_id']; ?>',700,400)" href="javascript:;">
                   <i class="layui-icon">&#xe649;</i>
               </a>  
               <a title="编辑"  onclick="x_admin_show('编辑 <?php echo $vo['car_name']; ?>','<?php echo url('Car/car_edit'); ?>?id=<?php echo $vo['id']; ?>',800,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
-              </a>
+              </a><!-----vo.id 是car_port的id  ---->
               <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i> 
               </a>
@@ -127,7 +127,7 @@
     function search(){
          $.ajax({
                 type:'get',
-                url:"<?php echo url('admin/Contact/car_list'); ?>",     
+                url:"<?php echo url('admin/Car/car_list'); ?>",     
                 data: $("#searchform").serialize(),
               //  data:{"success":true,"id":"1"} ,
                 dataType:"json",
@@ -139,11 +139,11 @@
                       return 0 ;
                  }
                          
-               }, error: function(XMLHttpRequest, textStatus, errorThrown) {
- console.log(XMLHttpRequest.status);
-console.log(XMLHttpRequest.readyState);
-console.log(textStatus);
-   },
+               },   error: function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpRequest.readyState);
+                    console.log(textStatus);
+                },
 
         });
         return 1;
@@ -184,7 +184,7 @@ console.log(textStatus);
             var dataArray={id:data};
             toajax(dataArray);
              layer.msg('删除成功', {icon: 1});
-             $(".layui-form-checked").not('.header').parents('tr').remove();
+            $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
 
@@ -192,7 +192,7 @@ console.log(textStatus);
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<?php echo url('admin/contact/toDel'); ?>",    
+                url:"<?php echo url('admin/car/toDel'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
