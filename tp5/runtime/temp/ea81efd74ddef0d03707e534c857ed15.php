@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1523153942;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1525251612;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1525767529;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -71,7 +71,6 @@
                         <a _href="<?php echo url('Member/mList'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>会员列表</cite>
-                            
                         </a>
                     </li >
                     <li>
@@ -123,9 +122,15 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="order-list.html">
+                        <a _href="<?php echo url('Order/order_edit'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>订单列表</cite>
+                            <cite>查看订单</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="<?php echo url('Order/order_list'); ?>">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>处理订单</cite>
                         </a>
                     </li >
                 </ul>

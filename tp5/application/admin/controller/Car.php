@@ -22,8 +22,9 @@ class Car extends Base
         //每页数量
         $count = count($list);
         // 获取分 页显示
+        //$this->_v($list);exit;
         $page = $list->render();
-      
+       
        // $this->_p($list); 
         $this->view->assign('count',$count);
         $this->view->assign('carlist',$list);

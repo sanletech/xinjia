@@ -1,4 +1,26 @@
-<{include file='./public/header' /}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525665995;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_list.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+    <!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   
   <body>
     <div class="x-nav">
@@ -15,15 +37,15 @@
       <div class="layui-row">
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
-            <input type="text" name="car_name"  value="<{$searchcar ? $searchcar : '';}>"  placeholder="请输入优势路线" autocomplete="off" class="layui-input">
-          <input type="text" name="port"    value="<{$searchport ? $searchport : '';}>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
+            <input type="text" name="car_name"  value="<?php echo !empty($searchcar)?$searchcar : '';; ?>"  placeholder="请输入船队名字" autocomplete="off" class="layui-input">
+          <input type="text" name="port"    value="<?php echo !empty($searchport)?$searchport : '';; ?>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('Contact/car_add')}>',800,726)"><i class="layui-icon"></i>添加</button>
-     <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
+     <button class="layui-btn" onclick="x_admin_show('添加车队','<?php echo url('Contact/car_add'); ?>',800,726)"><i class="layui-icon"></i>添加</button>
+     <span class="x-right" style="line-height:40px"> 本页有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -32,67 +54,44 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>车队名</th>
-            <th>所属港口</th>
-            <th>合作船公司</th>
-            <th>优势路线</th>
+            <th>船公司名</th>
+            <th>所属城市</th>
+            <th>业务港口</th>
             <th>公司地址</th>
-            <th>状态</th>
-            <th>合作关系</th>
             <th>操作</th></tr>
         </thead>
     <tbody >
-       
-
-      <{volist name="carlist" id="vo" }>
-   
-        <?php   //将status(1禁用2正常) 和 symbiosis(1为中止2为暂无3临时4长期合作) 的状态转成汉字
-                $vo['status']==1? $vo['status']='禁用':$vo['status']='正常';
-                if($vo['symbiosis']==1){
-                    $vo['symbiosis']='中止合作'; 
-                }elseif($vo['symbiosis']==2)
-                {
-                    $vo['symbiosis']='暂无合作'; 
-                }elseif($vo['symbiosis']==3){
-                    $vo['symbiosis']='临时合作'; 
-                }else{
-                    $vo['symbiosis']='长期合作'; 
-                     }
-        ?>
+        <?php if(is_array($shiplist) || $shiplist instanceof \think\Collection || $shiplist instanceof \think\Paginator): $i = 0; $__LIST__ = $shiplist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
          <tr >
             <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.car_name}></td>
-            <td><{$vo['port_name']}></td>
-            <td><{$vo['ship_short_name']}></td>
-            <td><{$vo['city_name']}></td>
-            <td><{$vo.address}></td>
-             <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini"><{$vo.status}></span></td>
-            <td><{$vo.symbiosis}></td>
+            <td class="tdata"><?php echo $vo['id']; ?></td>
+             <td><?php echo $vo['ship_short_name']; ?></td>
+            <td><?php echo $vo['city']; ?></td>
+            <td><?php echo $vo['port_name']; ?></td>
+            <td><?php echo $vo['ship_address']; ?></td>
             <td class="td-manage">
-              <a title="查看" onclick="x_admin_show('查看 <{$vo.car_name}>','<{:url('Car/car_info')}>?id=<{$vo.id}>',700,400)" href="javascript:;">
+              <a title="查看" onclick="x_admin_show('查看','<?php echo url('Ship/ship_info'); ?>?id=<?php echo $vo['id']; ?>',700,400)" href="javascript:;">
                   <i class="layui-icon">&#xe649;</i>
               </a>  
-              <a title="编辑"  onclick="x_admin_show('编辑 <{$vo.car_name}>','<{:url('Car/car_edit')}>?id=<{$vo.id}>',800,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','<?php echo url('Ship/ship_edit'); ?>?id=<?php echo $vo['id']; ?>',800,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i> 
               </a>
             </td>
           </tr>
-        <{/volist}>          
+        <?php endforeach; endif; else: echo "" ;endif; ?>          
         </tbody> 
       </table>
       <div class="page">
         <div>
-           <{$page}>
+           <?php echo $shiplist->render(); ?>
         </div>
       </div>
-
+  
     </div>
       <div>
           <?php 
@@ -103,11 +102,10 @@
           <div>
     <script>
            /*执行搜索车队或者港口*/
-           
     function search(){
          $.ajax({
                 type:'get',
-                url:"<{:url('admin/Contact/car_list')}>",     
+                url:"<?php echo url('admin/Contact/car_list'); ?>",     
                 data: $("#searchform").serialize(),
               //  data:{"success":true,"id":"1"} ,
                 dataType:"json",
@@ -120,10 +118,10 @@
                  }
                          
                }, error: function(XMLHttpRequest, textStatus, errorThrown) {
- console.log(XMLHttpRequest.status);
-console.log(XMLHttpRequest.readyState);
-console.log(textStatus);
-   },
+                console.log(XMLHttpRequest.status);
+               console.log(XMLHttpRequest.readyState);
+               console.log(textStatus);
+                  },
 
         });
         return 1;
@@ -172,7 +170,7 @@ console.log(textStatus);
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/contact/toDel')}>",    
+                url:"<?php echo url('admin/contact/toDel'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
