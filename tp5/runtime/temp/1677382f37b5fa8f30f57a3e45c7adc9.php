@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525767529;}*/ ?>
 
 <body>
      <!-- 左侧菜单开始 -->
@@ -12,7 +13,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="<{:url('Member/mList')}>">
+                        <a _href="<?php echo url('Member/mList'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>会员列表</cite>
                         </a>
@@ -66,13 +67,13 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="<{:url('Order/order_edit')}>">
+                        <a _href="<?php echo url('Order/order_edit'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>查看订单</cite>
                         </a>
                     </li>
                     <li>
-                        <a _href="<{:url('Order/order_list')}>">
+                        <a _href="<?php echo url('Order/order_list'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>处理订单</cite>
                         </a>
@@ -121,7 +122,7 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="<{:url('Car/car_list')}>">
+                        <a _href="<?php echo url('Car/car_list'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>车队通讯录</cite>
                         </a>
@@ -139,7 +140,7 @@
        
                     </li >
                     <li>
-                        <a _href="<{:url('Ship/ship_List')}>">
+                        <a _href="<?php echo url('Ship/ship_List'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>船公司通讯录</cite>
                         </a>
