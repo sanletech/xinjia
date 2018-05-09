@@ -19,7 +19,7 @@ class Ship extends Base
         $shiplist = new ShipM;
         $res = $shiplist->shiplist();
         $count = count($res); 
-       $this->_p($res);
+      // $this->_p($res);
         $this->assign('shiplist', $res);
         $this->assign('count', $count);
         return $this->view->fetch('Ship/ship_list');
