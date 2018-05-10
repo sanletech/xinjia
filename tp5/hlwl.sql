@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-05-09 20:20:23
+Date: 2018-05-10 20:44:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4371,34 +4371,34 @@ CREATE TABLE `hl_ship_order` (
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_ship_port_city`;
 CREATE TABLE `hl_ship_port_city` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `city_id` varchar(10) DEFAULT NULL COMMENT '城市code',
-  `city_name` varchar(20) DEFAULT NULL COMMENT '城市名字',
-  `port_id` varchar(10) DEFAULT NULL COMMENT '港口id',
-  `ship_id` int(10) NOT NULL COMMENT '船公司shipcompany表的Id',
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `city_id` varchar(20) DEFAULT NULL COMMENT '城市code',
+  `city_name` varchar(40) DEFAULT NULL COMMENT '城市名字',
+  `port_id` varchar(20) DEFAULT NULL COMMENT '港口id',
+  `ship_id` int(20) NOT NULL COMMENT '船公司shipcompany表的Id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_ship_port_city
 -- ----------------------------
-INSERT INTO `hl_ship_port_city` VALUES ('1', '1,2,3', '黄冈,黄石,黄州', '1,2,3', '1');
-INSERT INTO `hl_ship_port_city` VALUES ('2', '1,23', '石家庄,石首市,石头', '2,4,5', '2');
+INSERT INTO `hl_ship_port_city` VALUES ('1', '1,2,3', '黄冈,黄石,黄州', '1,2,3,4,5,6,7,8,9,10', '1');
+INSERT INTO `hl_ship_port_city` VALUES ('2', '1,2,3', '石家庄,石首市,石头', '2,4,5', '2');
 INSERT INTO `hl_ship_port_city` VALUES ('3', '1,2,3', '河北,合肥,河南', '7,8,9', '3');
 INSERT INTO `hl_ship_port_city` VALUES ('4', '4,5', '湖北,湖南', '4,5,8', '4');
-INSERT INTO `hl_ship_port_city` VALUES ('5', '4,5,6', '张家口,重启', '8,9,1', '5');
-INSERT INTO `hl_ship_port_city` VALUES ('6', '1,2,3', '北京,北平,天津', '11,12,15,1', '6');
+INSERT INTO `hl_ship_port_city` VALUES ('5', '4,5', '张家口,重启', '8,9,1', '5');
+INSERT INTO `hl_ship_port_city` VALUES ('6', '1,2,3', '北京,北平,天津', '11,12,13', '6');
 INSERT INTO `hl_ship_port_city` VALUES ('7', '10,11,12', '广州,广东,广西', '7,8,9,15', '7');
-INSERT INTO `hl_ship_port_city` VALUES ('8', '7,8,9', '山西,陕西,西安', '20,21,25', '8');
+INSERT INTO `hl_ship_port_city` VALUES ('8', '7,8,9', '山西,陕西,西安', '1,2,3', '8');
 INSERT INTO `hl_ship_port_city` VALUES ('9', '4,5', '天津,天安门', '8,9,10', '9');
 INSERT INTO `hl_ship_port_city` VALUES ('10', '4,5', '武汉,武昌', '1,8,10', '10');
 INSERT INTO `hl_ship_port_city` VALUES ('11', '1,2,3', '四川,重庆,成都', '4,8,15', '11');
 INSERT INTO `hl_ship_port_city` VALUES ('12', '4,5,6', '吉林,哈尔滨,黑龙江', '4,10,15', '12');
-INSERT INTO `hl_ship_port_city` VALUES ('13', '7,8,9', '西藏,拉萨,云南', '4,6,18', '13');
+INSERT INTO `hl_ship_port_city` VALUES ('13', '7,8,9', '西藏,拉萨,云南', '4,6,15', '13');
 INSERT INTO `hl_ship_port_city` VALUES ('14', '12,5', '贵州,桂林', '5,8,15', '14');
 INSERT INTO `hl_ship_port_city` VALUES ('15', '1,2', '江南,江西', '7,8,15', '15');
-INSERT INTO `hl_ship_port_city` VALUES ('16', '4,5,6', '泸州,庐州,赣州', '5,15,25', '16');
-INSERT INTO `hl_ship_port_city` VALUES ('17', '3,4', '荆州,十堰', '5,15,30', '17');
+INSERT INTO `hl_ship_port_city` VALUES ('16', '4,5,6', '泸州,庐州,赣州', '5,15,8', '16');
+INSERT INTO `hl_ship_port_city` VALUES ('17', '3,4', '荆州,十堰', '5,15,6', '17');
 
 -- ----------------------------
 -- Table structure for `hl_user`
@@ -4424,7 +4424,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1525831557', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1525915428', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
