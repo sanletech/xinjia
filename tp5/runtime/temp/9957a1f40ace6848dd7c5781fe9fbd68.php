@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525868736;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\car\car_info.html";i:1526008525;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525846743;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\car\car_info.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+>>>>>>> aa2a0191ccebcec85c30b75285f3e92e75c71653
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,9 +30,15 @@
     <div class="x-body">
       <table class="layui-table">
         <thead>
+<<<<<<< HEAD
             <tr>
             <th>姓名</th>
             <th>职务</th>
+=======
+          <tr>
+            <th>职务</th>
+            <th>姓名</th>
+>>>>>>> aa2a0191ccebcec85c30b75285f3e92e75c71653
             <th>电话</th>
             <th>座机</th>
             <th>微信/QQ</th>
@@ -37,8 +47,13 @@
     <tbody >
             <?php 
             foreach ($data as  $value) {
+<<<<<<< HEAD
                 echo '<tr><td class="tdata">'.$value['name'].'</td>';
                 echo '<td class="tdata">'.$value['position'].'</td>';
+=======
+                echo '<tr><td class="tdata">'.$value['position'].'</td>';
+                echo '<td class="tdata">'.$value['name'].'</td>';
+>>>>>>> aa2a0191ccebcec85c30b75285f3e92e75c71653
                 echo '<td class="tdata">'.$value['phone'].'</td>';
                 echo '<td class="tdata">'.$value['tel'].'</td>';
                 echo '<td class="tdata">'.$value['qq'].'</td>';
@@ -48,5 +63,25 @@
         </tbody> 
       </table>
     </div>
+<<<<<<< HEAD
   </body>
+=======
+<script type="text/javascript">
+
+var arr = new Array(3)
+arr[0] = "George"
+arr[1] = "John"
+arr[2] = "Thomas"
+
+console.log(arr )
+console.log(arr.push("James"))
+console.log(arr.shift())
+console.log(arr)
+
+</script>
+    
+ 
+  </body>
+
+>>>>>>> aa2a0191ccebcec85c30b75285f3e92e75c71653
 </html>

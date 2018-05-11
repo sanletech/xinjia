@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-05-10 20:44:38
+Date: 2018-05-11 20:11:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4329,27 +4329,35 @@ INSERT INTO `hl_shipcompany` VALUES ('11', '河北远洋运输集团有限公司
 DROP TABLE IF EXISTS `hl_shipman`;
 CREATE TABLE `hl_shipman` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `shipport_id` int(8) DEFAULT NULL COMMENT '船公司shipcompany表的Id',
+  `ship_id` int(8) DEFAULT NULL COMMENT '船公司shipcompany表的Id',
+  `port_id` int(8) DEFAULT NULL,
   `name` varchar(8) DEFAULT NULL COMMENT '姓名',
   `position` varchar(8) DEFAULT NULL COMMENT '职务',
+  `position_level` int(8) DEFAULT NULL COMMENT '职位编码 老板是1掌柜2小二3帐房4跑堂5',
   `duty_line` varchar(50) DEFAULT NULL COMMENT '负责的线路',
   `sn_tel` varchar(20) DEFAULT NULL COMMENT '船务公司联系人的座机区号+12345678+xxx',
   `sn_mobile` int(12) DEFAULT NULL,
   `sn_qq` int(14) DEFAULT NULL,
+  `sn_fax` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_shipman
 -- ----------------------------
-INSERT INTO `hl_shipman` VALUES ('1', '1', '老八', '总经理', '广州——北京', '1012255', '6546546', '112121');
-INSERT INTO `hl_shipman` VALUES ('2', '2', '老七', '财务', '广州——北京', '11111', '111', '1111');
-INSERT INTO `hl_shipman` VALUES ('3', '14', '老六', '业务', '广州——上海', '111', '111', '151');
-INSERT INTO `hl_shipman` VALUES ('4', '13', '老五', '跟单', '佛山——南京', '4545', '6546', '546');
-INSERT INTO `hl_shipman` VALUES ('5', '16', '老九', '文员', '广州——南昌', '565', '5356', '656');
-INSERT INTO `hl_shipman` VALUES ('6', '5', '老十', '掌柜', '广州——天津', '55555', '555', '55');
-INSERT INTO `hl_shipman` VALUES ('7', '2', 'sdfs', 'sdfsa', 'sdfsa', '111', '111', '111');
-INSERT INTO `hl_shipman` VALUES ('8', '2', ' 第三方', '速读法', '速读法', '1111', '1111', '111');
+INSERT INTO `hl_shipman` VALUES ('0', '2', '1', ' 第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
+INSERT INTO `hl_shipman` VALUES ('1', '1', '1', '老八', '总经理', '1', '广州——北京', '1012255', '6546546', '112121', '111');
+INSERT INTO `hl_shipman` VALUES ('2', '1', '2', '老七', '财务', '2', '广州——北京', '11111', '111', '1111', '222');
+INSERT INTO `hl_shipman` VALUES ('3', '1', '3', '老六', '业务', '2', '广州——上海', '111', '111', '151', '222');
+INSERT INTO `hl_shipman` VALUES ('4', '1', '4', '老五', '跟单', '3', '佛山——南京', '4545', '6546', '546', '2222');
+INSERT INTO `hl_shipman` VALUES ('5', '1', '5', '老九', '文员', '4', '广州——南昌', '565', '5356', '656', '222');
+INSERT INTO `hl_shipman` VALUES ('6', '1', '6', '老十', '掌柜', '5', '广州——天津', '55555', '555', '55', '222');
+INSERT INTO `hl_shipman` VALUES ('7', '1', '7', 'sdfs', 'sdfsa', '6', 'sdfsa', '111', '111', '111', '222');
+INSERT INTO `hl_shipman` VALUES ('9', '1', '9', '第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
+INSERT INTO `hl_shipman` VALUES ('10', '1', '10', '第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
+INSERT INTO `hl_shipman` VALUES ('11', '2', '1', '第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
+INSERT INTO `hl_shipman` VALUES ('12', '2', '1', '第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
+INSERT INTO `hl_shipman` VALUES ('13', '2', '1', '第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
 
 -- ----------------------------
 -- Table structure for `hl_ship_order`
@@ -4383,22 +4391,22 @@ CREATE TABLE `hl_ship_port_city` (
 -- Records of hl_ship_port_city
 -- ----------------------------
 INSERT INTO `hl_ship_port_city` VALUES ('1', '1,2,3', '黄冈,黄石,黄州', '1,2,3,4,5,6,7,8,9,10', '1');
-INSERT INTO `hl_ship_port_city` VALUES ('2', '1,2,3', '石家庄,石首市,石头', '2,4,5', '2');
-INSERT INTO `hl_ship_port_city` VALUES ('3', '1,2,3', '河北,合肥,河南', '7,8,9', '3');
-INSERT INTO `hl_ship_port_city` VALUES ('4', '4,5', '湖北,湖南', '4,5,8', '4');
+INSERT INTO `hl_ship_port_city` VALUES ('2', '1,2,3', '石家庄,石首市,石头', '2,4,5,1', '2');
+INSERT INTO `hl_ship_port_city` VALUES ('3', '1,2,3', '河北,合肥,河南', '7,8,9,1', '3');
+INSERT INTO `hl_ship_port_city` VALUES ('4', '4,5', '湖北,湖南', '4,5,8,1', '4');
 INSERT INTO `hl_ship_port_city` VALUES ('5', '4,5', '张家口,重启', '8,9,1', '5');
-INSERT INTO `hl_ship_port_city` VALUES ('6', '1,2,3', '北京,北平,天津', '11,12,13', '6');
-INSERT INTO `hl_ship_port_city` VALUES ('7', '10,11,12', '广州,广东,广西', '7,8,9,15', '7');
+INSERT INTO `hl_ship_port_city` VALUES ('6', '1,2,3', '北京,北平,天津', '10,12,13,1', '6');
+INSERT INTO `hl_ship_port_city` VALUES ('7', '10,11,12', '广州,广东,广西', '7,8,9,15,1', '7');
 INSERT INTO `hl_ship_port_city` VALUES ('8', '7,8,9', '山西,陕西,西安', '1,2,3', '8');
-INSERT INTO `hl_ship_port_city` VALUES ('9', '4,5', '天津,天安门', '8,9,10', '9');
+INSERT INTO `hl_ship_port_city` VALUES ('9', '4,5', '天津,天安门', '8,9,10,1', '9');
 INSERT INTO `hl_ship_port_city` VALUES ('10', '4,5', '武汉,武昌', '1,8,10', '10');
 INSERT INTO `hl_ship_port_city` VALUES ('11', '1,2,3', '四川,重庆,成都', '4,8,15', '11');
-INSERT INTO `hl_ship_port_city` VALUES ('12', '4,5,6', '吉林,哈尔滨,黑龙江', '4,10,15', '12');
-INSERT INTO `hl_ship_port_city` VALUES ('13', '7,8,9', '西藏,拉萨,云南', '4,6,15', '13');
-INSERT INTO `hl_ship_port_city` VALUES ('14', '12,5', '贵州,桂林', '5,8,15', '14');
-INSERT INTO `hl_ship_port_city` VALUES ('15', '1,2', '江南,江西', '7,8,15', '15');
-INSERT INTO `hl_ship_port_city` VALUES ('16', '4,5,6', '泸州,庐州,赣州', '5,15,8', '16');
-INSERT INTO `hl_ship_port_city` VALUES ('17', '3,4', '荆州,十堰', '5,15,6', '17');
+INSERT INTO `hl_ship_port_city` VALUES ('12', '4,5,6', '吉林,哈尔滨,黑龙江', '4,10,15', '10');
+INSERT INTO `hl_ship_port_city` VALUES ('13', '7,8,9', '西藏,拉萨,云南', '4,6,15', '9');
+INSERT INTO `hl_ship_port_city` VALUES ('14', '12,5', '贵州,桂林', '5,8,15', '8');
+INSERT INTO `hl_ship_port_city` VALUES ('15', '1,2', '江南,江西', '7,8,15', '7');
+INSERT INTO `hl_ship_port_city` VALUES ('16', '4,5,6', '泸州,庐州,赣州', '5,15,8', '6');
+INSERT INTO `hl_ship_port_city` VALUES ('17', '3,4', '荆州,十堰', '5,15,11', '5');
 
 -- ----------------------------
 -- Table structure for `hl_user`
@@ -4424,7 +4432,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1525915428', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1526003620', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

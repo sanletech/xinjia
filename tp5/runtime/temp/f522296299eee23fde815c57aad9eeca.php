@@ -1,4 +1,26 @@
-<{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\member\member_list.html";i:1525858051;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   
   <body>
     <div class="x-nav">
@@ -22,7 +44,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url("Member/mAdd")}>',600,400)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Member/mAdd"); ?>',600,400)"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -41,38 +63,38 @@
             <th>操作</th></tr>
         </thead>
         <tbody >
-         <{volist name='member' id='vo'}>
+         <?php if(is_array($member) || $member instanceof \think\Collection || $member instanceof \think\Paginator): $i = 0; $__LIST__ = $member;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
           <tr >
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
               
-            <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.loginname}></td>
-            <td><{$vo.username}></td>
-            <td><{$vo.logintime}></td>
-            <td><{$vo.phone}></td>
-            <td><{$vo.email}></td>
+            <td class="tdata"><?php echo $vo['id']; ?></td>
+            <td><?php echo $vo['loginname']; ?></td>
+            <td><?php echo $vo['username']; ?></td>
+            <td><?php echo $vo['logintime']; ?></td>
+            <td><?php echo $vo['phone']; ?></td>
+            <td><?php echo $vo['email']; ?></td>
             <td class="td-status">
-            <span class="layui-btn layui-btn-normal layui-btn-mini"><{$vo.status}></span></td>        
+            <span class="layui-btn layui-btn-normal layui-btn-mini"><?php echo $vo['status']; ?></span></td>        
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','<{:url("Member/mEdit")}>?id=<{$vo.id}>}',600,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('编辑','<?php echo url("Member/mEdit"); ?>?id=<?php echo $vo['id']; ?>}',600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a onclick="x_admin_show('修改密码','<{:url("Member/mPassword")}>?id=<{$vo.id}>}',600,400)" title="修改密码" href="javascript:;">
+              <a onclick="x_admin_show('修改密码','<?php echo url("Member/mPassword"); ?>?id=<?php echo $vo['id']; ?>}',600,400)" title="修改密码" href="javascript:;">
                 <i class="layui-icon">&#xe631;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
-          <{/volist}>
+          <?php endforeach; endif; else: echo "" ;endif; ?>
         </tbody>
       </table>
       <div class="page">
         <div>
-            <{$page}>
+            <?php echo $page; ?>
         </div>
       </div>
 
@@ -121,7 +143,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<?php echo url('admin/member/toDel'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){

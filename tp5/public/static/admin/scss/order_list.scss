@@ -1,0 +1,76 @@
+$bian:1px solid #666;
+$b_red:1px solid red;
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+.order_list{
+    background-color:#dff8faa2;
+    padding: 10px;
+    .nei{
+        border: $bian;
+        margin: 10px 0;
+        p,span{
+            font-size: 15px;
+            color: #666;
+        }
+        .top{
+            border-bottom: $bian;
+            padding: 10px 10px;
+            .top_ma{
+                margin-left: 30px;
+            }
+        }
+        .cen{
+            padding: 10px 20px;
+            height: 100px;
+            p{
+                font-weight: 700;
+                margin: 20px 0;
+            }
+            .se{
+                color: red;
+            }
+            .a_niu{
+                margin: 10px 0;
+                text-align: right;
+                a{
+                    display: inline-block;
+                    width: 100px;
+                    height: 35px;
+                    text-align: center;
+                    line-height: 35px;
+                    color:#fff;
+                    background-color: $cheng;
+                    margin-right: 5px;
+                }
+                .qu{
+                    background: #aaa;
+                }
+            }
+        }
+        .fo{
+            border-top: $bian;
+            padding: 5px 10px;
+            text-align: right;
+            a{
+                display: inline-block;
+                width: 100px;
+                height: 35px;
+                text-align: center;
+                line-height: 35px;
+                color:#fff;
+                background-color: $lan;
+                margin-right: 5px;
+            }
+        }
+    }
+    .urgent{
+        border: 2px solid red!important;
+        .top{
+            border-bottom: 2px solid red!important;
+        }
+        .fo{
+            border-top:2px solid red!important;
+        }
+    }
+}

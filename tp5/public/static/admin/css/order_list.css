@@ -1,0 +1,57 @@
+.order_list {
+  background-color: #dff8faa2;
+  padding: 10px; }
+  .order_list .nei {
+    border: 1px solid #666;
+    margin: 10px 0; }
+    .order_list .nei p, .order_list .nei span {
+      font-size: 15px;
+      color: #666; }
+    .order_list .nei .top {
+      border-bottom: 1px solid #666;
+      padding: 10px 10px; }
+      .order_list .nei .top .top_ma {
+        margin-left: 30px; }
+    .order_list .nei .cen {
+      padding: 10px 20px;
+      height: 100px; }
+      .order_list .nei .cen p {
+        font-weight: 700;
+        margin: 20px 0; }
+      .order_list .nei .cen .se {
+        color: red; }
+      .order_list .nei .cen .a_niu {
+        margin: 10px 0;
+        text-align: right; }
+        .order_list .nei .cen .a_niu a {
+          display: inline-block;
+          width: 100px;
+          height: 35px;
+          text-align: center;
+          line-height: 35px;
+          color: #fff;
+          background-color: #ff9f19;
+          margin-right: 5px; }
+        .order_list .nei .cen .a_niu .qu {
+          background: #aaa; }
+    .order_list .nei .fo {
+      border-top: 1px solid #666;
+      padding: 5px 10px;
+      text-align: right; }
+      .order_list .nei .fo a {
+        display: inline-block;
+        width: 100px;
+        height: 35px;
+        text-align: center;
+        line-height: 35px;
+        color: #fff;
+        background-color: #2e8de5;
+        margin-right: 5px; }
+  .order_list .urgent {
+    border: 2px solid red !important; }
+    .order_list .urgent .top {
+      border-bottom: 2px solid red !important; }
+    .order_list .urgent .fo {
+      border-top: 2px solid red !important; }
+
+/*# sourceMappingURL=order_list.css.map */

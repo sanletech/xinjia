@@ -7,29 +7,38 @@ use app\admin\common\Base;
 
 use think\Request;
 use think\Db;
-class Order extends Base
+class Price extends Base
 {   
     public function __construct(Request $request = null) {
         parent::__construct($request);
         $this->request= $request;
     }
     
-    public function order_list() 
+    public function price_route() 
     {               
-
-        return $this->view->fetch('Order/order_list'); 
+        return $this->view->fetch('Price/price_route'); 
     }
     
-    public function order_edit() 
+    public function price_trailer() 
     {               
-
-        return $this->view->fetch('Order/order_edit'); 
+        return $this->view->fetch('Price/price_trailer'); 
     }
-        
-    public function order_audit() 
-    {               
 
-        return $this->view->fetch('Order/order_audit'); 
+    public function route_add(){
+        return $this->view->fetch('Price/route_add');
+    }
+
+    public function route_edit(){
+        return $this->view->fetch("Price/route_edit");
+    }
+
+    public function trailer_add(){
+        return $this->view->fetch("Price/trailer_add");
+    }
+
+    public function trailer_edit(){
+      
+        return $this->view->fetch("price/trailer_edit");
     }
     //展示修改车队信息
     public function car_edit(){
