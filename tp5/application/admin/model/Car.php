@@ -56,9 +56,9 @@ class Car extends Model
         if(isset($id)){
             $pageParam['query']['id'] = $id;
             $list = $sqlstr->where('CP.id','in',$id)->order('CP.id')->group('CP.id') ->paginate($page,false,$pageParam);
-          }  else {
+        }else{
             $list=$sqlstr->order('CP.id')->group('CP.id') ->paginate($page);
-          }
+        }
           
 //          $list=Db::name('car_port')->alias('CP')
 //                  ->join('hl_car_city CC' , 'CC.car_id = CP.car_id' , 'left')
@@ -192,10 +192,7 @@ class Car extends Model
         return $response ;  
     }
 
-
-    /*
-     * 对车队的人员信息展示
-     */
+    //对车队的人员信息展示
     public function carinfo ($id) {
         $sql = "select * from hl_carinfo where car_data_id = '$id' " ;
         $res = Db::query($sql);

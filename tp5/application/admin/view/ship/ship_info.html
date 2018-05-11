@@ -3,47 +3,31 @@
   <body>
     <div class="x-body">
       <table class="layui-table">
-   <?php 
-        for($i=0;$i<count($list);$i++){
-           if($i>0 && $i<(count($list)-1)){
-             if( $list[$i+1]['shipport_id'] ==$list[$i]['shipport_id']){
-            
-                echo "<thead><th  align='center' class='layui-bg-red'>".$list[$i]['port_name']."</th>";
-                echo '<tr>
-                <th>职务</th>
-                <th>姓名</th>
-                <th>电话</th>
-                <th>座机</th>
-                <th>微信/QQ</th>
-                <th>负责路线</th></tr>
-            </thead>';
-             }else{echo'<th></th>';}
-			 }else{
-                echo '<thead>';
-                echo "<th  align='center' class='layui-bg-red'>".$list[$i]['port_name']."</th>";
-                echo '<tr>
-                <th>职务</th>
-                <th>姓名</th>
-                <th>电话</th>
-                <th>座机</th>
-                <th>微信/QQ</th>
-                <th>负责路线</th></tr>
-            </thead>';
-             } 
-               
-                echo '<tbody ><tr>';
-                echo '<th>'.$list[$i]['position'].'</th>';
-                echo '<th>'.$list[$i]['name'].'</th>';
-                echo '<th>'.$list[$i]['sn_mobile'].'</th>';
-                echo '<th>'.$list[$i]['sn_tel'].'</th>';
-                echo '<th>'.$list[$i]['sn_qq'].'</th>';
-                echo '<th>'.$list[$i]['duty_line'].'</th></tr>';
-                echo '</tbody>';
-        }
+        <thead>
+            <tr><th class="layui-bg-green"><?php echo $list['0']['port_name']; ?>aa</th>
+                <th class="layui-bg-blue"><?php echo $list['0']['ship_short_name']; ?>aa</th>
+            </tr>
+            <tr>
+            <th>职务</th>
+            <th>姓名</th>
+            <th>座机</th>
+            <th>手机</th>
+            <th>微信/QQ</th>
+            <th>传真</th></tr>
+        </thead>
+    <tbody >
+            <?php 
+            foreach ($list as  $value) {
+                echo '<tr><td class="tdata">'.$value['position'].'</td>';
+                echo '<td class="tdata">'.$value['name'].'</td>';
+                echo '<td class="tdata">'.$value['sn_tel'].'</td>';
+                echo '<td class="tdata">'.$value['sn_mobile'].'</td>';
+                echo '<td class="tdata">'.$value['sn_qq'].'</td>';
+                echo '<td class="tdata">'.$value['sn_fax'].'</td></tr>';
+               }
             ?>
+        </tbody> 
+      </table>
     </div>
-
- 
   </body>
-
 </html>

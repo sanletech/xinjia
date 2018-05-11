@@ -15,9 +15,20 @@ class Ship extends Base
     }
     //分页展示船公司的列表信息
     public function ship_list() 
-    {  
+    {   
+        $data    = input('get.'); 
+        $city_name   = input('get.city_name');
+        $port_name   = input('get.port_name');
+        if($city_name){
+            $this->assign('searchcity', $city_name);
+        }
+        if($port_name){
+            $this->assign('searchport', $port_name);
+        } 
+        $data =  array_filter($data);
         $shiplist = new ShipM;
-        $list = $shiplist->shiplist();
+        $list  = $shiplist->shiplist($data); 
+        
         $count = count($list); 
         for($i=0;$i<$count;$i++){
            $ship_id=$list[$i]['ship_id'];
@@ -36,19 +47,20 @@ class Ship extends Base
     //针对船公司依照不同港口展示联系人的资料
     public function  ship_info(){
         $id= $this->request->get();
-        var_dump($id);exit;
         $datainfo = new ShipM;
         $res = $datainfo->ship_info($id);
-        $this->_p($res);
-//        $data=  array_column($res, 'shipport_id');
-//        $dataid=$data;
-//        array_unique($data);
+  //      $this->_p($res);
         $this->assign('list', $res);
         return $this->view->fetch('Ship/ship_info');
     }
     
     //船公司编辑
     public function ship_edit() {
+        $id= $this->request->get('id');
+        $ship= new ShipM;
+        $shipdata =$ship->shipedit($id);
+      
         
+        return $this->view->fetch('Ship/ship_edit'); 
     }
 }
