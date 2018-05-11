@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525676300;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\car\car_edit.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525846743;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\car\car_edit.html";i:1525779202;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -169,12 +169,9 @@
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
-            loadProvince();  
-            TwoloadProvince(); 
-           // mode();  //加载选择合作关系的函数
-           // searchStatus(); //加载选择使用状态的函数
+            loadProvince();  //选择港口
+            TwoloadProvince(); //选择优势路线的城市
             loadship();//选择船公司 
-            loadPort();
             oldshipPort();//原有的船公司和港口
             
         });     

@@ -1,0 +1,109 @@
+<{include file='./public/header' /}>
+
+  <body>
+    <link rel="stylesheet" href="__STATIC__/css/trailer_add.css">
+    <form class="layui-form" action="">
+      <div class="trailer layui-row">
+        <!-- 下拉选择框 -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">请选择地址:</label>
+          <div class="layui-input-inline">
+            <select name="quiz1">
+              <option value="">请选择省</option>
+              <option value="浙江" selected="">浙江省</option>
+              <option value="你的工号">江西省</option>
+              <option value="你最喜欢的老师">福建省</option>
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="quiz2">
+              <option value="">请选择市</option>
+              <option value="杭州" selected="">杭州</option>
+              <option value="宁波" disabled="">宁波</option>
+              <option value="温州">温州</option>
+              <option value="温州">台州</option>
+              <option value="温州">绍兴</option>
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="quiz3">
+              <option value="">请选择县/区</option>
+              <option value="西湖区" selected="">西湖区</option>
+              <option value="余杭区">余杭区</option>
+              <option value="拱墅区">临安市</option>
+            </select>
+          </div>
+          <div class="layui-input-inline">
+            <select name="quiz4">
+              <option value="">请选择县/区</option>
+              <option value="西湖区" selected="">西湖区</option>
+              <option value="余杭区">余杭区</option>
+              <option value="拱墅区">临安市</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 收货 -->
+        <div class="layui-col-xs5">
+          <div class="grid-demo grid-demo-bg1">
+            <div class="layui-form-item">
+              <label class="layui-form-label">收货20GP:</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" value="2200">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">收货40HQ:</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" value="6000">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 中间线 -->
+        <div class="layui-col-xs2 xian"></div>
+        <!-- 送货 -->
+        <div class="layui-col-xs5">
+          <div class="grid-demo">
+            <div class="grid-demo grid-demo-bg1">
+              <div class="layui-form-item">
+                <label class="layui-form-label">送货20GP:</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" value="3000">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">送货40HQ:</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" value="5000">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layui-form-item layui-col-xs12 niu">
+          <div class="layui-col-md1 layui-col-md-offset4">
+            <div class="grid-demo grid-demo-bg1">
+              <button class="layui-btn" lay-submit="" lay-filter="demo1">修改</button>
+            </div>
+          </div>
+          <div class="layui-col-md1 layui-col-md-offset2">
+            <div class="grid-demo">
+              <button class="layui-btn cancel">取消</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <script type="text/javascript">
+      $('.cancel').click(function () {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+      });
+    </script>
+
+  </body>
+
+  </html>

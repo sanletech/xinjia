@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\member\member_list.html";i:1525858051;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html";i:1525948894;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,15 +36,13 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="开始日" name="start" id="start">
-          <input class="layui-input" placeholder="截止日" name="end" id="end">
-          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+          <input type="text" name="username"  placeholder="请输入港口" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Member/mAdd"); ?>',600,400)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加','<?php echo url('Price/trailer_add'); ?>',1200,400)" href="javascript:;"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -54,47 +52,39 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>用户名</th>
-            <th>姓名</th>
-            <th>登录时间</th>
-            <th>手机</th>
-            <th>邮箱</th>
-            <th>状态</th>
-            <th>操作</th></tr>
+            <th>详细地址</th>
+            <th>收货20GP</th>
+            <th>收货40HQ</th>
+            <th>送货20GP</th>
+            <th>送货40HQ</th>
+            <th>操作</th>
+          </tr>
         </thead>
         <tbody >
-         <?php if(is_array($member) || $member instanceof \think\Collection || $member instanceof \think\Paginator): $i = 0; $__LIST__ = $member;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
           <tr >
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
-              
-            <td class="tdata"><?php echo $vo['id']; ?></td>
-            <td><?php echo $vo['loginname']; ?></td>
-            <td><?php echo $vo['username']; ?></td>
-            <td><?php echo $vo['logintime']; ?></td>
-            <td><?php echo $vo['phone']; ?></td>
-            <td><?php echo $vo['email']; ?></td>
-            <td class="td-status">
-            <span class="layui-btn layui-btn-normal layui-btn-mini"><?php echo $vo['status']; ?></span></td>        
+            <td class="tdata">1</td>
+            <td>广州省广州市天河区长兴街道</td>
+            <td>￥2200</td>
+            <td>￥6000</td>
+            <td>￥3000</td>
+            <td>￥5000</td>   
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','<?php echo url("Member/mEdit"); ?>?id=<?php echo $vo['id']; ?>}',600,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/trailer_edit'); ?>',1200,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a onclick="x_admin_show('修改密码','<?php echo url("Member/mPassword"); ?>?id=<?php echo $vo['id']; ?>}',600,400)" title="修改密码" href="javascript:;">
-                <i class="layui-icon">&#xe631;</i>
-              </a>
-              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
+              <a title="删除" onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
-          <?php endforeach; endif; else: echo "" ;endif; ?>
         </tbody>
       </table>
       <div class="page">
         <div>
-            <?php echo $page; ?>
+            
         </div>
       </div>
 
@@ -156,5 +146,7 @@
             })
         }
     </script>
+ 
   </body>
+
 </html>

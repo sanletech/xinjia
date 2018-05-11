@@ -201,10 +201,6 @@ class Car extends Model
         $res = Db::query($sql);
         return $res;
     }
-    
-    
-
-
 }
 
 ?>

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,QAAQ;EACJ,KAAK,EAAC,GAAG;EACT,MAAM,EAAE,SAAS;EACjB,cAAK;IACD,KAAK,EAAE,GAAG;IACV,MAAM,EAAE,IAAI;IACZ,YAAY,EAAC,cAAc;IAC3B,WAAW,EAAE,IAAI;IACjB,YAAY,EAAE,IAAI;EAEtB,aAAI;IACA,UAAU,EAAE,GAAK",
+"sources": ["../scss/trailer_add.scss"],
+"names": [],
+"file": "trailer_add.css"
+}

@@ -25,7 +25,12 @@ class Order extends Base
 
         return $this->view->fetch('Order/order_edit'); 
     }
-    
+        
+    public function order_audit() 
+    {               
+
+        return $this->view->fetch('Order/order_audit'); 
+    }
     //展示修改车队信息
     public function car_edit(){
         

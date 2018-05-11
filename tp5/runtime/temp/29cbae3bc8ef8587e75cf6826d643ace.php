@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525767529;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_edit.html";i:1525768287;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_edit.html";i:1525837865;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,10 +36,10 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input" placeholder="请输入下单时间" name="start" id="start">
-          <input type="text" name="username"  placeholder="订单号" autocomplete="off" class="layui-input">
-          <input type="text" name="username"  placeholder="联系人" autocomplete="off" class="layui-input">
-          <input type="text" name="username"  placeholder="船公司" autocomplete="off" class="layui-input">
+          <input type="text" name="car_name"  placeholder="创建时间-始" autocomplete="off" class="layui-input" id="start">
+          <input type="text" name="port"  placeholder="创建时间-终" autocomplete="off" class="layui-input" id="end">
+          <input type="text" name="username"  placeholder="收货联系人" autocomplete="off" class="layui-input">
+          <input type="text" name="username"  placeholder="装货公司名全称" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -84,9 +84,6 @@
             <td class="td-manage">
               <a title="编辑"  onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
-              </a>
-              <a onclick="" title="修改密码" href="javascript:;">
-                <i class="layui-icon">&#xe631;</i>
               </a>
               <a title="删除" onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525767529;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;}*/ ?>
 
 <body>
      <!-- 左侧菜单开始 -->
@@ -67,9 +67,9 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a _href="<?php echo url('Order/order_edit'); ?>">
+                        <a _href="<?php echo url('Order/order_audit'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>查看订单</cite>
+                            <cite>审核订单</cite>
                         </a>
                     </li>
                     <li>
@@ -78,6 +78,33 @@
                             <cite>处理订单</cite>
                         </a>
                     </li >
+                    <li>
+                        <a _href="<?php echo url('Order/order_edit'); ?>">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>查看订单</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe723;</i>
+                    <cite>运价设置</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="<?php echo url('Price/price_route'); ?>">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>航线运价</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="<?php echo url('Price/price_trailer'); ?>">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>拖车运价</cite>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>
