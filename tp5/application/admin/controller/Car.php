@@ -15,7 +15,7 @@ class Car extends Base
     }
     
     public function car_list() 
-    {    
+    {   
         $data= array_filter($this->request->param());
         $car= new CarM;
         //接受搜索提供的搜索条件
@@ -43,9 +43,17 @@ class Car extends Base
         //每页数量
         $count = count($carlist);
         // 获取分 页显示
+<<<<<<< HEAD
         $page = $carlist->render();
       
        // $this->_p($carlist); 
+=======
+
+        $page = $carlist->render();
+      
+       // $this->_p($carlist); 
+
+>>>>>>> f35f1c02d81e731adf1acb592f712f2e73290ad2
         $this->view->assign('count',$count);
         $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);

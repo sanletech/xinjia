@@ -35,7 +35,6 @@
             <th>船公司名</th>
             <th>所属城市</th>
             <th>业务港口</th>
-            <th>公司地址</th>
             <th>操作</th></tr>
         </thead>
     <tbody >
@@ -44,11 +43,31 @@
             <td>
              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata"><{$vo.id}></td>
-             <td><{$vo.ship_short_name}></td>
-            <td><{$vo.city}></td>
-            <td><{$vo.port_name}></td>
-            <td><{$vo.ship_address}></td>
+            <td class="tdata" ><{$vo.id}></td>
+<!--            <td>
+        <div class="layui-row layui-col-space10">
+        <div class="layui-col-xs2">
+      你的内容 9/12
+    </div>
+  
+    </div>
+            </td>-->
+            <td style="display: none;"><{$vo.ship_id}></td>
+            <td><{$vo.ship_short_name}></td>
+            <td style="display: none;"><{$vo.city_id}></td>
+            <td><{$vo.city_name}></td>
+            <td style="display: none;"><{$vo.port_id}></td>
+<!--            <td><{$vo.port_name}></td>-->
+            <td>
+                <div class="layui-row layui-col-space10">   
+                    <{foreach name="port_arr[$vo.ship_id]" item="v" key="k" }>
+                        <div class="layui-col-xs2  ">
+                            <a title="查看" onclick="x_admin_show('<{$v}>','<{:url('Ship/ship_info')}>?ship_id=<{$vo.id}>&port_id=<{$k}>',700,400)" href="javascript:;">
+                           <i class="layui-icon-fonts-u"><{$v}></i></a>  
+                        </div>
+                    <{/foreach}>
+                </div>
+            </td>
             <td class="td-manage">
               <a title="查看" onclick="x_admin_show('查看','<{:url('Ship/ship_info')}>?id=<{$vo.id}>',700,400)" href="javascript:;">
                   <i class="layui-icon">&#xe649;</i>
