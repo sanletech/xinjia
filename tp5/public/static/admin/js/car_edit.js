@@ -12,7 +12,7 @@
             form.on('select(province)', function(data) {
                 $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
                 var value = data.value;
-                var d = value.split('_');
+                var d = value.split('_');a
                 var code = d[0];
                 var count = d[1];
                 var index = d[2];

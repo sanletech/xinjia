@@ -49,7 +49,7 @@ class Ship extends Base
         $id= $this->request->get();
         $datainfo = new ShipM;
         $res = $datainfo->ship_info($id);
-  //      $this->_p($res);
+     //   $this->_p($res);
         $this->assign('list', $res);
         return $this->view->fetch('Ship/ship_info');
     }
@@ -58,9 +58,17 @@ class Ship extends Base
     public function ship_edit() {
         $id= $this->request->get('id');
         $ship= new ShipM;
-        $shipdata =$ship->shipedit($id);
-      
+        $res =$ship->ship_edit($id);
+        //$this->_p($res); exit; 
         
+        //传递所有的港口给前台页面
+        $sql3="select *  from  hl_port ";
+        $port_data =Db::query($sql3);
+         //转成json格式传给js
+        $js_port=json_encode($port_data);
+        
+        $this->view->assign('js_port', $js_port);
+        $this->assign('list', $res);
         return $this->view->fetch('Ship/ship_edit'); 
     }
 }

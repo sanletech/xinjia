@@ -75,9 +75,25 @@ class Ship extends Model
     } 
     
     //展示原有的信息
-    public function ship_edit($id){
-       $sql="select* from hl_ship_port_city SPC lefr join hl_port P on P.id= SPC "; 
-        
+    public function ship_edit($id){ 
+       $sql="select SPC.*,S.ship_short_name,S.ship_name from hl_ship_port_city SPC "
+               . "  left join hl_shipcompany S on SPC.ship_id = S.id  where SPC.id =$id"; 
+       $res= Db::query($sql);
+       $city_id = explode(',' , $res['0']['city_id']);
+       $city_name = explode(',' , $res['0']['city_name']);
+       $city = array_combine( $city_id,$city_name);
+       $port_id = $res['0']['port_id'];
+       $sql2 = "select id,port_name from hl_port where id in ($port_id) order by id ";
+       $res2 = Db::query($sql2);
+       $port =  array_column($res2  ,'port_name','id');
+       $sql3 = "select ship_name , ship_short_name  from hl_shipcompany where id = {$res['0']['ship_id']}";
+       $res3 = Db::query($sql3);
+       unset($res['0']['city_id']);
+       unset($res['0']['city_name']);
+       unset($res['0']['port_id']);
+       $res['0']['port']=$port;
+       $res['0']['city']=$city;
+       return $res;
     }
     
     public function ship_info($id)

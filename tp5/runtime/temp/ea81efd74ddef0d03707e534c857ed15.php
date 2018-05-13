@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1523153942;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1525868736;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1525947884;}*/ ?>
->>>>>>> aa2a0191ccebcec85c30b75285f3e92e75c71653
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1526047940;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1526047940;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1526047940;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -126,15 +122,9 @@
                 </a>
                 <ul class="sub-menu">
                     <li>
-<<<<<<< HEAD
-                        <a _href="<?php echo url('Order/order_edit'); ?>">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>查看订单</cite>
-=======
                         <a _href="<?php echo url('Order/order_audit'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>审核订单</cite>
->>>>>>> aa2a0191ccebcec85c30b75285f3e92e75c71653
                         </a>
                     </li>
                     <li>
@@ -143,8 +133,6 @@
                             <cite>处理订单</cite>
                         </a>
                     </li >
-<<<<<<< HEAD
-=======
                     <li>
                         <a _href="<?php echo url('Order/order_edit'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
@@ -172,7 +160,6 @@
                             <cite>拖车运价</cite>
                         </a>
                     </li>
->>>>>>> aa2a0191ccebcec85c30b75285f3e92e75c71653
                 </ul>
             </li>
             <li>
