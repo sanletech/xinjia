@@ -16,6 +16,21 @@ class CarShipMan  extends Base
     public function man_list() 
     {    
         
+           
+    }
+      public function man_add() 
+    {    
+        
+        
+    }
+      public function to_add() 
+    {    
+        
+        
+    }
+      public function man_del() 
+    {    
+        
         
     }
 }

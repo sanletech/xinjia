@@ -108,7 +108,7 @@ class Ship extends Model
                 . " left join hl_shipcompany SC on SC.id = S.ship_id  "
                 . " where S.ship_id = '$ship_id' and S.port_id = '$port_id'"
                 . " order by S.position_level";
-       // var_dump($sql);exit;
+      // var_dump($sql);exit;
         $res = Db::query($sql);
         return $res;
         
