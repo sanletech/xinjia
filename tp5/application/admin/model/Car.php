@@ -90,9 +90,9 @@ class Car extends Model
             $response['success'] = '删除car_port表';  
              //根据car_id 删除相应的car_ship car_city 的数据
             $res1 = Db::name('car_ship')->where('id','in',$car_id_arr)->delete();
-            if($res1){$response['success'] = '删除car_ship表';}else{$response['fail'] = '删除car_ship表'; }
+            if($res1){$response['success'][] = '删除car_ship表';}else{$response['fail'][] = '删除car_ship表'; }
             $res2 = Db::name('car_city')->where('id','in',$car_id_arr)->delete(); 
-            if($res1){$response['success'] = '删除car_city表';}else{$response['fail'] = '删除car_city表'; }
+            if($res1){$response['success'][] = '删除car_city表';}else{$response['fail'][] = '删除car_city表'; }
         }  else {
             $response['fail'][]='删除car_port表';   
         }

@@ -152,18 +152,6 @@
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>车队通讯录</cite>
                         </a>
-<!--                      <ul class="sub-menu">
-                           当点击连接的时候讲对应的ID传到category控制器里处理-
-                    <?php 
-                    foreach ($cardata as $key => $value){
-                            $url=url('Contact/car_list').'?id='.$key ;
-                            echo '<li>';
-                           echo"<a href='$url'  onclick='func()'>";
-                            echo'<i class="iconfont">&#xe6a7;</i>';
-                            echo"<cite>{$value}</cite> </a></li >";
-                        } ?>
-                        </ul>-->
-       
                     </li >
                     <li>
                         <a _href="<{:url('Ship/ship_List')}>">
@@ -172,9 +160,9 @@
                         </a>
                     </li >
                     <li>
-                        <a _href="">
+                        <a _href="<{:url('CarShipMan/man_List')}>">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>港口管理</cite>
+                            <cite>车队船队人员资料</cite>
                         </a>
                     </li >
                     <li>

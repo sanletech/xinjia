@@ -85,7 +85,7 @@
             $form.find('select[name=Twocity]').html(cityHtml).parent().show();
             form.render();
             form.on('select(Twocity)', function(data) {
-              //  console.log(data);
+             //  console.log(data);
                 var value = data.value;
                 var d = value.split('_');
                 var code = d[0];

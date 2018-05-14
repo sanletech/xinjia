@@ -113,8 +113,66 @@ class Ship extends Model
         return $res;
         
     }
+    
+    public function to_edit($shipinfo,$port_id,$city_id,$city_name)
+    { 
+        $SPC_ID =$shipinfo['SPC_ID'];
+        $ship_id =$shipinfo['ship_ID'];
+        $ship_name = $shipinfo['ship_name'];
+        $ship_short_name = $shipinfo['ship_short_name']; 
+        $sql ="update hl_ship_port_city set city_id ='$city_id',  "
+               . "city_name = '$city_name' , port_id = '$port_id' where id = '$SPC_ID' and  "
+               . " ship_id = '$ship_id'  ";
+       // var_dump($sql);exit;
+        $sql2 = "update hl_shipcompany set ship_name = '$ship_name' ,  "
+                . "   ship_short_name = '$ship_short_name' where id = '$ship_id'";
+        $res = Db::execute($sql);
+        $res2 = Db::execute($sql2);
+       
+        if($res!== false){
+           $response['success'][] = '修改ship_port_city表';
+        }else{ $response['fail'][] = '修改ship_port_city表';}
+        if($res2){
+           $response['success'][] = '修改shipcompany表';
+        }else{ $response['fail'][] = '修改shipcompany表';}
+
+        return $response;
+        
+    }
       
-      
+    public function to_del($SPC_id) {
+        $SPC_id= implode(',', $SPC_id);
+        $ship_id = Db::name('ship_port_city')->where('id','in',$SPC_id)->column('ship_id');
+        $ship_id = implode(',', $ship_id);
+        $sql = "delete from hl_ship_port_city where  id  in ($SPC_id) ";
+        $sql2= "delete from hl_shipcompany where id in ($ship_id) ";
+        $res =  Db::execute($sql);
+        $res2 = Db::execute($sql2); 
+        if($res){
+           $response['success'][] = '删除ship_port_city表';
+        }else{ $response['fail'][] = '删除ship_port_city表';}
+        if($res2){
+           $response['success'][] = '删除shipcompany表';
+        }else{ $response['fail'][] = '删除shipcompany表';}
+    }  
+    
+    public function to_add($shipinfo,$port_id,$city_id,$city_name) {
+        $data = array('ship_name'=>$shipinfo['ship_name'],'ship_short_name'=>$shipinfo['ship_short_name']);
+        $res = Db::name('shipcompany')->insert($data);
+        $ship_id = Db::name('shipcompany')->getLastInsID();
+        $data2 = array('city_id'=>$city_id , 'city_name'=>$city_name ,'port_id'=>$port_id, 'ship_id'=>$ship_id);
+        $res2 = Db::name('ship_port_city')->insert($data2);
+        
+        if($res){
+           $response['success'][] = '添加ship_port_city表';
+        }else{ $response['fail'][] = '添加ship_port_city表';}
+        if($res2){
+           $response['success'][] = '添加shipcompany表';
+        }else{ $response['fail'][] = '添加shipcompany表';}
+        
+        return $response;
+    } 
+    
 }
 
 

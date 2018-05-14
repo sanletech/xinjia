@@ -22,7 +22,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('Contact/car_add')}>',800,726)"><i class="layui-icon"></i>添加</button>
+     <button class="layui-btn" onclick="x_admin_show('添加船队','<{:url('ship/ship_add')}>',550,400)"><i class="layui-icon"></i>添加</button>
      <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
       </xblock>
       <table class="layui-table">
@@ -72,9 +72,10 @@
 <!--              <a title="查看" onclick="x_admin_show('查看','<{:url('Ship/ship_info')}>?id=<{$vo.id}>',700,400)" href="javascript:;">
                   <i class="layui-icon">&#xe649;</i>
               </a>  -->
-              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('Ship/ship_edit')}>?id=<{$vo.id}>',800,400)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
+              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('Ship/ship_edit')}>?id=<{$vo.id}>',800,500)" href="javascript:;">
+                  <i class="layui-icon">&#xe642;</i>&nbsp;&nbsp;&nbsp;
               </a>
+
               <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i> 
               </a>
@@ -167,7 +168,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/contact/toDel')}>",    
+                url:"<{:url('admin/ship/to_del')}>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
