@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526301865;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_edit.html";i:1526301865;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1526047940;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526356196;s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_add.html";i:1526291697;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,34 +25,13 @@
   <body>
     <div class="x-body">
         <form class="layui-form" id="editform" method="post">
-            <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
-            <input type="hidden" name="id" class="layui-input" value="<?php echo $vo['id']; ?>">
-            <input type="hidden" name="ship_id" class="layui-input" value="<?php echo $vo['ship_id']; ?>">
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    <span class="x-red">*</span>船公司名缩写
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text" id ="ship_short_name"  name="ship_short_name" class="layui-input" value="<?php echo $vo['ship_short_name']; ?>">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    <span class="x-red">*</span>船公司名全称
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text"id ="ship_name" name="ship_name" class="layui-input" value="<?php echo $vo['ship_name']; ?>">
-                </div>
-            </div>
-            <?php endforeach; endif; else: echo "" ;endif; ?>
-            
             <div class="layui-form-item">
                 <label class="layui-form-label">
                 <span class="x-red">*</span>业务港口
                 </label>
                 <div class="layui-input-inline">
                     <select name="province" lay-filter="province" >
-                        <option value="">请选择港口</option>
+                        <option value="">请选择省</option>
                     </select>
                 </div>
                 <div class="layui-input-inline" id ='citydiv' style="display: none;">
@@ -70,10 +49,10 @@
                <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
             <div class="layui-form-item" id ="search_port">
             </div> 
-        
-              <div class="layui-form-item">
+            
+            <div class="layui-form-item">
                 <label class="layui-form-label">
-                <span class="x-red">*</span>所属城市
+                <span class="x-red">*</span>优势路线
                 </label>
                 <div class="layui-input-inline">
                     <select  name="Twoprovince" lay-filter="Twoprovince" >
@@ -90,39 +69,45 @@
                 <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
             <div class="layui-form-item" id ="search_city">
             </div> 
-            
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                        </label>
-                        <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
-                    </div>
-             </form>
+            <input type="hidden" name="id" class="layui-input" value="">
+            <input type="hidden" name="ship_id" class="layui-input" value="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>船公司名缩写
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id ="ship_short_name"  name="ship_short_name" class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>船公司名全称
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id ="ship_name" name="ship_name" class="layui-input" value="">
+                </div>
+            </div>
         
+            <div class="layui-form-item">
+                <label  class="layui-form-label">
+                </label>
+                <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
+            </div>
+         </form>
     </div>
-    <?php $port_arr =$list['0']['port'];
-          $ship_arr =$list['0']['city'];    
-    ?>
  <script type="text/javascript" src="/static/admin/js/area.js"></script>
  <script>
-      
-    // //展示原有的船公司的  城市和港口
-        var port= '<?php echo json_encode($port_arr); ?>';
-        port_arr = JSON.parse(port); 
-        
-        var city= '<?php echo json_encode($ship_arr); ?>';
-        city_arr= JSON.parse(city); 
+
     
-        var SPC_ID ='<?php echo $vo["id"];  ?>';
-        var ship_ID ='<?php echo $vo["ship_id"];  ?>'
-      
-//       //加载 所有的港口名字和相应的城市code
+       //加载 所有的港口名字和相应的城市code
         var js_port = '<?php echo $js_port; ?>';
             js_port=JSON.parse(js_port);    
         //ajax url生成
-       var url='<?php echo url('admin/ship/to_edit'); ?>';
-       //修改的ship_port_city ID 船队ship_id
-//       var SPC_id=
-//       var ship_id =
+       var url="<?php echo url('admin/ship/to_add'); ?>";
+       //设置ID为空
+        var SPC_ID ='';
+        var ship_ID =''
+        
   //初始数据
         var areaData = Area;
         var $form;
@@ -134,10 +119,11 @@
             $form = $('form');
             loadProvince();  //选择港口
             TwoloadProvince(); //选择优势路线的城市
-            oldshipPort();//原有船公司的港口和城市
+           // loadship();//选择船公司 
+           // oldshipPort();//原有的船公司和港口
             
-        });   
-        
+        });     
+
   
     //加载省数据
         function loadProvince() {
@@ -244,18 +230,6 @@
             });
         }
         
-         //加载县/区数据
-//        function loadArea(areas) {
-//            var areaHtml = '';
-//            for (var i = 0; i < areas.length; i++) {
-//                areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
-//            }
-//            $form.find('select[name=area]').html(areaHtml).parent().show();
-//            form.render();
-//            form.on('select(area)', function(data) {
-//                //console.log(data);
-//            });
-//        }
          
         //加载对应城市的港口，并显示已经选中了
         function loadPort(CityCode){
@@ -409,8 +383,6 @@
            //将船队的ID添加到port_arr
            var ship_name = document.getElementById("ship_name").value;
            var ship_short_name = document.getElementById("ship_short_name").value;
-         //  var SPC_ID ='<?php echo $vo["id"];  ?>';
-         //  var ship_ID ='<?php echo $vo["ship_id"];  ?>'
            var dataArray= {};
            dataArray['port']=port_arr;
            dataArray['city']=city_arr;
@@ -420,14 +392,13 @@
            dataArray[0]['ship_name']=ship_name ;
            dataArray[0]['ship_short_name']=ship_short_name;
             //表单需要提交的json数组
-           console.log((dataArray));
+          // console.log((dataArray));
             return dataArray;
             
         }
 
      
  </script>
-
 </body>
 </html>
 

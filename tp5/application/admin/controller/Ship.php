@@ -49,8 +49,13 @@ class Ship extends Base
         $id= $this->request->get();
         $datainfo = new ShipM;
         $res = $datainfo->ship_info($id);
-     //   $this->_p($res);
-        $this->assign('list', $res);
+         //$this->_p($res);exit;
+        if(!$res){
+        $res=array( 0=> Array('name' =>'','position' =>'','duty_line' =>'',
+            'sn_tel' =>'', 'sn_mobile' =>'','sn_qq' => '','sn_fax' =>'',
+            'port_name' =>'暂无','ship_short_name' =>'暂无',));
+        }
+         $this->assign('list', $res);
         return $this->view->fetch('Ship/ship_info');
     }
     

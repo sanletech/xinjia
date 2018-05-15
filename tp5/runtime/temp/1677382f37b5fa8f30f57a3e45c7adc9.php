@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526301865;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526356196;}*/ ?>
 
 <body>
      <!-- 左侧菜单开始 -->
@@ -161,9 +161,15 @@
                         </a>
                     </li >
                     <li>
-                        <a _href="<?php echo url('CarShipMan/man_List'); ?>">
+                        <a _href="<?php echo url('ShipMan/man_list'); ?>">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>车队船队人员资料</cite>
+                            <cite>船公司人员资料</cite>
+                        </a>
+                    </li >
+                     <li>
+                        <a _href="<?php echo url('Car_Man/man_List'); ?>">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>车队人员资料</cite>
                         </a>
                     </li >
                     <li>

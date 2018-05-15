@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526301865;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1526047940;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1526047940;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526356196;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1526370322;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -81,8 +81,8 @@
         ?>
          <tr >
        
-            <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
+           <td>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="<?php echo $vo['id']; ?>" ><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata"><?php echo $vo['id']; ?></td>
             <td><?php echo $vo['car_name']; ?></td>
@@ -178,13 +178,13 @@
          });
       }
 
-   function delAll (argument) {
+ function delAll (argument) {
         var data = tableCheck.getData();
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             var dataArray={id:data};
             toajax(dataArray);
-             layer.msg('删除成功', {icon: 1});
+            layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }

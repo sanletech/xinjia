@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526356196;s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_add.html";i:1526284708;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526356196;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\man_add.html";i:1526372721;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -65,32 +65,20 @@
             <div class="layui-form-item" id ="search_ship">
             </div>  
             
-              <div class="layui-form-item">
-                <label class="layui-form-label">
-                <span class="x-red">*</span>优势路线
-                </label>
-                <div class="layui-input-inline">
-                    <select  name="Twoprovince" lay-filter="Twoprovince" >
-                        <option value="">请选择省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" style="display: none;">
-                    <select  name="Twocity"  lay-filter="Twocity" >
-                        <option value="">请选择市</option>
-                    </select>
-                </div>
-            </div>
-            <!--  <button id="btn_tag" class="layui-btn layui-btn-normal"  style="display: none;"  onclick="del(this) ;return false">
-                <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
-            <div class="layui-form-item" id ="search_city">
-            </div> 
+       
             <input type="hidden"  name="id" class="layui-input" value="">
             <div class="layui-form-item">
                 <label class="layui-form-label">
-                    <span class="x-red">*</span>车队名字
+                    <span class="x-red">*</span>姓名
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="car_name" name="car_name" class="layui-input" value="">
+                    <input type="text" id="car_name" name="name" class="layui-input" value="">
+                </div>
+                 <label class="layui-form-label">
+                    <span class="x-red">*</span>职务
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="car_name" name="name" class="layui-input" value="">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -100,49 +88,26 @@
                 <div class="layui-input-inline">
                     <input type="text" id="address" name="address" class="layui-input" value="">
                 </div>
-            </div> 
-            <div class="layui-form-item">
                 <label class="layui-form-label">
-                    <span class="x-red">*</span>合作关系
+                    <span class="x-red">*</span>车队地址
                 </label>
                 <div class="layui-input-inline">
-                    <select id="symbiosis" name="symbiosis">
-                        <option value="1"  >中止合作</option>
-                        <option value="2"  >暂无合作</option>
-                        <option value="3"  >临时合作</option>
-                        <option value="4"  >长期合作</option>
-                    </select>  
+                    <input type="text" id="address" name="address" class="layui-input" value="">
                 </div>
             </div> 
-           <div class="layui-form-item">
-                    <label class="layui-form-label">
-                       <span class="x-red">*</span>使用状态
+                <div class="layui-form-item">
+                    <label  class="layui-form-label">
                     </label>
-                    <div class="layui-input-inline">
-                     <select id="status" name="status">
-                        <option value='1'>禁止使用</option>
-                        <option value='2'>正常使用</option>
-                    </select>  
-                    </div>
-            </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                        </label>
-                        <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
-                    </div>
-             </form>
+                    <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
+                </div>
+        </form>
     </div>
  <script type="text/javascript" src="/static/admin/js/area.js"></script>
  <script>
 
-    //加载 所有的船公司名字简称和相应的id
-        var js_ship = '<?php echo $js_ship; ?>';
-        js_ship=JSON.parse(js_ship);
-       //加载 所有的港口名字和相应的城市code
-        var js_port = '<?php echo $js_port; ?>';
-            js_port=JSON.parse(js_port);    
+  
         //ajax url生成
-       var url="<?php echo url('admin/Car/toAdd'); ?>";
+       var url="<?php echo url('admin/ShipMan/to_add'); ?>";
       //修改的车队ID 港口车队cp_id
        var carID='';
        var cpID ='';

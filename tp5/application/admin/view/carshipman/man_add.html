@@ -3,22 +3,68 @@
   <body>
     <div class="x-body">
         <form class="layui-form" id="editform" method="post">
+            <input type="hidden"  name="id" class="layui-input" value="">
             <div class="layui-form-item">
                 <label class="layui-form-label">
-                <span class="x-red">*</span>所属港口
+                    <span class="x-red">*</span>姓名
                 </label>
                 <div class="layui-input-inline">
-                    <select name="province" lay-filter="province" >
-                        <option value="">请选择省</option>
+                    <input type="text" id="car_name" name="name" class="layui-input" value="">
+                </div>
+                 <label class="layui-form-label">
+                    <span class="x-red">*</span>职务
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="car_name" name="position" class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>负责路线
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="duty_line" class="layui-input" value="">
+                </div>
+            </div> 
+             <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>电话
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_tel" class="layui-input" value="">
+                </div>
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>手机
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_mobile" class="layui-input" value="">
+                </div>
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>QQ
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_qq" class="layui-input" value="">
+                </div>
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>传真
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_fax" class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                <span class="x-red">*</span>所属船公司港口
+                </label>
+                <div class="layui-input-inline">
+                    <select name="ship" lay-filter="ship" >
+                        <option value="">请选择船公司</option>
                     </select>
                 </div>
                 <div class="layui-input-inline" id ='citydiv' style="display: none;">
-                    <select name="city" lay-filter="city" >
-                        <option value="">请选择市</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" style="display: none;">
-                    <select name="area"  lay-filter="area">
+                    <select name="port" lay-filter="港口" lay-search>
                         <option value="">请选择港口</option>
                     </select>
                 </div>
@@ -26,101 +72,21 @@
         <!--  <button id="btn_tag" class="layui-btn layui-btn-normal"  style="display: none;"  onclick="del(this) ;return false">
                <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
             <div class="layui-form-item" id ="search_port">
-            </div> 
-        
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    <span class="x-red">*</span>合作船公司
-                </label>
-                <div class="layui-input-inline">
-                    <select name="ship" lay-filter="ship" lay-search>
-                        <option value=""  >请选择船公司</option>
-                    </select>  
-                </div>
             </div>
-            <!-- <button id="btn2_tag"  class="layui-btn layui-btn-normal"  style="display: none;"  onclick="del(this) ;return false">船公司名字
-                 <input type="hidden"  name="name" value="id"><i id ="i2_tag" class="layui-icon">&#xe640;</i> </button>-->
-            <div class="layui-form-item" id ="search_ship">
-            </div>  
             
-              <div class="layui-form-item">
-                <label class="layui-form-label">
-                <span class="x-red">*</span>优势路线
-                </label>
-                <div class="layui-input-inline">
-                    <select  name="Twoprovince" lay-filter="Twoprovince" >
-                        <option value="">请选择省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" style="display: none;">
-                    <select  name="Twocity"  lay-filter="Twocity" >
-                        <option value="">请选择市</option>
-                    </select>
-                </div>
-            </div>
-            <!--  <button id="btn_tag" class="layui-btn layui-btn-normal"  style="display: none;"  onclick="del(this) ;return false">
-                <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
-            <div class="layui-form-item" id ="search_city">
-            </div> 
-            <input type="hidden"  name="id" class="layui-input" value="">
             <div class="layui-form-item">
-                <label class="layui-form-label">
-                    <span class="x-red">*</span>车队名字
+                <label  class="layui-form-label">
                 </label>
-                <div class="layui-input-inline">
-                    <input type="text" id="car_name" name="car_name" class="layui-input" value="">
-                </div>
+                <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    <span class="x-red">*</span>车队地址
-                </label>
-                <div class="layui-input-inline">
-                    <input type="text" id="address" name="address" class="layui-input" value="">
-                </div>
-            </div> 
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                    <span class="x-red">*</span>合作关系
-                </label>
-                <div class="layui-input-inline">
-                    <select id="symbiosis" name="symbiosis">
-                        <option value="1"  >中止合作</option>
-                        <option value="2"  >暂无合作</option>
-                        <option value="3"  >临时合作</option>
-                        <option value="4"  >长期合作</option>
-                    </select>  
-                </div>
-            </div> 
-           <div class="layui-form-item">
-                    <label class="layui-form-label">
-                       <span class="x-red">*</span>使用状态
-                    </label>
-                    <div class="layui-input-inline">
-                     <select id="status" name="status">
-                        <option value='1'>禁止使用</option>
-                        <option value='2'>正常使用</option>
-                    </select>  
-                    </div>
-            </div>
-                    <div class="layui-form-item">
-                        <label  class="layui-form-label">
-                        </label>
-                        <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
-                    </div>
-             </form>
+        </form>
     </div>
  <script type="text/javascript" src="/static/admin/js/area.js"></script>
  <script>
 
-    //加载 所有的船公司名字简称和相应的id
-        var js_ship = '<?php echo $js_ship; ?>';
-        js_ship=JSON.parse(js_ship);
-       //加载 所有的港口名字和相应的城市code
-        var js_port = '<?php echo $js_port; ?>';
-            js_port=JSON.parse(js_port);    
+  
         //ajax url生成
-       var url="<{:url('admin/Car/toAdd')}>";
+       var url="<{:url('admin/ShipMan/to_add')}>";
       //修改的车队ID 港口车队cp_id
        var carID='';
        var cpID ='';
@@ -134,11 +100,60 @@
             form = layui.form;
             $form = $('form');
             loadProvince();  //选择港口
-            TwoloadProvince(); //选择优势路线的城市
-            loadship();//选择船公司 
-           // oldshipPort();//原有的船公司和港口
-            
-        });     
+        }); 
+        
+    
+    //加载省数据
+        function loadProvince() {
+          
+            var proHtml = '';
+            for (var i = 0; i < areaData.length; i++) {
+                proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+            }
+            //初始化省数据
+            $form.find('select[name=province]').append(proHtml);
+            form.render();
+            form.on('select(province)', function(data) {
+                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                var value = data.value;
+                var d = value.split('_');a
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadCity(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city]').parent().hide();
+                }
+            });
+        }
+   
+        
+    //加载市数据
+        function loadCity(citys) {
+            var cityHtml = '';
+            for (var i = 0; i < citys.length; i++) {
+                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+            }
+           
+            $form.find('select[name=city]').html(cityHtml).parent().show();
+            form.render();
+            form.on('select(city)', function(data) {
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    //将城市Id 传给港口loadPort()
+                    //console.log(citys[index].cityCode);
+                    loadPort(citys[index].cityCode);
+                  // loadArea(citys[index].mallAreaList);
+                } else {
+                    $form.find('select[name=area]').parent().hide();
+                }
+            });
+        }    
      
  </script>
  <script type="text/javascript" src="/static/admin/js/car_edit.js"></script>

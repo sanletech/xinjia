@@ -15,7 +15,7 @@ class Ship extends Model
             $sub_id = 'SPC.'.$sub_id; //hl_ship_port_city 需要拆分的字段的
             $sql = " SELECT SPC.id , SUBSTRING_INDEX(SUBSTRING_INDEX($sub_id, ',', S.seq), ',' ,- 1)$sub_name , S.seq "
                . " FROM hl_sequence S CROSS JOIN hl_ship_port_city SPC  WHERE  S.seq  BETWEEN 1 AND "
-               . "(  SELECT 1 + LENGTH($sub_id) - LENGTH(REPLACE($sub_id, ',', ''))  ) order by SPC.ID ,$sub_name desc"; 
+               . "(  SELECT 1 + LENGTH($sub_id) - LENGTH(REPLACE($sub_id, ',', ''))  ) order by SPC.ID ,S.seq"; 
              return $sql;
         }
 //            $sql="select SPC.id , SPC.city_id ,SPC.city_name , SPC.port_id , group_concat(distinct P.port_name  order by RES.port_id ) port_name "
@@ -38,7 +38,8 @@ class Ship extends Model
         if( array_key_exists('port_name', $data)){
             $port_name = $data['port_name'];
             $pageParam['query']['port_name'] = $port_name; 
-            $sql2 = "select SPC.id from hl_ship_port_city SPC left join ($port_id_SQL) AS RES on RES.id =SPC.id  left join hl_port P on P.id = RES.port_id  where P.port_name like '%$port_name%'  ";
+            $sql2 = "select SPC.id from hl_ship_port_city SPC left join ($port_id_SQL) AS RES on RES.id =SPC.id  "
+                    . "left join hl_port P on P.id = RES.port_id  where P.port_name like '%$port_name%'  ";
             $port_id = Db::query($sql2);
             $port_id = array_column($port_id ,'id');
         } else{ $port_id =array();}
@@ -57,7 +58,7 @@ class Ship extends Model
                 ->join('hl_port P','P.id = RES.port_id' ,'left')
                 ->join('hl_shipcompany S','S.id = SPC.ship_id' ,'left')
                 ->field('SPC.id ,SPC.ship_id ,S.ship_short_name ,SPC.city_id ,SPC.city_name ,'
-                        . ' SPC.port_id , group_concat(distinct P.port_name  order by RES.port_id ) port_name ') 
+                        . ' SPC.port_id , group_concat(distinct P.port_name  order by RES.seq ) port_name ') 
                 ->where('SPC.id','in',$id_arr)->group('SPC.id')->order('SPC.id')
                 ->paginate($page,false,$pageParam);
            //var_dump(Db::getLastSql());exit;
@@ -67,10 +68,11 @@ class Ship extends Model
                 ->join('hl_port P','P.id = RES.port_id' ,'left')
                 ->join('hl_shipcompany S','S.id = SPC.ship_id' ,'left')
                 ->field('SPC.id ,SPC.ship_id ,S.ship_short_name ,SPC.city_id ,SPC.city_name ,'
-                        . ' SPC.port_id , group_concat(distinct P.port_name  order by RES.port_id ) port_name ') 
+                        . ' SPC.port_id , group_concat(distinct P.port_name  order by RES.seq ) port_name ') 
                 ->group('SPC.id')->order('SPC.id')
                 ->paginate($page);
         }
+       
         return $result;
     } 
     
@@ -97,7 +99,7 @@ class Ship extends Model
     }
     
     public function ship_info($id)
-    { 
+{       //var_dump($id);exit;
         $ship_id = $id['ship_id'];
         $port_id = $id['port_id'];
         
@@ -108,7 +110,7 @@ class Ship extends Model
                 . " left join hl_shipcompany SC on SC.id = S.ship_id  "
                 . " where S.ship_id = '$ship_id' and S.port_id = '$port_id'"
                 . " order by S.position_level";
-      // var_dump($sql);exit;
+        // var_dump($sql);exit;
         $res = Db::query($sql);
         return $res;
         
