@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1526037480;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1526366515;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -221,7 +221,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a href="">确认</a>
+                        <a title="确定" onclick="x_admin_show('信息','<?php echo url('Order/list_paiche'); ?>',700,500)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -401,7 +401,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a href="">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_peiship'); ?>',700,380)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -461,7 +461,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a href="">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_dship'); ?>',700,380)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -581,7 +581,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a href="">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_zship'); ?>',700,380)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -641,7 +641,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a href="">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_shouqian'); ?>',700,300)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -701,7 +701,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a href="">确认</a>
+                        <a title="确认" onclick="x_admin_show('查看','<?php echo url('Order/list_songhuo'); ?>',700,500)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>

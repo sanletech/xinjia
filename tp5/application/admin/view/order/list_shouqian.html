@@ -1,0 +1,60 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <link rel="stylesheet" href="__STATIC__/css/route_add.css">
+        <form class="layui-form" action="">
+            <div class="route layui-row">
+                <!-- 是否收钱 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否收钱：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="是" title="是">
+                        <input type="radio" name="sex" value="否" title="否" checked="">
+                    </div>
+                </div>
+                <!-- 月结客户 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">月结客户：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入月结客户" class="layui-input">
+                    </div>
+                </div>
+
+                <!-- 按钮 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block an">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确认</button>
+                        <button class="layui-btn cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <script type="text/javascript">
+            $('html').css('overflow-y', 'hidden');
+            $('.cancel').click(function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            layui.use(['form', 'layedit', 'laydate'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
+
+                //日期
+                laydate.render({
+                    elem: '#date'
+                });
+                laydate.render({
+                    elem: '#date1'
+                });
+
+            });
+        </script>
+
+    </body>
+
+    </html>
