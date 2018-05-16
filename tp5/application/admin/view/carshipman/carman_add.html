@@ -56,7 +56,7 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">
-                <span class="x-red">*</span>所属船公司港口
+                <span class="x-red">*</span>船公司港口
                 </label>
                 <div class="layui-input-inline">
                     <select name="ship" lay-filter="ship" >
@@ -83,8 +83,8 @@
     </div>
  <script type="text/javascript" src="/static/admin/js/area.js"></script>
  <script>
-
-  
+       var port_list ='<?php print_r($list); ?>' 
+        console.log(port_list);
         //ajax url生成
        var url="<{:url('admin/ShipMan/to_add')}>";
       //修改的车队ID 港口车队cp_id

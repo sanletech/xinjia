@@ -46,5 +46,41 @@ class CarShipMan extends Model
         }
         return $response;
    }
+   
+   
+       //展示车队人员资料的信息
+    public function car_list($searchdata = array(),$page = 5) { 
+         $list = Db::name('carinfo')->alias('CI')
+                 ->join('hl_cardata CD','CD.id = CI.car_data_id','left' )
+                 ->field('CI.*,CD.car_name')
+                 ->order('id,position_level');
+      
+        $pageParam  = ['query' =>[]]; //设置分页查询参数
+        if( array_key_exists('car_name', $searchdata)){
+            $car_name = $searchdata['car_name'];
+            $pageParam['query']['car_name'] = $car_name;
+            $list = $list ->where('car_name','like',"%{$car_name}%");
+        } 
+           
+         $list= $list->paginate($page, false, $pageParam);
+        
+         return $list;
+
+}
+
+    //执行删除车队人员资料的信息
+   public function car_del($id ='') { 
+       
+        $sql = "delete  from hl_carinfo where id in ($id) ";
+       // var_dump($sql);exit;
+        $res = Db::execute($sql);
+        if($res){
+            $response['success'][] = '删除carinfo表';
+        }else {
+            $response['fail'][] = '删除carinfo表';    
+        }
+        return $response;
+   }
+
 
 }

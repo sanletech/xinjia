@@ -33,6 +33,7 @@ class ShipMan  extends Base
         return $this->view->fetch('carshipman/shipman_list');
            
     }
+    //怎么把船公司及下面的港口传到页面上选择
       public function man_add() 
     {    
         function resultSQL($sub_id) {
@@ -44,27 +45,27 @@ class ShipMan  extends Base
              return $sql;
         }
         $port_id_SQL = resultSQl('port_id');  
-        $sql = "select SPC.id ,SPC.ship_id ,SC.ship_short_name ,RES.port_id ,P.port_name  "
+        $sql = "select SPC.id ,SPC.ship_id ,SC.ship_short_name ,"
+                . "group_concat(RES.port_id order by RES.seq ) port_id  ,"
+                . "group_concat(P.port_name  order by RES.seq ) port_name   "
                 . "  from hl_ship_port_city SPC"
                 . "  left join ($port_id_SQL) "
                 . "  as RES on RES.id =SPC.id   "
                 . "  left join hl_port P on P.id = RES.port_id   "
-                . "  left join hl_shipcompany SC on SC.id =SPC.ship_id  "; 
+                . "  left join hl_shipcompany SC on SC.id =SPC.ship_id   "
+                . "group by SPC.id  "; 
         $list = Db::query($sql);
-        $list = $list;
-        $list_ship = Db::query($sql.'group by SPC.id');
-        $list_ship = $list_ship;
-        $this->_v($list);exit;
-        unset($list_ship['port_name']);
-        foreach ($list as $k=>$v) {
-            foreach ($list_ship as  $value) {
-                if($list['id']=$list_ship['id']){
-                    
-                }
-            }
-            
+        for($i=0;$i<count($list);$i++ ){
+            $port_id = explode(',', $list[$i]['port_id']);
+            $port_name = explode(',', $list[$i]['port_name']);
+            $list[$i]['port_list']= array_map(null,$port_id, $port_name);
+            unset($list[$i]['port_id']);
+            unset($list[$i]['port_name']);
         }
-        return $this->view->fetch('carshipman/man_add');
+            json_encode($list);
+            //$this->_p($list);exit;
+            $this->assign('list',$list);
+        return $this->view->fetch('carshipman/shipman_add');
         
     }
       public function to_add() 

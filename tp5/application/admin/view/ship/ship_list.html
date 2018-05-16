@@ -60,7 +60,7 @@
 <!--            <td><{$vo.port_name}></td>-->
             <td>
                 <div class="layui-row layui-fluid">   
-                    <{foreach name="port_arr[$vo.ship_id]" item="v" key="k" mod="2" }>
+                    <{foreach name="port_arr[$vo.ship_id]" item="v" key="k" }>
                         <div class="layui-col-sm4">
                             <a onclick="x_admin_show('<{$v}>','<{:url('Ship/ship_info')}>?ship_id=<{$vo.id}>&port_id=<{$k}>',700,400)" href="javascript:;">
                            <i class="layui-icon-fonts-u"><{$v}></i></a>  
