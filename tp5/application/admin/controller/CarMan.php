@@ -1,6 +1,6 @@
 <?php
 /*
- *  车队 船公司联系人的资料管理
+ *  车队 联系人的资料管理
  */
 namespace app\admin\controller;
 use app\admin\common\Base;
@@ -31,21 +31,26 @@ class CarMan  extends Base
         return $this->view->fetch('carshipman/carman_list');
            
     }
-    //怎么把船公司及下面的港口传到页面上选择
+    //怎么把及下面的港口传到页面上选择
       public function man_add() 
     {   
-        $car_list = Db::name('cardata')->field('id,car_name') ->select(); 
-           
-       json_encode($car_list,,11);
-       $this->_p($car_list);exit;
-        $this->assign('list',$list);
-       // return $this->view->fetch('carshipman/carman_add');
+       $car_list = Db::name('cardata')->field('id,car_name') ->select(); 
+     //  json_encode($car_list);
+      // $this->_v($car_list);exit;
+        $this->assign('list',$car_list);
+       return $this->view->fetch('carshipman/carman_add');
         
     }
       public function to_add() 
     {    
-        
-        
+        $data =  $this->request->param();
+        $data['car_data_id'] = strstr($data['car'],'_','1');
+        //$this->_v($data);exit;
+        unset($data['car']);
+        $res = Db::name('carinfo')->insert($data);
+        if($res){
+            return $status =1;
+        }else{return $status = 0;}
     }
       public function man_del() 
     {    

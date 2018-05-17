@@ -66,7 +66,7 @@ class CarShipMan extends Model
         
          return $list;
 
-}
+    }
 
     //执行删除车队人员资料的信息
    public function car_del($id ='') { 

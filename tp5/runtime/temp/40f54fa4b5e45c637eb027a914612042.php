@@ -1,4 +1,26 @@
-<{include file='./public/header' /}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526458698;s:87:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\carman_list.html";i:1526527155;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   
   <body>
     <div class="x-nav">
@@ -15,14 +37,14 @@
       <div class="layui-row">
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
-            <input type="text" name="car_name"  value="<{$searchcar ? $searchcar : '';}>"  placeholder="请输入车队名字" autocomplete="off" class="layui-input">
+            <input type="text" name="car_name"  value="<?php echo !empty($searchcar)?$searchcar : '';; ?>"  placeholder="请输入车队名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('CarMan/man_add')}>',700,450)"><i class="layui-icon"></i>添加</button>
-     <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
+     <button class="layui-btn" onclick="x_admin_show('添加车队','<?php echo url('CarMan/man_add'); ?>',700,450)"><i class="layui-icon"></i>添加</button>
+     <span class="x-right" style="line-height:40px"> 本页有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -43,32 +65,32 @@
         </thead>
     <tbody >
 
-      <{volist name="list" id="vo" }>
+      <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
          <tr >
             <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.car_data_id}></td>
-            <td><{$vo.car_name}></td>
-            <td><{$vo.name}></td>
-            <td><{$vo.position}></td>
-             <td><{$vo.tel}></td>
-            <td><{$vo.phone}></td>
-            <td><{$vo.qq}></td>
-            <td><{$vo.fax}></td>
+            <td class="tdata"><?php echo $vo['id']; ?></td>
+            <td><?php echo $vo['car_data_id']; ?></td>
+            <td><?php echo $vo['car_name']; ?></td>
+            <td><?php echo $vo['name']; ?></td>
+            <td><?php echo $vo['position']; ?></td>
+             <td><?php echo $vo['tel']; ?></td>
+            <td><?php echo $vo['phone']; ?></td>
+            <td><?php echo $vo['qq']; ?></td>
+            <td><?php echo $vo['fax']; ?></td>
             <td class="td-manage">
-              <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i> 
               </a>
             </td>
           </tr>
-        <{/volist}>          
+        <?php endforeach; endif; else: echo "" ;endif; ?>          
         </tbody> 
       </table>
       <div class="page">
         <div>
-           <{$page}>
+           <?php echo $page; ?>
         </div>
       </div>
 
@@ -81,7 +103,7 @@
     function search(){
          $.ajax({
                 type:'get',
-                url:"<{:url('admin/CarMan/man_list')}>",     
+                url:"<?php echo url('admin/CarMan/man_list'); ?>",     
                 data: $("#searchform").serialize(),
               //  data:{"success":true,"id":"1"} ,
                 dataType:"json",
@@ -146,7 +168,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/CarMan/man_del')}>",    
+                url:"<?php echo url('admin/CarMan/man_del'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){

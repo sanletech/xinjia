@@ -1,12 +1,15 @@
 <?php
 /*
- *  车队 船公司联系人的资料管理
+ *  船公司个人通讯录控制器
  */
 namespace app\admin\controller;
 use app\admin\common\Base;
 use app\admin\model\CarShipMan;
 use think\Request;
 use think\Db;
+/*
+ *  车队 船公司联系人的资料管理
+ */
 class ShipMan  extends Base
 {   
     public function __construct(Request $request = null) {
@@ -62,16 +65,23 @@ class ShipMan  extends Base
             unset($list[$i]['port_id']);
             unset($list[$i]['port_name']);
         }
-            json_encode($list);
-            //$this->_p($list);exit;
-            $this->assign('list',$list);
+           // json_encode($list);
+           // $this->_p($list);exit;
+            $this->assign('shiplist',$list);
         return $this->view->fetch('carshipman/shipman_add');
         
     }
       public function to_add() 
     {    
-        
-        
+        $data =  $this->request->param();
+        $data['ship_id'] = explode('_', $data['ship']);
+        $data['ship_id'] = $data['ship_id']['1'];
+        $data['port_id'] = strstr($data['port'],'_','1');
+        unset($data['ship']);unset($data['port']);
+        $res = Db::name('shipman')->insert($data);
+        if($res){
+            return $status =1;
+        }else{return $status = 0;}
     }
       public function man_del() 
     {    
@@ -89,3 +99,5 @@ class ShipMan  extends Base
          return $status;   
     }
 }
+
+?>

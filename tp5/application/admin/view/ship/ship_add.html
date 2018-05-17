@@ -78,7 +78,7 @@
 
     
        //加载 所有的港口名字和相应的城市code
-        var js_port = '<?php echo $js_port; ?>';
+        var js_port = '<?php echo($js_port); ?>';
             js_port=JSON.parse(js_port);    
         //ajax url生成
        var url="<{:url('admin/ship/to_add')}>";
