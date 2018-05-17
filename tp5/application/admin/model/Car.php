@@ -56,9 +56,9 @@ class Car extends Model
         if(isset($id)){
             $pageParam['query']['id'] = $id;
             $list = $sqlstr->where('CP.id','in',$id)->order('CP.id')->group('CP.id') ->paginate($page,false,$pageParam);
-          }  else {
+        }else{
             $list=$sqlstr->order('CP.id')->group('CP.id') ->paginate($page);
-          }
+        }
           
 //          $list=Db::name('car_port')->alias('CP')
 //                  ->join('hl_car_city CC' , 'CC.car_id = CP.car_id' , 'left')
@@ -90,9 +90,9 @@ class Car extends Model
             $response['success'] = '删除car_port表';  
              //根据car_id 删除相应的car_ship car_city 的数据
             $res1 = Db::name('car_ship')->where('id','in',$car_id_arr)->delete();
-            if($res1){$response['success'] = '删除car_ship表';}else{$response['fail'] = '删除car_ship表'; }
+            if($res1){$response['success'][] = '删除car_ship表';}else{$response['fail'][] = '删除car_ship表'; }
             $res2 = Db::name('car_city')->where('id','in',$car_id_arr)->delete(); 
-            if($res1){$response['success'] = '删除car_city表';}else{$response['fail'] = '删除car_city表'; }
+            if($res1){$response['success'][] = '删除car_city表';}else{$response['fail'][] = '删除car_city表'; }
         }  else {
             $response['fail'][]='删除car_port表';   
         }
@@ -192,10 +192,7 @@ class Car extends Model
         return $response ;  
     }
 
-
-    /*
-     * 对车队的人员信息展示
-     */
+    //对车队的人员信息展示
     public function carinfo ($id) {
         $sql = "select * from hl_carinfo where car_data_id = '$id' " ;
         $res = Db::query($sql);

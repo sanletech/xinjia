@@ -23,6 +23,11 @@ class Order extends Base
     {
         return $this->view->fetch('Order/order_edit'); 
     }
+
+    public function order_waste() 
+    {
+        return $this->view->fetch('Order/order_waste'); 
+    }
         
     public function order_audit() 
     {

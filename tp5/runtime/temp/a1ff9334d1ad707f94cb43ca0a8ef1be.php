@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_zship.html";i:1526356817;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526436519;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_zship.html";i:1526542775;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,7 +28,7 @@
             <div class="route layui-row" style="margin-top: 80px;">
                 <!-- 已到港 -->
                 <div class="layui-form-item">
-                    <div style="margin-bottom: 10px;">实际到港时间：</div>
+                    <div style="margin-bottom: 10px;">实际卸船时间：</div>
                     <div class="layui-col-xs12">
                         <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                     </div>

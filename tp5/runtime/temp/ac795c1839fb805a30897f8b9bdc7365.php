@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html";i:1525948894;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526436519;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html";i:1526457370;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -52,11 +52,14 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
+            <td>港口</td>
             <th>详细地址</th>
-            <th>收货20GP</th>
-            <th>收货40HQ</th>
+            <th>装货20GP</th>
+            <th>装货40HQ</th>
+            <th>装货车队</th>
             <th>送货20GP</th>
             <th>送货40HQ</th>
+            <th>送货车队</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -66,11 +69,14 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata">1</td>
+            <td>天津港</td>
             <td>广州省广州市天河区长兴街道</td>
             <td>￥2200</td>
             <td>￥6000</td>
+            <td>萨哈车队</td>
             <td>￥3000</td>
-            <td>￥5000</td>   
+            <td>￥5000</td>
+            <td>拉姆车队</td>   
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/trailer_edit'); ?>',1200,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>

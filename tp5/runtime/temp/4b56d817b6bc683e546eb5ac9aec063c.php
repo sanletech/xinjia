@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_shouqian.html";i:1526354053;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526436519;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_shouqian.html";i:1526469660;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -28,17 +28,11 @@
             <div class="route layui-row">
                 <!-- 是否收钱 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">是否收钱：</label>
+                    <label class="layui-form-label">是否收款：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="sex" value="是" title="是">
-                        <input type="radio" name="sex" value="否" title="否" checked="">
-                    </div>
-                </div>
-                <!-- 月结客户 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">月结客户：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入月结客户" class="layui-input">
+                        <input type="radio" name="sex" value="否" title="否，后面有柜" checked="">
+                        <input type="radio" name="sex" value="月结客户" title="月结客户" checked="">
                     </div>
                 </div>
 

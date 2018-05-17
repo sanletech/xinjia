@@ -15,14 +15,14 @@
       <div class="layui-row">
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
-            <input type="text" name="car_name"  value="<{$searchcar ? $searchcar : '';}>"  placeholder="请输入船队名字" autocomplete="off" class="layui-input">
-          <input type="text" name="port"    value="<{$searchport ? $searchport : '';}>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
+            <input type="text" name="city_name"  value="<{$searchcity  ? $searchcity : '';}>"  placeholder="请输入城市名字" autocomplete="off" class="layui-input">
+          <input type="text" name="port_name"    value="<{$searchport ? $searchport : '';}>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('Contact/car_add')}>',800,726)"><i class="layui-icon"></i>添加</button>
+     <button class="layui-btn" onclick="x_admin_show('添加船队','<{:url('ship/ship_add')}>',550,400)"><i class="layui-icon"></i>添加</button>
      <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
       </xblock>
       <table class="layui-table">
@@ -59,22 +59,23 @@
             <td style="display: none;"><{$vo.port_id}></td>
 <!--            <td><{$vo.port_name}></td>-->
             <td>
-                <div class="layui-row layui-col-space10">   
-                    <{foreach name="port_arr[$vo.ship_id]" item="v" key="k" }>
-                        <div class="layui-col-xs2  ">
-                            <a title="查看" onclick="x_admin_show('<{$v}>','<{:url('Ship/ship_info')}>?ship_id=<{$vo.id}>&port_id=<{$k}>',700,400)" href="javascript:;">
+                <div class="layui-row layui-fluid">   
+                    <{foreach name="port_arr[$vo.ship_id]" item="v" key="k" mod="2" }>
+                        <div class="layui-col-sm4">
+                            <a onclick="x_admin_show('<{$v}>','<{:url('Ship/ship_info')}>?ship_id=<{$vo.id}>&port_id=<{$k}>',700,400)" href="javascript:;">
                            <i class="layui-icon-fonts-u"><{$v}></i></a>  
                         </div>
                     <{/foreach}>
                 </div>
             </td>
             <td class="td-manage">
-              <a title="查看" onclick="x_admin_show('查看','<{:url('Ship/ship_info')}>?id=<{$vo.id}>',700,400)" href="javascript:;">
+<!--              <a title="查看" onclick="x_admin_show('查看','<{:url('Ship/ship_info')}>?id=<{$vo.id}>',700,400)" href="javascript:;">
                   <i class="layui-icon">&#xe649;</i>
-              </a>  
-              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('Ship/ship_edit')}>?id=<{$vo.id}>',800,400)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
+              </a>  -->
+              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('Ship/ship_edit')}>?id=<{$vo.id}>',800,500)" href="javascript:;">
+                  <i class="layui-icon">&#xe642;</i>&nbsp;&nbsp;&nbsp;
               </a>
+
               <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i> 
               </a>
@@ -102,7 +103,7 @@
     function search(){
          $.ajax({
                 type:'get',
-                url:"<{:url('admin/Contact/car_list')}>",     
+                url:"<{:url('admin/Ship/ship_list')}>",     
                 data: $("#searchform").serialize(),
               //  data:{"success":true,"id":"1"} ,
                 dataType:"json",
@@ -167,7 +168,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/contact/toDel')}>",    
+                url:"<{:url('admin/ship/to_del')}>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){

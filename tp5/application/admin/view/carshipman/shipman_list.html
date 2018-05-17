@@ -1,4 +1,4 @@
-<{include file='./public/header'/}>
+<{include file='./public/header' /}>
   
   <body>
     <div class="x-nav">
@@ -13,26 +13,17 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-          <h5>船务公司对应的代码</h5>
-          <ol >
-              <li>1:中远海航 </li>  
-              <li>1:中远海航 </li>
-              <li>1:中远海航 </li>
-              <li>1:中远海航 </li>
-              <li>1:中远海航 </li>
-              <li>1:中远海航 </li>
-              <li>1:中远海航 </li>
-          </ol>       
-        <form id="searchform" class="layui-form layui-col-md12 x-so" >
-          <input type="text" name="car_name"  placeholder="请输入车队名字" autocomplete="off" class="layui-input">
-          <input type="text" name="port"  placeholder="请输入港口名字" autocomplete="off" class="layui-input">
+        <form id="searchform" class="layui-form 
+              layui-col-md12 x-so" >
+            <input type="text" name="ship_name"  value="<{$searchship ? $searchship : '';}>"  placeholder="请输入船公司名字" autocomplete="off" class="layui-input">
+          <input type="text" name="port_name"    value="<{$searchport ? $searchport : '';}>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url("")}>',600,400)"><i class="layui-icon"></i>添加</button>
-     <span class="x-right" style="line-height:40px">总共有<{$count}>条记录</span>
+     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('ShipMan/man_add')}>',800,726)"><i class="layui-icon"></i>添加</button>
+     <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -41,54 +32,39 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
+            <th>船公司名</th>
             <th>所属港口</th>
-            <th>合作船公司</th>
-            <th>车队名</th>
-            <th>老板</th>
-            <th>财务</th>
-            <th>调度</th>
-            <th>跟单</th>
-            <th>公司地址</th>
-            <th>状态</th>
-            <th>合作关系</th>
+            <th>姓名</th>
+            <th>职位</th>
+            <th>负责路线</th>
+            <th>电话</th>
+            <th>手机</th>
+            <th>QQ/微信</th>
+            <th>传真</th>
             <th>操作</th></tr>
         </thead>
     <tbody >
-      <{volist name="carlist" id="vo"}>
-        <?php   //将status(1正常0禁用) 和 symbiosis(1长期合作2临时合作3无合作) 的状态转成汉字
-                $vo['status']==1? $vo['status']='正常':$vo['status']='禁用';
-                if($vo['symbiosis']==1){
-                    $vo['symbiosis']='长期合作'; 
-                }elseif($vo['symbiosis']==2)
-                {
-                    $vo['symbiosis']='临时合作'; 
-                }else{
-                    $vo['symbiosis']='暂无合作'; 
-                }
-        ?>
+       
+
+      <{volist name="list" id="vo" }>
+   
          <tr >
             <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="<{$vo.id}>"><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.port}></td>
-            <td><{$vo.ship_id}></td>
-            <td><{$vo.car_name}></td>
-            <td><{$vo.boss}></td>
-            <td><{$vo.finance}></td>
-            <td><{$vo.car_plan}></td>
-            <td><{$vo.order_follow}></td>
-            <td><{$vo.address}></td>
-            
-             <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini"><{$vo.status}></span></td>
-            <td><{$vo.symbiosis}></td>
+            <td><{$vo.ship_short_name}></td>
+            <td><{$vo.port_name}></td>
+            <td><{$vo.name}></td>
+            <td><{$vo.position}></td>
+            <td><{$vo.duty_line}></td>
+            <td><{$vo.sn_tel}></td>
+            <td><{$vo.sn_mobile}></td>
+            <td><{$vo.sn_qq}></td>
+            <td><{$vo.sn_fax}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('Contact/car_edit')}>?id=<{$vo.id}>',600,400)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
               <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
+                <i class="layui-icon">&#xe640;</i> 
               </a>
             </td>
           </tr>
@@ -97,34 +73,44 @@
       </table>
       <div class="page">
         <div>
-           <{$carlist->render()}>
+           <{$page}>
         </div>
       </div>
 
     </div>
+      <div>
+          <div>
     <script>
            /*执行搜索车队或者港口*/
+           
     function search(){
          $.ajax({
-                type:'post',
-                url:"<{:url('admin/Contact/search')}>",     
-                data:$("#searchform").serialize(),
+                type:'get',
+                url:"<{:url('admin/ShipMan/man_list')}>",     
+                data: $("#searchform").serialize(),
+              //  data:{"success":true,"id":"1"} ,
                 dataType:"json",
+                async:false,
                 success:function(data){
-                    alert("1111");
                   if(data.status==1){
                     return 1;
                   }else{
                       return 0 ;
                  }
-               }
-        })
+                         
+               },   error: function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpRequest.readyState);
+                    console.log(textStatus);
+                },
+
+        });
+        return 1;
     }
         
         
       layui.use('laydate', function(){
         var laydate = layui.laydate;
-        
         //执行一个laydate实例
         laydate.render({
           elem: '#start' //指定元素
@@ -156,7 +142,7 @@
             //捉到所有被选中的，发异步进行删除
             var dataArray={id:data};
             toajax(dataArray);
-            layer.msg('删除成功', {icon: 1});
+             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
@@ -165,12 +151,13 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<{:url('admin/ShipMan/man_del')}>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
-                    if(data.status==1){
-                      return 1;
+                    if(data>0){
+                     layer.msg('删除成功', {icon: 1});
+                     $(".layui-form-checked").not('.header').parents('tr').remove();
                     }else{
                         return 0 ;
                   }

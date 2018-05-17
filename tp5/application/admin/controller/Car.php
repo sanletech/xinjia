@@ -39,15 +39,11 @@ class Car extends Base
         }else {
              $carlist= $car->carlist();
         }
-      
         //每页数量
         $count = count($carlist);
         // 获取分 页显示
-
         $page = $carlist->render();
-      
        // $this->_p($carlist); 
-
         $this->view->assign('count',$count);
         $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);

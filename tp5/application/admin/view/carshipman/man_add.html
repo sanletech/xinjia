@@ -1,0 +1,163 @@
+<{include file='./public/header'/}>
+  
+  <body>
+    <div class="x-body">
+        <form class="layui-form" id="editform" method="post">
+            <input type="hidden"  name="id" class="layui-input" value="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>姓名
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="car_name" name="name" class="layui-input" value="">
+                </div>
+                 <label class="layui-form-label">
+                    <span class="x-red">*</span>职务
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="car_name" name="position" class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>负责路线
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="duty_line" class="layui-input" value="">
+                </div>
+            </div> 
+             <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>电话
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_tel" class="layui-input" value="">
+                </div>
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>手机
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_mobile" class="layui-input" value="">
+                </div>
+            </div>
+             <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>QQ
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_qq" class="layui-input" value="">
+                </div>
+                <label class="layui-form-label">
+                    <span class="x-red">*</span>传真
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="address" name="sn_fax" class="layui-input" value="">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                <span class="x-red">*</span>所属船公司港口
+                </label>
+                <div class="layui-input-inline">
+                    <select name="ship" lay-filter="ship" >
+                        <option value="">请选择船公司</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" id ='citydiv' style="display: none;">
+                    <select name="port" lay-filter="港口" lay-search>
+                        <option value="">请选择港口</option>
+                    </select>
+                </div>
+            </div>
+        <!--  <button id="btn_tag" class="layui-btn layui-btn-normal"  style="display: none;"  onclick="del(this) ;return false">
+               <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
+            <div class="layui-form-item" id ="search_port">
+            </div>
+            
+            <div class="layui-form-item">
+                <label  class="layui-form-label">
+                </label>
+                <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
+            </div>
+        </form>
+    </div>
+ <script type="text/javascript" src="/static/admin/js/area.js"></script>
+ <script>
+
+  
+        //ajax url生成
+       var url="<{:url('admin/ShipMan/to_add')}>";
+      //修改的车队ID 港口车队cp_id
+       var carID='';
+       var cpID ='';
+  //初始数据
+        var areaData = Area;
+        var $form;
+        var form;
+        var $;
+        layui.use(['jquery', 'form'], function() {
+            $ = layui.jquery;
+            form = layui.form;
+            $form = $('form');
+            loadProvince();  //选择港口
+        }); 
+        
+    
+    //加载省数据
+        function loadProvince() {
+          
+            var proHtml = '';
+            for (var i = 0; i < areaData.length; i++) {
+                proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+            }
+            //初始化省数据
+            $form.find('select[name=province]').append(proHtml);
+            form.render();
+            form.on('select(province)', function(data) {
+                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                var value = data.value;
+                var d = value.split('_');a
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadCity(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city]').parent().hide();
+                }
+            });
+        }
+   
+        
+    //加载市数据
+        function loadCity(citys) {
+            var cityHtml = '';
+            for (var i = 0; i < citys.length; i++) {
+                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+            }
+           
+            $form.find('select[name=city]').html(cityHtml).parent().show();
+            form.render();
+            form.on('select(city)', function(data) {
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    //将城市Id 传给港口loadPort()
+                    //console.log(citys[index].cityCode);
+                    loadPort(citys[index].cityCode);
+                  // loadArea(citys[index].mallAreaList);
+                } else {
+                    $form.find('select[name=area]').parent().hide();
+                }
+            });
+        }    
+     
+ </script>
+ <script type="text/javascript" src="/static/admin/js/car_edit.js"></script>
+
+</body>
+</html>
+

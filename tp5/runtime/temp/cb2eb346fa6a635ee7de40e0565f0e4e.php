@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1525947884;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\trailer_add.html";i:1526019896;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526436519;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\trailer_add.html";i:1526457099;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,6 +26,13 @@
     <link rel="stylesheet" href="/static/admin/css/trailer_add.css">
     <form class="layui-form" action="">
       <div class="trailer layui-row">
+        <!-- 选择港口 -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">港口:</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入港口" class="layui-input">
+          </div>
+        </div>
         <!-- 下拉选择框 -->
         <div class="layui-form-item">
           <label class="layui-form-label">请选择地址:</label>
@@ -69,15 +76,21 @@
         <div class="layui-col-xs5">
           <div class="grid-demo grid-demo-bg1">
             <div class="layui-form-item">
-              <label class="layui-form-label">收货20GP:</label>
+              <label class="layui-form-label">装货20GP:</label>
               <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item">
-              <label class="layui-form-label">收货40HQ:</label>
+              <label class="layui-form-label">装货40HQ:</label>
               <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">装货车队名:</label>
+              <div class="layui-input-block">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车队" class="layui-input">
               </div>
             </div>
           </div>
@@ -91,13 +104,19 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">送货20GP:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">送货40HQ:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">送货车队名:</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车队" class="layui-input">
                 </div>
               </div>
             </div>
