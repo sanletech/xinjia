@@ -1,6 +1,6 @@
 <?php
 /*
- *  船对通讯录控制器
+ *  船公司通讯录控制器
  */
 namespace app\admin\controller;
 use app\admin\common\Base;
