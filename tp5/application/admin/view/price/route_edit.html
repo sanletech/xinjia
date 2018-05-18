@@ -8,46 +8,10 @@
         <div class="layui-form-item">
           <label class="layui-form-label">船务公司</label>
           <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入公司" class="layui-input" value="中远海船务">
-          </div>
-        </div>
-        <!-- 航线港口 -->
-        <div class="layui-form-item">
-          <label class="layui-form-label">港口航线</label>
-          <div class="layui-input-inline gang" style="width: 190px;">
-            <input type="text" name="price_min" placeholder="港口" autocomplete="off" class="layui-input" value="南沙">
-          </div>
-          <div class="layui-form-mid">—</div>
-          <div class="layui-input-inline gang" style="width: 190px;">
-            <input type="text" name="price_max" placeholder="港口" autocomplete="off" class="layui-input" value="天津">
-          </div>
-        </div>
-        <!-- 20GP -->
-        <div class="layui-form-item">
-          <label class="layui-form-label">20GP</label>
-          <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="20GP" class="layui-input" value="￥3000">
-          </div>
-        </div>
-        <!-- 40HQ -->
-        <div class="layui-form-item">
-          <label class="layui-form-label">40HQ</label>
-          <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="40HQ" class="layui-input" value="￥5000">
-          </div>
-        </div>
-        <!-- 船期 -->
-        <div class="layui-form-item">
-          <label class="layui-form-label">船期</label>
-          <div class="layui-input-block">
-            <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" value="2018-3-6">
-          </div>
-        </div>
-        <!-- 截单时间 -->
-        <div class="layui-form-item">
-          <label class="layui-form-label">截单时间</label>
-          <div class="layui-input-block">
-            <input type="text" name="date1" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" value="2018-3-10">
+            <select name="modules" lay-verify="required" lay-search="">
+              <option value="">选择船务公司</option>
+              <option value="" selected ="selected">中远海船务</option>
+            </select>
           </div>
         </div>
         <!-- 船名 -->
@@ -57,7 +21,21 @@
             <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入船名" class="layui-input" value="海洋局/tud36">
           </div>
         </div>
-        <!-- 海上实效 -->
+        <!-- 船期 -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">船期</label>
+          <div class="layui-input-block">
+            <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" value="2018-07-03">
+          </div>
+        </div>
+        <!-- 截单时间 -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">截单时间</label>
+          <div class="layui-input-block">
+            <input type="text" name="date1" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" value="2018-03-06">
+          </div>
+        </div>
+        <!-- 海上时效 -->
         <div class="layui-form-item">
           <label class="layui-form-label">海上时效</label>
           <div class="layui-input-block">
@@ -66,6 +44,40 @@
             </select>
           </div>
         </div>
+        <!-- 20GP -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">20GP</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="20GP" class="layui-input" value="3000">
+          </div>
+        </div>
+        <!-- 40HQ -->
+        <div class="layui-form-item">
+          <label class="layui-form-label">40HQ</label>
+          <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="40HQ" class="layui-input" value="5000">
+          </div>
+        </div>
+        <!-- 航线详情 -->
+        <div class="gkou">
+          <div class="le layui-col-xs2">港口航线</div>
+          <div class="rig">
+            <div class="layui-col-xs10">
+              <div class="layui-col-xs3 inpu">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="港口" class="layui-input" value="南沙">
+              </div>
+              <div class="layui-col-xs3 inpu">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="港口" class="layui-input" value="天津">
+              </div>
+              <div class="layui-col-xs3 jia">
+                <a onclick="hang();" href="javascript:;">
+                  <i class="layui-icon">&#xe654;</i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- 是否推荐 -->
         <div class="layui-form-item">
           <label class="layui-form-label">推荐</label>
@@ -86,13 +98,30 @@
     </form>
 
     <script type="text/javascript">
+      //取消关闭模态框
       $('.cancel').click(function () {
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
       });
 
+      //海上时效天数
       for (let i = 1; i < 31; i++) {
         $('#day').append('<option value="' + i + '">' + i + '天</option>');
+      }
+      //默认第五天
+      $("#day").val(5);
+
+      //航线详情-添加
+      function hang() {
+        $('.jia').before(
+          '<div class="layui-col-xs3 inpu">'
+          +'<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="港口" class="layui-input">'
+          +'<a onclick="hang_co(this);" href="javascript:;"><i class="layui-icon">&#x1006;</i></a>'
+          +'</div>');
+      }
+      //航线详情-删除
+      function hang_co(zj){
+        console.log($(zj).parent().remove());
       }
 
       layui.use(['form', 'layedit', 'laydate'], function () {

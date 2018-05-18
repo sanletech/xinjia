@@ -15,21 +15,53 @@ class Order extends Base
     }
     
     public function order_list() 
-    {               
-
+    {
         return $this->view->fetch('Order/order_list'); 
     }
     
     public function order_edit() 
-    {               
-
+    {
         return $this->view->fetch('Order/order_edit'); 
+    }
+
+    public function order_waste() 
+    {
+        return $this->view->fetch('Order/order_waste'); 
     }
         
     public function order_audit() 
-    {               
-
+    {
         return $this->view->fetch('Order/order_audit'); 
+    }
+
+    public function list_paiche() 
+    {
+        return $this->view->fetch('Order/list_paiche');
+    }
+
+    public function list_songhuo() 
+    {
+        return $this->view->fetch('Order/list_songhuo');
+    }
+
+    public function list_shouqian() 
+    {
+        return $this->view->fetch('Order/list_shouqian');
+    }
+
+    public function list_dship() 
+    {
+        return $this->view->fetch('Order/list_dship');
+    }
+
+    public function list_zship() 
+    {
+        return $this->view->fetch('Order/list_zship');
+    }
+
+    public function list_peiship() 
+    {
+        return $this->view->fetch('Order/list_peiship');
     }
     //展示修改车队信息
     public function car_edit(){
