@@ -1,10 +1,32 @@
-<{include file='./public/header' /}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526892566;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\list_edit.html";i:1526888926;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
 
     <body>
-        <link rel="stylesheet" href="__STATIC__/css/route_add.css">
+        <link rel="stylesheet" href="/static/admin/css/route_add.css">
         <form class="layui-form" action="">
             <div class="route layui-row">
-                <!-- 账号 -->
+                <!-- 车队名字 -->
                 <div class="layui-form-item">
                     <div style="margin-bottom: 10px;margin-top: 20px;">账号：</div>
                     <div class="layui-col-xs12">
@@ -12,18 +34,11 @@
                             value="18365486284">
                     </div>
                 </div>
-                <!-- 密码 -->
+                <!-- 车牌号 -->
                 <div class="layui-form-item">
                     <div style="margin-bottom: 10px;margin-top: 20px;">密码：</div>
                     <div class="layui-col-xs12">
                         <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入密码" class="layui-input" value="13055493654">
-                    </div>
-                </div>
-                <!-- 推荐人 -->
-                <div class="layui-form-item">
-                    <div style="margin-bottom: 10px;margin-top: 20px;">推荐人：</div>
-                    <div class="layui-col-xs12">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input" value="吴先生">
                     </div>
                 </div>
                 <!-- 航程 -->
@@ -212,12 +227,10 @@
                 });
 
                 form.on('select(test)', function (data) {
-                    //获取当前下自定义的input
-                    var zj = $(this).parent().parent().parent().siblings('.zdy').find('input');
                     if (data.value == 0) {
-                        zj.removeClass('layui-disabled').removeAttr('disabled');
+                        $('.zdy input').removeClass('layui-disabled').removeAttr('disabled');
                     } else {
-                        zj.addClass('layui-disabled').attr('disabled', false);
+                        $('.zdy input').addClass('layui-disabled').attr('disabled', false);
                     }
                 });
             });

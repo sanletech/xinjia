@@ -1,4 +1,27 @@
-<{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526894709;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\disable_list.html";i:1526895009;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
+  
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -17,39 +40,38 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
+      <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>账号</th>
-            <th>姓名</th>
+            <th>企业名/账号</th>
             <th>密码</th>
-            <th>企业名</th>
             <th>推荐人</th>
             <th>创建时间</th>
             <th>操作</th>
           </tr>
         </thead>
-        <tbody >
+        <tbody>
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
               
-            <td class="tdata">18365486284</td>
-            <td>小猪</td>
+            <td class="tdata">广州散了科技公司</td>
             <td>13055493654</td>
-            <td>广州散了科技公司</td>
             <td>吴先生</td>
             <td>2018-02-02</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/member_edit")}>',700,550)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
+              <a title="返回"  onclick="" href="javascript:;">
+                <i class="layui-icon">&#xe605;</i>
               </a>
-              <a title="禁用" onclick="" href="javascript:;">
-                <i class="layui-icon">&#xe60b;</i>
+              <a title="删除" onclick="" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
@@ -106,7 +128,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<?php echo url('admin/member/toDel'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){

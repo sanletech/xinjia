@@ -1,3 +1,4 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526894709;}*/ ?>
 <body>
     <!-- 左侧菜单开始 -->
     <div class="left-nav">
@@ -11,19 +12,19 @@
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a _href="<{:url('Member/member_list')}>">
+                            <a _href="<?php echo url('Member/member_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>用户列表</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('Member/company_list')}>">
+                            <a _href="<?php echo url('Member/company_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>企业列表</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('Member/disable_list')}>">
+                            <a _href="<?php echo url('Member/disable_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>禁用账号</cite>
                             </a>
@@ -38,25 +39,25 @@
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a _href="<{:url('Order/order_audit')}>">
+                            <a _href="<?php echo url('Order/order_audit'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>审核订单</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('Order/order_list')}>">
+                            <a _href="<?php echo url('Order/order_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>处理订单</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('Order/order_edit')}>">
+                            <a _href="<?php echo url('Order/order_edit'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>查看订单</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('Order/order_waste')}>">
+                            <a _href="<?php echo url('Order/order_waste'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>废弃订单</cite>
                             </a>
@@ -71,13 +72,13 @@
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a _href="<{:url('Price/price_route')}>">
+                            <a _href="<?php echo url('Price/price_route'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>航线运价</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('Price/price_trailer')}>">
+                            <a _href="<?php echo url('Price/price_trailer'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>拖车运价</cite>
                             </a>
@@ -126,25 +127,25 @@
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a _href="<{:url('Car/car_list')}>">
+                            <a _href="<?php echo url('Car/car_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>车队通讯录</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('Ship/ship_List')}>">
+                            <a _href="<?php echo url('Ship/ship_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>船公司通讯录</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('ShipMan/man_list')}>">
+                            <a _href="<?php echo url('ShipMan/man_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>船公司人员资料</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<{:url('CarMan/man_List')}>">
+                            <a _href="<?php echo url('CarMan/man_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>车队人员资料</cite>
                             </a>

@@ -1,4 +1,5 @@
 <{include file='./public/header'/}>
+  
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -17,35 +18,36 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
+      <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url("Member/company_add")}>',700,550)"><i class="layui-icon"></i>添加</button>
+       <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
+      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>账号</th>
-            <th>姓名</th>
-            <th>密码</th>
             <th>企业名</th>
+            <th>密码</th>
             <th>推荐人</th>
             <th>创建时间</th>
             <th>操作</th>
           </tr>
         </thead>
-        <tbody >
+        <tbody>
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
               
-            <td class="tdata">18365486284</td>
-            <td>小猪</td>
+            <td class="tdata">广州散了科技公司</td>
             <td>13055493654</td>
-            <td>广州散了科技公司</td>
             <td>吴先生</td>
             <td>2018-02-02</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/member_edit")}>',700,550)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/company_edit")}>',700,550)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="禁用" onclick="" href="javascript:;">

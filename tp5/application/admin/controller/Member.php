@@ -7,9 +7,41 @@ use think\Db;
 class Member extends Base
 {    
 
-  public function __construct(Request $request = null) {
+    public function __construct(Request $request = null) {
         parent::__construct($request);
         $this->request= $request;
+    }
+    //用户列表
+    public function member_list()
+    {
+        return $this->view->fetch('Member/member_list'); 
+    }
+    //用户列表修改
+    public function member_edit()
+    {
+        return $this->view->fetch('Member/member_edit'); 
+    }
+
+    //企业列表
+    public function company_list()
+    {
+        return $this->view->fetch('Member/company_list'); 
+    }
+    //企业列表修改
+    public function company_add()
+    {
+        return $this->view->fetch('Member/company_add'); 
+    }
+    //企业列表修改
+    public function company_edit()
+    {
+        return $this->view->fetch('Member/company_edit'); 
+    }
+
+    //禁用账号
+    public function disable_list()
+    {
+        return $this->view->fetch('Member/disable_list'); 
     }
 
     public function mList()
@@ -27,7 +59,7 @@ class Member extends Base
        $this->view->assign('count', $count);
         //3.渲染模版
      //  print_r($member);exit;
-      return $this->view->fetch('member/member_list'); 
+      return $this->view->fetch('Member/member_list'); 
        
     }
     
