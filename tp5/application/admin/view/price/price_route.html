@@ -61,7 +61,7 @@
             </td>
             <td class="tdata"><{$vo.id}></td>
             <td><{$vo.ship_short_name}></td> 
-            <td><{$vo.start_port.'--'.$vo.over_port}></td>
+            <td><{$vo.start_port.'>>>'.$vo.over_port}></td>
             <td>￥<{$vo.20GP}></td>
             <td>￥<{$vo.40HQ}></td> 
             <td><{$vo.shipping_date|date="y-m-d",###}></td>
@@ -71,10 +71,10 @@
             <td><{$vo.ETA|date="y-m-d",###}></td>
             <td><{$vo.EDD|date="y-m-d",###}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>?seaprice_id=<{$vo.id}>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -144,7 +144,7 @@
       function toajax(dataArray) {
         $.ajax({
           type: 'POST',
-          url: "<{:url('admin/member/toDel')}>",
+          url: "<{:url('admin/Price/route_del')}>",
           data: dataArray,
           dataType: "json",
           success: function (data) {

@@ -87,7 +87,7 @@ class Car extends Model
         //删除car_port的id
         $res = Db::name('car_port')->where('id','in',$data)->delete();
         if($res>0){
-            $response['success'] = '删除car_port表';  
+            $response['success'][] = '删除car_port表';  
              //根据car_id 删除相应的car_ship car_city 的数据
             $res1 = Db::name('car_ship')->where('id','in',$car_id_arr)->delete();
             if($res1){$response['success'][] = '删除car_ship表';}else{$response['fail'][] = '删除car_ship表'; }

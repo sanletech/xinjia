@@ -10,10 +10,10 @@ use think\Db;
 
 class Price extends Base
 {   
-    public function __construct(Request $request = null) {
-        parent::__construct($request);
-        $this->request= $request;
-    }
+//    public function __construct(Request $request = null) {
+//        parent::__construct($request);
+//        $this->request= $request;
+//    }
      //航线运价
     public function price_route() 
     {   
@@ -26,7 +26,7 @@ class Price extends Base
             $this->assign('port_over',$port_over); 
         }
         $route = new PriceM;
-        $list = $route->price_route_list($port_start,$port_over);
+        $list = $route->price_route_list($port_start,$port_over ,5);
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
@@ -39,14 +39,53 @@ class Price extends Base
     }
 
     
-   //航线添加
+   //航线添加页面
     public function route_add(){
+          //传递所有的港口给前台页面
+        $sql3="select *  from  hl_port ";
+        $port_data =Db::query($sql3);
+       //转成json格式传给js
+        $js_port=json_encode($port_data);
+        
+        //传递所有的船公司给前台页面选择
+        $sql4="select id , ship_short_name  from  hl_shipcompany ";
+        $ship_data =Db::query($sql4);
+       //转成json格式传给js
+        $js_ship=json_encode($ship_data);
+        
+        $this->view->assign('js_port',$js_port);
+        $this->view->assign('js_ship',$js_ship);
         
         return $this->view->fetch('Price/route_add');
     }
-    //航线修改
+    //航线添加
+    public function route_toadd(){
+        $data = $this->request->param();
+        $this->_p($data);  exit;
+        return $this->view->fetch('Price/route_add');
+    }
+    //航线修改页面
     public function route_edit(){
         return $this->view->fetch("Price/route_edit");
+    }
+    //航线修改页面
+    public function route_toedit(){
+        return $this->view->fetch("Price/route_edit");
+    }
+    //航线删除
+    public function route_del(){
+        //接受price_route_del 的id 数组
+        $data = $this->request->param();
+        $seaprice_id = $data['id'];
+        $seaprice = new PriceM;
+        $res = $seaprice->price_route_del($seaprice_id);
+        if(!array_key_exists('fail', $res)){
+                  $status =1; 
+              }else {
+                  $status =0;  
+                    }
+        json_encode($status);   
+         return $status;   
     }
     //拖车添加
     public function trailer_add(){
