@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>城市四级联动 - citys</title>
+        <link rel="stylesheet" type="text/css" href="style/cssreset-min.css">
+        <link rel="stylesheet" type="text/css" href="style/common.css">
+        <style type="text/css">
+            .citys{
+                margin-bottom: 10px;
+            }
+            .citys p{
+                line-height: 28px;
+            }
+            .warning{
+                color: #c00;
+            }
+            .main a{
+                margin-right: 8px;
+                color: #369;
+            }
+        </style>
+        <script type="text/javascript" src="__STATIC__/js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="__STATIC__/js/jquery.citys.js"></script>
+    </head>
+    <body>   
+        
+            <script type="text/javascript">
+                $('#demo2').citys({
+                    required:false,
+                    nodata:'disabled',
+                    onChange:function(data){
+                        var text = data['direct']?'(直辖市)':'';
+                        $('#place').text('当前选中地区：'+data['province']+text+' '+data['city']+' '+data['area']);
+                    }
+                });
+            </script>
+        	<div id="demo3" class="citys">
+                <p>
+                    <select name="province"></select>
+                    <select name="city"></select>
+                    <select name="area"></select>
+                    <select name="town"></select>
+                </p>
+            </div>
+            <div class="code">
+              <p>扩展显示行政区划第四级(街道)信息：</p>
+<pre>
+    var $town = $('#demo3 select[name="town"]');
+    var townFormat = function(info){
+    $town.hide().empty();
+    if(info['code']%1e4&&info['code']<7e6){	//是否为“区”且不是港澳台地区
+    	$.ajax({
+    		url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
+    		dataType:'json',
+    		success:function(town){
+    			$town.show();
+    			for(i in town){
+    					$town.append('&lt;option value="'+i+'"&gt;'+town[i]+'&lt;/option&gt;');
+    			}
+    		}
+    	});
+    }
+    };
+    $('#demo3').citys({
+        province:'福建',
+        city:'厦门',
+        area:'思明',
+        onChange:function(info){
+        	townFormat(info);
+        }
+    },function(api){
+        var info = api.getInfo();
+        townFormat(info);
+    });
+</pre>
+            </div>
+            <script type="text/javascript">
+        		var $town = $('#demo3 select[name="town"]');
+        		var townFormat = function(info){
+        			$town.hide().empty();
+        			if(info['code']%1e4&&info['code']<7e5){	//是否为“区”且不是港澳台地区
+        				$.ajax({
+        					url:'http://passer-by.com/data_location/town/'+info['code']+'.json',
+        					dataType:'json',
+        					success:function(town){
+        						$town.show();
+        						for(i in town){
+        								$town.append('<option value="'+i+'">'+town[i]+'</option>');
+        						}
+        					}
+        				});
+        			}
+        		};
+                $('#demo3').citys({
+        			province:'福建',
+        			city:'厦门',
+        			area:'思明',
+        			onChange:function(info){
+        				townFormat(info);
+        			}
+        		},function(api){
+        			var info = api.getInfo();
+        			townFormat(info);
+        		});
+            </script>
+
+</div>
+    </body>
+</html>

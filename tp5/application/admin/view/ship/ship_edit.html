@@ -84,7 +84,7 @@
  <script>
       
     // //展示原有的船公司的  城市和港口
-        var port= '<?php echo json_decode($port_arr); ?>';
+        var port= '<?php echo json_encode($port_arr); ?>';
         port_arr = JSON.parse(port); 
         
         var city= '<?php echo json_encode($ship_arr); ?>';

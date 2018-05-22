@@ -127,7 +127,7 @@
     // //展示原有的船公司和港口和优势路线
         var shipPort='<?php echo json_encode($data); ?>'
         shipPort=JSON.parse(shipPort); 
-        
+        console.log(shipPort);
     //加载 所有的船公司名字简称和相应的id
         var js_ship = '<?php echo $js_ship; ?>';
         js_ship=JSON.parse(js_ship);    
