@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1526035633;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526987309;s:89:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\financial_list.html";i:1526975173;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,7 +23,6 @@
 </head>
 
   <body>
-    
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -40,7 +39,8 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username" placeholder="请输入港口" autocomplete="off" class="layui-input">
+          <input type="text" name="username" placeholder="账单编号" autocomplete="off" class="layui-input">
+          <input type="text" name="car_name" placeholder="账单日期" autocomplete="off" class="layui-input" id="start">
           <button class="layui-btn" lay-submit="" lay-filter="sreach">
             <i class="layui-icon">&#xe615;</i>
           </button>
@@ -49,51 +49,42 @@
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()">
           <i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加','<?php echo url('Price/route_add'); ?>',700,500)" href="javascript:;">
-          <i class="layui-icon"></i>添加</button>
         <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
-
       <table class="layui-table">
         <thead>
           <tr>
             <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
+                <i class="layui-icon">&#xe605;</i>
+              </div>
             </th>
-            <th>ID</th>
-            <th>航务公司</th>
-            <th>港口航线</th>
-            <th>20GP</th>
-            <th>40HQ</th>
-            <th>船期</th>
-            <th>截单时间</th>
-            <th>船名</th>
-            <th>海上时效</th>          
-            <th>预计到港时间</th>
-            <th>预计送货日期</th>
+            <th>账单编号</th>
+            <th>账单日期</th>
+            <th>发票</th>
+            <th>开票</th>
+            <th>收款</th>
             <th>操作</th>
           </tr>
         </thead>
-        <tbody >
-          <tr >
+        <tbody>
+          <tr>
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
+                <i class="layui-icon">&#xe605;</i>
+              </div>
             </td>
-            <td class="tdata">1</td>
-            <td>中远海船务</td>
-            <td>南沙-天津</td>
-            <td>￥3000</td>
-            <td>￥5000</td> 
-            <td>2018-03-06</td>
-            <td>2018-3-10</td>
-            <td>海洋局/tud36</td>
-            <td>5天</td>
-            <td>2018-3-5</td>
-            <td>2018-3-17</td>
+
+            <td class="tdata">2264962316464</td>
+            <td>2018-10-03</td>
+            <td style="color: red;">6%</td>
+            <td style="color: red;">否</td>
+            <td style="color: red;">否</td> 
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">
+              <a title="修改账单" onclick="x_admin_show('账单修改','<?php echo url("Financial/financial_edit"); ?>',500,350)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
+              &nbsp;&nbsp;
               <a title="删除" onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>

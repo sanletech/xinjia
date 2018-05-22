@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1526894709;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1526987309;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -121,7 +121,7 @@
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="iconfont">&#xe723;</i>
+                        <i class="iconfont">&#xe698;</i>
                         <cite>运价设置</cite>
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
@@ -142,33 +142,42 @@
                 </li>
                 <li>
                     <a href="javascript:;">
-                        <i class="iconfont">&#xe726;</i>
-                        <cite>管理员管理</cite>
+                        <i class="iconfont">&#xe705;</i>
+                        <cite>财务中心</cite>
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
                     <ul class="sub-menu">
                         <li>
-                            <a _href="admin-list.html">
+                            <a _href="<?php echo url('Financial/customer_list'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>客户订单</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<?php echo url('Financial/financial_list'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>账单列表</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<?php echo url('Financial/company_form'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>公司表报</cite>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe726;</i>
+                        <cite>权限分配</cite>
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a _href="<?php echo url('keeper/admin_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>管理员列表</cite>
-                            </a>
-                        </li>
-                        <li>
-                            <a _href="admin-role.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>角色管理</cite>
-                            </a>
-                        </li>
-                        <li>
-                            <a _href="admin-cate.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>权限分类</cite>
-                            </a>
-                        </li>
-                        <li>
-                            <a _href="admin-rule.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>权限管理</cite>
                             </a>
                         </li>
                     </ul>
