@@ -1,4 +1,26 @@
-<{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\car\car_edit.html";i:1526634859;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   
   <body>
     <div class="x-body">
@@ -63,14 +85,14 @@
             <div class="layui-form-item" id ="search_city">
             </div> 
             
-            <{volist name="car_data" id="car"}>
-            <input type="hidden"  name="id" class="layui-input" value="<{$car.id}>">
+            <?php if(is_array($car_data) || $car_data instanceof \think\Collection || $car_data instanceof \think\Paginator): $i = 0; $__LIST__ = $car_data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$car): $mod = ($i % 2 );++$i;?>
+            <input type="hidden"  name="id" class="layui-input" value="<?php echo $car['id']; ?>">
             <div class="layui-form-item">
                 <label class="layui-form-label">
                     <span class="x-red">*</span>车队名字
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="car_name" name="car_name" class="layui-input" value="<{$car.car_name}>">
+                    <input type="text" id="car_name" name="car_name" class="layui-input" value="<?php echo $car['car_name']; ?>">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -78,7 +100,7 @@
                     <span class="x-red">*</span>车队地址
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="address" name="address" class="layui-input" value="<{$car.address}>">
+                    <input type="text" id="address" name="address" class="layui-input" value="<?php echo $car['address']; ?>">
                 </div>
             </div> 
             <div class="layui-form-item">
@@ -110,7 +132,7 @@
                     </select>  
                     </div>
             </div>
-            <{/volist}>
+            <?php endforeach; endif; else: echo "" ;endif; ?>
                     <div class="layui-form-item">
                         <label  class="layui-form-label">
                         </label>
@@ -135,10 +157,10 @@
         var js_port = '<?php echo $js_port; ?>';
             js_port=JSON.parse(js_port);    
         //ajax url生成
-       var url='<{:url('admin/Car/toEdit')}>';
+       var url='<?php echo url('admin/Car/toEdit'); ?>';
        //修改的车队ID 港口车队cp_id
-       var carID='<{$car.id}>';
-       var cpID ='<{$data.id}>';
+       var carID='<?php echo $car['id']; ?>';
+       var cpID ='<?php echo $data['id']; ?>';
   //初始数据
         var areaData = Area;
         var $form;

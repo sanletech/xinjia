@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_edit.html";i:1526974668;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_edit.html";i:1526975624;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+>>>>>>> 5e6c00c694aaca5ced28534dfd89ea694e91c94b
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,7 +34,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">船务公司</label>
           <div class="layui-input-block">
-            <select name="modules" lay-verify="required" lay-search="">
+              <select name="ship" lay-filter="ship" lay-search>
               <option value="">选择船务公司</option>
               <option value="" selected ="selected">中远海船务</option>
             </select>
@@ -120,6 +124,15 @@
     </form>
 
     <script type="text/javascript">
+      //加载 所有的船公司名字简称和相应的id
+        var js_ship = '<?php echo $js_ship; ?>';
+        js_ship=JSON.parse(js_ship);    
+       //加载 所有的港口名字和相应的城市code
+        var js_port = '<?php echo $js_port; ?>';
+            js_port=JSON.parse(js_port);        
+        
+        
+        
       //取消关闭模态框
       $('.cancel').click(function () {
         var index = parent.layer.getFrameIndex(window.name);
@@ -151,7 +164,7 @@
           , layer = layui.layer
           , layedit = layui.layedit
           , laydate = layui.laydate;
-
+         loadship();//选择船公司  
         //日期
         laydate.render({
           elem: '#date'
@@ -161,6 +174,40 @@
         });
 
       });
+      
+             
+        function loadship(){
+            alert('aaaaa');
+//             //加载 所有的船公司名字简称和相应的id
+//            var js_ship = '<?php echo $js_ship; ?>';
+//            js_ship=JSON.parse(js_ship);
+           
+            //  console.log(js_ship['1'].id );
+            var ship_length =js_ship.length;
+            var shipHtml = '';
+            for(var i=0;i<ship_length;i++){
+                
+                shipHtml += '<option  value="' + js_ship[i].id  +'_'+ js_ship[i].ship_short_name +'">' + js_ship[i].ship_short_name + '</option>';  
+            }
+            $form.find('select[name=ship]').append(shipHtml);
+            form.render();
+            form.on('select(ship)', function(data) {
+               
+               if(data.value!==''){
+                var ship =data.value.split('_');
+                //  console.log(ship);   
+                 var ship_id =ship['0'];
+                 var ship_name=ship['1'];
+                 //dataArray[ship_id] = ship_name;
+                 var mark = document.getElementById('search_ship');
+                  
+                   if(!document.getElementById(ship_id+'_'+ship_name)){
+                         selectPortShip(ship_id,ship_name,mark)
+                    }
+                }
+            });
+        }
+      
     </script>
 
   </body>

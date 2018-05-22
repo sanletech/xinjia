@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1526035633;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1526961057;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+>>>>>>> 5e6c00c694aaca5ced28534dfd89ea694e91c94b
 <!doctype html>
 <html lang="en">
 <head>
@@ -39,9 +43,10 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username" placeholder="请输入港口" autocomplete="off" class="layui-input">
-          <button class="layui-btn" lay-submit="" lay-filter="sreach">
+        <form class="layui-form layui-col-md12 x-so" id="searchform">
+          <input type="text" name="port_start" value="<?php echo !empty($port_start)?$port_start : '';; ?>" placeholder="请输入始发港口" autocomplete="off" class="layui-input">
+          <input type="text" name="port_over"  value="<?php echo !empty($port_over)?$port_over : '';; ?>" placeholder="请输入目的港口" autocomplete="off" class="layui-input">
+          <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="search()">
             <i class="layui-icon">&#xe615;</i>
           </button>
         </form>
@@ -75,55 +80,68 @@
           </tr>
         </thead>
         <tbody >
+          <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>   
           <tr >
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata">1</td>
-            <td>中远海船务</td>
-            <td>南沙-天津</td>
-            <td>￥3000</td>
-            <td>￥5000</td> 
-            <td>2018-03-06</td>
-            <td>2018-3-10</td>
-            <td>海洋局/tud36</td>
-            <td>5天</td>
-            <td>2018-3-5</td>
-            <td>2018-3-17</td>
+            <td class="tdata"><?php echo $vo['id']; ?></td>
+            <td><?php echo $vo['ship_short_name']; ?></td> 
+            <td><?php echo $vo['start_port'].'>>>'.$vo['over_port']; ?></td>
+            <td>￥<?php echo $vo['20GP']; ?></td>
+            <td>￥<?php echo $vo['40HQ']; ?></td> 
+            <td><?php echo date("y-m-d",$vo['shipping_date']); ?></td>
+            <td><?php echo date("y-m-d",$vo['cutoff_date']); ?></td>
+            <td><?php echo $vo['boat_name']; ?></td>
+            <td><?php echo $vo['sea_limitation']; ?>&nbsp;Day</td>
+            <td><?php echo date("y-m-d",$vo['ETA']); ?></td>
+            <td><?php echo date("y-m-d",$vo['EDD']); ?></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>?seaprice_id=<?php echo $vo['id']; ?>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
+          <?php endforeach; endif; else: echo "" ;endif; ?>
         </tbody>
       </table>
       <div class="page">
         <div>
-
+            <?php echo $page; ?>
         </div>
       </div>
 
     </div>
     <script>
-      layui.use('laydate', function () {
-        var laydate = layui.laydate;
+            /*执行搜索车队或者港口*/
+    function search(){
+         $.ajax({
+                type:'get',
+                url:"<?php echo url('admin/Price/price_route'); ?>",     
+                data: $("#searchform").serialize(),
+                dataType:"json",
+                async:false,
+                success:function(data){
+                  if(data.status==1){
+                    return 1;
+                  }else{
+                      return 0 ;
+                 }
+                         
+               }, error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.status);
+               console.log(XMLHttpRequest.readyState);
+               console.log(textStatus);
+                  },
 
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
         });
-
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
-      });
-
-
+        return 1;
+    }
+    
+        
       /*用户-删除*/
       function member_del(obj, did) {
         layer.confirm('确认要删除吗？', function (index) {
@@ -152,7 +170,7 @@
       function toajax(dataArray) {
         $.ajax({
           type: 'POST',
-          url: "<?php echo url('admin/member/toDel'); ?>",
+          url: "<?php echo url('admin/Price/route_del'); ?>",
           data: dataArray,
           dataType: "json",
           success: function (data) {
