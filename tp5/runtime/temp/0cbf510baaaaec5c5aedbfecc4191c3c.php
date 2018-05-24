@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526894709;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\company_edit.html";i:1526894122;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153323;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\company_edit.html";i:1527152852;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -233,10 +233,12 @@
                 });
 
                 form.on('select(test)', function (data) {
+                    //获取当前下自定义的input
+                    var zj = $(this).parent().parent().parent().siblings('.zdy').find('input');
                     if (data.value == 0) {
-                        $('.zdy input').removeClass('layui-disabled').removeAttr('disabled');
+                        zj.removeClass('layui-disabled').removeAttr('disabled');
                     } else {
-                        $('.zdy input').addClass('layui-disabled').attr('disabled', false);
+                        zj.addClass('layui-disabled').attr('disabled', false);
                     }
                 });
             });

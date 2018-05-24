@@ -17,9 +17,10 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username" placeholder="请输入港口" autocomplete="off" class="layui-input">
-          <button class="layui-btn" lay-submit="" lay-filter="sreach">
+        <form class="layui-form layui-col-md12 x-so" id="searchform">
+          <input type="text" name="port_start" value="<{$port_start ? $port_start : '';}>" placeholder="请输入始发港口" autocomplete="off" class="layui-input">
+          <input type="text" name="port_over"  value="<{$port_over  ? $port_over : '';}>" placeholder="请输入目的港口" autocomplete="off" class="layui-input">
+          <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="search()">
             <i class="layui-icon">&#xe615;</i>
           </button>
         </form>
@@ -53,55 +54,68 @@
           </tr>
         </thead>
         <tbody >
+          <{volist name="list" id="vo"}>   
           <tr >
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata">1</td>
-            <td>中远海船务</td>
-            <td>南沙-天津</td>
-            <td>￥3000</td>
-            <td>￥5000</td> 
-            <td>2018-03-06</td>
-            <td>2018-3-10</td>
-            <td>海洋局/tud36</td>
-            <td>5天</td>
-            <td>2018-3-5</td>
-            <td>2018-3-17</td>
+            <td class="tdata"><{$vo.id}></td>
+            <td><{$vo.ship_short_name}></td> 
+            <td><{$vo.start_port.'>>>'.$vo.over_port}></td>
+            <td>￥<{$vo.price_20GP}></td>
+            <td>￥<{$vo.price_40HQ}></td> 
+            <td><{$vo.shipping_date|date="y-m-d",###}></td>
+            <td><{$vo.cutoff_date|date="y-m-d",###}></td>
+            <td><{$vo.boat_name}></td>
+            <td><{$vo.sea_limitation}>&nbsp;Day</td>
+            <td><{$vo.ETA|date="y-m-d",###}></td>
+            <td><{$vo.EDD|date="y-m-d",###}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>?seaprice_id=<{$vo.id}>&sl_id=<{$vo.sl_id}>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
+          <{/volist}>
         </tbody>
       </table>
       <div class="page">
         <div>
-
+            <{$page}>
         </div>
       </div>
 
     </div>
     <script>
-      layui.use('laydate', function () {
-        var laydate = layui.laydate;
+            /*执行搜索车队或者港口*/
+    function search(){
+         $.ajax({
+                type:'get',
+                url:"<{:url('admin/Price/price_route')}>",     
+                data: $("#searchform").serialize(),
+                dataType:"json",
+                async:false,
+                success:function(data){
+                  if(data.status==1){
+                    return 1;
+                  }else{
+                      return 0 ;
+                 }
+                         
+               }, error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.status);
+               console.log(XMLHttpRequest.readyState);
+               console.log(textStatus);
+                  },
 
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
         });
-
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
-      });
-
-
+        return 1;
+    }
+    
+        
       /*用户-删除*/
       function member_del(obj, did) {
         layer.confirm('确认要删除吗？', function (index) {
@@ -130,7 +144,7 @@
       function toajax(dataArray) {
         $.ajax({
           type: 'POST',
-          url: "<{:url('admin/member/toDel')}>",
+          url: "<{:url('admin/Price/route_del')}>",
           data: dataArray,
           dataType: "json",
           success: function (data) {

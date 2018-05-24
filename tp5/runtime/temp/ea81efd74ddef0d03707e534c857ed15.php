@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527152852;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527153323;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -106,13 +106,13 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('Order/order_edit'); ?>">
+                            <a _href="<?php echo url('Order/order_waste'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>查看订单</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('Order/order_waste'); ?>">
+                            <a _href="<?php echo url('Order/order_edit'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>废弃订单</cite>
                             </a>
@@ -215,7 +215,7 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('CarMan/man_List'); ?>">
+                            <a _href="<?php echo url('Car_Man/man_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>车队人员资料</cite>
                             </a>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527152852;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153323;}*/ ?>
 <body>
     <!-- 左侧菜单开始 -->
     <div class="left-nav">
@@ -51,13 +51,13 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('Order/order_edit'); ?>">
+                            <a _href="<?php echo url('Order/order_waste'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>查看订单</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('Order/order_waste'); ?>">
+                            <a _href="<?php echo url('Order/order_edit'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>废弃订单</cite>
                             </a>
@@ -160,7 +160,7 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('CarMan/man_List'); ?>">
+                            <a _href="<?php echo url('Car_Man/man_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>车队人员资料</cite>
                             </a>

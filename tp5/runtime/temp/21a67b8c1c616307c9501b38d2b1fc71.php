@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527152852;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\disable_list.html";i:1527152852;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153323;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\disable_list.html";i:1527153873;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -68,7 +68,7 @@
             <td>2018-02-02</td>
             <td class="td-manage">
               <a title="返回"  onclick="" href="javascript:;">
-                <i class="layui-icon">&#xe605;</i>
+                <i class="layui-icon">&#xe65c;</i>
               </a>
               <a title="删除" onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
@@ -98,48 +98,6 @@
           elem: '#end' //指定元素
         });
       });
-
-
-      /*用户-删除*/
-    function member_del(obj,did){
-        layer.confirm('确认要删除吗？',function(index){
-            //转成数组形式
-            var dataA=new Array()
-            dataA[0]=did ;
-            var dataArray={id:dataA}
-            toajax(dataArray);
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
-         });
-      }
-
-   function delAll (argument) {
-        var data = tableCheck.getData();
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            var dataArray={id:data};
-            toajax(dataArray);
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
-
-
-       function toajax (dataArray){
-            $.ajax({
-                type:'POST',
-                url:"<?php echo url('admin/member/toDel'); ?>",    
-                data:dataArray,
-                dataType:"json",
-                success:function(data){
-                    if(data.status==1){
-                      return 1;
-                    }else{
-                        return 0 ;
-                  }
-                }
-            })
-        }
     </script>
  
   </body>

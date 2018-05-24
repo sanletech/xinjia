@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527151452;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1527061531;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153128;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1527153128;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -117,9 +117,9 @@
     </div>
       <div>
           <?php 
-        // for($i=580;$i<900; $i++ ){
-        // echo '<i class="layui-icon">&#xe'.$i.'\;</i>';
-        //echo "$i</br>"; }
+      //   for($i=580;$i<900; $i++ ){
+        //echo '<i class="layui-icon">&#xe'.$i.'\;</i>';
+       // "$i</br>"; }
           ?>
           <div>
     <script>
