@@ -1,0 +1,94 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <link rel="stylesheet" href="__STATIC__/css/route_add.css">
+        <form class="layui-form" action="">
+            <div class="route layui-row">
+                <!-- 账号 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input" value="<{18865483321}>">
+                    </div>
+                </div>
+                <!-- 密码 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入密码" class="layui-input" value="zhu123456">
+                    </div>
+                </div>
+                <!-- 联系电话 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input" value="小猪">
+                    </div>
+                </div>
+                <!-- 20GP -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">联系电话</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入联系电话" class="layui-input" value="13055493654">
+                    </div>
+                </div>
+                <!-- 海上时效 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户角色</label>
+                    <div class="layui-input-block">
+                        <select name="modules" lay-verify="required" id="day" lay-search="">
+                            <option value="0">选择角色</option>
+                            <option value="1" selected = "selected">业务员</option>
+                            <option value="2">操作员</option>
+                            <option value="3">管理员</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 是否推荐 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="是" title="启动"  checked="">
+                        <input type="radio" name="sex" value="否" title="禁用">
+                    </div>
+                </div>
+                <!-- 按钮 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block an">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">添加</button>
+                        <button class="layui-btn cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <script type="text/javascript">
+            //取消关闭模态框
+            $('.cancel').click(function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+
+            layui.use(['form', 'layedit', 'laydate'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
+
+                //日期
+                laydate.render({
+                    elem: '#date'
+                });
+                laydate.render({
+                    elem: '#date1'
+                });
+
+            });
+        </script>
+
+    </body>
+
+    </html>

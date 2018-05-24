@@ -1,0 +1,78 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <link rel="stylesheet" href="__STATIC__/css/route_add.css">
+        <form class="layui-form" action="">
+            <div class="route layui-row">
+                <!-- 总柜量 -->
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12" style="margin-bottom: 5px;">总柜量：<?php 50 ?></div>
+                    <div class="layui-col-xs12">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入总柜量" class="layui-input" value="<{10}>">
+                    </div>
+                </div>
+                <!-- 总交易 -->
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12" style="margin-bottom: 5px;">总交易：</div>
+                    <div class="layui-col-xs12">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入总交易" class="layui-input" value="30">
+                    </div>
+                </div>
+                <!-- 各个船公司总柜量 -->
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12" style="margin-bottom: 5px;">各个船公司总柜量：</div>
+                    <div class="layui-col-xs12">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="船公司总柜量" class="layui-input" value="20">
+                    </div>
+                </div>
+                <!-- 各个码头总柜量 -->
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12" style="margin-bottom: 5px;">各个码头总柜量：</div>
+                    <div class="layui-col-xs12">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="码头总柜量" class="layui-input" value="10">
+                    </div>
+                </div>
+                <!-- 各个码头各个船公司的总柜量 -->
+                <div class="layui-form-item">
+                    <div class="layui-col-xs12" style="margin-bottom: 5px;">各个码头各个船公司的总柜量：</div>
+                    <div class="layui-col-xs12">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="各个码头各个船公司的总柜量" class="layui-input" value="50">
+                    </div>
+                </div>
+                <!-- 按钮 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block an">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确认</button>
+                        <button class="layui-btn cancel">取消</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <script type="text/javascript">
+            $('.cancel').click(function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+            layui.use(['form', 'layedit', 'laydate'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
+
+                //日期
+                laydate.render({
+                    elem: '#date'
+                });
+                laydate.render({
+                    elem: '#date1'
+                });
+
+            });
+        </script>
+
+    </body>
+
+    </html>

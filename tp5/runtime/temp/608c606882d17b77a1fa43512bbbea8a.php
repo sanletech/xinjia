@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\company_list.html";i:1526898696;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\user_list.html";i:1526983522;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,13 +36,13 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username"  placeholder="请输入账号名" autocomplete="off" class="layui-input">
+          <input type="text" name="username"  placeholder="账号名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Member/company_add"); ?>',700,550)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Member/mAdd"); ?>',600,400)"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -51,29 +51,31 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>企业名</th>
-            <th>密码</th>
-            <th>推荐人</th>
-            <th>创建时间</th>
+            <th>账号</th>
+            <th>姓名</th>
+            <th>联系电话</th>
+            <th>用户角色</th>
+            <th>用户状态</th>
             <th>操作</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
+        <tbody >
+          <tr >
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
               
-            <td class="tdata">广州散了科技公司</td>
+            <td class="tdata">18865483321</td>
+            <td>小猪</td>
             <td>13055493654</td>
-            <td>吴先生</td>
-            <td>2018-02-02</td>
+            <td>业务员</td>
+            <td>启用</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<?php echo url("Member/company_edit"); ?>',700,550)" href="javascript:;">
+              <a title="编辑"  onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="禁用" onclick="" href="javascript:;">
-                <i class="layui-icon">&#xe60b;</i>
+              <a title="删除" onclick="" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
