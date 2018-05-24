@@ -126,10 +126,14 @@ class Price extends Model
             $sl_start = $port_id['0'];
             $sl_over  = $port_id[$port_length-1];
             $sl_middle = array_splice($port_id,'1','-1');
-            if( !( $this->lineStart($sl_start, $sl_over)) ){
+            $sl_startover = $this->lineStart($sl_start, $sl_over);
+            if( !$sl_startover ){
                 $res =  Db::name('sealine')->insert(['sl_start'=>$sl_start,'sl_over'=>$sl_over]);
-                $sealine_id = Db::name('sealine')->getLastInsID();
-                $pricedata['sl_id'] = $sealine_id;
+                $pricedata['sl_id'] = Db::name('sealine')->getLastInsID();
+            }  else {
+                $pricedata['sl_id'] = $sl_startover['id'] ;
+            }
+                
                    $str='';
                    foreach ($sl_middle as $k =>$v){
                    $str .= "('$sealine_id','$v','$k'),";

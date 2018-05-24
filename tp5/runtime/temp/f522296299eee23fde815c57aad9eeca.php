@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\member\member_list.html";i:1526614745;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527154465;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\member\member_list.html";i:1527154465;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,7 +36,9 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username"  placeholder="请输入账号" autocomplete="off" class="layui-input">
+          <input class="layui-input" placeholder="开始日" name="start" id="start">
+          <input class="layui-input" placeholder="截止日" name="end" id="end">
+          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -67,7 +69,7 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
               
-            <td class="tdata">1</td>
+            <td class="tdata"><?php echo $vo['id']; ?></td>
             <td><?php echo $vo['loginname']; ?></td>
             <td><?php echo $vo['username']; ?></td>
             <td><?php echo $vo['logintime']; ?></td>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-05-22 19:26:27
+Date: 2018-05-24 17:35:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4129,9 +4129,9 @@ DROP TABLE IF EXISTS `hl_sealine`;
 CREATE TABLE `hl_sealine` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `sl_start` varchar(20) DEFAULT NULL COMMENT '船运始发港口',
-  `sL_over` varchar(10) DEFAULT NULL COMMENT '船运目的港口',
+  `sl_over` varchar(10) DEFAULT NULL COMMENT '船运目的港口',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sealine
@@ -4142,6 +4142,31 @@ INSERT INTO `hl_sealine` VALUES ('3', '1', '4');
 INSERT INTO `hl_sealine` VALUES ('4', '1', '5');
 INSERT INTO `hl_sealine` VALUES ('5', '2', '1');
 INSERT INTO `hl_sealine` VALUES ('6', '2', '3');
+INSERT INTO `hl_sealine` VALUES ('7', '1', '2');
+INSERT INTO `hl_sealine` VALUES ('8', '1', '2');
+INSERT INTO `hl_sealine` VALUES ('9', '1', '2');
+INSERT INTO `hl_sealine` VALUES ('10', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('11', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('12', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('13', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('14', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('15', '3', '7');
+INSERT INTO `hl_sealine` VALUES ('16', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('17', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('18', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('19', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('20', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('21', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('22', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('23', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('24', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('25', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('26', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('27', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('28', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('29', '2', '4');
+INSERT INTO `hl_sealine` VALUES ('30', '4', '11');
+INSERT INTO `hl_sealine` VALUES ('31', '4', '11');
 
 -- ----------------------------
 -- Table structure for `hl_seaprice`
@@ -4149,25 +4174,34 @@ INSERT INTO `hl_sealine` VALUES ('6', '2', '3');
 DROP TABLE IF EXISTS `hl_seaprice`;
 CREATE TABLE `hl_seaprice` (
   `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `sl_id` int(20) DEFAULT NULL COMMENT '船运线路ID',
+  `sl_id` int(20) DEFAULT NULL COMMENT '船起始港口和终点港口sealine运线路ID',
+  `sm_id` int(20) DEFAULT NULL COMMENT '船中间港口sea_midddle 的运线路line_id',
   `ship_id` int(20) DEFAULT NULL COMMENT '船公司id',
-  `20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子船运价格',
-  `40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子船运价格',
+  `price_20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子船运价格',
+  `price_40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子船运价格',
   `shipping_date` int(20) DEFAULT NULL COMMENT '船期',
   `cutoff_date` int(20) DEFAULT NULL COMMENT '截单日期',
   `boat_name` varchar(40) DEFAULT NULL COMMENT '船名',
   `sea_limitation` int(10) DEFAULT NULL COMMENT '海上时效',
   `ETA` int(10) DEFAULT NULL COMMENT '预计到港时间',
   `EDD` int(10) DEFAULT NULL COMMENT 'Expected delivery date预计送货日期',
-  `generalize` int(20) DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
+  `generalize` int(1) unsigned zerofill DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
+  `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_seaprice
 -- ----------------------------
-INSERT INTO `hl_seaprice` VALUES ('1', '1', '1', '3000.00', '5000.00', '1529683200', '1529683200', '和谐号', '5', '1529683200', '1529683200', null);
-INSERT INTO `hl_seaprice` VALUES ('2', '2', '2', '3500.00', '5500.00', '1529683200', '1529683200', '飞鸟号', '6', '1529683200', '1529683200', null);
+INSERT INTO `hl_seaprice` VALUES ('1', '1', null, '1', '3000.00', '5000.00', '1529683200', '1529683200', '和谐号', '5', '1529683200', '1529683200', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('2', '2', null, '2', '3500.00', '5500.00', '1529683200', '1529683200', '飞鸟号', '6', '1529683200', '1529683200', '0', null);
+INSERT INTO `hl_seaprice` VALUES ('3', '25', null, '1', '1000.00', '5000.00', '1525708800', '1526313600', '啊啊', '4', '1526054400', '1526313600', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('4', '26', null, '1', '1000.00', '5000.00', '1525708800', '1526313600', '啊啊', '4', '1526054400', '1526313600', '0', null);
+INSERT INTO `hl_seaprice` VALUES ('5', '27', null, '1', '1000.00', '5000.00', '1525708800', '1526313600', '啊啊', '4', '1526054400', '1526313600', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('6', '28', null, '1', '1000.00', '5000.00', '1525708800', '1526313600', '啊啊', '4', '1526054400', '1526313600', '0', null);
+INSERT INTO `hl_seaprice` VALUES ('7', '29', null, '1', '1000.00', '5000.00', '1525708800', '1526313600', '啊啊', '4', '1526054400', '1526313600', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('8', '30', null, '3', '10000.00', '555555.00', '1525708800', '1527004800', '爱爱爱', '5', '1526140800', '1526400000', '0', null);
+INSERT INTO `hl_seaprice` VALUES ('9', '31', null, '3', '10000.00', '555555.00', '1525708800', '1527004800', '爱爱爱', '5', '1526140800', '1526400000', '1', null);
 
 -- ----------------------------
 -- Table structure for `hl_seaprice-aa`
@@ -4192,6 +4226,47 @@ CREATE TABLE `hl_seaprice-aa` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `hl_sea_line`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_sea_line`;
+CREATE TABLE `hl_sea_line` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sealine_id` int(11) DEFAULT NULL COMMENT 'sealine表的id,即航线的id',
+  `port_id` int(11) DEFAULT NULL COMMENT '中间港口的id',
+  `sequence` int(11) DEFAULT NULL COMMENT '中间港口的顺序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_sea_line
+-- ----------------------------
+INSERT INTO `hl_sea_line` VALUES ('1', '1', '4', '1');
+INSERT INTO `hl_sea_line` VALUES ('2', '1', '2', '2');
+INSERT INTO `hl_sea_line` VALUES ('3', '1', '3', '3');
+INSERT INTO `hl_sea_line` VALUES ('4', '2', '5', '1');
+INSERT INTO `hl_sea_line` VALUES ('5', '2', '5', '5');
+INSERT INTO `hl_sea_line` VALUES ('6', '2', '3', '2');
+INSERT INTO `hl_sea_line` VALUES ('7', '3', '4', '1');
+INSERT INTO `hl_sea_line` VALUES ('8', '3', '5', '2');
+INSERT INTO `hl_sea_line` VALUES ('9', '4', '7', '1');
+INSERT INTO `hl_sea_line` VALUES ('10', '4', '8', '2');
+INSERT INTO `hl_sea_line` VALUES ('11', '5', '3', '1');
+INSERT INTO `hl_sea_line` VALUES ('12', '5', '4', '2');
+INSERT INTO `hl_sea_line` VALUES ('13', '6', '5', '1');
+INSERT INTO `hl_sea_line` VALUES ('14', '6', '6', '2');
+INSERT INTO `hl_sea_line` VALUES ('15', '25', '3', '0');
+INSERT INTO `hl_sea_line` VALUES ('16', '26', '3', '0');
+INSERT INTO `hl_sea_line` VALUES ('17', '27', '3', '0');
+INSERT INTO `hl_sea_line` VALUES ('18', '28', '3', '0');
+INSERT INTO `hl_sea_line` VALUES ('19', '29', '3', '0');
+INSERT INTO `hl_sea_line` VALUES ('20', '30', '2', '0');
+INSERT INTO `hl_sea_line` VALUES ('21', '30', '7', '1');
+INSERT INTO `hl_sea_line` VALUES ('22', '30', '3', '2');
+INSERT INTO `hl_sea_line` VALUES ('23', '31', '2', '0');
+INSERT INTO `hl_sea_line` VALUES ('24', '31', '7', '1');
+INSERT INTO `hl_sea_line` VALUES ('25', '31', '3', '2');
+
+-- ----------------------------
 -- Table structure for `hl_sea_middle`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_sea_middle`;
@@ -4199,18 +4274,18 @@ CREATE TABLE `hl_sea_middle` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sealine_id` int(11) DEFAULT NULL COMMENT 'sealine表的id,即航线的id',
   `middle_port` int(11) DEFAULT NULL COMMENT '中间港口的id',
-  `order` int(11) DEFAULT NULL COMMENT '中间港口的顺序',
+  `sequence` int(11) DEFAULT NULL COMMENT '中间港口的顺序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sea_middle
 -- ----------------------------
-INSERT INTO `hl_sea_middle` VALUES ('1', '1', '1', '1');
+INSERT INTO `hl_sea_middle` VALUES ('1', '1', '4', '1');
 INSERT INTO `hl_sea_middle` VALUES ('2', '1', '2', '2');
 INSERT INTO `hl_sea_middle` VALUES ('3', '1', '3', '3');
 INSERT INTO `hl_sea_middle` VALUES ('4', '2', '5', '1');
-INSERT INTO `hl_sea_middle` VALUES ('5', '2', '5', '1');
+INSERT INTO `hl_sea_middle` VALUES ('5', '2', '5', '5');
 INSERT INTO `hl_sea_middle` VALUES ('6', '2', '3', '2');
 INSERT INTO `hl_sea_middle` VALUES ('7', '3', '4', '1');
 INSERT INTO `hl_sea_middle` VALUES ('8', '3', '5', '2');
@@ -4220,6 +4295,17 @@ INSERT INTO `hl_sea_middle` VALUES ('11', '5', '3', '1');
 INSERT INTO `hl_sea_middle` VALUES ('12', '5', '4', '2');
 INSERT INTO `hl_sea_middle` VALUES ('13', '6', '5', '1');
 INSERT INTO `hl_sea_middle` VALUES ('14', '6', '6', '2');
+INSERT INTO `hl_sea_middle` VALUES ('15', '25', '3', '0');
+INSERT INTO `hl_sea_middle` VALUES ('16', '26', '3', '0');
+INSERT INTO `hl_sea_middle` VALUES ('17', '27', '3', '0');
+INSERT INTO `hl_sea_middle` VALUES ('18', '28', '3', '0');
+INSERT INTO `hl_sea_middle` VALUES ('19', '29', '3', '0');
+INSERT INTO `hl_sea_middle` VALUES ('20', '30', '2', '0');
+INSERT INTO `hl_sea_middle` VALUES ('21', '30', '7', '1');
+INSERT INTO `hl_sea_middle` VALUES ('22', '30', '3', '2');
+INSERT INTO `hl_sea_middle` VALUES ('23', '31', '2', '0');
+INSERT INTO `hl_sea_middle` VALUES ('24', '31', '7', '1');
+INSERT INTO `hl_sea_middle` VALUES ('25', '31', '3', '2');
 
 -- ----------------------------
 -- Table structure for `hl_sequence`
@@ -4403,8 +4489,6 @@ INSERT INTO `hl_shipman` VALUES ('1', '1', '1', '老八', '总经理', '1', '广
 INSERT INTO `hl_shipman` VALUES ('2', '1', '2', '老七', '财务', '2', '广州——北京', '11111', '111', '1111', '222');
 INSERT INTO `hl_shipman` VALUES ('3', '1', '3', '老六', '业务', '2', '广州——上海', '111', '111', '151', '222');
 INSERT INTO `hl_shipman` VALUES ('4', '1', '4', '老五', '跟单', '3', '佛山——南京', '4545', '6546', '546', '2222');
-INSERT INTO `hl_shipman` VALUES ('7', '1', '7', 'sdfs', 'sdfsa', '6', 'sdfsa', '111', '111', '111', '222');
-INSERT INTO `hl_shipman` VALUES ('9', '1', '9', '第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
 INSERT INTO `hl_shipman` VALUES ('10', '1', '10', '第三方', '速读法', '7', '速读法', '1111', '1111', '111', '555');
 
 -- ----------------------------
@@ -4475,7 +4559,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1526953911', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1527126952', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
