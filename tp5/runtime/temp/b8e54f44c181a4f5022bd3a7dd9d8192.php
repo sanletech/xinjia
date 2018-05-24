@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:87:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\company_form.html";i:1526978982;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527151452;s:87:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\company_form.html";i:1527150396;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,59 +38,62 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username" placeholder="账单编号" autocomplete="off" class="layui-input">
-          <input type="text" name="car_name" placeholder="账单日期" autocomplete="off" class="layui-input" id="start">
-          <button class="layui-btn" lay-submit="" lay-filter="sreach">
-            <i class="layui-icon">&#xe615;</i>
-          </button>
+        <form class="layui-form layui-col-md5">
+          <div class="layui-form-item">
+            <label class="layui-form-label">选择月份：</label>
+            <div class="layui-input-block">
+              <select name="time">
+                <option value="0">请选择月份</option>
+              </select>
+            </div>
+          </div>
         </form>
       </div>
-      <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()">
-          <i class="layui-icon"></i>批量删除</button>
-        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
-      </xblock>
+      <!-- 公司报表信息 -->
       <table class="layui-table">
-        <thead>
-          <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary">
-                <i class="layui-icon">&#xe605;</i>
-              </div>
-            </th>
-            <th>总柜量</th>
-            <th>总交易额</th>
-            <th>各个船公司总柜量</th>
-            <th>各个码头总柜量</th>
-            <th>各个码头各个船公司总量</th>
-            <th>操作</th>
-          </tr>
-        </thead>
         <tbody>
           <tr>
-            <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
-                <i class="layui-icon">&#xe605;</i>
-              </div>
-            </td>
-
-            <td class="tdata">10</td>
-            <td>30</td>
+            <td>总金额</td>
+            <td>800</td>
+          </tr>
+          <tr>
+            <td>总柜量</td>
+            <td>300</td>
+          </tr>
+          <tr>
+            <td>船公司一总柜量</td>
+            <td>150</td>
+          </tr>
+          <tr>
+            <td>船公司二总柜量</td>
+            <td>63</td>
+          </tr>
+          <tr>
+            <td>船公司三总柜量</td>
+            <td>56</td>
+          </tr>
+          <tr>
+            <td>船公司四总柜量</td>
+            <td>106</td>
+          </tr>
+          <tr>
+            <td>船公司五总柜量</td>
+            <td>130</td>
+          </tr>
+          <tr>
+            <td>船公司六总柜量</td>
             <td>20</td>
-            <td>10</td>
-            <td>50</td>
-            <td class="td-manage">
-              <a title="修改报表" onclick="x_admin_show('报表修改','<?php echo url("Financial/company_edit"); ?>',700,450)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-              &nbsp;&nbsp;
-              <a title="删除" onclick="" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-            </td>
+          </tr>
+          <tr>
+            <td>船公司七总柜量</td>
+            <td>260</td>
+          </tr>
+          <tr>
+            <td>船公司八总柜量</td>
+            <td>310</td>
           </tr>
         </tbody>
+
       </table>
       <div class="page">
         <div>
@@ -113,50 +116,17 @@
           elem: '#end' //指定元素
         });
       });
-
-
-      /*用户-删除*/
-      function member_del(obj, did) {
-        layer.confirm('确认要删除吗？', function (index) {
-          //转成数组形式
-          var dataA = new Array()
-          dataA[0] = did;
-          var dataArray = { id: dataA }
-          toajax(dataArray);
-          $(obj).parents("tr").remove();
-          layer.msg('已删除!', { icon: 1, time: 1000 });
-        });
-      }
-
-      function delAll(argument) {
-        var data = tableCheck.getData();
-        layer.confirm('确认要删除吗？' + data, function (index) {
-          //捉到所有被选中的，发异步进行删除
-          var dataArray = { id: data };
-          toajax(dataArray);
-          layer.msg('删除成功', { icon: 1 });
-          $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
-
-
-      function toajax(dataArray) {
-        $.ajax({
-          type: 'POST',
-          url: "<?php echo url('admin/member/toDel'); ?>",
-          data: dataArray,
-          dataType: "json",
-          success: function (data) {
-            if (data.status == 1) {
-              return 1;
-            } else {
-              return 0;
-            }
-          }
-        })
+      //表格宽度
+      $('td').css('width', '50%');
+      //选择日期
+      var arry = ['2018年5月','2018年6月'];
+      console.log($('select[name=time]')[0]);
+      for (let i = 0; i < arry.length; i++) {
+        $('select[name=time]').append('<option value="'+arry[i]+'">'+arry[i]+'</option>');
       }
     </script>
 
+  
   </body>
 
   </html>

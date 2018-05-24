@@ -1,0 +1,101 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <link rel="stylesheet" href="__STATIC__/css/route_add.css">
+        <link rel="stylesheet" href="__STATIC__/css/all_order.css">
+        <div>
+            <table class="layui-table layui-table-item" id="te">
+                <thead>
+                    <tr>
+                        <th>船名航次</th>
+                        <th>开航日期</th>
+                        <th>装货日期</th>
+                        <th>箱量</th>
+                        <th>箱型</th>
+                        <th>柜号</th>
+                        <th>发货方</th>
+                        <th>装货地点</th>
+                        <th>送货地址</th>
+                        <th>发票</th>
+                        <th>运费</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>新温州061Ｎ</td>
+                        <td>2018-3-1</td>
+                        <td>2018-3-1</td>
+                        <td>12</td>
+                        <td>20Gp</td>
+                        <td>TEMU3046802</td>
+                        <td>开平市美富达调味品食品有限公司</td>
+                        <td>开平塘口镇水边村委会</td>
+                        <td>河北省衡水市武强县食品城</td>
+                        <td>6%</td>
+                        <td>600</td>
+                    </tr>
+                    <tr>
+                        <td>新温州061Ｎ</td>
+                        <td>2018-3-1</td>
+                        <td>2018-3-1</td>
+                        <td>12</td>
+                        <td>20Gp</td>
+                        <td>TEMU3046802</td>
+                        <td>开平市美富达调味品食品有限公司</td>
+                        <td>开平塘口镇水边村委会</td>
+                        <td>河北省衡水市武强县食品城</td>
+                        <td>11%</td>
+                        <td>1300</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="xinxi">
+                <div class="zong">
+                    <strong class="zy">总运费：
+                        <span>16100.00</span>
+                    </strong>
+                </div>
+                <div class="yh">
+                    <p>注：烦请在收到此单三个工作日内与我司核对并盖章回传020-22197970，否则我司将视为认可此笔费用。另汇款后请将水单传真至我司确认，谢谢合作！</p>
+                    <p>工商银行,开户行：广州黄埔支行,账号6222 0836 0200 6218 504 户名：陈灿炎</p>
+                    <p>交通银行,开户行：广州黄埔支行,账号6222 0836 0200 6218 504 户名：陈灿炎</p>
+                    <p>建设银行,开户行：广州黄埔支行,账号6222 0836 0200 6218 504 户名：陈灿炎</p>
+                    <p>农业银行,开户行：广州黄埔支行,账号6222 0836 0200 6218 504 户名：陈灿炎</p>
+                    <div class="fapiao">
+                        <h2>
+                            <strong>发票金额：
+                                <span>15699.12</span>
+                            </strong>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $('.cancel').click(function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+
+            layui.use(['form', 'layedit', 'laydate'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
+
+                //日期
+                laydate.render({
+                    elem: '#date'
+                });
+                laydate.render({
+                    elem: '#date1'
+                });
+
+            });
+        </script>
+
+    </body>
+
+    </html>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526987309;s:88:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\customer_list.html";i:1526976147;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527151452;s:88:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\customer_list.html";i:1527134688;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -93,12 +93,8 @@
             <td style="color: red;">6%</td>
             <td style="color: red;">否</td>
             <td class="td-manage">
-              <a title="生成账单" onclick="" href="javascript:;">
+              <a title="生成账单" onclick="x_admin_show('生产账单','<?php echo url("Financial/customer_data"); ?>',600,300)" href="javascript:;">
                 <i class="layui-icon">&#xe62a;</i>
-              </a>
-              &nbsp;&nbsp;
-              <a title="生成公司报表" onclick="" href="javascript:;">
-                <i class="layui-icon">&#xe63c;</i>
               </a>
             </td>
           </tr>

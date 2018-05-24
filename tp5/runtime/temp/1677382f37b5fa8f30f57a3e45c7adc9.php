@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526987309;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527151452;}*/ ?>
 <body>
     <!-- 左侧菜单开始 -->
     <div class="left-nav">
@@ -119,6 +119,12 @@
                         <i class="iconfont nav_right">&#xe697;</i>
                     </a>
                     <ul class="sub-menu">
+                        <li>
+                            <a _href="<?php echo url('keeper/user_list'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>用户列表</cite>
+                            </a>
+                        </li>
                         <li>
                             <a _href="<?php echo url('keeper/admin_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>

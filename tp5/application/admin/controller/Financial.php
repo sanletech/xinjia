@@ -22,13 +22,21 @@ class Financial extends Base
     {
       return $this->view->fetch('Financial\financial_edit'); 
     }
-
+    //详情账单列表
+    public function financial_select() 
+    {
+        return $this->view->fetch('Financial\financial_select'); 
+    }
     //客户订单
     public function customer_list() 
     {
         return $this->view->fetch('Financial\customer_list'); 
     }
-
+    //客户报表截取时间
+    public function customer_data() 
+    {
+        return $this->view->fetch('Financial\customer_data'); 
+    }
     //公司报表
     public function company_form() 
     {

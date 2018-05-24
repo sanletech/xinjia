@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527060834;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_add.html";i:1527150682;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527150848;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\user_edit.html";i:1527151384;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,46 +26,26 @@
         <link rel="stylesheet" href="/static/admin/css/route_add.css">
         <form class="layui-form" action="">
             <div class="route layui-row">
-                <!-- 账号 -->
+                <!-- 禁用 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">账号</label>
+                    <label class="layui-form-label">禁用：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入账号" class="layui-input" value="">
+                        <input type="radio" name="money" value="是" title="是">&nbsp;
+                        <input type="radio" name="money" value="否" title="否" checked="">
                     </div>
                 </div>
-                <!-- 密码 -->
+                <!-- 用户角色 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
+                    <label class="layui-form-label">用户角色：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入密码" class="layui-input" value="">
+                        <input type="radio" name="kai" value="是" title="业务员">&nbsp;
+                        <input type="radio" name="kai" value="否" title="普通用户" checked="">
                     </div>
                 </div>
-                <!-- 联系电话 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">姓名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input" value="">
-                    </div>
-                </div>
-                <!-- 20GP -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">联系电话</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入联系电话" class="layui-input" value="">
-                    </div>
-                </div>
-                <!-- 海上时效 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">用户角色</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" class="layui-input layui-disabled" value="操作员" disabled>
-                    </div>
-                </div>
-
                 <!-- 按钮 -->
                 <div class="layui-form-item">
-                    <div class="layui-input-block an">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">添加</button>
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">确定</button>
                         <button class="layui-btn cancel">取消</button>
                     </div>
                 </div>
@@ -74,7 +54,6 @@
         </form>
 
         <script type="text/javascript">
-            //取消关闭模态框
             $('.cancel').click(function () {
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);

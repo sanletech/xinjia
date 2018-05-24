@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526987309;s:89:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\financial_list.html";i:1526975173;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527151452;s:89:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\financial_list.html";i:1527150506;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -61,7 +61,7 @@
             </th>
             <th>账单编号</th>
             <th>账单日期</th>
-            <th>发票</th>
+            <th>总收款</th>
             <th>开票</th>
             <th>收款</th>
             <th>操作</th>
@@ -77,10 +77,14 @@
 
             <td class="tdata">2264962316464</td>
             <td>2018-10-03</td>
-            <td style="color: red;">6%</td>
+            <td>53600</td>
             <td style="color: red;">否</td>
-            <td style="color: red;">否</td> 
+            <td style="color: red;">否</td>
             <td class="td-manage">
+              <a title="查看详情" onclick="x_admin_show('详情信息','<?php echo url("Financial/financial_select"); ?>',1300,450)" href="javascript:;">
+                <i class="layui-icon">&#xe649;</i>
+              </a>
+              &nbsp;&nbsp;
               <a title="修改账单" onclick="x_admin_show('账单修改','<?php echo url("Financial/financial_edit"); ?>',500,350)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>

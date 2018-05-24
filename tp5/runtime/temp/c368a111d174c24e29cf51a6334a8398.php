@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526987309;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1526436519;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527151452;s:77:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Car\car_list.html";i:1527061531;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -91,7 +91,7 @@
             <td><?php echo $vo['city_name']; ?></td>
             <td><?php echo $vo['address']; ?></td>
              <td class="td-status">
-              <span class="layui-btn layui-btn-normal layui-btn-mini"><?php echo $vo['status']; ?></span></td>
+              <span class="layui-btn layui-btn-mini zt"><?php echo $vo['status']; ?></span></td>
             <td><?php echo $vo['symbiosis']; ?></td>
             <td class="td-manage">
               <a title="查看" onclick="x_admin_show('查看 <?php echo $vo['car_name']; ?>','<?php echo url('Car/car_info'); ?>?car_id=<?php echo $vo['car_id']; ?>',700,400)" href="javascript:;">
@@ -123,35 +123,34 @@
           ?>
           <div>
     <script>
-           /*执行搜索车队或者港口*/
-           
-    function search(){
-         $.ajax({
-                type:'get',
-                url:"<?php echo url('admin/Car/car_list'); ?>",     
-                data: $("#searchform").serialize(),
-              //  data:{"success":true,"id":"1"} ,
-                dataType:"json",
-                async:false,
-                success:function(data){
-                  if(data.status==1){
-                    return 1;
-                  }else{
-                      return 0 ;
-                 }
-                         
-               },   error: function(XMLHttpRequest, textStatus, errorThrown){
-                    console.log(XMLHttpRequest.status);
-                    console.log(XMLHttpRequest.readyState);
-                    console.log(textStatus);
-                },
+      /*执行搜索车队或者港口*/
+      function search() {
+        $.ajax({
+          type: 'get',
+          url: "<?php echo url('admin/Car/car_list'); ?>",
+          data: $("#searchform").serialize(),
+          //  data:{"success":true,"id":"1"} ,
+          dataType: "json",
+          async: false,
+          success: function (data) {
+            if (data.status == 1) {
+              return 1;
+            } else {
+              return 0;
+            }
+
+          }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log(XMLHttpRequest.status);
+            console.log(XMLHttpRequest.readyState);
+            console.log(textStatus);
+          },
 
         });
         return 1;
-    }
-        
-        
-      layui.use('laydate', function(){
+      }
+
+
+      layui.use('laydate', function () {
         var laydate = layui.laydate;
         //执行一个laydate实例
         laydate.render({
@@ -163,49 +162,57 @@
           elem: '#end' //指定元素
         });
       });
-     
-  
+
+
       /*用户-删除*/
-    function member_del(obj,did){
-        layer.confirm('确认要删除吗？',function(index){
-            //转成数组形式
-            var dataA=new Array()
-            dataA[0]=did ;
-            var dataArray={id:dataA}
-            toajax(dataArray);
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
-         });
+      function member_del(obj, did) {
+        layer.confirm('确认要删除吗？', function (index) {
+          //转成数组形式
+          var dataA = new Array()
+          dataA[0] = did;
+          var dataArray = { id: dataA }
+          toajax(dataArray);
+          $(obj).parents("tr").remove();
+          layer.msg('已删除!', { icon: 1, time: 1000 });
+        });
       }
 
- function delAll (argument) {
+      function delAll(argument) {
         var data = tableCheck.getData();
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            var dataArray={id:data};
-            toajax(dataArray);
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+        layer.confirm('确认要删除吗？' + data, function (index) {
+          //捉到所有被选中的，发异步进行删除
+          var dataArray = { id: data };
+          toajax(dataArray);
+          layer.msg('删除成功', { icon: 1 });
+          $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
 
 
-       function toajax (dataArray){
-            $.ajax({
-                type:'POST',
-                url:"<?php echo url('admin/car/toDel'); ?>",    
-                data:dataArray,
-                dataType:"json",
-                success:function(data){
-                    if(data>0){
-                     layer.msg('删除成功', {icon: 1});
-                     $(".layui-form-checked").not('.header').parents('tr').remove();
-                    }else{
-                        return 0 ;
-                  }
-                }
-            })
+      function toajax(dataArray) {
+        $.ajax({
+          type: 'POST',
+          url: "<?php echo url('admin/car/toDel'); ?>",
+          data: dataArray,
+          dataType: "json",
+          success: function (data) {
+            if (data > 0) {
+              layer.msg('删除成功', { icon: 1 });
+              $(".layui-form-checked").not('.header').parents('tr').remove();
+            } else {
+              return 0;
+            }
+          }
+        })
+      }
+      //状态样式切换
+      for (let i = 0; i < $('.zt').length; i++) {
+        if ($('.zt').eq(i).html() == '正常') {
+          $('.zt').eq(i).addClass('layui-btn-normal');
+        } else {
+          $('.zt').eq(i).addClass('layui-btn-danger');
         }
+      }
     </script>
  
   </body>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526987309;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_list.html";i:1526987680;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527151452;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_list.html";i:1527150745;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -48,7 +48,7 @@
             <xblock>
                 <button class="layui-btn layui-btn-danger" onclick="delAll()">
                     <i class="layui-icon"></i>批量删除</button>
-                <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" Keeper/admin_add "); ?>',700,400)">
+                <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Keeper/admin_add"); ?>',700,400)">
                     <i class="layui-icon"></i>添加</button>
                 <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
             </xblock>
@@ -80,12 +80,12 @@
                         <td>zhu123456</td>
                         <td>小猪</td>
                         <td>13055493654</td>
-                        <td>业务员</td>
+                        <td>操作员</td>
                         <td>
-                            <span class="layui-btn layui-btn-normal layui-btn-mini">启用</span>
+                            <span class="layui-btn layui-btn-mini zt">启用</span>
                         </td>
                         <td class="td-manage">
-                            <a title="编辑" onclick="x_admin_show('更改权限','<?php echo url(" Keeper/admin_edit "); ?>',600,400)" href="javascript:;">
+                            <a title="编辑" onclick="x_admin_show('更改权限','<?php echo url("Keeper/admin_edit"); ?>',600,400)" href="javascript:;">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
                             <a title="删除" onclick="" href="javascript:;">
@@ -104,12 +104,12 @@
                         <td>zhu123456</td>
                         <td>小猪</td>
                         <td>13055493654</td>
-                        <td>业务员</td>
+                        <td>操作员</td>
                         <td>
-                            <span class="layui-btn layui-btn-danger layui-btn-mini">禁用</span>
+                            <span class="layui-btn layui-btn-mini zt">禁用</span>
                         </td>
                         <td class="td-manage">
-                            <a title="编辑" onclick="x_admin_show('更改权限','<?php echo url(" Keeper/admin_edit "); ?>',600,400)" href="javascript:;">
+                            <a title="编辑" onclick="x_admin_show('更改权限','<?php echo url("Keeper/admin_edit"); ?>',600,400)" href="javascript:;">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
                             <a title="删除" onclick="" href="javascript:;">
@@ -141,6 +141,16 @@
                 });
             });
 
+            //状态样式切换
+            for(let i = 0;i < $('.zt').length;i++){
+                console.log($('.zt').eq(i).html());
+                
+                if($('.zt').eq(i).html() == '启用'){
+                    $('.zt').eq(i).addClass('layui-btn-normal');
+                }else{
+                    $('.zt').eq(i).addClass('layui-btn-danger');
+                }
+            }
         </script>
 
     </body>
