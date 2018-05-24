@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1527076947;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
-=======
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1526035633;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1526961057;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
->>>>>>> 5e6c00c694aaca5ced28534dfd89ea694e91c94b
->>>>>>> 1d45d2d9541146d6179c90d1932d29a1d83c6d7a
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527152674;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1527076947;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>

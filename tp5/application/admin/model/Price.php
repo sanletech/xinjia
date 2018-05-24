@@ -126,23 +126,25 @@ class Price extends Model
             $sl_start = $port_id['0'];
             $sl_over  = $port_id[$port_length-1];
             $sl_middle = array_splice($port_id,'1','-1');
-            $sql="select id ";
-            $res =  Db::name('sealine')->insert(['sl_start'=>$sl_start,'sl_over'=>$sl_over]);
-            $sealine_id = Db::name('sealine')->getLastInsID();
-            $pricedata['sl_id'] = $sealine_id;
-                $str='';
-                foreach ($sl_middle as $k =>$v){
-                $str .= "('$sealine_id','$v','$k'),";
-                }
-            $str=rtrim("$str",',');
-            $sql = "insert into hl_sea_middle(sealine_id,middle_port,sequence) values".$str;
-            if($res){
-                $response['success'][] = '添加sealine表'; 
-                $res2 =Db::execute($sql);
-                        if($res2){
-                        $response['success'][] = '添加sea_middle表';
-                        }else{ $response['fail'][] = '添加sea_middle表';   }
-            }else{$response['fail'][] = '添加sealine表'; }
+            if( !( $this->lineStart($sl_start, $sl_over)) ){
+                $res =  Db::name('sealine')->insert(['sl_start'=>$sl_start,'sl_over'=>$sl_over]);
+                $sealine_id = Db::name('sealine')->getLastInsID();
+                $pricedata['sl_id'] = $sealine_id;
+                   $str='';
+                   foreach ($sl_middle as $k =>$v){
+                   $str .= "('$sealine_id','$v','$k'),";
+                   }
+                $str=rtrim("$str",',');
+                $sql = "insert into hl_sea_middle(sealine_id,middle_port,sequence) values".$str;
+                if($res){
+                    $response['success'][] = '添加sealine表'; 
+                    $res2 =Db::execute($sql);
+                           if($res2){
+                           $response['success'][] = '添加sea_middle表';
+                           }else{ $response['fail'][] = '添加sea_middle表';   }
+               }else{$response['fail'][] = '添加sealine表'; }
+            }
+           
                 
         }else {return false;  } 
               
@@ -176,14 +178,19 @@ class Price extends Model
     return  $response;
     }
     
-    //查询航线是否存在 参数分别为 起始港口id, 目的港口id, 中间港口的id依照航行顺序排列的数组
-    public function  line($sl_start,$sl_over,$sl_middle){
+    //查询航线是否存在 参数为中间港口的id依照航行顺序排列的数组
+    public function  line($sl_middle){
         $v = implode(',', $sl_middle);
         $k = implode(',', array_keys($sl_middle));
-       
-        $sql = "select id from hl_sealine where sl_start = '$sl_start' and sl_over = '$sl_over' ";
         $sql2 = "select sealine_id, group_concat(middle_port) as middle_str, group_concat(sequence) as sequence_str from hl_sea_middle group by sealine_id;";
-        $sql3 = "select sealine_id from ('$sql2') as STR  where  STR.middle_str like '%$v%' and STR.sequence_str like '%$k%'"; 
-        
+        $sql3 = "select sealine_id from ('$sql2') as STR  where  STR.middle_str like '$v' and STR.sequence_str like '$k'"; 
+        $res = Db::query($sql3);
+        return $res ;
+    }
+        //查询航线是否存在 参数分别为 起始港口id, 目的港口id, 
+    public function  lineStart($sl_start,$sl_over){
+        $sql = "select id from hl_sealine where sl_start = '$sl_start' and  sl_over = '$sl_over'";
+        $res = Db::query($sql);
+        return $res ;
     }
 }
