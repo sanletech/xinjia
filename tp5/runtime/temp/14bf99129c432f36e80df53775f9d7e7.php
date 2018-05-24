@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153128;s:89:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Financial\financial_edit.html";i:1527143511;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153128;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\user_edit.html";i:1527151384;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,20 +26,20 @@
         <link rel="stylesheet" href="/static/admin/css/route_add.css">
         <form class="layui-form" action="">
             <div class="route layui-row">
-                <!-- 开票 -->
+                <!-- 禁用 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">开票：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="kai" value="是" title="是">&nbsp;
-                        <input type="radio" name="kai" value="否" title="否" checked="">
-                    </div>
-                </div>
-                <!-- 收款 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">收款：</label>
+                    <label class="layui-form-label">禁用：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="money" value="是" title="是">&nbsp;
                         <input type="radio" name="money" value="否" title="否" checked="">
+                    </div>
+                </div>
+                <!-- 用户角色 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户角色：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="kai" value="是" title="业务员">&nbsp;
+                        <input type="radio" name="kai" value="否" title="普通用户" checked="">
                     </div>
                 </div>
                 <!-- 按钮 -->

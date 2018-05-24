@@ -1,0 +1,83 @@
+#modal-default td {
+  border-top: 0;
+  border-right: 1px #e6e6e6 solid;
+  border-bottom: 1px #e6e6e6 solid;
+  border-left: 0;
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 3px;
+  box-sizing: border-box; }
+#modal-default table {
+  border-top: 1px #e6e6e6 solid;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 1px #e6e6e6 solid;
+  box-sizing: border-box; }
+#modal-default .wth {
+  width: 756px;
+  height: 1086px;
+  margin: 0 auto; }
+  #modal-default .wth .cen {
+    text-align: center; }
+  #modal-default .wth .rig {
+    text-align: right; }
+  #modal-default .wth .wt {
+    font-size: 16px;
+    position: relative;
+    margin-top: 30px; }
+    #modal-default .wth .wt .dd {
+      position: absolute;
+      right: 3%;
+      top: 0; }
+  #modal-default .wth .fot {
+    margin-top: 30px; }
+    #modal-default .wth .fot .shang {
+      margin-top: 10px; }
+  #modal-default .wth .dibu {
+    margin: 10px 0;
+    padding: 5px 0;
+    border-top: 1px solid #000;
+    color: #808080; }
+#modal-default .yi {
+  display: block;
+  width: 12.5%;
+  float: left; }
+#modal-default .yi1 {
+  display: block;
+  width: 25%;
+  float: left; }
+#modal-default .er {
+  float: left;
+  display: block;
+  width: 87.5%; }
+#modal-default .er2 {
+  display: block;
+  width: 75%;
+  float: left; }
+#modal-default ol {
+  padding-left: 20px;
+  padding-top: 10px; }
+  #modal-default ol li {
+    list-style: decimal; }
+
+.kp {
+  text-align: center;
+  margin-top: 20px; }
+
+.xinxi span {
+  color: red;
+  font-size: 20px; }
+.xinxi .zong {
+  overflow: hidden; }
+  .xinxi .zong .zy {
+    float: right; }
+.xinxi .yh {
+  position: relative; }
+  .xinxi .yh .fapiao {
+    position: absolute;
+    bottom: 0;
+    right: 0; }
+    .xinxi .yh .fapiao h2 {
+      color: #ff9f19; }
+
+/*# sourceMappingURL=all_order.css.map */

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1523153942;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527154465;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527153323;}*/ ?>
+>>>>>>> 9d9ba22b71d215f61c3da6cc3e323e6d5669db4a
 <!doctype html>
 <html lang="en">
 <head>
@@ -202,6 +206,12 @@
                     </a>
                     <ul class="sub-menu">
                         <li>
+                            <a _href="<?php echo url('keeper/user_list'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>用户列表</cite>
+                            </a>
+                        </li>
+                        <li>
                             <a _href="<?php echo url('keeper/admin_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>管理员列表</cite>
@@ -236,7 +246,7 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('CarMan/man_List'); ?>">
+                            <a _href="<?php echo url('Car_Man/man_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>车队人员资料</cite>
                             </a>

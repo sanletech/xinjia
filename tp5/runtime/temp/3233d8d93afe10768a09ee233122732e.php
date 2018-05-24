@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526987309;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_add.html";i:1526984519;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527060834;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_add.html";i:1527150682;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -58,12 +58,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户角色</label>
                     <div class="layui-input-block">
-                        <select name="modules" lay-verify="required" id="day" lay-search="">
-                            <option value="0">选择角色</option>
-                            <option value="1">业务员</option>
-                            <option value="2">操作员</option>
-                            <option value="3">管理员</option>
-                        </select>
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" class="layui-input layui-disabled" value="操作员" disabled>
                     </div>
                 </div>
 

@@ -195,6 +195,9 @@ class Price extends Model
     public function  lineStart($sl_start,$sl_over){
         $sql = "select id from hl_sealine where sl_start = '$sl_start' and  sl_over = '$sl_over'";
         $res = Db::query($sql);
+        if($res){
+            
+        }
         return $res ;
     }
 }
