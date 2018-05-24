@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:80:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_add.html";i:1526984823;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:80:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_add.html";i:1527132108;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,7 +24,7 @@
 
   <body>
     <link rel="stylesheet" href="/static/admin/css/route_add.css">
-    <form class="layui-form" id="sealinefrom">
+     <form class="layui-form" id="routeaddform">
     <div class="route layui-row">
         <!-- 航务公司 -->
         <div class="layui-form-item">
@@ -69,14 +69,14 @@
         <div class="layui-form-item">
             <label class="layui-form-label">20GP</label>
             <div class="layui-input-inline">
-                <input type="text" name="20GP" lay-verify="title" autocomplete="off" placeholder="20GP" class="layui-input">
+                <input type="text" name="price_20GP" lay-verify="title" autocomplete="off" placeholder="20GP" class="layui-input">
             </div>
         </div>
         <!-- 40HQ -->
         <div class="layui-form-item">
             <label class="layui-form-label">40HQ</label>
             <div class="layui-input-inline">
-                <input type="text" name="40HQ" lay-verify="title" autocomplete="off" placeholder="40HQ" class="layui-input">
+                <input type="text" name="price_40HQ" lay-verify="title" autocomplete="off" placeholder="40HQ" class="layui-input">
             </div>
         </div>
         <!-- 航线详情 -->
@@ -103,7 +103,7 @@
         <!-- 按钮 -->
         <div class="layui-form-item">
             <div class="layui-input-block an">
-                <button class="layui-btn" onclick="toajax()">添加</button>
+                <button  type ="button" class="layui-btn" onclick="toajax()">添加</button>
                 <button class="layui-btn cancel">取消</button>
             </div>
         </div>
@@ -122,7 +122,8 @@
         for (let i = 1; i < 31; i++) {
           $('#day').append('<option value="' + i + '">' + i + '天</option>');
         }
-
+        //默认第五天
+        $("#day").val(5);
 
         layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
@@ -153,8 +154,7 @@
         var js_port = '<?php echo $js_port; ?>';
             js_port=JSON.parse(js_port);        
         
-      //  var url="<?php echo url('admin/Price/route_toadd'); ?>";
-         var url="<?php echo url('admin/ShipMan/to_add'); ?>";
+        var url="<?php echo url('admin/Price/route_toadd'); ?>";
         
         function loadship(){
 //             //加载 所有的船公司名字简称和相应的id
@@ -164,9 +164,8 @@
             var ship_length =js_ship.length;
             var shipHtml = '';
             for(var i=0;i<ship_length;i++){
-                
                 shipHtml += '<option  value="' + js_ship[i].id  +'_'+ js_ship[i].ship_short_name +'">' + js_ship[i].ship_short_name + '</option>';  
-            }
+            } 
             $form.find('select[name=ship]').append(shipHtml);
             form.render();
             form.on('select(ship)', function(data) {
@@ -204,6 +203,10 @@
                  var port_name=port['1'];
                 
                 var mark = document.getElementById('search_port');
+//                var childNote =mark.children;
+//                if (childNote.length>1){
+//                    childNote[0]
+//                }
                  //已经存的港口就不执行
                 if(! document.getElementById(port_id+'_'+port_name)  ){
                         selectPortShip(port_id,port_name,mark);
@@ -223,7 +226,7 @@
                 });
             var ipt= document.createElement('input');
                 ipt.type="hidden";
-                ipt.name=port_name;
+                ipt.name='port_name[]';
                 ipt.value=port_id;
             var  i_tag=document.createElement('i');
                  i_tag.className="layui-icon";
@@ -243,15 +246,35 @@
                 //删除本身button
             obj.parentNode.removeChild(obj);
         }
+//        function toajax (){
+//             $.ajax({
+//                 type:"POST",
+//                 url:url,
+//                 cache:false,
+//                 data: $("#caraddform").serialize(),
+//                 dataType:"json",
+//                 async:true,
+//               //  data:{"id":"hehehe"},
+//                 success:function(msg){
+//                     alert(msg);
+//                 },
+//                 error:function (XMLHttpRequest,textStatus,errorThrown){
+//                     alert(XMLHttpRequest.responseText);
+//                     alert(XMLHttpRequest.status);
+//                     alert(XMLHttpRequest.readyState);
+//                     alert(textStatus);
+//                 }
+//             });
+//        }
+        
         
         function toajax (){
-            //console.log($("#sealinefrom").serialize());
             var loading = layer.load(1);
-             post_adduser = true;    
+            post_adduser = true;    
                 $.ajax({
                     type:'POST',
                     url:url,    
-                    data: {"name":"小明","age":14},
+                    data: $("#routeaddform").serialize(),
                     dataType:"json",
                     success:function(status){
                         if(status>0){
@@ -277,10 +300,9 @@
                             }
                 });
                 return false;//只此一句
-            }               
+            }             
       
     </script>
 
   </body>
-
   </html>

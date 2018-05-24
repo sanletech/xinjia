@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1526961057;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1527076947;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -84,8 +84,8 @@
             <td class="tdata"><?php echo $vo['id']; ?></td>
             <td><?php echo $vo['ship_short_name']; ?></td> 
             <td><?php echo $vo['start_port'].'>>>'.$vo['over_port']; ?></td>
-            <td>￥<?php echo $vo['20GP']; ?></td>
-            <td>￥<?php echo $vo['40HQ']; ?></td> 
+            <td>￥<?php echo $vo['price_20GP']; ?></td>
+            <td>￥<?php echo $vo['price_40HQ']; ?></td> 
             <td><?php echo date("y-m-d",$vo['shipping_date']); ?></td>
             <td><?php echo date("y-m-d",$vo['cutoff_date']); ?></td>
             <td><?php echo $vo['boat_name']; ?></td>
@@ -93,7 +93,7 @@
             <td><?php echo date("y-m-d",$vo['ETA']); ?></td>
             <td><?php echo date("y-m-d",$vo['EDD']); ?></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>?seaprice_id=<?php echo $vo['id']; ?>',700,500)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>?seaprice_id=<?php echo $vo['id']; ?>&sl_id=<?php echo $vo['sl_id']; ?>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
