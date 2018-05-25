@@ -33,12 +33,6 @@ class Price extends Base
         $this->assign('page',$page);
         return $this->view->fetch('Price/price_route'); 
     }
-    //拖车运价
-    public function price_trailer() 
-    {               
-        return $this->view->fetch('Price/price_trailer'); 
-    }
-   //航线添加页面
     public function route_add(){
           //传递所有的港口给前台页面
         $sql3="select *  from  hl_port ";
@@ -73,8 +67,9 @@ class Price extends Base
     public function route_edit(){
         $seaprice_id = input('get.seaprice_id');
         $sl_id = input('get.sl_id');
+        $sm_id = input('get.sm_id');
         $seaprice = new PriceM;
-        $res = $seaprice->price_route_edit($seaprice_id,$sl_id); 
+        $res = $seaprice->price_route_edit($seaprice_id,$sl_id,$sm_id); 
        // $this->_p($res);exit;
        //传递原始数据给页面
         $data = $res[0];
@@ -100,13 +95,14 @@ class Price extends Base
     //航线执行修改
     public function route_toedit(){
         $data = $this->request->param();
-        $this->_p($data);exit;
+       // $this->_p($data);exit;
         $seaprice = new PriceM;
         $res = $seaprice->price_route_toedit($data);          
         if(!array_key_exists('fail', $res)){
             $status =1; 
         }else {$status =0;} 
         json_encode($status);  
+         return $status; 
     }
     //航线删除
     public function route_del(){
@@ -123,7 +119,12 @@ class Price extends Base
     }
     
     
-    
+        //拖车运价
+    public function price_trailer() 
+    {               
+        return $this->view->fetch('Price/price_trailer'); 
+    }
+   //航线添加页面
     
     //拖车添加
     public function trailer_add(){

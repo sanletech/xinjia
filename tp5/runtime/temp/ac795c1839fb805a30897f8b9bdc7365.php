@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527152224;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html";i:1526615141;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153323;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html";i:1526457370;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
->>>>>>> 9d9ba22b71d215f61c3da6cc3e323e6d5669db4a
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527161015;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html";i:1526615141;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>

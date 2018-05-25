@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527152224;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_list.html";i:1527152224;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153128;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_list.html";i:1527150745;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
->>>>>>> 9d9ba22b71d215f61c3da6cc3e323e6d5669db4a
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527161015;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_list.html";i:1527161014;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>

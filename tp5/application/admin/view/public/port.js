@@ -1,50 +1,4 @@
-<{include file='./public/header'/}>
-  
-  <body>
-    <div class="x-body">
-        <form class="layui-form" id="editform" method="post">
-            <div class="layui-form-item">
-                <label class="layui-form-label">
-                <span class="x-red">*</span>业务港口
-                </label>
-                <div class="layui-input-inline">
-                    <select name="province" lay-filter="province" >
-                        <option value="">请选择省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" id ='citydiv' style="display: none;">
-                    <select name="city" lay-filter="city" >
-                        <option value="">请选择市</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" style="display: none;">
-                    <select name="area"  lay-filter="area">
-                        <option value="">请选择县</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" style="display: none;">
-                    <select name="town"  lay-filter="town">
-                        <option value="">请选择镇</option>
-                    </select>
-                </div>
-            </div>
-        <!--  <button id="btn_tag" class="layui-btn layui-btn-normal"  style="display: none;"  onclick="del(this) ;return false">
-               <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
-            <div class="layui-form-item" id ="search_port">
-            </div> 
-            
-          
-        
-            <div class="layui-form-item">
-                <label  class="layui-form-label">
-                </label>
-                <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
-            </div>
-         </form>
-    </div>
- <script type="text/javascript" src="/static/admin/js/area.js"></script>
- <script>
-   //初始数据
+  //初始数据
         var areaData = Area;
         var $form;
         var form;
@@ -123,14 +77,14 @@
         
                 
          //加载镇
-        function loadtown(towns) {
-            var townHtml = '';
-            for (var i = 0; i < towns.length; i++) {
-                townHtml += '<option value="' + towns[i].areaCode + '">' + towns[i].areaName + '</option>';
+        function loadtown(areas) {
+            var areaHtml = '';
+            for (var i = 0; i < areas.length; i++) {
+                areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
             }
-            $form.find('select[name=town]').html(townHtml).parent().show();
+            $form.find('select[name=area]').html(areaHtml).parent().show();
             form.render();
-            form.on('select(town)', function(data) {
+            form.on('select(area)', function(data) {
                 //console.log(data);
             });
         }
@@ -150,9 +104,4 @@
             });
         }
                             
-                   
-    
- </script>
-</body>
-</html>
-
+                

@@ -1,16 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527060834;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_edit.html";i:1527060834;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
-=======
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_edit.html";i:1527141454;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
-=======
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526981949;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_edit.html";i:1526974668;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1526628628;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_edit.html";i:1526975624;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
->>>>>>> 5e6c00c694aaca5ced28534dfd89ea694e91c94b
->>>>>>> 1d45d2d9541146d6179c90d1932d29a1d83c6d7a
->>>>>>> 1b87e710b7bc1d19f7869a2845addfff547d5d14
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527161015;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_edit.html";i:1527220952;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -39,6 +27,7 @@
      <form class="layui-form" id="routeaddform">
         <input type="hidden" name="id" value ="<?php echo $data['id']; ?>"/>
         <input type="hidden" name="sl_id" value ="<?php echo $data['sl_id']; ?>"/>
+        <input type="hidden" name="sm_id" value ="<?php echo $data['sm_id']; ?>"/>
     <div class="route layui-row">
         <!-- 航务公司 -->
         <div class="layui-form-item">
