@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527577827;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1527652686;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527673583;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1527673521;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -94,7 +94,7 @@
             <td><?php echo date("y-m-d",$vo['ETA']); ?></td>
             <td><?php echo date("y-m-d",$vo['EDD']); ?></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>?seaprice_id=<?php echo $vo['id']; ?>&sl_id=<?php echo $vo['sl_id']; ?>',700,500)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>?seaprice_id=<?php echo $vo['id']; ?>&sl_id=<?php echo $vo['sl_id']; ?>&sm_id=<?php echo $vo['sm_id']; ?>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
