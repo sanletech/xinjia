@@ -217,4 +217,28 @@ class Price extends Model
        
         return $id ;
     }
+    
+    public function price_trailer_toadd($port_id, $address_id, $load, $send){
+        $cl_id = $this->lineCar($port_id,$address_id);
+        $mtime =  time();
+        $load_car =$load['car'];
+        $load_price_20GP = $load['price_20GP'];
+        $load_price_40HQ = $load['price_40HQ'];
+        $sql = "insert into hl_carprice(cl_id ,car_id ,price_20GP,price_40HQ , variable ,mtime)  "
+                . " values('$cl_id','$load_car','$load_price_20GP','$load_price_40HQ','$mtime')  ";
+        $send_car =$send['car'];
+        $send_price_20GP = $send['price_20GP'];
+        $send_price_40HQ = $send['price_40HQ'];
+        
+    }
+    
+         //查询车队运输线是否存在 参数分别为 港口id, 目的地址id, 
+    public function  lineCar($port_id,$address_id){
+        $sql = "select id from hl_car_line where port_id = '$port_id,' and  address_id = '$address_id'";
+        $res = Db::query($sql);
+        $id=  $res ? ($id = $res['0']['id']) :($id =0);
+       
+        return $id ;
+    }
+    
 }

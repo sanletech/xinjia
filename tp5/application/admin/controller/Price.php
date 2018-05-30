@@ -126,10 +126,46 @@ class Price extends Base
     }
    //航线添加页面
     
-    //拖车添加
+    //拖车添加展示页面
     public function trailer_add(){
+        //传递所有的港口给前台页面
+        $sql="select *  from  hl_port ";
+        $port_data =Db::query($sql);
+       //转成json格式传给js
+        $js_port = json_encode($port_data);
+        
+        //传递所有的车队给前台页面
+        $sql2="select id ,car_name from  hl_cardata ";
+        $car_data =Db::query($sql2);
+       //转成json格式传给js
+        $js_car = json_encode($car_data);
+        
+        $this->view->assign('js_port',$js_port);
+        $this->view->assign('js_car',$js_car);
+        
         return $this->view->fetch("Price/trailer_add");
     }
+    //拖车添加执行页面
+    public function trailer_toadd(){
+        $data = $this->request->param();
+        //  $this->_v($data);exit;
+        //根据港口和地址 贮存车队送货/装货线路
+        $port_id = strstr($data['port'],'_',true); 
+        $address_id =  $data['town'] ? $data['town'] :$data['area']; 
+        $load = $data['load'];
+        $load['car']= strstr($data['car_load'],'_',true); 
+        $send = $data['send'];
+        $send['car']= strstr($data['car_send'],'_',true); 
+        $carprice = new PriceM;
+        $res = $carprice-> price_trailer_toadd($port_id, $address_id, $load, $send);
+        if(!array_key_exists('fail', $res)){
+            $status =1; 
+        }else {$status =0;} 
+        json_encode($status);   
+        return $status;   
+      
+    }
+    
     //拖车修改
     public function trailer_edit(){
       
