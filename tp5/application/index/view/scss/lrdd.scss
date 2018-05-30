@@ -1,0 +1,258 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+button{
+  cursor: pointer;
+}
+.banner{
+  width: 100%;
+  height: 500px;
+  background-image: url(../image/banner.jpg);
+  background-size: 100% 100%;
+  margin-bottom:80px;
+}
+.se{
+  background-color: $lan;
+  color:#fff;
+  border-radius: 15px;
+}
+.xxtx{
+  width: 80%;
+  margin: 0 auto;
+  // 订单信息
+  .xxtx_dd{
+    border: 1px solid #808080;
+    padding:0 10px;
+    .xx{
+      padding:10px 0;
+      border-bottom:1px solid #808080;
+      margin-bottom:20px;
+    }
+    .dd{
+      height: 250px;
+      .tu{
+        height: 100%;
+      }
+      .dd_nei{
+        height: 80%;
+        //路线
+        .dd_yu{
+          padding:0px 23px;
+        }
+        .bian{
+          border-left: 1px solid #808080;
+        }
+        .dd_lu{
+          font-size: 16px;
+          height: 35px;
+          line-height: 35px;
+          padding:5px 0;
+          margin-bottom:50px;
+          border-bottom:1px solid #808080;
+          span:nth-child(1){
+            color:#808080;
+            float: left;
+          }
+          span:nth-child(2){
+            float: right;
+          }
+          i{
+            color:#808080;
+          }
+          .a{
+            strong{
+              margin-right: 20px;
+            }
+          }
+          .b{
+            strong{
+              margin-left: 20px;
+            }
+          }
+          .c{
+            text-align: center;
+            i{
+              color:$lan;
+            }
+          }
+        }
+        //下单日期
+        .yj{
+          border-bottom:1px solid #808080;
+          >div{
+            margin:10px 0;
+            height: 30px;
+            span:nth-child(1){
+              color:#808080;
+              float: left;
+            }
+            span:nth-child(2){
+              float: right;
+            }
+          }
+        }
+      }
+      // 航次
+      .dd_ming{
+        height: 20%;
+        padding:5px 30px;
+        span{
+          color:$lan;
+        }
+        >div:nth-child(2){
+          text-align: center;
+        }
+        >div:nth-child(3){
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  //委托信息
+  .er{
+    margin-top:50px;
+    overflow: hidden;
+    .er_anniu{
+      float: right;
+      margin-top:-5px;
+      button{
+        width: 100px;
+        height:30px;
+        border:0;
+      }
+    }
+    .grid-demo{
+      height: 35px;
+      margin:25px 0;
+      >.layui-col-xs3,.layui-col-xs4{
+        text-align: right;
+        height: 35px;
+        line-height: 35px;
+        span{
+          color:red;
+        }
+      }
+      input,.select{
+        width:80%;
+        height: 30px;
+        padding-left: 13px;
+      }
+      .select{
+        border-radius: 0;
+        select{
+          padding:3px;
+        }
+        &:before{
+          top:9px;
+          right: 1.5em;
+        }
+      }
+      d{
+        border:1px solid #808080;
+        display: inline-block;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        margin-right: 9px;
+      }
+    }
+  }
+
+  //航线介绍
+  .hx{
+    margin-bottom: 20px;
+    height: 100px;
+    overflow: auto;
+  }
+
+  .tjiao{
+    width: 30%;
+    margin:50px auto;
+    a{
+      display: inline-block;
+      height: 35px;
+      width: 100px;
+      line-height: 35px;
+      text-align: center;
+      color:#fff;
+      background-color: $cheng;
+      border: 0;
+      cursor: pointer;
+      &:nth-child(2){
+        float: right;
+      }
+    }
+  }
+}
+
+#modal-default{
+  top:30%;
+  .iziModal-header{
+    background-color: #b6b6b6 !important;
+    h2{
+      text-align: left;
+      color:#000;
+    }
+  }
+  .iziModal-content{
+    text-align: center;
+    .qr{
+      margin: 30px 0;
+    }
+    .en{
+      a{
+        display: inline-block;
+        height: 35px;
+        width: 100px;
+        line-height: 35px;
+        text-align: center;
+        color:#fff;
+        background-color: $lan;
+        border-radius: 10px;
+      }
+    }
+  }
+}
+#wt1,#wt2{
+  .iziModal-header{
+    background-color: $lan !important;
+  }
+}
+
+#wt1 .biao .xin{
+  li{
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    &:hover{
+      .nei{
+        border: 1px solid $cheng;
+        background: #f5f5f5;
+      }
+    }
+    .nei{
+      border: 1px solid #808080;
+      padding:10px;
+      overflow: hidden;
+      .tiao{
+        height: 25px;
+        line-height: 25px;
+        margin: 10px 0;
+      }
+      .le{
+        float: left;
+        width: 80px;
+        text-align: right;
+      }
+      .rig{
+        width: 330px;
+        float: left;
+        .wu{
+          height: 50px;
+        }
+      }
+    }
+  }
+}

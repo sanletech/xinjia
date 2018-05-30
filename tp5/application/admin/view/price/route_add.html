@@ -17,7 +17,9 @@
         <div class="layui-form-item">
             <label class="layui-form-label">船名</label>
             <div class="layui-input-inline">
-                <input type="text" id="car_name" name="boat_name" class="layui-input" value="">
+                <select name="ship" lay-filter="ship" lay-search>
+                    <option value="" >请选择船名</option>
+                </select>  
             </div>
         </div>
         <!-- 船期 -->
@@ -57,9 +59,22 @@
                 <input type="text" name="price_40HQ" lay-verify="title" autocomplete="off" placeholder="40HQ" class="layui-input">
             </div>
         </div>
+        <!-- 港口航线 -->
+        <div class="layui-form-item">
+            <div class="layui-inline">
+              <label class="layui-form-label">港口航线</label>
+              <div class="layui-input-inline" style="width: 82px;">
+                <input type="text" name="price_min" placeholder="起" autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-form-mid">-</div>
+              <div class="layui-input-inline" style="width: 82px;">
+                <input type="text" name="price_max" placeholder="终" autocomplete="off" class="layui-input">
+              </div>
+            </div>
+          </div>
         <!-- 航线详情 -->
         <div class="layui-form-item ">
-            <label class="layui-form-label">港口航线</label>
+            <label class="layui-form-label">航线详情</label>
             <div class="layui-input-inline" >
                 <select name ="port"  lay-filter="port" lay-search>
                     <option value="">请选择港口</option>

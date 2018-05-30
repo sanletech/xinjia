@@ -1,0 +1,56 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+$bian:1px solid #000;
+*{
+  margin: 0;
+  padding: 0;
+}
+
+#top{
+  margin: 30px 0 102px;
+  overflow: hidden;
+  .logo{
+    width: 246px;
+    height: 68px;
+    position: absolute;
+    top:10px;
+    left: 10px;
+  }
+  ul{
+    width: 920px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 0 auto;
+    float: right;
+    li{
+      float: left;
+      width: 100px;
+      margin-left: 8px;
+      border-radius: 10px;
+      a{
+        font-size: 16px;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
+      &:hover{
+        cursor: pointer;
+        background: $lan;
+        a{
+          color:#fff;
+        }
+      }
+    }
+    .hang{
+        background: $lan;
+        a{
+          color:#fff;
+        }
+    }
+  }
+}
+nav{
+  overflow:hidden;
+}

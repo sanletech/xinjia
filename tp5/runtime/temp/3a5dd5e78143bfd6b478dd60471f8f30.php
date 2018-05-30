@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153323;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_audit.html";i:1525837381;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527577827;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_audit.html";i:1527652590;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -54,9 +54,9 @@
             </th>
             <th>订单号</th>
             <th>运单号</th>
+            <th>用户账号</th>
             <th>联系人</th>
-            <th>联系电话</th>
-            <th>运输条款</th>
+            <th>业务员</th>
             <th>航线</th>
             <th>货名</th>
             <th>船名/航次</th>
@@ -72,9 +72,9 @@
               
             <td class="tdata">2264962316464</td>
             <td>178NASF3554</td>
-            <td>小猪</td>
             <td>13055493654</td>
-            <td>DO-DY</td>
+            <td>小猪</td>
+            <td>业务员</td>
             <td>北京-上海</td>
             <td>钢铁</td>
             <td>锦旗18/1782N</td>

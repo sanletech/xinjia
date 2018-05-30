@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527153323;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527577827;s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527577827;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -82,6 +82,12 @@
                             <a _href="<?php echo url('Member/disable_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>禁用账号</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<?php echo url('Member/member_check'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>用户跟踪</cite>
                             </a>
                         </li>
                     </ul>
@@ -215,15 +221,27 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('Car_Man/man_List'); ?>">
+                            <a _href="<?php echo url('CarMan/man_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>车队人员资料</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<?php echo url('CarMan/ship_name'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>船名管理</cite>
                             </a>
                         </li>
                         <li>
                             <a _href="admin-rule.html">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>港口管理</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<?php echo url('CarMan/sealine_list'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>航线详情</cite>
                             </a>
                         </li>
                     </ul>

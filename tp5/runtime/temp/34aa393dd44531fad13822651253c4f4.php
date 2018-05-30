@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153323;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1526542864;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527577827;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1527668453;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -85,25 +85,25 @@
                     <i class="layui-icon">&#xe605;</i>
                     <span>创建时间：2018-03-08</span>
                   </div>
-                  <span class="top_ma">船期：2018-03-05</span>
+                  <span class="top_ma">
+                    <span>船期：2018-03-05</span>
+                    <span>走船时间：2018-04-23</span>
+                    <span>离港时间：2018-05-10</span>
+                  </span>
                 </div>
                 <div class="cen">
                   <div class="cen_le layui-col-md12">
-                    <div class="layui-col-md2">
+                    <div class="layui-col-md3">
                       <p>运单号：178NJIYD045</p>
                       <p>船名/航次：场景18/1782N</p>
                     </div>
-                    <div class="layui-col-md2">
-                      <p>运输条款：DO-CY</p>
+                    <div class="layui-col-md3">
+                      <p>收货人：广州三乐科技有限公司</p>
                       <p>货名：钢筋</p>
                     </div>
-                    <div class="layui-col-md2">
+                    <div class="layui-col-md3">
                       <p>航线：揭阳-青岛</p>
                       <p>箱型*箱量：20GP*1</p>
-                    </div>
-                    <div class="layui-col-md3">
-                      <p>离港时间：2018-05-10</p>
-                      <p>收货人：广州三乐科技有限公司</p>
                     </div>
                     <div class="layui-col-md2">
                       <p class="se">状态：待订舱</p>

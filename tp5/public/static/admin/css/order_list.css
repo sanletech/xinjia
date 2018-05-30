@@ -12,6 +12,11 @@
       padding: 10px 10px; }
       .order_list .nei .top .top_ma {
         float: right; }
+        .order_list .nei .top .top_ma span {
+          font-size: 18px;
+          font-weight: 600;
+          margin-left: 20px;
+          color: #0000FF; }
     .order_list .nei .cen {
       padding: 10px 20px;
       height: 100px; }

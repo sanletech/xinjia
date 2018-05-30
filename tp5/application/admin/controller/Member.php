@@ -21,6 +21,16 @@ class Member extends Base
     {
         return $this->view->fetch('Member/member_edit'); 
     }
+    //用户查价
+    public function member_check()
+    {
+        return $this->view->fetch('Member/member_check'); 
+    }
+    //用户状态修改
+    public function state_edit()
+    {
+        return $this->view->fetch('Member/state_edit'); 
+    }
 
     //企业列表
     public function company_list()

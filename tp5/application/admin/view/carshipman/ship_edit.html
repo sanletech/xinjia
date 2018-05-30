@@ -1,0 +1,44 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <div class="x-body">
+            <form class="layui-form" id="editform" method="post">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">船公司名</label>
+                    <div class="layui-input-inline">
+                        <select name="province" lay-filter="province">
+                            <option value="">请选择公司</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">船名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="car_name" name="car_name" class="layui-input" value="{嘻哈}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">航次</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="car_name" name="car_name" class="layui-input" value="ND988">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script>
+
+        </script>
+
+    </body>
+
+    </html>

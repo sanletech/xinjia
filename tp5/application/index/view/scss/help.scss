@@ -1,0 +1,82 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+$bian:1px solid #000;
+.banner{
+  width: 100%;
+  height: 500px;
+  background-image: url(../image/banner.jpg);
+  background-size: 100% 100%;
+  margin-bottom:80px;
+}
+.help{
+  width: 80%;
+  margin:0 auto;
+  .help_top{
+    .hh1{
+      margin: 0 auto;
+      h1{
+        text-align: center;
+        color:$lan;
+      }
+      .heng{
+        width: 30px;
+        margin: 10px auto;
+        border:2px solid $lan;
+      }
+    }
+  }
+
+  .help_cen{
+    margin:30px;
+    >div:nth-child(1){
+      border:$bian;
+      height: 477px;
+    }
+    .bz{
+      margin-left: 20px;
+      #bzhu{
+        overflow: hidden;
+        width: 55%;
+        margin:0  auto;
+        li{
+          float: left;
+          width: 100px;
+          height: 30px;
+          text-align: center;
+          line-height: 30px;
+          &:hover{
+            cursor:pointer;
+            background-color: $cheng;
+            color:#fff;
+          }
+          &:nth-child(n+2){
+            margin-left: 5px;
+          }
+        }
+        .bb{
+          background-color: $cheng;
+          color:#fff;
+        }
+      }
+    }
+    .bz_nei{
+      display: none;
+      ul{
+        li{
+          height:20px;
+          margin:10px 5px 20px 0;
+          border-bottom: 1px dashed #808080;
+          padding-bottom:16px;
+          h3{
+            float: left;
+          }
+          p{
+            float:right;
+            color:#808080;
+          }
+        }
+      }
+    }
+  }
+}

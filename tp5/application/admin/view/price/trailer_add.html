@@ -68,7 +68,12 @@
             <div class="layui-form-item">
               <label class="layui-form-label">装货车队名:</label>
               <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车队" class="layui-input">
+                <select>
+                  <option value="">请选择车队</option>
+                  <option value="1" selected="">喜欢</option>
+                  <option value="2">哈哈</option>
+                  <option value="3">福看看</option>
+                </select>
               </div>
             </div>
           </div>
@@ -91,16 +96,20 @@
                   <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
-              <div class="layui-form-item">
-                <label class="layui-form-label">送货车队名:</label>
-                <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车队" class="layui-input">
-                </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">送货车队名:</label>
+              <div class="layui-input-block">
+                <select>
+                  <option value="">请选择车队</option>
+                  <option value="1" selected="">喜欢</option>
+                  <option value="2">哈哈</option>
+                  <option value="3">福看看</option>
+                </select>
               </div>
             </div>
           </div>
         </div>
-
         <div class="layui-form-item layui-col-xs12 niu">
           <div class="layui-col-md1 layui-col-md-offset4">
             <div class="grid-demo grid-demo-bg1">
@@ -113,7 +122,6 @@
             </div>
           </div>
         </div>
-      </div>
     </form>
 
     <script type="text/javascript">

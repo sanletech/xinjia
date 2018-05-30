@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527153323;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1527153128;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527577827;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1527652686;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -40,6 +40,7 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" id="searchform">
+            <input type="text" name="port_start" value="" placeholder="请输入航务公司" autocomplete="off" class="layui-input">
           <input type="text" name="port_start" value="<?php echo !empty($port_start)?$port_start : '';; ?>" placeholder="请输入始发港口" autocomplete="off" class="layui-input">
           <input type="text" name="port_over"  value="<?php echo !empty($port_over)?$port_over : '';; ?>" placeholder="请输入目的港口" autocomplete="off" class="layui-input">
           <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="search()">
