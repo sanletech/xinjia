@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527673583;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\trailer_add.html";i:1527673627;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527673840;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\trailer_add.html";i:1527734690;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -68,13 +68,13 @@
             <div class="layui-form-item">
               <label class="layui-form-label">装货20GP:</label>
               <div class="layui-input-block">
-                <input type="text" name="load['pirce_20GP']" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                <input type="text" name="load[price_20GP]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">装货40HQ:</label>
               <div class="layui-input-block">
-                <input type="text" name="load['pirce_40HQ']" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                <input type="text" name="load[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item">
@@ -96,13 +96,13 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">送货20GP:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="send['pirce_20GP']" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                  <input type="text" name="send[price_20GP]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">送货40HQ:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="send['pirce_40HQ']" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                  <input type="text" name="send[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">

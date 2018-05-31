@@ -70,13 +70,16 @@ document.write("<script language='javascript' src='/static/admin/js/area.js'><\/
         function loadArea(areas) {
             var areaHtml = '';
             for (var i = 0; i < areas.length; i++) {
-                areaHtml += '<option value="' + areas[i].areaCode + '">' + areas[i].areaName + '</option>';
+                areaHtml += '<option value="' + areas[i].areaCode + '_'+ areas[i].areaName + '">' + areas[i].areaName + '</option>';
             }
             $form.find('select[name=area]').html(areaHtml).parent().show();
             form.render();
             form.on('select(area)', function(data) {
+                var value = data.value;
+                var d = value.split('_')
+                var code = d[0];
+                var areaName = d[1];
                 //console.log(data.value);
-                var code = data.value;
                 var towns = toajax(code);
             });
         }
@@ -93,7 +96,7 @@ document.write("<script language='javascript' src='/static/admin/js/area.js'><\/
          //       towns = $.parseJSON(towns);
                 var townHtml = '';
                 for (let i in  towns){
-                    townHtml += '<option value="' + i + '">' + towns[i] + '</option>';
+                    townHtml += '<option value="' + i +'_'+ towns[i] + '">' + towns[i] + '</option>';
                 }
                 $form.find('select[name=town]').html(townHtml).parent().show();
                 form.render();

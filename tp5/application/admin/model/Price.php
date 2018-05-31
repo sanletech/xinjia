@@ -218,25 +218,74 @@ class Price extends Model
         return $id ;
     }
     
-    public function price_trailer_toadd($port_id, $address_id, $load, $send){
-        $cl_id = $this->lineCar($port_id,$address_id);
+    public function price_trailer_list($port_name ,$pages=5) {
+        
+         $list = Db::name('carprice')->alias('CP')
+                ->join('hl_car_line L', 'CP.cl_id = L.id', 'left')
+                ->join('hl_cardata CD','CP.car_id = CD.id', 'left')
+                ->join('hl_port P', 'L.port_id =P.id', 'left')
+                ->field('CP.id,CP.cl_id,L.address_name ,CP.car_id, CD.car_name, P.port_name,'
+                        . 'CP.price_20GP,CP.price_40HQ,variable ,CP.latest_order_time')->order('CP.cl_id, CP.variable')->buildSql();
+        
+        $pageParam  = ['query' =>[]]; //设置分页查询参数
+        if($port_name){
+            $list = Db::table($list.' a')->where('a.port_name', 'like', "%{$port_name}%")->buildSql();
+            $pageParam['query']['port_name'] = $port_name;
+        }
+        
+        $lista =Db::table($list.' a')->paginate($pages,false,$pageParam);   
+//            echo '<pre>';
+//                var_dump($list);
+//            echo '</pre>';exit;
+//            echo Db::getLastSql() ;
+        return $lista;
+        
+    }
+    
+    
+    public function price_trailer_toadd($port_id, $address_data, $load, $send){
+        $cl_id = $this->lineCar($port_id,$address_data);
         $mtime =  time();
+       // var_dump($load);exit;
         $load_car =$load['car'];
         $load_price_20GP = $load['price_20GP'];
         $load_price_40HQ = $load['price_40HQ'];
-        $sql = "insert into hl_carprice(cl_id ,car_id ,price_20GP,price_40HQ , variable ,mtime)  "
-                . " values('$cl_id','$load_car','$load_price_20GP','$load_price_40HQ','$mtime')  ";
+        
         $send_car =$send['car'];
         $send_price_20GP = $send['price_20GP'];
         $send_price_40HQ = $send['price_40HQ'];
         
+        $sql = "insert into hl_carprice(cl_id ,car_id ,price_20GP,price_40HQ , variable ,mtime)  "
+                . " values('$cl_id','$load_car','$load_price_20GP','$load_price_40HQ','1','$mtime'),"
+                . "       ('$cl_id','$send_car','$send_price_20GP','$send_price_40HQ','2','$mtime')  ";
+        $res = Db::execute($sql);
+        $res ? $response['success'][] = '添加carprice表':$response['fail'][] = '添加carprice表';
+        return $response ;
     }
     
-         //查询车队运输线是否存在 参数分别为 港口id, 目的地址id, 
-    public function  lineCar($port_id,$address_id){
+         //查询车队运输线是否存在 若存在就反悔线路id不存在就添加 
+         //参数分别为 港口id, 目的地址, 
+    public function  lineCar($port_id,$address_data){
+        $address_id= strstr($address_data,'_',true);
+        
         $sql = "select id from hl_car_line where port_id = '$port_id,' and  address_id = '$address_id'";
         $res = Db::query($sql);
-        $id=  $res ? ($id = $res['0']['id']) :($id =0);
+        //如果没有查到就添加这条记录
+        if(!$res){
+            $address_name=  trim(strrchr($str, '_'),'_'); //镇级地址
+            $town_id = substr($address_id,0,-3);
+            $add_sql = "select group_concat(P.province,C.city,A.area) AS add_name "
+                    . " from hl_area A left join hl_city C on A.father = C.city_id "
+                    . "left join hl_province P on C.father = P.province_id"
+                    . " where A.area_id = '$town_id'";
+            $add_name = Db::query($add_sql);
+            $add_name =  $add_name['0']['add_name'].$address_name;
+            $sql2 = "insert into hl_car_line(port_id ,address_id ,address_name) values('$port_id','$address_id','$add_name')";  
+            $res2 = Db::execute($sql2);
+            $id = Db::name('car_line')->getLastInsID();
+        }  else {
+            $id = $res['0']['id'] ;   
+        }
        
         return $id ;
     }

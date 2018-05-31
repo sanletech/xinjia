@@ -121,10 +121,22 @@ class Price extends Base
     
         //拖车运价
     public function price_trailer() 
-    {               
+    {      
+        $port_name = input('get.port_name');
+      
+        if($port_name){
+            $this->assign('port_name',$port_name); 
+        }
+    
+        $route = new PriceM;
+        $list = $route->price_trailer_list($port_name ,5);
+        //$this->_p($list);exit;
+        $page = $list->render();
+        $this->assign('list',$list);
+        $this->assign('page',$page);
         return $this->view->fetch('Price/price_trailer'); 
     }
-   //航线添加页面
+
     
     //拖车添加展示页面
     public function trailer_add(){
@@ -151,13 +163,13 @@ class Price extends Base
         //  $this->_v($data);exit;
         //根据港口和地址 贮存车队送货/装货线路
         $port_id = strstr($data['port'],'_',true); 
-        $address_id =  $data['town'] ? $data['town'] :$data['area']; 
+        $address_data =  $data['town'] ? $data['town'] :$data['area']; 
         $load = $data['load'];
         $load['car']= strstr($data['car_load'],'_',true); 
         $send = $data['send'];
         $send['car']= strstr($data['car_send'],'_',true); 
         $carprice = new PriceM;
-        $res = $carprice-> price_trailer_toadd($port_id, $address_id, $load, $send);
+        $res = $carprice-> price_trailer_toadd($port_id, $address_data, $load, $send);
         if(!array_key_exists('fail', $res)){
             $status =1; 
         }else {$status =0;} 
