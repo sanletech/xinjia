@@ -104,7 +104,7 @@ class Price extends Base
         json_encode($status);  
          return $status; 
     }
-    //航线删除
+    //航线运价删除
     public function route_del(){
         //接受price_route_del 的id 数组
         $data = $this->request->param();
@@ -169,7 +169,7 @@ class Price extends Base
         $send = $data['send'];
         $send['car']= strstr($data['car_send'],'_',true); 
         $carprice = new PriceM;
-        $res = $carprice-> price_trailer_toadd($port_id, $address_data, $load, $send);
+        $res = $carprice->price_trailer_toadd($port_id, $address_data, $load, $send);
         if(!array_key_exists('fail', $res)){
             $status =1; 
         }else {$status =0;} 
@@ -178,9 +178,53 @@ class Price extends Base
       
     }
     
-    //拖车修改
+    //拖车运价修改页面
     public function trailer_edit(){
-      
+        $data = $this->request->param();
+        $carprice = new PriceM;
+        $res =$carprice->price_trailer_edit($data);   
+        // $this->_p($res);exit;
+        
+        //传递所有的港口给前台页面
+        $sql="select *  from  hl_port ";
+        $port_data =Db::query($sql);
+       //转成json格式传给js
+        $js_port = json_encode($port_data);
+        
+        //传递所有的车队给前台页面
+        $sql2="select id ,car_name from  hl_cardata ";
+        $car_data =Db::query($sql2);
+       //转成json格式传给js
+        $js_car = json_encode($car_data);
+        
+        $this->view->assign('js_port',$js_port);
+        $this->view->assign('js_car',$js_car);
+        $this->view->assign('data',$res);
         return $this->view->fetch("price/trailer_edit");
+    }
+        //拖车运价执行修改
+    public function traile_toedit(){
+        $data = $this->request->param();
+       // $this->_p($data);exit;
+        $carprice = new PriceM;
+        $res =$carprice->price_trailer_toedit($data);          
+        if(!array_key_exists('fail', $res)){
+            $status =1; 
+        }else {$status =0;} 
+        json_encode($status);  
+         return $status; 
+    }
+        //拖车运价执行删除
+    public function traile_del(){
+        //接受price_route_del 的id 数组
+        $data = $this->request->param();
+        $carprice_id = $data['id'];
+        $carprice = new PriceM;
+        $res = $carprice->price_trailer_del($carprice_id);
+         if(!array_key_exists('fail', $res)){
+            $status =1; 
+        }else {$status =0;} 
+        json_encode($status);   
+        return $status;   
     }
 }

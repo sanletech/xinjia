@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-05-31 18:36:40
+Date: 2018-06-01 20:42:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3187,24 +3187,30 @@ CREATE TABLE `hl_cardata` (
   `status` int(1) NOT NULL DEFAULT '2' COMMENT '1为删除2为正常默认为2',
   `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_cardata
 -- ----------------------------
-INSERT INTO `hl_cardata` VALUES ('1', '法撒旦法', '撒旦发射', '1', '1', '1526882031');
-INSERT INTO `hl_cardata` VALUES ('2', '大师法', '不知名或许', '4', '2', '1525761231');
-INSERT INTO `hl_cardata` VALUES ('3', '法撒旦法', '防守对方是否', '3', '2', '1525685928');
-INSERT INTO `hl_cardata` VALUES ('4', '速读法', '大飞', '3', '2', '1526635672');
-INSERT INTO `hl_cardata` VALUES ('5', '第三方', '速读法', '3', '2', '1524726443');
-INSERT INTO `hl_cardata` VALUES ('6', '撒旦发射', '的说法撒旦', '3', '2', '1524726478');
-INSERT INTO `hl_cardata` VALUES ('7', '京东万达出生地', '圣达菲卡', '3', '2', '1524731566');
-INSERT INTO `hl_cardata` VALUES ('8', '阿飞', '撒旦法', '4', '2', '1525761815');
-INSERT INTO `hl_cardata` VALUES ('9', '阿飞', '撒旦法', '4', '2', '1525761842');
-INSERT INTO `hl_cardata` VALUES ('10', '阿道夫士大夫但是', '盛大发售的方式', '4', '2', '1525761919');
-INSERT INTO `hl_cardata` VALUES ('11', 'aaaaaaaa', 'aaaaaaaa', '1', '1', '1525761984');
-INSERT INTO `hl_cardata` VALUES ('12', 'cccccc', 'dddd', '4', '1', '1525762731');
-INSERT INTO `hl_cardata` VALUES ('13', '撒旦发射', '阿萨德发生', '2', '2', '1525770089');
+INSERT INTO `hl_cardata` VALUES ('1', '飞机', '撒旦发射', '1', '1', '1526882031');
+INSERT INTO `hl_cardata` VALUES ('2', '火车', '不知名或许', '4', '2', '1525761231');
+INSERT INTO `hl_cardata` VALUES ('3', '宝马', '防守对方是否', '3', '2', '1525685928');
+INSERT INTO `hl_cardata` VALUES ('4', '单车', '大飞', '3', '2', '1526635672');
+INSERT INTO `hl_cardata` VALUES ('5', '公交', '速读法', '3', '2', '1524726443');
+INSERT INTO `hl_cardata` VALUES ('6', '马自达', '的说法撒旦', '3', '2', '1524726478');
+INSERT INTO `hl_cardata` VALUES ('7', '饿了没', '圣达菲卡', '3', '2', '1524731566');
+INSERT INTO `hl_cardata` VALUES ('8', '饿了么', '撒旦法', '4', '2', '1525761815');
+INSERT INTO `hl_cardata` VALUES ('9', '饿了吧', '撒旦法', '4', '2', '1525761842');
+INSERT INTO `hl_cardata` VALUES ('10', '还没饿', '盛大发售的方式', '4', '2', '1525761919');
+INSERT INTO `hl_cardata` VALUES ('11', '饿了不', 'aaaaaaaa', '1', '1', '1525761984');
+INSERT INTO `hl_cardata` VALUES ('12', '饿了哦', 'dddd', '4', '1', '1525762731');
+INSERT INTO `hl_cardata` VALUES ('13', '百度外卖', '阿萨德分', '3', '2', null);
+INSERT INTO `hl_cardata` VALUES ('14', '滴滴', '阿萨德发生', '2', '2', '1525770089');
+INSERT INTO `hl_cardata` VALUES ('15', '快递', '阿萨德发生', '2', '2', '1525770089');
+INSERT INTO `hl_cardata` VALUES ('16', '查水表', '阿萨德发生', '2', '2', '1525770089');
+INSERT INTO `hl_cardata` VALUES ('17', '天天快递', '阿萨德发生', '2', '2', '1525770089');
+INSERT INTO `hl_cardata` VALUES ('18', '顺风快递', '阿萨德发生', '2', '2', '1525770089');
+INSERT INTO `hl_cardata` VALUES ('19', '不饿了', '阿萨德发生', '2', '2', '1525770089');
 
 -- ----------------------------
 -- Table structure for `hl_carinfo`
@@ -3282,30 +3288,31 @@ CREATE TABLE `hl_carprice` (
   `price_20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子车运价格',
   `price_40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子车运价格',
   `latest_order_time` int(10) DEFAULT NULL COMMENT '最新的合作订单时间',
-  `variable` int(1) DEFAULT NULL COMMENT '区分是装货还是送货  装货为1 送货为2',
+  `variable` char(1) DEFAULT NULL COMMENT '区分是装货还是送货  装货为r 送货为s',
   `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_carprice
 -- ----------------------------
-INSERT INTO `hl_carprice` VALUES ('1', '1', '14', '3000.00', '5000.00', '5', '1', '1527221154');
-INSERT INTO `hl_carprice` VALUES ('3', '2', '3', '1000.00', '5000.00', '4', '1', null);
-INSERT INTO `hl_carprice` VALUES ('5', '3', '5', '1000.00', '5000.00', '4', '1', null);
-INSERT INTO `hl_carprice` VALUES ('6', '3', '6', '1000.00', '5000.00', '4', '2', null);
-INSERT INTO `hl_carprice` VALUES ('7', '4', '7', '1000.00', '5000.00', '4', '1', null);
-INSERT INTO `hl_carprice` VALUES ('8', '4', '8', '10000.00', '555555.00', '5', '2', null);
-INSERT INTO `hl_carprice` VALUES ('9', '5', '10', '10000.00', '555555.00', '5', '1', null);
-INSERT INTO `hl_carprice` VALUES ('10', '5', '5', '3000.00', '5000.00', '5', '2', '1527218220');
-INSERT INTO `hl_carprice` VALUES ('11', '6', '10', '3000.00', '5000.00', '5', '1', '1527218244');
-INSERT INTO `hl_carprice` VALUES ('12', '6', '10', '3000.00', '5000.00', '5', '2', '1527218277');
-INSERT INTO `hl_carprice` VALUES ('13', '7', '10', '3000.00', '5000.00', '5', '1', '1527218356');
-INSERT INTO `hl_carprice` VALUES ('14', '7', '11', '3000.00', '5000.00', '5', '2', '1527218407');
-INSERT INTO `hl_carprice` VALUES ('15', '28', '6', '555.00', '1111.00', null, '1', '1527734753');
-INSERT INTO `hl_carprice` VALUES ('16', '28', '6', '666.00', '6666.00', null, '2', '1527734753');
-INSERT INTO `hl_carprice` VALUES ('20', '1', '2', '3500.00', '5500.00', '6', '2', null);
-INSERT INTO `hl_carprice` VALUES ('25', '2', '4', '1000.00', '5000.00', '4', '2', null);
+INSERT INTO `hl_carprice` VALUES ('1', '1', '1', '3000.00', '5000.00', '5', 's', '1527221154');
+INSERT INTO `hl_carprice` VALUES ('2', '1', '2', '3500.00', '5500.00', '6', 'r', null);
+INSERT INTO `hl_carprice` VALUES ('3', '2', '3', '1000.00', '5000.00', '4', 's', null);
+INSERT INTO `hl_carprice` VALUES ('4', '2', '4', '1000.00', '5000.00', '4', 'r', null);
+INSERT INTO `hl_carprice` VALUES ('5', '3', '5', '1000.00', '5000.00', '4', 's', null);
+INSERT INTO `hl_carprice` VALUES ('6', '3', '6', '1000.00', '5000.00', '4', 'r', null);
+INSERT INTO `hl_carprice` VALUES ('7', '4', '7', '1000.00', '5000.00', '4', 's', null);
+INSERT INTO `hl_carprice` VALUES ('8', '4', '8', '10000.00', '555555.00', '5', 'r', null);
+INSERT INTO `hl_carprice` VALUES ('9', '5', '9', '10000.00', '555555.00', '5', 's', null);
+INSERT INTO `hl_carprice` VALUES ('10', '5', '10', '3000.00', '5000.00', '5', 'r', '1527218220');
+INSERT INTO `hl_carprice` VALUES ('11', '6', '11', '3000.00', '5000.00', '5', 's', '1527218244');
+INSERT INTO `hl_carprice` VALUES ('12', '6', '12', '3000.00', '5000.00', '5', 'r', '1527218277');
+INSERT INTO `hl_carprice` VALUES ('13', '7', '13', '3000.00', '5000.00', '5', 's', '1527218356');
+INSERT INTO `hl_carprice` VALUES ('14', '7', '14', '3000.00', '5000.00', '5', 'r', '1527218407');
+INSERT INTO `hl_carprice` VALUES ('15', '28', '19', '555.00', '1111.00', '4', 's', '1527734753');
+INSERT INTO `hl_carprice` VALUES ('26', '29', '1', '9999.00', '999999.00', null, 'r', '1527837391');
+INSERT INTO `hl_carprice` VALUES ('27', '29', '2', '1111.00', '111111.00', null, 's', '1527837391');
 
 -- ----------------------------
 -- Table structure for `hl_carprice1`
@@ -3409,39 +3416,41 @@ CREATE TABLE `hl_car_line` (
   `address_id` int(11) DEFAULT NULL COMMENT 'id',
   `port_id` int(11) DEFAULT NULL COMMENT '港口的id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_car_line
 -- ----------------------------
-INSERT INTO `hl_car_line` VALUES ('1', null, '1', '4');
-INSERT INTO `hl_car_line` VALUES ('2', null, '1', '2');
-INSERT INTO `hl_car_line` VALUES ('3', null, '1', '3');
-INSERT INTO `hl_car_line` VALUES ('4', null, '2', '5');
-INSERT INTO `hl_car_line` VALUES ('5', null, '2', '5');
-INSERT INTO `hl_car_line` VALUES ('6', null, '2', '3');
-INSERT INTO `hl_car_line` VALUES ('7', null, '3', '4');
-INSERT INTO `hl_car_line` VALUES ('8', null, '3', '5');
-INSERT INTO `hl_car_line` VALUES ('9', null, '4', '7');
-INSERT INTO `hl_car_line` VALUES ('10', null, '4', '8');
-INSERT INTO `hl_car_line` VALUES ('11', null, '5', '3');
-INSERT INTO `hl_car_line` VALUES ('12', null, '5', '4');
-INSERT INTO `hl_car_line` VALUES ('13', null, '6', '5');
-INSERT INTO `hl_car_line` VALUES ('14', null, '6', '6');
-INSERT INTO `hl_car_line` VALUES ('15', null, '25', '3');
-INSERT INTO `hl_car_line` VALUES ('16', null, '26', '3');
-INSERT INTO `hl_car_line` VALUES ('17', null, '27', '3');
-INSERT INTO `hl_car_line` VALUES ('18', null, '28', '3');
-INSERT INTO `hl_car_line` VALUES ('19', null, '29', '3');
-INSERT INTO `hl_car_line` VALUES ('20', null, '30', '2');
-INSERT INTO `hl_car_line` VALUES ('21', null, '30', '7');
-INSERT INTO `hl_car_line` VALUES ('22', null, '30', '3');
-INSERT INTO `hl_car_line` VALUES ('23', null, '31', '2');
-INSERT INTO `hl_car_line` VALUES ('24', null, '31', '7');
-INSERT INTO `hl_car_line` VALUES ('25', null, '31', '3');
+INSERT INTO `hl_car_line` VALUES ('1', null, '421125100', '4');
+INSERT INTO `hl_car_line` VALUES ('2', null, '421125101', '2');
+INSERT INTO `hl_car_line` VALUES ('3', null, '421125102', '3');
+INSERT INTO `hl_car_line` VALUES ('4', null, '421125103', '5');
+INSERT INTO `hl_car_line` VALUES ('5', null, '421125104', '5');
+INSERT INTO `hl_car_line` VALUES ('6', null, '421125105', '3');
+INSERT INTO `hl_car_line` VALUES ('7', null, '421125106', '4');
+INSERT INTO `hl_car_line` VALUES ('8', null, '421125107', '5');
+INSERT INTO `hl_car_line` VALUES ('9', null, '421125108', '7');
+INSERT INTO `hl_car_line` VALUES ('10', null, '421125109', '8');
+INSERT INTO `hl_car_line` VALUES ('11', null, '421125110', '3');
+INSERT INTO `hl_car_line` VALUES ('12', null, '421125111', '4');
+INSERT INTO `hl_car_line` VALUES ('13', null, '421125112', '5');
+INSERT INTO `hl_car_line` VALUES ('14', null, '421125113', '6');
+INSERT INTO `hl_car_line` VALUES ('15', null, '421125114', '3');
+INSERT INTO `hl_car_line` VALUES ('16', null, '421125115', '3');
+INSERT INTO `hl_car_line` VALUES ('17', null, '421125116', '3');
+INSERT INTO `hl_car_line` VALUES ('18', null, '421125117', '3');
+INSERT INTO `hl_car_line` VALUES ('19', null, '421125117', '3');
+INSERT INTO `hl_car_line` VALUES ('20', null, '421125117', '2');
+INSERT INTO `hl_car_line` VALUES ('21', null, '421125117', '7');
+INSERT INTO `hl_car_line` VALUES ('22', null, '421125117', '3');
+INSERT INTO `hl_car_line` VALUES ('23', null, '421125117', '2');
+INSERT INTO `hl_car_line` VALUES ('24', null, '421125117', '7');
+INSERT INTO `hl_car_line` VALUES ('25', null, '421125117', '3');
 INSERT INTO `hl_car_line` VALUES ('26', null, '120102002', '1');
 INSERT INTO `hl_car_line` VALUES ('27', null, '110105001', '1');
 INSERT INTO `hl_car_line` VALUES ('28', null, '230102001', '2');
+INSERT INTO `hl_car_line` VALUES ('29', '鼓楼街道', '110228001', '1');
+INSERT INTO `hl_car_line` VALUES ('30', '浙江省温州市瓯海区景山街道', '330304001', '2');
 
 -- ----------------------------
 -- Table structure for `hl_car_port`
@@ -4636,7 +4645,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1527731462', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1527819587', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

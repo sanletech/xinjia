@@ -29,13 +29,23 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>ID</th>
+            <th>路线ID</th>
             <td>港口</td>
             <th>详细地址</th>
-            <th>20GP</th>
-            <th>40HQ</th>
-            <th>车队</th>
+<!--            <th>s_id</th>
+            <th>送货车队id</th>-->
+            <th>送货车队</th>
+            <th>送货20GP价格</th>
+            <th>送货40HQ价格</th>
             <th>最新订单时间</th>
+<!--             <th>variable</th>
+            <th>r_id</th>
+            <th>装货车队id</th>-->
+            <th>装货车队</th>
+            <th>装货20GP价格</th>
+            <th>装货40HQ价格</th>
+            <th>最新订单时间</th>
+<!--             <th>variable</th>-->
             <th>操作</th>
           </tr>
         </thead>
@@ -43,20 +53,33 @@
           <{volist name="list" id="vo"}>   
           <tr >
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.cl_id}>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata"><{$vo.id}></td>
+            <td class="tdata"><{$vo.cl_id}></td>
             <td><{$vo.port_name}></td> 
             <td><{$vo.address_name}></td>
-            <td>￥<{$vo.price_20GP}></td>
-            <td>￥<{$vo.price_40HQ}></td> 
-            <td><{$vo.car_name}></td>
-            <td><{$vo.latest_order_time|date="y-m-d",###}></td>
+            
+<!--            <td><{$vo.s_id}></td>
+            <td><{$vo.s_carid}></td>-->
+            <td><{$vo.s_carname}></td>
+            <td>￥<{$vo.s_20GP}></td>
+            <td>￥<{$vo.s_40HQ}></td> 
+            <td><{$vo.s_ordertime|date="y-m-d",###}></td>
+<!--            <td><{$vo.s_variable}></td>
+            
+            <td><{$vo.r_id}></td>
+            <td><{$vo.r_carid}></td>-->
+            <td><{$vo.r_carname}></td>
+            <td>￥<{$vo.r_20GP}></td>
+            <td>￥<{$vo.r_40HQ}></td> 
+            <td><{$vo.r_ordertime|date="y-m-d",###}></td>
+<!--            <td><{$vo.r_variable}></td>
+            -->
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>?id=<{$vo.id}>&cl_id=<{$vo.cl_id}>',700,500)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/trailer_edit')}>?cl_id=<{$vo.cl_id}>&s_id=<{$vo.s_id}>&r_id=<{$vo.r_id}>',1200,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<{$vo.cl_id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -142,7 +165,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<{:url('admin/price/traile_del')}>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
