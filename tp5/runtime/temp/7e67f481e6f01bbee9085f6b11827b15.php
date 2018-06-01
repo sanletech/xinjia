@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527749499;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\ship_add.html";i:1527576976;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527737139;s:85:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\ship_edit.html";i:1527577177;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,14 +37,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">船名</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="car_name" name="car_name" class="layui-input" value="">
+                        <input type="text" id="car_name" name="car_name" class="layui-input" value="{嘻哈}">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">航次</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="car_name" name="car_name" class="layui-input" value="">
+                        <input type="text" id="car_name" name="car_name" class="layui-input" value="ND988">
                     </div>
                 </div>
 

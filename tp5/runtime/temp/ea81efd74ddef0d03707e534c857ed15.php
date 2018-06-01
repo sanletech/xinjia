@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527673583;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527749499;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -194,7 +194,33 @@
                         </li>
                     </ul>
                 </li>
-
+                <li>
+                    <a href="javascript:;">
+                        <i class="layui-icon">&#xe631;</i>
+                        <cite>数据管理</cite>
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a _href="<?php echo url('Port/port_list'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>港口管理</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<?php echo url('CarMan/ship_name'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>船名管理</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<?php echo url('CarMan/sealine_list'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>航线详情</cite>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li>
                     <a href="javascript:;">
                         <i class="iconfont">&#xe725;</i>
@@ -224,24 +250,6 @@
                             <a _href="<?php echo url('CarMan/man_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>车队人员资料</cite>
-                            </a>
-                        </li>
-                        <li>
-                            <a _href="<?php echo url('CarMan/ship_name'); ?>">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>船名管理</cite>
-                            </a>
-                        </li>
-                        <li>
-                            <a _href="admin-rule.html">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>港口管理</cite>
-                            </a>
-                        </li>
-                        <li>
-                            <a _href="<?php echo url('CarMan/sealine_list'); ?>">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>航线详情</cite>
                             </a>
                         </li>
                     </ul>

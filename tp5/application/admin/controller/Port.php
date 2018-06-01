@@ -13,15 +13,19 @@ class Port extends Base
         parent::__construct($request);
         $this->request= $request;
     }
-    
+    //港口列表
     public function port_list() 
     {
- 
-    
       return $this->view->fetch('port\port_list'); 
     }
-    
- 
-    
-
+    //添加港口
+    public function port_add() 
+    {
+      return $this->view->fetch('port\port_add'); 
+    }
+    //修改列表
+    public function port_edit() 
+    {
+      return $this->view->fetch('port\port_edit'); 
+    }
 } 

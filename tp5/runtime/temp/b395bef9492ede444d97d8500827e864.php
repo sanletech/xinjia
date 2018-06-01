@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527749499;s:85:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\ship_name.html";i:1527580628;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\port_list.html";i:1527739160;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,13 +36,13 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username"  placeholder="请输入公司名" autocomplete="off" class="layui-input">
+          <input type="text" name="username"  placeholder="请输入港口名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("CarMan/ship_add"); ?>',500,350)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Port/port_add"); ?>',500,350)"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -51,9 +51,8 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>船公司名</th>
-            <th>船名</th>
-            <th>船次</th>
+            <th>港口名</th>
+            <th>所属城市</th>
             <th>创建时间</th>
             <th>操作</th>
           </tr>
@@ -64,12 +63,11 @@
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
               
-            <td class="tdata">广州散了科技公司</td>
-            <td>嘻哈</td>
-            <td>ND988</td>
+            <td class="tdata">天津港</td>
+            <td>天津市</td>
             <td>2018-02-02</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<?php echo url("CarMan/ship_edit"); ?>',500,350)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改信息','<?php echo url("Port/port_edit"); ?>',500,350)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="" href="javascript:;">

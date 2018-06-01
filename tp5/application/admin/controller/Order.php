@@ -32,6 +32,12 @@ class Order extends Base
     {
         return $this->view->fetch('Order/order_audit'); 
     }
+
+    //处理订单订舱
+    public function list_booking() 
+    {
+        return $this->view->fetch('Order/list_booking');
+    }
     //处理订单派车
     public function list_paiche() 
     {

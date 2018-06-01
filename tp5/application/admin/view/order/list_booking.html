@@ -4,13 +4,18 @@
         <link rel="stylesheet" href="__STATIC__/css/route_add.css">
         <form class="layui-form" action="">
             <div class="route layui-row">
-                <!-- 是否收钱 -->
+                <!-- 车队名字 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">是否收款：</label>
+                    <label class="layui-form-label">无：</label>
                     <div class="layui-input-block">
-                        <input type="radio" name="sex" value="是" title="是">
-                        <input type="radio" name="sex" value="否" title="否，后面有柜" checked="">
-                        <input type="radio" name="sex" value="月结客户" title="月结客户" checked="">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车队名字" class="layui-input">
+                    </div>
+                </div>
+                <!-- 车牌号 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">无：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
                     </div>
                 </div>
 
@@ -26,12 +31,10 @@
         </form>
 
         <script type="text/javascript">
-            $('html').css('overflow-y', 'hidden');
             $('.cancel').click(function () {
                 var index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);
             });
-
             layui.use(['form', 'layedit', 'laydate'], function () {
                 var form = layui.form
                     , layer = layui.layer

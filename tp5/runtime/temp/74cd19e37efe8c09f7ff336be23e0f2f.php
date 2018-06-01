@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527679283;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Keeper\admin_list.html";i:1527150745;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527679283;s:88:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\sealine_list.html";i:1527582583;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1525660218;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -39,7 +39,7 @@
         <div class="x-body">
             <div class="layui-row">
                 <form class="layui-form layui-col-md12 x-so">
-                    <input type="text" name="username" placeholder="账号名" autocomplete="off" class="layui-input">
+                    <input type="text" name="username" placeholder="请输入账号名" autocomplete="off" class="layui-input">
                     <button class="layui-btn" lay-submit="" lay-filter="sreach">
                         <i class="layui-icon">&#xe615;</i>
                     </button>
@@ -48,7 +48,7 @@
             <xblock>
                 <button class="layui-btn layui-btn-danger" onclick="delAll()">
                     <i class="layui-icon"></i>批量删除</button>
-                <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Keeper/admin_add"); ?>',700,400)">
+                <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("CarMan/sealine_add"); ?>',650,400)">
                     <i class="layui-icon"></i>添加</button>
                 <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
             </xblock>
@@ -60,12 +60,9 @@
                                 <i class="layui-icon">&#xe605;</i>
                             </div>
                         </th>
-                        <th>账号</th>
-                        <th>密码</th>
-                        <th>姓名</th>
-                        <th>联系电话</th>
-                        <th>用户角色</th>
-                        <th>用户状态</th>
+                        <th>航线/起-终</th>
+                        <th>航线详情</th>
+                        <th>创建时间</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -76,40 +73,12 @@
                                 <i class="layui-icon">&#xe605;</i>
                             </div>
                         </td>
-                        <td class="tdata">18865483321</td>
-                        <td>zhu123456</td>
-                        <td>小猪</td>
-                        <td>13055493654</td>
-                        <td>操作员</td>
-                        <td>
-                            <span class="layui-btn layui-btn-mini zt">启用</span>
-                        </td>
-                        <td class="td-manage">
-                            <a title="编辑" onclick="x_admin_show('更改权限','<?php echo url("Keeper/admin_edit"); ?>',600,400)" href="javascript:;">
-                                <i class="layui-icon">&#xe642;</i>
-                            </a>
-                            <a title="删除" onclick="" href="javascript:;">
-                                <i class="layui-icon">&#xe640;</i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
-                                <i class="layui-icon">&#xe605;</i>
-                            </div>
-                        </td>
 
-                        <td class="tdata">18865483321</td>
-                        <td>zhu123456</td>
-                        <td>小猪</td>
-                        <td>13055493654</td>
-                        <td>操作员</td>
-                        <td>
-                            <span class="layui-btn layui-btn-mini zt">禁用</span>
-                        </td>
+                        <td class="tdata">天津港/北京港</td>
+                        <td>嘻哈-阿斯蒂芬-发大水-阿道夫-阿斯蒂芬-速度sd-士大夫</td>
+                        <td>2018-02-02</td>
                         <td class="td-manage">
-                            <a title="编辑" onclick="x_admin_show('更改权限','<?php echo url("Keeper/admin_edit"); ?>',600,400)" href="javascript:;">
+                            <a title="编辑" onclick="x_admin_show('修改信息','<?php echo url("CarMan/ship_edit"); ?>',500,350)" href="javascript:;">
                                 <i class="layui-icon">&#xe642;</i>
                             </a>
                             <a title="删除" onclick="" href="javascript:;">
@@ -141,16 +110,6 @@
                 });
             });
 
-            //状态样式切换
-            for(let i = 0;i < $('.zt').length;i++){
-                console.log($('.zt').eq(i).html());
-                
-                if($('.zt').eq(i).html() == '启用'){
-                    $('.zt').eq(i).addClass('layui-btn-normal');
-                }else{
-                    $('.zt').eq(i).addClass('layui-btn-danger');
-                }
-            }
         </script>
 
     </body>
