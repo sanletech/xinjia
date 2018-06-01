@@ -3,13 +3,14 @@
   padding: 10px; }
   .order_list .nei {
     border: 1px solid #666;
-    margin: 10px 0; }
+    margin: 15px 0; }
     .order_list .nei p, .order_list .nei span {
       font-size: 15px;
       color: #666; }
     .order_list .nei .top {
       border-bottom: 1px solid #666;
-      padding: 10px 10px; }
+      padding: 0px 10px;
+      line-height: 40px; }
       .order_list .nei .top .top_ma {
         float: right; }
         .order_list .nei .top .top_ma span {
@@ -24,7 +25,8 @@
         font-weight: 700;
         margin: 20px 0; }
       .order_list .nei .cen .se {
-        color: red; }
+        color: red;
+        font-size: 16px; }
       .order_list .nei .cen .a_niu {
         margin: 10px 0;
         text-align: right; }
