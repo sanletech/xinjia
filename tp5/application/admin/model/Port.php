@@ -4,14 +4,27 @@ use think\Model;
 class Port extends Model
 {
  
-    protected $table = 'hl_port';
-    
-    //和车队表关联模型
-    //belongsToMany(‘关联模型名’,’中间表名’,’外键名’,’当前模型关联键名’,[‘模型别名定义’]);
-    public function car() {
-        
-        return $this->belongsToMany('Contact' , 'car_ship_port','car_data_id','port_id');
-    }
+     public function  port_list($port_name ,$pages=5)
+    {   
+        $list = Db::name('port')->alias('P')
+                ->join
+        $sql ="select city_id  from hl_port where"        
+        //县 ,省直辖行政单位 ,省直辖县级行政单位 ,市辖区
+        //+-----+---------+--------------------+--------+
+        //| id  | city_id | city               | father |
+        //+-----+---------+--------------------+--------+
+        //|   1 | 110100  | 市辖区             | 110000 |
+        //|   2 | 110200  | 县                 | 110000 |
+        //|   3 | 120100  | 市辖区             | 120000 |
+        //|  75 | 310100  | 市辖区             | 310000 |
+        //|  76 | 310200  | 县                 | 310000 |
+        //| 185 | 429000  | 省直辖行政单位     | 420000 |
+        //| 237 | 469000  | 省直辖县级行政单位 | 460000 |
+        //| 238 | 500100  | 市辖区             | 500000 |
+        //| 239 | 500200  | 县                 | 500000 |
+        //| 345 | 659000  | 省直辖行政单位     | 650000 |
+        //|   4 | 120200  | 县                 | 120000 |  
+            }
     
 }
 

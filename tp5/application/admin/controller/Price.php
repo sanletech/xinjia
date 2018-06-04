@@ -183,7 +183,7 @@ class Price extends Base
         $data = $this->request->param();
         $carprice = new PriceM;
         $res =$carprice->price_trailer_edit($data);   
-        // $this->_p($res);exit;
+       // $this->_p($res);exit;
         
         //传递所有的港口给前台页面
         $sql="select *  from  hl_port ";
@@ -203,9 +203,9 @@ class Price extends Base
         return $this->view->fetch("price/trailer_edit");
     }
         //拖车运价执行修改
-    public function traile_toedit(){
+    public function trailer_toedit(){
         $data = $this->request->param();
-       // $this->_p($data);exit;
+     //   $this->_p($data);exit;
         $carprice = new PriceM;
         $res =$carprice->price_trailer_toedit($data);          
         if(!array_key_exists('fail', $res)){
