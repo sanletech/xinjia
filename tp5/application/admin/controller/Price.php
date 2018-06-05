@@ -95,7 +95,7 @@ class Price extends Base
     //航线执行修改
     public function route_toedit(){
         $data = $this->request->param();
-       // $this->_p($data);exit;
+//        $this->_p($data);exit;
         $seaprice = new PriceM;
         $res = $seaprice->price_route_toedit($data);          
         if(!array_key_exists('fail', $res)){
@@ -183,7 +183,7 @@ class Price extends Base
         $data = $this->request->param();
         $carprice = new PriceM;
         $res =$carprice->price_trailer_edit($data);   
-        // $this->_p($res);exit;
+//      $this->_p($res);exit;
         
         //传递所有的港口给前台页面
         $sql="select *  from  hl_port ";
