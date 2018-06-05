@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\trailer_add.html";i:1527734690;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\port_edit.html";i:1528192752;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -40,6 +40,10 @@
                 <label class="layui-form-label">
                 <span class="x-red">*</span>请选择地址
                 </label>
+                <div class="layui-input-inline" id ="oldadd" >
+                    <input type="text" name="city_name" value="<?php echo $data['city']; ?>" readonly="readonly"  class="layui-input">
+                     <input type="hidden" name="city_id"  value="<?php echo $data['city_id']; ?>" >
+                </div>
                 <div class="layui-input-inline">
                     <select name="province" lay-filter="province" >
                         <option value="">请选择省</option>
@@ -50,7 +54,7 @@
                         <option value="">请选择市</option>
                     </select>
                 </div>
-                <div class="layui-input-inline" style="display: none;">
+<!--                <div class="layui-input-inline" style="display: none;">
                     <select name="area"  lay-filter="area">
                         <option value="">请选择县/区</option>
                     </select>
@@ -59,78 +63,24 @@
                     <select name="town"  lay-filter="town">
                         <option value="">请选择镇/街道</option>
                     </select>
-                </div>
+                </div>-->
             </div>
-
-        <!-- 收货 -->
-        <div class="layui-col-xs5">
-          <div class="grid-demo grid-demo-bg1">
-            <div class="layui-form-item">
-              <label class="layui-form-label">装货20GP:</label>
-              <div class="layui-input-block">
-                <input type="text" name="load[price_20GP]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
-              </div>
-            </div>
-            <div class="layui-form-item">
-              <label class="layui-form-label">装货40HQ:</label>
-              <div class="layui-input-block">
-                <input type="text" name="load[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
-              </div>
-            </div>
-            <div class="layui-form-item">
-              <label class="layui-form-label">装货车队名:</label>
-                <div class="layui-input-inline" >
-                <select name ="car_load"  lay-filter="car" lay-search>
-                    <option value="">请选装货车队</option>
-                </select>
-                </div>
-            </div>
-          </div>
-        </div>
-        <!-- 中间线 -->
-        <div class="layui-col-xs2 xian"></div>
-        <!-- 送货 -->
-        <div class="layui-col-xs5">
-          <div class="grid-demo">
-            <div class="grid-demo grid-demo-bg1">
-              <div class="layui-form-item">
-                <label class="layui-form-label">送货20GP:</label>
-                <div class="layui-input-block">
-                  <input type="text" name="send[price_20GP]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
-                </div>
-              </div>
-              <div class="layui-form-item">
-                <label class="layui-form-label">送货40HQ:</label>
-                <div class="layui-input-block">
-                  <input type="text" name="send[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
-                </div>
-              </div>
-              <div class="layui-form-item">
-                <label class="layui-form-label">送货车队名:</label>
-                <div class="layui-input-inline" >
-                    <select name ="car_send"  lay-filter="car" lay-search>
-                        <option value="">请选装货车队</option>
-                    </select>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-       <div class="layui-form-item layui-col-xs12 niu">
+         
+    <div class="layui-form-item layui-col-xs12 niu">
           <div class="layui-col-md1 layui-col-md-offset4">
             <div class="grid-demo grid-demo-bg1">
               <button class="layui-btn" type="button"  onclick="trailerAjax()">添加</button>
             </div>
           </div>
-          <div class="layui-col-md1 layui-col-md-offset2">
+          <div class="layui-col-md1 layui-col-md-offset4">
             <div class="grid-demo">
               <button class="layui-btn cancel">取消</button>
             </div>
           </div>
-        </div>
+    </div>
     </form>
     <script>  var addressURL = "<?php echo url('admin/address/town'); ?>"; </script>
+    <script type="text/javascript" src="/static/admin/js/port.js"></script>
     <script type="text/javascript" src="/static/admin/js/address.js"></script>
     
     <script type="text/javascript">
@@ -139,47 +89,37 @@
         parent.layer.close(index);
       });
       
-       //加载 所有的船公司名字简称和相应的id
-        var js_car = '<?php echo $js_car; ?>';
-            js_car=JSON.parse(js_car);    
         //加载 所有的港口名字和相应的城市code
-        var js_port = '<?php echo $js_port; ?>';
-            js_port=JSON.parse(js_port);   
+        var js_port = JS_PORT;
         
-        var url="<?php echo url('admin/price/trailer_toadd'); ?>";    
-                
+        var port_id = "<?php echo $data['id']; ?>";
+        var url="<?php echo url('admin/port/port_toedit'); ?>";    
+               
         layui.use(['jquery', 'form'], function() {
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
             loadPort();  //加载选择港口
-            loadCar();
-        });     
+           
+          
+        });  
+        
         function loadPort(){
             //加载 所有的港口名字和相应id
             var port_length =js_port.length;
             var portHtml = '';
             for(var i=0;i<port_length;i++){
+                if(js_port[i].id == port_id ){
+                portHtml += '<option  value="' + js_port[i].id   +'_'+ js_port[i].port_name +'" selected="selected">' + js_port[i].port_name + '</option>';  
+                }else{
                 portHtml += '<option  value="' + js_port[i].id +'_'+ js_port[i].port_name + '">' + js_port[i].port_name + '</option>';  
-            }
+            }  }
             $form.find('select[name=port]').append(portHtml);
             form.render();
             form.on('select(port)', function(data) {
             } ) 
         }
-        function loadCar(){
-            //加载 所有的车队名字和相应的车队id
-            var car_length =js_car.length;
-            var carHtml = '';
-            for(var i=0;i<car_length;i++){
-                carHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
-            }
-            $form.find('select[name=car_load]').append(carHtml);
-            $form.find('select[name=car_send]').append(carHtml);
-            form.render();
-            form.on('select(car)', function(data) {
-            } ) 
-        }
+        
         
         function  trailerAjax(){
             var loading = layer.load(1);

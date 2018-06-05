@@ -190,7 +190,6 @@ class Price extends Base
         $port_data =Db::query($sql);
        //转成json格式传给js
         $js_port = json_encode($port_data);
-        
         //传递所有的车队给前台页面
         $sql2="select id ,car_name from  hl_cardata ";
         $car_data =Db::query($sql2);
