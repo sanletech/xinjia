@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\port_edit.html";i:1528192752;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528339083;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\port_edit.html";i:1528265475;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,9 +30,8 @@
         <div class="layui-form-item">
           <label class="layui-form-label">港口:</label>
             <div class="layui-input-inline" >
-                <select name ="port"  lay-filter="port" lay-search>
-                    <option value="">请选择港口</option>
-                </select>
+                 <input type="hidden" name="id" value="<?php echo $data['id']; ?>"   class="layui-input">
+                 <input type="text" name="port_name" value="<?php echo $data['port_name']; ?>"   class="layui-input">
             </div>
         </div>
         <!-- 下拉选择框地址 -->
@@ -42,7 +41,7 @@
                 </label>
                 <div class="layui-input-inline" id ="oldadd" >
                     <input type="text" name="city_name" value="<?php echo $data['city']; ?>" readonly="readonly"  class="layui-input">
-                     <input type="hidden" name="city_id"  value="<?php echo $data['city_id']; ?>" >
+                    <input type="hidden" name="city_id"  value="<?php echo $data['city_id']; ?>" >
                 </div>
                 <div class="layui-input-inline">
                     <select name="province" lay-filter="province" >
@@ -50,7 +49,7 @@
                     </select>
                 </div>
                 <div class="layui-input-inline" id ='citydiv' style="display: none;">
-                    <select name="city" lay-filter="city" >
+                    <select name="city" lay-filter="city"  onchange="sele_Change()" >
                         <option value="">请选择市</option>
                     </select>
                 </div>
@@ -66,18 +65,9 @@
                 </div>-->
             </div>
          
-    <div class="layui-form-item layui-col-xs12 niu">
-          <div class="layui-col-md1 layui-col-md-offset4">
             <div class="grid-demo grid-demo-bg1">
               <button class="layui-btn" type="button"  onclick="trailerAjax()">添加</button>
             </div>
-          </div>
-          <div class="layui-col-md1 layui-col-md-offset4">
-            <div class="grid-demo">
-              <button class="layui-btn cancel">取消</button>
-            </div>
-          </div>
-    </div>
     </form>
     <script>  var addressURL = "<?php echo url('admin/address/town'); ?>"; </script>
     <script type="text/javascript" src="/static/admin/js/port.js"></script>
@@ -90,36 +80,66 @@
       });
       
         //加载 所有的港口名字和相应的城市code
-        var js_port = JS_PORT;
+       // var js_port = JS_PORT;
         
         var port_id = "<?php echo $data['id']; ?>";
         var url="<?php echo url('admin/port/port_toedit'); ?>";    
-               
+         
+    
+        //初始数据
+        var areaData = Area;
+        var $form;
+        var form;
+        var $;
         layui.use(['jquery', 'form'], function() {
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
-            loadPort();  //加载选择港口
-           
+            loadProvince();  //选择省会
+        });    
+        
+        
+        //加载省数据
+        function loadProvince() {
           
-        });  
-        
-        function loadPort(){
-            //加载 所有的港口名字和相应id
-            var port_length =js_port.length;
-            var portHtml = '';
-            for(var i=0;i<port_length;i++){
-                if(js_port[i].id == port_id ){
-                portHtml += '<option  value="' + js_port[i].id   +'_'+ js_port[i].port_name +'" selected="selected">' + js_port[i].port_name + '</option>';  
-                }else{
-                portHtml += '<option  value="' + js_port[i].id +'_'+ js_port[i].port_name + '">' + js_port[i].port_name + '</option>';  
-            }  }
-            $form.find('select[name=port]').append(portHtml);
+            var proHtml = '';
+            for (var i = 0; i < areaData.length; i++) {
+                proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+            }
+            //初始化省数据
+            $form.find('select[name=province]').append(proHtml);
             form.render();
-            form.on('select(port)', function(data) {
-            } ) 
+            form.on('select(province)', function(data) {
+                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                $form.find('select[name=town]').html('<option value="">请选择镇/街道<</option>').parent().hide();
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadCity(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city]').parent().hide();
+                }
+            });
         }
+   
         
+    //加载市数据
+        function loadCity(citys) {
+            var cityHtml = '';
+            for (var i = 0; i < citys.length; i++) {
+                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+            }
+           
+            $form.find('select[name=city]').html(cityHtml).parent().show();
+            form.render();
+            form.on('select(city)', function(data) {
+                 $('#oldadd').remove();
+            });
+        }
+           
         
         function  trailerAjax(){
             var loading = layer.load(1);

@@ -1,15 +1,37 @@
-<{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528339083;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_edit.html";i:1528447949;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   
 <body>
     <div class="x-body">
         <form class="layui-form" id="shipeditform">
-            <input type="hidden" name="ship_id" class="layui-input" value="<{$ship.id}>">
+            <input type="hidden" name="ship_id" class="layui-input" value="<?php echo $ship['id']; ?>">
             <div class="layui-form-item">
                 <label class="layui-form-label">
                     <span class="x-red">*</span>船公司名缩写
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id ="ship_short_name"  name="ship_short_name" class="layui-input" value="<{$ship.ship_short_name}>">
+                    <input type="text" id ="ship_short_name"  name="ship_short_name" class="layui-input" value="<?php echo $ship['ship_short_name']; ?>">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -17,7 +39,7 @@
                     <span class="x-red">*</span>船公司名全称
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text"  name="ship_name" class="layui-input" value="<{$ship.ship_name}>">
+                    <input type="text"  name="ship_name" class="layui-input" value="<?php echo $ship['ship_name']; ?>">
                 </div>
             </div>
 <!--        <div class="layui-form-item">
@@ -25,7 +47,7 @@
                     <span class="x-red">*</span>船公司地址
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text"  name="ship_address" class="layui-input" value="<{$ship.ship_address}>">
+                    <input type="text"  name="ship_address" class="layui-input" value="<?php echo $ship['ship_address']; ?>">
                 </div>
             </div>-->
             
@@ -65,7 +87,7 @@
  <script>
       
     //加载 所有的港口名字和相应的code
-        var port= '<{$port}>';
+        var port= '<?php echo $port; ?>';
        var port_arr = JSON.parse(port); 
       
         //加载 所有的港口名字和相应的code
@@ -74,7 +96,7 @@
 //           // js_port= JSON.parse(js_port);    
 //        console.log(js_port); 
         //ajax url生成
-       var url='<{:url('admin/ship/to_edit')}>';
+       var url='<?php echo url('admin/ship/to_edit'); ?>';
        
   //初始数据
         var areaData = Area;

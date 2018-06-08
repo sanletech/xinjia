@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1523153942;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1527857159;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1523153942;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1528339083;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -235,6 +235,12 @@
                             </a>
                         </li>
                         <li>
+                            <a _href="<?php echo url('CarMan/man_List'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>车队人员资料</cite>
+                            </a>
+                        </li>
+                        <li>
                             <a _href="<?php echo url('Ship/ship_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>船公司通讯录</cite>
@@ -246,12 +252,7 @@
                                 <cite>船公司人员资料</cite>
                             </a>
                         </li>
-                        <li>
-                            <a _href="<?php echo url('CarMan/man_List'); ?>">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>车队人员资料</cite>
-                            </a>
-                        </li>
+                       
                     </ul>
                 </li>
                 <li>

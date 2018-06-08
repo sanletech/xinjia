@@ -1,4 +1,26 @@
-    <{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528339083;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_list.html";i:1528442909;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+    <!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   
   <body>
     <div class="x-nav">
@@ -15,15 +37,15 @@
       <div class="layui-row">
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
-            <input type="text" name="ship_name"  value="<{$searchship  ? $searchship : '';}>"  placeholder="请输入船公司名字" autocomplete="off" class="layui-input">
-          <input type="text" name="port_name"    value="<{$searchport ? $searchport : '';}>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
+            <input type="text" name="ship_name"  value="<?php echo !empty($searchship)?$searchship : '';; ?>"  placeholder="请输入船公司名字" autocomplete="off" class="layui-input">
+          <input type="text" name="port_name"    value="<?php echo !empty($searchport)?$searchport : '';; ?>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加船队','<{:url('ship/ship_add')}>',550,400)"><i class="layui-icon"></i>添加</button>
-     <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
+     <button class="layui-btn" onclick="x_admin_show('添加船队','<?php echo url('ship/ship_add'); ?>',550,400)"><i class="layui-icon"></i>添加</button>
+     <span class="x-right" style="line-height:40px"> 本页有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -37,33 +59,33 @@
             <th>操作</th></tr>
         </thead>
     <tbody >
-        <{volist name="shiplist" id="vo" }>  
+        <?php if(is_array($shiplist) || $shiplist instanceof \think\Collection || $shiplist instanceof \think\Paginator): $i = 0; $__LIST__ = $shiplist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
          <tr >
             <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="<{$vo.ship_id.'_'.$vo.port_id}>"><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="<?php echo $vo['ship_id'].'_'.$vo['port_id']; ?>"><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata" ><{$vo.ship_id}></td>
-            <td><{$vo.ship_name}></td>
-            <td style="display: none;"><{$vo.port_id}></td>
-            <td><{$vo.port_name}></td>
+            <td class="tdata" ><?php echo $vo['ship_id']; ?></td>
+            <td><?php echo $vo['ship_name']; ?></td>
+            <td style="display: none;"><?php echo $vo['port_id']; ?></td>
+            <td><?php echo $vo['port_name']; ?></td>
             <td class="td-manage">
-                <a title="查看"  onclick="x_admin_show('查看信息','<{:url('Ship/ship_info')}>?ship_id=<{$vo.ship_id}>&port_id=<{$vo.port_id}>',750,350)" href="javascript:;">
+                <a title="查看"  onclick="x_admin_show('查看信息','<?php echo url('Ship/ship_info'); ?>?ship_id=<?php echo $vo['ship_id']; ?>&port_id=<?php echo $vo['port_id']; ?>',750,350)" href="javascript:;">
                     <i class="layui-icon">&#xe649;   </i>
                 </a>
-                 <a title="编辑"  onclick="x_admin_show('编辑信息','<{:url('Ship/ship_edit')}>?ship_id=<{$vo.ship_id}>&port_id=<{$vo.port_id}>',800,350)" href="javascript:;">
+                 <a title="编辑"  onclick="x_admin_show('编辑信息','<?php echo url('Ship/ship_edit'); ?>?ship_id=<?php echo $vo['ship_id']; ?>&port_id=<?php echo $vo['port_id']; ?>',800,350)" href="javascript:;">
                     <i class="layui-icon">&#xe642;   </i>
                 </a>
-                <a title="删除" onclick="member_del(this,'<{$vo.ship_id.'_'.$vo.port_id}>')" href="javascript:;">
+                <a title="删除" onclick="member_del(this,'<?php echo $vo['ship_id'].'_'.$vo['port_id']; ?>')" href="javascript:;">
                     <i class="layui-icon">  &#xe640;</i>
                 </a>
             </td>
           </tr>
-        <{/volist}>          
+        <?php endforeach; endif; else: echo "" ;endif; ?>          
         </tbody> 
       </table>
       <div class="page">
         <div>
-           <{$page}>
+           <?php echo $page; ?>
         </div>
       </div>
   
@@ -80,7 +102,7 @@
     function search(){
          $.ajax({
                 type:'get',
-                url:"<{:url('admin/Ship/ship_list')}>",     
+                url:"<?php echo url('admin/Ship/ship_list'); ?>",     
                 data: $("#searchform").serialize(),
               //  data:{"success":true,"id":"1"} ,
                 dataType:"json",
@@ -145,7 +167,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/ship/to_del')}>",    
+                url:"<?php echo url('admin/ship/to_del'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){

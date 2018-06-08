@@ -5,108 +5,34 @@ use think\Db;
 class Ship extends Model
 {
  
-    protected $table = 'hl_shipcompany';
-    
-       //$pageParam  = ['query' =>[]] 
-    public function shiplist($data=array(),$page=5){
-         //解析字符拆成分行展示
-        function resultSQL($sub_id) {
-            $sub_name = $sub_id; //需要拆分的字段的名字
-            $sub_id = 'SPC.'.$sub_id; //hl_ship_port_city 需要拆分的字段的
-            $sql = " SELECT SPC.id , SUBSTRING_INDEX(SUBSTRING_INDEX($sub_id, ',', S.seq), ',' ,- 1)$sub_name , S.seq "
-               . " FROM hl_sequence S CROSS JOIN hl_ship_port_city SPC  WHERE  S.seq  BETWEEN 1 AND "
-               . "(  SELECT 1 + LENGTH($sub_id) - LENGTH(REPLACE($sub_id, ',', ''))  ) order by SPC.ID ,S.seq"; 
-             return $sql;
-        }
-//            $sql="select SPC.id , SPC.city_id ,SPC.city_name , SPC.port_id , group_concat(distinct P.port_name  order by RES.port_id ) port_name "
-//               . "from hl_ship_port_city SPC left join ($port_id_SQL) AS RES on RES.id =SPC.id left join hl_port P on P.id = RES.port_id "
-//               . "group by SPC.id order by SPC.id";
-//        
-//         $city_id_SQL   =  resultSQL('city_id');
-//         $city_name_SQL =  resultSQL('city_name');
-           $port_id_SQL   =  resultSQl('port_id');
+    public function shiplist($ship_name,$port_name,$pages=5){
+        $list = Db::name('ship_port')->alias('SPC')
+                ->join('hl_port P','P.port_code=SPC.port_id','left')
+                ->join('hl_shipcompany SC','SC.id=SPC.ship_id','left')
+                ->field('SPC.ship_id,SC.ship_short_name ship_name,SPC.port_id,P.port_name')
+                ->order('SPC.ship_id,SPC.seq')
+                ->buildSql();
         
         $pageParam  = ['query' =>[]]; //设置分页查询参数
-        if( array_key_exists('city_name', $data)){
-            $city_name = $data['city_name'];
-            $pageParam['query']['city_name'] = $city_name;
-            $sql = "select id from hl_ship_port_city where city_name like '%{$city_name}%' ";
-            $city_id = Db::query($sql);
-            $city_id = array_column($city_id ,'id');
-        } else{ $city_id =array();}
-        
-        if( array_key_exists('port_name', $data)){
-            $port_name = $data['port_name'];
-            $pageParam['query']['port_name'] = $port_name; 
-            $sql2 = "select SPC.id from hl_ship_port_city SPC left join ($port_id_SQL) AS RES on RES.id =SPC.id  "
-                    . "left join hl_port P on P.id = RES.port_id  where P.port_name like '%$port_name%'  ";
-            $port_id = Db::query($sql2);
-            $port_id = array_column($port_id ,'id');
-        } else{ $port_id =array();}
-           
-        if(empty($city_id) || empty($port_id)){
-            $id_arr = array_merge($city_id,$port_id);
-        }else{
-            $id_arr = array_intersect($city_id,$port_id);  
+        if($port_name){
+            $list = Db::table($list.' a')->where('a.port_name', 'like', "%{$port_name}%")->buildSql();
+            $pageParam['query']['port_name'] = $port_name;
         }
-        
-       // var_dump($id_arr);exit;
-        if(count($id_arr)>0){
-            $pageParam['query']['id']=  $id_arr;
-            $result =Db::name('ship_port_city')->alias('SPC')
-                ->join('('.$port_id_SQL. ') AS RES','RES.id =SPC.id' ,'left')   
-                ->join('hl_port P','P.id = RES.port_id' ,'left')
-                ->join('hl_shipcompany S','S.id = SPC.ship_id' ,'left')
-                ->field('SPC.id ,SPC.ship_id ,S.ship_short_name ,SPC.city_id ,SPC.city_name ,'
-                        . ' SPC.port_id , group_concat(distinct P.port_name  order by RES.seq ) port_name ') 
-                ->where('SPC.id','in',$id_arr)->group('SPC.id')->order('SPC.id')
-                ->paginate($page,false,$pageParam);
-           //var_dump(Db::getLastSql());exit;
-        }else{
-            $result =Db::name('ship_port_city')->alias('SPC')
-                ->join('('.$port_id_SQL. ') AS RES','RES.id =SPC.id' ,'left')   
-                ->join('hl_port P','P.id = RES.port_id' ,'left')
-                ->join('hl_shipcompany S','S.id = SPC.ship_id' ,'left')
-                ->field('SPC.id ,SPC.ship_id ,S.ship_short_name ,SPC.city_id ,SPC.city_name ,'
-                        . ' SPC.port_id , group_concat(distinct P.port_name  order by RES.seq ) port_name ') 
-                ->group('SPC.id')->order('SPC.id')
-                ->paginate($page);
+        if($ship_name){
+            $list = Db::table($list.' b')->where('b.ship_name', 'like', "%{$ship_name}%")->buildSql();
+            $pageParam['query']['ship_name'] = $ship_name;
         }
-       
-        return $result;
+        $list =Db::table($list.' c')->order('c.ship_id' )->paginate($pages,false,$pageParam);   
+        
+        return $list;
     } 
     
-    //展示原有的信息
-    public function ship_edit($id){ 
-       $sql="select SPC.*,S.ship_short_name,S.ship_name from hl_ship_port_city SPC "
-               . "  left join hl_shipcompany S on SPC.ship_id = S.id  where SPC.id =$id"; 
-       $res= Db::query($sql);
-       $city_id = explode(',' , $res['0']['city_id']);
-       $city_name = explode(',' , $res['0']['city_name']);
-       $city = array_combine( $city_id,$city_name);
-       $port_id = $res['0']['port_id'];
-       $sql2 = "select id,port_name from hl_port where id in ($port_id) order by id ";
-       $res2 = Db::query($sql2);
-       $port =  array_column($res2  ,'port_name','id');
-       $sql3 = "select ship_name , ship_short_name  from hl_shipcompany where id = {$res['0']['ship_id']}";
-       $res3 = Db::query($sql3);
-       unset($res['0']['city_id']);
-       unset($res['0']['city_name']);
-       unset($res['0']['port_id']);
-       $res['0']['port']=$port;
-       $res['0']['city']=$city;
-       return $res;
-    }
-    
-    public function ship_info($id)
-{       //var_dump($id);exit;
-        $ship_id = $id['ship_id'];
-        $port_id = $id['port_id'];
-        
+    //船公司对应港口的人员资料
+    public function ship_info($ship_id ,$port_id){
         $sql="select S.name, S.position, S.duty_line, S.sn_tel, S.sn_mobile, S.sn_qq, S.sn_fax,   "
                 . "P.port_name, SC.ship_short_name "
                 . " from hl_shipman S"
-                . " left join hl_port P on P.id = S.port_id "
+                . " left join hl_port P on P.port_code = S.port_id "
                 . " left join hl_shipcompany SC on SC.id = S.ship_id  "
                 . " where S.ship_id = '$ship_id' and S.port_id = '$port_id'"
                 . " order by S.position_level";
@@ -116,46 +42,23 @@ class Ship extends Model
         
     }
     
-    public function to_edit($shipinfo,$port_id,$city_id,$city_name)
-    { 
-        $SPC_ID =$shipinfo['SPC_ID'];
-        $ship_id =$shipinfo['ship_ID'];
-        $ship_name = $shipinfo['ship_name'];
-        $ship_short_name = $shipinfo['ship_short_name']; 
-        $sql ="update hl_ship_port_city set city_id ='$city_id',  "
-               . "city_name = '$city_name' , port_id = '$port_id' where id = '$SPC_ID' and  "
-               . " ship_id = '$ship_id'  ";
-       // var_dump($sql);exit;
-        $sql2 = "update hl_shipcompany set ship_name = '$ship_name' ,  "
-                . "   ship_short_name = '$ship_short_name' where id = '$ship_id'";
-        $res = Db::execute($sql);
-        $res2 = Db::execute($sql2);
-       
-        if($res!== false){
-           $response['success'][] = '修改ship_port_city表';
-        }else{ $response['fail'][] = '修改ship_port_city表';}
-        if($res2){
-           $response['success'][] = '修改shipcompany表';
-        }else{ $response['fail'][] = '修改shipcompany表';}
-
+    
+    public function to_del($arr) {
+        foreach ($arr as $k=>$v){
+           $ship_id =$k;
+           $port_id = implode(',', $v);
+           $sql = "delete from hl_ship_port where ship_id ='$ship_id' and port_id in ($port_id ) ";
+           $sql2 = "select id from hl_ship_port where ship_id ='$ship_id'" ;
+           $res = Db::execute($sql);
+           $res ? $response['success'][] = '删除ship_port表船id'. $ship_id :$response['success'][] = '删除ship_port表船id'. $ship_id ;
+           $res2 =Db::query($sql2);
+           if(!$res2){
+                $sql3 = "delete from hl_shipcompany where id ='$ship_id'";
+                $res3 = Db::execute($sql3);
+                $res ? $response['success'][] = '删除shipcompany表船id'. $ship_id :$response['success'][] = '删除shipcompany表船id'. $ship_id ;
+            }
+        }
         return $response;
-        
-    }
-      
-    public function to_del($SPC_id) {
-        $SPC_id= implode(',', $SPC_id);
-        $ship_id = Db::name('ship_port_city')->where('id','in',$SPC_id)->column('ship_id');
-        $ship_id = implode(',', $ship_id);
-        $sql = "delete from hl_ship_port_city where  id  in ($SPC_id) ";
-        $sql2= "delete from hl_shipcompany where id in ($ship_id) ";
-        $res =  Db::execute($sql);
-        $res2 = Db::execute($sql2); 
-        if($res){
-           $response['success'][] = '删除ship_port_city表';
-        }else{ $response['fail'][] = '删除ship_port_city表';}
-        if($res2){
-           $response['success'][] = '删除shipcompany表';
-        }else{ $response['fail'][] = '删除shipcompany表';}
     }  
     
     public function to_add($shipinfo,$port_id,$city_id,$city_name) {
@@ -173,7 +76,50 @@ class Ship extends Model
         }else{ $response['fail'][] = '添加shipcompany表';}
         
         return $response;
-    } 
+    }
+    
+        //展示原有的信息
+    public function ship_edit($ship_id ,$port_id){ 
+        $sql = "select * from hl_shipcompany where id = '$ship_id' ";
+        $sql2 = "select SP.port_id ,P.port_name from hl_ship_port SP left join hl_port P on P.port_code = SP.port_id "
+                . " where SP.ship_id = '$ship_id'";
+        $res =array();
+        $res1 = Db::query($sql);
+        $res[] = Db::query($sql2);
+        $res[] = $res1[0];
+        return $res;
+    }
+    
+    public function to_edit($ship_id ,$ship_short_name ,$ship_name ,$port_code){ 
+          //先删除hl_ship_port原有的数据 ,再重新插入  
+        $sql = "delete from hl_ship_port where ship_id ='$ship_id'";
+        $str ='';
+        foreach ($port_code as $k=>$v){
+            $str .= "($v,$k,$ship_id) , ";
+        }
+        echo $str;
+       // $str = "'".$str."'";
+        //$str3 = substr($str, 0, -1) ;
+        $str2 = rtrim($str ,',');
+        echo '</br>';
+        echo  $str2 ;exit;
+        $sql2 = "insert into hl_ship_port(port_id,seq,ship_id)  values".$str;
+        var_dump($sql2);exit;
+        $sql3 = "update hl_shipcompany set ship_short_name ='$ship_short_name'  "
+                . "  ship_name ='$ship_name' where id = '$ship_id' ";    
+        $res1 =Db::execute($sql); 
+        $res1 ? $response['success'][] = '删除ship_port表': $response['fail'][] = '删除ship_port_city表';
+        if($res1){
+            $res2 =Db::execute($sql2); 
+            $res2 ? $response['success'][] = '修改ship_port表': $response['fail'][] = '修改ship_port_city表';
+            $res3 =Db::execute($sql3); 
+            $res3 ? $response['success'][] = '修改shipcompany表': $response['fail'][] = '修改shipcompany表';
+        }
+    
+        return $response;
+        
+    }
+  
     
 }
 

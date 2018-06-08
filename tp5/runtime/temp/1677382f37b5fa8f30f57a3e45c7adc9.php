@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528339083;}*/ ?>
 <body>
     <!-- 左侧菜单开始 -->
     <div class="left-nav">
@@ -180,6 +180,12 @@
                             </a>
                         </li>
                         <li>
+                            <a _href="<?php echo url('CarMan/man_List'); ?>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>车队人员资料</cite>
+                            </a>
+                        </li>
+                        <li>
                             <a _href="<?php echo url('Ship/ship_List'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>船公司通讯录</cite>
@@ -191,12 +197,7 @@
                                 <cite>船公司人员资料</cite>
                             </a>
                         </li>
-                        <li>
-                            <a _href="<?php echo url('CarMan/man_List'); ?>">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>车队人员资料</cite>
-                            </a>
-                        </li>
+                       
                     </ul>
                 </li>
                 <li>
