@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527898250;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\port_list.html";i:1527898250;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\port_list.html";i:1528192607;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
 <!doctype html>
 <html lang="en">
 <head>
@@ -36,7 +40,11 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
+<<<<<<< HEAD
           <input type="text" name="username"  placeholder="请输入港口名" autocomplete="off" class="layui-input">
+=======
+          <input type="text" name="port_name"  placeholder="请输入港口名" autocomplete="off" class="layui-input">
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -51,6 +59,10 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
+<<<<<<< HEAD
+=======
+            <th>ID</th>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
             <th>港口名</th>
             <th>所属城市</th>
             <th>创建时间</th>
@@ -58,6 +70,7 @@
           </tr>
         </thead>
         <tbody>
+<<<<<<< HEAD
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
@@ -71,20 +84,75 @@
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="" href="javascript:;">
+=======
+        <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
+          <tr>
+            <td>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
+            </td>
+            <td class="tdata"><?php echo $vo['id']; ?></td>
+            <td class="tdata"><?php echo $vo['port_name']; ?></td>
+            <td><?php echo $vo['city']; ?></td>
+            <td><?php echo date("y-m-d",$vo['mtime']); ?></td>
+            <td class="td-manage">
+              <a title="编辑"  onclick="x_admin_show('修改信息','<?php echo url('Port/port_edit'); ?>?id=<?php echo $vo['id']; ?>',750,350)" href="javascript:;">
+                <i class="layui-icon">&#xe642;</i>
+              </a>
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
+<<<<<<< HEAD
+=======
+            <?php endforeach; endif; else: echo "" ;endif; ?>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
         </tbody>
       </table>
       <div class="page">
         <div>
+<<<<<<< HEAD
            
+=======
+            <?php echo $page; ?>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
         </div>
       </div>
 
     </div>
+<<<<<<< HEAD
     <script>
+=======
+<script>
+/*执行搜索车队或者港口*/
+    function search(){
+         $.ajax({
+                type:'get',
+                url:"<?php echo url('admin/Port/port_list'); ?>",     
+                data: $("#searchform").serialize(),
+                dataType:"json",
+                async:false,
+                success:function(data){
+                  if(data.status==1){
+                    return 1;
+                  }else{
+                      return 0 ;
+                 }
+                         
+               }, error: function(XMLHttpRequest, textStatus, errorThrown) {
+                console.log(XMLHttpRequest.status);
+               console.log(XMLHttpRequest.readyState);
+               console.log(textStatus);
+                  },
+
+        });
+        return 1;
+    }    
+        
+        
+        
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
       layui.use('laydate', function(){
         var laydate = layui.laydate;
         
@@ -99,7 +167,51 @@
         });
       });
 
+<<<<<<< HEAD
     </script>
+=======
+
+      /*用户-删除*/
+    function member_del(obj,did){
+        layer.confirm('确认要删除吗？',function(index){
+            //转成数组形式
+            var dataA=new Array()
+            dataA[0]=did ;
+            var dataArray={id:dataA}
+            toajax(dataArray);
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!',{icon:1,time:1000});
+         });
+      }
+
+   function delAll (argument) {
+        var data = tableCheck.getData();
+        layer.confirm('确认要删除吗？'+data,function(index){
+            //捉到所有被选中的，发异步进行删除
+            var dataArray={id:data};
+            toajax(dataArray);
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+      }
+
+       function toajax (dataArray){
+            $.ajax({
+                type:'POST',
+                url:"<?php echo url('admin/Port/port_del'); ?>",    
+                data:dataArray,
+                dataType:"json",
+                success:function(data){
+                    if(data.status==1){
+                      return 1;
+                    }else{
+                        return 0 ;
+                  }
+                }
+            })
+        };
+</script>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
  
   </body>
 

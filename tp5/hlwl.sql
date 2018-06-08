@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-06-01 20:42:24
+Date: 2018-06-05 18:01:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2283,10 +2283,10 @@ INSERT INTO `hl_area` VALUES ('2250', '500240', '石柱土家族自治县', '500
 INSERT INTO `hl_area` VALUES ('2251', '500241', '秀山土家族苗族自治县', '500200');
 INSERT INTO `hl_area` VALUES ('2252', '500242', '酉阳土家族苗族自治县', '500200');
 INSERT INTO `hl_area` VALUES ('2253', '500243', '彭水苗族土家族自治县', '500200');
-INSERT INTO `hl_area` VALUES ('2254', '500381', '江津市', '500300');
-INSERT INTO `hl_area` VALUES ('2255', '500382', '合川市', '500300');
-INSERT INTO `hl_area` VALUES ('2256', '500383', '永川市', '500300');
-INSERT INTO `hl_area` VALUES ('2257', '500384', '南川市', '500300');
+INSERT INTO `hl_area` VALUES ('2254', '500116', '江津区', '500100');
+INSERT INTO `hl_area` VALUES ('2255', '500117', '合川区', '500100');
+INSERT INTO `hl_area` VALUES ('2256', '500118', '永川区', '500100');
+INSERT INTO `hl_area` VALUES ('2257', '500119', '南川区', '500100');
 INSERT INTO `hl_area` VALUES ('2258', '510101', '市辖区', '510100');
 INSERT INTO `hl_area` VALUES ('2259', '510104', '锦江区', '510100');
 INSERT INTO `hl_area` VALUES ('2260', '510105', '青羊区', '510100');
@@ -3187,7 +3187,7 @@ CREATE TABLE `hl_cardata` (
   `status` int(1) NOT NULL DEFAULT '2' COMMENT '1为删除2为正常默认为2',
   `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_cardata
@@ -3296,8 +3296,8 @@ CREATE TABLE `hl_carprice` (
 -- ----------------------------
 -- Records of hl_carprice
 -- ----------------------------
-INSERT INTO `hl_carprice` VALUES ('1', '1', '1', '3000.00', '5000.00', '5', 's', '1527221154');
-INSERT INTO `hl_carprice` VALUES ('2', '1', '2', '3500.00', '5500.00', '6', 'r', null);
+INSERT INTO `hl_carprice` VALUES ('1', '32', '17', '3550.00', '5555.00', '5', 's', '1528103431');
+INSERT INTO `hl_carprice` VALUES ('2', '32', '17', '3600.00', '6500.00', '6', 'r', '1528103431');
 INSERT INTO `hl_carprice` VALUES ('3', '2', '3', '1000.00', '5000.00', '4', 's', null);
 INSERT INTO `hl_carprice` VALUES ('4', '2', '4', '1000.00', '5000.00', '4', 'r', null);
 INSERT INTO `hl_carprice` VALUES ('5', '3', '5', '1000.00', '5000.00', '4', 's', null);
@@ -3313,6 +3313,8 @@ INSERT INTO `hl_carprice` VALUES ('14', '7', '14', '3000.00', '5000.00', '5', 'r
 INSERT INTO `hl_carprice` VALUES ('15', '28', '19', '555.00', '1111.00', '4', 's', '1527734753');
 INSERT INTO `hl_carprice` VALUES ('26', '29', '1', '9999.00', '999999.00', null, 'r', '1527837391');
 INSERT INTO `hl_carprice` VALUES ('27', '29', '2', '1111.00', '111111.00', null, 's', '1527837391');
+INSERT INTO `hl_carprice` VALUES ('28', '31', '2', '3500.00', '5500.00', null, 'r', '1528094324');
+INSERT INTO `hl_carprice` VALUES ('29', '31', '1', '3000.00', '5000.00', null, 's', '1528094324');
 
 -- ----------------------------
 -- Table structure for `hl_carprice1`
@@ -3416,16 +3418,16 @@ CREATE TABLE `hl_car_line` (
   `address_id` int(11) DEFAULT NULL COMMENT 'id',
   `port_id` int(11) DEFAULT NULL COMMENT '港口的id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_car_line
 -- ----------------------------
-INSERT INTO `hl_car_line` VALUES ('1', null, '421125100', '4');
-INSERT INTO `hl_car_line` VALUES ('2', null, '421125101', '2');
-INSERT INTO `hl_car_line` VALUES ('3', null, '421125102', '3');
-INSERT INTO `hl_car_line` VALUES ('4', null, '421125103', '5');
-INSERT INTO `hl_car_line` VALUES ('5', null, '421125104', '5');
+INSERT INTO `hl_car_line` VALUES ('1', 'aaaa', '421125100', '4');
+INSERT INTO `hl_car_line` VALUES ('2', 'aaa', '421125101', '2');
+INSERT INTO `hl_car_line` VALUES ('3', 'aaaa', '421125102', '3');
+INSERT INTO `hl_car_line` VALUES ('4', 'aaaa', '421125103', '5');
+INSERT INTO `hl_car_line` VALUES ('5', 'aaaaaaaaa', '421125104', '5');
 INSERT INTO `hl_car_line` VALUES ('6', null, '421125105', '3');
 INSERT INTO `hl_car_line` VALUES ('7', null, '421125106', '4');
 INSERT INTO `hl_car_line` VALUES ('8', null, '421125107', '5');
@@ -3451,6 +3453,8 @@ INSERT INTO `hl_car_line` VALUES ('27', null, '110105001', '1');
 INSERT INTO `hl_car_line` VALUES ('28', null, '230102001', '2');
 INSERT INTO `hl_car_line` VALUES ('29', '鼓楼街道', '110228001', '1');
 INSERT INTO `hl_car_line` VALUES ('30', '浙江省温州市瓯海区景山街道', '330304001', '2');
+INSERT INTO `hl_car_line` VALUES ('31', '北京市市辖区东城区景山街道', '110101002', '4');
+INSERT INTO `hl_car_line` VALUES ('32', '广西壮族自治区桂林市资源县车田苗族乡', '450329203', '3');
 
 -- ----------------------------
 -- Table structure for `hl_car_port`
@@ -3607,7 +3611,9 @@ CREATE TABLE `hl_city` (
 -- ----------------------------
 -- Records of hl_city
 -- ----------------------------
-INSERT INTO `hl_city` VALUES ('1', '110100', '市辖区', '110000');
+INSERT INTO `hl_city` VALUES ('1', '110100', '北京市', '110000');
+INSERT INTO `hl_city` VALUES ('2', '110200', '北京市辖县', '110000');
+INSERT INTO `hl_city` VALUES ('3', '120100', '天津市', '120000');
 INSERT INTO `hl_city` VALUES ('5', '130100', '石家庄市', '130000');
 INSERT INTO `hl_city` VALUES ('6', '130200', '唐山市', '130000');
 INSERT INTO `hl_city` VALUES ('7', '130300', '秦皇岛市', '130000');
@@ -3678,8 +3684,8 @@ INSERT INTO `hl_city` VALUES ('71', '231000', '牡丹江市', '230000');
 INSERT INTO `hl_city` VALUES ('72', '231100', '黑河市', '230000');
 INSERT INTO `hl_city` VALUES ('73', '231200', '绥化市', '230000');
 INSERT INTO `hl_city` VALUES ('74', '232700', '大兴安岭地区', '230000');
-INSERT INTO `hl_city` VALUES ('75', '310100', '市辖区', '310000');
-INSERT INTO `hl_city` VALUES ('76', '310200', '县', '310000');
+INSERT INTO `hl_city` VALUES ('75', '310100', '上海市', '310000');
+INSERT INTO `hl_city` VALUES ('76', '310200', '上海市辖县', '310000');
 INSERT INTO `hl_city` VALUES ('77', '320100', '南京市', '320000');
 INSERT INTO `hl_city` VALUES ('78', '320200', '无锡市', '320000');
 INSERT INTO `hl_city` VALUES ('79', '320300', '徐州市', '320000');
@@ -3841,8 +3847,8 @@ INSERT INTO `hl_city` VALUES ('234', '451400', '崇左市', '450000');
 INSERT INTO `hl_city` VALUES ('235', '460100', '海口市', '460000');
 INSERT INTO `hl_city` VALUES ('236', '460200', '三亚市', '460000');
 INSERT INTO `hl_city` VALUES ('237', '469000', '省直辖县级行政单位', '460000');
-INSERT INTO `hl_city` VALUES ('238', '500100', '市辖区', '500000');
-INSERT INTO `hl_city` VALUES ('239', '500200', '县', '500000');
+INSERT INTO `hl_city` VALUES ('238', '500100', '重庆市', '500000');
+INSERT INTO `hl_city` VALUES ('239', '500200', '重庆市辖县', '500000');
 INSERT INTO `hl_city` VALUES ('240', '500300', '市', '500000');
 INSERT INTO `hl_city` VALUES ('241', '510100', '成都市', '510000');
 INSERT INTO `hl_city` VALUES ('242', '510300', '自贡市', '510000');
@@ -3949,6 +3955,7 @@ INSERT INTO `hl_city` VALUES ('342', '654000', '伊犁哈萨克自治州', '6500
 INSERT INTO `hl_city` VALUES ('343', '654200', '塔城地区', '650000');
 INSERT INTO `hl_city` VALUES ('344', '654300', '阿勒泰地区', '650000');
 INSERT INTO `hl_city` VALUES ('345', '659000', '省直辖行政单位', '650000');
+INSERT INTO `hl_city` VALUES ('4', '120200', '天津市辖县', '120000');
 
 -- ----------------------------
 -- Table structure for `hl_container`
@@ -4074,6 +4081,7 @@ DROP TABLE IF EXISTS `hl_port`;
 CREATE TABLE `hl_port` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `port_name` varchar(11) DEFAULT NULL COMMENT '港口名字',
+  `mtime` int(11) DEFAULT NULL COMMENT '创建或修改时间',
   `city_id` int(11) DEFAULT NULL COMMENT '市级id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
@@ -4081,21 +4089,17 @@ CREATE TABLE `hl_port` (
 -- ----------------------------
 -- Records of hl_port
 -- ----------------------------
-INSERT INTO `hl_port` VALUES ('1', '上海港', '310100');
-INSERT INTO `hl_port` VALUES ('2', '深圳港', '440300');
-INSERT INTO `hl_port` VALUES ('3', '黄埔港', '440100');
-INSERT INTO `hl_port` VALUES ('4', '虎门港', '441900');
-INSERT INTO `hl_port` VALUES ('5', '广州港', '440100');
-INSERT INTO `hl_port` VALUES ('6', '天津港', '120100');
-INSERT INTO `hl_port` VALUES ('7', '厦门港', '350200');
-INSERT INTO `hl_port` VALUES ('8', '大连港', '210200');
-INSERT INTO `hl_port` VALUES ('9', '珠海港', '440400');
-INSERT INTO `hl_port` VALUES ('10', '苏州港', '320500');
-INSERT INTO `hl_port` VALUES ('11', '宁波港', '330200');
-INSERT INTO `hl_port` VALUES ('12', '黄石港', '420200');
-INSERT INTO `hl_port` VALUES ('13', '北京港', '110100');
-INSERT INTO `hl_port` VALUES ('14', '天安门港', '110100');
-INSERT INTO `hl_port` VALUES ('15', '八达岭港', '110100');
+INSERT INTO `hl_port` VALUES ('1', '上海港', null, '310100');
+INSERT INTO `hl_port` VALUES ('2', '深圳港', null, '440300');
+INSERT INTO `hl_port` VALUES ('3', '黄埔港', null, '440100');
+INSERT INTO `hl_port` VALUES ('5', '广州港', null, '440100');
+INSERT INTO `hl_port` VALUES ('6', '天津港', null, '120100');
+INSERT INTO `hl_port` VALUES ('7', '厦门港', null, '350200');
+INSERT INTO `hl_port` VALUES ('8', '大连港', null, '210200');
+INSERT INTO `hl_port` VALUES ('9', '珠海港', null, '440400');
+INSERT INTO `hl_port` VALUES ('10', '苏州港', null, '320500');
+INSERT INTO `hl_port` VALUES ('11', '宁波港', null, '330200');
+INSERT INTO `hl_port` VALUES ('12', '黄石港', null, '420200');
 
 -- ----------------------------
 -- Table structure for `hl_province`
@@ -4645,7 +4649,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1527819587', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1528189091', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

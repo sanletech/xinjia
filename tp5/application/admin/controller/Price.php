@@ -184,13 +184,12 @@ class Price extends Base
         $carprice = new PriceM;
         $res =$carprice->price_trailer_edit($data);   
 //      $this->_p($res);exit;
-        
+
         //传递所有的港口给前台页面
         $sql="select *  from  hl_port ";
         $port_data =Db::query($sql);
        //转成json格式传给js
         $js_port = json_encode($port_data);
-        
         //传递所有的车队给前台页面
         $sql2="select id ,car_name from  hl_cardata ";
         $car_data =Db::query($sql2);
@@ -203,9 +202,9 @@ class Price extends Base
         return $this->view->fetch("price/trailer_edit");
     }
         //拖车运价执行修改
-    public function traile_toedit(){
+    public function trailer_toedit(){
         $data = $this->request->param();
-       // $this->_p($data);exit;
+     //   $this->_p($data);exit;
         $carprice = new PriceM;
         $res =$carprice->price_trailer_toedit($data);          
         if(!array_key_exists('fail', $res)){

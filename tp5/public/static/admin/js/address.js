@@ -102,6 +102,8 @@ document.write("<script language='javascript' src='/static/admin/js/area.js'><\/
                 form.render();
                 form.on('select(town)', function(data) {
                   //  console.log(data);
+                   $('#oldadd').remove();
+                   
             });
             }
         }

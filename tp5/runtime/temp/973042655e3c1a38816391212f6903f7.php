@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527898250;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\price\trailer_edit.html";i:1528038928;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\price\trailer_edit.html";i:1528099902;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,12 +29,22 @@
   <body>
     <link rel="stylesheet" href="/static/admin/css/trailer_add.css">
     <form class="layui-form" id="trailerform" >
+<<<<<<< HEAD
+=======
+    <input type="hidden" name="s_id"  value="<?php echo $data['0']['s_id']; ?>" >
+    <input type="hidden" name="r_id"  value="<?php echo $data['0']['r_id']; ?>" >
+    <input type="hidden" name="cl_id"  value="<?php echo $data['0']['cl_id']; ?>" >
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
       <div class="trailer layui-row">
         <!-- 选择港口 -->
         <div class="layui-form-item">
           <label class="layui-form-label">港口:</label>
             <div class="layui-input-inline" >
+<<<<<<< HEAD
                 <select name ="port"  id= 'port' lay-filter="port" lay-search>
+=======
+                <select name ="port"  lay-filter="port" lay-search>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
                     <option value="">请选择港口</option>
                 </select>
             </div>
@@ -40,6 +54,13 @@
                 <label class="layui-form-label">
                 <span class="x-red">*</span>请选择地址
                 </label>
+<<<<<<< HEAD
+=======
+                <div class="layui-input-inline" id ="oldadd" >
+                    <input type="text" name="address_name" value="<?php echo $data['0']['address_name']; ?>" readonly="readonly"  class="layui-input">
+                     <input type="hidden" name="address_id"  value="<?php echo $data['0']['address_id']; ?>" >
+                </div>
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
                 <div class="layui-input-inline">
                     <select name="province" lay-filter="province" >
                         <option value="">请选择省</option>
@@ -148,25 +169,50 @@
             js_car=JSON.parse(js_car);    
         //加载 所有的港口名字和相应的城市code
         var js_port = '<?php echo $js_port; ?>';
+<<<<<<< HEAD
             js_port=JSON.parse(js_port);   
         
         var url="<?php echo url('admin/price/trailer_toadd'); ?>";    
                 
+=======
+            js_port=JSON.parse(js_port);  
+            
+        var port_id = "<?php echo $data['0']['port_id']; ?>";
+        var s_carid = "<?php echo $data['0']['s_carid']; ?>";
+        var r_carid = "<?php echo $data['0']['r_carid']; ?>";
+        
+        var url="<?php echo url('admin/price/trailer_toedit'); ?>";    
+               
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
         layui.use(['jquery', 'form'], function() {
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
             loadPort();  //加载选择港口
             loadCar();
+<<<<<<< HEAD
             olddata();
         });     
+=======
+          
+        });  
+        
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
         function loadPort(){
             //加载 所有的港口名字和相应id
             var port_length =js_port.length;
             var portHtml = '';
             for(var i=0;i<port_length;i++){
+<<<<<<< HEAD
                 portHtml += '<option  value="' + js_port[i].id +'_'+ js_port[i].port_name + '">' + js_port[i].port_name + '</option>';  
             }
+=======
+                if(js_port[i].id == port_id ){
+                portHtml += '<option  value="' + js_port[i].id   +'_'+ js_port[i].port_name +'" selected="selected">' + js_port[i].port_name + '</option>';  
+                }else{
+                portHtml += '<option  value="' + js_port[i].id +'_'+ js_port[i].port_name + '">' + js_port[i].port_name + '</option>';  
+            }  }
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
             $form.find('select[name=port]').append(portHtml);
             form.render();
             form.on('select(port)', function(data) {
@@ -175,6 +221,7 @@
         function loadCar(){
             //加载 所有的车队名字和相应的车队id
             var car_length =js_car.length;
+<<<<<<< HEAD
             var carHtml = '';
             for(var i=0;i<car_length;i++){
                 carHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
@@ -218,6 +265,77 @@
             }
         
         }
+=======
+            var scarHtml = ''; var rcarHtml = '';
+            for(var i=0;i<car_length;i++){
+                
+                if(s_carid ==js_car[i].id){
+                  scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
+                }else{
+                    scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
+                }   
+                if(r_carid ==js_car[i].id){
+                    rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
+                }else{
+                    rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
+                }   
+            }
+             
+            $form.find('select[name=car_load]').append(rcarHtml);
+            $form.find('select[name=car_send]').append(scarHtml);
+            form.render();
+            form.on('select(car)', function(data) {
+            } ) 
+            
+        }
+//          function  oldaddress(address_name){
+//              //alert(address_name)
+//                if(address_name == 'oldadd'){
+//                    $form.find('select[name=province]').html('<option value="">请选择省</option>').parent().hide();
+//                }else{
+//                    $form.find('select[name=province]').html('<option value="">请选择省</option>').parent().show();
+//                    $('#oldadd').remove();
+//                }
+//                  
+//              
+//          }
+        
+//        function olddata(){
+//            var port_id = "1";
+//             var s_carid = "2";
+//             var r_carid = "3";
+//             var tagName1 = 'port'; 
+//             var tagName2 = 'car_send'; 
+//             var tagName3 = 'car_load'; 
+//             loadolddata(tagName1,port_id);
+////             loadolddata(tagName2,s_carid);
+////             loadolddata(tagName3,r_carid);
+//         }
+//          
+//        //加载原有数据展示
+//        function loadolddata(tagName,selectId){
+//         
+//            var dataobj =  $form.find("select[name="+tagName+"]");
+//          
+//            var optionobj = dataobj['0'].getElementsByTagName('option')
+//            //  console.log(optionobj);
+//            for(var i=0;i<optionobj.length ;i++){
+//                var op = optionobj[i].value
+////                console.log(optionobj[i]);
+//                var d = op.split('_');
+//                var code = d[0];
+//                var name = d[1];
+//                if(code == selectId){
+//                    
+//                    optionobj[i].setAttribute("selected", "selected");
+////                    optionobj[i].setAttribute("defaultSelected", "true"); 
+//                    console.log(optionobj[i]);
+//                }
+//               
+//            }
+//        
+//        }
+>>>>>>> f1a9d2cc2f7dcbe4a587ac227fa24b8e61066617
         
         function  trailerAjax(){
             var loading = layer.load(1);

@@ -30,10 +30,6 @@ class Price extends Model
         }
         
         $lista =Db::table($list.' a')->paginate($pages,false,$pageParam);   
-//            echo '<pre>';
-//                var_dump($list);
-//            echo '</pre>';exit;
-//            echo Db::getLastSql() ;
         return $lista;
     }
     
@@ -220,7 +216,6 @@ class Price extends Model
     }
     
     
-    
     //车队运价展示
     public function price_trailer_list($port_name ,$pages=5,$cl_id ='') {
         
@@ -299,70 +294,48 @@ class Price extends Model
         
         return $res;
     }
+    
     //车队运价的修改更新
     public function  price_trailer_toedit($data)
-    {          
-        $pricedata['id'] = $data['id'];
-        $pricedata['ship_id'] = strstr($data['ship'],'_', true);
-        $pricedata['price_20GP'] = $data['price_20GP'];
-        $pricedata['price_40HQ'] = $data['price_40HQ'];
-        $pricedata['shipping_date'] = strtotime($data['shipping_date']);
-        $pricedata['cutoff_date'] = strtotime($data['cutoff_date']);
-        $pricedata['boat_name'] = $data['boat_name'];
-        $pricedata['sea_limitation'] = $data['sea_limitation'];
-        $pricedata['ETA'] = strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day');
-        $pricedata['EDD'] = strtotime("+3day",$pricedata['ETA']);
-        $pricedata['generalize'] = $data['generalize'];
-        $pricedata['mtime'] = time();
-        $response= array();
-        $port_id = $data['port_name'];
-        $port_length = count($port_id); 
-        if($port_length<2){
-            return  $response['fail'][] = '航线缺少起始目的港口';
-        }
-        if($port_length >= 2){
-            $sl_start = $port_id['0'];
-            $sl_over  = $port_id[$port_length-1];
-            $sl_middle = array_splice($port_id,'1','-1');
-            $sl_startover = $this->lineStart($sl_start, $sl_over);
-            if( !$sl_startover ){
-                $res =  Db::name('sealine')->insert(['sl_start'=>$sl_start,'sl_over'=>$sl_over]);
-                $res ?($response['success'][] = '修改sealine表') :($response['fail'][] = '修改sealine表') ;
-                $pricedata['sl_id'] = Db::name('sealine')->getLastInsID();
-                
-            }  else { $pricedata['sl_id'] = $sl_startover ; }
-            
-            if( $sl_middle){    //$sl_middle 为空说明没有中间的港口航线
-                $sl_middle_id = $this->line($sl_middle);  //如果返回id说明中间港口线路存在 空则新增线路
-//                var_dump($sl_middle); var_dump($sl_middle_id);exit;
-                if(!$sl_middle_id){
-                    $sealine_id = Db::name('sea_middle')->max('sealine_id');
-                    $sealine_id = $sealine_id  +1 ;
-                    $str='';
-                    foreach ($sl_middle as $k =>$v){
-                        $str .= "('$sealine_id','$v','$k'),";
-                    }
-                    $str=rtrim("$str",',');
-
-                    $sql = "insert into hl_sea_middle(sealine_id,middle_port,sequence) values".$str;
-                    $res2 =Db::execute($sql); 
-                    $pricedata['sm_id'] = $sealine_id ;
-                    $res2 ?($response['success'][] = '修改sea_middle表') :($response['fail'][] = '修改sea_middle表') ;
-                }else{  $pricedata['sm_id'] = $sl_middle_id ;}
-              
-            }else{  $pricedata['sm_id'] = '' ;}
+    {   
+        $s_id = $data['s_id'];  //送货车队的 运线id
+        $r_id = $data['r_id'];  //装货车队的 运线id
         
-            }
-              
-        $res3 = Db::name('seaprice')->update($pricedata);
-         // echo Db::getLastSql();exit;
-        $res3 ? $response['success'][] = '修改seaprice表':$response['fail'][] = '修改seaprice表';
-        return  $response;
+        //如果存在address_name就是原来的
+        if( array_key_exists('address_name', $data)){
+            $cl_id =  $data['cl_id']; //路线id
+        }else{
+             //根据港口和地址 贮存车队送货/装货线路
+            $port_id = strstr($data['port'],'_',true);//港口id
+            $address_data =  $data['town'] ? $data['town'] :$data['area']; 
+          
+            $cl_id = $this->lineCar($port_id,$address_data);
+        }
+        $mtime =  time(); //修改时间
+        
+       //装货和送货车队的id ,价格
+        $load_car = strstr($data['car_load'],'_',true); 
+        $load_price_20GP = $data['load']['price_20GP'];
+        $load_price_40HQ = $data['load']['price_40HQ'];
+        
+        $send_car = strstr($data['car_send'],'_',true); 
+        $send_price_20GP = $data['send']['price_20GP'];
+        $send_price_40HQ = $data['send']['price_40HQ'];
+        
+        $sql = "update hl_carprice set cl_id ='$cl_id',car_id ='$load_car',"
+                . "price_20GP ='$load_price_20GP',price_40HQ ='$load_price_40HQ'"
+                . ",mtime='$mtime'  where id ='$r_id'";
+        $sql2 = "update hl_carprice set cl_id ='$cl_id',car_id ='$load_car',"
+                . "price_20GP ='$send_price_20GP',price_40HQ ='$send_price_40HQ'"
+                . ",mtime='$mtime'  where id ='$s_id'";
+        $res = Db::execute($sql); $res2 = Db::execute($sql2);
+        $res ? $response['success'][] = '修改carprice表_装货':$response['fail'][] = '修改carprice表_装货';
+        $res2 ? $response['success'][] = '修改carprice表_送货':$response['fail'][] = '修改carprice表_送货货';
+        return $response;
     }
     
-    
-         //查询车队运输线是否存在 若存在就反悔线路id不存在就添加 
-         //参数分别为 港口id, 目的地址, 
+    //查询车队运输线是否存在 若存在就反悔线路id不存在就添加 
+    //参数分别为 港口id, 目的地址, 
     public function  lineCar($port_id,$address_data){
         $address_id= strstr($address_data,'_',true);
         
