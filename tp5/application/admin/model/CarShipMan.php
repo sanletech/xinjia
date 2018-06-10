@@ -10,7 +10,7 @@ class CarShipMan extends Model
     //展示船队人员资料的信息
     public function ship_list($searchdata = array(),$page = 5) { 
          $list = Db::name('shipman')->alias('SM')
-                 ->join('hl_port P','P.id = SM.port_id ')
+                 ->join('hl_port P','P.port_code = SM.port_id ')
                  ->join('hl_shipcompany SC','SC.id = SM.ship_id')
                  ->field('SM.id ,P.port_name ,SC.ship_short_name,SM.* ');
       

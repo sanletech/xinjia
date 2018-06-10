@@ -9,10 +9,7 @@ use think\Request;
 use think\Db;
 class Car extends Base
 {   
-    public function __construct(Request $request = null) {
-        parent::__construct($request);
-        $this->request= $request;
-    }
+
     
     public function car_list() 
     {   

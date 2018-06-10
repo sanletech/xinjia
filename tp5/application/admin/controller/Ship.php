@@ -17,38 +17,32 @@ class Ship extends Base
     public function ship_list() 
     {   
         $data    = input('get.'); 
-        $city_name   = input('get.city_name');
+        $ship_name   = input('get.ship_name');
         $port_name   = input('get.port_name');
-        if($city_name){
-            $this->assign('searchcity', $city_name);
+        if($ship_name){
+            $this->assign('searchship', $ship_name);
         }
         if($port_name){
             $this->assign('searchport', $port_name);
         } 
-        $data =  array_filter($data);
         $shiplist = new ShipM;
-        $list  = $shiplist->shiplist($data); 
-        //$this->_v($list); exit;
+        $list  = $shiplist->shiplist($ship_name,$port_name); 
+       // $this->_v($list); exit;
         $count = count($list); 
-        for($i=0;$i<$count;$i++){
-           $ship_id=$list[$i]['ship_id'];
-           $port_id=explode(',',$list[$i]['port_id'])  ;
-           $port_name=  explode(',',$list[$i]['port_name']) ;
-           $port_arr[$ship_id]= array_combine($port_id ,$port_name);
-        }
-       //$this->_v($port_arr);
         $page = $list->render();
+        
         $this->assign('shiplist', $list);
         $this->assign('page' , $page);
         $this->assign('count',$count);
-        $this->assign('port_arr',$port_arr);
         return $this->view->fetch('Ship/ship_list');
     }
+    
     //针对船公司依照不同港口展示联系人的资料
     public function  ship_info(){
-        $id= $this->request->get();
+        $ship_id   = input('get.ship_id');
+        $port_id   = input('get.port_id');
         $datainfo = new ShipM;
-        $res = $datainfo->ship_info($id);
+        $res = $datainfo->ship_info($ship_id ,$port_id);
          //$this->_p($res);exit;
         if(!$res){
         $res=array( 0=> Array('name' =>'','position' =>'','duty_line' =>'',
@@ -59,58 +53,21 @@ class Ship extends Base
         return $this->view->fetch('Ship/ship_info');
     }
     
-    //船公司编辑
-    public function ship_edit() {
-        $id= $this->request->get('id');
-        $ship= new ShipM;
-        $res =$ship->ship_edit($id);
-        //$this->_p($res); exit; 
-        
-        //传递所有的港口给前台页面
-        $sql3="select *  from  hl_port ";
-        $port_data =Db::query($sql3);
-         //转成json格式传给js
-        $js_port=json_encode($port_data);
-        
-        $this->view->assign('js_port', $js_port);
-        $this->assign('list', $res);
-        return $this->view->fetch('Ship/ship_edit'); 
-    }
-    
-     //执行船公司编辑
-    public function to_edit() {
-        $data = $this->request->param();
-       // $this->_p($data);  
-        $shipinfo =  $data['0']; 
-        $port_arr =$data['port'];
-        asort($port_arr);
-        // $this->_p($port_arr);exit;
-        $port_id =  implode(',', $port_arr);
-        
-        $city_arr =$data['city'];
-        asort($city_arr);
-        $city_id =  implode(',',  $city_arr);
-        $city_name = implode(',', array_keys($city_arr));
-        
-        $ship= new ShipM;
-        $res =$ship->to_edit($shipinfo,$port_id,$city_id,$city_name); 
-        if(!array_key_exists('fail', $res)){
-                  $status =1; 
-              }else {
-                  $status =0;  
-                    }
-        json_encode($status);   
-        
-         return $status;   
-        }
-        
    //执行删除
     public function to_del() {
        //接受ship_port_city 的id 数组
         $data = $this->request->param();
-        $SPC_id = $data['id'];
-        $ship= new ShipM;
-        $res =$ship->to_del($SPC_id);
+        $id_arr = $data['id'];
+        foreach ($id_arr as $k=>$v){
+           $arr[] = explode('_', $v);
+        }
+        $result =   array();
+        //依照ship_id 分组对应的port_id
+        foreach($arr as $k=>$v){
+            $result[$v[0]][]    =   $v[1];
+        } 
+        $shipdel = new ShipM;
+        $res = $shipdel->to_del($result);
         if(!array_key_exists('fail', $res)){
                   $status =1; 
               }else {
@@ -120,6 +77,7 @@ class Ship extends Base
         
          return $status;   
    }
+   
    //展示添加页面
     public function  ship_add(){
        
@@ -136,21 +94,13 @@ class Ship extends Base
    }
    
    public function to_add() {
-       $data = $this->request->param();
-        $shipinfo =  $data['0'];
-        unset($shipinfo['SPC_ID']);
-         unset($shipinfo['ship_ID']);
-        $port_arr =$data['port'];
-        arsort($port_arr);
-        $port_id =  implode(',', $port_arr);
-        
-        $city_arr =$data['city'];
-        arsort($city_arr);
-        $city_id =  implode(',',  $city_arr);
-        $city_name = implode(',', array_keys($city_arr));
-        
+        $data = $this->request->param();
+     //   $this->_p($data);exit;
+        $port_arr =$data['port_code'];
+        $ship_short_name = $data['ship_short_name'];
+        $ship_name = $data['ship_name'];
         $ship= new ShipM;
-        $res =$ship->to_add($shipinfo,$port_id,$city_id,$city_name); 
+        $res =$ship->to_add($port_arr,$ship_name ,$ship_short_name); 
         if(!array_key_exists('fail', $res)){
                   $status =1; 
               }else {
@@ -161,5 +111,42 @@ class Ship extends Base
          return $status;   
        
    }
+   
+   
+   
+   //船公司编辑展示页面
+    public function ship_edit() {
+        $ship_id= $this->request->get('ship_id');
+        $port_id= $this->request->get('port_id');
+        $ship= new ShipM;
+        $res =$ship->ship_edit($ship_id,$port_id);
+//        $this->_p($res); exit; 
+        $ship_arr = $res[1];
+        $port_arr = $res[0];
+        $port_arr = json_encode($port_arr);
+        $this->assign('ship', $ship_arr);
+        $this->assign('port', $port_arr);
+        return $this->view->fetch('Ship/ship_edit'); 
+    }
+    
+     //执行船公司编辑
+    public function to_edit() {
+        $data = $this->request->param();
+        // $this->_p($data); exit; 
+        $port_code = $data['port_code'];
+        $ship_id = $data['ship_id'];
+        $ship_short_name =$data['ship_short_name'];
+        $ship_name = $data['ship_name'];
+        $ship= new ShipM;
+        $res =$ship->to_edit($ship_id ,$ship_short_name ,$ship_name ,$port_code); 
+        if(!array_key_exists('fail', $res)){
+                  $status =1; 
+              }else {
+                  $status =0;  
+                    }
+        json_encode($status);   
+        
+        return $status;   
+        }
    
 }
