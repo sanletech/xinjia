@@ -9,46 +9,6 @@ use think\Request;
 use think\Db;
 class CarMan  extends Base
 {   
-    public function __construct(Request $request = null) {
-        parent::__construct($request);
-        $this->request= $request;
-    }
-    //船名列表
-    public function ship_name(){
-        return $this->view->fetch('carshipman/ship_name');
-    }
-    //添加船名
-    public function ship_add(){
-        return $this->view->fetch('carshipman/ship_add');
-    }
-    //修改船名
-    public function ship_edit(){
-        return $this->view->fetch('carshipman/ship_edit');
-    }
-
-    //航线详情列表
-    public function sealine_list(){
-        return $this->view->fetch('carshipman/sealine_list');
-    }
-    //添加航线详情
-    public function sealine_add(){
-          //传递所有的港口给前台页面
-          $sql3="select *  from  hl_port ";
-          $port_data =Db::query($sql3);
-         //转成json格式传给js
-          $js_port=json_encode($port_data);
-          
-          //传递所有的船公司给前台页面选择
-          $sql4="select id , ship_short_name  from  hl_shipcompany ";
-          $ship_data =Db::query($sql4);
-         //转成json格式传给js
-          $js_ship=json_encode($ship_data);
-          
-          $this->view->assign('js_port',$js_port);
-          $this->view->assign('js_ship',$js_ship);
-        return $this->view->fetch('carshipman/sealine_add');
-    }
-
     public function man_list() 
     {   
         $seachData =  $this->request->param();

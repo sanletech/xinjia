@@ -15,14 +15,14 @@
       <div class="layui-row">
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
-            <input type="text" name="city_name"  value="<{$searchcity  ? $searchcity : '';}>"  placeholder="请输入城市名字" autocomplete="off" class="layui-input">
+            <input type="text" name="ship_name"  value="<{$searchship  ? $searchship : '';}>"  placeholder="请输入船公司名字" autocomplete="off" class="layui-input">
           <input type="text" name="port_name"    value="<{$searchport ? $searchport : '';}>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加船队','<{:url('ship/ship_add')}>',550,400)"><i class="layui-icon"></i>添加</button>
+     <button class="layui-btn" onclick="x_admin_show('添加船公司','<{:url('ship/ship_add')}>',750,400)"><i class="layui-icon"></i>添加</button>
      <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
       </xblock>
       <table class="layui-table">
@@ -33,7 +33,6 @@
             </th>
             <th>ID</th>
             <th>船公司名</th>
-            <th>所属城市</th>
             <th>业务港口</th>
             <th>操作</th></tr>
         </thead>
@@ -41,44 +40,22 @@
         <{volist name="shiplist" id="vo" }>  
          <tr >
             <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="<{$vo.ship_id.'_'.$vo.port_id}>"><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata" ><{$vo.id}></td>
-<!--            <td>
-        <div class="layui-row layui-col-space10">
-        <div class="layui-col-xs2">
-      你的内容 9/12
-    </div>
-  
-    </div>
-            </td>-->
-            <td style="display: none;"><{$vo.ship_id}></td>
-            <td><{$vo.ship_short_name}></td>
-            <td style="display: none;"><{$vo.city_id}></td>
-            <td><{$vo.city_name}></td>
+            <td class="tdata" ><{$vo.ship_id}></td>
+            <td><{$vo.ship_name}></td>
             <td style="display: none;"><{$vo.port_id}></td>
-<!--            <td><{$vo.port_name}></td>-->
-            <td>
-                <div class="layui-row layui-fluid">   
-                    <{foreach name="port_arr[$vo.ship_id]" item="v" key="k" }>
-                        <div class="layui-col-sm4">
-                            <a onclick="x_admin_show('<{$v}>','<{:url('Ship/ship_info')}>?ship_id=<{$vo.id}>&port_id=<{$k}>',700,400)" href="javascript:;">
-                           <i class="layui-icon-fonts-u"><{$v}></i></a>  
-                        </div>
-                    <{/foreach}>
-                </div>
-            </td>
+            <td><{$vo.port_name}></td>
             <td class="td-manage">
-<!--              <a title="查看" onclick="x_admin_show('查看','<{:url('Ship/ship_info')}>?id=<{$vo.id}>',700,400)" href="javascript:;">
-                  <i class="layui-icon">&#xe649;</i>
-              </a>  -->
-              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('Ship/ship_edit')}>?id=<{$vo.id}>',800,500)" href="javascript:;">
-                  <i class="layui-icon">&#xe642;</i>&nbsp;&nbsp;&nbsp;
-              </a>
-
-              <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
-                <i class="layui-icon">&#xe640;</i> 
-              </a>
+                <a title="查看"  onclick="x_admin_show('查看信息','<{:url('Ship/ship_info')}>?ship_id=<{$vo.ship_id}>&port_id=<{$vo.port_id}>',750,350)" href="javascript:;">
+                    <i class="layui-icon">&#xe649;   </i>
+                </a>
+                 <a title="编辑"  onclick="x_admin_show('编辑信息','<{:url('Ship/ship_edit')}>?ship_id=<{$vo.ship_id}>&port_id=<{$vo.port_id}>',800,350)" href="javascript:;">
+                    <i class="layui-icon">&#xe642;   </i>
+                </a>
+                <a title="删除" onclick="member_del(this,'<{$vo.ship_id.'_'.$vo.port_id}>')" href="javascript:;">
+                    <i class="layui-icon">  &#xe640;</i>
+                </a>
             </td>
           </tr>
         <{/volist}>          
@@ -86,18 +63,18 @@
       </table>
       <div class="page">
         <div>
-           <{$shiplist->render()}>
+           <{$page}>
         </div>
       </div>
   
     </div>
-      <div>
-          <?php 
-        // for($i=580;$i<900; $i++ ){
-        // echo '<i class="layui-icon">&#xe'.$i.'\;</i>';
-        //echo "$i</br>"; }
-          ?>
-          <div>
+        <div>
+            <?php 
+            // for($i=580;$i<900; $i++ ){
+            // echo '<i class="layui-icon">&#xe'.$i.'\;</i>';
+            //echo "$i</br>"; }
+            ?>
+        <div>
     <script>
            /*执行搜索车队或者港口*/
     function search(){

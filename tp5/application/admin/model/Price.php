@@ -30,10 +30,6 @@ class Price extends Model
         }
         
         $lista =Db::table($list.' a')->paginate($pages,false,$pageParam);   
-//            echo '<pre>';
-//                var_dump($list);
-//            echo '</pre>';exit;
-//            echo Db::getLastSql() ;
         return $lista;
     }
     
@@ -209,7 +205,8 @@ class Price extends Model
         
         return $id ;
     }
-        //查询航线是否存在 参数分别为 起始港口id, 目的港口id, 
+    
+    //查询航线是否存在 参数分别为 起始港口id, 目的港口id, 
     public function  lineStart($sl_start,$sl_over){
         $sql = "select id from hl_sealine where sl_start = '$sl_start' and  sl_over = '$sl_over'";
         $res = Db::query($sql);
@@ -218,31 +215,56 @@ class Price extends Model
         return $id ;
     }
     
-    public function price_trailer_list($port_name ,$pages=5) {
+    
+    //车队运价展示
+    public function price_trailer_list($port_name ,$pages=5,$cl_id ='') {
         
          $list = Db::name('carprice')->alias('CP')
                 ->join('hl_car_line L', 'CP.cl_id = L.id', 'left')
                 ->join('hl_cardata CD','CP.car_id = CD.id', 'left')
                 ->join('hl_port P', 'L.port_id =P.id', 'left')
-                ->field('CP.id,CP.cl_id,L.address_name ,CP.car_id, CD.car_name, P.port_name,'
-                        . 'CP.price_20GP,CP.price_40HQ,variable ,CP.latest_order_time')->order('CP.cl_id, CP.variable')->buildSql();
+                ->field('CP.id ,CP.cl_id ,L.address_id ,L.address_name ,CP.car_id ,'
+                        . ' CD.car_name ,L.port_id , P.port_name ,'
+                        . 'CP.price_20GP ,CP.price_40HQ ,variable , '
+                        . 'CP.latest_order_time')
+                ->order('CP.cl_id, CP.variable')->buildSql();
         
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($port_name){
             $list = Db::table($list.' a')->where('a.port_name', 'like', "%{$port_name}%")->buildSql();
             $pageParam['query']['port_name'] = $port_name;
         }
+        if($cl_id){
+            $list = Db::table($list.' c')->where('c.cl_id','=',"$cl_id")->buildSql();
+            $pageParam['query']['cl_id'] = $cl_id;
+        }
         
-        $lista =Db::table($list.' a')->paginate($pages,false,$pageParam);   
+        
+        $lista =Db::table($list.' a')
+                ->join("($list) as b",'b.cl_id =a.cl_id AND a.variable <> b.variable','left')
+                ->field('a.cl_id ,a.port_id ,a.port_name,a.address_id ,a.address_name ,a.id s_id,'
+                        . ' a.car_id s_carid ,a.car_name s_carname ,'
+                        . 'a.price_20GP s_20GP ,a.price_40HQ s_40HQ ,'
+                        . 'a.latest_order_time s_ordertime , a.variable s_variable , '
+                        . 'b.id r_id , b.car_id r_carid ,b.car_name r_carname ,'
+                        . 'b.price_20GP r_20GP ,b.price_40HQ r_40HQ '
+                        . ',b.latest_order_time r_ordertime , b.variable r_variable ')
+                ->group('a.cl_id, b.cl_id')
+                ->paginate($pages,false,$pageParam);   
 //            echo '<pre>';
-//                var_dump($list);
-//            echo '</pre>';exit;
-//            echo Db::getLastSql() ;
+//                var_dump($lista);
+//            echo '</pre>';exit
+//            echo Db::getLastSql() ; 
         return $lista;
         
     }
-    
-    
+    //车队运价 删除
+    public function price_trailer_del($carprice_id){
+        $res = Db::name('carprice')->where('cl_id','in',$carprice_id )->delete();
+        $res ?  $response['success'][] = '删除carprice表':$response['fail'][] = '删除carprice表';
+        return $response ;
+    }
+    //车队运价的添加
     public function price_trailer_toadd($port_id, $address_data, $load, $send){
         $cl_id = $this->lineCar($port_id,$address_data);
         $mtime =  time();
@@ -254,30 +276,80 @@ class Price extends Model
         $send_car =$send['car'];
         $send_price_20GP = $send['price_20GP'];
         $send_price_40HQ = $send['price_40HQ'];
-        
+        //送货 s 装货 r
         $sql = "insert into hl_carprice(cl_id ,car_id ,price_20GP,price_40HQ , variable ,mtime)  "
-                . " values('$cl_id','$load_car','$load_price_20GP','$load_price_40HQ','1','$mtime'),"
-                . "       ('$cl_id','$send_car','$send_price_20GP','$send_price_40HQ','2','$mtime')  ";
+                . " values('$cl_id','$load_car','$load_price_20GP','$load_price_40HQ','r','$mtime'),"
+                . "       ('$cl_id','$send_car','$send_price_20GP','$send_price_40HQ','s','$mtime')  ";
         $res = Db::execute($sql);
         $res ? $response['success'][] = '添加carprice表':$response['fail'][] = '添加carprice表';
         return $response ;
     }
     
-         //查询车队运输线是否存在 若存在就反悔线路id不存在就添加 
-         //参数分别为 港口id, 目的地址, 
+    //车队运价的修改页面的原始数据
+    public function  price_trailer_edit($data) 
+    {   
+        $cl_id = $data['cl_id'];
+        $port_name = '';
+        $res = $this->price_trailer_list($port_name ,$pages=5,$cl_id);
+        
+        return $res;
+    }
+    
+    //车队运价的修改更新
+    public function  price_trailer_toedit($data)
+    {   
+        $s_id = $data['s_id'];  //送货车队的 运线id
+        $r_id = $data['r_id'];  //装货车队的 运线id
+        
+        //如果存在address_name就是原来的
+        if( array_key_exists('address_name', $data)){
+            $cl_id =  $data['cl_id']; //路线id
+        }else{
+             //根据港口和地址 贮存车队送货/装货线路
+            $port_id = strstr($data['port'],'_',true);//港口id
+            $address_data =  $data['town'] ? $data['town'] :$data['area']; 
+          
+            $cl_id = $this->lineCar($port_id,$address_data);
+        }
+        $mtime =  time(); //修改时间
+        
+       //装货和送货车队的id ,价格
+        $load_car = strstr($data['car_load'],'_',true); 
+        $load_price_20GP = $data['load']['price_20GP'];
+        $load_price_40HQ = $data['load']['price_40HQ'];
+        
+        $send_car = strstr($data['car_send'],'_',true); 
+        $send_price_20GP = $data['send']['price_20GP'];
+        $send_price_40HQ = $data['send']['price_40HQ'];
+        
+        $sql = "update hl_carprice set cl_id ='$cl_id',car_id ='$load_car',"
+                . "price_20GP ='$load_price_20GP',price_40HQ ='$load_price_40HQ'"
+                . ",mtime='$mtime'  where id ='$r_id'";
+        $sql2 = "update hl_carprice set cl_id ='$cl_id',car_id ='$load_car',"
+                . "price_20GP ='$send_price_20GP',price_40HQ ='$send_price_40HQ'"
+                . ",mtime='$mtime'  where id ='$s_id'";
+        $res = Db::execute($sql); $res2 = Db::execute($sql2);
+        $res ? $response['success'][] = '修改carprice表_装货':$response['fail'][] = '修改carprice表_装货';
+        $res2 ? $response['success'][] = '修改carprice表_送货':$response['fail'][] = '修改carprice表_送货货';
+        return $response;
+    }
+    
+    //查询车队运输线是否存在 若存在就反悔线路id不存在就添加 
+    //参数分别为 港口id, 目的地址, 
     public function  lineCar($port_id,$address_data){
         $address_id= strstr($address_data,'_',true);
         
         $sql = "select id from hl_car_line where port_id = '$port_id,' and  address_id = '$address_id'";
         $res = Db::query($sql);
-        //如果没有查到就添加这条记录
+        //如果没有查到就添加这条记录 否则返回路线的id
         if(!$res){
-            $address_name=  trim(strrchr($str, '_'),'_'); //镇级地址
-            $town_id = substr($address_id,0,-3);
+            $address_name=  trim(strrchr($address_data, '_'),'_'); //镇级地址
+            $area_id = substr($address_id,0,-3);  //县级code
             $add_sql = "select group_concat(P.province,C.city,A.area) AS add_name "
                     . " from hl_area A left join hl_city C on A.father = C.city_id "
                     . "left join hl_province P on C.father = P.province_id"
-                    . " where A.area_id = '$town_id'";
+                    . " where A.area_id = '$area_id'";
+           
             $add_name = Db::query($add_sql);
             $add_name =  $add_name['0']['add_name'].$address_name;
             $sql2 = "insert into hl_car_line(port_id ,address_id ,address_name) values('$port_id','$address_id','$add_name')";  
@@ -289,5 +361,6 @@ class Price extends Model
        
         return $id ;
     }
+    
     
 }
