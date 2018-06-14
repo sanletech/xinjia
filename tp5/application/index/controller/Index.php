@@ -49,4 +49,9 @@ class Index extends Controller
     {
        return $this->view->fetch('index/personal');
     }
+
+    public function tt()
+    {
+       return $this->view->fetch('index/tt');
+    }
 }
