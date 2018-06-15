@@ -14,7 +14,7 @@ class Car extends Base
     public function car_list() 
     {   
         $data= array_filter($this->request->param());
-        $car= new CarM;
+        //$car= new CarM;
         //接受搜索提供的搜索条件
         $data= $this->request->param();
         $search =  array_filter($data);//过滤下空的参数;
@@ -32,9 +32,9 @@ class Car extends Base
         //展示分页内容
         //  传参数展示分页carlist第一个参数是搜索条件 第二个参数是分页数量
         if($bz){
-             $carlist= $car->carlist($search);
+             $carlist= CarM::carlist($search);
         }else {
-             $carlist= $car->carlist();
+             $carlist= CarM::carlist();
         }
         //每页数量
         $count = count($carlist);

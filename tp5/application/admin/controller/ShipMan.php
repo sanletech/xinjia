@@ -22,8 +22,8 @@ class ShipMan extends Base {
         $ship_name = $this->request->param('ship_name');
         $port_name = $this->request->param('port_name');
 
-        $Manlist = new CarShipMan();
-        $list = $Manlist->ship_list($seachData);
+       // $Manlist = new CarShipMan();
+        $list = CarShipMan::ship_list($seachData);
         //  echo Db::getLastSql();exit;
         $page = $list->render();
         $count = count($list);
