@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528339083;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_list.html";i:1528442909;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Ship\ship_list.html";i:1528680962;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
     <!doctype html>
 <html lang="en">
 <head>
@@ -44,7 +44,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加船队','<?php echo url('ship/ship_add'); ?>',550,400)"><i class="layui-icon"></i>添加</button>
+     <button class="layui-btn" onclick="x_admin_show('添加船公司','<?php echo url('ship/ship_add'); ?>',750,400)"><i class="layui-icon"></i>添加</button>
      <span class="x-right" style="line-height:40px"> 本页有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">

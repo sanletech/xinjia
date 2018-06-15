@@ -1,0 +1,26 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#aaa;
+$bian:1px solid #000;
+.layui-side-scroll{
+  width: 200px;
+}
+//菜单背景
+.layui-bg{
+  background: $lan;
+}
+//选择菜单样式
+.layui-nav{
+  background-color:$lan;
+}
+//悬浮样式
+.layui-nav-tree .layui-nav-bar{
+  background-color: $cheng;
+}
+//点击之后的样式
+.layui-this{
+
+}
+.body_nei{
+  padding:50px;
+}

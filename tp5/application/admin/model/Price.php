@@ -2,6 +2,7 @@
 namespace app\admin\model;
 use think\Model;
 use think\Db;
+use app\admin\model\Port;
 class Price extends Model
 {
      // 定义时间戳字段名
@@ -12,21 +13,39 @@ class Price extends Model
      //船运航价的展示
     public function  price_route_list($port_start,$port_over,$pages=5)
     {   
+        $middleSql =Db::name('sea_middle')->alias('SM')
+            ->join('hl_port P','P.port_code =SM.sl_middle','left')
+            ->field('SM.sealine_id,group_concat(SM.sl_middle order by SM.sequence) middle_port ,'
+                    . 'group_concat(P.port_name order by SM.sequence) port_name')
+            ->group('SM.sealine_id')->order('SM.sealine_id')->buildSql();
+        
+        $bothendSql =Db::name('sea_bothend')->alias('SB')
+                    ->join('hl_port P1','P1.port_code = SB.sl_start','left')
+                    ->join('hl_port P2','P2.port_code = SB.sl_end','left')
+                    ->field('SB.sealine_id,SB.sl_start,P1.port_name s_port_name,SB.sl_end ,P2.port_name e_port_name')
+                    ->group('SB.sealine_id')->order('SB.sealine_id')->buildSql();
+        
+        $routeSql = Db::name('ship_route')->alias('SR')
+                    ->join("$bothendSql T1",'SR.bothend_id =T1.sealine_id')
+                    ->join("$middleSql T2",'SR.middle_id =T2.sealine_id')
+                    ->field('SR.*, T1.sealine_id s_id ,T1.sl_start ,T1.s_port_name, T1.sl_end ,T1.e_port_name ,'
+                            . 'T2.sealine_id m_id,T2.middle_port,T2.port_name')
+                    ->order('SR.id')->buildSql();
+        
         $list = Db::name('seaprice')->alias('SP')
                 ->join('hl_shipcompany S', 'S.id = SP.ship_id', 'left')
-                ->join('hl_sealine SL','SL.id = SP.sl_id', 'left')
-                ->join('hl_port P1', 'SL.sl_start=P1.id', 'left')
-                ->join('hl_port P2', 'SL.sl_over=P2.id', 'left')
-                ->field('SP.*, S.ship_short_name, P1.port_name as start_port , P2.port_name as over_port')->buildSql();
-        
+                ->join("$routeSql T3",'T3.id = SP.route_id', 'left')
+                ->join("hl_boat B",'B.boat_code = SP.boat_code', 'left')
+                ->field('SP.*, S.ship_short_name ship_name,B.boat_name ,T3.s_port_name, T3.e_port_name, T3.port_name')->buildSql();
+        //var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($port_start){
-            $list = Db::table($list.' a')->where('a.start_port', 'like', "%{$port_start}%")->buildSql();
-            $pageParam['query']['start_port'] = $port_start;
+            $list = Db::table($list.' a')->where('a.s_port_name', 'like', "%{$port_start}%")->buildSql();
+            $pageParam['query']['s_port_name'] = $port_start;
         }
         if($port_over){
-            $list = Db::table($list.' b')->where('b.over_port', 'like', "%{$port_over}%")->buildSql();
-            $pageParam['query']['over_port'] = $port_over;
+            $list = Db::table($list.' b')->where('b.e_port_name', 'like', "%{$port_over}%")->buildSql();
+            $pageParam['query']['e_port_name'] = $port_over;
         }
         
         $lista =Db::table($list.' a')->paginate($pages,false,$pageParam);   
@@ -94,7 +113,7 @@ class Price extends Model
     }
     
     //航运价格的修改页面的原始数据
-      public function  price_route_edit($seaprice_id,$sl_id,$sm_id) 
+      public function  price_route_edit($seaprice_id,$route_id) 
     {   
         $res[] = Db::name('seaprice')->alias('SP')
                 ->join('hl_shipcompany S', 'S.id = SP.ship_id', 'left')

@@ -64,7 +64,7 @@
 <script type="text/javascript" src="/static/admin/js/port.js"></script>
  <script>
       
-    //加载 所有的港口名字和相应的code
+    //加载 原有的港口名字和相应的code
         var port= '<{$port}>';
        var port_arr = JSON.parse(port); 
       
@@ -93,7 +93,6 @@
   
     //加载省数据
         function loadProvince() {
-          
             var proHtml = '';
             for (var i = 0; i < areaData.length; i++) {
                 proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
@@ -116,14 +115,12 @@
             });
         }
    
-        
     //加载市数据
         function loadCity(citys) {
             var cityHtml = '';
             for (var i = 0; i < citys.length; i++) {
                 cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
             }
-           
             $form.find('select[name=city]').html(cityHtml).parent().show();
             form.render();
             form.on('select(city)', function(data) {
@@ -206,10 +203,8 @@
             btn.appendChild(i_tag);
             mark.appendChild(btn);
          }
-        
-
          
-         function del(obj){
+        function del(obj){
             obj.setAttribute('style','display: none;');
            // 删除button的子节点
             var childs = obj.childNodes; 

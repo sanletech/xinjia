@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528339083;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;}*/ ?>
 <body>
     <!-- 左侧菜单开始 -->
     <div class="left-nav">
@@ -153,13 +153,13 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('CarMan/ship_name'); ?>">
+                            <a _href="<?php echo url('Port/boat_name'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>船名管理</cite>
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('CarMan/sealine_list'); ?>">
+                            <a _href="<?php echo url('Port/shiproute_list'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>航线详情</cite>
                             </a>

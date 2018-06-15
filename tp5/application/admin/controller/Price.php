@@ -34,6 +34,11 @@ class Price extends Base
         return $this->view->fetch('Price/price_route'); 
     }
     public function route_add(){
+        //传递船公司下面的船只
+        $sql ="select * from hl_boat ";
+        $boat_data = Db::query($sql);
+        $js_boat=json_encode($boat_data);
+         $this->view->assign('js_boat',$js_boat);
           //传递所有的港口给前台页面
         $sql3="select *  from  hl_port ";
         $port_data =Db::query($sql3);
@@ -66,10 +71,9 @@ class Price extends Base
     //航线修改页面
     public function route_edit(){
         $seaprice_id = input('get.seaprice_id');
-        $sl_id = input('get.sl_id');
-        $sm_id = input('get.sm_id');
+        $route_id= input('get.route_id');
         $seaprice = new PriceM;
-        $res = $seaprice->price_route_edit($seaprice_id,$sl_id,$sm_id); 
+        $res = $seaprice->price_route_edit($seaprice_id,$route_id); 
        // $this->_p($res);exit;
        //传递原始数据给页面
         $data = $res[0];
@@ -95,7 +99,7 @@ class Price extends Base
     //航线执行修改
     public function route_toedit(){
         $data = $this->request->param();
-       // $this->_p($data);exit;
+//        $this->_p($data);exit;
         $seaprice = new PriceM;
         $res = $seaprice->price_route_toedit($data);          
         if(!array_key_exists('fail', $res)){
@@ -183,8 +187,8 @@ class Price extends Base
         $data = $this->request->param();
         $carprice = new PriceM;
         $res =$carprice->price_trailer_edit($data);   
-       // $this->_p($res);exit;
-        
+//      $this->_p($res);exit;
+
         //传递所有的港口给前台页面
         $sql="select *  from  hl_port ";
         $port_data =Db::query($sql);

@@ -36,6 +36,7 @@ class Ship extends Base
         $this->assign('count',$count);
         return $this->view->fetch('Ship/ship_list');
     }
+    
     //针对船公司依照不同港口展示联系人的资料
     public function  ship_info(){
         $ship_id   = input('get.ship_id');
@@ -52,8 +53,6 @@ class Ship extends Base
         return $this->view->fetch('Ship/ship_info');
     }
     
-
-        
    //执行删除
     public function to_del() {
        //接受ship_port_city 的id 数组
@@ -78,6 +77,7 @@ class Ship extends Base
         
          return $status;   
    }
+   
    //展示添加页面
     public function  ship_add(){
        
@@ -94,21 +94,13 @@ class Ship extends Base
    }
    
    public function to_add() {
-       $data = $this->request->param();
-        $shipinfo =  $data['0'];
-        unset($shipinfo['SPC_ID']);
-         unset($shipinfo['ship_ID']);
-        $port_arr =$data['port'];
-        arsort($port_arr);
-        $port_id =  implode(',', $port_arr);
-        
-        $city_arr =$data['city'];
-        arsort($city_arr);
-        $city_id =  implode(',',  $city_arr);
-        $city_name = implode(',', array_keys($city_arr));
-        
+        $data = $this->request->param();
+     //   $this->_p($data);exit;
+        $port_arr =$data['port_code'];
+        $ship_short_name = $data['ship_short_name'];
+        $ship_name = $data['ship_name'];
         $ship= new ShipM;
-        $res =$ship->to_add($shipinfo,$port_id,$city_id,$city_name); 
+        $res =$ship->to_add($port_arr,$ship_name ,$ship_short_name); 
         if(!array_key_exists('fail', $res)){
                   $status =1; 
               }else {

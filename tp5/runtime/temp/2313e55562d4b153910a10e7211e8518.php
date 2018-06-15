@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:88:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\shipman_list.html";i:1526536863;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:88:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\shipman_list.html";i:1528719668;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -44,7 +44,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<?php echo url('ShipMan/man_add'); ?>',750,500)"><i class="layui-icon"></i>添加</button>
+     <button class="layui-btn" onclick="x_admin_show('添加船队','<?php echo url('ShipMan/man_add'); ?>',750,500)"><i class="layui-icon"></i>添加</button>
      <span class="x-right" style="line-height:40px"> 本页有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
@@ -102,6 +102,7 @@
     </div>
       <div>
           <div>
+ 
     <script>
            /*执行搜索车队或者港口*/
            

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1527857159;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\price\trailer_edit.html";i:1528099902;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528339083;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\price\trailer_edit.html";i:1528782972;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -33,7 +33,7 @@
         <div class="layui-form-item">
           <label class="layui-form-label">港口:</label>
             <div class="layui-input-inline" >
-                <select name ="port"  lay-filter="port" lay-search>
+                <select name ="port"  id= 'port' lay-filter="port" lay-search>
                     <option value="">请选择港口</option>
                 </select>
             </div>
@@ -169,8 +169,8 @@
             $form = $('form');
             loadPort();  //加载选择港口
             loadCar();
-          
-        });  
+          //  olddata();
+        });     
         
         function loadPort(){
             //加载 所有的港口名字和相应id
@@ -178,6 +178,7 @@
             var portHtml = '';
             for(var i=0;i<port_length;i++){
                 if(js_port[i].id == port_id ){
+                   // console.log(port_id);  这个模块使用的是pord_id 为联系,而不是port_code
                 portHtml += '<option  value="' + js_port[i].id   +'_'+ js_port[i].port_name +'" selected="selected">' + js_port[i].port_name + '</option>';  
                 }else{
                 portHtml += '<option  value="' + js_port[i].id +'_'+ js_port[i].port_name + '">' + js_port[i].port_name + '</option>';  
@@ -192,9 +193,9 @@
             var car_length =js_car.length;
             var scarHtml = ''; var rcarHtml = '';
             for(var i=0;i<car_length;i++){
-                
                 if(s_carid ==js_car[i].id){
-                  scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
+                  
+                    scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
                 }else{
                     scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
                 }   
@@ -210,8 +211,43 @@
             form.render();
             form.on('select(car)', function(data) {
             } ) 
-            
+
         }
+        
+      
+//         function olddata(){
+//             var port_id = "<?php echo $data['0']['port_id']; ?>";
+//             var s_carid = "<?php echo $data['0']['s_carid']; ?>";
+//             var r_carid = "<?php echo $data['0']['r_carid']; ?>";
+//             var tagName1 = 'port'; 
+//             var tagName2 = 'car_send'; 
+//             var tagName3 = 'car_load'; 
+//            // loadolddata(tagName1,port_id)
+//             loadolddata(tagName2,s_carid)
+//             loadolddata(tagName3,r_carid)
+//         }
+//          
+//        //加载原有数据展示
+//        function loadolddata(tagName,selectId){
+//             console.log(tagName);
+//            console.log(selectId);
+//            var dataobj =  $form.find("select[name="+tagName+"]");
+//          
+//            var optionobj = dataobj['0'].getElementsByTagName('option')
+//           
+//            for(var i=0;i<optionobj.length ;i++){
+//                var op = optionobj[i].value
+////                console.log(optionobj[i]);
+//                var d = op.split('_');
+//                var code = d[0];
+//                var name = d[1];
+//                if(code == selectId){
+//                    optionobj[i].setAttribute("selected", "true"); 
+//                }
+//               
+//            }
+//
+//        }
 //          function  oldaddress(address_name){
 //              //alert(address_name)
 //                if(address_name == 'oldadd'){

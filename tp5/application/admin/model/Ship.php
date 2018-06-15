@@ -61,20 +61,23 @@ class Ship extends Model
         return $response;
     }  
     
-    public function to_add($shipinfo,$port_id,$city_id,$city_name) {
-        $data = array('ship_name'=>$shipinfo['ship_name'],'ship_short_name'=>$shipinfo['ship_short_name']);
-        $res = Db::name('shipcompany')->insert($data);
+    public function to_add($port_arr,$ship_name ,$ship_short_name) {
+        
+        $sql = "insert into hl_shipcompany(ship_name, ship_short_name) "
+                . "values('$ship_name','$ship_short_name') ";
+        $res = Db::execute($sql);
         $ship_id = Db::name('shipcompany')->getLastInsID();
-        $data2 = array('city_id'=>$city_id , 'city_name'=>$city_name ,'port_id'=>$port_id, 'ship_id'=>$ship_id);
-        $res2 = Db::name('ship_port_city')->insert($data2);
+        $str ='';
+        foreach ($port_arr as $k=>$v){
+            $k = $k + 1;
+            $str .= "($v,$k,$ship_id) , ";
+        }
+        $str = rtrim($str ,', ');
+        $sql2 = "insert into hl_ship_port(port_id,seq,ship_id)  values".$str;
+        $res1 =Db::execute($sql2); 
         
-        if($res){
-           $response['success'][] = '添加ship_port_city表';
-        }else{ $response['fail'][] = '添加ship_port_city表';}
-        if($res2){
-           $response['success'][] = '添加shipcompany表';
-        }else{ $response['fail'][] = '添加shipcompany表';}
-        
+        $res ? $response['success'][] = '添加shipcompany表': $response['fail'][] = '添加shipcompany表';
+        $res1 ? $response['success'][] = '添加ship_port表': $response['fail'][] = '添加ship_port表';
         return $response;
     }
     
@@ -97,16 +100,11 @@ class Ship extends Model
         foreach ($port_code as $k=>$v){
             $str .= "($v,$k,$ship_id) , ";
         }
-        echo $str;
-       // $str = "'".$str."'";
-        //$str3 = substr($str, 0, -1) ;
-        $str2 = rtrim($str ,',');
-        echo '</br>';
-        echo  $str2 ;exit;
+        $str = rtrim($str ,', ');
         $sql2 = "insert into hl_ship_port(port_id,seq,ship_id)  values".$str;
-        var_dump($sql2);exit;
-        $sql3 = "update hl_shipcompany set ship_short_name ='$ship_short_name'  "
-                . "  ship_name ='$ship_name' where id = '$ship_id' ";    
+        $mtime = time(); 
+        $sql3 = "update hl_shipcompany set ship_short_name ='$ship_short_name' ,"
+                . "  ship_name ='$ship_name',mtime ='$mtime ' where id = '$ship_id' ";    
         $res1 =Db::execute($sql); 
         $res1 ? $response['success'][] = '删除ship_port表': $response['fail'][] = '删除ship_port_city表';
         if($res1){
@@ -115,7 +113,6 @@ class Ship extends Model
             $res3 =Db::execute($sql3); 
             $res3 ? $response['success'][] = '修改shipcompany表': $response['fail'][] = '修改shipcompany表';
         }
-    
         return $response;
         
     }
