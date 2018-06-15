@@ -11,18 +11,18 @@
                         <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车队名字" class="layui-input">
                     </div>
                 </div>
-                <!-- 车牌号 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">车牌号：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
-                    </div>
-                </div>
                 <!-- 司机姓名 -->
                 <div class="layui-form-item">
                     <label class="layui-form-label">司机姓名：</label>
                     <div class="layui-input-block">
                         <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="司机姓名" class="layui-input">
+                    </div>
+                </div>
+                <!-- 车牌号 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">车牌号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
                     </div>
                 </div>
                 <!-- 身份证 -->
@@ -39,18 +39,18 @@
                         <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="手机号" class="layui-input">
                     </div>
                 </div>
-                <!-- 柜号 -->
+                <!-- 装货时间 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">柜号：</label>
+                    <label class="layui-form-label">装货时间：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="柜号" class="layui-input">
+                            <input type="text" name="date1" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <!-- 封条号 -->
+                <!-- 收货人 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">封条号：</label>
+                    <label class="layui-form-label">收货人：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="封条号" class="layui-input">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="收货人" class="layui-input" id="date">
                     </div>
                 </div>
                 <!-- 按钮 -->
@@ -70,9 +70,6 @@
                 parent.layer.close(index);
             });
 
-            for (let i = 1; i < 31; i++) {
-                $('#day').append('<option value="' + i + '">' + i + '天</option>');
-            }
 
             layui.use(['form', 'layedit', 'laydate'], function () {
                 var form = layui.form

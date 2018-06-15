@@ -1,0 +1,76 @@
+<{include file='./public/head' /}>
+
+  <body>
+      <link rel="stylesheet" href="__STATIC__/css/help.css">
+    <div class="banner"></div>
+    <div class="help">
+      <div class=" help_top">
+        <div class="hh1">
+          <h1><strong>帮助和公告 / </strong>Help and notice</h1>
+          <div class="heng"></div>
+        </div>
+      </div>
+
+      <div class="help_cen layui-row">
+        <div class="layui-col-xs4">
+          <div class="grid-demo">图片</div>
+        </div>
+        <div class="layui-col-xs8">
+          <div class="bz">
+            <ul id="bzhu">
+              <li>帮助</li>
+              <li>公告</li>
+              <li>常见问题</li>
+            </ul>
+          </div>
+          <div class="bz_nei">
+            <ul>
+              <li>
+                <h3>如何填写运单号</h3>
+                <p>2018-03-02</p>
+              </li>
+              <li>
+                <h3>如何查询快递价格</h3>
+                <p>2018-03-02</p>
+              </li>
+              <li>
+                <h3>如何查询有那些物品不能收送</h3>
+                <p>2018-03-02</p>
+              </li>
+              <li>
+                <h3>快递已经寄出，为何网上单查不到这个单号</h3>
+                <p>2018-03-02</p>
+              </li>
+              <li>
+                <h3>关于2018年端午节放假通知</h3>
+                <p>2018-03-02</p>
+              </li>
+              <li>
+                <h3>如何填写运单号</h3>
+                <p>2018-03-02</p>
+              </li>
+              <li>
+                <h3>如何查询快递价格</h3>
+                <p>2018-03-02</p>
+              </li>
+              <li>
+                <h3>如何查询有那些物品不能收送</h3>
+                <p>2018-03-02</p>
+              </li>
+            </ul>
+          </div>
+          <div class="bz_nei">公告</div>
+          <div class="bz_nei">常见问题</div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      $('#bzhu li').eq(0).addClass('bb');
+      $('.bz_nei').eq(0).show();
+      $('#bzhu li').click(function(event) {
+        $(this).addClass('bb').siblings().removeClass('bb');
+        $('.bz_nei').eq($(this).index()).show().siblings('.bz_nei').hide();
+      });
+    </script>
+  </body>
+</html>
