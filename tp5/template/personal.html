@@ -14,7 +14,7 @@
   </head>
   <body class="layui-layout-body">
     <!-- 头部区域（可配合layui已有的水平导航） -->
-<!-- <div class="layui-layout layui-layout-admin">
+<div class="layui-layout layui-layout-admin">
   <div class="layui-header">
     <div class="layui-logo">layui 后台布局</div>
     <ul class="layui-nav layui-layout-left">
@@ -44,7 +44,7 @@
       <li class="layui-nav-item"><a href="">退了</a></li>
     </ul>
   </div>
-  </div> -->
+  </div>
 
   <div class="layui-side layui-bg">
     <div class="layui-side-scroll">
@@ -89,11 +89,10 @@
     © layui.com - 底部固定区域
   </div> -->
 
-
 <script>
 function changeFrameHeight(){
         var ifm= document.getElementById("mainiframe");
-        ifm.height=document.documentElement.clientHeight-220;
+        ifm.height=document.documentElement.clientHeight-130+'px';
     }
     window.onresize=function(){ changeFrameHeight();}
     $(function(){changeFrameHeight();});
@@ -101,7 +100,8 @@ function changeFrameHeight(){
 //JavaScript代码区域
 layui.use('element', function(){
   var element = layui.element;
-
+  console.log(element);
+  
 });
 </script>
 </body>

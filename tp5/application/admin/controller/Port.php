@@ -106,40 +106,110 @@ class Port extends Base
     }
     
         //船名列表
-    public function ship_name(){
-        return $this->view->fetch('carshipman/ship_name');
+    public function boat_name(){
+        $ship_name = input('get.ship_name');
+        $boat_name = input('get.boat_name');
+        if($ship_name){
+            $this->assign('ship_name',$ship_name);
+        }
+        if($boat_name){
+            $this->assign('boat_name',$boat_name);
+        }
+        
+        $boat_list = new PortM;
+        $list = $boat_list->boat_list($ship_name, $boat_name,5);
+//        $this->_v($list);exit;
+        $page = $list->render();
+        $this->assign('boatlist',$list);
+        $this->assign('page',$page);
+        return $this->view->fetch('port/boat_name');
     }
     //添加船名
-    public function ship_add(){
-        return $this->view->fetch('carshipman/ship_add');
+    public function boat_add(){
+        return $this->view->fetch('port/boat_add');
     }
-    //修改船名
-    public function ship_edit(){
-        return $this->view->fetch('carshipman/ship_edit');
+    //执行添加船名
+    public function boat_toadd(){
+        $data = $this->request->param();
+        $boat_code = $data['boat_code'];
+        $boat_name = $data['boat_name'];
+        $ship_id =  substr($data['ship'],0,strpos($data['ship'], '_'));
+        $boatadd = new PortM;
+        $res =$boatadd->boat_add($ship_id, $boat_code,$boat_name);
+        if(!array_key_exists('fail', $res)){
+            $status =1; 
+        }else {$status =0;} 
+        json_encode($status);   
+        return $status;    
+        
+    }
+    //删除船名
+    public function boat_del(){
+        //接受port_del 的id 数组
+        $data = $this->request->param();
+        $boat_id = $data['id'];
+//        var_dump($boat_id);exit;
+        $boatdel = new PortM;
+        $res = $boatdel ->boat_del($boat_id);
+         if(!array_key_exists('fail', $res)){
+            $status =1; 
+        }else {$status =0;} 
+        json_encode($status);   
+        return $status;   
     }
 
+    
     //航线详情列表
-    public function sealine_list(){
-        return $this->view->fetch('carshipman/sealine_list');
+    public function shiproute_list(){
+        $sl_start = input('get.sl_start');
+        $sl_end = input('get.sl_end');
+        if($sl_start){
+            $this->assign('sl_start',$sl_start); 
+        }
+        if($sl_end){
+            $this->assign('sl_end',$sl_end); 
+        }
+        $shiproute =new PortM;
+        $list = $shiproute->shiproute_list($sl_start,$sl_end ,5);
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $this->view->assign('page',$page);
+        $this->view->assign('list',$list);
+        return $this->view->fetch('port/shiproute_list');
     }
     //添加航线详情
-    public function sealine_add(){
-          //传递所有的港口给前台页面
-          $sql3="select *  from  hl_port ";
-          $port_data =Db::query($sql3);
-         //转成json格式传给js
-          $js_port=json_encode($port_data);
-          
-          //传递所有的船公司给前台页面选择
-          $sql4="select id , ship_short_name  from  hl_shipcompany ";
-          $ship_data =Db::query($sql4);
-         //转成json格式传给js
-          $js_ship=json_encode($ship_data);
-          
-          $this->view->assign('js_port',$js_port);
-          $this->view->assign('js_ship',$js_ship);
-        return $this->view->fetch('carshipman/sealine_add');
+    public function shiproute_add(){
+        return $this->view->fetch('port/shiproute_add');
     }
+    //添加航线详情
+    public function shiproute_toadd(){
+        $data = $this->request->param();
+//        $this->_v($data);exit;
+        $port_arr= $data['port_code'];
+        $route =new PortM;
+        $res = $route->shiproute_add($port_arr);
+        if(!array_key_exists('fail', $res)){
+            $status =1; 
+        }else {$status =0;} 
+        json_encode($status);   
+        return $status;   
+    }
+    //删除航线详情
+    public function shiproute_del(){
+           //接受shiproute_del 的id 数组
+        $data = $this->request->param();
+        $shiproute = $data['id'];
+//        var_dump($boat_id);exit;
+        $shiproutedel = new PortM;
+        $res = $shiproutedel->shiproute_del($shiproute);
+         if(!array_key_exists('fail', $res)){
+            $status =1; 
+        }else {$status =0;} 
+        json_encode($status);   
+        return $status;   
+    }
+    
+    
     
 
     

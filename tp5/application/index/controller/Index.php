@@ -2,28 +2,57 @@
 namespace app\index\controller;
 use think\Db;
 use think\Controller;
-class Index
+class Index extends Controller 
 {
+    //导航
     public function index()
     {
-        //var_dump(APP_PATH);EXIT;
-//      Config::load(APP_PATH.'index/config.php');
-//        return $this->view->fetch();
+       return $this->view->fetch('index/top');
     }
-    
-      public function hello()
-    {     
+    //首页
+    public function index1()
+    {
+       return $this->view->fetch('index/index');
+    }
+    //公共查询
+    public function check()
+    {
+       return $this->view->fetch('index/check');
+    }
+    //海运运价
+    public function hyyj()
+    {
+       return $this->view->fetch('index/hyyj');
+    }
+    //集装箱出售
+    public function container()
+    {
+       return $this->view->fetch('index/container');
+    }
+    //新闻中心
+    public function news()
+    {
+       return $this->view->fetch('index/news');
+    }
+    //合伙人加盟
+    public function join()
+    {
+       return $this->view->fetch('index/join');
+    }
+    //帮助与公告
+    public function help()
+    {
+       return $this->view->fetch('index/help');
+    }
+    //个人中心
+    public function personal()
+    {
+       return $this->view->fetch('index/personal');
+    }
 
-          
-//         $result=Db::execute('insert into eps_anli (caseId, companyName) values (:caseId, :companyName)',['caseId'=>31,'companyName'=>'thinkphp']); 
-//        
-//         if($result){
-//            //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
-//            $this->success('新增成功');
-//        } else {
-//            //错误页面的默认跳转页面是返回前一页，通常不需要设置
-//            $this->error('新增失败');
-//        }
-
+    public function tt()
+    {
+       return $this->view->fetch('index/tt');
     }
 }
+

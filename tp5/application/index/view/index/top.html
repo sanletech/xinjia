@@ -1,0 +1,83 @@
+<{include file='./public/head' /}>
+
+  <body>
+    <header>
+      <div id="top">
+        <div class="logo">
+          <img src="__STATIC__/image/logo.jpg" alt="">
+        </div>
+        <ul> 
+          <li class="hang">
+            <a href="javascript:;">首页</a>
+          </li>
+          <li>
+            <a href="javascript:;">公共查询</a>
+          </li>
+          <li>
+            <a href="javascript:;">海运运价</a>
+          </li>
+          <li>
+            <a href="javascript:;">集装箱出售</a>
+          </li>
+          <li>
+            <a href="javascript:;">新闻中心</a>
+          </li>
+          <li>
+            <a href="javascript:;">合伙人加盟</a>
+          </li>
+          <li>
+            <a href="javascript:;">帮助与公告</a>
+          </li>
+          <li>
+            <a href="javascript:;">个人中心</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <nav>
+      <iframe src="<{:url('index/index1')}>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100"></iframe>
+    </nav>
+    <footer>
+      <{include file='./public/foot' /}>
+    </footer>
+    <script type="text/javascript">
+      $('#top li').click(function (event) {
+        $(this).addClass('hang').siblings('li').removeClass('hang');
+        if($(this).index() == 0) { //首页
+          $('nav iframe').attr('src','<{:url('index/index1')}>');
+        }else if($(this).index() == 1) {//公共查询
+          $('nav iframe').attr('src','<{:url('index/check')}>');
+        }else if($(this).index() == 2) {//海运运价
+          $('nav iframe').attr('src','<{:url('index/hyyj')}>');
+        }else if($(this).index() == 3) {//集装箱出售
+          $('nav iframe').attr('src','<{:url('index/container')}>');
+        }else if($(this).index() == 4) {//新闻中心
+          $('nav iframe').attr('src','<{:url('index/news')}>');
+        }else if($(this).index() == 5) {//合伙人加盟
+          $('nav iframe').attr('src','<{:url('index/join')}>');
+        }else if($(this).index() == 6) {//帮助与公告
+          $('nav iframe').attr('src','<{:url('index/help')}>');
+        }else if($(this).index() == 7) {//个人中心
+          $('nav iframe').attr('src','<{:url('index/personal')}>');
+        }else if($(this).index() == 8) {
+          $('nav iframe').attr('src','<{:url('index/index1')}>');
+        }
+      });
+
+      function reinitIframe() {
+        var iframe = document.getElementById("ifram");
+        try {
+          iframe.width = document.body.clientWidth;
+          var bHeight = iframe.contentWindow.document.body.scrollHeight;
+          var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+          var height = Math.max(bHeight, dHeight);
+          iframe.height = height;
+        } catch (ex) { }
+      }
+      window.setInterval("reinitIframe()", 200);
+
+    </script>
+  </body>
+
+  </html>

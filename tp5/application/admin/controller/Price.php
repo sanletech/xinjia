@@ -6,6 +6,7 @@ namespace app\admin\controller;
 use app\admin\common\Base;
 use think\Request;
 use app\admin\model\Price as PriceM;
+use app\admin\model\Port as PortM;
 use think\Db;
 
 class Price extends Base
@@ -33,28 +34,32 @@ class Price extends Base
         $this->assign('page',$page);
         return $this->view->fetch('Price/price_route'); 
     }
+    //航线详情添加展示页面
     public function route_add(){
-          //传递所有的港口给前台页面
-        $sql3="select *  from  hl_port ";
-        $port_data =Db::query($sql3);
-       //转成json格式传给js
-        $js_port=json_encode($port_data);
-        
-        //传递所有的船公司给前台页面选择
-        $sql4="select id , ship_short_name  from  hl_shipcompany ";
-        $ship_data =Db::query($sql4);
-       //转成json格式传给js
-        $js_ship=json_encode($ship_data);
-        
-        $this->view->assign('js_port',$js_port);
-        $this->view->assign('js_ship',$js_ship);
+        //传递船公司下面的船只
+        $sql ="select * from hl_boat ";
+        $boat_data = Db::query($sql);
+        $js_boat=json_encode($boat_data);
+        $this->view->assign('js_boat',$js_boat);
         
         return $this->view->fetch('Price/route_add');
+    }
+    //传递根据前面选择的起点和终点的中间线路行情
+    public function route_select(){
+        $data = $this->request->param();
+     //   $this->_v($data);exit;
+        $sl_start =$data['sl_start'];
+        $sl_end =$data['sl_end'];
+        //使用PortM 里的行情list方法查询对应的中间港口
+        $ship_route = new PortM;
+        $res =$ship_route->shiproute_list('','',100,$sl_start,$sl_end);
+        $middle_route =$res->column('port_name','m_id');
+        return json($middle_route);    
     }
     //航线添加
     public function route_toadd(){
         $data = $this->request->param();
-       // $this->_p($data);  exit;
+//       $this->_p($data);  exit;
         $seaprice = new PriceM;
         $res = $seaprice->price_route_add($data); 
         if(!array_key_exists('fail', $res)){
@@ -63,13 +68,13 @@ class Price extends Base
         json_encode($status);   
         return $status; 
     }
+    
     //航线修改页面
     public function route_edit(){
         $seaprice_id = input('get.seaprice_id');
-        $sl_id = input('get.sl_id');
-        $sm_id = input('get.sm_id');
+        $route_id= input('get.route_id');
         $seaprice = new PriceM;
-        $res = $seaprice->price_route_edit($seaprice_id,$sl_id,$sm_id); 
+        $res = $seaprice->price_route_edit($seaprice_id,$route_id); 
        // $this->_p($res);exit;
        //传递原始数据给页面
         $data = $res[0];

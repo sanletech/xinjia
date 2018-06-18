@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>首页</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/jquery-1.9.0.min.js"></script>
-  </head>
-  <body>
+<{include file='./public/head' /}>
+<body>
+    <link rel="stylesheet" href="__STATIC__/css/index.css">
     <div class="home">
       <!-- 搜索 -->
       <div class="home_top">
@@ -38,7 +28,7 @@
 
         <div class="home_le">
 
-          <div class="tu"><img src="image/index/xw.jpg" alt="图片" style="width:100%;"></div>
+          <div class="tu"><img src="__STATIC__/image/index/xw.jpg" alt="图片" style="width:100%;"></div>
           <ul>
             <li>
                 <div class="date">
@@ -78,7 +68,7 @@
 
         <!-- 通知通告 -->
         <div class="home_rig">
-          <div class="tu"><img src="image/index/gg.jpg" alt="图片" style="width:100%;"></div>
+          <div class="tu"><img src="__STATIC__/image/index/gg.jpg" alt="图片" style="width:100%;"></div>
           <div class="tong">
             <ul>
               <li>
@@ -131,7 +121,7 @@
 
       <!-- 底部 -->
     </div>
-      <iframe src="foot.html" width="99.7%" height="295" marginwidth="0" margintop="0px" frameborder="0"></iframe>
+    
     <script type="text/javascript">
       $('#jzx li').eq(0).addClass('xuan');
       $('.home_top .ss').eq(0).show();

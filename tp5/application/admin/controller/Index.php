@@ -22,5 +22,4 @@ class Index extends Base
        
     }
     
-
 }
