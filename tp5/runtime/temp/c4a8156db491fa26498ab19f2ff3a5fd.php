@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1528979609;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html";i:1529371482;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -87,12 +87,12 @@
             <td><?php echo $vo['s_port_name']; ?> >>>  <?php echo $vo['port_name']; ?> >>> <?php echo $vo['e_port_name']; ?></td>
             <td>￥<?php echo $vo['price_20GP']; ?></td>
             <td>￥<?php echo $vo['price_40HQ']; ?></td> 
-            <td><?php echo date("y-m-d",$vo['shipping_date']); ?></td>
-            <td><?php echo date("y-m-d",$vo['cutoff_date']); ?></td>
+            <td><?php echo date("m-d",$vo['shipping_date']); ?></td>
+            <td><?php echo date("m-d",$vo['cutoff_date']); ?></td>
             <td><?php echo $vo['boat_name']; ?></td>
             <td><?php echo $vo['sea_limitation']; ?>&nbsp;Day</td>
-            <td><?php echo date("y-m-d",$vo['ETA']); ?></td>
-            <td><?php echo date("y-m-d",$vo['EDD']); ?></td>
+            <td><?php echo date("m-d",$vo['ETA']); ?></td>
+            <td><?php echo date("m-d",$vo['EDD']); ?></td>
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>?seaprice_id=<?php echo $vo['id']; ?>&route_id=<?php echo $vo['route_id']; ?>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>

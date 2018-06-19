@@ -114,8 +114,8 @@ class Port extends Model
     
     
       //航线详情list
-       public function  shiproute_list($sl_start,$sl_end ,$pages=5)
-    {   
+       public function  shiproute_list($sl_start,$sl_end ,$pages=5,$sl_start_id=0,$sl_end_id=0)
+    {         
         $middleSql =Db::name('sea_middle')->alias('SM')
                     ->join('hl_port P','P.port_code =SM.sl_middle','left')
                     ->field('SM.sealine_id,group_concat(SM.sl_middle order by SM.sequence) middle_port ,'
@@ -133,13 +133,13 @@ class Port extends Model
                     ->group('SB.sealine_id')->order('SB.sealine_id')->buildSql();
         
         $list = Db::name('ship_route')->alias('SR')
-                ->join("$bothendSql T1",'SR.bothend_id =T1.sealine_id')
-                ->join("$middleSql T2",'SR.middle_id =T2.sealine_id')
+                ->join("$bothendSql T1",'SR.bothend_id =T1.sealine_id','left')
+                ->join("$middleSql T2",'SR.middle_id =T2.sealine_id','left')
                 ->field('SR.*, T1.sealine_id s_id ,T1.sl_start ,T1.s_port_name, T1.sl_end ,T1.e_port_name ,'
                         . 'T2.sealine_id m_id,T2.middle_port,T2.port_name')
                 ->order('SR.id')->buildSql();
               
-        //var_dump($list);exit;
+       // var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if(!empty($sl_start) && isset($sl_start)){
             $list = Db::table($list.' a')->where('a.s_port_name', 'like', "%{$sl_start}%")->buildSql();
@@ -149,11 +149,15 @@ class Port extends Model
             $list = Db::table($list.' b')->where('b.e_port_name', 'like', "%{$sl_end}%")->buildSql();
             $pageParam['query']['sl_end'] = $sl_end;
         }
-//              var_dump($sl_end);
-//              var_dump($sl_start);
-//              var_dump($list);
+        if(!empty($sl_start_id) && isset($sl_start_id)){
+            $list = Db::table($list.' e')->where('e.sl_start',"$sl_start_id")->buildSql();
+        }
+        if(!empty($sl_end_id) && isset($sl_end_id)){
+            $list = Db::table($list.' f')->where('f.sl_end',"$sl_end_id")->buildSql();
+        }
+        
         $lista =Db::table($list.' c')->paginate($pages,false,$pageParam);   
-       // echo  Db::getLastSql(); exit;
+//        echo  Db::getLastSql(); exit;
         return $lista;
     }
     
@@ -173,11 +177,16 @@ class Port extends Model
         $sl_end = array_pop($port_arr);
         $bothend_id =  $this->bothEndLine($sl_start,$sl_end);
         $sl_middle = $port_arr;
-        $middle_id =  $this->middleLine($sl_middle);
+        if(!empty($sl_middle)){
+            $middle_id =  $this->middleLine($sl_middle);
+        } else {
+            $middle_id = 0;
+        }
         $mtime = time();
         $sql1 ="select id from hl_ship_route where bothend_id ='$bothend_id' and "
                 . "  middle_id ='$middle_id'";
         $res = Db::query($sql1);
+       
         if(empty($res)){
         $sql = "insert into hl_ship_route(bothend_id ,middle_id ,mtime)  "
                 . " values('$bothend_id','$middle_id','$mtime')";

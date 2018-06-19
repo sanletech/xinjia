@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:80:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_add.html";i:1529068328;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:80:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_add.html";i:1529371482;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -21,9 +21,8 @@
     <script type="text/javascript" src="/static/admin/js/area.js"></script>
 
 </head>
-
-  <body>
-    <link rel="stylesheet" href="/static/admin/css/route_add.css">
+<body>
+    <!--<link rel="stylesheet" href="/static/admin/css/route_add.css">-->
      <form class="layui-form" id="routeaddform">
     <div class="route layui-row">
         <!-- 航务公司 -->
@@ -111,7 +110,7 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">航线详情</label>
             <div class="layui-input-inline" >
-                <select name ="middle_id"  lay-filter="port" lay-search>
+                <select name ="route"  lay-filter="route" lay-search>
                     <option value="">请选择航线</option>
                 </select>
             </div>
@@ -134,8 +133,8 @@
             </div>
         </div>
       </div>
-
     </form>
+    <!--port_js  加载城市港口对应数据  ship_port 加载船公司下属的港口  ship_boat 船公司下属的船舶-->
 <script type="text/javascript" src="/static/admin/js/port.js"></script>
 <script type="text/javascript" src="/static/admin/js/ship_port.js"></script>
 <script type="text/javascript" src="/static/admin/js/ship_boat.js"></script>
@@ -213,6 +212,7 @@
         }
         //加载船公司对应boat
         function loadBoat(ship){
+            console.log(ship);
             var areaHtml = '';
             if(typeof(ship) !== 'undefined' && ship!=0){
                 var ship_length =ship.length;
@@ -310,6 +310,26 @@
         
         }
         
+             //加载对应城市的港口，并显示已经选中了
+        function loadShipRoute(route_arr){
+            console.log(route_arr);
+            var areaHtml = '';
+            if(route_arr.length!=0){
+                var j=0;
+                for(var i in route_arr){
+                    j++;
+                    areaHtml += '<option  value="' +i+'">路线'+j+'\-'+ route_arr[i]+ '</option>';  
+                }
+            }else{
+                    areaHtml = '<option  value="">无此航线</option>'; 
+            }
+            $form.find('select[name=route]').html(areaHtml).parent().show();
+            form.render();
+            
+            form.on('select(port)', function(data) {
+            } ) 
+        
+        }
         
         function  selectPortShip(port_id,port_name,mark){
             var btn =document.createElement('button');
@@ -344,13 +364,19 @@
                 obj.parentNode.removeChild(obj);
          }
         function routeSelect(){
-            var port_arr = document.getElementsByName('port_code[]');
-            console.log(port_arr);
-            for(var i in port_arr){
-                console.log(port_arr[i]);
-            }
-          var aaa =  $(" input[ name='port_code[]' ] ").val()
-            console.log(aaa);
+            var sl_start = $("input[name='port_code[]']:eq(0)").val();
+            var sl_end  = $("input[name='port_code[]']:eq(1)").val();
+             var data ={'sl_start':sl_start,'sl_end':sl_end};
+                    $.ajax({
+                    type:'POST',
+                    url:"<?php echo url('admin/Price/route_select'); ?>",
+                    data: data,
+                    dataType:"json",
+                    success:function(data){
+                        loadShipRoute(data); 
+                    }
+                });
+       
         }
          
          
@@ -360,7 +386,7 @@
                 $.ajax({
                     type:'POST',
                     url:url,
-                    data:$("#shipeditform").serialize(),
+                    data:$("#routeaddform").serialize(),
                     dataType:"json",
                     success:function(status){
                         if(status>0){

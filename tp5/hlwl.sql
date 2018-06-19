@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-06-15 21:14:40
+Date: 2018-06-19 18:05:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3186,26 +3186,27 @@ CREATE TABLE `hl_boat` (
   `boat_name` varchar(8) DEFAULT NULL COMMENT '船名',
   `mtime` int(11) DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_boat
 -- ----------------------------
-INSERT INTO `hl_boat` VALUES ('1', '1', '4654asdf', '捉住', '0');
-INSERT INTO `hl_boat` VALUES ('2', '2', 'sdf54fs', '抓住', '0');
-INSERT INTO `hl_boat` VALUES ('3', '3', 'fsa', '擒获', '0');
-INSERT INTO `hl_boat` VALUES ('4', '4', '1safsdsd', '相拥', '1528797852');
-INSERT INTO `hl_boat` VALUES ('5', '5', '1saffsd', '拥抱', null);
-INSERT INTO `hl_boat` VALUES ('6', '6', '1fsdfsd', '搂抱', null);
-INSERT INTO `hl_boat` VALUES ('7', '7', '21sf', '搀扶', null);
-INSERT INTO `hl_boat` VALUES ('8', '8', '5sdsfsdf', '推拉', null);
-INSERT INTO `hl_boat` VALUES ('9', '9', '5fasf', '捶打', null);
-INSERT INTO `hl_boat` VALUES ('12', '12', '1sfas', '撕咬', null);
-INSERT INTO `hl_boat` VALUES ('13', '13', '6fdfa', '撕扯', null);
-INSERT INTO `hl_boat` VALUES ('14', '2', 'fassdf', '阿飞岁的', '1529045149');
-INSERT INTO `hl_boat` VALUES ('15', '2', 'ghjgh55', '艾弗森', '1529045352');
-INSERT INTO `hl_boat` VALUES ('16', '2', 'ghjgh55', '艾弗森', '1529045601');
-INSERT INTO `hl_boat` VALUES ('20', '4', 'aasds', '阿斯蒂芬', '1529050289');
+INSERT INTO `hl_boat` VALUES ('1', '1', 'aaab', '捉住', '0');
+INSERT INTO `hl_boat` VALUES ('2', '2', 'aaac', '抓住', '0');
+INSERT INTO `hl_boat` VALUES ('3', '3', 'aaad', '擒获', '0');
+INSERT INTO `hl_boat` VALUES ('4', '4', 'aaae', '相拥', '1528797852');
+INSERT INTO `hl_boat` VALUES ('5', '5', 'aaaf', '拥抱', null);
+INSERT INTO `hl_boat` VALUES ('6', '6', 'aaag', '搂抱', null);
+INSERT INTO `hl_boat` VALUES ('7', '7', 'aaah', '搀扶', null);
+INSERT INTO `hl_boat` VALUES ('8', '8', 'aaai', '推拉', null);
+INSERT INTO `hl_boat` VALUES ('9', '9', 'aaaj', '捶打', null);
+INSERT INTO `hl_boat` VALUES ('12', '12', 'aaak', '撕咬', null);
+INSERT INTO `hl_boat` VALUES ('13', '13', 'bbba', '撕扯', null);
+INSERT INTO `hl_boat` VALUES ('14', '2', 'bbbb', '阿飞岁的', '1529045149');
+INSERT INTO `hl_boat` VALUES ('15', '2', 'bbbc', '艾弗森', '1529045352');
+INSERT INTO `hl_boat` VALUES ('16', '2', 'bbbd', '艾弗森', '1529045601');
+INSERT INTO `hl_boat` VALUES ('20', '4', 'bbbe', '阿斯蒂芬', '1529050289');
+INSERT INTO `hl_boat` VALUES ('21', '3', '888a', '伊利涨', '1529393942');
 
 -- ----------------------------
 -- Table structure for `hl_cardata`
@@ -4032,6 +4033,37 @@ INSERT INTO `hl_limit` VALUES ('4', '40', '企业用户');
 INSERT INTO `hl_limit` VALUES ('5', '50', '个人用户');
 
 -- ----------------------------
+-- Table structure for `hl_member`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_member`;
+CREATE TABLE `hl_member` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `loginname` varchar(10) NOT NULL COMMENT '登录帐号名字',
+  `membername` varchar(10) NOT NULL COMMENT '用户名',
+  `password` varchar(32) NOT NULL COMMENT '密码',
+  `create_time` int(12) NOT NULL COMMENT '创建时间',
+  `logintime` int(12) NOT NULL COMMENT '最近一次登录时间',
+  `phone` varchar(15) NOT NULL COMMENT '手机号码',
+  `email` varchar(20) NOT NULL COMMENT '邮箱',
+  `status` tinyint(1) NOT NULL COMMENT '启用状态:0表示禁用 1表示启用',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `update_time` int(12) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_member
+-- ----------------------------
+INSERT INTO `hl_member` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
+INSERT INTO `hl_member` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
+INSERT INTO `hl_member` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_member` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_member` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_member` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_member` VALUES ('7', 'eeee', '老八', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_member` VALUES ('8', 'fff', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+
+-- ----------------------------
 -- Table structure for `hl_node`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_node`;
@@ -4256,6 +4288,37 @@ INSERT INTO `hl_role_user` VALUES ('25', '25', '0');
 INSERT INTO `hl_role_user` VALUES ('26', '0', '4');
 
 -- ----------------------------
+-- Table structure for `hl_salesman`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_salesman`;
+CREATE TABLE `hl_salesman` (
+  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `loginname` varchar(10) NOT NULL COMMENT '登录帐号名字',
+  `salesname` varchar(10) NOT NULL COMMENT '业务姓名',
+  `password` varchar(32) NOT NULL COMMENT '密码',
+  `create_time` int(12) NOT NULL COMMENT '创建时间',
+  `logintime` int(12) NOT NULL COMMENT '最近一次登录时间',
+  `phone` varchar(15) NOT NULL COMMENT '手机号码',
+  `email` varchar(20) NOT NULL COMMENT '邮箱',
+  `status` tinyint(1) NOT NULL COMMENT '启用状态:0表示禁用 1表示启用',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
+  `update_time` int(12) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_salesman
+-- ----------------------------
+INSERT INTO `hl_salesman` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
+INSERT INTO `hl_salesman` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
+INSERT INTO `hl_salesman` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_salesman` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('7', 'eeee', '老八', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('8', 'fff', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+
+-- ----------------------------
 -- Table structure for `hl_seaprice`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_seaprice`;
@@ -4279,20 +4342,20 @@ CREATE TABLE `hl_seaprice` (
 -- ----------------------------
 -- Records of hl_seaprice
 -- ----------------------------
-INSERT INTO `hl_seaprice` VALUES ('1', '1', '1', '3000.00', '5000.00', '1529683200', '1529683200', '4654asdf', '5', '1530115200', '1530374400', '1', '1528783059');
-INSERT INTO `hl_seaprice` VALUES ('2', '2', '2', '3500.00', '5500.00', '1529683200', '1529683200', 'sdf54fs', '6', '1530201600', '1530460800', '1', '1528862972');
-INSERT INTO `hl_seaprice` VALUES ('3', '3', '1', '1000.00', '5000.00', '1525708800', '1526313600', 'fsa', '4', '1526054400', '1526313600', '1', null);
-INSERT INTO `hl_seaprice` VALUES ('4', '4', '1', '1000.00', '5000.00', '1525708800', '1526313600', '1safsdsd', '4', '1526054400', '1526313600', '0', null);
-INSERT INTO `hl_seaprice` VALUES ('5', '5', '1', '1000.00', '5000.00', '1525708800', '1526313600', '1saffsd', '4', '1526054400', '1526313600', '1', null);
-INSERT INTO `hl_seaprice` VALUES ('6', '6', '1', '1000.00', '5000.00', '1525708800', '1526313600', '1fsdfsd', '4', '1526054400', '1526313600', '0', null);
-INSERT INTO `hl_seaprice` VALUES ('7', '7', '1', '1000.00', '5000.00', '1525708800', '1526313600', '21sf', '4', '1526054400', '1526313600', '1', null);
-INSERT INTO `hl_seaprice` VALUES ('8', '8', '3', '10000.00', '555555.00', '1525708800', '1527004800', '5sdsfsdf', '5', '1526140800', '1526400000', '0', null);
-INSERT INTO `hl_seaprice` VALUES ('9', '9', '3', '10000.00', '555555.00', '1525708800', '1527004800', '5fasf', '5', '1526140800', '1526400000', '1', null);
-INSERT INTO `hl_seaprice` VALUES ('10', '10', '1', '3000.00', '5000.00', '1529683200', '1529683200', '165fsfds', '5', '1530115200', '1530374400', '1', '1527218220');
-INSERT INTO `hl_seaprice` VALUES ('11', '11', '1', '3000.00', '5000.00', '1529683200', '1529683200', '1sfas', '5', '1530115200', '1530374400', '1', '1527218244');
-INSERT INTO `hl_seaprice` VALUES ('12', '12', '1', '3000.00', '5000.00', '1529683200', '1529683200', '6fdfa', '5', '1530115200', '1530374400', '1', '1527218277');
-INSERT INTO `hl_seaprice` VALUES ('13', '13', '1', '3000.00', '5000.00', '1529683200', '1529683200', '5fasf', '5', '1530115200', '1530374400', '1', '1527218356');
-INSERT INTO `hl_seaprice` VALUES ('14', '14', '1', '3000.00', '5000.00', '1529683200', '1529683200', '6fdfa', '5', '1530115200', '1530374400', '1', '1527218407');
+INSERT INTO `hl_seaprice` VALUES ('1', '21', '2', '2000.00', '6555.00', '1529683200', '1529683200', 'bbbb', '3', '1529942400', '1530201600', '1', '1529395458');
+INSERT INTO `hl_seaprice` VALUES ('2', '2', '2', '3500.00', '5500.00', '1529683200', '1529683200', 'bbbc', '6', '1530201600', '1530460800', '1', '1528862972');
+INSERT INTO `hl_seaprice` VALUES ('3', '3', '1', '1000.00', '5000.00', '1525708800', '1526313600', 'aaab', '4', '1526054400', '1526313600', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('4', '4', '1', '1000.00', '5000.00', '1525708800', '1526313600', 'aaac', '4', '1526054400', '1526313600', '0', null);
+INSERT INTO `hl_seaprice` VALUES ('5', '5', '3', '1000.00', '5000.00', '1525708800', '1526313600', 'aaad', '4', '1526054400', '1526313600', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('6', '6', '4', '1000.00', '5000.00', '1525708800', '1526313600', 'aaae', '4', '1526054400', '1526313600', '0', null);
+INSERT INTO `hl_seaprice` VALUES ('7', '7', '4', '1000.00', '5000.00', '1525708800', '1526313600', 'bbbe', '4', '1526054400', '1526313600', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('8', '8', '5', '10000.00', '555555.00', '1525708800', '1527004800', 'aaaf', '5', '1526140800', '1526400000', '0', null);
+INSERT INTO `hl_seaprice` VALUES ('9', '9', '6', '10000.00', '555555.00', '1525708800', '1527004800', 'aaag', '5', '1526140800', '1526400000', '1', null);
+INSERT INTO `hl_seaprice` VALUES ('10', '10', '7', '3000.00', '5000.00', '1529683200', '1529683200', 'aaah', '5', '1530115200', '1530374400', '1', '1527218220');
+INSERT INTO `hl_seaprice` VALUES ('11', '11', '8', '3000.00', '5000.00', '1529683200', '1529683200', 'aaai', '5', '1530115200', '1530374400', '1', '1527218244');
+INSERT INTO `hl_seaprice` VALUES ('12', '12', '9', '3000.00', '5000.00', '1529683200', '1529683200', 'aaaj', '5', '1530115200', '1530374400', '1', '1527218277');
+INSERT INTO `hl_seaprice` VALUES ('13', '13', '12', '3000.00', '5000.00', '1529683200', '1529683200', 'aaak', '5', '1530115200', '1530374400', '1', '1527218356');
+INSERT INTO `hl_seaprice` VALUES ('14', '14', '13', '3000.00', '5000.00', '1529683200', '1529683200', 'bbba', '5', '1530115200', '1530374400', '1', '1527218407');
 
 -- ----------------------------
 -- Table structure for `hl_seaprice-aa`
@@ -4736,7 +4799,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529024657', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

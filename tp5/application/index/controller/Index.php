@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-<?php
-namespace app\index\controller;
-use think\Db;
-use think\Controller;
-
-class Index  extends Controller
-{
-    public function index()
-    {
-       return $this->view->fetch('index/check');
-    }
-    
-
-    
-}
-=======
 <?php
 namespace app\index\controller;
 use think\Db;
@@ -72,4 +55,4 @@ class Index extends Controller
        return $this->view->fetch('index/tt');
     }
 }
->>>>>>> 1b2a58036272c945d1f6936e665b29b97ef8c837
+
