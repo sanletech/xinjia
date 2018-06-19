@@ -5951,3 +5951,345 @@
 [ sql ] [ SQL ] select * from hl_boat [ RunTime:0.000000s ]
 [ sql ] [ SQL ] select *  from  hl_port [ RunTime:0.000000s ]
 [ sql ] [ SQL ] select id , ship_short_name  from  hl_shipcompany [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-06-15T21:25:07+08:00 ] 127.0.0.1 GET /admin.php/admin/index/index.html
+[ info ] www.tp5.com/admin.php/admin/index/index.html [运行时间：0.050000s][吞吐率：20.00req/s] [内存消耗：2,361.62kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/login/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; _gid=GA1.2.442239827.1528680575; PHPSESSID=o5ddqrprvttlfaofbj5ti21en0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Index->index[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-06-15T21:25:08+08:00 ] 127.0.0.1 GET /admin.php/admin/index/welcome.html
+[ info ] www.tp5.com/admin.php/admin/index/welcome.html [运行时间：0.060000s][吞吐率：16.67req/s] [内存消耗：2,189.73kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'index',
+    2 => 'welcome',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; _gid=GA1.2.442239827.1528680575; PHPSESSID=o5ddqrprvttlfaofbj5ti21en0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Index->welcome[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\welcome.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-06-15T21:25:11+08:00 ] 127.0.0.1 GET /admin.php/admin/price/price_route.html
+[ info ] www.tp5.com/admin.php/admin/price/price_route.html [运行时间：0.090000s][吞吐率：11.11req/s] [内存消耗：2,812.86kb] [文件加载：52]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'price',
+    2 => 'price_route',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; _gid=GA1.2.442239827.1528680575; PHPSESSID=o5ddqrprvttlfaofbj5ti21en0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Price->price_route[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Price.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_route.html [ array (
+  0 => 'cardata',
+  1 => 'list',
+  2 => 'page',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_sea_middle` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_sea_bothend` [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_ship_route` [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM ( SELECT `SP`.*,S.ship_short_name ship_name,`B`.`boat_name`,`T3`.`s_port_name`,`T3`.`e_port_name`,`T3`.`port_name` FROM `hl_seaprice` `SP` LEFT JOIN `hl_shipcompany` `S` ON `S`.`id`=`SP`.`ship_id` LEFT JOIN ( SELECT `SR`.*,T1.sealine_id s_id,`T1`.`sl_start`,`T1`.`s_port_name`,`T1`.`sl_end`,`T1`.`e_port_name`,T2.sealine_id m_id,`T2`.`middle_port`,`T2`.`port_name` FROM `hl_ship_route` `SR` INNER JOIN ( SELECT `SB`.`sealine_id`,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,P2.port_name e_port_name FROM `hl_sea_bothend` `SB` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SB`.`sealine_id` ORDER BY `SB`.`sealine_id` ) T1 ON `SR`.`bothend_id`=`T1`.`sealine_id` INNER JOIN ( SELECT `SM`.`sealine_id`,group_concat(SM.sl_middle order by SM.sequence) middle_port,group_concat(P.port_name order by SM.sequence) port_name FROM `hl_sea_middle` `SM` LEFT JOIN `hl_port` `P` ON `P`.`port_code`=`SM`.`sl_middle` GROUP BY `SM`.`sealine_id` ORDER BY `SM`.`sealine_id` ) T2 ON `SR`.`middle_id`=`T2`.`sealine_id` ORDER BY `SR`.`id` ) T3 ON `T3`.`id`=`SP`.`route_id` LEFT JOIN `hl_boat` `B` ON `B`.`boat_code`=`SP`.`boat_code` ) a LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT * FROM ( SELECT `SP`.*,S.ship_short_name ship_name,`B`.`boat_name`,`T3`.`s_port_name`,`T3`.`e_port_name`,`T3`.`port_name` FROM `hl_seaprice` `SP` LEFT JOIN `hl_shipcompany` `S` ON `S`.`id`=`SP`.`ship_id` LEFT JOIN ( SELECT `SR`.*,T1.sealine_id s_id,`T1`.`sl_start`,`T1`.`s_port_name`,`T1`.`sl_end`,`T1`.`e_port_name`,T2.sealine_id m_id,`T2`.`middle_port`,`T2`.`port_name` FROM `hl_ship_route` `SR` INNER JOIN ( SELECT `SB`.`sealine_id`,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,P2.port_name e_port_name FROM `hl_sea_bothend` `SB` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SB`.`sealine_id` ORDER BY `SB`.`sealine_id` ) T1 ON `SR`.`bothend_id`=`T1`.`sealine_id` INNER JOIN ( SELECT `SM`.`sealine_id`,group_concat(SM.sl_middle order by SM.sequence) middle_port,group_concat(P.port_name order by SM.sequence) port_name FROM `hl_sea_middle` `SM` LEFT JOIN `hl_port` `P` ON `P`.`port_code`=`SM`.`sl_middle` GROUP BY `SM`.`sealine_id` ORDER BY `SM`.`sealine_id` ) T2 ON `SR`.`middle_id`=`T2`.`sealine_id` ORDER BY `SR`.`id` ) T3 ON `T3`.`id`=`SP`.`route_id` LEFT JOIN `hl_boat` `B` ON `B`.`boat_code`=`SP`.`boat_code` ) a LIMIT 0,5 [ RunTime:0.010000s ]
+---------------------------------------------------------------
+[ 2018-06-15T21:25:12+08:00 ] 127.0.0.1 GET /admin.php/admin/price/price_trailer.html
+[ info ] www.tp5.com/admin.php/admin/price/price_trailer.html [运行时间：0.070000s][吞吐率：14.29req/s] [内存消耗：2,782.85kb] [文件加载：52]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'price',
+    2 => 'price_trailer',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; _gid=GA1.2.442239827.1528680575; PHPSESSID=o5ddqrprvttlfaofbj5ti21en0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Price->price_trailer[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Price.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html [ array (
+  0 => 'cardata',
+  1 => 'list',
+  2 => 'page',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM ( SELECT count(*) FROM ( SELECT `CP`.`id`,`CP`.`cl_id`,`L`.`address_id`,`L`.`address_name`,`CP`.`car_id`,`CD`.`car_name`,`L`.`port_id`,`P`.`port_name`,`CP`.`price_20GP`,`CP`.`price_40HQ`,`variable`,`CP`.`latest_order_time` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `L` ON `CP`.`cl_id`=`L`.`id` LEFT JOIN `hl_cardata` `CD` ON `CP`.`car_id`=`CD`.`id` LEFT JOIN `hl_port` `P` ON `L`.`port_id`=`P`.`id` ORDER BY CP.cl_id, CP.variable ) a LEFT JOIN (( SELECT `CP`.`id`,`CP`.`cl_id`,`L`.`address_id`,`L`.`address_name`,`CP`.`car_id`,`CD`.`car_name`,`L`.`port_id`,`P`.`port_name`,`CP`.`price_20GP`,`CP`.`price_40HQ`,`variable`,`CP`.`latest_order_time` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `L` ON `CP`.`cl_id`=`L`.`id` LEFT JOIN `hl_cardata` `CD` ON `CP`.`car_id`=`CD`.`id` LEFT JOIN `hl_port` `P` ON `L`.`port_id`=`P`.`id` ORDER BY CP.cl_id, CP.variable )) as b ON `b`.`cl_id`=a.cl_id AND a.variable <> b.variable GROUP BY a.cl_id, b.cl_id ) `_group_count_` LIMIT 1 [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `a`.`cl_id`,`a`.`port_id`,`a`.`port_name`,`a`.`address_id`,`a`.`address_name`,a.id s_id,a.car_id s_carid,a.car_name s_carname,a.price_20GP s_20GP,a.price_40HQ s_40HQ,a.latest_order_time s_ordertime,a.variable s_variable,b.id r_id,b.car_id r_carid,b.car_name r_carname,b.price_20GP r_20GP,b.price_40HQ r_40HQ,b.latest_order_time r_ordertime,b.variable r_variable FROM ( SELECT `CP`.`id`,`CP`.`cl_id`,`L`.`address_id`,`L`.`address_name`,`CP`.`car_id`,`CD`.`car_name`,`L`.`port_id`,`P`.`port_name`,`CP`.`price_20GP`,`CP`.`price_40HQ`,`variable`,`CP`.`latest_order_time` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `L` ON `CP`.`cl_id`=`L`.`id` LEFT JOIN `hl_cardata` `CD` ON `CP`.`car_id`=`CD`.`id` LEFT JOIN `hl_port` `P` ON `L`.`port_id`=`P`.`id` ORDER BY CP.cl_id, CP.variable ) a LEFT JOIN (( SELECT `CP`.`id`,`CP`.`cl_id`,`L`.`address_id`,`L`.`address_name`,`CP`.`car_id`,`CD`.`car_name`,`L`.`port_id`,`P`.`port_name`,`CP`.`price_20GP`,`CP`.`price_40HQ`,`variable`,`CP`.`latest_order_time` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `L` ON `CP`.`cl_id`=`L`.`id` LEFT JOIN `hl_cardata` `CD` ON `CP`.`car_id`=`CD`.`id` LEFT JOIN `hl_port` `P` ON `L`.`port_id`=`P`.`id` ORDER BY CP.cl_id, CP.variable )) as b ON `b`.`cl_id`=a.cl_id AND a.variable <> b.variable GROUP BY a.cl_id, b.cl_id LIMIT 0,5 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-06-15T21:25:13+08:00 ] 127.0.0.1 GET /admin.php/admin/order/order_audit.html
+[ info ] www.tp5.com/admin.php/admin/order/order_audit.html [运行时间：0.050000s][吞吐率：20.00req/s] [内存消耗：2,367.55kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'order_audit',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; _gid=GA1.2.442239827.1528680575; PHPSESSID=o5ddqrprvttlfaofbj5ti21en0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Order->order_audit[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_audit.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-06-15T21:25:14+08:00 ] 127.0.0.1 GET /admin.php/admin/order/order_list.html
+[ info ] www.tp5.com/admin.php/admin/order/order_list.html [运行时间：0.050000s][吞吐率：20.00req/s] [内存消耗：2,446.94kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'order_list',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; _gid=GA1.2.442239827.1528680575; PHPSESSID=o5ddqrprvttlfaofbj5ti21en0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Order->order_list[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-06-15T21:25:16+08:00 ] 127.0.0.1 GET /admin.php/admin/order/order_waste.html
+[ info ] www.tp5.com/admin.php/admin/order/order_waste.html [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：2,367.88kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'order_waste',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/admin/index/index.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; _gid=GA1.2.442239827.1528680575; PHPSESSID=o5ddqrprvttlfaofbj5ti21en0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'pragma' => 'no-cache',
+  'cache-control' => 'no-cache',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Order->order_waste[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_waste.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
