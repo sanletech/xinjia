@@ -25,8 +25,8 @@ class Price extends Model
                     ->group('SB.sealine_id')->order('SB.sealine_id')->buildSql();
         
         $routeSql = Db::name('ship_route')->alias('SR')
-                    ->join("$bothendSql T1",'SR.bothend_id =T1.sealine_id')
-                    ->join("$middleSql T2",'SR.middle_id =T2.sealine_id')
+                    ->join("$bothendSql T1",'SR.bothend_id =T1.sealine_id','left')
+                    ->join("$middleSql T2",'SR.middle_id =T2.sealine_id','left')
                     ->field('SR.*, T1.sealine_id s_id ,T1.sl_start ,T1.s_port_name, T1.sl_end ,T1.e_port_name ,'
                             . 'T2.sealine_id m_id,T2.middle_port,T2.port_name')
                     ->order('SR.id')->buildSql();
@@ -51,7 +51,6 @@ class Price extends Model
         if($seaprice_id){
             $list = Db::table($list.' d')->where('d.id',"$seaprice_id")->buildSql();
         }
-      
         $lista =Db::table($list.' c')->order('id,ship_id,route_id')->paginate($pages,false,$pageParam);  
         return $lista;
     }

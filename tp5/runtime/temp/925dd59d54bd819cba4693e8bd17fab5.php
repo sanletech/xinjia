@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:80:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_add.html";i:1529371482;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:80:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\route_add.html";i:1529565096;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,7 +38,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">船名</label>
             <div class="layui-input-inline">
-                <select name="boat" lay-filter="boat" lay-search>
+                <select name="boat_code" lay-filter="boat" lay-search>
                     <option value="" >请选择船名</option>
                 </select>  
             </div>
@@ -222,7 +222,7 @@
             }else{
                     areaHtml = '<option  value="">此船公司无对应船舶</option>'; 
             }
-            $form.find('select[name=boat]').html(areaHtml).parent().show();
+            $form.find('select[name=boat_code]').html(areaHtml).parent().show();
             form.render();
             
             form.on('select(area)', function(data) {
@@ -318,7 +318,11 @@
                 var j=0;
                 for(var i in route_arr){
                     j++;
-                    areaHtml += '<option  value="' +i+'">路线'+j+'\-'+ route_arr[i]+ '</option>';  
+                    if(route_arr[i]==null){
+                        areaHtml += '<option  value="' +i+'">路线'+j+'\-'+'直航'+'</option>';
+                    }else{
+                        areaHtml += '<option  value="' +i+'">路线'+j+'\-'+ route_arr[i]+ '</option>';   
+                        }
                 }
             }else{
                     areaHtml = '<option  value="">无此航线</option>'; 
