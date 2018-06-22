@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\personal.html";i:1529569050;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529483178;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\personal.html";i:1529651522;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529651522;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
