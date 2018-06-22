@@ -1,4 +1,5 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1529068907;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529068907;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1529569820;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529483178;}*/ ?>
+<!-- 海运运价 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,16 +9,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/index/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="/static/index/font/iconfont.css">
+    <link rel="stylesheet" href="/static/index/css/font.css">
     <link rel="stylesheet" href="/static/index/css/index.css">
     <link rel="stylesheet" href="/static/index/css/top.css">
     <link rel="stylesheet" href="/static/index/css/foot.css">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="/static/index/js/jquery-1.9.0.min.js"></script>
+    <script src="/static/index/layui/layui.js"></script>
 </head>
 
   <body>
     <link rel="stylesheet" href="/static/index/css/hyyj.css">
+    <link rel="stylesheet" type="text/css" href="/static/index/css/iziModal.css">
     <div class="banner">
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
@@ -116,7 +119,7 @@
             </div>
 
             <div class="nei_rig">
-              <a href="xxtx.html">下单</a>
+              <a href="<?php echo url('index/xxtx'); ?>">下单</a>
               <a href="#" class="trigger-default">航线详情</a>
             </div>
 
@@ -166,7 +169,7 @@
             </div>
 
             <div class="nei_rig">
-              <a href="xxtx.html">下单</a>
+              <a href="<?php echo url("","",true,false);?>">下单</a>
               <a href="#" class="trigger-default">航线详情</a>
             </div>
 
@@ -214,8 +217,6 @@
         </div>
       </div>
     </div>
-    <script src="/static/index/js/jquery-1.9.0.min.js"></script>
-    <script src="/static/index/layui/layui.js"></script>
     <script src="/static/index/js/iziModal.min.js"></script>
     <script type="text/javascript">
       //模态窗口基本设置
