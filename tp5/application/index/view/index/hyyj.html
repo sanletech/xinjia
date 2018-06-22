@@ -1,7 +1,9 @@
+<!-- 海运运价 -->
 <{include file='./public/head' /}>
 
   <body>
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
     <div class="banner">
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
@@ -100,7 +102,7 @@
             </div>
 
             <div class="nei_rig">
-              <a href="xxtx.html">下单</a>
+              <a href="<{:url('index/xxtx')}>">下单</a>
               <a href="#" class="trigger-default">航线详情</a>
             </div>
 
@@ -150,7 +152,7 @@
             </div>
 
             <div class="nei_rig">
-              <a href="xxtx.html">下单</a>
+              <a href="<{url:index/xxtx}>">下单</a>
               <a href="#" class="trigger-default">航线详情</a>
             </div>
 
@@ -198,8 +200,6 @@
         </div>
       </div>
     </div>
-    <script src="__STATIC__/js/jquery-1.9.0.min.js"></script>
-    <script src="__STATIC__/layui/layui.js"></script>
     <script src="__STATIC__/js/iziModal.min.js"></script>
     <script type="text/javascript">
       //模态窗口基本设置

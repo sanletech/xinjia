@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>注册</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="layui/css/layui.css" media="all">
-    <link rel="stylesheet" type="text/css" href="css/iziModal.css">
-    <link rel="stylesheet" href="css/logout.css">
-    <script src="js/jquery-1.9.0.min.js"></script>
-    <script src="layui/layui.js"></script>
-        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  </head>
+<!-- 注册 -->
+<{include file='./public/head' /}>
   <body>
+      <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
+      <link rel="stylesheet" href="__STATIC__/css/logout.css">
     <div class="tou">
       <div class="zuo">
-        <a href="top.html"><img src="image/logo.jpg" alt=""></a>
+        <a href="<{:url('../index/index')}>"><img src="__STATIC__/image/logo.jpg" alt=""></a>
       </div>
       <div class="you">
         <div class="zi">
@@ -86,7 +75,7 @@
           </div>
 
           <div class="zh">
-            <span>已经注册&nbsp;&nbsp;<a href="login.html">登陆</a></span>
+            <span>已经注册&nbsp;&nbsp;<a href="<{:url('login/login')}>">登陆</a></span>
           </div>
           <div class="jz" id="container">
               <div class="pwd_le"><input type="checkbox" class="input_check" id="check1" checked='true'><label for="check1"></label><a href="#" class="trigger-default">《注册协议》</a></div>
@@ -171,7 +160,7 @@
 				</p>
 			</div>
     </div>
-    <script src="js/iziModal.min.js"></script>
+    <script src="__STATIC__/js/iziModal.min.js"></script>
     <script type="text/javascript">
       // $('#zc li').eq(0).addClass('yan');
       // $('.fm').eq(0).show();

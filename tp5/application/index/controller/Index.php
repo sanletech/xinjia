@@ -50,9 +50,15 @@ class Index extends Controller
        return $this->view->fetch('index/personal');
     }
 
-    public function tt()
+    //下单
+    public function xxtx()
     {
-       return $this->view->fetch('index/tt');
+       return $this->view->fetch('index/xxtx');
+    }
+
+    //确认下单
+    public function lrdd()
+    {
+       return $this->view->fetch('index/lrdd');
     }
 }
-

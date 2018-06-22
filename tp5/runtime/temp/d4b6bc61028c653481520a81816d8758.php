@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\help.html";i:1529068908;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529068907;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\help.html";i:1528711545;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529483178;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/index/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="/static/index/font/iconfont.css">
+    <link rel="stylesheet" href="/static/index/css/font.css">
     <link rel="stylesheet" href="/static/index/css/index.css">
     <link rel="stylesheet" href="/static/index/css/top.css">
     <link rel="stylesheet" href="/static/index/css/foot.css">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="/static/index/js/jquery-1.9.0.min.js"></script>
+    <script src="/static/index/layui/layui.js"></script>
 </head>
 
   <body>

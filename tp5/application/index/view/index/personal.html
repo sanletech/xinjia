@@ -1,125 +1,149 @@
-<{include file='./public/head' /}>
-
-  <body class="layui-layout-body">
-    <link rel="stylesheet" href="__STATIC__/css/personal.css">
-    <!-- 头部区域（可配合layui已有的水平导航） -->
-      <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
-          <div class="layui-logo">layui 后台布局</div>
-          <!-- 头部区域（可配合layui已有的水平导航） -->
-          <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item">
-              <a href="">控制台</a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="">商品管理</a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="">用户</a>
-            </li>
-            <li class="layui-nav-item">
-              <a href="javascript:;">其它系统</a>
-              <dl class="layui-nav-child">
-                <dd>
-                  <a href="">邮件管理</a>
-                </dd>
-                <dd>
-                  <a href="">消息管理</a>
-                </dd>
-                <dd>
-                  <a href="">授权管理</a>
-                </dd>
-              </dl>
-            </li>
-          </ul>
-          <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-              <a href="javascript:;">
-                <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> 贤心
-              </a>
-              <dl class="layui-nav-child">
-                <dd>
-                  <a href="">基本资料</a>
-                </dd>
-                <dd>
-                  <a href="">安全设置</a>
-                </dd>
-              </dl>
-            </li>
-            <li class="layui-nav-item">
-              <a href="">退了</a>
-            </li>
-          </ul>
+<{include file='./public/head'/}>
+<body>
+    <link rel="stylesheet" href="__STATIC__/css/xadmin.css">
+    <script type="text/javascript" src="__STATIC__/js/xadmin.js"></script>
+    <!-- 顶部开始 -->
+    <div class="container">
+        <div class="logo"><a href="./index.html">X-admin v2.0</a></div>
+        <div class="left_open">
+            <i title="展开左侧栏" class="iconfont">&#xe699;</i>
         </div>
-
-        <div class="layui-side layui-bg">
-          <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
-              <li class="layui-nav-item">
-                <a href="<{:url('personal/steward')}>">物流管家</a>
-              </li>
-              <li class="layui-nav-item">
-                <a class="" href="javascript:;">订单中心</a>
-                <dl class="layui-nav-child">
-                  <dd>
-                    <a href="personal/all_order.html">所有订单</a>
-                  </dd>
-                  <dd>
-                    <a href="personal/invalid.html">作废订单</a>
-                  </dd>
-                </dl>
-              </li>
-              <li class="layui-nav-item">
-                <a href="javascript:;">账单中心</a>
-                <dl class="layui-nav-child">
-                  <dd>
-                    <a href="personal/a_order.html">生成账单</a>
-                  </dd>
-                  <dd>
-                    <a href="personal/form_order.html">账单报表</a>
-                  </dd>
-                </dl>
-              </li>
-
-              <li class="layui-nav-item">
-                <a href="javascript:;">企业中心</a>
-                <dl class="layui-nav-child">
-                  <dd>
-                    <a href="personal/info.html">个人信息</a>
-                  </dd>
-                  <dd>
-                    <a href="personal/company.html">公司信息</a>
-                  </dd>
-                  <dd>
-                    <a href="personal/common_info.html">常用信息</a>
-                  </dd>
-                </dl>
-              </li>
+        <ul class="layui-nav left fast-add" lay-filter="">
+          <li class="layui-nav-item">
+            <a href="javascript:;">+新增</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a onclick="x_admin_show('资讯','http://www.baidu.com')"><i class="iconfont">&#xe6a2;</i>资讯</a></dd>
+              <dd><a onclick="x_admin_show('图片','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>图片</a></dd>
+               <dd><a onclick="x_admin_show('用户','http://www.baidu.com')"><i class="iconfont">&#xe6b8;</i>用户</a></dd>
+            </dl>
+          </li>
+        </ul>
+        <ul class="layui-nav right" lay-filter="">
+          <li class="layui-nav-item">
+            <a href="javascript:;">admin</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+              <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
+              <dd><a onclick="x_admin_show('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+              <dd><a href="<{:url('login/logout')}>">退出</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item to-index"><a href="/">前台首页</a></li>
+        </ul>
+        
+    </div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+     <!-- 左侧菜单开始 -->
+     <div class="left-nav">
+        <div id="side-nav">
+            <ul id="nav">
+                <li>
+                    <a _href="<{:url('personal/steward')}>">
+                        <i class="layui-icon">&#xe667;</i>
+                        <cite>物流管家</cite>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe723;</i>
+                        <cite>订单中心</cite>
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a _href="<{:url('personal/all_order')}>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>所有订单</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<{:url('personal/invalid')}>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>废弃订单</cite>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+               
+                <li>
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe705;</i>
+                        <cite>账单中心</cite>
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a _href="<{:url('personal/a_order')}>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>生成账单</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<{:url('personal/form_order')}>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>账单报表</cite>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe726;</i>
+                        <cite>企业中心</cite>
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a _href="<{:url('personal/info')}>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>个人信息</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<{:url('personal/company')}>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>公司信息</cite>
+                            </a>
+                        </li>
+                        <li>
+                            <a _href="<{:url('personal/common_info')}>">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>常用信息</cite>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
+        </div>
+    </div>
+    <!-- <div class="x-slide_left"></div> -->
+    <!-- 左侧菜单结束 -->
+    <script>
+        window.onload = function func() {
+            $(document).click(function () { return true; });
+        }
+    </script>
+    <!-- 右侧主体开始 -->
+    <div class="page-content">
+        <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+          <ul class="layui-tab-title">
+            <li>我的桌面</li>
+          </ul>
+          <div class="layui-tab-content" style="padding: 10px 0 0 10px;">
+            <div class="layui-tab-item layui-show">
+                <iframe src="<{:url('personal/steward')}>" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
           </div>
         </div>
-
-        <div class="layui-body body_nei">
-          <!-- 内容主体区域 -->
-          <iframe src="<{:url('personal/steward')}>" width="100%" height="0" name="myFrame" frameborder="0" scrolling="auto" id="mainiframe"></iframe>
-        </div>
-      </div>
-        <!-- 底部固定区域 -->
-        <!-- <div class="layui-footer" style="z-index:999">
-          © layui.com - 底部固定区域
-        </div> -->
-
-
-        <script>
-          function changeFrameHeight() {
-            var ifm = document.getElementById("mainiframe");
-            ifm.height = document.documentElement.clientHeight - 220 + 'px';
-            console.log(ifm.height);
-
-          }
-          $(function () { changeFrameHeight(); });
-        </script>
-    </body>
-
-    </html>
+    </div>
+    <div class="page-content-bg"></div>
+    <!-- 右侧主体结束 -->
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer">
+        <div class="copyright">Copyright ©2017 x-admin v2.3 All Rights Reserved</div>  
+    </div>
+    <!-- 底部结束 -->
+    
+</body>
+</html>
