@@ -8,6 +8,13 @@ use think\Request;
 use think\Db;
 class Order extends Base
 {   
+    
+        //处理订单
+    public function order_submit() 
+    {
+        return $this->view->fetch('Order/order_submit'); 
+    }
+    
     //处理订单
     public function order_list() 
     {
