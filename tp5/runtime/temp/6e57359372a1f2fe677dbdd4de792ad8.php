@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1529651522;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529651522;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530100689;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530084830;}*/ ?>
 <!-- 海运运价 -->
 <!DOCTYPE html>
 <html>
@@ -27,13 +27,6 @@
         <div class="gnhy_nei layui-row">
           <input type="text" name="qi" placeholder="请输入起始地" class="layui-col-xs12">
           <input type="text" name="mu" placeholder="请输入目的地" class="layui-col-xs12">
-
-          <div class="layui-col-xs6 a">
-            <input type="text" name="huo" placeholder="请输入货物名称" class="layui-col-xs12 ">
-          </div>
-          <div class="layui-col-xs6 b">
-            <input type="text" name="zhong" placeholder="请输入重量" class="layui-col-xs12">
-          </div>
 
           <input type="text" name="date" placeholder="装货时间" id="date" class="layui-col-xs12">
         </div>
@@ -113,13 +106,22 @@
                   </div>
                 </li>
                 <li>3月17日</li>
-                <li>￥3000</li>
-                <li>￥5000</li>
+                <li>
+                  ￥3000
+                  <div class="dian">
+                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
+                  </div>
+                </li>
+                <li>
+                  ￥5000
+                  <div class="dian">
+                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
+                  </div>
+                </li>
               </ul>
             </div>
 
             <div class="nei_rig">
-              <a href="<?php echo url('index/xxtx'); ?>">下单</a>
               <a href="#" class="trigger-default">航线详情</a>
             </div>
 
@@ -163,13 +165,22 @@
                   </div>
                 </li>
                 <li>3月17日</li>
-                <li>￥3000</li>
-                <li>￥5000</li>
+                <li>
+                  ￥3000
+                  <div class="dian">
+                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
+                  </div>
+                </li>
+                <li>
+                  ￥5000
+                  <div class="dian">
+                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
+                  </div>
+                </li>
               </ul>
             </div>
 
             <div class="nei_rig">
-              <a href="<?php echo url("","",true,false);?>">下单</a>
               <a href="#" class="trigger-default">航线详情</a>
             </div>
 
