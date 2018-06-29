@@ -22,6 +22,62 @@ button{
 .xxtx{
   width: 80%;
   margin: 0 auto;
+  //流程
+  .lc{
+    width: 100%;
+    height: 50px;
+    ul{
+      width: 100%;
+      padding-left: 10%;
+      li{
+        float: left;
+        width: 15%;
+        height: 15px;
+        line-height: 15px;
+        background-color: $lan;
+        padding: 5px 0;
+        color:#fff;
+        margin-left: 5px;
+        text-align: center;
+        font-size: 12px;
+        span{
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          line-height: 15px;
+          color: $lan;
+          
+          background-color: #fff;
+          border-radius: 50%;
+        }
+      }
+      li:nth-child(3){
+        width: 20%;
+        height: 20px;
+        line-height: 20px;
+        margin-top: -2.5px;
+        font-size: 18px;
+        span{
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+        }
+      }
+      li:nth-child(5),li:nth-child(7){
+        background: #aaa;
+        span{
+          color: #aaa;
+        }
+      }
+      .jt{
+        width: 5%;
+        background: #fff;
+        color: #000;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
   // 订单信息
   .xxtx_dd{
     border: 1px solid #808080;

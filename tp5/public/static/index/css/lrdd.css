@@ -19,6 +19,51 @@ button {
 .xxtx {
   width: 80%;
   margin: 0 auto; }
+  .xxtx .lc {
+    width: 100%;
+    height: 50px; }
+    .xxtx .lc ul {
+      width: 100%;
+      padding-left: 10%; }
+      .xxtx .lc ul li {
+        float: left;
+        width: 15%;
+        height: 15px;
+        line-height: 15px;
+        background-color: #2e8de5;
+        padding: 5px 0;
+        color: #fff;
+        margin-left: 5px;
+        text-align: center;
+        font-size: 12px; }
+        .xxtx .lc ul li span {
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          line-height: 15px;
+          color: #2e8de5;
+          background-color: #fff;
+          border-radius: 50%; }
+      .xxtx .lc ul li:nth-child(3) {
+        width: 20%;
+        height: 20px;
+        line-height: 20px;
+        margin-top: -2.5px;
+        font-size: 18px; }
+        .xxtx .lc ul li:nth-child(3) span {
+          width: 20px;
+          height: 20px;
+          line-height: 20px; }
+      .xxtx .lc ul li:nth-child(5), .xxtx .lc ul li:nth-child(7) {
+        background: #aaa; }
+        .xxtx .lc ul li:nth-child(5) span, .xxtx .lc ul li:nth-child(7) span {
+          color: #aaa; }
+      .xxtx .lc ul .jt {
+        width: 5%;
+        background: #fff;
+        color: #000;
+        font-size: 18px;
+        font-weight: 500; }
   .xxtx .xxtx_dd {
     border: 1px solid #808080;
     padding: 0px 10px 10px;

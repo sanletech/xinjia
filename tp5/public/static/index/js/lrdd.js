@@ -179,3 +179,8 @@ $('.fp01').change(function(){
     $('.tx').show();
   }
 });
+
+//柜量
+for (let i = 1; i < 31; i++) {
+  $('.guil').append("<option value='"+i+"'>"+i+"</option>");
+}

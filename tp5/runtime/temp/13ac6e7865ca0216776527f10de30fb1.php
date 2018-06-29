@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530181200;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530084830;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530260243;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530084830;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +25,18 @@
     <div class="banner"></div>
     <form class="" action="">
       <div class="xxtx">
+        <!-- 流程 -->
+          <div class="lc">
+              <ul>
+                <li><span>1</span> 运单查询</li>
+                <li class="jt">></li>
+                <li><span>2</span> 完善订单</li>
+                <li class="jt">></li>
+                <li><span>3</span> 确认并支付</li>
+                <li class="jt">></li>
+                <li><span>4</span> 完成</li>
+              </ul>
+          </div>
         <!-- 订单信息 -->
         <div class="xxtx_dd">
           <div class="xx">
@@ -230,13 +242,11 @@
           <div class="layui-col-xs4 er">
             <div class="grid-demo nei">
               <div class="layui-col-xs3">
-                <span>*&nbsp;</span>货名：</div>
+                <span>*&nbsp;</span>柜量：</div>
               <div class="layui-col-xs6">
                 <div class="select">
-                  <select name='make'>
-                    <option value='0' selected>请选择</option>
-                    <option value='1'>柜子</option>
-                    <option value='2'>箱子</option>
+                  <select name='make' class="guil">
+                    <option value='0'>请选择</option>
                   </select>
                 </div>
               </div>
