@@ -1,7 +1,29 @@
-<{include file='./public/header' /}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\trailer_add.html";i:1530015158;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
 
   <body>
-<!--    <link rel="stylesheet" href="__STATIC__/css/trailer_add.css">-->
+<!--    <link rel="stylesheet" href="/static/admin/css/trailer_add.css">-->
     <form class="layui-form" id="trailerform" >
       <div class="trailer layui-row">
         <!-- 选择港口 -->
@@ -118,7 +140,7 @@
           </div>
         </div>
     </form>
-    <script>  var addressURL = "<{:url('admin/address/town')}>"; </script>
+    <script>  var addressURL = "<?php echo url('admin/address/town'); ?>"; </script>
     <script type="text/javascript" src="/static/admin/js/address.js"></script>
     <script type="text/javascript" src="/static/admin/js/port.js"></script>
     <script type="text/javascript">
@@ -134,7 +156,7 @@
         var js_port = JS_PORT;
          
         
-        var url="<{:url('admin/price/trailer_toadd')}>";    
+        var url="<?php echo url('admin/price/trailer_toadd'); ?>";    
                 
         layui.use(['jquery', 'form'], function() {
             $ = layui.jquery;

@@ -1,4 +1,26 @@
-<{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_audit.html";i:1530257271;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   
   <body>
     <div class="x-nav">
@@ -22,7 +44,7 @@
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn layui-btn-normal" onclick="passAll()"><i class="layui-icon"></i>批量通过</button>
-        <span class="x-right" style="line-height:40px">总共有<{$count}>条记录</span>
+        <span class="x-right" style="line-height:40px">总共有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -42,34 +64,34 @@
           </tr>
         </thead>
         <tbody >
-          <{volist name="list" id="vo"}>  
+          <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
           <tr>
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata"><{$vo.order_num}></td>
-            <td><{$vo.phone}></td>
-            <td><{$vo.membername}></td>
-            <td><{$vo.salesname}></td>
-            <td><{$vo.s_port_name}>-<{$vo.e_port_name}></td>
-            <td><{$vo.cargo}></td>
-            <td><{$vo.ship_short_name}>--<{$vo.boat_name}>/<{$vo.boat_code}></td>
-            <td><{$vo.mtime|date="y-m-d",###}></td>
+            <td class="tdata"><?php echo $vo['order_num']; ?></td>
+            <td><?php echo $vo['phone']; ?></td>
+            <td><?php echo $vo['membername']; ?></td>
+            <td><?php echo $vo['salesname']; ?></td>
+            <td><?php echo $vo['s_port_name']; ?>-<?php echo $vo['e_port_name']; ?></td>
+            <td><?php echo $vo['cargo']; ?></td>
+            <td><?php echo $vo['ship_short_name']; ?>--<?php echo $vo['boat_name']; ?>/<?php echo $vo['boat_code']; ?></td>
+            <td><?php echo date("y-m-d",$vo['mtime']); ?></td>
             <td class="td-manage">
-                <a title="确认"  onclick="member_pass(this,'<{$vo.id}>')" href="javascript:;">
+                <a title="确认"  onclick="member_pass(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
                     <i class="layui-icon">&#xe618;</i>
                 </a>
-                <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
+                <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
           </tr>
-          <{/volist}>
+          <?php endforeach; endif; else: echo "" ;endif; ?>
         </tbody>
       </table>
       <div class="page">
         <div>
-              <{$page}>
+              <?php echo $page; ?>
         </div>
       </div>
 
@@ -82,7 +104,7 @@
             var dataA=new Array()
             dataA[0]=did ;
             var dataArray={id:dataA}
-            var url = "<{:url('admin/order/order_audit_pass')}>";
+            var url = "<?php echo url('admin/order/order_audit_pass'); ?>";
             toajax(dataArray,url);
             $(obj).parents("tr").remove();
             layer.msg('已通过!',{icon:1,time:1000});
@@ -95,7 +117,7 @@
         layer.confirm('确认通过吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             var dataArray={id:data};
-           var url = "<{:url('admin/order/order_audit_pass')}>";
+           var url = "<?php echo url('admin/order/order_audit_pass'); ?>";
             toajax(dataArray,url);
             toajax(dataArray,url);
             layer.msg('已通过', {icon: 1});
@@ -111,7 +133,7 @@
             var dataA=new Array()
             dataA[0]=did ;
             var dataArray={id:dataA}
-            var url = "<{:url('admin/order/order_audit_del')}>"
+            var url = "<?php echo url('admin/order/order_audit_del'); ?>"
             toajax(dataArray,url);
             $(obj).parents("tr").remove();
             layer.msg('已删除!',{icon:1,time:1000});
@@ -123,7 +145,7 @@
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             var dataArray={id:data};
-           var url = "<{:url('admin/order/order_audit_del')}>";
+           var url = "<?php echo url('admin/order/order_audit_del'); ?>";
             toajax(dataArray,url);
             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();

@@ -1,12 +1,41 @@
-<{include file='./public/header' /}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\price\trailer_edit.html";i:1530017328;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
 
   <body>
-<!--    <link rel="stylesheet" href="__STATIC__/css/trailer_add.css">-->
+    <link rel="stylesheet" href="/static/admin/css/trailer_add.css">
     <form class="layui-form" id="trailerform" >
+    <input type="hidden" name="s_id"  value="<?php echo $data['0']['s_id']; ?>" >
+    <input type="hidden" name="r_id"  value="<?php echo $data['0']['r_id']; ?>" >
+    <input type="hidden" name="cl_id"  value="<?php echo $data['0']['cl_id']; ?>" >
       <div class="trailer layui-row">
         <!-- 选择港口 -->
-        <div class="layui-form-item">
+         <div class="layui-form-item">
           <label class="layui-form-label">港口:</label>
+                <div class="layui-input-inline" id ="oldport" >
+                    <input type="text" name="port_name" value="<?php echo $data['0']['port_name']; ?>" readonly="readonly"  class="layui-input">
+                    <input type="hidden" name="port_id"  value="<?php echo $data['0']['port_id']; ?>" >
+                </div>
               <div class="layui-input-inline">
                     <select name="province1" lay-filter="province1" >
                         <option value="">请选择省</option>
@@ -28,7 +57,11 @@
                 <label class="layui-form-label">
                 <span class="x-red">*</span>请选择地址
                 </label>
-                <div class="layui-input-inline ">
+                <div class="layui-input-inline" id ="oldadd" >
+                    <input type="text" name="address_name" value="<?php echo $data['0']['address_name']; ?>" readonly="readonly"  class="layui-input">
+                     <input type="hidden" name="address_id"  value="<?php echo $data['0']['address_id']; ?>" >
+                </div>
+                <div class="layui-input-inline">
                     <select name="province" lay-filter="province" >
                         <option value="">请选择省</option>
                     </select>
@@ -49,34 +82,7 @@
                     </select>
                 </div>
             </div>
-
-        <!-- 收货 -->
-        <div class="layui-col-xs5">
-          <div class="grid-demo grid-demo-bg1">
-            <div class="layui-form-item">
-              <label class="layui-form-label">装货20GP:</label>
-              <div class="layui-input-block">
-                <input type="text" name="load[price_20GP]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
-              </div>
-            </div>
-            <div class="layui-form-item">
-              <label class="layui-form-label">装货40HQ:</label>
-              <div class="layui-input-block">
-                <input type="text" name="load[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
-              </div>
-            </div>
-            <div class="layui-form-item">
-              <label class="layui-form-label">装货车队名:</label>
-                <div class="layui-input-inline" >
-                <select name ="car_load"  lay-filter="car" lay-search>
-                    <option value="">请选装货车队</option>
-                </select>
-                </div>
-            </div>
-          </div>
-        </div>
-        <!-- 中间线 -->
-        <div class="layui-col-xs2 xian"></div>
+         
         <!-- 送货 -->
         <div class="layui-col-xs5">
           <div class="grid-demo">
@@ -84,13 +90,13 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">送货20GP:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="send[price_20GP]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                    <input type="text" name="send[price_20GP]" value="<?php echo $data['0']['s_20GP']; ?>" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">送货40HQ:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="send[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                  <input type="text" name="send[price_40HQ]" value="<?php echo $data['0']['s_40HQ']; ?>" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
@@ -104,6 +110,37 @@
             </div>
           </div>
         </div>
+        
+        <!-- 中间线 -->
+        <div class="layui-col-xs2 xian"></div>
+        
+        <!-- 收货 -->
+        <div class="layui-col-xs5">
+          <div class="grid-demo grid-demo-bg1">
+            <div class="layui-form-item">
+              <label class="layui-form-label">装货20GP:</label>
+              <div class="layui-input-block">
+                  <input type="text" name="load[price_20GP]"  value="<?php echo $data['0']['r_20GP']; ?>"  lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">装货40HQ:</label>
+              <div class="layui-input-block">
+                <input type="text" name="load[price_40HQ]" value="<?php echo $data['0']['r_40HQ']; ?>"  lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">装货车队名:</label>
+                <div class="layui-input-inline" >
+                <select name ="car_load"  lay-filter="car" lay-search>
+                    <option value="">请选装货车队</option>
+                </select>
+                </div>
+            </div>
+          </div>
+        </div>
+
+  
 
        <div class="layui-form-item layui-col-xs12 niu">
           <div class="layui-col-md1 layui-col-md-offset4">
@@ -118,7 +155,7 @@
           </div>
         </div>
     </form>
-    <script>  var addressURL = "<{:url('admin/address/town')}>"; </script>
+    <script>  var addressURL = "<?php echo url('admin/address/town'); ?>"; </script>
     <script type="text/javascript" src="/static/admin/js/address.js"></script>
     <script type="text/javascript" src="/static/admin/js/port.js"></script>
     <script type="text/javascript">
@@ -127,32 +164,39 @@
         parent.layer.close(index);
       });
       
-       //加载 所有的车公司名字简称和相应的id
+       //加载 所有的船公司名字简称和相应的id
         var js_car = '<?php echo $js_car; ?>';
             js_car=JSON.parse(js_car);    
         //加载 所有的港口名字和相应的城市code
         var js_port = JS_PORT;
-         
+            
+        var port_id = "<?php echo $data['0']['port_id']; ?>";
+        var s_carid = "<?php echo $data['0']['s_carid']; ?>";
+        var r_carid = "<?php echo $data['0']['r_carid']; ?>";
         
-        var url="<{:url('admin/price/trailer_toadd')}>";    
-                
+        var url="<?php echo url('admin/price/trailer_toedit'); ?>";    
+               
         layui.use(['jquery', 'form'], function() {
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
             loadProvince1();
             loadCar();
-        });  
-        
+          //  olddata();
+          
+        } );     
+     
+              
            //加载省数据
         function loadProvince1() {
+            
             var proHtml = '';
             for (var i = 0; i < areaData.length; i++) {
                 proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
             }
             //初始化省数据
             $form.find('select[name=province1]').append(proHtml);
-            form.render();
+            form.render();  
             form.on('select(province1)', function(data) {
                 $form.find('select[name=area1]').html('<option value="">请选择县/区</option>').parent().hide();
                 var value = data.value;
@@ -209,22 +253,36 @@
             form.render();
             
             form.on('select(port)', function(data) {
+                   $('#oldport').remove();
             } ) 
         }
-      
+        
         function loadCar(){
             //加载 所有的车队名字和相应的车队id
             var car_length =js_car.length;
-            var carHtml = '';
+            var scarHtml = ''; var rcarHtml = '';
             for(var i=0;i<car_length;i++){
-                carHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
+                if(s_carid ==js_car[i].id){
+                  
+                    scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
+                }else{
+                    scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
+                }   
+                if(r_carid ==js_car[i].id){
+                    rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
+                }else{
+                    rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
+                }   
             }
-            $form.find('select[name=car_load]').append(carHtml);
-            $form.find('select[name=car_send]').append(carHtml);
+             
+            $form.find('select[name=car_load]').append(rcarHtml);
+            $form.find('select[name=car_send]').append(scarHtml);
             form.render();
             form.on('select(car)', function(data) {
             } ) 
+
         }
+        
         
         function  trailerAjax(){
             var loading = layer.load(1);

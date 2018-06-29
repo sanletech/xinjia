@@ -116,7 +116,7 @@ class Price extends Base
         }
     
         $route = new PriceM;
-        $list = $route->price_trailer_list($port_name ,5);
+        $list = $route->price_trailer_list($port_name ,15);
         //$this->_p($list);exit;
         $page = $list->render();
         $this->assign('list',$list);
@@ -127,11 +127,11 @@ class Price extends Base
     
     //拖车添加展示页面
     public function trailer_add(){
-        //传递所有的港口给前台页面
-        $sql="select *  from  hl_port ";
-        $port_data =Db::query($sql);
-       //转成json格式传给js
-        $js_port = json_encode($port_data);
+//        //传递所有的港口给前台页面
+//        $sql="select *  from  hl_port ";
+//        $port_data =Db::query($sql);
+//       //转成json格式传给js
+//        $js_port = json_encode($port_data);
         
         //传递所有的车队给前台页面
         $sql2="select id ,car_name from  hl_cardata ";
@@ -139,7 +139,7 @@ class Price extends Base
        //转成json格式传给js
         $js_car = json_encode($car_data);
         
-        $this->view->assign('js_port',$js_port);
+      //  $this->view->assign('js_port',$js_port);
         $this->view->assign('js_car',$js_car);
         
         return $this->view->fetch("Price/trailer_add");
@@ -147,7 +147,7 @@ class Price extends Base
     //拖车添加执行页面
     public function trailer_toadd(){
         $data = $this->request->param();
-        //  $this->_v($data);exit;
+    //   $this->_v($data);exit;
         //根据港口和地址 贮存车队送货/装货线路
         $port_id = strstr($data['port'],'_',true); 
         $address_data =  $data['town'] ? $data['town'] :$data['area']; 
@@ -172,18 +172,13 @@ class Price extends Base
         $res =$carprice->price_trailer_edit($data);   
 //      $this->_p($res);exit;
 
-        //传递所有的港口给前台页面
-        $sql="select *  from  hl_port ";
-        $port_data =Db::query($sql);
-       //转成json格式传给js
-        $js_port = json_encode($port_data);
+  
         //传递所有的车队给前台页面
         $sql2="select id ,car_name from  hl_cardata ";
         $car_data =Db::query($sql2);
        //转成json格式传给js
         $js_car = json_encode($car_data);
         
-        $this->view->assign('js_port',$js_port);
         $this->view->assign('js_car',$js_car);
         $this->view->assign('data',$res);
         return $this->view->fetch("price/trailer_edit");
@@ -191,7 +186,7 @@ class Price extends Base
         //拖车运价执行修改
     public function trailer_toedit(){
         $data = $this->request->param();
-     //   $this->_p($data);exit;
+       $this->_p($data);exit;
         $carprice = new PriceM;
         $res =$carprice->price_trailer_toedit($data);          
         if(!array_key_exists('fail', $res)){

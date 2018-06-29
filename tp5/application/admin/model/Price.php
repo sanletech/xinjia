@@ -152,12 +152,12 @@ class Price extends Model
     
     
     //车队运价展示
-    public function price_trailer_list($port_name ,$pages=5,$cl_id ='') {
+    public function price_trailer_list($port_name ,$pages=15,$cl_id ='') {
         
          $list = Db::name('carprice')->alias('CP')
                 ->join('hl_car_line L', 'CP.cl_id = L.id', 'left')
                 ->join('hl_cardata CD','CP.car_id = CD.id', 'left')
-                ->join('hl_port P', 'L.port_id =P.id', 'left')
+                ->join('hl_port P', 'L.port_id =P.port_code', 'left')
                 ->field('CP.id ,CP.cl_id ,L.address_id ,L.address_name ,CP.car_id ,'
                         . ' CD.car_name ,L.port_id , P.port_name ,'
                         . 'CP.price_20GP ,CP.price_40HQ ,variable , '
@@ -241,7 +241,11 @@ class Price extends Model
             $cl_id =  $data['cl_id']; //路线id
         }else{
              //根据港口和地址 贮存车队送货/装货线路
-            $port_id = strstr($data['port'],'_',true);//港口id
+            if( array_key_exists('port_id', $data)){
+                $port_id =  $data['port_id']; //港口id
+            }  else {
+                $port_id = strstr($data['port'],'_',true);//港口id
+            }
             $address_data =  $data['town'] ? $data['town'] :$data['area']; 
           
             $cl_id = $this->lineCar($port_id,$address_data);
@@ -295,6 +299,8 @@ class Price extends Model
         }
        
         return $id ;
+        
+ 
     }
     
     
