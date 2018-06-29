@@ -13,9 +13,9 @@ button:hover {
   padding: 20px 10%;
   margin-bottom: 80px; }
   .banner .gnhy {
-    width: 520px;
+    width: 500px;
     background: #fff;
-    height: 400px; }
+    height: 350px; }
     .banner .gnhy .gnhy_top {
       text-align: center;
       color: #fff;
@@ -107,6 +107,15 @@ button:hover {
                 display: inline-block;
                 position: relative;
                 top: -4px; }
+              .cen_nei .nei_nei .hang_nei .nei_le ul li .dian .gp {
+                display: inline-block;
+                width: 100px;
+                height: 35px;
+                line-height: 35px;
+                margin-left: 15px;
+                text-align: center;
+                background-color: #ff9f19;
+                color: #fff; }
             .cen_nei .nei_nei .hang_nei .nei_le ul li i {
               font-size: 25px; }
           .cen_nei .nei_nei .hang_nei .nei_le ul .hui {
@@ -133,14 +142,10 @@ button:hover {
           line-height: 35px;
           margin-left: 15px;
           text-align: center;
-          border: 1px solid #ff9f19; }
-          .cen_nei .nei_nei .hang_nei .nei_rig a:nth-child(1) {
-            margin-bottom: 20px;
-            background-color: #ff9f19;
-            color: #fff; }
-          .cen_nei .nei_nei .hang_nei .nei_rig a:nth-child(2) {
-            background-color: #fff;
-            color: #ff9f19; }
+          border: 1px solid #ff9f19;
+          background-color: #fff;
+          color: #ff9f19;
+          margin-top: 18px; }
       .cen_nei .nei_nei .hang_nei .sm {
         overflow: hidden;
         height: 55px;

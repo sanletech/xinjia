@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:57:"E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl";i:1529651524;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:1:{s:57:"E:\xampp\htdocs\xinjia\tp5\thinkphp\tpl\dispatch_jump.tpl";i:1530084832;}*/ ?>
+>>>>>>> 1f2c35d2d7c2f06de631f5b44e581d314a6a54c2
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\member_list.html";i:1527161014;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1530084830;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\member_list.html";i:1530084830;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1530084830;}*/ ?>
->>>>>>> 1f2c35d2d7c2f06de631f5b44e581d314a6a54c2
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1530084830;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\disable_list.html";i:1530084830;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1530084830;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,6 +21,7 @@
     <script type="text/javascript" src="/static/admin/js/area.js"></script>
 
 </head>
+  
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -43,39 +40,38 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
+      <xblock>
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+      </xblock>
       <table class="layui-table">
         <thead>
           <tr>
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>账号</th>
-            <th>姓名</th>
+            <th>企业名/账号</th>
             <th>密码</th>
-            <th>企业名</th>
             <th>推荐人</th>
             <th>创建时间</th>
             <th>操作</th>
           </tr>
         </thead>
-        <tbody >
+        <tbody>
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
               
-            <td class="tdata">18365486284</td>
-            <td>小猪</td>
+            <td class="tdata">广州散了科技公司</td>
             <td>13055493654</td>
-            <td>广州散了科技公司</td>
             <td>吴先生</td>
             <td>2018-02-02</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<?php echo url("Member/member_edit"); ?>',700,550)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
+              <a title="返回"  onclick="" href="javascript:;">
+                <i class="layui-icon">&#xe65c;</i>
               </a>
-              <a title="禁用" onclick="" href="javascript:;">
-                <i class="layui-icon">&#xe60b;</i>
+              <a title="删除" onclick="" href="javascript:;">
+                <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
@@ -102,48 +98,6 @@
           elem: '#end' //指定元素
         });
       });
-
-
-      /*用户-删除*/
-    function member_del(obj,did){
-        layer.confirm('确认要删除吗？',function(index){
-            //转成数组形式
-            var dataA=new Array()
-            dataA[0]=did ;
-            var dataArray={id:dataA}
-            toajax(dataArray);
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
-         });
-      }
-
-   function delAll (argument) {
-        var data = tableCheck.getData();
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            var dataArray={id:data};
-            toajax(dataArray);
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
-
-
-       function toajax (dataArray){
-            $.ajax({
-                type:'POST',
-                url:"<?php echo url('admin/member/toDel'); ?>",    
-                data:dataArray,
-                dataType:"json",
-                success:function(data){
-                    if(data.status==1){
-                      return 1;
-                    }else{
-                        return 0 ;
-                  }
-                }
-            })
-        }
     </script>
  
   </body>

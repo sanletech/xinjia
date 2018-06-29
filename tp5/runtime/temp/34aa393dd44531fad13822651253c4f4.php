@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1530264923;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1530084830;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1530085748;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1530084830;}*/ ?>
+>>>>>>> 1f2c35d2d7c2f06de631f5b44e581d314a6a54c2
 <!doctype html>
 <html lang="en">
 <head>
@@ -112,7 +116,11 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
+<<<<<<< HEAD
                         <a title="确认" onclick="x_admin_show('实际价格','<?php echo url('Order/list_booking'); ?>',700,500)" href="javascript:;">确认</a>
+=======
+                        <a title="确认" onclick="x_admin_show('确认','<?php echo url('Order/list_booking'); ?>',600,250)" href="javascript:;">确认</a>
+>>>>>>> 1f2c35d2d7c2f06de631f5b44e581d314a6a54c2
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -194,7 +202,11 @@
                     <span>创建时间：2018-03-08</span>
                   </div>
                   <span class="top_ma">
+<<<<<<< HEAD
                     <span>小明</span>
+=======
+                    <span>业务员：小明</span>
+>>>>>>> 1f2c35d2d7c2f06de631f5b44e581d314a6a54c2
                     <span>船期：2018-03-05</span>
                     <span>海上时效：3天</span>
                     <span>离港时间：2018-05-10</span>
