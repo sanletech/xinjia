@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\top.html";i:1529718403;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529718403;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529718403;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\top.html";i:1530084830;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530084830;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1530084830;}*/ ?>
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
 <!DOCTYPE html>
 <html>
 <head>

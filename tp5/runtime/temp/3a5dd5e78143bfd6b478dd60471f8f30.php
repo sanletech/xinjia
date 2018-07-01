@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1529105623;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_audit.html";i:1527898250;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_audit.html";i:1530257271;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
 <!doctype html>
 <html lang="en">
 <head>
@@ -43,8 +47,13 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+<<<<<<< HEAD
         <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Member/mAdd"); ?>',600,400)"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
+=======
+        <button class="layui-btn layui-btn-normal" onclick="passAll()"><i class="layui-icon"></i>批量通过</button>
+        <span class="x-right" style="line-height:40px">总共有<?php echo $count; ?>条记录</span>
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
       </xblock>
       <table class="layui-table">
         <thead>
@@ -53,9 +62,14 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>订单号</th>
+<<<<<<< HEAD
             <th>运单号</th>
             <th>用户账号</th>
             <th>联系人</th>
+=======
+            <th>客户账号</th>
+            <th>客户姓名</th>
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
             <th>业务员</th>
             <th>航线</th>
             <th>货名</th>
@@ -65,6 +79,7 @@
           </tr>
         </thead>
         <tbody >
+<<<<<<< HEAD
           <tr >
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
@@ -88,16 +103,46 @@
               </a>
             </td>
           </tr>
+=======
+          <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
+          <tr>
+            <td>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
+            </td>
+            <td class="tdata"><?php echo $vo['order_num']; ?></td>
+            <td><?php echo $vo['phone']; ?></td>
+            <td><?php echo $vo['membername']; ?></td>
+            <td><?php echo $vo['salesname']; ?></td>
+            <td><?php echo $vo['s_port_name']; ?>-<?php echo $vo['e_port_name']; ?></td>
+            <td><?php echo $vo['cargo']; ?></td>
+            <td><?php echo $vo['ship_short_name']; ?>--<?php echo $vo['boat_name']; ?>/<?php echo $vo['boat_code']; ?></td>
+            <td><?php echo date("y-m-d",$vo['mtime']); ?></td>
+            <td class="td-manage">
+                <a title="确认"  onclick="member_pass(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
+                    <i class="layui-icon">&#xe618;</i>
+                </a>
+                <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
+                    <i class="layui-icon">&#xe640;</i>
+                </a>
+            </td>
+          </tr>
+          <?php endforeach; endif; else: echo "" ;endif; ?>
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
         </tbody>
       </table>
       <div class="page">
         <div>
+<<<<<<< HEAD
            
+=======
+              <?php echo $page; ?>
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
         </div>
       </div>
 
     </div>
     <script>
+<<<<<<< HEAD
       layui.use('laydate', function(){
         var laydate = layui.laydate;
         
@@ -111,6 +156,35 @@
           elem: '#end' //指定元素
         });
       });
+=======
+    /* 订单确认*/    
+    function member_pass(obj,did){
+        layer.confirm('确认通过吗？',function(index){
+            //转成数组形式
+            var dataA=new Array()
+            dataA[0]=did ;
+            var dataArray={id:dataA}
+            var url = "<?php echo url('admin/order/order_audit_pass'); ?>";
+            toajax(dataArray,url);
+            $(obj).parents("tr").remove();
+            layer.msg('已通过!',{icon:1,time:1000});
+         });
+        
+    }
+    
+     function passAll (argument) {
+        var data = tableCheck.getData();
+        layer.confirm('确认通过吗？'+data,function(index){
+            //捉到所有被选中的，发异步进行删除
+            var dataArray={id:data};
+           var url = "<?php echo url('admin/order/order_audit_pass'); ?>";
+            toajax(dataArray,url);
+            toajax(dataArray,url);
+            layer.msg('已通过', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+      }
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
 
 
       /*用户-删除*/
@@ -120,7 +194,12 @@
             var dataA=new Array()
             dataA[0]=did ;
             var dataArray={id:dataA}
+<<<<<<< HEAD
             toajax(dataArray);
+=======
+            var url = "<?php echo url('admin/order/order_audit_del'); ?>"
+            toajax(dataArray,url);
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
             $(obj).parents("tr").remove();
             layer.msg('已删除!',{icon:1,time:1000});
          });
@@ -131,17 +210,29 @@
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             var dataArray={id:data};
+<<<<<<< HEAD
             toajax(dataArray);
+=======
+           var url = "<?php echo url('admin/order/order_audit_del'); ?>";
+            toajax(dataArray,url);
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
 
 
+<<<<<<< HEAD
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
                 url:"<?php echo url('admin/member/toDel'); ?>",    
+=======
+       function toajax (dataArray,url){
+            $.ajax({
+                type:'POST',
+                url:url,    
+>>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
                 data:dataArray,
                 dataType:"json",
                 success:function(data){

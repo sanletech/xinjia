@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Price\price_trailer.html";i:1528170611;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_edit.html";i:1526040607;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,14 +35,17 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" id="searchform">
-          <input type="text" name="port_name"  value="<?php echo !empty($port_name)?$port_name : '';; ?>" placeholder="请输入港口" autocomplete="off" class="layui-input">
+        <form class="layui-form layui-col-md12 x-so">
+          <input type="text" name="car_name"  placeholder="创建时间-始" autocomplete="off" class="layui-input" id="start">
+          <input type="text" name="port"  placeholder="创建时间-终" autocomplete="off" class="layui-input" id="end">
+          <input type="text" name="username"  placeholder="收货联系人" autocomplete="off" class="layui-input">
+          <input type="text" name="username"  placeholder="装货公司名全称" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加','<?php echo url('Price/trailer_add'); ?>',1200,400)" href="javascript:;"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Member/mAdd"); ?>',600,400)"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -51,99 +54,52 @@
             <th>
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
-            <th>路线ID</th>
-            <td>港口</td>
-            <th>详细地址</th>
-<!--            <th>s_id</th>
-            <th>送货车队id</th>-->
-            <th>送货车队</th>
-            <th>送货20GP价格</th>
-            <th>送货40HQ价格</th>
-            <th>最新订单时间</th>
-<!--             <th>variable</th>
-            <th>r_id</th>
-            <th>装货车队id</th>-->
-            <th>装货车队</th>
-            <th>装货20GP价格</th>
-            <th>装货40HQ价格</th>
-            <th>最新订单时间</th>
-<!--             <th>variable</th>-->
+            <th>订单号</th>
+            <th>运单号</th>
+            <th>联系人</th>
+            <th>联系电话</th>
+            <th>运输条款</th>
+            <th>航线</th>
+            <th>货名</th>
+            <th>船名/航次</th>
+            <th>下单时间</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody >
-          <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>   
           <tr >
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['cl_id']; ?>'><i class="layui-icon">&#xe605;</i></div>
+              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata"><?php echo $vo['cl_id']; ?></td>
-            <td><?php echo $vo['port_name']; ?></td> 
-            <td><?php echo $vo['address_name']; ?></td>
-            
-<!--            <td><?php echo $vo['s_id']; ?></td>
-            <td><?php echo $vo['s_carid']; ?></td>-->
-            <td><?php echo $vo['s_carname']; ?></td>
-            <td>￥<?php echo $vo['s_20GP']; ?></td>
-            <td>￥<?php echo $vo['s_40HQ']; ?></td> 
-            <td><?php echo date("y-m-d",$vo['s_ordertime']); ?></td>
-<!--            <td><?php echo $vo['s_variable']; ?></td>
-            
-            <td><?php echo $vo['r_id']; ?></td>
-            <td><?php echo $vo['r_carid']; ?></td>-->
-            <td><?php echo $vo['r_carname']; ?></td>
-            <td>￥<?php echo $vo['r_20GP']; ?></td>
-            <td>￥<?php echo $vo['r_40HQ']; ?></td> 
-            <td><?php echo date("y-m-d",$vo['r_ordertime']); ?></td>
-<!--            <td><?php echo $vo['r_variable']; ?></td>
-            -->
+              
+            <td class="tdata">2264962316464</td>
+            <td>178NASF3554</td>
+            <td>小猪</td>
+            <td>13055493654</td>
+            <td>DO-DY</td>
+            <td>北京-上海</td>
+            <td>钢铁</td>
+            <td>锦旗18/1782N</td>
+            <td>2018-02-02</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<?php echo url('Price/trailer_edit'); ?>?cl_id=<?php echo $vo['cl_id']; ?>&s_id=<?php echo $vo['s_id']; ?>&r_id=<?php echo $vo['r_id']; ?>',1200,400)" href="javascript:;">
+              <a title="编辑"  onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<?php echo $vo['cl_id']; ?>')" href="javascript:;">
+              <a title="删除" onclick="" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
           </tr>
-          <?php endforeach; endif; else: echo "" ;endif; ?>
         </tbody>
       </table>
       <div class="page">
         <div>
-            <?php echo $page; ?>
+           
         </div>
       </div>
 
     </div>
-<script>
-/*执行搜索车队或者港口*/
-    function search(){
-         $.ajax({
-                type:'get',
-                url:"<?php echo url('admin/Price/price_trailer'); ?>",     
-                data: $("#searchform").serialize(),
-                dataType:"json",
-                async:false,
-                success:function(data){
-                  if(data.status==1){
-                    return 1;
-                  }else{
-                      return 0 ;
-                 }
-                         
-               }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest.status);
-               console.log(XMLHttpRequest.readyState);
-               console.log(textStatus);
-                  },
-
-        });
-        return 1;
-    }    
-        
-        
-        
+    <script>
       layui.use('laydate', function(){
         var laydate = layui.laydate;
         
@@ -187,7 +143,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<?php echo url('admin/price/traile_del'); ?>",    
+                url:"<?php echo url('admin/member/toDel'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
@@ -199,7 +155,7 @@
                 }
             })
         }
-</script>
+    </script>
  
   </body>
 

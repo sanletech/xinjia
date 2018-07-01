@@ -60,10 +60,10 @@
             <td>锦旗18/1782N</td>
             <td>2018-02-02</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="" href="javascript:;">
+              <a title="编辑"  onclick="member_pass(this,'<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -91,8 +91,9 @@
           elem: '#end' //指定元素
         });
       });
-
-
+    
+    
+      
       /*用户-删除*/
     function member_del(obj,did){
         layer.confirm('确认要删除吗？',function(index){

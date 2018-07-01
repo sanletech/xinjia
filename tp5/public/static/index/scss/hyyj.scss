@@ -19,9 +19,9 @@ button:hover{
   padding: 20px 10%;
   margin-bottom: 80px;
   .gnhy{
-    width: 520px;
+    width: 500px;
     background: #fff;
-    height:400px;
+    height:350px;
     .gnhy_top{
       text-align: center;
       color:#fff;
@@ -138,6 +138,16 @@ button:hover{
                 position: relative;
                 top: -4px;
               }
+              .gp{
+                display: inline-block;
+                width:100px;
+                height:35px;
+                line-height:35px;
+                margin-left: 15px;
+                text-align: center;
+                background-color: #ff9f19;
+                color:#fff;
+              }
             }
             i{
               font-size: 25px;
@@ -176,15 +186,9 @@ button:hover{
           margin-left: 15px;
           text-align: center;
           border:1px solid #ff9f19;
-          &:nth-child(1){
-            margin-bottom:20px;
-            background-color: #ff9f19;
-            color:#fff;
-          }
-          &:nth-child(2){
-            background-color: #fff;
-            color: #ff9f19;
-          }
+          background-color: #fff;
+          color: #ff9f19;
+          margin-top:18px;
         }
       }
       .sm{

@@ -7,11 +7,21 @@
         <!-- 选择港口 -->
         <div class="layui-form-item">
           <label class="layui-form-label">港口:</label>
-            <div class="layui-input-inline" >
-                <select name ="port"  lay-filter="port" lay-search>
-                    <option value="">请选择港口</option>
-                </select>
-            </div>
+              <div class="layui-input-inline">
+                    <select name="province1" lay-filter="province1" >
+                        <option value="">请选择省</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" id ='citydiv' style="display: none;">
+                    <select name="city1" lay-filter="city1" >
+                        <option value="">请选择市</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" style="display: none;">
+                    <select name="port"  lay-filter="port">
+                        <option value="">请选择港口</option>
+                    </select>
+                </div>
         </div>
         <!-- 下拉选择框地址 -->
             <div class="layui-form-item">
@@ -110,19 +120,19 @@
     </form>
     <script>  var addressURL = "<{:url('admin/address/town')}>"; </script>
     <script type="text/javascript" src="/static/admin/js/address.js"></script>
-    
+    <script type="text/javascript" src="/static/admin/js/port.js"></script>
     <script type="text/javascript">
       $('.cancel').click(function () {
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
       });
       
-       //加载 所有的船公司名字简称和相应的id
+       //加载 所有的车公司名字简称和相应的id
         var js_car = '<?php echo $js_car; ?>';
             js_car=JSON.parse(js_car);    
         //加载 所有的港口名字和相应的城市code
-        var js_port = '<?php echo $js_port; ?>';
-            js_port=JSON.parse(js_port);   
+        var js_port = JS_PORT;
+         
         
         var url="<{:url('admin/price/trailer_toadd')}>";    
                 
@@ -130,21 +140,78 @@
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
-            loadPort();  //加载选择港口
+            loadProvince1();
             loadCar();
-        });     
-        function loadPort(){
-            //加载 所有的港口名字和相应id
-            var port_length =js_port.length;
-            var portHtml = '';
-            for(var i=0;i<port_length;i++){
-                portHtml += '<option  value="' + js_port[i].id +'_'+ js_port[i].port_name + '">' + js_port[i].port_name + '</option>';  
+        });  
+        
+           //加载省数据
+        function loadProvince1() {
+            var proHtml = '';
+            for (var i = 0; i < areaData.length; i++) {
+                proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
             }
-            $form.find('select[name=port]').append(portHtml);
+            //初始化省数据
+            $form.find('select[name=province1]').append(proHtml);
             form.render();
+            form.on('select(province1)', function(data) {
+                $form.find('select[name=area1]').html('<option value="">请选择县/区</option>').parent().hide();
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadCity1(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city1]').parent().hide();
+                }
+            });
+        }
+   
+    //加载市数据
+        function loadCity1(citys) {
+            var cityHtml = '';
+            for (var i = 0; i < citys.length; i++) {
+                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+            }
+            $form.find('select[name=city1]').html(cityHtml).parent().show();
+            form.render();
+            form.on('select(city1)', function(data) {
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    //将城市Id 传给港口loadPort()
+                    //console.log(citys[index].cityCode);
+                    loadPort(citys[index].cityCode);
+                  // loadArea(citys[index].mallAreaList);
+                } else {
+                    $form.find('select[name=port]').parent().hide();
+                }
+            });
+        }
+     
+        //加载对应城市的港口，并显示已经选中了
+        function loadPort(CityCode){
+            var port_arr =  js_port[CityCode];
+            var areaHtml = '';
+            if(typeof(port_arr) !== 'undefined' && port_arr!=0){
+                var port_length =port_arr.length;
+                for(var i=0;i<port_length;i++){
+                    areaHtml += '<option  value="' + port_arr[i].id +'_'+ port_arr[i].port_name + '">' + port_arr[i].port_name + '</option>';  
+                }
+            }else{
+                    areaHtml = '<option  value="">此城市无港口</option>'; 
+            }
+            $form.find('select[name=port]').html(areaHtml).parent().show();
+            form.render();
+            
             form.on('select(port)', function(data) {
             } ) 
         }
+      
         function loadCar(){
             //加载 所有的车队名字和相应的车队id
             var car_length =js_car.length;

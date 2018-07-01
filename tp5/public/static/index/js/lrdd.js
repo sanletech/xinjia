@@ -79,9 +79,10 @@ var $ = layui.jquery
 
 //提交模态窗口基本设置
 $("#modal-default").iziModal({
-    title: "信息确认",
+    title: "发票填写",
     iconClass: 'icon-announcement',
-    width: 400,
+    width: 700,
+    top:30,
     padding: 20
 });
 //启动模态窗
@@ -136,15 +137,50 @@ input_wu();
 $('.in').css('border', '0');
 function xiu(){
   var gai = $('.er_anniu .wt3').text();
-  if (gai == '修改') {
+  console.log(gai);
+  
+  if (gai == '修改' || gai == '') {
     $('.er_anniu .wt3').text('确认');
     $('.in').css('border', '1px solid #e6e6e6');
     $('.in').removeAttr('readonly');
     input_null();
   }else{
+   
     $('.er_anniu .wt3').text('修改');
     $('.in').css('border', '0');
     $('.in').attr('readonly', 'readonly');
     input_wu();
   }
+}
+//发票设置
+$('#fk').change(function () {
+  let fk = $(this).children('option:selected').val();
+  if (fk == 3) {
+    $('.jin input').removeClass('layui-disabled').attr('disabled', false);
+  } else {
+    $('.jin input').addClass('layui-disabled').attr('disabled', true);
+  }
+});
+
+//开取发票
+function kfp(fp){
+  if($(fp).find('input[type="checkbox"]').prop('checked')){ 
+    $('.fp01').removeClass('layui-disabled').attr('disabled',false);
+  }else{
+    $('.fp01').addClass('layui-disabled').attr('disabled',true);
+  }
+};
+//设置发票增税值
+$('.fp01').change(function(){
+  let fk = $(this).children('option:selected').val();
+  if(fk == 0){
+    $('.tx').hide();
+  }else{
+    $('.tx').show();
+  }
+});
+
+//柜量
+for (let i = 1; i < 31; i++) {
+  $('.guil').append("<option value='"+i+"'>"+i+"</option>");
 }
