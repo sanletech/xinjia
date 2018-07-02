@@ -57,10 +57,10 @@ class Order extends Base
         $list = $data->order_list();
         $page =$list->render();
         $count =  count($list);
-//        $this->_p($list);exit;
-        $this->view->assign('count',$count);
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
+//      $this->_p($list);exit;
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
         return $this->view->fetch('Order/order_list'); 
     }
     //查看订单

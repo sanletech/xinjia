@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\index.html";i:1529105630;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529718403;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\index.html";i:1530084830;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530084830;}*/ ?>
->>>>>>> 9e1aa94b7201876201f199a59cc5e1a259f9b08c
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\index.html";i:1529651522;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529651522;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>

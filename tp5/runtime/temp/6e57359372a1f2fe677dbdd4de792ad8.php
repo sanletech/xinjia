@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530266800;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529651522;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530524280;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
 <!-- 海运运价 -->
 <!DOCTYPE html>
 <html>
@@ -16,6 +16,7 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="/static/index/js/jquery-1.9.0.min.js"></script>
     <script src="/static/index/layui/layui.js"></script>
+    
 </head>
 
   <body>
@@ -69,66 +70,77 @@
           </ul>
         </div>
         <!-- 查询内容 -->
+        <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
         <div class="nei_nei">
-          <div class="tj">
-            <img src="/static/index/image/tuijian.jpg" alt="">
-          </div>
-          <div class="hang_nei">
+            <?php if($vo['generalize']=1): ?>
+            <div class="tj">
+                <img src="/static/index/image/tuijian.jpg" alt="">
+            </div>
+            <?php endif; ?>
+            
+            <div class="hang_nei">
             <div class="nei_le">
-              <ul>
+                <ul>
                 <li>
-                  中远海船务
-                  <div class="dian">
-                    <i class="icon iconfont icon-chuan se"></i>&nbsp;
-                    <span class="hui">直航</span>
-                  </div>
-                </li>
-                <li>3月6日</li>
+                    <?php echo $vo['ship_short_name']; ?>
+                    <div class="dian">
+                        <i class="icon iconfont icon-chuan se"></i>&nbsp;
+                        <?php if($vo['middle_id']=0): ?><span class="hui">直航</span>
+                        <?php else: ?><span class="hui">中转</span><?php endif; ?>
+                    </div>
+                 </li>
+                <li><?php echo date("Y-m-d",$vo['cutoff_date']); ?></li>
                 <li>
-                  3月10日
-                  <div class="dian">
-                    <i class="icon iconfont icon-dingwei se">&nbsp;</i>
-                    <span class="hui">南沙</span>
-                  </div>
+                    <?php echo date("Y-m-d",$vo['shipping_date']); ?>
+                    <div class="dian">
+                        <i class="icon iconfont icon-dingwei se">&nbsp;</i>
+                        <span class="hui"><?php echo $vo['s_port_name']; ?></span>
+                    </div>
                 </li>
                 <li class="zhi">
-                  <div class="hui">陆威海</div>
-                  <div>
-                    <div class="j"></div>
-                  </div>
-                  <div class="hui">IC9</div>
+                    <div class="hui"><?php echo $vo['boat_name']; ?></div>
+                        <div>
+                            <div class="j"></div>
+                        </div>
+                    <div class="hui"><?php echo $vo['boat_code']; ?></div>
                 </li>
                 <li>
-                  3月15日
-                  <div class="dian">
-                    <i class="icon iconfont icon-dingwei se">&nbsp;</i>
-                    <span class="hui">天津</span>
-                  </div>
+                    <?php echo date("Y-m-d",$vo['ETA']); ?>
+                    <div class="dian">
+                        <i class="icon iconfont icon-dingwei se">&nbsp;</i>
+                        <span class="hui"><?php echo $vo['e_port_name']; ?></span>
+                    </div>
                 </li>
-                <li>3月17日</li>
+                <li><?php echo date("Y-m-d",$vo['EDD']); ?></li>
                 <li>
-                  ￥3000
-                  <div class="dian">
-                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
-                  </div>
+                    ￥<?php echo $vo['price_20GP']; ?>
+                    <div class="dian">
+                        <a href="<?php echo url('Order/lrdd'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=1" class="gp">下单</a>
+                    </div>
                 </li>
                 <li>
-                  ￥5000
-                  <div class="dian">
-                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
-                  </div>
+                    ￥<?php echo $vo['price_40HQ']; ?>
+                    <div class="dian">
+                        <a href="<?php echo url('Order/lrdd'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=2" class="gp">下单</a>
+                    </div>
                 </li>
               </ul>
             </div>
-
+            
             <div class="nei_rig">
-              <a href="#" class="trigger-default">航线详情</a>
+                <a href="#" class="trigger-default">航线详情</a>
             </div>
-
+            
             <div class="sm">
-              截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp; 说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp; 价格说明：已含们到门所有费用，不含开票。
+                截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp; 说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp; 价格说明：已含们到门所有费用，不含开票。
             </div>
-          </div>
+            </div>
+        </div>
+        <?php endforeach; endif; else: echo "" ;endif; ?>  
+        <div class="page">
+            <div>
+                <?php echo $page; ?>
+            </div>
         </div>
 
         <div class="nei_nei">

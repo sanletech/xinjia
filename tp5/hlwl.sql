@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-06-29 18:05:28
+Date: 2018-07-02 18:01:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4325,8 +4325,8 @@ CREATE TABLE `hl_order_add` (
 -- ----------------------------
 -- Records of hl_order_add
 -- ----------------------------
-INSERT INTO `hl_order_add` VALUES ('1', 'kehu001', '1', '2', null, null);
-INSERT INTO `hl_order_add` VALUES ('2', 'kehu002', '1', '2', null, null);
+INSERT INTO `hl_order_add` VALUES ('1', 'kehu002', '1', '2', null, null);
+INSERT INTO `hl_order_add` VALUES ('2', 'kehu001', '1', '2', null, null);
 
 -- ----------------------------
 -- Table structure for `hl_order_comment`
@@ -4375,7 +4375,7 @@ CREATE TABLE `hl_order_father` (
 -- ----------------------------
 -- Records of hl_order_father
 -- ----------------------------
-INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '1', '1', '2', '2000', '8848', '5', '这个是针对订单具体信息', '1525467905', '1', '1', 'kehu001', '1');
+INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '1', '1', '2', '2000', '8848', '5', '这个是针对订单具体信息', '1525467905', '2', '1', 'kehu001', '1');
 INSERT INTO `hl_order_father` VALUES ('2', '201806251705', '牲畜', '2', '2', '1', '8000', '54321', '2', '这是一个订单下另一种货物', '1525468905', '1', '2', 'kehu002', '2');
 
 -- ----------------------------
@@ -5157,7 +5157,7 @@ INSERT INTO `hl_ship_route` VALUES ('17', '4', '10', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('18', '3', '11', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('19', '2', '1', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('20', '1', '2', '1514736000');
-INSERT INTO `hl_ship_route` VALUES ('21', '2', '3', '1514736000');
+INSERT INTO `hl_ship_route` VALUES ('21', '2', '0', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('22', '4', '4', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('23', '5', '5', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('24', '6', '6', '1514736000');
@@ -5189,7 +5189,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1530237127', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1530496927', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

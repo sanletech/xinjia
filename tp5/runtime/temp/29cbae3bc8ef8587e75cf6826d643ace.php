@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_edit.html";i:1526040607;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_edit.html";i:1530239228;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -82,10 +82,10 @@
             <td>锦旗18/1782N</td>
             <td>2018-02-02</td>
             <td class="td-manage">
-              <a title="编辑"  onclick="" href="javascript:;">
+              <a title="编辑"  onclick="member_pass(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>
@@ -113,8 +113,9 @@
           elem: '#end' //指定元素
         });
       });
-
-
+    
+    
+      
       /*用户-删除*/
     function member_del(obj,did){
         layer.confirm('确认要删除吗？',function(index){

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1527857159;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1530266800;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,18 +26,11 @@
         <link rel="stylesheet" href="/static/admin/css/route_add.css">
         <form class="layui-form" action="">
             <div class="route layui-row">
-                <!-- 车队名字 -->
+                <!-- 运单号 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">无：</label>
+                    <label class="layui-form-label">运单号：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车队名字" class="layui-input">
-                    </div>
-                </div>
-                <!-- 车牌号 -->
-                <div class="layui-form-item">
-                    <label class="layui-form-label">无：</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
                     </div>
                 </div>
 

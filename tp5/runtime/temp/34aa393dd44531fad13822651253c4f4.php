@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1529105623;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1530277775;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1530502517;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -75,40 +75,42 @@
               <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
                 <i class="layui-icon"></i>添加</button>
               <span class="x-right" style="line-height:40px">总共有
-                <{}>条记录</span>
+                <?php echo $count_book; ?>条记录</span>
             </xblock>
             <!-- 内容 -->
             <div class="order_list layui-row">
-              <div class="nei layui-col-md12">
+                <?php if(is_array($list_book) || $list_book instanceof \think\Collection || $list_book instanceof \think\Paginator): $i = 0; $__LIST__ = $list_book;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
+                <div class="nei layui-col-md12">
                 <div class="top">
                   <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
                     <i class="layui-icon">&#xe605;</i>
-                    <span>创建时间：2018-03-08</span>
+                    <span>创建时间: <?php echo date("y-m-d",$vo['mtime']); ?></span>
                   </div>
                   <span class="top_ma">
-                    <span>业务员：小明</span>
-                    <span>船期：2018-03-05</span>
-                    <span>海上时效：3天</span>
-                    <span>离港时间：2018-05-10</span>
+                    <span>业务员: <?php echo $vo['salesname']; ?></span>
+                    <span>船期: <?php echo date("y-m-d",$vo['shipping_date']); ?></span>
+                    <span>海上时效: <?php echo $vo['sea_limitation']; ?></span>
+                    <span>截单时间: <?php echo date("y-m-d",$vo['cutoff_date']); ?></span>
                   </span>
                 </div>
                 <div class="cen">
                   <div class="cen_le layui-col-md12">
                     <div class="layui-col-md3">
-                      <p>运单号：178NJIYD045</p>
-                      <p>船名/航次：场景18/1782N</p>
+                      <p>订单号:<?php echo $vo['order_num']; ?></p>
+                      <p>船公司/船名/航次: <?php echo $vo['ship_short_name']; ?> <?php echo $vo['boat_name']; ?>/<?php echo $vo['boat_code']; ?></p>
                     </div>
                     <div class="layui-col-md3">
-                      <p>收货人：广州三乐科技有限公司</p>
-                      <p>货名：钢筋</p>
+                      <p>收货人: <?php echo $vo['company']; ?></p>
+                      <p>货名: <?php echo $vo['cargo']; ?></p>
                     </div>
                     <div class="layui-col-md3">
-                      <p>航线：揭阳-青岛</p>
-                      <p>箱型*箱量：20GP*1</p>
+                      <p>航线: <?php echo $vo['s_port_name']; ?>-<?php echo $vo['e_port_name']; ?></p>
+                      <p>箱型*箱量: <?php echo $vo['type']; ?>*<?php echo $vo['container_num']; ?></p>
                     </div>
                     <div class="layui-col-md2">
                       <p class="se">状态：待订舱</p>
-                      <p class="se">天数：7天</p>
+                      <p class="se">天数: <?php $timediff =$vo['mtime']-time(); $days = intval($timediff/86400); echo $days;?>天</p>
+                                                   
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
@@ -126,7 +128,7 @@
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
               </div>
-
+                <?php endforeach; endif; else: echo "" ;endif; ?>
               <div class="nei urgent layui-col-md12">
                 <div class="top">
                   <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
@@ -173,9 +175,16 @@
                   <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
+                  
               </div>
             </div>
+            <div class="page">
+                <div>
+                   <?php echo $page_book; ?>
+                </div>
+            </div>
           </div>
+          
           <!-- 待派车 -->
           <div class="layui-tab-item">
             <xblock>
