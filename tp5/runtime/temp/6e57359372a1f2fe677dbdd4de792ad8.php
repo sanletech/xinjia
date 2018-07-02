@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530524280;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530542853;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
 <!-- 海运运价 -->
 <!DOCTYPE html>
 <html>
@@ -115,20 +115,20 @@
                 <li>
                     ￥<?php echo $vo['price_20GP']; ?>
                     <div class="dian">
-                        <a href="<?php echo url('Order/lrdd'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=1" class="gp">下单</a>
+                        <a href="<?php echo url('Order/confirm_order'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=1" class="gp">下单</a>
                     </div>
                 </li>
                 <li>
                     ￥<?php echo $vo['price_40HQ']; ?>
                     <div class="dian">
-                        <a href="<?php echo url('Order/lrdd'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=2" class="gp">下单</a>
+                        <a href="<?php echo url('Order/confirm_order'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=2" class="gp">下单</a>
                     </div>
                 </li>
               </ul>
             </div>
-            
+               
             <div class="nei_rig">
-                <a href="#" class="trigger-default">航线详情</a>
+                <a href="<?php echo url('Order/route_detail'); ?>?middle_id=<?php echo $vo['middle_id']; ?>" class="trigger-default">航线详情</a>
             </div>
             
             <div class="sm">
@@ -141,65 +141,6 @@
             <div>
                 <?php echo $page; ?>
             </div>
-        </div>
-
-        <div class="nei_nei">
-          <div class="hang_nei">
-            <div class="nei_le">
-              <ul>
-                <li>
-                  中远海船务
-                  <div class="dian">
-                    <i class="icon iconfont icon-zhongzhuan se"></i>&nbsp;
-                    <span class="hui">中转</span>
-                  </div>
-                </li>
-                <li>3月6日</li>
-                <li>
-                  3月10日
-                  <div class="dian">
-                    <i class="icon iconfont icon-dingwei se"></i>&nbsp;
-                    <span class="hui">南沙</span>
-                  </div>
-                </li>
-                <li class="zhi">
-                  <div class="hui">陆威海</div>
-                  <div>
-                    <div class="j"></div>
-                  </div>
-                  <div class="hui">IC9</div>
-                </li>
-                <li>
-                  3月15日
-                  <div class="dian">
-                    <i class="icon iconfont icon-dingwei se"></i>&nbsp;
-                    <span class="hui">天津</span>
-                  </div>
-                </li>
-                <li>3月17日</li>
-                <li>
-                  ￥3000
-                  <div class="dian">
-                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
-                  </div>
-                </li>
-                <li>
-                  ￥5000
-                  <div class="dian">
-                      <a href="<?php echo url('index/lrdd'); ?>" class="gp">下单</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div class="nei_rig">
-              <a href="#" class="trigger-default">航线详情</a>
-            </div>
-
-            <div class="sm">
-              截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp; 说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp; 价格说明：已含们到门所有费用，不含开票。
-            </div>
-          </div>
         </div>
 
 

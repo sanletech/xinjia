@@ -37,9 +37,23 @@ class Order extends Model
                         . '(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,'
                         . '(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ')
                 ->buildSql();
-      //  var_dump($price_sql);exit;
+   // var_dump($price_sql);exit;
 
         $list = Db::table($price_sql.' D')->paginate($pages,false,$pageParam);   
         return $list;
+    }
+      public function route_detail($sealine_id)
+    { 
+        $sql = "select P.port_name from hl_sea_middle SM "
+            . "left join hl_port P on SM.sl_middle = P.port_code"
+            . " where SM.sealine_id = '$sealine_id' order by SM.sequence";    
+        $res =Db::query($sql);
+        $data = array_column($res, 'port_name');
+        return $data;
+    }
+    
+     public function confirm_order($price)
+    { 
+         
     }
 }

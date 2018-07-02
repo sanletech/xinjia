@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\index.html";i:1529651522;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529651522;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\index.html";i:1529105630;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +15,7 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="/static/index/js/jquery-1.9.0.min.js"></script>
     <script src="/static/index/layui/layui.js"></script>
+    
 </head>
 <body>
     <link rel="stylesheet" href="/static/index/css/index.css">
