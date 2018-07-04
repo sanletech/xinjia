@@ -1,0 +1,54 @@
+---------------------------------------------------------------
+[ 2018-07-04T09:33:22+08:00 ] 127.0.0.1 GET /iplookup/iplookup.php?format=js
+[ info ] int.dpool.sina.com.cn/iplookup/iplookup.php?format=js [运行时间：1.707639s][吞吐率：0.59req/s] [内存消耗：1,145.30kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'iplookup',
+    2 => 'iplookup.php',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8',
+  'host' => 'int.dpool.sina.com.cn',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+  'connection' => 'Keep-Alive',
+  'accept-encoding' => 'gzip',
+)
+[ info ] [ PARAM ] array (
+  'format' => 'js',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T09:50:28+08:00 ] 127.0.0.1 GET /cm/admaster?pid=8709450677226561460&id=s122fe67008088b2cde
+[ info ] cm.zintow.com/cm/admaster?pid=8709450677226561460&id=s122fe67008088b2cde [运行时间：0.076039s][吞吐率：13.15req/s] [内存消耗：1,148.66kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'cm',
+    2 => 'admaster',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'cm.zintow.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36',
+  'accept' => 'image/webp,image/apng,image/*,*/*;q=0.8',
+  'referer' => 'http://pos.baidu.com/s?hei=250&wid=300&di=u3199863&ltu=http%3A%2F%2Fwww.baoxiao001.com%2Fqzone%2Findex.php%3Fs%3D%2Findex%2FpagesNew%2Fcid%2F47685%2Fpid%2F43%2Fopenid%2F86CB40481BBF5D5C66AAE00A68222E3A%2Fopenkey%2FC0FAAD3690AFAD5B05D16664A28A67C7%2Ftype%2F%2Fcategoryid%2F&psr=1366x768&pcs=1349x588&cec=UTF-8&chi=45&tlm=1530669026&cce=true&ant=0&dri=0&tcn=1530669026&dc=3&cmi=5&ps=273x850&cfv=0&drs=1&col=zh-CN&cdo=-1&ltr=http%3A%2F%2Fwww.baoxiao001.com%2Fqzone%2Findex.php%3Fs%3D%2Findex%2FgbtoppagesNew%2Fopenid%2F86CB40481BBF5D5C66AAE00A68222E3A%2Fopenkey%2FC0FAAD3690AFAD5B05D16664A28A67C7%2Ftype%2F&cpl=4&pis=-1x-1&dis=0&par=1366x728&pss=1349x3033&cja=false&tpr=1530669026410&ti=%E8%87%AA%E4%BB%8E%E6%9C%89%E4%BA%86%E5%A5%B3%E5%84%BF%E3%80%82%3F%3F%3F%3F-%E8%9B%8B%E7%96%BC%E5%9B%BE&ari=2&dai=2&dtm=HTML_POST&exps=111000&ccd=24',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9,en;q=0.8',
+)
+[ info ] [ PARAM ] array (
+  'pid' => '8709450677226561460',
+  'id' => 's122fe67008088b2cde',
+)
+[ info ] [ LOG ] INIT File
