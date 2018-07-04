@@ -27,15 +27,15 @@
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
-              <div>上海中谷物流股份有限公司</div>
-              <div>中谷福建/星东28N航次</div>
+              <div><{$list.ship_short_name}></div>
+              <div><{$list.boat_name}>/<{$list.boat_code}></div>
             </div>
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
               <div class="layui-col-xs5">
-                <h2>虎门港</h2>
-                <span>2018-06-23</span>
+                <h5><{$list.r_add}></h5><h2>----<{$list.s_port_name}></h2>
+                <span><{$list.shipping_date|date="Y-m-d",###}></span>
               </div>
 
               <div class="layui-col-xs2">
@@ -43,16 +43,22 @@
               </div>
 
               <div class="layui-col-xs5">
-                <h2>虎门港</h2>
-                <span>2018-06-23</span>
+                <h5><{$list.s_add}></h5><h2>----<{$list.e_port_name}></h2>
+                <span><{$list.ETA|date="Y-m-d",###}></span>
               </div>
             </div>
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
-              <span>20GP</span>
+            <span>
+                <{switch name="list.container_size"}>
+                <{case value="1"}>20GP<{/case}>
+                <{case value="2"}>40HQ<{/case}>
+                <{default /}>未知集装箱型号
+                <{/switch}>
+            </span>
               <p>￥
-                <strong>1240.00</strong>
+                <strong><{$list.price}></strong>
               </p>
             </div>
             <div class="you">价格说明：这是纯运费</div>
@@ -391,7 +397,7 @@
           <a>取消</a>
         </div>
       </div>
-
+    </form>
       <!-- 填写发票窗口 -->
       <div id="modal-default">
         <form class="layui-form" action="">
@@ -466,8 +472,8 @@
               </div>
             </div>
           </form>
-
-          <!-- 表格 -->
+<!--============================================================================================-->
+          <!--选择-->
           <div class="biao">
             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
               <ul class="layui-tab-title">
@@ -479,14 +485,16 @@
                   <ul class="xin">
                     <li class='layui-col-xs6'>
                       <div class="nei">
+                        <form class="layui-form layui-col-md12 x-so" id="searchform">
                         <div class="le">
                           <div class="tiao">姓名：</div>
                           <div class="tiao">手机号：</div>
                           <div class="tiao">公司名：</div>
                           <div class="tiao">装货地址：</div>
                         </div>
+                        </form>
                         <div class="rig">
-                          <div class="tiao">刘某</div>
+                          <div class="tiao">刘asdfasd</div>
                           <div class="tiao">21346498797</div>
                           <div class="tiao">广州三乐可以有限公司</div>
                           <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
@@ -590,10 +598,9 @@
             </from>
         </div>
       </div>
-      </form>
+      
 
       <script src="__STATIC__/js/iziModal.min.js"></script>
       <script src="__STATIC__/js/lrdd.js"></script>
   </body>
-
   </html>

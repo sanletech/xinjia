@@ -10,16 +10,16 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-06-22 20:50:23
+Date: 2018-07-02 18:01:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `hi_order_add`
+-- Table structure for `hi_order_add_copy`
 -- ----------------------------
-DROP TABLE IF EXISTS `hi_order_add`;
-CREATE TABLE `hi_order_add` (
+DROP TABLE IF EXISTS `hi_order_add_copy`;
+CREATE TABLE `hi_order_add_copy` (
   `id` int(10) NOT NULL,
   `order_sum_code` int(11) DEFAULT NULL COMMENT '一个集装箱的订单id',
   `send_id` int(10) DEFAULT NULL COMMENT '收货人linkman_id',
@@ -39,10 +39,10 @@ CREATE TABLE `hi_order_add` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of hi_order_add
+-- Records of hi_order_add_copy
 -- ----------------------------
-INSERT INTO `hi_order_add` VALUES ('1', '123456789', '1', '2', null, '111111', '1', null, null, null, null, null, null, null, null);
-INSERT INTO `hi_order_add` VALUES ('2', '123456789', '110101001', '120101004', null, '222255', '1', null, null, null, null, null, null, null, null);
+INSERT INTO `hi_order_add_copy` VALUES ('1', '123456789', '1', '2', null, '111111', '1', null, null, null, null, null, null, null, null);
+INSERT INTO `hi_order_add_copy` VALUES ('2', '123456789', '110101001', '120101004', null, '222255', '1', null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `hl_area`
@@ -3238,6 +3238,67 @@ INSERT INTO `hl_boat` VALUES ('20', '4', 'bbbe', '阿斯蒂芬', '1529050289');
 INSERT INTO `hl_boat` VALUES ('21', '3', '888a', '伊利涨', '1529393942');
 
 -- ----------------------------
+-- Table structure for `hl_book_line`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_book_line`;
+CREATE TABLE `hl_book_line` (
+  `seaprice_id` int(11) DEFAULT NULL COMMENT '船运价格表的id',
+  `s_pricecar_id` int(11) unsigned DEFAULT NULL COMMENT '车装货价格表的id',
+  `r_pricecar_id` int(11) DEFAULT NULL COMMENT '车装货价格表的id',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_book_line
+-- ----------------------------
+INSERT INTO `hl_book_line` VALUES ('1', '39', '36', '1');
+INSERT INTO `hl_book_line` VALUES ('2', '39', '36', '2');
+
+-- ----------------------------
+-- Table structure for `hl_book_line_444`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_book_line_444`;
+CREATE TABLE `hl_book_line_444` (
+  `id` int(20) NOT NULL COMMENT 'ID',
+  `rid` int(20) DEFAULT NULL COMMENT 'ID',
+  `sid` int(20) DEFAULT NULL COMMENT 'ID',
+  `route_id` int(20) DEFAULT NULL COMMENT '船起始港口和终点港口sealine运线路ID',
+  `ship_id` int(20) DEFAULT NULL COMMENT '船公司id',
+  `ship_short_name` varchar(5) DEFAULT NULL COMMENT '船公司简称不可超过四个字eq中远 1为空白选择',
+  `shipping_date` int(20) DEFAULT NULL COMMENT '船期',
+  `cutoff_date` int(20) DEFAULT NULL COMMENT '截单日期',
+  `boat_code` varchar(12) DEFAULT NULL COMMENT '运输船Code',
+  `boat_name` varchar(8) DEFAULT NULL COMMENT '船名',
+  `sea_limitation` int(10) DEFAULT NULL COMMENT '海上时效',
+  `ETA` int(10) DEFAULT NULL COMMENT '预计到港时间',
+  `EDD` int(10) DEFAULT NULL COMMENT 'Expected delivery date预计送货日期',
+  `generalize` int(1) unsigned zerofill DEFAULT NULL COMMENT '推荐级别默认0不推荐1~10推荐优先级',
+  `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
+  `sl_start` varchar(20) DEFAULT NULL COMMENT '船运始发港口',
+  `sl_end` varchar(10) DEFAULT NULL COMMENT '船运目的港口',
+  `price_20GP` double(19,2) DEFAULT NULL,
+  `price_40HQ` double(19,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_book_line_444
+-- ----------------------------
+INSERT INTO `hl_book_line_444` VALUES ('1', '36', '39', '21', '2', '中海', '1529683200', '1529683200', 'bbbb', '阿飞岁的', '3', '1529942400', '1530201600', '1', '1529395458', '110100003', '110100002', '3300.00', '9255.00');
+INSERT INTO `hl_book_line_444` VALUES ('2', '36', '39', '2', '2', '中海', '1529683200', '1529683200', 'bbbc', '艾弗森', '6', '1530201600', '1530460800', '1', '1528862972', '110100003', '110100002', '4800.00', '8200.00');
+INSERT INTO `hl_book_line_444` VALUES ('3', null, '37', '3', '1', '黄金海盗', '1525708800', '1526313600', 'aaab', '捉住', '4', '1526054400', '1526313600', '1', null, '110100004', '110100003', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('4', null, null, '4', '1', '黄金海盗', '1525708800', '1526313600', 'aaac', '抓住', '4', '1526054400', '1526313600', '0', null, '110100005', '110100004', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('5', null, null, '5', '3', '中谷', '1525708800', '1526313600', 'aaad', '擒获', '4', '1526054400', '1526313600', '1', null, '110100006', '110100005', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('6', null, null, '6', '4', '安通', '1525708800', '1526313600', 'aaae', '相拥', '4', '1526054400', '1526313600', '0', null, '110100009', '110100008', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('7', null, null, '7', '4', '安通', '1525708800', '1526313600', 'bbbe', '阿斯蒂芬', '4', '1526054400', '1526313600', '1', null, '110100007', '110100006', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('8', null, null, '8', '5', '宁波远洋', '1525708800', '1527004800', 'aaaf', '拥抱', '5', '1526140800', '1526400000', '0', null, '110100008', '110100007', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('9', null, null, '9', '6', '中良', '1525708800', '1527004800', 'aaag', '搂抱', '5', '1526140800', '1526400000', '1', null, '110100009', '110100008', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('10', null, null, '10', '7', ' 河北远洋', '1529683200', '1529683200', 'aaah', '搀扶', '5', '1530115200', '1530374400', '1', '1527218220', '110100010', '110100009', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('11', '32', null, '11', '8', 'aaa', '1529683200', '1529683200', 'aaai', '推拉', '5', '1530115200', '1530374400', '1', '1527218244', '120100002', '110100010', null, null);
+INSERT INTO `hl_book_line_444` VALUES ('16', null, null, '26', '2', '中海', '1529510400', '1529942400', 'bbbc', '艾弗森', '5', '1529942400', '1530201600', '0', '1529565619', '110100004', '120100009', null, null);
+
+-- ----------------------------
 -- Table structure for `hl_cardata`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_cardata`;
@@ -3354,15 +3415,25 @@ CREATE TABLE `hl_carprice` (
   `variable` char(1) DEFAULT NULL COMMENT '区分是装货还是送货  装货为r 送货为s',
   `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_carprice
 -- ----------------------------
 INSERT INTO `hl_carprice` VALUES ('30', '33', '5', '1000.00', '111111112.00', null, 'r', '1528782891');
 INSERT INTO `hl_carprice` VALUES ('31', '33', '6', '200.00', '2000.00', null, 's', '1528782891');
-INSERT INTO `hl_carprice` VALUES ('32', '34', '5', '5000.00', '55555.00', null, 'r', '1528783034');
-INSERT INTO `hl_carprice` VALUES ('33', '34', '5', '555.00', '445454.00', null, 's', '1528783034');
+INSERT INTO `hl_carprice` VALUES ('32', '31', '5', '5000.00', '55555.00', null, 'r', '1528783034');
+INSERT INTO `hl_carprice` VALUES ('33', '31', '5', '555.00', '445454.00', null, 's', '1528783034');
+INSERT INTO `hl_carprice` VALUES ('34', '32', '1', '2000.00', '4111.00', null, 'r', '1530002159');
+INSERT INTO `hl_carprice` VALUES ('35', '32', '2', '1220.00', '455000.00', null, 's', '1530002159');
+INSERT INTO `hl_carprice` VALUES ('36', '35', '1', '500.00', '1000.00', null, 'r', '1530071239');
+INSERT INTO `hl_carprice` VALUES ('37', '35', '2', '500.00', '1200.00', null, 's', '1530071239');
+INSERT INTO `hl_carprice` VALUES ('38', '36', '8', '800.00', '1600.00', null, 'r', '1530071320');
+INSERT INTO `hl_carprice` VALUES ('39', '36', '11', '800.00', '1700.00', null, 's', '1530071320');
+INSERT INTO `hl_carprice` VALUES ('42', '37', '5', '500.00', '1000.00', null, 'r', '1530172947');
+INSERT INTO `hl_carprice` VALUES ('43', '37', '13', '550.00', '1200.00', null, 's', '1530172947');
+INSERT INTO `hl_carprice` VALUES ('44', '38', '5', '600.00', '1500.00', null, 'r', '1530172993');
+INSERT INTO `hl_carprice` VALUES ('45', '38', '17', '700.00', '1550.00', null, 's', '1530172993');
 
 -- ----------------------------
 -- Table structure for `hl_carprice1`
@@ -3468,47 +3539,30 @@ CREATE TABLE `hl_car_line` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `address_name` varchar(80) DEFAULT NULL,
   `address_id` int(11) DEFAULT NULL COMMENT 'id',
-  `port_id` int(11) DEFAULT NULL COMMENT '港口的id',
+  `port_id` int(11) DEFAULT NULL COMMENT '港口的port_code',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_car_line
 -- ----------------------------
-INSERT INTO `hl_car_line` VALUES ('1', 'aaaa', '421125100', '4');
-INSERT INTO `hl_car_line` VALUES ('2', 'aaa', '421125101', '2');
-INSERT INTO `hl_car_line` VALUES ('3', 'aaaa', '421125102', '3');
-INSERT INTO `hl_car_line` VALUES ('4', 'aaaa', '421125103', '5');
-INSERT INTO `hl_car_line` VALUES ('5', 'aaaaaaaaa', '421125104', '5');
-INSERT INTO `hl_car_line` VALUES ('6', null, '421125105', '3');
-INSERT INTO `hl_car_line` VALUES ('7', null, '421125106', '4');
-INSERT INTO `hl_car_line` VALUES ('8', null, '421125107', '5');
-INSERT INTO `hl_car_line` VALUES ('9', null, '421125108', '7');
-INSERT INTO `hl_car_line` VALUES ('10', null, '421125109', '8');
-INSERT INTO `hl_car_line` VALUES ('11', null, '421125110', '3');
-INSERT INTO `hl_car_line` VALUES ('12', null, '421125111', '4');
-INSERT INTO `hl_car_line` VALUES ('13', null, '421125112', '5');
-INSERT INTO `hl_car_line` VALUES ('14', null, '421125113', '6');
-INSERT INTO `hl_car_line` VALUES ('15', null, '421125114', '3');
-INSERT INTO `hl_car_line` VALUES ('16', null, '421125115', '3');
-INSERT INTO `hl_car_line` VALUES ('17', null, '421125116', '3');
-INSERT INTO `hl_car_line` VALUES ('18', null, '421125117', '3');
-INSERT INTO `hl_car_line` VALUES ('19', null, '421125117', '3');
-INSERT INTO `hl_car_line` VALUES ('20', null, '421125117', '2');
-INSERT INTO `hl_car_line` VALUES ('21', null, '421125117', '7');
-INSERT INTO `hl_car_line` VALUES ('22', null, '421125117', '3');
-INSERT INTO `hl_car_line` VALUES ('23', null, '421125117', '2');
-INSERT INTO `hl_car_line` VALUES ('24', null, '421125117', '7');
-INSERT INTO `hl_car_line` VALUES ('25', null, '421125117', '3');
-INSERT INTO `hl_car_line` VALUES ('26', null, '120102002', '1');
-INSERT INTO `hl_car_line` VALUES ('27', null, '110105001', '1');
-INSERT INTO `hl_car_line` VALUES ('28', null, '230102001', '2');
-INSERT INTO `hl_car_line` VALUES ('29', '鼓楼街道', '110228001', '1');
-INSERT INTO `hl_car_line` VALUES ('30', '浙江省温州市瓯海区景山街道', '330304001', '2');
-INSERT INTO `hl_car_line` VALUES ('31', '北京市市辖区东城区景山街道', '110101002', '4');
-INSERT INTO `hl_car_line` VALUES ('32', '广西壮族自治区桂林市资源县车田苗族乡', '450329203', '3');
-INSERT INTO `hl_car_line` VALUES ('33', '北京市北京市东城区东华门街道', '110101001', '18');
-INSERT INTO `hl_car_line` VALUES ('34', '天津市天津市和平区新兴街道', '120101004', '20');
+INSERT INTO `hl_car_line` VALUES ('1', 'aaaa', '421125100', '110100002');
+INSERT INTO `hl_car_line` VALUES ('23', null, '421125117', '110100003');
+INSERT INTO `hl_car_line` VALUES ('24', null, '421125117', '110100004');
+INSERT INTO `hl_car_line` VALUES ('25', null, '421125117', '110100005');
+INSERT INTO `hl_car_line` VALUES ('26', null, '120102002', '110100006');
+INSERT INTO `hl_car_line` VALUES ('27', null, '110105001', '110100007');
+INSERT INTO `hl_car_line` VALUES ('28', null, '230102001', '110100008');
+INSERT INTO `hl_car_line` VALUES ('29', '鼓楼街道', '110228001', '110100009');
+INSERT INTO `hl_car_line` VALUES ('30', '浙江省温州市瓯海区景山街道', '330304001', '110100010');
+INSERT INTO `hl_car_line` VALUES ('31', '北京市市辖区东城区景山街道', '110101002', '120100002');
+INSERT INTO `hl_car_line` VALUES ('32', '广西壮族自治区桂林市资源县车田苗族乡', '450329203', '120100003');
+INSERT INTO `hl_car_line` VALUES ('33', '北京市北京市东城区东华门街道', '110101001', '120100004');
+INSERT INTO `hl_car_line` VALUES ('34', '天津市天津市和平区新兴街道', '120101004', '120100005');
+INSERT INTO `hl_car_line` VALUES ('35', '北京市北京市西城区西长安街街道', '110102001', '110100003');
+INSERT INTO `hl_car_line` VALUES ('36', '河北省石家庄市新华区宁安街道', '130105004', '110100002');
+INSERT INTO `hl_car_line` VALUES ('37', '北京市北京市丰台区右安门街道', '110106001', '110100002');
+INSERT INTO `hl_car_line` VALUES ('38', '北京市北京市通州区玉桥街道', '110112004', '110100003');
 
 -- ----------------------------
 -- Table structure for `hl_car_port`
@@ -3541,7 +3595,7 @@ DROP TABLE IF EXISTS `hl_car_receive`;
 CREATE TABLE `hl_car_receive` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `car_name` varchar(20) DEFAULT NULL COMMENT '车队名称',
-  `car_id` int(10) DEFAULT NULL COMMENT '车牌号码',
+  `car_id` int(10) DEFAULT NULL COMMENT '车队id',
   `truck_code` varchar(10) DEFAULT NULL COMMENT '卡车车牌',
   `driver_id` varchar(10) DEFAULT NULL COMMENT '司机id',
   `container_id` int(20) DEFAULT NULL COMMENT '集装箱柜号',
@@ -4014,10 +4068,25 @@ INSERT INTO `hl_city` VALUES ('345', '659000', '省直辖行政单位', '650000'
 INSERT INTO `hl_city` VALUES ('4', '120200', '天津市辖县', '120000');
 
 -- ----------------------------
--- Table structure for `hl_container`
+-- Table structure for `hl_container_code`
 -- ----------------------------
-DROP TABLE IF EXISTS `hl_container`;
-CREATE TABLE `hl_container` (
+DROP TABLE IF EXISTS `hl_container_code`;
+CREATE TABLE `hl_container_code` (
+  `id` int(10) NOT NULL,
+  `cargo_id` int(10) DEFAULT NULL COMMENT '货物id',
+  `container_code` varchar(20) DEFAULT NULL COMMENT '集装箱的code',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_container_code
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `hl_container_size`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_container_size`;
+CREATE TABLE `hl_container_size` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `type` varchar(10) DEFAULT NULL COMMENT '集装箱子的种类',
   `comment` varchar(20) DEFAULT NULL COMMENT '箱子备注',
@@ -4025,10 +4094,31 @@ CREATE TABLE `hl_container` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of hl_container
+-- Records of hl_container_size
 -- ----------------------------
-INSERT INTO `hl_container` VALUES ('1', '20GP', null);
-INSERT INTO `hl_container` VALUES ('2', '40HQ', null);
+INSERT INTO `hl_container_size` VALUES ('1', '20GP', null);
+INSERT INTO `hl_container_size` VALUES ('2', '40HQ', null);
+
+-- ----------------------------
+-- Table structure for `hl_container_type`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_container_type`;
+CREATE TABLE `hl_container_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `container_type` varchar(255) DEFAULT NULL COMMENT '装载各种类型货物的集装',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_container_type
+-- ----------------------------
+INSERT INTO `hl_container_type` VALUES ('1', '杂货集装箱');
+INSERT INTO `hl_container_type` VALUES ('2', '散货集装箱');
+INSERT INTO `hl_container_type` VALUES ('3', '液体货集装箱');
+INSERT INTO `hl_container_type` VALUES ('4', '冷藏集装箱');
+INSERT INTO `hl_container_type` VALUES ('5', '汽车集装箱');
+INSERT INTO `hl_container_type` VALUES ('6', '牲畜集装箱');
+INSERT INTO `hl_container_type` VALUES ('7', '兽皮集装箱');
 
 -- ----------------------------
 -- Table structure for `hl_driver`
@@ -4040,12 +4130,17 @@ CREATE TABLE `hl_driver` (
   `driver_identity` varchar(20) DEFAULT NULL COMMENT '司机身份证号码',
   `driver_phone` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_driver
 -- ----------------------------
-INSERT INTO `hl_driver` VALUES ('1', '老司机', '350301198906180060', '18575280024');
+INSERT INTO `hl_driver` VALUES ('0', '老司机', '350301198906180060', '18575280024');
+INSERT INTO `hl_driver` VALUES ('2', '老司机B', '350301198906180060', '18575280024');
+INSERT INTO `hl_driver` VALUES ('3', '老司机C', '350301198906180060', '18575280024');
+INSERT INTO `hl_driver` VALUES ('4', '老司机D', '350301198906180060', '18575280024');
+INSERT INTO `hl_driver` VALUES ('5', '老司机E', '350301198906180060', '18575280024');
+INSERT INTO `hl_driver` VALUES ('6', '老司机F', '350301198906180060', '18575280024');
 
 -- ----------------------------
 -- Table structure for `hl_get_money`
@@ -4054,6 +4149,7 @@ DROP TABLE IF EXISTS `hl_get_money`;
 CREATE TABLE `hl_get_money` (
   `id` int(10) NOT NULL,
   `get_meony` varchar(10) DEFAULT NULL COMMENT '收钱方式,月结,未结款,尾单结款',
+  `container_code` varchar(10) DEFAULT NULL COMMENT '集装箱柜号',
   `track_num` varchar(10) DEFAULT NULL COMMENT '运单号码',
   `time` varchar(12) DEFAULT NULL COMMENT '更改收钱时间',
   PRIMARY KEY (`id`)
@@ -4061,6 +4157,25 @@ CREATE TABLE `hl_get_money` (
 
 -- ----------------------------
 -- Records of hl_get_money
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `hl_invoice`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_invoice`;
+CREATE TABLE `hl_invoice` (
+  `id` int(11) NOT NULL,
+  `invoice_title` varchar(32) DEFAULT NULL COMMENT '发票抬头',
+  `taxpayer_id` varchar(32) DEFAULT NULL COMMENT '纳税人识别号',
+  `registered_address` varchar(32) DEFAULT NULL COMMENT '注册地址',
+  `registered_phone` varchar(19) DEFAULT NULL,
+  `deposit_bank` varchar(8) DEFAULT '开户银行',
+  `bank_account` varchar(24) DEFAULT NULL COMMENT '银行账户',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_invoice
 -- ----------------------------
 
 -- ----------------------------
@@ -4105,9 +4220,9 @@ CREATE TABLE `hl_linkman` (
   `id` int(11) NOT NULL,
   `name` varchar(10) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `compangy` varchar(50) DEFAULT NULL,
+  `company` varchar(50) DEFAULT NULL,
   `address` varchar(200) DEFAULT NULL COMMENT '详细地址',
-  `add_code` int(10) DEFAULT NULL COMMENT '地址的镇级code',
+  `town_code` int(10) DEFAULT NULL COMMENT '地址的镇级code',
   `mtime` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -4115,8 +4230,11 @@ CREATE TABLE `hl_linkman` (
 -- ----------------------------
 -- Records of hl_linkman
 -- ----------------------------
-INSERT INTO `hl_linkman` VALUES ('1', '送A', '55555', '送货公司', '北京市北京市东城区东华门街道', '110101001', null);
-INSERT INTO `hl_linkman` VALUES ('2', '装B', '6666', '收货公司', '天津市天津市和平区新兴街道', '120101004', null);
+INSERT INTO `hl_linkman` VALUES ('1', '送A', '55555', '送货A公司', '北京市北京市东城区东华门街道', '110101001', null);
+INSERT INTO `hl_linkman` VALUES ('2', '装B', '6666', '收货B公司', '天津市天津市和平区新兴街道', '120101004', null);
+INSERT INTO `hl_linkman` VALUES ('3', '送C', '55555', '送货C公司', '北京市北京市东城区东华门街道', '110101001', null);
+INSERT INTO `hl_linkman` VALUES ('4', '装D', '55555', '收货D公司', '北京市北京市东城区东华门街道', '110101001', null);
+INSERT INTO `hl_linkman` VALUES ('5', '送E', '55555', '送货E公司', '北京市北京市东城区东华门街道', '110101001', null);
 
 -- ----------------------------
 -- Table structure for `hl_member`
@@ -4135,20 +4253,21 @@ CREATE TABLE `hl_member` (
   `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `update_time` int(12) DEFAULT NULL,
   `mmeber_leve` varchar(10) DEFAULT NULL COMMENT '会员状态,一般会员normal,月结会员month,压货会员pledge',
+  `member_code` varchar(10) DEFAULT NULL COMMENT '客户的编码',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_member
 -- ----------------------------
-INSERT INTO `hl_member` VALUES ('1', 'kehu1', '客户李麻子', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647', null);
-INSERT INTO `hl_member` VALUES ('2', 'kehu2', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647', null);
-INSERT INTO `hl_member` VALUES ('3', 'kehu3', '客户王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018', null);
-INSERT INTO `hl_member` VALUES ('4', 'kehu4', '客户钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', null);
-INSERT INTO `hl_member` VALUES ('5', 'kehu5', '客户马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', null);
-INSERT INTO `hl_member` VALUES ('6', 'kehu6', '客户李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647', null);
-INSERT INTO `hl_member` VALUES ('7', 'kehu7', '客户老八', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', null);
-INSERT INTO `hl_member` VALUES ('8', 'kehu8', '客户哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', null);
+INSERT INTO `hl_member` VALUES ('1', 'kehu1', '客户李麻子', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '18575280024', 'aaa@qq.com', '0', '', '2147483647', '1', 'kehu001');
+INSERT INTO `hl_member` VALUES ('2', 'kehu2', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '18575280024', 'ssssi@qq.com', '0', '', '2147483647', '2', 'kehu002');
+INSERT INTO `hl_member` VALUES ('3', 'kehu3', '客户王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '18575280024', 'wangwu@qq.com', '0', '', '2018', '3', 'kehu003');
+INSERT INTO `hl_member` VALUES ('4', 'kehu4', '客户钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', '1', 'kehu004');
+INSERT INTO `hl_member` VALUES ('5', 'kehu5', '客户马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', '2', 'kehu005');
+INSERT INTO `hl_member` VALUES ('6', 'kehu6', '客户李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '18575280024', 'asaa@qq.com', '0', null, '2147483647', '3', 'kehu006');
+INSERT INTO `hl_member` VALUES ('7', 'kehu7', '客户老八', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', '1', 'kehu007');
+INSERT INTO `hl_member` VALUES ('8', 'kehu8', '客户哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647', '2', 'kehu008');
 
 -- ----------------------------
 -- Table structure for `hl_member_order`
@@ -4157,15 +4276,17 @@ DROP TABLE IF EXISTS `hl_member_order`;
 CREATE TABLE `hl_member_order` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `member_id` int(10) DEFAULT NULL COMMENT '客户id',
-  `order_sum_id` int(10) DEFAULT NULL COMMENT '订单汇总id',
+  `member_name` varchar(255) DEFAULT NULL COMMENT '客户姓名',
+  `order_father_id` int(10) DEFAULT NULL COMMENT '订单汇总id',
   `mtime` int(10) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_member_order
 -- ----------------------------
-INSERT INTO `hl_member_order` VALUES ('1', '1', '741', '1530460800');
+INSERT INTO `hl_member_order` VALUES ('1', '1', '客户李麻子', '741', '1530460800');
+INSERT INTO `hl_member_order` VALUES ('2', '2', '客户王老五', null, null);
 
 -- ----------------------------
 -- Table structure for `hl_node`
@@ -4188,25 +4309,97 @@ CREATE TABLE `hl_node` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `hl_order`
+-- Table structure for `hl_order_add`
 -- ----------------------------
-DROP TABLE IF EXISTS `hl_order`;
-CREATE TABLE `hl_order` (
-  `id` int(12) NOT NULL AUTO_INCREMENT COMMENT '订单号码',
-  `order_num` varchar(15) DEFAULT NULL COMMENT '订单号码',
-  `status_id` int(12) DEFAULT NULL COMMENT '订单状态显示0待确认1待订舱2待派车3待装货4待报柜号5待配船6待到港7待卸船8待收钱9待送货',
-  `track_num` varchar(15) DEFAULT NULL COMMENT '运单号码',
-  `car_receive_id` int(10) DEFAULT NULL COMMENT '装货车表id',
-  `ship_order_id` varchar(12) DEFAULT NULL COMMENT '船运表ID',
-  `money_get` varchar(10) DEFAULT NULL COMMENT '收钱方式',
-  `car_send_id` int(10) DEFAULT NULL COMMENT '送货车表的ID',
+DROP TABLE IF EXISTS `hl_order_add`;
+CREATE TABLE `hl_order_add` (
+  `id` int(10) NOT NULL,
+  `member_code` varchar(10) DEFAULT NULL COMMENT '客户的id',
+  `s_linkman_id` int(10) DEFAULT NULL COMMENT '收货人linkman_id',
+  `r_linkman_id` int(10) DEFAULT NULL COMMENT '收货人linkman_id',
+  `mtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `is_default` int(10) DEFAULT NULL COMMENT '是否设为默认地址,1是2不是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of hl_order
+-- Records of hl_order_add
 -- ----------------------------
-INSERT INTO `hl_order` VALUES ('1', '201804030001', '1', 'yundanhao', '1', null, null, null);
+INSERT INTO `hl_order_add` VALUES ('1', 'kehu002', '1', '2', null, null);
+INSERT INTO `hl_order_add` VALUES ('2', 'kehu001', '1', '2', null, null);
+
+-- ----------------------------
+-- Table structure for `hl_order_comment`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_order_comment`;
+CREATE TABLE `hl_order_comment` (
+  `id` int(10) NOT NULL,
+  `order_num` int(11) DEFAULT NULL COMMENT '订单号码',
+  `sign_receipt` int(11) DEFAULT NULL COMMENT '是否需要箱内签会单1需要2不需要',
+  `payer` int(2) DEFAULT NULL COMMENT '1发货方付款, 收货方付款',
+  `payment_method` int(11) DEFAULT NULL COMMENT '收款方式,月结,押货,先钱后送',
+  `tax_id` varchar(10) DEFAULT NULL COMMENT '税率种类选择1不需要,2为6%实际4% ,3为11%实际7%',
+  `message` int(11) DEFAULT NULL COMMENT '是否需要等通知送货1不需要,2需要',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_order_comment
+-- ----------------------------
+INSERT INTO `hl_order_comment` VALUES ('1', null, null, null, null, null, null);
+INSERT INTO `hl_order_comment` VALUES ('2', null, null, null, null, null, null);
+
+-- ----------------------------
+-- Table structure for `hl_order_father`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_order_father`;
+CREATE TABLE `hl_order_father` (
+  `id` int(10) NOT NULL,
+  `order_num` bigint(11) DEFAULT NULL COMMENT '订单号码',
+  `cargo` varchar(255) DEFAULT NULL COMMENT '货名',
+  `cargo_id` int(11) DEFAULT NULL COMMENT '货物id给container_code使用',
+  `container_size` int(2) DEFAULT NULL COMMENT '集装箱子的规格20gp为1,40HQ为2',
+  `container_num` int(4) DEFAULT NULL COMMENT '一票柜子需要的集装箱数量',
+  `weight` int(11) DEFAULT NULL COMMENT '一票柜子的总重量',
+  `amount_covery` int(11) DEFAULT NULL COMMENT '一柜货物保险金额',
+  `container_type_id` int(11) DEFAULT NULL COMMENT '装载各种类型货物的集装箱子',
+  `comment` varchar(50) DEFAULT NULL COMMENT '备注',
+  `mtime` int(11) DEFAULT NULL,
+  `add_id` int(11) DEFAULT NULL COMMENT '发货收货地址',
+  `book_line_id` int(11) DEFAULT NULL COMMENT '海运价格表门到门的',
+  `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
+  `state` int(1) DEFAULT NULL COMMENT '1为待审核 2为审核通过',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_order_father
+-- ----------------------------
+INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '1', '1', '2', '2000', '8848', '5', '这个是针对订单具体信息', '1525467905', '2', '1', 'kehu001', '1');
+INSERT INTO `hl_order_father` VALUES ('2', '201806251705', '牲畜', '2', '2', '1', '8000', '54321', '2', '这是一个订单下另一种货物', '1525468905', '1', '2', 'kehu002', '2');
+
+-- ----------------------------
+-- Table structure for `hl_order_grandad`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_order_grandad`;
+CREATE TABLE `hl_order_grandad` (
+  `id` int(10) NOT NULL,
+  `order_num` varchar(20) DEFAULT NULL COMMENT '订单编号',
+  `order_father` int(10) DEFAULT NULL COMMENT '汇总的订单编号',
+  `order_code` int(11) DEFAULT NULL COMMENT '子订单id',
+  `seq` int(11) DEFAULT NULL COMMENT '序号',
+  `add_id` int(11) DEFAULT NULL COMMENT '发货收货地址',
+  `mtime` int(11) DEFAULT NULL COMMENT '创建时间',
+  `seaprice_id` int(11) DEFAULT NULL COMMENT '海运价格表',
+  `member_id` int(11) DEFAULT NULL COMMENT '客户id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_order_grandad
+-- ----------------------------
+INSERT INTO `hl_order_grandad` VALUES ('1', '2015081025', '741', '123456788', '1', '1', null, '1', '1');
+INSERT INTO `hl_order_grandad` VALUES ('2', '2015081025', '741', '123456789', '2', '1', null, '1', '1');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -4220,16 +4413,42 @@ CREATE TABLE `hl_order_price` (
   `sales_price` int(5) DEFAULT NULL COMMENT '业务需要添加的价格',
   `extra_price` int(5) DEFAULT NULL COMMENT '不一般的货物需要添加的价格',
   `sales_id` int(5) DEFAULT NULL,
+  `price_20GP` float(5,0) DEFAULT NULL,
+  `price_40HQ` float(5,0) DEFAULT NULL,
   `container` varchar(10) DEFAULT NULL COMMENT '集装箱的种类20GP ,40HQ',
-  `container_type` varchar(255) DEFAULT NULL COMMENT '集装箱子要装的货物类别,钢材,木材,大理石',
+  `container_type` varchar(255) DEFAULT NULL COMMENT '集装箱子类别,装石头,还是钢材',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_price
 -- ----------------------------
-INSERT INTO `hl_order_price` VALUES ('1', '31', '33', '16', '100', '10', '1', '20GP', null);
-INSERT INTO `hl_order_price` VALUES ('2', '31', '33', '16', '100', '20', '2', '40HQ', null);
+INSERT INTO `hl_order_price` VALUES ('1', '31', '33', '16', '100', '10', '1', null, null, '20GP', null);
+INSERT INTO `hl_order_price` VALUES ('2', '31', '33', '16', '100', '20', '2', null, null, '40HQ', null);
+
+-- ----------------------------
+-- Table structure for `hl_order_son`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_order_son`;
+CREATE TABLE `hl_order_son` (
+  `id` int(12) NOT NULL AUTO_INCREMENT COMMENT '订单号码',
+  `order_num` varchar(15) DEFAULT NULL COMMENT '订单号码',
+  `track_num` varchar(15) DEFAULT NULL COMMENT '运单号码',
+  `cargo_id` int(20) DEFAULT NULL COMMENT '货物种类id',
+  `container_code` varchar(20) DEFAULT NULL COMMENT '一个运单号里的多个柜号',
+  `status_id` int(12) DEFAULT NULL COMMENT '订单状态显示0待确认1待订舱2待派车3待装货4待报柜号5待配船6待到港7待卸船8待收钱9待送货',
+  `car_receive_id` int(11) DEFAULT NULL COMMENT '装货车表的ID',
+  `ship_order_id` varchar(12) DEFAULT NULL COMMENT '船运表ID',
+  `car_send_id` int(10) DEFAULT NULL COMMENT '送货车表的ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_order_son
+-- ----------------------------
+INSERT INTO `hl_order_son` VALUES ('1', '201804030001', 'yundanhao1', '1', 'AAA201816', '1', '1', '1', '1');
+INSERT INTO `hl_order_son` VALUES ('2', '201804030001', 'yundanhao1', '1', 'AAA201817', '1', '1', '1', '1');
+INSERT INTO `hl_order_son` VALUES ('3', '201804030001', 'yundanhao1', '2', 'BBB201855', '1', '1', '1', '1');
 
 -- ----------------------------
 -- Table structure for `hl_order_status`
@@ -4250,25 +4469,6 @@ CREATE TABLE `hl_order_status` (
 INSERT INTO `hl_order_status` VALUES ('1', '0', null, '4444444', null);
 
 -- ----------------------------
--- Table structure for `hl_order_sum`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_order_sum`;
-CREATE TABLE `hl_order_sum` (
-  `id` int(10) NOT NULL,
-  `order_sum` int(10) DEFAULT NULL COMMENT '汇总的订单编号',
-  `order_code` int(11) DEFAULT NULL COMMENT '子订单id',
-  `seq` int(11) DEFAULT NULL COMMENT '序号',
-  `mtime` int(11) DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_order_sum
--- ----------------------------
-INSERT INTO `hl_order_sum` VALUES ('1', '741', '123456788', '1', null);
-INSERT INTO `hl_order_sum` VALUES ('2', '741', '123456789', '2', null);
-
--- ----------------------------
 -- Table structure for `hl_order_time`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_order_time`;
@@ -4278,6 +4478,7 @@ CREATE TABLE `hl_order_time` (
   `arrival_time` int(12) DEFAULT NULL COMMENT '到港时间',
   `unship_time` int(12) DEFAULT NULL COMMENT '卸船时间',
   `submit_man_code` int(11) DEFAULT NULL COMMENT '修改订单的员工id',
+  `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -4447,6 +4648,7 @@ DROP TABLE IF EXISTS `hl_salesman`;
 CREATE TABLE `hl_salesman` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
   `loginname` varchar(10) NOT NULL COMMENT '登录帐号名字',
+  `sales_code` varchar(10) DEFAULT NULL COMMENT '员工编号',
   `salesname` varchar(10) NOT NULL COMMENT '业务姓名',
   `password` varchar(32) NOT NULL COMMENT '密码',
   `create_time` int(12) NOT NULL COMMENT '创建时间',
@@ -4462,13 +4664,13 @@ CREATE TABLE `hl_salesman` (
 -- ----------------------------
 -- Records of hl_salesman
 -- ----------------------------
-INSERT INTO `hl_salesman` VALUES ('1', 'sales1', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_salesman` VALUES ('2', 'sales2', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_salesman` VALUES ('3', 'sales3', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018');
-INSERT INTO `hl_salesman` VALUES ('4', 'sales4', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
-INSERT INTO `hl_salesman` VALUES ('5', 'sales5', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
-INSERT INTO `hl_salesman` VALUES ('6', 'sales6', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
-INSERT INTO `hl_salesman` VALUES ('8', 'sales7', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
+INSERT INTO `hl_salesman` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
+INSERT INTO `hl_salesman` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_salesman` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('5', 'sales5', 'yw005', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('6', 'sales6', 'yw006', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
+INSERT INTO `hl_salesman` VALUES ('8', 'sales7', 'yw007', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 
 -- ----------------------------
 -- Table structure for `hl_sales_member`
@@ -4476,8 +4678,8 @@ INSERT INTO `hl_salesman` VALUES ('8', 'sales7', '哥哥个', 'e10adc3949ba59abb
 DROP TABLE IF EXISTS `hl_sales_member`;
 CREATE TABLE `hl_sales_member` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sales_id` int(5) DEFAULT NULL COMMENT '业务的id',
-  `member_id` int(5) DEFAULT NULL COMMENT '客户id',
+  `sales_code` varchar(10) DEFAULT NULL COMMENT '业务的工号',
+  `member_code` varchar(10) DEFAULT NULL COMMENT '客户id',
   `mtime` int(12) DEFAULT NULL,
   `comment` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -4486,14 +4688,14 @@ CREATE TABLE `hl_sales_member` (
 -- ----------------------------
 -- Records of hl_sales_member
 -- ----------------------------
-INSERT INTO `hl_sales_member` VALUES ('1', '1', '1', null, null);
-INSERT INTO `hl_sales_member` VALUES ('2', '1', '2', null, null);
-INSERT INTO `hl_sales_member` VALUES ('3', '1', '3', null, null);
-INSERT INTO `hl_sales_member` VALUES ('4', '2', '4', null, null);
-INSERT INTO `hl_sales_member` VALUES ('5', '2', '5', null, null);
-INSERT INTO `hl_sales_member` VALUES ('6', '2', '6', null, null);
-INSERT INTO `hl_sales_member` VALUES ('7', '2', '7', null, null);
-INSERT INTO `hl_sales_member` VALUES ('8', '3', '8', null, null);
+INSERT INTO `hl_sales_member` VALUES ('1', 'yw001', 'kehu001', null, null);
+INSERT INTO `hl_sales_member` VALUES ('2', 'yw002', 'kehu002', null, null);
+INSERT INTO `hl_sales_member` VALUES ('3', 'yw003', 'kehu003', null, null);
+INSERT INTO `hl_sales_member` VALUES ('4', 'yw004', 'kehu004', null, null);
+INSERT INTO `hl_sales_member` VALUES ('5', 'yw005', 'kehu005', null, null);
+INSERT INTO `hl_sales_member` VALUES ('6', 'yw006', 'kehu006', null, null);
+INSERT INTO `hl_sales_member` VALUES ('7', 'yw007', 'kehu007', null, null);
+INSERT INTO `hl_sales_member` VALUES ('8', 'yw007', 'kehu008', null, null);
 
 -- ----------------------------
 -- Table structure for `hl_seaprice`
@@ -4514,7 +4716,7 @@ CREATE TABLE `hl_seaprice` (
   `generalize` int(1) unsigned zerofill DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
   `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_seaprice
@@ -4532,6 +4734,7 @@ INSERT INTO `hl_seaprice` VALUES ('10', '10', '7', '3000.00', '5000.00', '152968
 INSERT INTO `hl_seaprice` VALUES ('11', '11', '8', '3000.00', '5000.00', '1529683200', '1529683200', 'aaai', '5', '1530115200', '1530374400', '1', '1527218244');
 INSERT INTO `hl_seaprice` VALUES ('15', '27', '2', '5000.00', '8000.00', '1529510400', '1529683200', 'bbbb_14', '5', '1529942400', '1530201600', '0', '1529561210');
 INSERT INTO `hl_seaprice` VALUES ('16', '26', '2', '1125.00', '11256.00', '1529510400', '1529942400', 'bbbc', '5', '1529942400', '1530201600', '0', '1529565619');
+INSERT INTO `hl_seaprice` VALUES ('17', '19', '1', '400.00', '400.00', '1528732800', '1530201600', 'aaab_1', '5', '1529164800', '1529424000', '1', '1530172869');
 
 -- ----------------------------
 -- Table structure for `hl_seaprice-aa`
@@ -4954,7 +5157,7 @@ INSERT INTO `hl_ship_route` VALUES ('17', '4', '10', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('18', '3', '11', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('19', '2', '1', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('20', '1', '2', '1514736000');
-INSERT INTO `hl_ship_route` VALUES ('21', '2', '3', '1514736000');
+INSERT INTO `hl_ship_route` VALUES ('21', '2', '0', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('22', '4', '4', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('23', '5', '5', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('24', '6', '6', '1514736000');
@@ -4986,7 +5189,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529646014', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1530496927', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

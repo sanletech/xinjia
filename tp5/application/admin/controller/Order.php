@@ -6,18 +6,61 @@ namespace app\admin\controller;
 use app\admin\common\Base;
 use think\Request;
 use think\Db;
+use app\admin\model\Order as OrderM;
 class Order extends Base
 {   
     
-        //处理订单
-    public function order_submit() 
+    
+        //审核订单
+    public function order_audit() 
     {
-        return $this->view->fetch('Order/order_submit'); 
+        $data = new OrderM;
+        $list = $data->order_audit();
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        return $this->view->fetch('Order/order_audit'); 
     }
+    //审核订单 的通过
+    public function order_audit_pass() 
+    { 
+       if (request()->isAjax()){
+           $data =$this->request->param();
+           $id=  implode(',', $data['id']);
+           $sql = 'update hl_order_fahter set state = "2" where id  in'. $id;
+           $res =Db::execute($sql);
+           return json($res ? 1 : 0) ;
+       }
+    }
+    
+      //审核订单 的删除
+    public function order_audit_del() 
+    {
+         if (request()->isAjax()){
+           $data =$this->request->param();
+           $id=  implode(',', $data['id']);
+           $sql = 'update hl_order_fahter set state = "1" where id  in'. $id;
+           $res =Db::execute($sql);
+           return json($res ? 1 : 0) ;
+       }
+        
+    }
+    
+  
     
     //处理订单
     public function order_list() 
     {
+        $data = new OrderM;
+        $list = $data->order_list();
+        $page =$list->render();
+        $count =  count($list);
+//      $this->_p($list);exit;
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
         return $this->view->fetch('Order/order_list'); 
     }
     //查看订单
@@ -30,15 +73,13 @@ class Order extends Base
     {
         return $this->view->fetch('Order/order_waste'); 
     }
-    //审核订单
-    public function order_audit() 
-    {
-        return $this->view->fetch('Order/order_audit'); 
-    }
+    
 
+    
     //处理订单订舱
     public function list_booking() 
     {
+
         return $this->view->fetch('Order/list_booking');
     }
     //处理订单派车

@@ -1,0 +1,73 @@
+<?php
+
+namespace app\index\controller;
+use app\index\common\Base;
+use app\index\model\Order as OrderM;
+use think\Db;
+class Order extends Base 
+{
+    
+    //海运运价
+    public function hyyj()
+    {
+        $start_add =$this->request->param('start_add');
+        if($start_add){ $this->view->assign('start_add',$start_add);   }
+        $end_add =$this->request->param('end_add');
+        if($end_add){ $this->view->assign('end_add',$end_add);  }
+        $load_time =$this->request->param('load_time');
+        if($load_time){ $this->view->assign('load_time',$load_time);  
+        $load_time =strtotime($load_time); }
+        $sea_pirce =new OrderM;
+        $list = $sea_pirce ->price_sum($start_add,$end_add,$load_time);
+        //获取总页数
+        $count =  Db::table($list.' A')->count(); 
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        // $tol=($page-1)*$limit+1;
+        // 查询出当前页数显示的数据
+        $list = Db::table($list.' A')->limit(($page-1)*$limit,$limit)->select();
+      
+       // $page= $list->render();
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('list',$list);
+      //$this->_p($list);exit;
+       return $this->view->fetch('index/hyyj');
+    }
+    
+     //海运运价
+    public function pagedata()
+    {
+        $sea_pirce =new OrderM;
+        $list = $sea_pirce ->price_sum();
+        $count =  Db::table($list.' A')->count(); //获取总页数
+        //获取每页显示的条数
+        $limit= $this->Request->param('limit');
+        //获取当前页数
+        $page= $this->Request->param('page');
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit+1;
+        // 查询出当前页数显示的数据
+        $list = Db::table($list.' A')->where("id",">=","$tol")->limit("$limit")->select()->toArray();
+        
+        return ["code"=>"0","msg"=>"","count"=>$count,"data"=>$list];
+    }
+    
+    
+        //确认下单
+    public function book()
+    {
+        $data =$this->request->param();
+//        var_dump($data);exit;
+//        array(3) { ["sea_id"]=> string(1) "1" ["s_car_id"]=> string(14) "39$r_car_id=36" ["container_size"]=> string(1) "1" } 
+        $sea_pirce =new OrderM;
+        $list = $sea_pirce ->book($data);
+        $this->view->assign('list',$list);
+      
+        return $this->view->fetch('index/lrdd');
+    }
+}

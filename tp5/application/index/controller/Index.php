@@ -19,11 +19,7 @@ class Index extends Controller
     {
        return $this->view->fetch('index/check');
     }
-    //海运运价
-    public function hyyj()
-    {
-       return $this->view->fetch('index/hyyj');
-    }
+    
     //集装箱出售
     public function container()
     {
@@ -56,9 +52,5 @@ class Index extends Controller
        return $this->view->fetch('index/xxtx');
     }
 
-    //确认下单
-    public function lrdd()
-    {
-       return $this->view->fetch('index/lrdd');
-    }
+
 }
