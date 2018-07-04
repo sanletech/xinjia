@@ -285,7 +285,8 @@ class Port extends Model
             $list = Db::table($list.' b')->where('b.ship_name', 'like', "%{$ship_name}%")->buildSql();
             $pageParam['query']['ship_name'] = $ship_name;
         }
-        $lista =Db::table($list.' c')->paginate($pages,false,$pageParam);   
+        $lista =Db::table($list.' c')->paginate($pages,false,$pageParam);  
+
        // echo  Db::getLastSql(); exit;
         return $lista;
     }

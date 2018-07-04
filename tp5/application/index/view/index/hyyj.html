@@ -7,12 +7,13 @@
     <div class="banner">
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
-        <div class="gnhy_nei layui-row">
-          <input type="text" name="qi" placeholder="请输入起始地" class="layui-col-xs12">
-          <input type="text" name="mu" placeholder="请输入目的地" class="layui-col-xs12">
-
-          <input type="text" name="date" placeholder="装货时间" id="date" class="layui-col-xs12">
+        <form class="layui-form layui-col-md12 x-so" id ="search_price">
+        <div class="gnhy_nei layui-row" >
+            <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>"  placeholder="请输入起始地" class="layui-col-xs12" >
+            <input type="text" name="end_add"   id="end_add" value="<{$end_add ? $end_add : '';}>"  placeholder="请输入目的地" class="layui-col-xs12">
+            <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>"  placeholder="装货时间"     class="layui-col-xs12" id="date">
         </div>
+            
         <div class="gnhy_di">
           <div class="di_zuo">
             <a href="" style="margin-right:50px;">
@@ -21,9 +22,11 @@
               <i class="fa fa-warning fa-lg c"></i>&nbsp;国家禁运品声明</a>
           </div>
           <div class="di_you">
-            <button>查价</button>
+<!--              <button  type="button" onclick="toajax()">查价</button>-->
+            <button class="layui-btn"  lay-submit="" lay-filter="sreach">查价</button>
           </div>
         </div>
+        </form>
       </div>
     </div>
     <div class="head_hy">
@@ -97,13 +100,13 @@
                 <li>
                     ￥<{$vo.price_20GP}>
                     <div class="dian">
-                        <a href="<{:url('Order/lrdd')}>?sea_id=<{$vo.id}>&s_car_id=<{$vo.sid}>$r_car_id=<{$vo.rid}>&container_size=1" class="gp">下单</a>
+                        <a href="<{:url('Order/book')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=1" class="gp">下单</a>
                     </div>
                 </li>
                 <li>
                     ￥<{$vo.price_40HQ}>
                     <div class="dian">
-                        <a href="<{:url('Order/lrdd')}>?sea_id=<{$vo.id}>&s_car_id=<{$vo.sid}>$r_car_id=<{$vo.rid}>&container_size=2" class="gp">下单</a>
+                        <a href="<{:url('Order/book')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=2" class="gp">下单</a>
                     </div>
                 </li>
               </ul>
@@ -119,71 +122,8 @@
             </div>
         </div>
         <{/volist}>  
-        <div class="page">
-            <div>
-                <{$page}>
-            </div>
-        </div>
-
-        <div class="nei_nei">
-          <div class="hang_nei">
-            <div class="nei_le">
-              <ul>
-                <li>
-                  中远海船务
-                  <div class="dian">
-                    <i class="icon iconfont icon-zhongzhuan se"></i>&nbsp;
-                    <span class="hui">中转</span>
-                  </div>
-                </li>
-                <li>3月6日</li>
-                <li>
-                  3月10日
-                  <div class="dian">
-                    <i class="icon iconfont icon-dingwei se"></i>&nbsp;
-                    <span class="hui">南沙</span>
-                  </div>
-                </li>
-                <li class="zhi">
-                  <div class="hui">陆威海</div>
-                  <div>
-                    <div class="j"></div>
-                  </div>
-                  <div class="hui">IC9</div>
-                </li>
-                <li>
-                  3月15日
-                  <div class="dian">
-                    <i class="icon iconfont icon-dingwei se"></i>&nbsp;
-                    <span class="hui">天津</span>
-                  </div>
-                </li>
-                <li>3月17日</li>
-                <li>
-                  ￥3000
-                  <div class="dian">
-                      <a href="<{:url('index/lrdd')}>" class="gp">下单</a>
-                  </div>
-                </li>
-                <li>
-                  ￥5000
-                  <div class="dian">
-                      <a href="<{:url('index/lrdd')}>" class="gp">下单</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div class="nei_rig">
-              <a href="#" class="trigger-default">航线详情</a>
-            </div>
-
-            <div class="sm">
-              截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp; 说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp; 价格说明：已含们到门所有费用，不含开票。
-            </div>
-          </div>
-        </div>
-
+        <div class="text-center" id="pages"></div>
+        
 
       </div>
     </div>
@@ -252,7 +192,54 @@
           elem: '#date1'
         });
       });
+        
+       function toajax (){
+            $.ajax({
+                type:'GET',
+                url:"<{:url('index/order/hyyj')}>",    
+                data:$("#search_price").serialize(),
+                dataType:"json",
+                success:function(data){
+                    if(data.status==1){
+                      return 1;
+                    }else{
+                        return 0 ;
+                  }
+                }
+            })
+        }
     </script>
+    
+    <script>
+            layui.use('laypage', function(){
+            var laypage = layui.laypage;
+            var $data= $("#search_price input");
+            var start_add = $data[0].value;
+            var end_add = $data[1].value;
+            var load_time =$data[2].value;
+            //执行一个laypage实例
+            laypage.render({
+                elem: 'pages', 
+                limit:<{$limit}>,
+                limits:[5,10,15],
+                count:<{$count}>,
+                layout:['count','prev', 'page', 'next','limit','skip'],
+                curr:<{$page}>,
+                theme: '#c00' ,
+                jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                //console.log(obj.limit); //得到每页显示的条数
+                //首次不执行
+                if(!first){
+                  //do something
+                    window.location.href ="<{:url('index/Order/hyyj')}>?page="+obj.curr+'&limit='+obj.limit+'&start_add='+start_add+'&end_add='+end_add+'&load_time='+load_time;
+                }
+            }
+          });
+      })
+    </script>
+   
   </body>
 
   </html>

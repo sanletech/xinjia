@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530266800;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530698403;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,15 +45,15 @@
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
-              <div>上海中谷物流股份有限公司</div>
-              <div>中谷福建/星东28N航次</div>
+              <div><?php echo $list['ship_short_name']; ?></div>
+              <div><?php echo $list['boat_name']; ?>/<?php echo $list['boat_code']; ?></div>
             </div>
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
               <div class="layui-col-xs5">
-                <h2>虎门港</h2>
-                <span>2018-06-23</span>
+                <h5><?php echo $list['r_add']; ?></h5><h2>----<?php echo $list['s_port_name']; ?></h2>
+                <span><?php echo date("Y-m-d",$list['shipping_date']); ?></span>
               </div>
 
               <div class="layui-col-xs2">
@@ -61,16 +61,19 @@
               </div>
 
               <div class="layui-col-xs5">
-                <h2>虎门港</h2>
-                <span>2018-06-23</span>
+                <h5><?php echo $list['s_add']; ?></h5><h2>----<?php echo $list['e_port_name']; ?></h2>
+                <span><?php echo date("Y-m-d",$list['ETA']); ?></span>
               </div>
             </div>
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
-              <span>20GP</span>
+            <span>
+                <?php switch($list['container_size']): case "1": ?>20GP<?php break; case "2": ?>40HQ<?php break; default: ?>未知集装箱型号
+                <?php endswitch; ?>
+            </span>
               <p>￥
-                <strong>1240.00</strong>
+                <strong><?php echo $list['price']; ?></strong>
               </p>
             </div>
             <div class="you">价格说明：这是纯运费</div>
@@ -497,14 +500,16 @@
                   <ul class="xin">
                     <li class='layui-col-xs6'>
                       <div class="nei">
+                        <form class="layui-form layui-col-md12 x-so" id="searchform">
                         <div class="le">
                           <div class="tiao">姓名：</div>
                           <div class="tiao">手机号：</div>
                           <div class="tiao">公司名：</div>
                           <div class="tiao">装货地址：</div>
                         </div>
+                        </form>
                         <div class="rig">
-                          <div class="tiao">刘某</div>
+                          <div class="tiao">刘asdfasd</div>
                           <div class="tiao">21346498797</div>
                           <div class="tiao">广州三乐可以有限公司</div>
                           <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
@@ -613,5 +618,4 @@
       <script src="/static/index/js/iziModal.min.js"></script>
       <script src="/static/index/js/lrdd.js"></script>
   </body>
-
   </html>
