@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530694850;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530866869;s:65:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\top.html";i:1530867537;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529651522;}*/ ?>
 <!-- 海运运价 -->
 <!DOCTYPE html>
 <html>
@@ -18,6 +18,109 @@
     <script src="/static/index/layui/layui.js"></script>
     
 </head>
+
+  <body>
+    <header>
+      <div id="top">
+        <div class="logo">
+          <img src="/static/index/image/logo.jpg" alt="">
+        </div>
+        <ul> 
+          <li class="hang">
+            <a href="javascript:;">首页</a>
+          </li>
+          <li>
+            <a href="javascript:;">公共查询</a>
+          </li>
+          <li>
+            <a href="<?php echo url('index/Order/hyyj'); ?>">海运运价</a>
+          </li>
+          <li>
+            <a href="javascript:;">集装箱出售</a>
+          </li>
+          <li>
+            <a href="javascript:;">新闻中心</a>
+          </li>
+          <li>
+            <a href="javascript:;">合伙人加盟</a>
+          </li>
+          <li>
+            <a href="javascript:;">帮助与公告</a>
+          </li>
+          <li>
+            <a href="javascript:;">个人中心</a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <nav>
+      <iframe src="<?php echo url('index/index1'); ?>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
+    </nav>
+    <footer>
+      <div class="foot">
+    <div class="lx">
+        <p>联系我们</p>
+        <p>地址：广东省广州市黄埔区港弯路59号中交港湾国际大厦2005室</p>
+        <p>手机：13825001413</p>
+        <p>电话：020-28211730</p>
+        <p>邮箱：1572154495@qq.com</p>
+    </div>
+    <div class="rwm">
+        <div class="r1">
+            <img src="/static/index/image/rwm/chen.jpg" alt="">
+            <p>加我好友</p>
+        </div>
+        <div class="r2">
+            <img src="/static/index/image/rwm/chen.jpg" alt="">
+            <p>关注海浪公众号</p>
+        </div>
+    </div>
+</div>
+<div class="bp">
+    <div>@2017&nbsp;&nbsp;广州市海浪科技有限公司&nbsp;&nbsp;&nbsp;&nbsp;版权所有&nbsp;&nbsp;&nbsp;&nbsp;粤ＩＣＰ备14023066号-1</div>
+</div>
+    </footer>
+    <script type="text/javascript">
+      $('#top li').click(function (event) {
+        $(this).addClass('hang').siblings('li').removeClass('hang');
+        if($(this).index() == 0) { //首页
+          $('nav iframe').attr('src','<?php echo url('index/Index/index'); ?>');
+        }else if($(this).index() == 1) {//公共查询
+          $('nav iframe').attr('src','<?php echo url('index/Index/check'); ?>');
+        }else if($(this).index() == 2) {//海运运价
+          $('nav iframe').attr('src','<?php echo url('index/Index/hyyj'); ?>');
+        }else if($(this).index() == 3) {//集装箱出售
+          $('nav iframe').attr('src','<?php echo url('index/Index/container'); ?>');
+        }else if($(this).index() == 4) {//新闻中心
+          $('nav iframe').attr('src','<?php echo url('index/Index/news'); ?>');
+        }else if($(this).index() == 5) {//合伙人加盟
+          $('nav iframe').attr('src','<?php echo url('index/Index/join'); ?>');
+        }else if($(this).index() == 6) {//帮助与公告
+          $('nav iframe').attr('src','<?php echo url('index/Index/help'); ?>');
+        }else if($(this).index() == 7) {//个人中心
+          $('nav iframe').attr('src','<?php echo url('index/Index/personal'); ?>');
+        }else if($(this).index() == 8) {
+          $('nav iframe').attr('src','<?php echo url('index/Index/index'); ?>');
+        }
+      });
+
+      function reinitIframe() {
+        var iframe = document.getElementById("ifram");
+        try {
+          iframe.width = document.body.clientWidth;
+          var bHeight = iframe.contentWindow.document.body.scrollHeight;
+          var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+          var height = Math.max(bHeight, dHeight);
+          iframe.height = height;
+        } catch (ex) { }
+      }
+      window.setInterval("reinitIframe()", 200);
+
+    </script>
+  </body>
+
+  </html>
 
   <body>
     <link rel="stylesheet" href="/static/index/css/hyyj.css">

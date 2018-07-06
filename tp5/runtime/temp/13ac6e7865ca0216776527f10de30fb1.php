@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530698403;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530849722;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,11 +24,11 @@
     <link rel="stylesheet" href="/static/index/css/xiala.css">
     <link rel="stylesheet" href="/static/index/css/all_order.css">
     <div class="banner"></div>
-    <form class="" action="">
+    <form class="" id ='order_data_form'>
       <div class="xxtx">
         <!-- 流程 -->
-          <div class="lc">
-              <ul>
+        <div class="lc">
+                <ul>
                 <li><span>1</span> 运单查询</li>
                 <li class="jt">></li>
                 <li><span>2</span> 完善订单</li>
@@ -36,9 +36,12 @@
                 <li><span>3</span> 确认并支付</li>
                 <li class="jt">></li>
                 <li><span>4</span> 完成</li>
-              </ul>
-          </div>
-        <!-- 订单信息 -->
+                </ul>
+        </div>
+        <!-- 订单信息 -->A.sea_id, A.rid, A.sid
+            <input type="hidden" name='sea_id' value="<?php echo $list['sea_id']; ?>">
+            <input type="hidden" name='rid' value="<?php echo $list['rid']; ?>">
+            <input type="hidden" name='sid' value="<?php echo $list['sid']; ?>">
         <div class="xxtx_dd">
           <div class="xx">
             <strong>订单信息</strong>
@@ -85,7 +88,7 @@
           <div class="xx" style="margin-bottom:0px;">
             <strong>委托信息</strong>
             <div class="er_anniu">
-              <input type="button" class="se wt1" onclick="javascript:void(0);" value="选择">
+              <input type="button" class="se wt1" onclick="selectlink();javascript:void(0);" value="选择">
               <input type="button" class="se wt2" onclick="javascript:void(0);" value="添加">
               <input type="button" class="se wt3" onclick="xiu();" value="修改">
               <input type="button" class="se wt4" onclick="javascript:void(0);" value="设置为默认">
@@ -101,21 +104,21 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>装货公司名全称：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="r_company" value="" readonly='readonly' class="in">
                 </div>
               </div>
               <div class="grid-demo">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>装货联系人：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="r_name" value="" readonly='readonly' class="in">
                 </div>
               </div>
               <div class="grid-demo">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>装货联系人电话：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="r_phone" value="" readonly='readonly' class="in">
                 </div>
               </div>
               <div class="grid-demo">
@@ -131,7 +134,7 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>装货详情地址：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="r_add" value="" readonly='readonly' class="in">
                 </div>
               </div>
             </div>
@@ -142,21 +145,21 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>收货公司名全称：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="s_company" value="" readonly='readonly' class="in">
                 </div>
               </div>
               <div class="grid-demo">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>收货联系人：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="s_name" value="" readonly='readonly' class="in">
                 </div>
               </div>
               <div class="grid-demo">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>收货联系人电话：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="s_phone" value="" readonly='readonly' class="in">
                 </div>
               </div>
               <div class="grid-demo">
@@ -172,7 +175,7 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>收货详情地址：</div>
                 <div class="layui-col-xs9">
-                  <input type="text" name="" value="" readonly='readonly' class="in">
+                  <input type="text" name="s_add" value="" readonly='readonly' class="in">
                 </div>
               </div>
             </div>
@@ -189,13 +192,14 @@
               <div class="layui-col-xs3">
                 <span>*&nbsp;</span>货名：</div>
               <div class="layui-col-xs6">
-                <div class="select">
-                  <select name='make'>
+                   <input type="text" name="weight" value="" placeholder="">
+<!--                <div class="select">
+                  <select name ='cargo'>
                     <option value='0' selected>请选择</option>
-                    <option value='1'>柜子</option>
-                    <option value='2'>箱子</option>
+                    <option  value='1'>柜子</option>
+                    <option  value='2'>箱子</option>
                   </select>
-                </div>
+                </div>-->
               </div>
             </div>
           </div>
@@ -205,13 +209,13 @@
                 <span>*&nbsp;</span>包装：</div>
               <div class="layui-col-xs6">
                 <div class="select">
-                  <select name='make'>
-                    <option value='0' selected>请选择</option>
-                    <option value='1'>铁桶</option>
-                    <option value='2'>铁箱</option>
-                    <option value='3'>纸箱</option>
+                  <select name ='container_type'>
+                    <option  value='1'>杂货集装箱</option>
+                    <option  value='2'>散货集装箱</option>
+                    <option  value='3'>液体货集装箱</option>
                   </select>
                 </div>
+ 
               </div>
             </div>
           </div>
@@ -220,7 +224,7 @@
               <div class="layui-col-xs3">
                 <span>*&nbsp;</span>重量：</div>
               <div class="layui-col-xs6">
-                <input type="text" name="" value="" placeholder="">
+                  <input type="text" name="weight" value="" placeholder="">
               </div>
               <div class="layui-col-xs2" style="text-align: left;margin-left: 8px; ">
                 <span>吨(T)</span>
@@ -239,7 +243,9 @@
               <div class="layui-col-xs4">
                 <span>*&nbsp;</span>集装箱规格：</div>
               <div class="layui-col-xs6">
-                <input type="text" name="" value="20GP" placeholder="" disabled>
+                <input type="text" name="container_size" value="<?php if($list['container_size'] ==1){
+                       echo '20GP';  }else{echo '40HQ';} ?>" readonly="readonly">
+                <input type="hidden" name="container_size" value="<?php echo $list['container_size']; ?>">
               </div>
             </div>
           </div>
@@ -249,7 +255,7 @@
                 <span>*&nbsp;</span>柜量：</div>
               <div class="layui-col-xs6">
                 <div class="select">
-                  <select name='make' class="guil">
+                  <select name='container_num' class="guil">
                     <option value='0'>请选择</option>
                   </select>
                 </div>
@@ -262,7 +268,7 @@
               <div class="layui-col-xs3">
                 <span>*&nbsp;</span>保险金额：</div>
               <div class="layui-col-xs6">
-                <input type="text" name="" value="" placeholder="">
+                <input type="text" name="cargo_cost" value="" placeholder="">
               </div>
 
               <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
@@ -279,14 +285,14 @@
                 备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
               </div>
               <div class="layui-col-xs10 inp">
-                <input type="text" name="" value="" placeholder="填写备注信息" class="layui-input">
+                <input type="text" name="comment" value="" placeholder="填写备注信息" class="layui-input">
               </div>
             </div>
           </div>
           <div class="fp layui-col-xs12">
             <!-- 是否开取发票 -->
             <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
-              <input type="checkbox" name="" title="是否开取发票信息" lay-skin="primary" value="1">
+              <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1">
             </div>
             <div class="layui-col-xs1">&nbsp;</div>
             <!-- 选择发票 -->
@@ -297,10 +303,10 @@
                 </div>
                 <div class="layui-col-xs6">
                   <div class="select">
-                    <select name='make' disabled="ture" class="layui-disabled fp01">
-                      <option value='0' selected>请选择</option>
-                      <option value='1'>6%</option>
-                      <option value='2'>11%</option>
+                    <select name='tax_rate' disabled="ture" class="layui-disabled fp01">
+                      <option  value='0' selected>请选择</option>
+                      <option  value='1'>6%</option>
+                      <option  value='2'>11%</option>
                     </select>
                   </div>
                 </div>
@@ -328,11 +334,11 @@
                 <span>*&nbsp;</span>付款人：</div>
               <div class="layui-col-xs8">
                 <div class="select">
-                  <select name='make' id="fk">
-                    <option value='0' selected="selected">请选择</option>
-                    <option value='1'>已方付款</option>
-                    <option value='2'>对方付款</option>
-                    <option value='3'>第三方付款</option>
+                  <select name='payer' id="fk">
+                    <option  value='0' selected="selected">请选择</option>
+                    <option  value='1'>已方付款</option>
+                    <option  value='2'>对方付款</option>
+                    <option  value='3'>第三方付款</option>
                   </select>
                 </div>
               </div>
@@ -343,7 +349,7 @@
                 <div class="layui-col-xs4">
                   <span>*&nbsp;</span>姓名：</div>
                 <div class="layui-col-xs8 jin">
-                  <input type="text" name="" value="" placeholder="第三方输入" class="layui-disabled" disabled="disabled">
+                  <input type="text" name="payer_name" value="" placeholder="第三方输入" class="layui-disabled" disabled="disabled">
                 </div>
               </div>
 
@@ -351,7 +357,7 @@
                 <div class="layui-col-xs4">
                   <span>*&nbsp;</span>电话号码：</div>
                 <div class="layui-col-xs8 jin">
-                  <input type="text" name="" value="" placeholder="第三方输入" class="layui-disabled" disabled="disabled">
+                  <input type="text" name="payer_phone" value="" placeholder="第三方输入" class="layui-disabled" disabled="disabled">
                 </div>
               </div>
             </div>
@@ -363,10 +369,10 @@
                 <span>*&nbsp;</span>结账方式：</div>
               <div class="layui-col-xs6">
                 <div class="select">
-                  <select name='make'>
-                    <option value='0' selected>请选择</option>
-                    <option value='1'>到港付</option>
-                    <option value='2'>月结付</option>
+                  <select name='payment_method''>
+                    <option  value='0' selected>请选择</option>
+                    <option  value='1'>到港付</option>
+                    <option  value='2'>月结付</option>
                   </select>
                 </div>
               </div>
@@ -375,10 +381,10 @@
             <div class="layui-col-xs9">
               <div class="zhong layui-form">
                 <div class="chec">
-                  <input type="checkbox" name="" title="&nbsp;通 知 送 货" lay-skin="primary">
+                  <input type="checkbox" name="message_send" title="&nbsp;通 知 送 货" value='1' lay-skin="primary">
                 </div>
                 <div class="chec">
-                  <input type="checkbox" name="" title="箱内签回单" lay-skin="primary">
+                  <input type="checkbox" name="sign_receipt" title="箱内签回单"  value='1' lay-skin="primary">
                 </div>
               </div>
             </div>
@@ -407,215 +413,297 @@
           </div>
         </div>
 
-        <div class="tjiao">
+        <div class="tjiao" onclick="order_data()">
           <a href="#">提交</a>
           <a>取消</a>
         </div>
       </div>
-
+    </form>
       <!-- 填写发票窗口 -->
       <div id="modal-default">
-        <form class="layui-form" action="">
+        <form class="layui-form"id ='invoice_form'>
+            <input type="hidden" name='member_code' value="kehu001"> 
+            <!--需要贮存客户session_id-->
           <div class="layui-form-item">
             <label class="layui-form-label">发票抬头</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="发票抬头" class="layui-input">
+              <input type="text" name="title" lay-verify="invoice_title" autocomplete="off" placeholder="发票抬头" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
             <label class="layui-form-label">纳税人识别号</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="纳税人识别号" class="layui-input">
+              <input type="text" name="taxpayer_id" lay-verify="title" autocomplete="off" placeholder="纳税人识别号" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
             <label class="layui-form-label">注册地址</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="注册地址" class="layui-input">
+              <input type="text" name="registered_address" lay-verify="title" autocomplete="off" placeholder="注册地址" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
             <label class="layui-form-label">注册电话</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="注册电话" class="layui-input">
+              <input type="text" name="registered_phone" lay-verify="title" autocomplete="off" placeholder="注册电话" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
             <label class="layui-form-label">开户银行</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="开户银行" class="layui-input">
+              <input type="text" name="deposit_bank" lay-verify="title" autocomplete="off" placeholder="开户银行" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
             <label class="layui-form-label">银行账户</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="银行账户" class="layui-input">
+              <input type="text" name="bank_account" lay-verify="title" autocomplete="off" placeholder="银行账户" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即保存</button>
+                <button class="layui-btn" lay-submit="" onclick='invoice()' lay-filter="demo1">立即保存</button>
               </div>
             </div>
         </form>
       </div>
 
-      <!-- 选择模态框 -->
-      <div id="wt1">
-        <div class="all_order">
-          <form class="" action="index.html" method="post">
-            <div class="layui-row">
+          <!-- 选择模态框 -->
+    <div id="wt1">
+      <div class="all_order">
+        <form class="" action="index.html" method="post">
+          <div class="layui-row">
               <!-- 收货人 -->
-              <div class="layui-col-xs8">
-                <div class="grid-demo">
-                  <div class="layui-form-item">
-                    <label class="layui-form-label">姓名：</label>
-                    <div class="layui-input-inline">
-                      <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
-                    </div>
+            <div class="layui-col-xs8">
+              <div class="grid-demo">
+                <div class="layui-form-item">
+                  <label class="layui-form-label">姓名：</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+                  </div>
 
-                    <div class="layui-input-inline" style="float:right;">
-                      <button class="layui-btn btn_sou" lay-submit="" lay-filter="demo1">搜索</button>
-                    </div>
+                  <div class="layui-input-inline" style="float:right;">
+                    <button class="layui-btn btn_sou" lay-submit="" lay-filter="demo1">搜索</button>
                   </div>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
+        </form>
 
-          <!-- 表格 -->
-          <div class="biao">
-            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-              <ul class="layui-tab-title">
-                <li class="layui-this">收货人</li>
-                <li>发货人</li>
-              </ul>
-              <div class="layui-tab-content" style="height: 100px;">
-                <div class="layui-tab-item layui-show">
-                  <ul class="xin">
-                    <li class='layui-col-xs6'>
-                      <div class="nei">
-                        <form class="layui-form layui-col-md12 x-so" id="searchform">
-                        <div class="le">
-                          <div class="tiao">姓名：</div>
-                          <div class="tiao">手机号：</div>
-                          <div class="tiao">公司名：</div>
-                          <div class="tiao">装货地址：</div>
-                        </div>
-                        </form>
-                        <div class="rig">
-                          <div class="tiao">刘asdfasd</div>
-                          <div class="tiao">21346498797</div>
-                          <div class="tiao">广州三乐可以有限公司</div>
-                          <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
-                        </div>
+        <!-- 表格 -->
+        <div class="biao">
+          <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+              <li class="layui-this">收货人</li>
+              <li>发货人</li>
+            </ul>
+            <div class="layui-tab-content" style="height: 100px;">
+              <div class="layui-tab-item layui-show">
+                <ul class="xin">
+                      <!--送货人-->
+                  <li class='layui-col-xs6'>
+                    <div class="nei">
+                      <div class="le">
+                        <div class="tiao">姓名：</div>
+                        <div class="tiao">手机号：</div>
+                        <div class="tiao">公司名：</div>
+                        <div class="tiao">装货地址：</div>
                       </div>
-                    </li>
-
-                    <li class='layui-col-xs6'>
-                      <div class="nei">
-                        <div class="le">
-                          <div class="tiao">姓名：</div>
-                          <div class="tiao">手机号：</div>
-                          <div class="tiao">公司名：</div>
-                          <div class="tiao">装货地址：</div>
-                        </div>
-                        <div class="rig">
-                          <div class="tiao">刘某</div>
-                          <div class="tiao">21346498797</div>
-                          <div class="tiao">广州三乐可以有限公司</div>
-                          <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
-                        </div>
+                      <div class="rig">
+                        <div class="tiao">刘某</div>
+                        <div class="tiao">21346498797</div>
+                        <div class="tiao">广州三乐可以有限公司</div>
+                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
                       </div>
-                    </li>
-                  </ul>
+                    </div>
+                  </li>
 
-                </div>
-
-                <div class="layui-tab-item">
-                  <ul class="xin">
-                    <li class='layui-col-xs6'>
-                      <div class="nei">
-                        <div class="le">
-                          <div class="tiao">姓名：</div>
-                          <div class="tiao">手机号：</div>
-                          <div class="tiao">公司名：</div>
-                          <div class="tiao">装货地址：</div>
-                        </div>
-                        <div class="rig">
-                          <div class="tiao">刘某</div>
-                          <div class="tiao">21346498797</div>
-                          <div class="tiao">广州三乐可以有限公司</div>
-                          <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
-                        </div>
+                  <li class='layui-col-xs6'>
+                    <div class="nei">
+                      <div class="le">
+                        <div class="tiao">姓名：</div>
+                        <div class="tiao">手机号：</div>
+                        <div class="tiao">公司名：</div>
+                        <div class="tiao">装货地址：</div>
                       </div>
-                    </li>
-                  </ul>
+                      <div class="rig">
+                        <div class="tiao">刘某</div>
+                        <div class="tiao">21346498797</div>
+                        <div class="tiao">广州三乐可以有限公司</div>
+                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
+                      </div>
+                    </div>
+                  </li>
+				  
+		<li class='layui-col-xs6'>
+                    <div class="nei">
+                      <div class="le">
+                        <div class="tiao">姓名：</div>
+                        <div class="tiao">手机号：</div>
+                        <div class="tiao">公司名：</div>
+                        <div class="tiao">装货地址：</div>
+                      </div>
+                      <div class="rig">
+                        <div class="tiao">刘某</div>
+                        <div class="tiao">21346498797</div>
+                        <div class="tiao">广州三乐可以有限公司</div>
+                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
+                      </div>
+                    </div>
+                  </li>
+                  
+                </ul>
+              </div>
+                   <!--收货人-->
+              <div class="layui-tab-item">
+                <ul class="xin">
+                  <li class='layui-col-xs6'>
+                    <div class="nei">
+                      <div class="le">
+                        <div class="tiao">姓名：</div>
+                        <div class="tiao">手机号：</div>
+                        <div class="tiao">公司名：</div>
+                        <div class="tiao">装货地址：</div>
+                      </div>
+                      <div class="rig">
+                        <div class="tiao">刘某</div>
+                        <div class="tiao">21346498797</div>
+                        <div class="tiao">广州三乐可以有限公司</div>
+                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
 
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+      
 
       <!-- 添加模态框 -->
       <div id="wt2">
         <div class="layui-row">
-          <form class="layui-form" action="">
+          <form class="layui-form" id ="linkman_form">
             <div class="layui-form-item">
               <label class="layui-form-label">姓名：</label>
               <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+                <input type="text" name="link_name" lay-verify="title" value="" autocomplete="off" placeholder="请输入姓名" class="layui-input">
               </div>
             </div>
 
             <div class="layui-form-item">
               <label class="layui-form-label">手机号码：</label>
               <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入手机" class="layui-input">
+                <input type="text" name="phone" lay-verify="title" value="" autocomplete="off" placeholder="请输入手机" class="layui-input">
               </div>
             </div>
 
             <div class="layui-form-item">
               <label class="layui-form-label">公司名：</label>
               <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入公司名" class="layui-input">
+                <input type="text" name="company" lay-verify="title" value="" autocomplete="off" placeholder="请输入公司名" class="layui-input">
               </div>
             </div>
 
             <div class="layui-form-item">
-              <label class="layui-form-label">收货地址：</label>
+              <label class="layui-form-label">收/发货地址:</label>
               <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入地址" class="layui-input">
-              </div>
-            </div>
-
-            <div class="layui-form-item">
-              <label class="layui-form-label">选择人物：</label>
-              <div class="layui-input-block">
-                <input type="radio" name="sex" value="" title="发货人" checked="">
-                <input type="radio" name="sex" value="" title="收货人">
+                <input type="text" name="add" lay-verify="title" value="" autocomplete="off" value="" placeholder="请输入地址" class="layui-input">
               </div>
             </div>
 
             <div class="layui-form-item">
               <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                  <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="linkman_btn()">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
               </div>
             </div>
             </from>
         </div>
       </div>
-      </form>
+      
 
-      <script src="/static/index/js/iziModal.min.js"></script>
-      <script src="/static/index/js/lrdd.js"></script>
+    <script src="/static/index/js/iziModal.min.js"></script>
+    <script src="/static/index/js/lrdd.js"></script>
+    <script>
+        // 接受后台的联系人资料
+       window.onload = function (){ 
+            var url = "<?php echo url('index/order/selectlinkman'); ?>";
+            var member_code = 'kehu001';
+            var data = {'member_code':member_code};
+           $.ajax({
+                type:'POST',
+                url:url,    
+                data:data,
+                dataType:"json",
+                success:function(status){
+                    //接受数据 展示页面
+                }   
+            });
+        }
+        //收货/发货人的表单提交 
+        function linkman_btn(){
+            var url = "<?php echo url('index/order/linkman'); ?>";
+            var data = $("#linkman_form").serialize();
+            toajax (url,data);
+        }
+        
+           //发票的信息提交 
+        function invoice(){
+            var url = "<?php echo url('index/order/invoice'); ?>";
+            var data = $("#invoice_form").serialize();
+            toajax (url,data);
+        }
+        
+        //订单信息的提交
+        function order_data(){
+            var url = "<?php echo url('index/order/order_data'); ?>";
+            var data = $("#order_data_form").serialize();
+            toajax (url,data);
+        }
+        
+       function toajax (url,data){
+            var loading = layer.load(1);
+            post_adduser = true;    
+            $.ajax({
+                type:'POST',
+                url:url,    
+                data:data,
+                dataType:"json",
+                success:function(status){
+                        if(status>0){
+                            post_adduser = false;
+                            layer.close(loading);
+                            layer.msg("添加成功", { icon: 6, time: 2000 }, function () {
+                            // 获得frame索引
+                            parent.location.reload();
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
+                        }else{
+                            post_adduser = false;
+                            layer.close(loading);
+                            layer.msg("添加失败", { icon: 5 });
+                            }
+                            },
+                        error: function () {
+                                post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
+                                layer.close(loading);
+                                layer.msg("添加失败", { icon: 5 });
+                            }
+                });
+                return false;//只此一句
+        }
+    </script>
   </body>
   </html>

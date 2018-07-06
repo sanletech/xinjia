@@ -58,7 +58,7 @@ class Order extends Base
     }
     
     
-        //确认下单
+        //确认下单提交选择航线信息
     public function book()
     {
         $data =$this->request->param();
@@ -70,4 +70,60 @@ class Order extends Base
       
         return $this->view->fetch('index/lrdd');
     }
+    
+    //添加收/发货人的信息
+    public function linkman()
+    {
+        $data =$this->request->param();
+        $sea_pirce =new OrderM;
+        $response = $sea_pirce ->linkman($data);
+       if(!array_key_exists('fail', $response)){
+            $status =1; 
+        }else {
+            $status =0;  
+              }
+        json_encode($status);   
+        return $status ;
+    }
+    //传给前台页面客户所有的联系人
+      public function selectlinkman()
+    {
+        $data =$this->request->param();
+        $member_code =$data['member_code'];
+        $res = Db::name('linkman')->where('member_code',$member_code)->order('mtime desc')->select();
+        //var_dump($res);exit;
+        return json_encode($res);
+    }
+        //添加客户发票的所有信息
+      public function invoice()
+    {
+        $data =$this->request->param();
+         //var_dump($data);exit;
+        $sea_pirce =new OrderM;
+        $response = $sea_pirce ->invoice($data);
+        if(!array_key_exists('fail', $response)){
+            $status =1; 
+        }else {
+            $status =0;  
+              }
+        json_encode($status);   
+        return $status ;
+    }
+    
+          //添加客户订单所有信息
+      public function order_data()
+    {
+        $data =$this->request->param();
+        $this->_P($data);exit;
+       //线路价格sea_id r_id s_id  存进book_line表里
+        $sea_id =$data['sea_id'];
+        $rid =$data['rid'];
+        $sid =$data['sid'];
+        $sea_pirce =new OrderM;
+        $book_id = $sea_pirce ->book_line($sea_id,$rid,$sid);
+        
+        return json_encode($res);
+    }
+    
+    
 }

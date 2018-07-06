@@ -1,16 +1,17 @@
 <?php
 namespace app\index\controller;
 use think\Db;
-use think\Controller;
-class Index extends Controller 
+use app\index\common\Base;
+class Index extends Base 
 {
-    //导航
-    public function index()
+   // 展示起始页导航
+     public function index()
     {
-       return $this->view->fetch('index/top');
+       return $this->view->fetch('public/top');
     }
-    //首页
-    public function index1()
+    //展示index首页
+    public function index_body()
+  //  public function index()
     {
        return $this->view->fetch('index/index');
     }

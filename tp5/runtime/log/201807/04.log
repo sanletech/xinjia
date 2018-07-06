@@ -11262,3 +11262,1629 @@
 [ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.006000s ]
 [ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
 [ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:20:07+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.069000s][吞吐率：14.49req/s] [内存消耗：2,716.95kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:20:07+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.027000s][吞吐率：37.04req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:20:07+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.078000s][吞吐率：12.82req/s] [内存消耗：2,524.93kb] [文件加载：46]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:20:07+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.030000s][吞吐率：33.33req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:21:12+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.072000s][吞吐率：13.89req/s] [内存消耗：2,712.66kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:21:12+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.028000s][吞吐率：35.71req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:22:45+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.077000s][吞吐率：12.99req/s] [内存消耗：2,712.68kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:22:45+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.032000s][吞吐率：31.25req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:28:57+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.072000s][吞吐率：13.89req/s] [内存消耗：2,712.65kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:28:57+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.027000s][吞吐率：37.04req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:29:16+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.076000s][吞吐率：13.16req/s] [内存消耗：2,712.62kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:29:16+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.031000s][吞吐率：32.26req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:35:39+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.087000s][吞吐率：11.49req/s] [内存消耗：2,712.70kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:35:40+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.027000s][吞吐率：37.04req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:36:13+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.086000s][吞吐率：11.63req/s] [内存消耗：2,712.70kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.011000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:36:13+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.025000s][吞吐率：40.00req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:39:52+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=1 [运行时间：0.074000s][吞吐率：13.51req/s] [内存消耗：2,711.99kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=10&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '1',
+  's_car_id' => '39',
+  'r_car_id' => '36',
+  'container_size' => '1',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_20GP price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '1'  AND `rid` = '36'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:39:52+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.027000s][吞吐率：37.04req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:41:28+08:00 ] 127.0.0.1 GET /admin.php/port/shiproute_add.html
+[ info ] www.tp5.com/admin.php/port/shiproute_add.html [运行时间：0.062000s][吞吐率：16.13req/s] [内存消耗：2,226.20kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'port',
+    2 => 'shiproute_add',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/port/shiproute_list.html?page=1',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ RUN ] app\admin\controller\Port->shiproute_add[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Port.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\shiproute_add.html [ array (
+  0 => 'cardata',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_cardata` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `id`,`car_name` FROM `hl_cardata` WHERE  `status` = 1 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:43:57+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.092000s][吞吐率：10.87req/s] [内存消耗：2,524.88kb] [文件加载：46]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=5&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:44:25+08:00 ] 127.0.0.1 GET /index.php/order/hyyj.html
+[ info ] www.tp5.com/index.php/order/hyyj.html [运行时间：0.082000s][吞吐率：12.20req/s] [内存消耗：2,624.61kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'hyyj',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Order->hyyj[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html [ array (
+  0 => 'page',
+  1 => 'count',
+  2 => 'limit',
+  3 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A LIMIT 1 [ RunTime:0.003000s ]
+[ sql ] [ SQL ] SELECT * FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A LIMIT 0,10 [ RunTime:0.004000s ]
+---------------------------------------------------------------
+[ 2018-07-04T19:44:30+08:00 ] 127.0.0.1 GET /index.php
+[ info ] www.tp5.com/index.php [运行时间：0.042000s][吞吐率：23.81req/s] [内存消耗：1,468.44kb] [文件加载：39]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\top.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:44:30+08:00 ] 127.0.0.1 GET /index.php/index/index1.html
+[ info ] www.tp5.com/index.php/index/index1.html [运行时间：0.025000s][吞吐率：40.00req/s] [内存消耗：1,407.96kb] [文件加载：38]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'index1',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index1[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T19:44:30+08:00 ] 127.0.0.1 GET /index.php/index/index1.html
+[ info ] www.tp5.com/index.php/index/index1.html [运行时间：0.028000s][吞吐率：35.71req/s] [内存消耗：1,407.76kb] [文件加载：38]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'index',
+    2 => 'index1',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'accept-encoding' => 'identity;q=1, *;q=0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => '*/*',
+  'referer' => 'http://www.tp5.com/index.php/index/index1.html',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+  'range' => 'bytes=0-25000',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] app\index\controller\Index->index1[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Index.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:20:51+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.100000s][吞吐率：10.00req/s] [内存消耗：2,721.50kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'upgrade-insecure-requests' => '1',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=5&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.004000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:21:01+08:00 ] 127.0.0.1 POST /index.php/order/%3C%7Bindex/order/linkman%7D%3E
+[ info ] www.tp5.com/index.php/order/%3C%7Bindex/order/linkman%7D%3E [运行时间：0.038000s][吞吐率：26.32req/s] [内存消耗：1,405.25kb] [文件加载：38]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => '<{index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'content-length' => '47',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'origin' => 'http://www.tp5.com',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'asdfasf',
+  'order' => 'linkman}>',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:21:16+08:00 ] 127.0.0.1 POST /index.php/order/%3C%7Bindex/order/linkman%7D%3E
+[ info ] www.tp5.com/index.php/order/%3C%7Bindex/order/linkman%7D%3E [运行时间：0.038000s][吞吐率：26.32req/s] [内存消耗：1,405.27kb] [文件加载：38]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => '<{index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'content-length' => '60',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'origin' => 'http://www.tp5.com',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'asdfasf',
+  'order' => 'linkman}>',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:24:18+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.054000s][吞吐率：18.52req/s] [内存消耗：2,530.56kb] [文件加载：46]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:24:36+08:00 ] 127.0.0.1 POST /index.php/order/%3C%7Bindex/order/linkman%7D%3E
+[ info ] www.tp5.com/index.php/order/%3C%7Bindex/order/linkman%7D%3E [运行时间：0.033000s][吞吐率：30.30req/s] [内存消耗：1,405.47kb] [文件加载：38]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => '<{index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '57',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'sdfasdf',
+  'order' => 'linkman}>',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:24:42+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.022000s][吞吐率：45.45req/s] [内存消耗：1,146.03kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => '*/*',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'origin' => 'null',
+  'cookie' => 'pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:34:11+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.056000s][吞吐率：17.86req/s] [内存消耗：2,721.33kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:34:12+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.025000s][吞吐率：40.00req/s] [内存消耗：1,146.03kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => '*/*',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'origin' => 'null',
+  'cookie' => 'pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:34:26+08:00 ] 127.0.0.1 POST /index.php/order/%3C%7Bindex/order/linkman%7D%3E
+[ info ] www.tp5.com/index.php/order/%3C%7Bindex/order/linkman%7D%3E [运行时间：0.036000s][吞吐率：27.78req/s] [内存消耗：1,405.46kb] [文件加载：38]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => '<{index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '62',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'afdsfdasfasf',
+  'order' => 'linkman}>',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:34:47+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.068000s][吞吐率：14.71req/s] [内存消耗：2,721.33kb] [文件加载：48]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:34:47+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.025000s][吞吐率：40.00req/s] [内存消耗：1,146.03kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => '*/*',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'origin' => 'null',
+  'cookie' => 'pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:34:53+08:00 ] 127.0.0.1 POST /index.php/order/%3C%7Bindex/order/linkman%7D%3E
+[ info ] www.tp5.com/index.php/order/%3C%7Bindex/order/linkman%7D%3E [运行时间：0.027000s][吞吐率：37.04req/s] [内存消耗：1,405.53kb] [文件加载：38]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => '<{index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '66',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'asdfasfdasfas',
+  'order' => 'linkman}>',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:35:17+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.071000s][吞吐率：14.08req/s] [内存消耗：2,782.20kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.007000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.006000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:35:20+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.069000s][吞吐率：14.49req/s] [内存消耗：2,591.59kb] [文件加载：47]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:35:21+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.036000s][吞吐率：27.78req/s] [内存消耗：1,146.03kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => '*/*',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'origin' => 'null',
+  'cookie' => 'pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:35:30+08:00 ] 127.0.0.1 POST /index.php/order/linkman.html
+[ info ] www.tp5.com/index.php/order/linkman.html [运行时间：0.023000s][吞吐率：43.48req/s] [内存消耗：1,238.60kb] [文件加载：31]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'linkman',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '68',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'fsafasdfasdf',
+)
+[ info ] [ RUN ] app\index\controller\Order->linkman[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:37:17+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.069000s][吞吐率：14.49req/s] [内存消耗：2,782.32kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.005000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.003000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:37:17+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.024000s][吞吐率：41.67req/s] [内存消耗：1,146.03kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => '*/*',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'origin' => 'null',
+  'cookie' => 'pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:37:49+08:00 ] 127.0.0.1 POST /index.php/order/linkman.html
+[ info ] www.tp5.com/index.php/order/linkman.html [运行时间：0.027000s][吞吐率：37.04req/s] [内存消耗：1,238.60kb] [文件加载：31]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'linkman',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '68',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'fsafasdfasdf',
+)
+[ info ] [ RUN ] app\index\controller\Order->linkman[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:38:02+08:00 ] 127.0.0.1 POST /index.php/order/linkman.html
+[ info ] www.tp5.com/index.php/order/linkman.html [运行时间：0.027000s][吞吐率：37.04req/s] [内存消耗：1,238.65kb] [文件加载：31]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'linkman',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-length' => '82',
+  'cookie' => 'thinkphp_show_page_trace=0|5; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; PHPSESSID=liiq74uaps03frsc9qtd3r7fm0',
+  'connection' => 'keep-alive',
+)
+[ info ] [ PARAM ] array (
+  'title' => 'fsafasdfasdf11111111111111',
+)
+[ info ] [ RUN ] app\index\controller\Order->linkman[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:42:50+08:00 ] 127.0.0.1 GET /index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2
+[ info ] www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2 [运行时间：0.067000s][吞吐率：14.93req/s] [内存消耗：2,782.48kb] [文件加载：49]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'book',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+  'referer' => 'http://www.tp5.com/index.php/order/hyyj.html?page=2&limit=5&start_add=&end_add=&load_time=',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'sea_id' => '2',
+  's_car_id' => '39',
+  'r_car_id' => '44',
+  'container_size' => '2',
+)
+[ info ] [ RUN ] app\index\controller\Order->book[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html [ array (
+  0 => 'list',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_seaprice` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_carprice` [ RunTime:0.004000s ]
+[ sql ] [ SQL ] SELECT `A`.`sea_id`,`A`.`rid`,`A`.`sid`,`A`.`ship_short_name`,`A`.`shipping_date`,`A`.`boat_code`,`A`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`sl_start`,`A`.`s_port_name`,`A`.`r_add`,`A`.`sl_end`,`A`.`e_port_name`,`A`.`s_add`,A.price_40HQ price FROM ( SELECT A.id sea_id,B.id rid,C.id sid,`A`.`route_id`,`A`.`middle_id`,`A`.`ship_id`,`SC`.`ship_short_name`,`A`.`shipping_date`,`A`.`cutoff_date`,`A`.`boat_code`,`BA`.`boat_name`,`A`.`sea_limitation`,`A`.`ETA`,`A`.`EDD`,`A`.`generalize`,`A`.`mtime`,`A`.`sl_start`,`A`.`s_port_name`,B.address_name r_add,`A`.`sl_end`,`A`.`e_port_name`,C.address_name s_add,(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ FROM ( SELECT `SP`.*,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,`SR`.`middle_id`,P2.port_name e_port_name FROM `hl_seaprice` `SP` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` GROUP BY `SP`.`id` ORDER BY `SP`.`route_id` ) A LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) B ON `A`.`sl_start`=`B`.`port_id` LEFT JOIN ( SELECT `CP`.*,`CL`.`port_id`,`CL`.`address_name` FROM `hl_carprice` `CP` LEFT JOIN `hl_car_line` `CL` ON `CL`.`id`=`CP`.`cl_id` ORDER BY `CP`.`cl_id` ) C ON `A`.`sl_end`=`C`.`port_id` INNER JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`A`.`ship_id` INNER JOIN `hl_boat` `BA` ON `BA`.`boat_code`=`A`.`boat_code` WHERE  `B`.`variable` = 'r'  AND `C`.`variable` = 'S' ) A WHERE  `sea_id` = '2'  AND `rid` = '44'  AND `sid` = '39' LIMIT 1 [ RunTime:0.002000s ]
+---------------------------------------------------------------
+[ 2018-07-04T20:42:50+08:00 ] 127.0.0.1 GET /static/index/js/jquery.min.map
+[ info ] www.tp5.com/static/index/js/jquery.min.map [运行时间：0.044000s][吞吐率：22.73req/s] [内存消耗：1,145.12kb] [文件加载：34]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'static',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'js' => 'jquery.min.map',
+)
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-04T20:42:56+08:00 ] 127.0.0.1 POST /index.php/order/linkman.html
+[ info ] www.tp5.com/index.php/order/linkman.html [运行时间：0.020000s][吞吐率：50.00req/s] [内存消耗：1,239.27kb] [文件加载：31]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'index'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'order',
+    2 => 'linkman',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'connection' => 'keep-alive',
+  'content-length' => '71',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'origin' => 'http://www.tp5.com',
+  'x-requested-with' => 'XMLHttpRequest',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'referer' => 'http://www.tp5.com/index.php/order/book.html?sea_id=2&s_car_id=39&r_car_id=44&container_size=2',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.9',
+  'cookie' => 'thinkphp_show_page_trace=0|0; thinkphp_show_page_trace=0|0',
+)
+[ info ] [ PARAM ] array (
+  'link_name' => 'fasdfasdfas',
+  'phone' => 'fasdfasf',
+  'compangy' => 'sfasdfasf',
+  'add' => 'fasdfadsfsa',
+)
+[ info ] [ RUN ] app\index\controller\Order->linkman[ E:\xampp\htdocs\xinjia\tp5\application\index\controller\Order.php ]
+[ info ] [ LOG ] INIT File

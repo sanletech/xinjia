@@ -80,9 +80,123 @@ class Order extends Model
                 . $price_size.' price' )->find();
              // 将集装箱字的尺寸添加到数组中
             $res['container_size']=$container_size;
-            
             //   var_dump($res);exit;
         return $res;            
-          
+    }
+    
+     //添加收/发货人的信息
+    public function linkman($data)
+    {
+        $link_name = $data['link_name'];
+        $phone = $data['phone'];
+        $company = $data['company'];
+        $add = $data['add'];
+        if(array_key_exists('member_code', $data)){
+            $member_code = $data['member_code'];
+        }  else {
+             $member_code = 'kehu001';
+        }
+       
+        $time = time();
+    $sql= "insert into hl_linkman(name ,phone ,company ,address,mtime,member_code) "
+        . " values('$link_name','$phone','$company','$add','$time','$member_code')";
+
+    $res =  Db::execute($sql);
+    $res ?  $response['success'][]='添加linkman表': $response['fail'][]='添加linkman表';
+    return  $response;    
+        
+    }
+    //处理客户提交的订单信息
+    public function order_data($data) {
+        //添加数据到hl_order_fahter表里
+        $time =  time();
+        $member_code ='kehu001';
+        $add = 1;
+        $order_num = $time.$member_code.rand(100,999);
+        $cargo = $data['cargo'];
+        $container_size = $data['container_size'];
+        $container_num = $data['container_num'];
+        $weight = $data['weight'];
+        $container_type = $data['container_type'];
+        $sea_id=$data['sea_id']; $rid =$data['rid']; $sid=$data['sid'];
+        $book_line = $this->book_line($sea_id, $rid, $sid);
+        $cargo_cost= $data['cargo_cost'];
+        $comment =$data['comment'];
+        $state = 1;
+        $sql ="insert into hl_order_father (order_num,cargo,cargo_id,container_size,"
+                . "container_num,weight,cargo_cost,container_type_id"
+                . ",comment,mtime,add_id ,book_line_id,member_code,state) "
+                . "  values('$order_num','$cargo,cargo_id','$container_size',"
+                . "'$container_num','$weight','$cargo_cost','$container_type_id',"
+                . "'$comment','$mtime','$add_id' ,'$book_line_id','$member_code','$state')";
+        
+        
+        //添加数据到 订单补充表 hl_order_comment表里
+        $tax_rate = $data['tax_rate'];
+        if($data['invoice_if']==0){
+            $invoice_id = 0;
+        }else{
+           // $sql = "select a.id  from hl_invoice as a  where mtime =  (select max(mtime) from hl_invoice ) and a.member_code ='$member_code'";
+                  
+            $invoice_id = Db::name('invoice')->field('id')->where('member_code',$member_code)->where('mtime','(select max(mtime) from hl_invoice )');
+            var_dump($invoice_id); exit;
+        }
+        
+        $payer = $data['payer']  ;
+        if($payer ==3){
+            $payer = $data['payer_name'].'_'.$data['payer_phone'];
+        }
+        $payment_method = $data['payment_method'];
+        if(array_key_exists('message_send', $data)){
+            $message_send = 1;
+        }  else {
+            $message_send = 2;
+        }
+        if(array_key_exists('sign_receipt', $data)){
+            $sign_receipt = 1;
+        } else {
+            $sign_receipt = 2;
+        }
+        $sql2 = "insert into hl_order_comment (order_num,payer,payment_method,tax_rate,invoice_id,message_send,sign_receipt,mtime)"
+            . "values ('$order_num','$payer','$payment_method','$tax_rate','$invoice_id','$message_send','$sign_receipt','$mtime')";
+        
+        $res =Db::execute($sql);
+        $res2 =Db::execute($sql2);
+        var_dump($res1);
+        var_dump($res2);exit;
+    }
+    
+    //保存订单的航线价格信息
+    public function book_line($sea_id,$rid,$sid) {
+      
+        $sql ="select id from hl_book_line where seaprice_id ='$sea_id' and "
+                . "s_pricecar_id ='$sid' and r_pricecar_id ='$rid'";
+        $sql2 = "insert into hl_book_line(seaprice_id,s_pricecar_id,"
+                . "r_pricecar_id) values ('$sea_id','$sid','$rid')";
+        $res = Db::query($sql);
+        if(!$res){
+            $res2 = Db::execute($sql2); 
+            $res = Db::query($sql);
+        }
+        return $res['id'];
+    }
+    
+    //保存发票信息
+    public function invoice($data) {
+        $mtime =time();
+        $title = $data['title'];
+        $taxpayer_id =$data['taxpayer_id'];
+        $registered_address =$data['registered_address'];
+        $registered_phone = $data['registered_phone'];
+        $deposit_bank = $data['deposit_bank'];
+        $bank_account = $data['bank_account'];
+        $member_code = $data['member_code'];
+        $sql ="insert into hl_invoice (invoice_title,taxpayer_id,registered_address ,"
+                . "registered_phone,deposit_bank,bank_account,member_code,mtime)  "
+                . " values ('$title','$taxpayer_id' ,'$registered_address' ,"
+                . "'$registered_phone' ,'$deposit_bank' ,'$bank_account','$member_code','$mtime')";
+        $res = Db::execute($sql);
+        $res ? $response['success'][]='添加invoice表':$response['fail'][]='添加invoice表';
+        return $response;
     }
 }
