@@ -15,7 +15,7 @@ class Base extends Controller
         if(is_null($this->user_id)){
             $this->notlogin();
         }
-        $this->carList();
+       // $this->middle();
         
     }
     
@@ -38,6 +38,7 @@ class Base extends Controller
           
       }   
     }
+    
       protected function alreadylogin()
     {
         //如果登录常量为非nll，表示没有登录
@@ -54,12 +55,12 @@ class Base extends Controller
        //  $limit = $this->user_id;
          
     }
-    
-    protected function  carList(){
-        $cardata= Db::name('cardata')->where('status',1)->column('car_name','id');
-        $this->view->assign('cardata', $cardata);
+    //左边栏公共页面
+    protected function  middle(){
+//        $cardata= Db::name('cardata')->where('status',1)->column('car_name','id');
+//        $this->view->assign('cardata', $cardata);
             //3.渲染模版
-        return $this->view->fetch('public/middle'); 
+     //   return $this->view->fetch('public/middle'); 
     
    }
     

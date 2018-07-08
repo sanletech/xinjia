@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530277776;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
-=======
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\lrdd.html";i:1530849722;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
->>>>>>> fc325bbe98b344ad052728ce71dade58e27d0f0f
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1531061084;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -143,7 +139,6 @@
               </div>
             </div>
 
-
             <div class="layui-col-xs6 er_rig">
               <div class="grid-demo" style="margin-top: 10px;">
                 <div class="layui-col-xs3">
@@ -183,6 +178,7 @@
                 </div>
               </div>
             </div>
+              
           </div>
         </div>
 

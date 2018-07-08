@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\personal\steward.html";i:1529718403;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1529718403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\personal\steward.html";i:1529718403;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
 <!-- 物流管家 -->
 <!DOCTYPE html>
 <html>
@@ -16,6 +16,7 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="/static/index/js/jquery-1.9.0.min.js"></script>
     <script src="/static/index/layui/layui.js"></script>
+    
 </head>
   <body>
       <link rel="stylesheet" href="/static/index/css/personal_steward.css">

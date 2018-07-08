@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:74:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\top.html";i:1530532388;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529718403;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\public\top.html";i:1530889144;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529718403;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +32,7 @@
             <a href="javascript:;">公共查询</a>
           </li>
           <li>
-            <a href="<?php echo url('Order/hyyj'); ?>">海运运价</a>
+            <a href="javascript:;">海运运价</a>
           </li>
           <li>
             <a href="javascript:;">集装箱出售</a>
@@ -54,7 +54,7 @@
     </header>
 
     <nav>
-      <iframe src="<?php echo url('index/index1'); ?>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
+      <iframe src="<?php echo url('index/Index/index_body'); ?>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
     </nav>
     <footer>
       <div class="foot">
@@ -84,23 +84,23 @@
       $('#top li').click(function (event) {
         $(this).addClass('hang').siblings('li').removeClass('hang');
         if($(this).index() == 0) { //首页
-          $('nav iframe').attr('src','<?php echo url('index/index1'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/index_body'); ?>');
         }else if($(this).index() == 1) {//公共查询
-          $('nav iframe').attr('src','<?php echo url('index/check'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/check'); ?>');
         }else if($(this).index() == 2) {//海运运价
-          $('nav iframe').attr('src','<?php echo url('index/hyyj'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Order/order_list'); ?>');
         }else if($(this).index() == 3) {//集装箱出售
-          $('nav iframe').attr('src','<?php echo url('index/container'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/container'); ?>');
         }else if($(this).index() == 4) {//新闻中心
-          $('nav iframe').attr('src','<?php echo url('index/news'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/news'); ?>');
         }else if($(this).index() == 5) {//合伙人加盟
-          $('nav iframe').attr('src','<?php echo url('index/join'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/join'); ?>');
         }else if($(this).index() == 6) {//帮助与公告
-          $('nav iframe').attr('src','<?php echo url('index/help'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/help'); ?>');
         }else if($(this).index() == 7) {//个人中心
-          $('nav iframe').attr('src','<?php echo url('index/personal'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/personal'); ?>');
         }else if($(this).index() == 8) {
-          $('nav iframe').attr('src','<?php echo url('index/index1'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Index/index'); ?>');
         }
       });
 
