@@ -3,6 +3,7 @@
 namespace app\index\model;
 use think\Model;
 use think\Db;
+use think\Session;
 class Order extends Model
 {
 
@@ -42,6 +43,8 @@ class Order extends Model
                         . '(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ')
                 ->where('B.variable', '=',"r")->where('C.variable', '=',"S")
                 ->buildSql();
+
+   // var_dump($price_sql);exit;
         if($start_add){
             $price_sql = Db::table($price_sql.' F')->where('F.r_add','like',"%$start_add%")->buildSql();
         }
@@ -91,12 +94,7 @@ class Order extends Model
         $phone = $data['phone'];
         $company = $data['company'];
         $add = $data['add'];
-        if(array_key_exists('member_code', $data)){
-            $member_code = $data['member_code'];
-        }  else {
-             $member_code = 'kehu001';
-        }
-       
+        $member_code =Session::get('member_code');
         $time = time();
     $sql= "insert into hl_linkman(name ,phone ,company ,address,mtime,member_code) "
         . " values('$link_name','$phone','$company','$add','$time','$member_code')";
@@ -106,42 +104,48 @@ class Order extends Model
     return  $response;    
         
     }
+    
     //处理客户提交的订单信息
-    public function order_data($data) {
+    public function order_data($data,$book_line_id) {
         //添加数据到hl_order_fahter表里
-        $time =  time();
-        $member_code ='kehu001';
-        $add = 1;
-        $order_num = $time.$member_code.rand(100,999);
+        $mtime =  time();
+        $member_code =Session::get('member_code');
+       // var_dump($member_code);exit;
+        $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
+        $order_num = $mtime.$member_code.rand(100,999);
         $cargo = $data['cargo'];
         $container_size = $data['container_size'];
         $container_num = $data['container_num'];
         $weight = $data['weight'];
         $container_type = $data['container_type'];
-        $sea_id=$data['sea_id']; $rid =$data['rid']; $sid=$data['sid'];
-        $book_line = $this->book_line($sea_id, $rid, $sid);
+//        $sea_id=$data['sea_id']; $rid =$data['rid']; $sid=$data['sid'];
+//        $book_line = $this->book_line($sea_id, $rid, $sid);
         $cargo_cost= $data['cargo_cost'];
         $comment =$data['comment'];
         $state = 1;
-        $sql ="insert into hl_order_father (order_num,cargo,cargo_id,container_size,"
+        $sql ="insert into hl_order_father (order_num,cargo,container_size,"
                 . "container_num,weight,cargo_cost,container_type_id"
                 . ",comment,mtime,add_id ,book_line_id,member_code,state) "
-                . "  values('$order_num','$cargo,cargo_id','$container_size',"
-                . "'$container_num','$weight','$cargo_cost','$container_type_id',"
+                . "  values('$order_num','$cargo','$container_size',"
+                . "'$container_num','$weight','$cargo_cost','$container_type',"
                 . "'$comment','$mtime','$add_id' ,'$book_line_id','$member_code','$state')";
         
         
         //添加数据到 订单补充表 hl_order_comment表里
-        $tax_rate = $data['tax_rate'];
-        if($data['invoice_if']==0){
+       
+        if(array_key_exists('invoice_id', $data)){
             $invoice_id = 0;
         }else{
-           // $sql = "select a.id  from hl_invoice as a  where mtime =  (select max(mtime) from hl_invoice ) and a.member_code ='$member_code'";
-                  
-            $invoice_id = Db::name('invoice')->field('id')->where('member_code',$member_code)->where('mtime','(select max(mtime) from hl_invoice )');
-            var_dump($invoice_id); exit;
+            $sql3 ="select id from hl_invoice where member_code = '$member_code' and mtime = (select max(mtime) from hl_invoice ) ";
+            //$invoice_id = Db::name('invoice')->field('id')->where('member_code',$member_code)->where('mtime','(select max(mtime) from hl_invoice )');
+            $invoice_id = Db::query($sql3);
+            $invoice_id = $invoice_id['0']['id'];
         }
-        
+        if(array_key_exists('tax_rate', $data)){
+            $tax_rate = $data['tax_rate'];
+        }  else {
+            $tax_rate =0;
+        }
         $payer = $data['payer']  ;
         if($payer ==3){
             $payer = $data['payer_name'].'_'.$data['payer_phone'];
@@ -159,11 +163,13 @@ class Order extends Model
         }
         $sql2 = "insert into hl_order_comment (order_num,payer,payment_method,tax_rate,invoice_id,message_send,sign_receipt,mtime)"
             . "values ('$order_num','$payer','$payment_method','$tax_rate','$invoice_id','$message_send','$sign_receipt','$mtime')";
-        
+       // var_dump($sql2);exit;
         $res =Db::execute($sql);
         $res2 =Db::execute($sql2);
-        var_dump($res1);
-        var_dump($res2);exit;
+        $respones = [];
+        $res ? $respones['success'][]='order_father表' : $respones['fail'][]='order_father表';
+        $res2 ? $respones['success'][]='order_comment表' : $respones['fail'][]='order_comment表';
+        return $respones;
     }
     
     //保存订单的航线价格信息
@@ -178,7 +184,7 @@ class Order extends Model
             $res2 = Db::execute($sql2); 
             $res = Db::query($sql);
         }
-        return $res['id'];
+        return $res['0']['id'];
     }
     
     //保存发票信息
@@ -198,5 +204,19 @@ class Order extends Model
         $res = Db::execute($sql);
         $res ? $response['success'][]='添加invoice表':$response['fail'][]='添加invoice表';
         return $response;
+    }
+      public function route_detail($sealine_id)
+    { 
+        $sql = "select P.port_name from hl_sea_middle SM "
+            . "left join hl_port P on SM.sl_middle = P.port_code"
+            . " where SM.sealine_id = '$sealine_id' order by SM.sequence";    
+        $res =Db::query($sql);
+        $data = array_column($res, 'port_name');
+        return $data;
+    }
+    
+     public function confirm_order($price)
+    { 
+         
     }
 }

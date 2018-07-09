@@ -1,10 +1,28 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\login\login.html";i:1531101165;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
 <!-- 登陆 -->
-<{include file='./public/head' /}>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/index/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/index/css/font.css">
+    <link rel="stylesheet" href="/static/index/css/index.css">
+    <link rel="stylesheet" href="/static/index/css/top.css">
+    <link rel="stylesheet" href="/static/index/css/foot.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/static/index/js/jquery-1.9.0.min.js"></script>
+    <script src="/static/index/layui/layui.js"></script>
+    
+</head>
   <body>
-      <link rel="stylesheet" href="__STATIC__/css/login.css">
+      <link rel="stylesheet" href="/static/index/css/login.css">
     <div class="tou">
       <div class="zuo">
-        <a href="<{:url('../index/index')}>"><img src="__STATIC__/image/logo.jpg" alt=""></a>
+        <a href="<?php echo url('../index/index'); ?>"><img src="/static/index/image/logo.jpg" alt=""></a>
       </div>
       <div class="you">
         <div class="zi">
@@ -37,7 +55,7 @@
                     <button type="button" class="layui-btn layui-btn-fluid" id="loginbtn">登陆</button>
               </div>
                 <div class="zh">
-            <span>没有帐号？<a href="<{:url('index/login/register')}>">立即注册</a></span>
+            <span>没有帐号？<a href="<?php echo url('index/login/register'); ?>">立即注册</a></span>
           </div>
             </form>
             </div>
@@ -48,17 +66,17 @@
         $("#loginbtn").on('click',function(){
             $.ajax({
                 type:'POST',
-                url:"<{:url('index/login/check_login')}>",
+                url:"<?php echo url('index/login/check_login'); ?>",
                 data:$("#loginform").serialize(),
                 dataType:"json",
                 success:function(data){
             
                     if(data.status==1){
                         alert(data.message);
-                        window.location.href="<{:url('index/index/index')}>";
+                        window.location.href="<?php echo url('index/index/index'); ?>";
                     }else{
                         alert(data.message);
-                        window.location.href="<{:url('index/login/login')}>";
+                        window.location.href="<?php echo url('index/login/login'); ?>";
                     }
                 }
             })

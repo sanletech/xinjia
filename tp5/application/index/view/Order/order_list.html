@@ -1,0 +1,243 @@
+<!-- 海运运价 -->
+<{include file='./public/head' /}>
+
+  <body>
+    <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
+    <div class="banner">
+      <div class="gnhy">
+        <div class="gnhy_top">国内海运</div>
+        <form class="layui-form layui-col-md12 x-so" id ="search_price">
+        <div class="gnhy_nei layui-row" >
+            <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>"  placeholder="请输入起始地" class="layui-col-xs12" >
+            <input type="text" name="end_add"   id="end_add" value="<{$end_add ? $end_add : '';}>"  placeholder="请输入目的地" class="layui-col-xs12">
+            <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>"  placeholder="装货时间"     class="layui-col-xs12" id="date">
+        </div>
+            
+        <div class="gnhy_di">
+          <div class="di_zuo">
+            <a href="" style="margin-right:50px;">
+              <i class="fa fa-ban on fa-lg"></i>&nbsp;不接货物</a>
+            <a href="">
+              <i class="fa fa-warning fa-lg c"></i>&nbsp;国家禁运品声明</a>
+          </div>
+          <div class="di_you">
+<!--              <button  type="button" onclick="toajax()">查价</button>-->
+            <button class="layui-btn"  lay-submit="" lay-filter="sreach">查价</button>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    <div class="head_hy">
+      <!-- 查询表单 -->
+
+      <!-- 查询内容 -->
+      <div class="cen_nei">
+        <!-- 查询导航 -->
+        <div class="nei_dao">
+          <ul>
+            <li>航公司</li>
+            <li>截单时间</li>
+            <li>预计开船日期</li>
+            <li>航线</li>
+            <li>预计到港日期</li>
+            <li>预计送货日期&nbsp;
+              <i class="icon iconfont icon-paixu"></i>
+            </li>
+            <li>20GP&nbsp;
+              <i class="icon iconfont icon-paixu"></i>
+            </li>
+            <li>40HQ&nbsp;
+              <i class="icon iconfont icon-paixu se"></i>
+            </li>
+            <li>操作</li>
+          </ul>
+        </div>
+        <!-- 查询内容 -->
+        <{volist name='list' id='vo'}>
+        <div class="nei_nei">
+            <{if condition="$vo['generalize']=1"}>
+            <div class="tj">
+                <img src="__STATIC__/image/tuijian.jpg" alt="">
+            </div>
+            <{/if}>
+            
+            <div class="hang_nei">
+            <div class="nei_le">
+                <ul>
+                <li>
+                    <{$vo.ship_short_name}>
+                    <div class="dian">
+                        <i class="icon iconfont icon-chuan se"></i>&nbsp;
+                        <{if condition="$vo['middle_id']=0"}><span class="hui">直航</span>
+                        <{else /}><span class="hui">中转</span><{/if}>
+                    </div>
+                 </li>
+                <li><{$vo.cutoff_date|date="Y-m-d",###}></li>
+                <li>
+                    <{$vo.shipping_date|date="Y-m-d",###}>
+                    <div class="dian">
+                        <i class="icon iconfont icon-dingwei se">&nbsp;</i>
+                        <span class="hui"><{$vo.s_port_name}></span>
+                    </div>
+                </li>
+                <li class="zhi">
+                    <div class="hui"><{$vo.boat_name}></div>
+                        <div>
+                            <div class="j"></div>
+                        </div>
+                    <div class="hui"><{$vo.boat_code}></div>
+                </li>
+                <li>
+                    <{$vo.ETA|date="Y-m-d",###}>
+                    <div class="dian">
+                        <i class="icon iconfont icon-dingwei se">&nbsp;</i>
+                        <span class="hui"><{$vo.e_port_name}></span>
+                    </div>
+                </li>
+                <li><{$vo.EDD|date="Y-m-d",###}></li>
+                <li>
+                    ￥<{$vo.price_20GP}>
+                    <div class="dian">
+                        <a href="<{:url('index/Order/book')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=1" class="gp">下单</a>
+                    </div>
+                </li>
+                <li>
+                    ￥<{$vo.price_40HQ}>
+                     <div class="dian">
+                        <a href="<{:url('index/Order/book')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=2" class="gp">下单</a>
+                    </div>
+                </li>
+              </ul>
+            </div>
+               
+            <div class="nei_rig">
+                <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a>
+            </div>
+            
+            <div class="sm">
+                截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp; 说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp; 价格说明：已含们到门所有费用，不含开票。
+            </div>
+            </div>
+        </div>
+        <{/volist}>  
+
+        <div class="text-center" id="pages"></div>
+      </div>
+
+    <!-- 模态窗口 -->
+    <div id="modal-default" class="iziModal">
+      <div class="mo_cen">
+        <div class="xian"></div>
+        <div class="mo_nei layui-row">
+          <div class="layui-col-xs4 la">
+            <!-- 进过地址加y类样式 -->
+            <div class="guan">广州
+              <br/>3018-03-14
+              <div class="nn">
+                <div class="yuan y"></div>
+              </div>
+            </div>
+          </div>
+          <div class="layui-col-xs4 la">
+            <!-- 航船经过加chuan类样式 -->
+            <div class="guan chuan">
+              <div class="nn">
+                <div class="yuan">船</div>
+              </div>中转地
+              <br/>3018-03-14 </div>
+          </div>
+
+          <div class="layui-col-xs4 la">
+            <div class="guan">天津
+              <br/>3018-03-14
+              <div class="nn">
+                <div class="yuan"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="__STATIC__/js/iziModal.min.js"></script>
+    <script type="text/javascript">
+      //模态窗口基本设置
+      $("#modal-default").iziModal({
+        title: "航线详情",
+        iconClass: 'icon-announcement',
+        width: 700,
+        padding: 20
+      });
+      //启动模态窗
+      $(document).on('click', '.trigger-default', function (event) {
+        event.preventDefault();
+        $('#modal-default').iziModal('open');
+      });
+
+      // 日期
+      layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+          , layer = layui.layer
+          , layedit = layui.layedit
+          , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+          elem: '#date'
+        });
+        laydate.render({
+          elem: '#date1'
+        });
+      });
+        
+       function toajax (){
+            $.ajax({
+                type:'GET',
+                url:"<{:url('index/order/order_list')}>",    
+                data:$("#search_price").serialize(),
+                dataType:"json",
+                success:function(data){
+                    if(data.status==1){
+                      return 1;
+                    }else{
+                        return 0 ;
+                  }
+                }
+            })
+        }
+    </script>
+    
+    <script>
+            layui.use('laypage', function(){
+            var laypage = layui.laypage;
+            var $data= $("#search_price input");
+            var start_add = $data[0].value;
+            var end_add = $data[1].value;
+            var load_time =$data[2].value;
+            //执行一个laypage实例
+            laypage.render({
+                elem: 'pages', 
+                limit:<{$limit}>,
+                limits:[5,10,15],
+                count:<{$count}>,
+                layout:['count','prev', 'page', 'next','limit','skip'],
+                curr:<{$page}>,
+                theme: '#c00' ,
+                jump: function(obj, first){
+                //obj包含了当前分页的所有参数，比如：
+                //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                //console.log(obj.limit); //得到每页显示的条数
+                //首次不执行
+                if(!first){
+                  //do something
+                    window.location.href ="<{:url('index/Order/order_list')}>?page="+obj.curr+'&limit='+obj.limit+'&start_add='+start_add+'&end_add='+end_add+'&load_time='+load_time;
+                }
+            }
+          });
+      })
+    </script>
+   
+  </body>
+
+  </html>

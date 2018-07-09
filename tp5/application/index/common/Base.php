@@ -10,11 +10,11 @@ class Base extends Controller
     protected function _initialize() {
         parent::_initialize();
         //在公共控制器的初始化方法中，创建一个常量用来判断用户是否登录或已经登录
-//        $this->member_code=  Session::get('member_code');
-//        //$user_id 为空则没有登录
-//        if(is_null($this->member_code)){
-//            $this->notlogin();
-//        }
+        $this->member_code=  Session::get('member_code');
+        //$user_id 为空则没有登录
+        if(is_null($this->member_code)){
+            $this->notlogin();
+        }
        // $this->top();
         
     }
@@ -25,7 +25,7 @@ class Base extends Controller
     {
         //如果登录常量为nll，表示没有登录
       if(is_null($this->member_code)){
-          $this->error('未登录，无权访问','login/index');
+          $this->error('未登录，无权访问','login/login');
           
       }   
     }
@@ -33,7 +33,7 @@ class Base extends Controller
     {
         //如果登录常量为非nll，表示没有登录
       if(!is_null($this->member_code)){
-          $this->error('请不要重复登录','index/index');
+          $this->error('请不要重复登录','login/login');
           
       }   
     }

@@ -3,6 +3,8 @@
     <body>
         <link rel="stylesheet" href="__STATIC__/css/route_add.css">
         <form class="layui-form" action="">
+        <input type="hidden" name='order_num' value="<{$order_num}>">
+        <input type="hidden" name='container_num' value="<{$container_num}>">
             <div class="route layui-row">
                 <!-- 运单号 -->
                 <div class="layui-form-item">
@@ -15,8 +17,7 @@
                 <!-- 按钮 -->
                 <div class="layui-form-item">
                     <div class="layui-input-block an">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
-                        <button class="layui-btn cancel">下一步</button>
+                        <button class="layui-btn"  type="button"  onclick ='toajax()'>保存</button>
                     </div>
                 </div>
             </div>
@@ -43,6 +44,25 @@
                 });
 
             });
+            
+            
+    function toajax() {
+        $.ajax({
+          type: 'post',
+          url: "<{:url('admin/Contact/search')}>",
+          data: $("#searchform").serialize(),
+          dataType: "json",
+          success: function (data) {
+            alert("1111");
+            if (data.status == 1) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        })
+      }
+            
         </script>
 
     </body>

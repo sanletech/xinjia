@@ -1,10 +1,28 @@
-<{include file='./public/head' /}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1531118919;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/index/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/index/css/font.css">
+    <link rel="stylesheet" href="/static/index/css/index.css">
+    <link rel="stylesheet" href="/static/index/css/top.css">
+    <link rel="stylesheet" href="/static/index/css/foot.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/static/index/js/jquery-1.9.0.min.js"></script>
+    <script src="/static/index/layui/layui.js"></script>
+    
+</head>
 
   <body>
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
-    <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
-    <link rel="stylesheet" href="__STATIC__/css/xiala.css">
-    <link rel="stylesheet" href="__STATIC__/css/all_order.css">
+    <link rel="stylesheet" type="text/css" href="/static/index/css/iziModal.css">
+    <link rel="stylesheet" href="/static/index/css/lrdd.css">
+    <link rel="stylesheet" href="/static/index/css/xiala.css">
+    <link rel="stylesheet" href="/static/index/css/all_order.css">
     <div class="banner"></div>
     <form class="" id ='order_data_form'>
       <div class="xxtx">
@@ -21,24 +39,24 @@
                 </ul>
         </div>
         <!-- 订单信息 -->A.sea_id, A.rid, A.sid
-            <input type="hidden" name='sea_id' value="<{$list.sea_id}>">
-            <input type="hidden" name='rid' value="<{$list.rid}>">
-            <input type="hidden" name='sid' value="<{$list.sid}>">
+            <input type="hidden" name='sea_id' value="<?php echo $list['sea_id']; ?>">
+            <input type="hidden" name='rid' value="<?php echo $list['rid']; ?>">
+            <input type="hidden" name='sid' value="<?php echo $list['sid']; ?>">
         <div class="xxtx_dd">
           <div class="xx">
             <strong>订单信息</strong>
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
-              <div><{$list.ship_short_name}></div>
-              <div><{$list.boat_name}>/<{$list.boat_code}></div>
+              <div><?php echo $list['ship_short_name']; ?></div>
+              <div><?php echo $list['boat_name']; ?>/<?php echo $list['boat_code']; ?></div>
             </div>
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
               <div class="layui-col-xs5">
-                <h5><{$list.r_add}></h5><h2>----<{$list.s_port_name}></h2>
-                <span><{$list.shipping_date|date="Y-m-d",###}></span>
+                <h5><?php echo $list['r_add']; ?></h5><h2>----<?php echo $list['s_port_name']; ?></h2>
+                <span><?php echo date("Y-m-d",$list['shipping_date']); ?></span>
               </div>
 
               <div class="layui-col-xs2">
@@ -46,22 +64,19 @@
               </div>
 
               <div class="layui-col-xs5">
-                <h5><{$list.s_add}></h5><h2>----<{$list.e_port_name}></h2>
-                <span><{$list.ETA|date="Y-m-d",###}></span>
+                <h5><?php echo $list['s_add']; ?></h5><h2>----<?php echo $list['e_port_name']; ?></h2>
+                <span><?php echo date("Y-m-d",$list['ETA']); ?></span>
               </div>
             </div>
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
             <span>
-                <{switch name="list.container_size"}>
-                <{case value="1"}>20GP<{/case}>
-                <{case value="2"}>40HQ<{/case}>
-                <{default /}>未知集装箱型号
-                <{/switch}>
+                <?php switch($list['container_size']): case "1": ?>20GP<?php break; case "2": ?>40HQ<?php break; default: ?>未知集装箱型号
+                <?php endswitch; ?>
             </span>
               <p>￥
-                <strong><{$list.price}></strong>
+                <strong><?php echo $list['price']; ?></strong>
               </p>
             </div>
             <div class="you">价格说明：这是纯运费</div>
@@ -124,7 +139,6 @@
               </div>
             </div>
 
-
             <div class="layui-col-xs6 er_rig">
               <div class="grid-demo" style="margin-top: 10px;">
                 <div class="layui-col-xs3">
@@ -164,6 +178,7 @@
                 </div>
               </div>
             </div>
+              
           </div>
         </div>
 
@@ -177,7 +192,7 @@
               <div class="layui-col-xs3">
                 <span>*&nbsp;</span>货名：</div>
               <div class="layui-col-xs6">
-                   <input type="text" name="weight" value="" placeholder="">
+                   <input type="text" name="cargo" value="" placeholder="">
 <!--                <div class="select">
                   <select name ='cargo'>
                     <option value='0' selected>请选择</option>
@@ -228,9 +243,9 @@
               <div class="layui-col-xs4">
                 <span>*&nbsp;</span>集装箱规格：</div>
               <div class="layui-col-xs6">
-                <input type="text" name="container_size" value="<?php if($list['container_size'] ==1){
+                <input type="text" name="container" value="<?php if($list['container_size'] ==1){
                        echo '20GP';  }else{echo '40HQ';} ?>" readonly="readonly">
-                <input type="hidden" name="container_size" value="<{$list.container_size}>">
+                <input type="hidden" name="container_size" value="<?php echo $list['container_size']; ?>">
               </div>
             </div>
           </div>
@@ -240,7 +255,7 @@
                 <span>*&nbsp;</span>柜量：</div>
               <div class="layui-col-xs6">
                 <div class="select">
-                  <select name='container_num' class="guil">
+                  <select name='container_num' class="guil" id='container_num'>
                     <option value='0'>请选择</option>
                   </select>
                 </div>
@@ -304,7 +319,7 @@
         </div>
         <!-- 总运费 -->
         <div class="sun">
-            <span>总运费：<strong>￥165970.00元</strong></span>
+            <span>总运费：<strong id ='price_sum'>￥165970.00元</strong></span>
         </div>
 
         <!-- 付款方式 -->
@@ -617,12 +632,21 @@
       </div>
       
 
-    <script src="__STATIC__/js/iziModal.min.js"></script>
-    <script src="__STATIC__/js/lrdd.js"></script>
+    <script src="/static/index/js/iziModal.min.js"></script>
+    <script src="/static/index/js/lrdd.js"></script>
     <script>
+      
+          //根据选择的箱子数量 计算总价格
+//          $('#container_num').bind('select propertychange', function () {
+//              var price = (this.value )*('<?php echo $list['price']; ?>');
+//              alert(price);
+//           // $('#price_sum').html('￥'+price);
+//        })
+          
+          
         // 接受后台的联系人资料
        window.onload = function (){ 
-            var url = "<{:url('index/order/selectlinkman')}>";
+            var url = "<?php echo url('index/order/selectlinkman'); ?>";
             var member_code = 'kehu001';
             var data = {'member_code':member_code};
            $.ajax({
@@ -637,57 +661,39 @@
         }
         //收货/发货人的表单提交 
         function linkman_btn(){
-            var url = "<{:url('index/order/linkman')}>";
+            var url = "<?php echo url('index/order/linkman'); ?>";
             var data = $("#linkman_form").serialize();
             toajax (url,data);
         }
         
            //发票的信息提交 
         function invoice(){
-            var url = "<{:url('index/order/invoice')}>";
+            var url = "<?php echo url('index/order/invoice'); ?>";
             var data = $("#invoice_form").serialize();
             toajax (url,data);
         }
         
         //订单信息的提交
         function order_data(){
-            var url = "<{:url('index/order/order_data')}>";
+            var url = "<?php echo url('index/order/order_data'); ?>";
             var data = $("#order_data_form").serialize();
             toajax (url,data);
         }
         
        function toajax (url,data){
-            var loading = layer.load(1);
-            post_adduser = true;    
             $.ajax({
                 type:'POST',
                 url:url,    
                 data:data,
                 dataType:"json",
                 success:function(status){
-                        if(status>0){
-                            post_adduser = false;
-                            layer.close(loading);
-                            layer.msg("添加成功", { icon: 6, time: 2000 }, function () {
-                            // 获得frame索引
-                            parent.location.reload();
-                            var index = parent.layer.getFrameIndex(window.name);
-                            //关闭当前frame
-                            parent.layer.close(index);
-                        });
-                        }else{
-                            post_adduser = false;
-                            layer.close(loading);
-                            layer.msg("添加失败", { icon: 5 });
-                            }
-                            },
-                        error: function () {
-                                post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
-                                layer.close(loading);
-                                layer.msg("添加失败", { icon: 5 });
-                            }
-                });
-                return false;//只此一句
+                   if(status ==1){
+                        alert('提交表单成功');
+                        window.location.href="<{index/order/order_list}>"
+                    }  
+                }
+            });
+                //return false;//只此一句
         }
     </script>
   </body>

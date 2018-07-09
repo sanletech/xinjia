@@ -61,16 +61,16 @@ class Order extends Model
                         . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . 'LK2.company ')
                 ->group('OF.id')->where('OF.state','eq','2')
-               ->where('OA.member_code = OF.member_code')
+               // ->where('OA.member_code = OF.member_code')
                 ->order('OF.id ,OF.mtime desc')->buildSql();
-//        var_dump($fatherSql);exit;
+        //var_dump($fatherSql);exit;
         $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
         return $list;
     }
     
     
     //待订舱
-    public function order_book(){
+    public function order_book($container_num,$order_num){
 
     
     }

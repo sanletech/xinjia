@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530542853;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
+=======
 <?php if (!defined('THINK_PATH')) exit(); /*a:4:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\hyyj.html";i:1530866869;s:65:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\top.html";i:1530867537;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529651522;}*/ ?>
+>>>>>>> fc325bbe98b344ad052728ce71dade58e27d0f0f
 <!-- 海运运价 -->
 <!DOCTYPE html>
 <html>
@@ -221,20 +225,28 @@
                 <li>
                     ￥<?php echo $vo['price_20GP']; ?>
                     <div class="dian">
+<<<<<<< HEAD
+                        <a href="<?php echo url('Order/confirm_order'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=1" class="gp">下单</a>
+=======
                         <a href="<?php echo url('Order/book'); ?>?sea_id=<?php echo $vo['sea_id']; ?>&s_car_id=<?php echo $vo['sid']; ?>&r_car_id=<?php echo $vo['rid']; ?>&container_size=1" class="gp">下单</a>
+>>>>>>> fc325bbe98b344ad052728ce71dade58e27d0f0f
                     </div>
                 </li>
                 <li>
                     ￥<?php echo $vo['price_40HQ']; ?>
                     <div class="dian">
+<<<<<<< HEAD
+                        <a href="<?php echo url('Order/confirm_order'); ?>?sea_id=<?php echo $vo['id']; ?>&s_car_id=<?php echo $vo['sid']; ?>$r_car_id=<?php echo $vo['rid']; ?>&container_size=2" class="gp">下单</a>
+=======
                         <a href="<?php echo url('Order/book'); ?>?sea_id=<?php echo $vo['sea_id']; ?>&s_car_id=<?php echo $vo['sid']; ?>&r_car_id=<?php echo $vo['rid']; ?>&container_size=2" class="gp">下单</a>
+>>>>>>> fc325bbe98b344ad052728ce71dade58e27d0f0f
                     </div>
                 </li>
               </ul>
             </div>
-            
+               
             <div class="nei_rig">
-                <a href="#" class="trigger-default">航线详情</a>
+                <a href="<?php echo url('Order/route_detail'); ?>?middle_id=<?php echo $vo['middle_id']; ?>" class="trigger-default">航线详情</a>
             </div>
             
             <div class="sm">
@@ -243,8 +255,17 @@
             </div>
         </div>
         <?php endforeach; endif; else: echo "" ;endif; ?>  
+<<<<<<< HEAD
+        <div class="page">
+            <div>
+                <?php echo $page; ?>
+            </div>
+        </div>
+
+=======
         <div class="text-center" id="pages"></div>
         
+>>>>>>> fc325bbe98b344ad052728ce71dade58e27d0f0f
 
       </div>
     </div>

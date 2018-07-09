@@ -1,17 +1,35 @@
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\order_list.html";i:1531101165;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
 <!-- 海运运价 -->
-<{include file='./public/top' /}>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/index/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/index/css/font.css">
+    <link rel="stylesheet" href="/static/index/css/index.css">
+    <link rel="stylesheet" href="/static/index/css/top.css">
+    <link rel="stylesheet" href="/static/index/css/foot.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="/static/index/js/jquery-1.9.0.min.js"></script>
+    <script src="/static/index/layui/layui.js"></script>
+    
+</head>
 
   <body>
-    <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
+    <link rel="stylesheet" href="/static/index/css/hyyj.css">
+    <link rel="stylesheet" type="text/css" href="/static/index/css/iziModal.css">
     <div class="banner">
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
         <form class="layui-form layui-col-md12 x-so" id ="search_price">
         <div class="gnhy_nei layui-row" >
-            <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>"  placeholder="请输入起始地" class="layui-col-xs12" >
-            <input type="text" name="end_add"   id="end_add" value="<{$end_add ? $end_add : '';}>"  placeholder="请输入目的地" class="layui-col-xs12">
-            <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>"  placeholder="装货时间"     class="layui-col-xs12" id="date">
+            <input type="text" name="start_add" id="start_add" value="<?php echo !empty($start_add)?$start_add : '';; ?>"  placeholder="请输入起始地" class="layui-col-xs12" >
+            <input type="text" name="end_add"   id="end_add" value="<?php echo !empty($end_add)?$end_add : '';; ?>"  placeholder="请输入目的地" class="layui-col-xs12">
+            <input type="text" name="load_time" id="load_time" value="<?php echo !empty($load_time)?$load_time : '';; ?>"  placeholder="装货时间"     class="layui-col-xs12" id="date">
         </div>
             
         <div class="gnhy_di">
@@ -55,65 +73,65 @@
           </ul>
         </div>
         <!-- 查询内容 -->
-        <{volist name='list' id='vo'}>
+        <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
         <div class="nei_nei">
-            <{if condition="$vo['generalize']=1"}>
+            <?php if($vo['generalize']=1): ?>
             <div class="tj">
-                <img src="__STATIC__/image/tuijian.jpg" alt="">
+                <img src="/static/index/image/tuijian.jpg" alt="">
             </div>
-            <{/if}>
+            <?php endif; ?>
             
             <div class="hang_nei">
             <div class="nei_le">
                 <ul>
                 <li>
-                    <{$vo.ship_short_name}>
+                    <?php echo $vo['ship_short_name']; ?>
                     <div class="dian">
                         <i class="icon iconfont icon-chuan se"></i>&nbsp;
-                        <{if condition="$vo['middle_id']=0"}><span class="hui">直航</span>
-                        <{else /}><span class="hui">中转</span><{/if}>
+                        <?php if($vo['middle_id']=0): ?><span class="hui">直航</span>
+                        <?php else: ?><span class="hui">中转</span><?php endif; ?>
                     </div>
                  </li>
-                <li><{$vo.cutoff_date|date="Y-m-d",###}></li>
+                <li><?php echo date("Y-m-d",$vo['cutoff_date']); ?></li>
                 <li>
-                    <{$vo.shipping_date|date="Y-m-d",###}>
+                    <?php echo date("Y-m-d",$vo['shipping_date']); ?>
                     <div class="dian">
                         <i class="icon iconfont icon-dingwei se">&nbsp;</i>
-                        <span class="hui"><{$vo.s_port_name}></span>
+                        <span class="hui"><?php echo $vo['s_port_name']; ?></span>
                     </div>
                 </li>
                 <li class="zhi">
-                    <div class="hui"><{$vo.boat_name}></div>
+                    <div class="hui"><?php echo $vo['boat_name']; ?></div>
                         <div>
                             <div class="j"></div>
                         </div>
-                    <div class="hui"><{$vo.boat_code}></div>
+                    <div class="hui"><?php echo $vo['boat_code']; ?></div>
                 </li>
                 <li>
-                    <{$vo.ETA|date="Y-m-d",###}>
+                    <?php echo date("Y-m-d",$vo['ETA']); ?>
                     <div class="dian">
                         <i class="icon iconfont icon-dingwei se">&nbsp;</i>
-                        <span class="hui"><{$vo.e_port_name}></span>
+                        <span class="hui"><?php echo $vo['e_port_name']; ?></span>
                     </div>
                 </li>
-                <li><{$vo.EDD|date="Y-m-d",###}></li>
+                <li><?php echo date("Y-m-d",$vo['EDD']); ?></li>
                 <li>
-                    ￥<{$vo.price_20GP}>
+                    ￥<?php echo $vo['price_20GP']; ?>
                     <div class="dian">
-                        <a href="<{:url('Order/book')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=1" class="gp">下单</a>
+                        <a href="<?php echo url('index/Order/book'); ?>?sea_id=<?php echo $vo['sea_id']; ?>&s_car_id=<?php echo $vo['sid']; ?>&r_car_id=<?php echo $vo['rid']; ?>&container_size=1" class="gp">下单</a>
                     </div>
                 </li>
                 <li>
-                    ￥<{$vo.price_40HQ}>
-                    <div class="dian">
-                        <a href="<{:url('Order/book')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=2" class="gp">下单</a>
+                    ￥<?php echo $vo['price_40HQ']; ?>
+                     <div class="dian">
+                        <a href="<?php echo url('index/Order/book'); ?>?sea_id=<?php echo $vo['sea_id']; ?>&s_car_id=<?php echo $vo['sid']; ?>&r_car_id=<?php echo $vo['rid']; ?>&container_size=2" class="gp">下单</a>
                     </div>
                 </li>
               </ul>
             </div>
-            
+               
             <div class="nei_rig">
-                <a href="#" class="trigger-default">航线详情</a>
+                <a href="<?php echo url('Order/route_detail'); ?>?middle_id=<?php echo $vo['middle_id']; ?>" class="trigger-default">航线详情</a>
             </div>
             
             <div class="sm">
@@ -121,12 +139,10 @@
             </div>
             </div>
         </div>
-        <{/volist}>  
-        <div class="text-center" id="pages"></div>
-        
+        <?php endforeach; endif; else: echo "" ;endif; ?>  
 
+        <div class="text-center" id="pages"></div>
       </div>
-    </div>
 
     <!-- 模态窗口 -->
     <div id="modal-default" class="iziModal">
@@ -162,7 +178,7 @@
         </div>
       </div>
     </div>
-    <script src="__STATIC__/js/iziModal.min.js"></script>
+    <script src="/static/index/js/iziModal.min.js"></script>
     <script type="text/javascript">
       //模态窗口基本设置
       $("#modal-default").iziModal({
@@ -196,7 +212,7 @@
        function toajax (){
             $.ajax({
                 type:'GET',
-                url:"<{:url('index/order/hyyj')}>",    
+                url:"<?php echo url('index/order/order_list'); ?>",    
                 data:$("#search_price").serialize(),
                 dataType:"json",
                 success:function(data){
@@ -220,11 +236,11 @@
             //执行一个laypage实例
             laypage.render({
                 elem: 'pages', 
-                limit:<{$limit}>,
+                limit:<?php echo $limit; ?>,
                 limits:[5,10,15],
-                count:<{$count}>,
+                count:<?php echo $count; ?>,
                 layout:['count','prev', 'page', 'next','limit','skip'],
-                curr:<{$page}>,
+                curr:<?php echo $page; ?>,
                 theme: '#c00' ,
                 jump: function(obj, first){
                 //obj包含了当前分页的所有参数，比如：
@@ -233,7 +249,7 @@
                 //首次不执行
                 if(!first){
                   //do something
-                    window.location.href ="<{:url('index/Order/hyyj')}>?page="+obj.curr+'&limit='+obj.limit+'&start_add='+start_add+'&end_add='+end_add+'&load_time='+load_time;
+                    window.location.href ="<?php echo url('index/Order/order_list'); ?>?page="+obj.curr+'&limit='+obj.limit+'&start_add='+start_add+'&end_add='+end_add+'&load_time='+load_time;
                 }
             }
           });

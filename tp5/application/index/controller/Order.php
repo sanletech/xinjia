@@ -4,12 +4,14 @@ namespace app\index\controller;
 use app\index\common\Base;
 use app\index\model\Order as OrderM;
 use think\Db;
+use think\Session;
 class Order extends Base 
 {
     
     //海运运价
-    public function hyyj()
+    public function order_list()
     {
+   
         $start_add =$this->request->param('start_add');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
         $end_add =$this->request->param('end_add');
@@ -36,10 +38,11 @@ class Order extends Base
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
       //$this->_p($list);exit;
-       return $this->view->fetch('index/hyyj');
+       return $this->view->fetch('Order/order_list');
     }
     
-     //海运运价
+
+     //海运运价 分页数据
     public function pagedata()
     {
         $sea_pirce =new OrderM;
@@ -58,7 +61,7 @@ class Order extends Base
     }
     
     
-        //确认下单提交选择航线信息
+        //确认下单页面提交选择航线信息
     public function book()
     {
         $data =$this->request->param();
@@ -68,7 +71,7 @@ class Order extends Base
         $list = $sea_pirce ->book($data);
         $this->view->assign('list',$list);
       
-        return $this->view->fetch('index/lrdd');
+        return $this->view->fetch('Order/place_order');
     }
     
     //添加收/发货人的信息
@@ -89,7 +92,7 @@ class Order extends Base
       public function selectlinkman()
     {
         $data =$this->request->param();
-        $member_code =$data['member_code'];
+        $member_code =Session::get('member_code');
         $res = Db::name('linkman')->where('member_code',$member_code)->order('mtime desc')->select();
         //var_dump($res);exit;
         return json_encode($res);
@@ -108,22 +111,38 @@ class Order extends Base
               }
         json_encode($status);   
         return $status ;
+
     }
     
           //添加客户订单所有信息
       public function order_data()
     {
         $data =$this->request->param();
-        $this->_P($data);exit;
+       // $this->_P($data);exit;
        //线路价格sea_id r_id s_id  存进book_line表里
         $sea_id =$data['sea_id'];
         $rid =$data['rid'];
         $sid =$data['sid'];
         $sea_pirce =new OrderM;
-        $book_id = $sea_pirce ->book_line($sea_id,$rid,$sid);
-        
-        return json_encode($res);
+        $book_line_id = $sea_pirce ->book_line($sea_id,$rid,$sid);
+        unset($data['sea_id'],$data['rid'],$data['sid']);
+        $response = $sea_pirce ->order_data($data,$book_line_id);
+        if(!array_key_exists('fail', $response)){
+            $status =1; 
+        }else {
+            $status =0;  
+              }
+        json_encode($status);   
+        return $status ;
     }
     
-    
+    //中间航线详情
+     public function route_detail()
+    { 
+        $data =$this->request->param();
+        $this->_P($data);exit;
+         $sea_pirce =new OrderM;
+        $route_line= $sea_pirce ->route_detail($data);
+        return json_encode($route_line);
+     }
 }

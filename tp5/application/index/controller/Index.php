@@ -1,8 +1,8 @@
 <?php
 namespace app\index\controller;
 use think\Db;
-use app\index\common\Base;
-class Index extends Base 
+use think\Controller;
+class Index extends Controller
 {
    // 展示起始页导航
      public function index()

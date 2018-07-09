@@ -29,7 +29,8 @@ class Order extends Base
        if (request()->isAjax()){
            $data =$this->request->param();
            $id=  implode(',', $data['id']);
-           $sql = 'update hl_order_fahter set state = "2" where id  in'. $id;
+           $sql = 'update hl_order_father set state = "2" where id  in  ('.$id.')';
+           //var_dump($sql);exit;
            $res =Db::execute($sql);
            return json($res ? 1 : 0) ;
        }
@@ -78,8 +79,11 @@ class Order extends Base
     
     //处理订单订舱
     public function list_booking() 
-    {
-
+    {  
+        $container_num  = $this->request->input('get.container_num');
+        $order_num = $this->request->input('get.order_num');
+        $this->view->assign('order_num',$order_num);
+        $this->view->assign('container_num',$container_num);
         return $this->view->fetch('Order/list_booking');
     }
     //处理订单派车

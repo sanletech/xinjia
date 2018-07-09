@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\public\top.html";i:1530871397;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529651522;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\public\top.html";i:1531101165;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529651522;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,7 +88,7 @@
         }else if($(this).index() == 1) {//公共查询
           $('nav iframe').attr('src','<?php echo url('index/Index/check'); ?>');
         }else if($(this).index() == 2) {//海运运价
-          $('nav iframe').attr('src','<?php echo url('index/Index/hyyj'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Order/order_list'); ?>');
         }else if($(this).index() == 3) {//集装箱出售
           $('nav iframe').attr('src','<?php echo url('index/Index/container'); ?>');
         }else if($(this).index() == 4) {//新闻中心
