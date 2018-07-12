@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\public\top.html";i:1531101165;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1529651522;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:75:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\public\top.html";i:1531380783;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531300153;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\foot.html";i:1531300153;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +86,7 @@
         if($(this).index() == 0) { //首页
           $('nav iframe').attr('src','<?php echo url('index/Index/index_body'); ?>');
         }else if($(this).index() == 1) {//公共查询
-          $('nav iframe').attr('src','<?php echo url('index/Index/check'); ?>');
+          $('nav iframe').attr('src','<?php echo url('index/Cargotrack/query'); ?>');
         }else if($(this).index() == 2) {//海运运价
           $('nav iframe').attr('src','<?php echo url('index/Order/order_list'); ?>');
         }else if($(this).index() == 3) {//集装箱出售

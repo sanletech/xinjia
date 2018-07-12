@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\check.html";i:1531300153;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531300153;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\cargo_track.html";i:1531382123;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531300153;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,17 +38,16 @@
               <li>历史查询记录</li>
             </ul>
             <!-- 查询表单 -->
-            <form class="layui-form" action="">
+            <form class="layui-form" id ='track_form'>
               <div class="layui-form-item">
-                  <input type="text" name="title" required  lay-verify="required" placeholder="运单号" autocomplete="off" class="layui-input">
+                  <input type="text" name="waybillNum"  value="<?php echo !empty($waybillNum)?$waybillNum :''; ?>" required  lay-verify="required" placeholder="运单号" autocomplete="off" class="layui-input">
               </div>
-
               <div class="layui-form-item">
-                  <input type="text" name="title" required  lay-verify="required" placeholder="集装箱号" autocomplete="off" class="layui-input">
+                  <input type="text" name="boxNum" value="<?php echo !empty($boxNum)?$boxNum :''; ?>" required  lay-verify="required" placeholder="集装箱号" autocomplete="off" class="layui-input">
               </div>
 
               <div class="layui-form-item ti">
-                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">立即提交</button>
+                <button type ='button'class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" onclick="toajax ()"> 立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
               </div>
             </form>
@@ -113,7 +112,7 @@
                 <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
               </div>
               <div class="layui-input-inline" style="float:right;">
-                <button class="layui-btn btn_sou" lay-submit="" lay-filter="demo1">搜索</button>
+                  <button class="layui-btn btn_sou" lay-submit=""  lay-filter="demo1">搜索</button>
               </div>
             </div>
           </div>
@@ -140,6 +139,18 @@
       $('.head_ul li').click(function(event) {
         $(this).addClass('head_li').siblings('li').removeClass('head_li');
       });
+    function toajax (){
+      $.ajax({
+          type:'POST',
+          url:"<?php echo url('index/Cargotrack/tracking'); ?>",    
+          data:$("#track_form").serialize(),
+          dataType:"json",
+          success:function(status){
+                      console.log(status)
+                      }
+      })
+    }
+      
     </script>
   </body>
 </html>
