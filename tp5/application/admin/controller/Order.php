@@ -80,12 +80,27 @@ class Order extends Base
     //处理订单订舱
     public function list_booking() 
     {  
-        $container_num  = $this->request->input('get.container_num');
+         $data = $this->request->param();
+       
+        $container_num  = $this->request->input('put.container_num');
+         var_dump($container_num );exit;
         $order_num = $this->request->input('get.order_num');
         $this->view->assign('order_num',$order_num);
         $this->view->assign('container_num',$container_num);
         return $this->view->fetch('Order/list_booking');
     }
+    //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
+     public function waybillNum () 
+    {  
+        $data = $this->request->param();
+        var_dump($data);exit;
+        $track_num = explode(',', $data);
+        $trackM = new OrderM;
+        $response = $trackM ->waybillNum ();
+        return $this->view->fetch('Order/list_booking');
+    }
+    
+    
     //处理订单派车
     public function list_paiche() 
     {

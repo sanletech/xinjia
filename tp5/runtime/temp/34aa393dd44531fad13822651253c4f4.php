@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1531122270;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1531469939;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('确认','<?php echo url('Order/list_booking'); ?>',600,250)" href="javascript:;">确认</a>
+                        <a title="确认" onclick="x_admin_show('确认','<?php echo url('admin/Order/list_booking'); ?>?container_num=<?php echo $vo['container_num']; ?>&order_num<?php echo $vo['order_num']; ?>',600,250)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -129,54 +129,7 @@
                 </div>
               </div>
                 <?php endforeach; endif; else: echo "" ;endif; ?>
-<!--              <div class="nei urgent layui-col-md12">
-                <div class="top">
-                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
-                    <i class="layui-icon">&#xe605;</i>
-                    <span>创建时间：2018-03-08</span>
-                  </div>
-                  <span class="top_ma">
-                    <span>业务员：小猪</span>
-                    <span>船期：2018-03-05</span>
-                    <span>海上实效：4天</span>
-                    <span>离港时间：2018-05-10</span>
-                  </span>
-                </div>
-                <div class="cen">
-                  <div class="cen_le layui-col-md12">
-                    <div class="layui-col-md3">
-                      <p>运单号：178NJIYD045</p>
-                      <p>船名/航次：场景18/1782N</p>
-                    </div>
-                    <div class="layui-col-md3">
-                      <p>收货人：广州三乐科技有限公司</p>
-                      <p>货名：钢筋</p>
-                    </div>
-                    <div class="layui-col-md3">
-                      <p>航线：揭阳-青岛</p>
-                      <p>箱型*箱量：20GP*1</p>
-                    </div>
-                    <div class="layui-col-md2">
-                      <p class="se">状态：待订舱</p>
-                      <p class="se">天数：7天</p>
-                    </div>
-                    <div class="layui-col-md1">
-                      <p class="a_niu">
-                        <a href="">确认</a>
-                      </p>
-                      <p class="a_niu">
-                        <a class="qu" href="">取消</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
-                  <a title="删除" onclick="" href="javascript:;">删除订单</a>
-                </div>
-                  
-              </div>-->
+
             </div>
             <div class="page">
                 <div>

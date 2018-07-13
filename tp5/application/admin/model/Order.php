@@ -69,10 +69,10 @@ class Order extends Model
     }
     
     
-    //待订舱
-    public function order_book($container_num,$order_num){
-
-    
+   //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
+     public function waybillNum () 
+    {  
+         
     }
     
  

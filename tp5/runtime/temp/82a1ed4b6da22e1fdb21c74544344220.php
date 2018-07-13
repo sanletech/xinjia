@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1531138583;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1531471849;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,7 +24,7 @@
 
     <body>
         <link rel="stylesheet" href="/static/admin/css/route_add.css">
-        <form class="layui-form" action="">
+        <form class="layui-form" action="" id="waybillNum_form" >
         <input type="hidden" name='order_num' value="<?php echo $order_num; ?>">
         <input type="hidden" name='container_num' value="<?php echo $container_num; ?>">
             <div class="route layui-row">
@@ -32,15 +32,14 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">运单号：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
+                        <input type="text" name="waybillNum" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
                     </div>
                 </div>
 
                 <!-- 按钮 -->
                 <div class="layui-form-item">
                     <div class="layui-input-block an">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
-                        <button class="layui-btn cancel">下一步</button>
+                        <button class="layui-btn"  type="button"  onclick ='toajax()'>保存</button>
                     </div>
                 </div>
             </div>
@@ -67,6 +66,25 @@
                 });
 
             });
+            
+            
+    function toajax() {
+        $.ajax({
+          type: 'post',
+          url: "<?php echo url('admin/Order/waybillNum'); ?>",
+          data: $("#waybillNum_form").serialize(),
+          dataType: "json",
+          success: function (data) {
+            alert("提交成功");
+            if (data.status == 1) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        })
+      }
+            
         </script>
 
     </body>

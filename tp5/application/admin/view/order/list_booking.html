@@ -2,7 +2,7 @@
 
     <body>
         <link rel="stylesheet" href="__STATIC__/css/route_add.css">
-        <form class="layui-form" action="">
+        <form class="layui-form" action="" id="waybillNum_form" >
         <input type="hidden" name='order_num' value="<{$order_num}>">
         <input type="hidden" name='container_num' value="<{$container_num}>">
             <div class="route layui-row">
@@ -10,7 +10,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">运单号：</label>
                     <div class="layui-input-block">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
+                        <input type="text" name="waybillNum" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
                     </div>
                 </div>
 
@@ -49,11 +49,11 @@
     function toajax() {
         $.ajax({
           type: 'post',
-          url: "<{:url('admin/Contact/search')}>",
-          data: $("#searchform").serialize(),
+          url: "<{:url('admin/Order/waybillNum')}>",
+          data: $("#waybillNum_form").serialize(),
           dataType: "json",
           success: function (data) {
-            alert("1111");
+            alert("提交成功");
             if (data.status == 1) {
               return 1;
             } else {

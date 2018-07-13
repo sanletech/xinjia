@@ -18,14 +18,26 @@ class Cargotrack extends Controller {
         if($waybillNum){  $this->view->assign('waybillNum',$waybillNum);}
         $boxNum = $this->request->post('boxNum');
         if($boxNum){  $this->view->assign('boxNum',$boxNum);}
-
-    //$event = \think\Loader::controller('Logistics', 'event');;
-       // $event =new  \application\index\controller\Logistics();
+        $bz =  substr($waybillNum, 0,1);
+        switch($bz){
+            case 'Z';
+                $function_name ='zhonggu';
+                break;
+            case 'A';
+                $function_name ='antong';
+                break;
+            case 'P';
+                $function_name ='zhongyuan';
+                break;
+            default;
+                return ['message'=>'无此记录'];
+        }          
         $event =new Logistics();
-   // var_dump($event);exit;
-        $list = $event->zhonggu($waybillNum,$boxNum);
+        $list = $event->$function_name($waybillNum,$boxNum);
+        
         return json($list);
+        
     }
-    
-    
 }
+    
+  
