@@ -113,6 +113,7 @@ class Order extends Model
        // var_dump($member_code);exit;
         $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
         $order_num = $mtime.$member_code.rand(100,999);
+       // var_dump($order_num);exit;
         $cargo = $data['cargo'];
         $container_size = $data['container_size'];
         $container_num = $data['container_num'];
