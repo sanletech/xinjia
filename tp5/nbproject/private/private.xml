@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/controller/Order.php</file>
-<<<<<<< HEAD
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/controller/Login.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/common/Base.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/view/login/login.html</file>
-=======
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/view/index/lrdd.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/view/index/hyyj.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/price/price_route.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/model/Order.php</file>
->>>>>>> f5d7964112d8cfc0e11e4c08793c61d26dd7e36e
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/order/order_list.html</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/order/list_booking.html</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/model/Order.php</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/Order.php</file>
         </group>
     </open-files>
 </project-private>

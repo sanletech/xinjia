@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\cargo_track.html";i:1531393734;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531300153;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\index\cargo_track.html";i:1531712018;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531300153;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +45,7 @@
               <div class="layui-form-item">
                   <input type="text" name="boxNum" value="<?php echo !empty($boxNum)?$boxNum :''; ?>" required  lay-verify="required" placeholder="集装箱号" autocomplete="off" class="layui-input">
               </div>
-
+                      
               <div class="layui-form-item ti">
                 <button type ='button'class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo" onclick="toajax ()"> 立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>

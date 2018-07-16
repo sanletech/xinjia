@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\port\port_list.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:88:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\carshipman\shipman_list.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,7 +26,7 @@
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
-        <a href="">演示</a>
+        <a href="">车队</a>
         <a>
           <cite>导航元素</cite></a>
       </span>
@@ -35,15 +35,17 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-            <input type="text" name="port_name" value="<?php echo !empty($port_name)?$port_name :''; ?>" placeholder="请输入港口名" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        <form id="searchform" class="layui-form 
+              layui-col-md12 x-so" >
+            <input type="text" name="ship_name"  value="<?php echo !empty($searchship)?$searchship : '';; ?>"  placeholder="请输入船公司名字" autocomplete="off" class="layui-input">
+          <input type="text" name="port_name"    value="<?php echo !empty($searchport)?$searchport : '';; ?>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url("Port/port_add"); ?>',750,350)"><i class="layui-icon"></i>添加</button>
-       <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
+     <button class="layui-btn" onclick="x_admin_show('添加船队','<?php echo url('ShipMan/man_add'); ?>',750,500)"><i class="layui-icon"></i>添加</button>
+     <span class="x-right" style="line-height:40px"> 本页有<?php echo $count; ?>条记录</span>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -52,48 +54,64 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>港口名</th>
-            <th>所属城市</th>
-            <th>创建时间</th>
-            <th>操作</th>
-          </tr>
+            <th>船公司名</th>
+            <th>所属港口</th>
+            <th>姓名</th>
+            <th>职位</th>
+            <th>负责路线</th>
+            <th>电话</th>
+            <th>手机</th>
+            <th>QQ/微信</th>
+            <th>传真</th>
+            <th>操作</th></tr>
         </thead>
-        <tbody>
-        <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
-          <tr>
+    <tbody >
+       
+
+      <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
+   
+         <tr >
             <td>
-              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<?php echo $vo['id']; ?>'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata"><?php echo $vo['id']; ?></td>
-            <td class="tdata"><?php echo $vo['port_name']; ?></td>
-            <td><?php echo $vo['city']; ?></td>
-            <td><?php echo date("y-m-d",$vo['mtime']); ?></td>
+            <td><?php echo $vo['ship_short_name']; ?></td>
+            <td><?php echo $vo['port_name']; ?></td>
+            <td><?php echo $vo['name']; ?></td>
+            <td><?php echo $vo['position']; ?></td>
+            <td><?php echo $vo['duty_line']; ?></td>
+            <td><?php echo $vo['sn_tel']; ?></td>
+            <td><?php echo $vo['sn_mobile']; ?></td>
+            <td><?php echo $vo['sn_qq']; ?></td>
+            <td><?php echo $vo['sn_fax']; ?></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<?php echo url('Port/port_edit'); ?>?id=<?php echo $vo['id']; ?>',750,350)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>')" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
+              <a title="删除" onclick="member_del(this,'<?php echo $vo['id']; ?>') " href="javascript:;">
+                <i class="layui-icon">&#xe640;</i> 
               </a>
             </td>
           </tr>
-            <?php endforeach; endif; else: echo "" ;endif; ?>
-        </tbody>
+        <?php endforeach; endif; else: echo "" ;endif; ?>          
+        </tbody> 
       </table>
       <div class="page">
         <div>
-            <?php echo $page; ?>
+           <?php echo $page; ?>
         </div>
       </div>
 
     </div>
-<script>
-/*执行搜索车队或者港口*/
+      <div>
+          <div>
+ 
+    <script>
+           /*执行搜索车队或者港口*/
+           
     function search(){
          $.ajax({
                 type:'get',
-                url:"<?php echo url('admin/Port/port_list'); ?>",     
+                url:"<?php echo url('admin/ShipMan/man_list'); ?>",     
                 data: $("#searchform").serialize(),
+              //  data:{"success":true,"id":"1"} ,
                 dataType:"json",
                 async:false,
                 success:function(data){
@@ -103,21 +121,19 @@
                       return 0 ;
                  }
                          
-               }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-                console.log(XMLHttpRequest.status);
-               console.log(XMLHttpRequest.readyState);
-               console.log(textStatus);
-                  },
+               },   error: function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(XMLHttpRequest.status);
+                    console.log(XMLHttpRequest.readyState);
+                    console.log(textStatus);
+                },
 
         });
         return 1;
-    }    
-        
+    }
         
         
       layui.use('laydate', function(){
         var laydate = layui.laydate;
-        
         //执行一个laydate实例
         laydate.render({
           elem: '#start' //指定元素
@@ -128,8 +144,8 @@
           elem: '#end' //指定元素
         });
       });
-
-
+     
+  
       /*用户-删除*/
     function member_del(obj,did){
         layer.confirm('确认要删除吗？',function(index){
@@ -149,27 +165,29 @@
             //捉到所有被选中的，发异步进行删除
             var dataArray={id:data};
             toajax(dataArray);
-            layer.msg('删除成功', {icon: 1});
+             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
 
+
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<?php echo url('admin/Port/port_del'); ?>",    
+                url:"<?php echo url('admin/ShipMan/man_del'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
-                    if(data.status==1){
-                      return 1;
+                    if(data>0){
+                     layer.msg('删除成功', {icon: 1});
+                     $(".layui-form-checked").not('.header').parents('tr').remove();
                     }else{
                         return 0 ;
                   }
                 }
             })
-        };
-</script>
+        }
+    </script>
  
   </body>
 
