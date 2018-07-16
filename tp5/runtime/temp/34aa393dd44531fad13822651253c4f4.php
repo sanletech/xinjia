@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1531469939;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1531581737;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('确认','<?php echo url('admin/Order/list_booking'); ?>?container_num=<?php echo $vo['container_num']; ?>&order_num<?php echo $vo['order_num']; ?>',600,250)" href="javascript:;">确认</a>
+                        <a title="确认" onclick="x_admin_show('确认','<?php echo url('admin/Order/list_booking'); ?>?container_num=<?php echo $vo['container_num']; ?>&order_num=<?php echo $vo['order_num']; ?>',600,250)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>

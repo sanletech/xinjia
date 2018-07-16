@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1531118919;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530520898;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1531144594;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -689,7 +689,7 @@
                 success:function(status){
                    if(status ==1){
                         alert('提交表单成功');
-                        window.location.href="<{index/order/order_list}>"
+                        window.location.href="<?php echo url('index/order/order_list'); ?>"
                     }  
                 }
             });

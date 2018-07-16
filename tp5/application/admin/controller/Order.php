@@ -80,11 +80,8 @@ class Order extends Base
     //处理订单订舱
     public function list_booking() 
     {  
-         $data = $this->request->param();
-       
-        $container_num  = $this->request->input('put.container_num');
-         var_dump($container_num );exit;
-        $order_num = $this->request->input('get.order_num');
+        $container_num  = $this->request->param('container_num');
+        $order_num = $this->request->param('order_num');
         $this->view->assign('order_num',$order_num);
         $this->view->assign('container_num',$container_num);
         return $this->view->fetch('Order/list_booking');
@@ -93,10 +90,16 @@ class Order extends Base
      public function waybillNum () 
     {  
         $data = $this->request->param();
-        var_dump($data);exit;
-        $track_num = explode(',', $data);
+       // var_dump($data['waybillNum']);
+        $track_num =  preg_split('/[,|，| ]+/', $data['waybillNum'], -1, PREG_SPLIT_NO_EMPTY);
+        $container_num =$data['container_num'];
+        $order_num = $data['order_num'];
+        $track_sum =count($track_num);///输入的运单号码数量
+        if(!($track_sum ==$data['container_num']&& $track_sum==1)){
+            return '输入的运单号数量不对';
+        }
         $trackM = new OrderM;
-        $response = $trackM ->waybillNum ();
+        $response = $trackM ->waybillNum ($order_num,$container_num,$track_num, $track_sum);
         return $this->view->fetch('Order/list_booking');
     }
     
