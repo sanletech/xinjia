@@ -137,12 +137,12 @@ class Logistics extends Controller {
         $msectime =  (float)sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
         return $msectime;
     }
-    //中谷数据插入表中
+    //中谷数据插入表中 时间从旧到新
     public function  dataEntry($data_logistics,$waybillNum,$boxId,$boxNum){
         $num =count($data_logistics);
         $sqlNum = Db::name('logistic')->where('boxNum',$data_logistics['boxNum'])->count();
         if($num>$sqlNum){
-            $dataArray = array_slice($data_logistics, 0 ,-$sqlNum);
+            $dataArray = array_slice($data_logistics,$sqlNum);
             $response=[];
             for($i=0;$i<count($dataArray);$i++){
                 $data['describe'] = $dataArray[$i]['describe '];   
@@ -160,14 +160,15 @@ class Logistics extends Controller {
         
     }
     
-    //安通物流数据插入
+    //安通物流数据插入  时间从新到旧
     public function  dataAntong($data_logistics,$waybillNum,$boxId,$boxNum){
         
         $num =count($data_logistics);
         $rule ="/<a.*?>(.*)<\/a>/i";  //正则
         $sqlNum = Db::name('logistic')->where('boxNum',$data_logistics['boxNo'])->count();
         if($num>$sqlNum){
-            $dataArray = array_slice($data_logistics, ($sqlNum+1));
+            if($sqlNum ==0){$sqlNum = -$num;}
+            $dataArray = array_slice($data_logistics,0 ,(-$sqlNum));
             $response=[];
             for($i=0;$i<count($dataArray);$i++){
                 $data['describe'] = $dataArray[$i]['details'];   
@@ -190,13 +191,14 @@ class Logistics extends Controller {
         return $response ;
     }
     
-        //中远物流数据插入
+        //中远物流数据插入 时间从新到旧
     public function  dataZhongyuan($data_logistics,$waybillNum,$boxId,$boxNum){
-        
         $num =count($data_logistics);
-        $sqlNum = Db::name('logistic')->where('boxNum',$data_logistics['boxNo'])->count();
+        $sqlNum = Db::name('logistic_zhongyuan')->where("boxNum=:boxNum and waybillNum=:waybillNum")
+                ->bind(['boxNum'=>$boxNum,'waybillNum'=>$waybillNum])->count();
         if($num>$sqlNum){
-            $dataArray = array_slice($data_logistics, ($sqlNum+1));
+            if($sqlNum ==0){$sqlNum = -$num;}
+            $dataArray = array_slice($data_logistics,0 ,(-$sqlNum));
             $response=[];
             for($i=0;$i<count($dataArray);$i++){
                 $data['describe'] = $dataArray[$i]['details'];   
@@ -221,4 +223,5 @@ class Logistics extends Controller {
     
    
 
+    
 }

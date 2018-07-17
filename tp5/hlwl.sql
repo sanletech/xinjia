@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-07-09 20:18:49
+Date: 2018-07-17 18:13:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4258,6 +4258,92 @@ INSERT INTO `hl_linkman` VALUES ('8', '赵前程', '10086', '火星物流', '广
 INSERT INTO `hl_linkman` VALUES ('9', '路人贾一平', '10086110254', '赵富国有限公司', '广州天河客运站地铁五号线', '', null, '1530763515');
 
 -- ----------------------------
+-- Table structure for `hl_logistic`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_logistic`;
+CREATE TABLE `hl_logistic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `describe` varchar(255) DEFAULT '物流动态描述',
+  `czsj` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `code` varchar(20) DEFAULT NULL COMMENT '动态标题的顺序id',
+  `codeName` varchar(28) DEFAULT NULL COMMENT '动态标题',
+  `waybillNum` varchar(17) DEFAULT NULL COMMENT '运单号码',
+  `boxNum` varchar(18) DEFAULT NULL COMMENT '集装箱编码',
+  `boxId` varchar(18) DEFAULT NULL COMMENT '中谷对应的集装箱编码的id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_logistic
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `hl_logistic_antong`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_logistic_antong`;
+CREATE TABLE `hl_logistic_antong` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `describe` varchar(255) DEFAULT '物流动态描述',
+  `czsj` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `code` varchar(20) DEFAULT NULL COMMENT '动态标题的顺序id',
+  `codeName` varchar(28) DEFAULT NULL COMMENT '动态标题',
+  `waybillNum` varchar(17) DEFAULT NULL COMMENT '运单号码',
+  `boxNum` varchar(18) DEFAULT NULL COMMENT '集装箱编码',
+  `boxId` varchar(18) DEFAULT NULL COMMENT '中谷对应的集装箱编码的id',
+  `shipName` varchar(10) DEFAULT NULL COMMENT '船名',
+  `currentPort` varchar(30) DEFAULT NULL COMMENT '当前港口',
+  `nextPort` varchar(30) DEFAULT NULL COMMENT '下一个港口',
+  `operationType` varchar(10) DEFAULT NULL COMMENT '状态说明',
+  `voyage` varchar(10) DEFAULT NULL COMMENT '航次',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_logistic_antong
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `hl_logistic_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_logistic_info`;
+CREATE TABLE `hl_logistic_info` (
+  `id` int(11) NOT NULL,
+  `waybillNum` varchar(18) DEFAULT NULL COMMENT '运单号码',
+  `portName` varchar(10) DEFAULT NULL COMMENT '港口名称',
+  `bright` varchar(4) DEFAULT NULL COMMENT '是否到达',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_logistic_info
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `hl_logistic_zhongyuan`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_logistic_zhongyuan`;
+CREATE TABLE `hl_logistic_zhongyuan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `describe` varchar(255) DEFAULT '物流动态描述',
+  `czsj` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `code` varchar(20) DEFAULT NULL COMMENT '动态标题的顺序id',
+  `codeName` varchar(28) DEFAULT NULL COMMENT '动态标题',
+  `waybillNum` varchar(17) DEFAULT NULL COMMENT '运单号码',
+  `boxNum` varchar(18) DEFAULT NULL COMMENT '集装箱编码',
+  `boxId` varchar(18) DEFAULT NULL COMMENT '中谷对应的集装箱编码的id',
+  `shipName` varchar(10) DEFAULT NULL COMMENT '船名',
+  `currentPort` varchar(30) DEFAULT NULL COMMENT '当前港口',
+  `nextPort` varchar(30) DEFAULT NULL COMMENT '下一个港口',
+  `operationType` varchar(10) DEFAULT NULL COMMENT '状态说明',
+  `voyage` varchar(10) DEFAULT NULL COMMENT '航次',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_logistic_zhongyuan
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `hl_member`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_member`;
@@ -4363,7 +4449,7 @@ CREATE TABLE `hl_order_comment` (
   `sign_receipt` int(11) DEFAULT NULL COMMENT '是否需要箱内签会单1需要2不需要',
   `mtime` varchar(12) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_comment
@@ -4372,6 +4458,7 @@ INSERT INTO `hl_order_comment` VALUES ('1', '1531116252kehu001992', '1', '1', '2
 INSERT INTO `hl_order_comment` VALUES ('2', '1531118326kehu001205', '势必就是_10086', '2', '1', '9', '1', '1', '1531118326');
 INSERT INTO `hl_order_comment` VALUES ('3', '1531118344kehu001875', '势必就是_10086', '2', '1', '9', '1', '1', '1531118344');
 INSERT INTO `hl_order_comment` VALUES ('4', '1531119660kehu001132', '2', '2', '2', '9', '1', '1', '1531119660');
+INSERT INTO `hl_order_comment` VALUES ('5', '1531190282kehu001737', '三大发射的_10086', '1', '1', '9', '1', '1', '1531190282');
 
 -- ----------------------------
 -- Table structure for `hl_order_father`
@@ -4393,7 +4480,7 @@ CREATE TABLE `hl_order_father` (
   `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
   `state` int(1) DEFAULT NULL COMMENT '1为待审核 2为审核通过',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_father
@@ -4404,6 +4491,7 @@ INSERT INTO `hl_order_father` VALUES ('3', '1531107265kehu001555', '钢材', '1'
 INSERT INTO `hl_order_father` VALUES ('4', '1531118326kehu001205', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '1531118326', '1', '1', 'kehu001', '2');
 INSERT INTO `hl_order_father` VALUES ('5', '1531118344kehu001875', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '1531118344', '1', '1', 'kehu001', '2');
 INSERT INTO `hl_order_father` VALUES ('6', '1531119660kehu001132', '黄金沙子', '1', '1', '100', '1000', '1', '昂贵物品丢失不赔', '1531119660', '1', '1', 'kehu001', '2');
+INSERT INTO `hl_order_father` VALUES ('7', '1531190282kehu001737', '饮料', '1', '3', '100', '100', '2', '发货所得税法撒旦法', '1531190282', '1', '3', 'kehu001', '2');
 
 -- ----------------------------
 -- Table structure for `hl_order_grandad`
@@ -5217,7 +5305,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1531101792', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1531717241', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
