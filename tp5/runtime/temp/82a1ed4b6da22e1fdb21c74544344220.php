@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1531481520;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1531914850;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -75,11 +75,11 @@
           data: $("#waybillNum_form").serialize(),
           dataType: "json",
           success: function (data) {
-            alert("提交成功");
             if (data.status == 1) {
-              return 1;
+                alert("提交成功");
+                parent.location.reload()
             } else {
-              return 0;
+              alert(data.msg+"提交失败");
             }
           }
         })

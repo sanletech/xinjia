@@ -53,11 +53,11 @@
           data: $("#waybillNum_form").serialize(),
           dataType: "json",
           success: function (data) {
-            alert("提交成功");
             if (data.status == 1) {
-              return 1;
+                alert("提交成功");
+                parent.location.reload()
             } else {
-              return 0;
+              alert(data.msg+"提交失败");
             }
           }
         })

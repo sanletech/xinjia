@@ -70,23 +70,26 @@ class Order extends Model
     
     
    //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
-     public function waybillNum ($order_num,$container_num,$track_num, $track_sum)
-    {   
+    //订单号 集装箱数量, 运单号, 运单号数量
+     public function waybillNum ($order_num,$container_num,$track_num, $track_sum){
+         //输入一个订单 就填充集装箱数量个订单号
         if($track_sum ==1){
             $j= $container_num;
-            $track_num = array_fill(0,$track_sum,$track_num['0']);
+            $track_num = array_fill(0,$container_num,$track_num['0']);
         }else{
             $j= $track_sum;
         }
-        
+        $str ='';
         for($i=0;$i<$j;$i++){
-            $str .= '($data["order_num"],$track_num[$i],$i) ,';   
+            $str .= "('$order_num','$track_num[$i]','$i') ,";   
         }
         $str = rtrim($str,',');
         $sql ="insert into hl_order_son(order_num,track_num,container_code) values".$str;
+   //   var_dump($sql);exit;
         $res =Db::execute($sql);
         $respones =[];
         $res ? $respones[]['success']='添加运单号成功' :$respones[]['fail']='添加运单号失败';
+       // var_dump($respones);exit;
         return $respones;
     }
     

@@ -7,6 +7,7 @@ use app\admin\common\Base;
 use think\Request;
 use think\Db;
 use app\admin\model\Order as OrderM;
+use think\Validate;
 class Order extends Base
 {   
     
@@ -92,21 +93,40 @@ class Order extends Base
         $data = $this->request->param();
        // var_dump($data['waybillNum']);
         $track_num =  preg_split('/[,|，| ]+/', $data['waybillNum'], -1, PREG_SPLIT_NO_EMPTY);
-        $container_num =$data['container_num'];
+        $container_num = $data['container_num'];
+        settype($container_num,'integer'); //转换成int类型
         $order_num = $data['order_num'];
         $track_sum =count($track_num);///输入的运单号码数量
-        if(!($track_sum ==$data['container_num']&& $track_sum==1)){
-            return '输入的运单号数量不对';
+        //运单号,订单号,集装箱数量,输入的运单号数量
+        $data=array('track_num'=>$track_num ,'order_num'=>$order_num,'container_num'=>$container_num,'track_sum'=>$track_sum);
+        $result = $this->validate($data ,'Order');
+        if(true !== $result){
+            // 验证失败 输出错误信息
+            return json(['msg'=>$result,'status'=>0]);
         }
+
         $trackM = new OrderM;
         $response = $trackM ->waybillNum ($order_num,$container_num,$track_num, $track_sum);
-        return $this->view->fetch('Order/list_booking');
+        if(!array_key_exists('fail', $response)){
+            //将对应的order_father 的 state 状态改为3
+            $sql = "update hl_order_father set state = '3' where order_num = '$order_num' ";
+            $res =Db::execute($sql);
+            $status =['msg'=>'录入运单号成功','status'=>1];
+            if($res!==1){
+                $status =['msg'=>'修改录入运单号失败','status'=>0];
+            }
+            
+        }else   {
+            $status =['msg'=>'录入运单号失败','status'=>0]; 
+        }
+        return json($status);  
     }
     
     
     //处理订单派车
     public function list_paiche() 
     {
+        
         return $this->view->fetch('Order/list_paiche');
     }
     //处理订单送货
