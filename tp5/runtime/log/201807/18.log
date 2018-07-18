@@ -4935,3 +4935,283 @@
 [ sql ] [ SQL ] SHOW COLUMNS FROM `hl_order_father` [ RunTime:0.000000s ]
 [ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM ( SELECT `OF`.`id`,`OF`.`order_num`,`SA`.`salesname`,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,P2.port_name e_port_name,`OF`.`cargo`,`CS`.`type`,`OF`.`container_num`,`SC`.`ship_short_name`,`B`.`boat_code`,`B`.`boat_name`,`OF`.`mtime`,`SP`.`shipping_date`,`SP`.`sea_limitation`,`SP`.`cutoff_date`,`LK2`.`company` FROM `hl_order_father` `OF` LEFT JOIN `hl_container_size` `CS` ON `CS`.`id`=`OF`.`container_size` LEFT JOIN `hl_book_line` `BL` ON `BL`.`id`=`OF`.`book_line_id` LEFT JOIN `hl_seaprice` `SP` ON `SP`.`id`=`BL`.`seaprice_id` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` LEFT JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`SP`.`ship_id` LEFT JOIN `hl_boat` `B` ON `B`.`boat_code`=`SP`.`boat_code` LEFT JOIN `hl_sales_member` `SM` ON `SM`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_salesman` `SA` ON `SA`.`sales_code`=`SM`.`sales_code` LEFT JOIN `hl_member` `MB` ON `MB`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_order_add` `OA` ON `OA`.`id`=`OF`.`add_id` LEFT JOIN `hl_linkman` `LK2` ON `OA`.`r_linkman_id`=`LK2`.`id` WHERE  `OF`.`state` = '2' GROUP BY `OF`.`id` ORDER BY OF.id ,OF.mtime desc ) A LIMIT 1 [ RunTime:0.010000s ]
 [ sql ] [ SQL ] SELECT * FROM ( SELECT `OF`.`id`,`OF`.`order_num`,`SA`.`salesname`,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,P2.port_name e_port_name,`OF`.`cargo`,`CS`.`type`,`OF`.`container_num`,`SC`.`ship_short_name`,`B`.`boat_code`,`B`.`boat_name`,`OF`.`mtime`,`SP`.`shipping_date`,`SP`.`sea_limitation`,`SP`.`cutoff_date`,`LK2`.`company` FROM `hl_order_father` `OF` LEFT JOIN `hl_container_size` `CS` ON `CS`.`id`=`OF`.`container_size` LEFT JOIN `hl_book_line` `BL` ON `BL`.`id`=`OF`.`book_line_id` LEFT JOIN `hl_seaprice` `SP` ON `SP`.`id`=`BL`.`seaprice_id` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` LEFT JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`SP`.`ship_id` LEFT JOIN `hl_boat` `B` ON `B`.`boat_code`=`SP`.`boat_code` LEFT JOIN `hl_sales_member` `SM` ON `SM`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_salesman` `SA` ON `SA`.`sales_code`=`SM`.`sales_code` LEFT JOIN `hl_member` `MB` ON `MB`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_order_add` `OA` ON `OA`.`id`=`OF`.`add_id` LEFT JOIN `hl_linkman` `LK2` ON `OA`.`r_linkman_id`=`LK2`.`id` WHERE  `OF`.`state` = '2' GROUP BY `OF`.`id` ORDER BY OF.id ,OF.mtime desc ) A LIMIT 0,5 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-07-18T20:06:54+08:00 ] 127.0.0.1 GET /admin.php/order/list_paiche.html
+[ info ] www.tp5.com/admin.php/order/list_paiche.html [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：1,589.26kb] [文件加载：42]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'list_paiche',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/order/order_list.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; Hm_lvt_aba1a55910444a23dbcad68d17658d63=1531218518; gr_user_id=0614123d-ea9c-43d1-83ab-2f5e1af46b7c; PHPSESSID=5qpp936m9036c4lliq648n9me3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Order->list_paiche[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_paiche.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-18T20:18:32+08:00 ] 127.0.0.1 GET /admin.php/order/list_paiche.html
+[ info ] www.tp5.com/admin.php/order/list_paiche.html [运行时间：0.513000s][吞吐率：1.95req/s] [内存消耗：2,506.40kb] [文件加载：50]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'list_paiche',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/order/order_list.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; Hm_lvt_aba1a55910444a23dbcad68d17658d63=1531218518; gr_user_id=0614123d-ea9c-43d1-83ab-2f5e1af46b7c; PHPSESSID=5qpp936m9036c4lliq648n9me3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Order->list_paiche[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ LOG ] INIT File
+[ error ] [1]Call to a member function render() on null[E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php:131]
+---------------------------------------------------------------
+[ 2018-07-18T20:18:57+08:00 ] 127.0.0.1 GET /admin.php/order/order_list.html
+[ info ] www.tp5.com/admin.php/order/order_list.html [运行时间：0.070000s][吞吐率：14.29req/s] [内存消耗：2,727.64kb] [文件加载：51]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'order_list',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/order/order_list.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; Hm_lvt_aba1a55910444a23dbcad68d17658d63=1531218518; gr_user_id=0614123d-ea9c-43d1-83ab-2f5e1af46b7c; PHPSESSID=5qpp936m9036c4lliq648n9me3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Order->order_list[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ DB ] INIT mysql
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html [ array (
+  0 => 'count_book',
+  1 => 'list_book',
+  2 => 'page_book',
+) ]
+[ info ] [ LOG ] INIT File
+[ sql ] [ DB ] CONNECT:[ UseTime:0.010000s ] mysql:host=127.0.0.1;dbname=hlwl;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `hl_order_father` [ RunTime:0.000000s ]
+[ sql ] [ SQL ] SELECT COUNT(*) AS tp_count FROM ( SELECT `OF`.`id`,`OF`.`order_num`,`SA`.`salesname`,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,P2.port_name e_port_name,`OF`.`cargo`,`CS`.`type`,`OF`.`container_num`,`SC`.`ship_short_name`,`B`.`boat_code`,`B`.`boat_name`,`OF`.`mtime`,`SP`.`shipping_date`,`SP`.`sea_limitation`,`SP`.`cutoff_date`,`LK2`.`company` FROM `hl_order_father` `OF` LEFT JOIN `hl_container_size` `CS` ON `CS`.`id`=`OF`.`container_size` LEFT JOIN `hl_book_line` `BL` ON `BL`.`id`=`OF`.`book_line_id` LEFT JOIN `hl_seaprice` `SP` ON `SP`.`id`=`BL`.`seaprice_id` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` LEFT JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`SP`.`ship_id` LEFT JOIN `hl_boat` `B` ON `B`.`boat_code`=`SP`.`boat_code` LEFT JOIN `hl_sales_member` `SM` ON `SM`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_salesman` `SA` ON `SA`.`sales_code`=`SM`.`sales_code` LEFT JOIN `hl_member` `MB` ON `MB`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_order_add` `OA` ON `OA`.`id`=`OF`.`add_id` LEFT JOIN `hl_linkman` `LK2` ON `OA`.`r_linkman_id`=`LK2`.`id` WHERE  `OF`.`state` = '2' GROUP BY `OF`.`id` ORDER BY OF.id ,OF.mtime desc ) A LIMIT 1 [ RunTime:0.010000s ]
+[ sql ] [ SQL ] SELECT * FROM ( SELECT `OF`.`id`,`OF`.`order_num`,`SA`.`salesname`,`SB`.`sl_start`,P1.port_name s_port_name,`SB`.`sl_end`,P2.port_name e_port_name,`OF`.`cargo`,`CS`.`type`,`OF`.`container_num`,`SC`.`ship_short_name`,`B`.`boat_code`,`B`.`boat_name`,`OF`.`mtime`,`SP`.`shipping_date`,`SP`.`sea_limitation`,`SP`.`cutoff_date`,`LK2`.`company` FROM `hl_order_father` `OF` LEFT JOIN `hl_container_size` `CS` ON `CS`.`id`=`OF`.`container_size` LEFT JOIN `hl_book_line` `BL` ON `BL`.`id`=`OF`.`book_line_id` LEFT JOIN `hl_seaprice` `SP` ON `SP`.`id`=`BL`.`seaprice_id` LEFT JOIN `hl_ship_route` `SR` ON `SR`.`id`=`SP`.`route_id` LEFT JOIN `hl_sea_bothend` `SB` ON `SB`.`sealine_id`=`SR`.`bothend_id` LEFT JOIN `hl_port` `P1` ON `P1`.`port_code`=`SB`.`sl_start` LEFT JOIN `hl_port` `P2` ON `P2`.`port_code`=`SB`.`sl_end` LEFT JOIN `hl_shipcompany` `SC` ON `SC`.`id`=`SP`.`ship_id` LEFT JOIN `hl_boat` `B` ON `B`.`boat_code`=`SP`.`boat_code` LEFT JOIN `hl_sales_member` `SM` ON `SM`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_salesman` `SA` ON `SA`.`sales_code`=`SM`.`sales_code` LEFT JOIN `hl_member` `MB` ON `MB`.`member_code`=`OF`.`member_code` LEFT JOIN `hl_order_add` `OA` ON `OA`.`id`=`OF`.`add_id` LEFT JOIN `hl_linkman` `LK2` ON `OA`.`r_linkman_id`=`LK2`.`id` WHERE  `OF`.`state` = '2' GROUP BY `OF`.`id` ORDER BY OF.id ,OF.mtime desc ) A LIMIT 0,5 [ RunTime:0.000000s ]
+---------------------------------------------------------------
+[ 2018-07-18T20:18:59+08:00 ] 127.0.0.1 GET /admin.php/order/list_booking.html?container_num=3&order_num=1531118326kehu001205
+[ info ] www.tp5.com/admin.php/order/list_booking.html?container_num=3&order_num=1531118326kehu001205 [运行时间：0.040000s][吞吐率：25.00req/s] [内存消耗：1,503.82kb] [文件加载：41]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'list_booking',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/order/order_list.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; Hm_lvt_aba1a55910444a23dbcad68d17658d63=1531218518; gr_user_id=0614123d-ea9c-43d1-83ab-2f5e1af46b7c; PHPSESSID=5qpp936m9036c4lliq648n9me3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+  'container_num' => '3',
+  'order_num' => '1531118326kehu001205',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Order->list_booking[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html [ array (
+  0 => 'order_num',
+  1 => 'container_num',
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-18T20:19:04+08:00 ] 127.0.0.1 GET /admin.php/order/list_paiche.html
+[ info ] www.tp5.com/admin.php/order/list_paiche.html [运行时间：0.030000s][吞吐率：33.33req/s] [内存消耗：1,441.58kb] [文件加载：40]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'list_paiche',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/order/order_list.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; Hm_lvt_aba1a55910444a23dbcad68d17658d63=1531218518; gr_user_id=0614123d-ea9c-43d1-83ab-2f5e1af46b7c; PHPSESSID=5qpp936m9036c4lliq648n9me3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Order->list_paiche[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_paiche.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-18T20:19:07+08:00 ] 127.0.0.1 GET /admin.php/order/list_paiche.html?title=&title=&title=&title=&title=&title=&title=&date1=&title=
+[ info ] www.tp5.com/admin.php/order/list_paiche.html?title=&title=&title=&title=&title=&title=&title=&date1=&title= [运行时间：0.050000s][吞吐率：20.00req/s] [内存消耗：1,442.16kb] [文件加载：40]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'list_paiche',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/order/list_paiche.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; Hm_lvt_aba1a55910444a23dbcad68d17658d63=1531218518; gr_user_id=0614123d-ea9c-43d1-83ab-2f5e1af46b7c; PHPSESSID=5qpp936m9036c4lliq648n9me3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+  'title' => '',
+  'date1' => '',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Order->list_paiche[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_paiche.html [ array (
+) ]
+[ info ] [ LOG ] INIT File
+---------------------------------------------------------------
+[ 2018-07-18T20:19:08+08:00 ] 127.0.0.1 GET /admin.php/order/list_paiche.html
+[ info ] www.tp5.com/admin.php/order/list_paiche.html [运行时间：0.049000s][吞吐率：20.41req/s] [内存消耗：1,441.58kb] [文件加载：40]
+[ info ] [ LANG ] E:\xampp\htdocs\xinjia\tp5\thinkphp\lang\zh-cn.php
+[ info ] [ BIND ] 'admin'
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'admin',
+    1 => 'order',
+    2 => 'list_paiche',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'host' => 'www.tp5.com',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'accept-language' => 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+  'accept-encoding' => 'gzip, deflate',
+  'referer' => 'http://www.tp5.com/admin.php/order/order_list.html',
+  'cookie' => 'thinkphp_show_page_trace=0|0; pgv_pvi=9210117120; hibext_instdsigdipv2=1; _ga=GA1.2.1868033078.1526888261; Hm_lvt_aba1a55910444a23dbcad68d17658d63=1531218518; gr_user_id=0614123d-ea9c-43d1-83ab-2f5e1af46b7c; PHPSESSID=5qpp936m9036c4lliq648n9me3',
+  'connection' => 'keep-alive',
+  'upgrade-insecure-requests' => '1',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ RUN ] app\admin\controller\Order->list_paiche[ E:\xampp\htdocs\xinjia\tp5\application\admin\controller\Order.php ]
+[ info ] [ VIEW ] E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_paiche.html [ array (
+) ]
+[ info ] [ LOG ] INIT File

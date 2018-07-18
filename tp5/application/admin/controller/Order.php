@@ -125,8 +125,15 @@ class Order extends Base
     
     //处理订单派车
     public function list_paiche() 
-    {
-        
+    {   
+//        $data = new OrderM;
+//        $list = $data->sendCarList();
+//        $page =$list->render();
+//        $count =  count($list);
+////      $this->_p($list);exit;
+//        $this->view->assign('count_book',$count);
+//        $this->view->assign('list_book',$list);
+//        $this->view->assign('page_book',$page);
         return $this->view->fetch('Order/list_paiche');
     }
     //处理订单送货
