@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1531300153;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531300153;}*/ ?>
+=======
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1532007117;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531988465;}*/ ?>
+>>>>>>> 87af6a8b3914733b03447866a77790414dfe9446
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,14 +92,10 @@
           <div class="xx" style="margin-bottom:0px;">
             <strong>委托信息</strong>
             <div class="er_anniu">
-              <input type="button" class="se wt1" onclick="selectlink();javascript:void(0);" value="选择">
+              <input type="button" class="se wt1" onclick="selectlink('<?php echo url("index/order/selectlinkman"); ?>');" value="选择">
               <input type="button" class="se wt2" onclick="javascript:void(0);" value="添加">
               <input type="button" class="se wt3" onclick="xiu();" value="修改">
               <input type="button" class="se wt4" onclick="javascript:void(0);" value="设置为默认">
-              <!-- <button class="se wt1">选择</button>
-              <button class="se wt2">添加</button>
-              <button class="se wt3" onclick="xiu()">修改</button>
-              <button class="se wt4">设置为默认</button> -->
             </div>
           </div>
           <div class="layui-row" style="padding-bottom: 10px;">
@@ -121,15 +121,7 @@
                   <input type="text" name="r_phone" value="" readonly='readonly' class="in">
                 </div>
               </div>
-              <div class="grid-demo">
-                <div class="layui-col-xs3">装货门店：</div>
-                <div class="layui-col-xs9">
-                  <d>广东省</d>
-                  <d>广州市</d>
-                  <d>天河区</d>
-                  <d>长福路</d>
-                </div>
-              </div>
+
               <div class="grid-demo">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>装货详情地址：</div>
@@ -159,15 +151,6 @@
                   <span>*&nbsp;</span>收货联系人电话：</div>
                 <div class="layui-col-xs9">
                   <input type="text" name="s_phone" value="" readonly='readonly' class="in">
-                </div>
-              </div>
-              <div class="grid-demo">
-                <div class="layui-col-xs3">收货门店：</div>
-                <div class="layui-col-xs9">
-                  <d>广东省</d>
-                  <d>广州市</d>
-                  <d>天河区</d>
-                  <d>长福路</d>
                 </div>
               </div>
               <div class="grid-demo">
@@ -369,7 +352,7 @@
                 <span>*&nbsp;</span>结账方式：</div>
               <div class="layui-col-xs6">
                 <div class="select">
-                  <select name='payment_method''>
+                  <select name='payment_method'>
                     <option  value='0' selected>请选择</option>
                     <option  value='1'>到港付</option>
                     <option  value='2'>月结付</option>
@@ -505,80 +488,15 @@
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
               <div class="layui-tab-item layui-show">
-                <ul class="xin">
+                <ul class="xin song">
                       <!--送货人-->
-                  <li class='layui-col-xs6'>
-                    <div class="nei">
-                      <div class="le">
-                        <div class="tiao">姓名：</div>
-                        <div class="tiao">手机号：</div>
-                        <div class="tiao">公司名：</div>
-                        <div class="tiao">装货地址：</div>
-                      </div>
-                      <div class="rig">
-                        <div class="tiao">刘某</div>
-                        <div class="tiao">21346498797</div>
-                        <div class="tiao">广州三乐可以有限公司</div>
-                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li class='layui-col-xs6'>
-                    <div class="nei">
-                      <div class="le">
-                        <div class="tiao">姓名：</div>
-                        <div class="tiao">手机号：</div>
-                        <div class="tiao">公司名：</div>
-                        <div class="tiao">装货地址：</div>
-                      </div>
-                      <div class="rig">
-                        <div class="tiao">刘某</div>
-                        <div class="tiao">21346498797</div>
-                        <div class="tiao">广州三乐可以有限公司</div>
-                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
-                      </div>
-                    </div>
-                  </li>
-				  
-		<li class='layui-col-xs6'>
-                    <div class="nei">
-                      <div class="le">
-                        <div class="tiao">姓名：</div>
-                        <div class="tiao">手机号：</div>
-                        <div class="tiao">公司名：</div>
-                        <div class="tiao">装货地址：</div>
-                      </div>
-                      <div class="rig">
-                        <div class="tiao">刘某</div>
-                        <div class="tiao">21346498797</div>
-                        <div class="tiao">广州三乐可以有限公司</div>
-                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
-                      </div>
-                    </div>
-                  </li>
-                  
+                  <!-- ajax添加数据 -->
                 </ul>
               </div>
                    <!--收货人-->
               <div class="layui-tab-item">
-                <ul class="xin">
-                  <li class='layui-col-xs6'>
-                    <div class="nei">
-                      <div class="le">
-                        <div class="tiao">姓名：</div>
-                        <div class="tiao">手机号：</div>
-                        <div class="tiao">公司名：</div>
-                        <div class="tiao">装货地址：</div>
-                      </div>
-                      <div class="rig">
-                        <div class="tiao">刘某</div>
-                        <div class="tiao">21346498797</div>
-                        <div class="tiao">广州三乐可以有限公司</div>
-                        <div class="tiao wu">啊撒娇发拉萨解撒旦发装货地址</div>
-                      </div>
-                    </div>
-                  </li>
+                <ul class="xin shou">
+                  <!-- ajax添加数据 -->
                 </ul>
 
               </div>
@@ -630,71 +548,7 @@
             </from>
         </div>
       </div>
-      
-
     <script src="/static/index/js/iziModal.min.js"></script>
     <script src="/static/index/js/lrdd.js"></script>
-    <script>
-      
-          //根据选择的箱子数量 计算总价格
-//          $('#container_num').bind('select propertychange', function () {
-//              var price = (this.value )*('<?php echo $list['price']; ?>');
-//              alert(price);
-//           // $('#price_sum').html('￥'+price);
-//        })
-          
-          
-        // 接受后台的联系人资料
-       window.onload = function (){ 
-            var url = "<?php echo url('index/order/selectlinkman'); ?>";
-            var member_code = 'kehu001';
-            var data = {'member_code':member_code};
-           $.ajax({
-                type:'POST',
-                url:url,    
-                data:data,
-                dataType:"json",
-                success:function(status){
-                    //接受数据 展示页面
-                }   
-            });
-        }
-        //收货/发货人的表单提交 
-        function linkman_btn(){
-            var url = "<?php echo url('index/order/linkman'); ?>";
-            var data = $("#linkman_form").serialize();
-            toajax (url,data);
-        }
-        
-           //发票的信息提交 
-        function invoice(){
-            var url = "<?php echo url('index/order/invoice'); ?>";
-            var data = $("#invoice_form").serialize();
-            toajax (url,data);
-        }
-        
-        //订单信息的提交
-        function order_data(){
-            var url = "<?php echo url('index/order/order_data'); ?>";
-            var data = $("#order_data_form").serialize();
-            toajax (url,data);
-        }
-        
-       function toajax (url,data){
-            $.ajax({
-                type:'POST',
-                url:url,    
-                data:data,
-                dataType:"json",
-                success:function(status){
-                   if(status ==1){
-                        alert('提交表单成功');
-                        window.location.href="<?php echo url('index/order/order_list'); ?>"
-                    }  
-                }
-            });
-                //return false;//只此一句
-        }
-    </script>
   </body>
   </html>
