@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:78:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\public\middle.html";i:1528888058;s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_waste.html";i:1526615141;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1524122628;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_waste.html";i:1531995199;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,7 +37,7 @@
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
           <input type="text" name="car_name"  placeholder="创建时间-始" autocomplete="off" class="layui-input" id="start">
-          <input type="text" name="port"  placeholder="创建时间-终" autocomplete="off" class="layui-input" id="end">
+          <input type="text" name="port"      placeholder="创建时间-终" autocomplete="off" class="layui-input" id="end">
           <input type="text" name="username"  placeholder="收货联系人" autocomplete="off" class="layui-input">
           <input type="text" name="username"  placeholder="装货公司名全称" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>

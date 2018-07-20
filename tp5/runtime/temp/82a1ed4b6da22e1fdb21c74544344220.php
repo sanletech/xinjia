@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1531914850;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1532081160;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -39,7 +39,7 @@
                 <!-- 按钮 -->
                 <div class="layui-form-item">
                     <div class="layui-input-block an">
-                        <button class="layui-btn"  type="button"  onclick ='toajax()'>保存</button>
+                       <button type="button" class="layui-btn" onclick ='toajax()'>保存</button>
                     </div>
                 </div>
             </div>
@@ -47,25 +47,25 @@
         </form>
 
         <script type="text/javascript">
-            $('.cancel').click(function () {
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
-            });
-            layui.use(['form', 'layedit', 'laydate'], function () {
-                var form = layui.form
-                    , layer = layui.layer
-                    , layedit = layui.layedit
-                    , laydate = layui.laydate;
-
-                //日期
-                laydate.render({
-                    elem: '#date'
-                });
-                laydate.render({
-                    elem: '#date1'
-                });
-
-            });
+//            $('.cancel').click(function () {
+//                var index = parent.layer.getFrameIndex(window.name);
+//                parent.layer.close(index);
+//            });
+//            layui.use(['form', 'layedit', 'laydate'], function () {
+//                var form = layui.form
+//                    , layer = layui.layer
+//                    , layedit = layui.layedit
+//                    , laydate = layui.laydate;
+//
+//                //日期
+//                laydate.render({
+//                    elem: '#date'
+//                });
+//                laydate.render({
+//                    elem: '#date1'
+//                });
+//
+//            });
             
             
     function toajax() {

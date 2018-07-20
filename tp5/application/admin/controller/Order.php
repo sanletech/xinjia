@@ -49,22 +49,7 @@ class Order extends Base
        }
         
     }
-    
-  
-    
-    //处理订单
-    public function order_list() 
-    {
-        $data = new OrderM;
-        $list = $data->order_list();
-        $page =$list->render();
-        $count =  count($list);
-//      $this->_p($list);exit;
-        $this->view->assign('count_book',$count);
-        $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
-        return $this->view->fetch('Order/order_list'); 
-    }
+        
     //查看订单
     public function order_edit() 
     {
@@ -76,9 +61,28 @@ class Order extends Base
         return $this->view->fetch('Order/order_waste'); 
     }
     
-
+    //处理订单的公共头部
+    public function orderCenter() 
+    {
+        return $this->view->fetch('Order/order_center'); 
+    }
     
-    //处理订单订舱
+    //待订舱页面list
+    public function listBook() 
+    {
+        $data = new OrderM;
+        $list = $data->listBook();
+        $page =$list->render();
+        $count =  count($list);
+//      $this->_p($list);exit;
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        return $this->view->fetch('listOrder/list_book'); 
+    }
+    
+    
+    //展示录入运单号的页面信息
     public function list_booking() 
     {  
         $container_num  = $this->request->param('container_num');
@@ -123,19 +127,43 @@ class Order extends Base
     }
     
     
-    //处理订单派车
-    public function list_paiche() 
-    {   
-//        $data = new OrderM;
-//        $list = $data->sendCarList();
-//        $page =$list->render();
-//        $count =  count($list);
-////      $this->_p($list);exit;
-//        $this->view->assign('count_book',$count);
-//        $this->view->assign('list_book',$list);
-//        $this->view->assign('page_book',$page);
-        return $this->view->fetch('Order/list_paiche');
+    //待派车list页面
+    public function listSendCar() 
+    {      
+        $data = new OrderM;
+        $list = $data->sendCarList();
+        $page =$list->render();
+        $count =  count($list);
+//      $this->_p($list);exit;
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        return $this->view->fetch('listOrder/list_sendCar');
     }
+    
+    //展示录入派车信息页面
+    public function sendCarInfo() 
+    {  
+        $order_num =$this->request->get('order_num');
+        $container_num =$this->request->get('container_num');
+        $this->assign([
+        'order_num'  => $order_num,
+        'container_num' => $container_num
+        ]);
+        return $this->view->fetch('Order/sendCarInfo');
+    }
+    
+    //录入派车信息
+    public function tosendCar() 
+    {  
+        $data =$this->request->param();
+        $this->_v($data);exit;
+        $data = new OrderM;
+        $list = $data->sendCarList();
+        return $this->view->fetch('Order/sendCarInfo');
+    }
+    
+    
     //处理订单送货
     public function list_songhuo() 
     {

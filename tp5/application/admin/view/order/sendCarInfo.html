@@ -1,0 +1,128 @@
+<{include file='./public/header' /}>
+<body>
+<link rel="stylesheet" href="__STATIC__/css/route_add.css">
+<form class="layui-form"  id ='sendCar_form'>
+<div class="layui-form ">
+    <table class="layui-table">
+    <colgroup>
+        <col width="6%">
+        <?php 
+        for($i=0;$i<$container_num;$i++){
+          echo "<col width='8%'>";
+        }
+        ?>
+        <col>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>栏目\序号<{$container_num}></th>
+            <?php 
+            for($i=1;$i<=$container_num;$i++){
+              echo "<th>司机$i</th>";
+            }
+            ?>
+        </tr> 
+    </thead>
+    <input type="hidden" name='order_num' value="<{$order_num}>">
+    <input type="hidden" name='container_num' value="<{$container_num}>">
+    <tbody>
+        <tr>
+            <td>车队名字</td> <?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td> <input type="text" name="carName[]" lay-verify="title" autocomplete="off" placeholder="请输入车队名字" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>司机姓名</td><?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="text" name="driverName[]" lay-verify="title" autocomplete="off" placeholder="司机姓名" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>车牌号</td><?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="text" name="carCode[]" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>身份证</td><?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="text" name="identity[]" lay-verify="title" autocomplete="off" placeholder="身份证" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>手机号</td><?php 
+              for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="text" name="mobile[]" lay-verify="title" autocomplete="off" placeholder="手机号" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>柜号</td><?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="text" name="container[]" lay-verify="title" autocomplete="off" placeholder="手机号" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>封条号</td><?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="text" name="seal_id[]" lay-verify="title" autocomplete="off" placeholder="封条号" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>收货人</td> <?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="text" name="consignee[]" lay-verify="title" autocomplete="off" placeholder="收货人" class="layui-input"></td>';
+            } ?>
+        </tr>
+        <tr>
+            <td>装货时间</td><?php 
+            for($i=0;$i<$container_num;$i++){
+                echo '<td><input type="date" name="consigneeTime[]" lay-verify="title" autocomplete="off" placeholder="装货时间" class="layui-input"></td>';
+            } ?>
+        </tr>
+    </tbody>
+    </table>
+</div>
+<div class="layui-form-item">
+    <div class="layui-input-block an">
+        <button type="button" class="layui-btn" onclick="toajax()">保存</button>
+    </div>
+</div>
+</form>
+
+<script type="text/javascript">
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+    });
+    function toajax() {
+        $.ajax({
+          type: 'post',
+          url: "<{:url('admin/Order/tosendCar')}>",
+          data: $("#sendCar_form").serialize(),
+          dataType: "json",
+          success: function (data) {
+            if (data.status == 1) {
+                alert("提交成功");
+                parent.location.reload()
+            } else {
+              alert(data.msg+"提交失败");
+            }
+          }
+        })
+      }
+    
+</script>
+</body>
+</html>

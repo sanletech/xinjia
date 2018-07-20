@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:3:{s:76:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\index\index.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\middle.html";i:1531985047;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -106,7 +106,7 @@
                             </a>
                         </li>
                         <li>
-                            <a _href="<?php echo url('Order/order_list'); ?>">
+                            <a _href="<?php echo url('admin/Order/orderCenter'); ?>">
                                 <i class="iconfont">&#xe6a7;</i>
                                 <cite>处理订单</cite>
                             </a>

@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\login\register.html";i:1531041274;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1530532388;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:79:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\login\register.html";i:1531300153;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531300153;}*/ ?>
 <!-- 注册 -->
 <!DOCTYPE html>
 <html>
@@ -211,29 +211,7 @@
                 data:$("#register_form").serialize(),
                 dataType:"json",
                 success:function(status){
-                          //  post_adduser = false;
-                          //  layer.close(loading);
-                          console.log(status);
-                            var message = status.message;
                             alert(status)
-                          //  layer.msg(message, { icon: 5 });
-                    
-                    
-//                        if(status>0){
-////                            post_adduser = false;
-////                            layer.close(loading);
-//                            layer.msg("注册成功", { icon: 6, time: 2000 }, function () {
-//                            // 获得frame索引
-//                            parent.location.reload();
-//                            var index = parent.layer.getFrameIndex(window.name);
-//                            //关闭当前frame
-//                           // parent.layer.close(index);
-//                        });
-//                        }else{
-//                            post_adduser = false;
-//                            layer.close(loading);
-//                            layer.msg("注册失败", { icon: 5 });
-//                            }
                             }
             })
         }
