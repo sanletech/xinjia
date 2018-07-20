@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-07-18 19:56:59
+Date: 2018-07-20 18:09:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4487,7 +4487,7 @@ CREATE TABLE `hl_order_father` (
 -- ----------------------------
 INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '1', '2', '2000', '8848', '5', '这个是针对订单具体信息', '1525467905', '2', '1', 'kehu001', '1');
 INSERT INTO `hl_order_father` VALUES ('2', '201806251705', '牲畜', '2', '1', '8000', '54321', '2', '这是一个订单下另一种货物', '1525468905', '1', '2', 'kehu002', '3');
-INSERT INTO `hl_order_father` VALUES ('3', '1531107265kehu001555', '钢材', '1', '2', '410', '142', '1', '阿萨德发送到发送', '1531107265', '1', '5', 'kehu001', '1');
+INSERT INTO `hl_order_father` VALUES ('3', '1531107265kehu001555', '钢材', '1', '2', '410', '142', '1', '阿萨德发送到发送', '1531107265', '1', '5', 'kehu001', '3');
 INSERT INTO `hl_order_father` VALUES ('4', '1531118326kehu001205', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '1531118326', '1', '1', 'kehu001', '2');
 INSERT INTO `hl_order_father` VALUES ('5', '1531118344kehu001875', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '1531118344', '1', '1', 'kehu001', '2');
 INSERT INTO `hl_order_father` VALUES ('6', '1531119660kehu001132', '黄金沙子', '1', '1', '100', '1000', '1', '昂贵物品丢失不赔', '1531119660', '1', '1', 'kehu001', '3');
@@ -4555,7 +4555,7 @@ CREATE TABLE `hl_order_son` (
   `ship_order_id` varchar(12) DEFAULT NULL COMMENT '船运表ID',
   `car_send_id` int(10) DEFAULT NULL COMMENT '送货车表的ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_son
@@ -4571,6 +4571,8 @@ INSERT INTO `hl_order_son` VALUES ('9', '1531119660kehu001132', 'aaaaaaaaaaa', '
 INSERT INTO `hl_order_son` VALUES ('10', '1531190282kehu001737', 'aaaaaaaaa', '0', null, null, null, null);
 INSERT INTO `hl_order_son` VALUES ('11', '1531190282kehu001737', 'aaaaaaaaa', '1', null, null, null, null);
 INSERT INTO `hl_order_son` VALUES ('12', '1531190282kehu001737', 'aaaaaaaaa', '2', null, null, null, null);
+INSERT INTO `hl_order_son` VALUES ('13', '1531107265kehu001555', 'asdfasfsadfasdf', '0', null, null, null, null);
+INSERT INTO `hl_order_son` VALUES ('14', '1531107265kehu001555', 'asdfasfsadfasdf', '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `hl_order_status`
@@ -5313,7 +5315,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1531901985', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1532052429', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

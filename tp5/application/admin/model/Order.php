@@ -6,7 +6,7 @@ use think\Db;
 class Order extends Model
 {
     //审核客户提交的订单
-    public function order_audit($pages=5)
+    public function order_audit($pages=5,$state='1')
     {
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         //查询客户的订单编号order_father 查询对应的订单信息
@@ -26,7 +26,7 @@ class Order extends Model
                 ->field('OF.id ,OF.order_num,MB.phone,MB.membername,SA.salesname,'
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
                         . 'OF.cargo,SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime')
-                ->group('OF.id')->where('OF.state','eq','1')
+                ->group('OF.id')->where('OF.state','eq',$state)
                 ->order('OF.id ,OF.mtime desc ')->buildSql();
 
         $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
@@ -34,8 +34,8 @@ class Order extends Model
         return $list;
        
     }
-    // 展示需要处理的订单列表
-    public function order_list($pages=5) {
+    // 待订舱页面的list
+    public function listBook($pages=5,$state='2') {
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         //查询客户的订单编号order_father 查询对应的订单信息
         $fatherSql= Db::name('order_father')->alias('OF')
@@ -51,7 +51,7 @@ class Order extends Model
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
                 ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
                 ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->join('hl_order_add OA','OA.id = OF.add_id ','left')
+                ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
               //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
                 ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
                 ->field('OF.id ,OF.order_num,SA.salesname,'
@@ -60,7 +60,7 @@ class Order extends Model
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
                         . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . 'LK2.company ')
-                ->group('OF.id')->where('OF.state','eq','2')
+                ->group('OF.id')->where('OF.state','eq',$state)
                // ->where('OA.member_code = OF.member_code')
                 ->order('OF.id ,OF.mtime desc')->buildSql();
         //var_dump($fatherSql);exit;
@@ -93,11 +93,21 @@ class Order extends Model
         return $respones;
     }
     
-    //展示待派车的页面的list
-    public function sendCarList() {
+     //录入派车信息
+    public function tosendCar($data) 
+    {  
+        $order_num =$data['order_num'];
+        $container_num = $data['container_num'];
+        unset($data['order_num'],$data['container_num']);
+        $str ='';
+        foreach($data as $key=>$value){
+            for($i=0;$i<$container_num ;$i++){
+             $str .= "()";
+            }
+        }
+      
         
     }
- 
     
     
 }
