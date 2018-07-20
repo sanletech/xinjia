@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1532007117;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531988465;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/index\view\Order\place_order.html";i:1532081657;s:66:"E:\xampp\htdocs\xinjia\tp5\application\index\view\public\head.html";i:1531988465;}*/ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +76,7 @@
                 <?php endswitch; ?>
             </span>
               <p>￥
-                <strong><?php echo $list['price']; ?></strong>
+                <strong class="money"><?php echo $list['price']; ?></strong>
               </p>
             </div>
             <div class="you">价格说明：这是纯运费</div>
@@ -235,7 +235,6 @@
               <div class="layui-col-xs6">
                 <div class="select">
                   <select name='container_num' class="guil" id='container_num'>
-                    <option value='0'>请选择</option>
                   </select>
                 </div>
               </div>
@@ -247,7 +246,7 @@
               <div class="layui-col-xs3">
                 <span>*&nbsp;</span>保险金额：</div>
               <div class="layui-col-xs6">
-                <input type="text" name="cargo_cost" value="" placeholder="">
+                <input id="bxje" type="text" name="cargo_cost" value="" placeholder="">
               </div>
 
               <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
@@ -285,7 +284,7 @@
                     <select name='tax_rate' disabled="ture" class="layui-disabled fp01">
                       <option  value='0' selected>请选择</option>
                       <option  value='1'>6%</option>
-                      <option  value='2'>11%</option>
+                      <option  value='2'>10%</option>
                     </select>
                   </div>
                 </div>
@@ -392,9 +391,9 @@
           </div>
         </div>
 
-        <div class="tjiao" onclick="order_data()">
-          <a href="#">提交</a>
-          <a>取消</a>
+        <div class="tjiao">
+          <a href="#" onclick="order_data()">提交</a>
+          <a class="shi" href="javascript:void(0);">取消</a>
         </div>
       </div>
     </form>
@@ -546,5 +545,24 @@
       </div>
     <script src="/static/index/js/iziModal.min.js"></script>
     <script src="/static/index/js/lrdd.js"></script>
+    <script>
+      
+$('.shi').click(function(){
+  var money = $('.money').text();//纯运费
+  var sum = $("#container_num option:selected").val();//柜量
+  var bxje = $('#bxje').val();//保险金额
+  var fp = $(".fp01 option:selected").val();//发票
+  var cun =money*sum;
+  var bx = bxje*6;
+  var zong = cun+bx;
+  var zong6 = zong*1.038;
+  var zong10 = zong*1.06;
+  console.log('纯运费:'+money*sum);
+  console.log('加保险费:'+bxje*6);
+  console.log('总运费:'+zong);
+  console.log('总运费6:'+zong6);
+  console.log('总运费10:'+zong10);
+});
+    </script>
   </body>
   </html>

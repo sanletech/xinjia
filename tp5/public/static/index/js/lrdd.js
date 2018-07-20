@@ -185,13 +185,6 @@ for (let i = 1; i < 31; i++) {
   $('.guil').append("<option value='" + i + "'>" + i + "</option>");
 }
 
-//根据选择的箱子数量 计算总价格
-//          $('#container_num').bind('select propertychange', function () {
-//              var price = (this.value )*('<{$list.price}>');
-//              alert(price);
-//           // $('#price_sum').html('￥'+price);
-//        })
-
 
 // 接受后台的联系人资料
 function selectlink(url) {
@@ -209,6 +202,7 @@ function selectlink(url) {
   });
 }
 var arr = [];
+
 //展示委托信息
 function wt(data) {
   var dataArray = eval(data); 
@@ -258,7 +252,6 @@ function nei(zj) {
     $(input[7]).val(nei.address);
   }
   $('#wt1').iziModal('close');
-  
 }
 
 //收货/发货人的表单提交 
