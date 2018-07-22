@@ -94,7 +94,7 @@ class Order extends Base
         $data =$this->request->param();
         $member_code =Session::get('member_code');
         $res = Db::name('linkman')->where('member_code',$member_code)->order('mtime desc')->select();
-        //var_dump($res);exit;
+        // $this->_v($res);exit;
         return json_encode($res);
     }
         //添加客户发票的所有信息

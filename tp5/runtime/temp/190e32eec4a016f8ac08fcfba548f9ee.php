@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_list.html";i:1531581737;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_center.html";i:1532245986;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -55,149 +55,26 @@
     <div class="biao">
       <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
-          <li class="layui-this">待订舱</li>
-          <li>待派车</li>
-          <li>待装货</li>
-          <li>待报柜号</li>
-          <li>待配船</li>
-          <li>待到港</li>
-          <li>待卸船</li>
-          <li>待收款</li>
-          <li>待送货</li>
+          <li class="layui-this" id ='a1'>待订舱</li>
+          <li id ='a2'>待派车</li>
+          <li id ='a3'>待装货</li>
+          <li id ='a4'>待报柜号</li>
+          <li id ='a5'>待配船</li>
+          <li id ='a6'>待到港</li>
+          <li id ='a7'>待卸船</li>
+          <li id ='a8'>待收款</li>
+          <li id ='a9'>待送货</li>
         </ul>
         <div class="layui-tab-content">
 
-          <!-- 待订舱 -->
-          <div class="layui-tab-item layui-show">
-            <xblock>
-              <button class="layui-btn layui-btn-danger" onclick="delAll()">
-                <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
-                <i class="layui-icon"></i>添加</button>
-              <span class="x-right" style="line-height:40px">总共有
-                <?php echo $count_book; ?>条记录</span>
-            </xblock>
-            <!-- 内容 -->
-            <div class="order_list layui-row">
-                <?php if(is_array($list_book) || $list_book instanceof \think\Collection || $list_book instanceof \think\Paginator): $i = 0; $__LIST__ = $list_book;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>  
-                <div class="nei layui-col-md12">
-                <div class="top">
-                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
-                    <i class="layui-icon">&#xe605;</i>
-                    <span>创建时间: <?php echo date("y-m-d",$vo['mtime']); ?></span>
-                  </div>
-                  <span class="top_ma">
-                    <span>业务员: <?php echo $vo['salesname']; ?></span>
-                    <span>船期: <?php echo date("y-m-d",$vo['shipping_date']); ?></span>
-                    <span>海上时效: <?php echo $vo['sea_limitation']; ?></span>
-                    <span>截单时间: <?php echo date("y-m-d",$vo['cutoff_date']); ?></span>
-                  </span>
-                </div>
-                <div class="cen">
-                  <div class="cen_le layui-col-md12">
-                    <div class="layui-col-md3">
-                      <p>订单号:<?php echo $vo['order_num']; ?></p>
-                      <p>船公司/船名/航次: <?php echo $vo['ship_short_name']; ?> <?php echo $vo['boat_name']; ?>/<?php echo $vo['boat_code']; ?></p>
-                    </div>
-                    <div class="layui-col-md3">
-                      <p>收货人: <?php echo $vo['company']; ?></p>
-                      <p>货名: <?php echo $vo['cargo']; ?></p>
-                    </div>
-                    <div class="layui-col-md3">
-                      <p>航线: <?php echo $vo['s_port_name']; ?>-<?php echo $vo['e_port_name']; ?></p>
-                      <p>箱型*箱量: <?php echo $vo['type']; ?>*<?php echo $vo['container_num']; ?></p>
-                    </div>
-                    <div class="layui-col-md2">
-                      <p class="se">状态：待订舱</p>
-                      <p class="se">天数: <?php $timediff =time()-$vo['mtime']; $days = intval($timediff/86400); echo $days;?>天</p>
-                                                   
-                    </div>
-                    <div class="layui-col-md1">
-                      <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('确认','<?php echo url('admin/Order/list_booking'); ?>?container_num=<?php echo $vo['container_num']; ?>&order_num=<?php echo $vo['order_num']; ?>',600,250)" href="javascript:;">确认</a>
-                      </p>
-                      <p class="a_niu">
-                        <a class="qu" href="">取消</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
-                  <a title="删除" onclick="" href="javascript:;">删除订单</a>
-                </div>
-              </div>
-                <?php endforeach; endif; else: echo "" ;endif; ?>
+        <!-- 待订舱 -->
+        <div id='b1' class="layui-tab-item " >
+        </div>
+        
+        <!-- 待派车 -->
+        <div  id='b2'class="layui-tab-item " >
+        </div>
 
-            </div>
-            <div class="page">
-                <div>
-                   <?php echo $page_book; ?>
-                </div>
-            </div>
-          </div>
-          
-          <!-- 待派车 -->
-          <div class="layui-tab-item">
-            <xblock>
-              <button class="layui-btn layui-btn-danger" onclick="delAll()">
-                <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
-                <i class="layui-icon"></i>添加</button>
-              <span class="x-right" style="line-height:40px">总共有
-                <{}>条记录</span>
-            </xblock>
-            <div class="order_list layui-row">
-              <div class="nei layui-col-md12">
-                <div class="top">
-                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
-                    <i class="layui-icon">&#xe605;</i>
-                    <span>创建时间：2018-03-08</span>
-                  </div>
-                  <span class="top_ma">
-                    <span>业务员：小明</span>
-                    <span>船期：2018-03-05</span>
-                    <span>海上时效：3天</span>
-                    <span>离港时间：2018-05-10</span>
-                  </span>
-                </div>
-                <div class="cen">
-                  <div class="cen_le layui-col-md12">
-                    <div class="layui-col-md3">
-                      <p>运单号：178NJIYD045</p>
-                      <p>船名/航次：场景18/1782N</p>
-                    </div>
-                    <div class="layui-col-md3">
-                      <p>收货人：广州三乐科技有限公司</p>
-                      <p>货名：钢筋</p>
-                    </div>
-                    <div class="layui-col-md3">
-                      <p>航线：揭阳-青岛</p>
-                      <p>箱型*箱量：20GP*1</p>
-                    </div>
-                    <div class="layui-col-md2">
-                      <p class="se">状态：待派车</p>
-                      <p class="se">天数：7天</p>
-                    </div>
-                    <div class="layui-col-md1">
-                      <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('查看','<?php echo url('Order/list_paiche'); ?>',700,500)" href="javascript:;">确认</a>
-                      </p>
-                      <p class="a_niu">
-                        <a class="qu" href="">取消</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
-                  <a title="删除" onclick="" href="javascript:;">删除订单</a>
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- 待装货 -->
           <div class="layui-tab-item">
             <xblock>
@@ -683,21 +560,50 @@
       }
 
 
-      function toajax(dataArray) {
-        $.ajax({
-          type: 'POST',
-          url: "<?php echo url('admin/member/toDel'); ?>",
-          data: dataArray,
-          dataType: "json",
-          success: function (data) {
-            if (data.status == 1) {
-              return 1;
-            } else {
-              return 0;
+        function toajax(dataArray) {
+          $.ajax({
+            type: 'POST',
+            url: "<?php echo url('admin/member/toDel'); ?>",
+            data: dataArray,
+            dataType: "json",
+            success: function (data) {
+              if (data.status == 1) {
+                return 1;
+              } else {
+                return 0;
+              }
             }
-          }
-        })
-      }
+          })
+        }
+      
+    $(document).ready(function() {
+        yemian('a1','b1' , "<?php echo url('admin/Order/listBook'); ?>")
+        yemian('a2','b2' , "<?php echo url('admin/Order/listSendCar'); ?>")
+    });
+	
+    function yemian(id1,id2,url){   
+        $("#"+id1).click(function(){
+                var parames={
+                "type1":"paramer1","type2":"paramer2"};
+                $.ajax({
+                url:url,
+                type:'post',
+                dataType:'html',
+                data:parames,
+                error: function(){alert('error');},
+                success:function(data){
+                        // console.log(data);
+                        data = JSON.parse( data );
+                        $("#"+id2).html(data);
+                }
+                }); 
+
+        });  
+    } 
+      
+
+     
+
     </script>
 
   </body>
