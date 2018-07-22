@@ -6,7 +6,7 @@ use think\Db;
 class Order extends Model
 {
     //审核客户提交的订单
-    public function order_audit($pages=5,$state='1')
+    public function order_audit($pages=5,$state='0')
     {
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         //查询客户的订单编号order_father 查询对应的订单信息
@@ -28,14 +28,13 @@ class Order extends Model
                         . 'OF.cargo,SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime')
                 ->group('OF.id')->where('OF.state','eq',$state)
                 ->order('OF.id ,OF.mtime desc ')->buildSql();
-
-        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
         
+        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
         return $list;
-       
     }
+    
     // 待订舱页面的list
-    public function listBook($pages=5,$state='2') {
+    public function listBook($pages=5,$state='1') {
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         //查询客户的订单编号order_father 查询对应的订单信息
         $fatherSql= Db::name('order_father')->alias('OF')
@@ -68,10 +67,9 @@ class Order extends Model
         return $list;
     }
     
-    
    //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
     //订单号 集装箱数量, 运单号, 运单号数量
-     public function waybillNum ($order_num,$container_num,$track_num, $track_sum){
+    public function waybillNum ($order_num,$container_num,$track_num, $track_sum){
          //输入一个订单 就填充集装箱数量个订单号
         if($track_sum ==1){
             $j= $container_num;
@@ -93,6 +91,10 @@ class Order extends Model
         return $respones;
     }
     
+//    //待派车页面list
+//    public function sendCarList() {
+//        
+//    }
      //录入派车信息
     public function tosendCar($data) 
     {  

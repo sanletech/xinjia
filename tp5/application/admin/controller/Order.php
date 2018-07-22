@@ -112,8 +112,8 @@ class Order extends Base
         $trackM = new OrderM;
         $response = $trackM ->waybillNum ($order_num,$container_num,$track_num, $track_sum);
         if(!array_key_exists('fail', $response)){
-            //将对应的order_father 的 state 状态改为3
-            $sql = "update hl_order_father set state = '3' where order_num = '$order_num' ";
+            //将对应的order_father 的 state 状态改为2 从录入运单号后，需要修改father和 son订单的两个状态
+            $sql = "update hl_order_father set state = '2' where order_num = '$order_num' ";
             $res =Db::execute($sql);
             $status =['msg'=>'录入运单号成功','status'=>1];
             if($res!==1){
@@ -130,8 +130,8 @@ class Order extends Base
     //待派车list页面
     public function listSendCar() 
     {      
-        $data = new OrderM;
-        $list = $data->sendCarList();
+        $dataM = new OrderM;
+        $list = $dataM->listBook($pages=5,$state='2');
         $page =$list->render();
         $count =  count($list);
 //      $this->_p($list);exit;
@@ -162,6 +162,9 @@ class Order extends Base
         $response = $Order->tosendCar($data);
         if(!array_key_exists('fail', $response)){
             $status =1; 
+        //同时修改状态
+            $sql = "update hl_order_father set state = '3' where order_num = '$order_num' ";
+            $sql = "update hl_order_son set state_id = '3' where order_num = '$order_num' ";
         }else {$status =0;} 
         json_encode($status);   
         return $status; 
