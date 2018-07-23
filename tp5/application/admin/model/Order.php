@@ -122,14 +122,14 @@ class Order extends Model
                 ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
                 ->field('OF.id ,OF.order_num,SA.salesname,'
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
-                        . "OF.cargo,CS.type,OF.container_num, group_concat(OS.track_num order by OS.id separator '_') track_num "
+                        . "OF.cargo,CS.type,OF.container_num, group_concat(OS.track_num order by OS.id separator '_') track_num, "
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
                         . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . 'LK2.company ')
                 ->group('OF.id')->where('OF.state','eq',$state)
                // ->where('OA.member_code = OF.member_code')
                 ->order('OF.id ,OF.mtime desc')->buildSql();
-        //var_dump($fatherSql);exit;
+      //  var_dump($fatherSql);exit;
         $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
         return $list;
     }
@@ -153,13 +153,13 @@ class Order extends Model
        // $arr =['car_name','driver_name','truck_code','identity','mobile','container_id','seal_id','consignee','load_time'];
         for($i=0;$i< $container_num;$i++){
             $arr1 = array_column($data, $i);
-            $arr2[] = array_combine($arr,$arr1);
+            $arr2 = array_combine($arr,$arr1);
+            $res = Db::name('car_receive')->insert($arr2);
+            $id[] = Db::name('car_receive')->getLastInsID();
         }
-        echo '<pre>'; var_dump($arr2); echo '</pre>';
-        $res = Db::name('car_receive')->insertAll($arr2);
-        var_dump($res);
-       $id = Db::name('car_receive')->getLastInsID();;
-       echo '<pre>'; var_dump($id); echo '</pre>';exit;
+    
+      // echo '<pre>'; var_dump($id); echo '</pre>';exit;
+       
         if(!empty($res)){
             //同时修改状态
             $sql2 = "update hl_order_father set state = '3' where order_num = '$order_num' ";
