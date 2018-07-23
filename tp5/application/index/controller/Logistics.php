@@ -65,6 +65,43 @@ class Logistics extends Controller {
            
     }
     
+      public function  zhongyuan1($waybillNum='PASU5884178320' ,$boxNum='UETU2479126') {
+        $waybillNum = substr($waybillNum,3);
+      //  $msectime = $this->msectime();
+        //var_dump($msectime);exit;
+        $postUrl ='http://elines.coscoshipping.com/NewEBWeb/public/cargoTracking/cargoTracking.xhtml?MM_PG_MeetingSearch&flag=l&PortalLanguage=GB18030&uid=&language=zh#';
+     	
+         $curlPost =  json_encode(array('cargoTrackingPara'=>'5806863750','containerNumberAll'=>'SEGU1017162'));
+       // $postUrl ='http://elines.coscoshipping.com/ebtracking/public/container/status/'.$boxNum.'?bookingNumber='.$waybillNum.'&timestamp='.$msectime;
+       // $header[]="Content-Type:application/json;charset=UTF-8";
+         $header = array('CLIENT-IP:125.210.188.36', 'X-FORWARDED-FOR:125.210.188.36','Content-Type:application/x-www-form-urlencoded');
+     //   $header = array('CLIENT-IP:125.210.188.36', 'X-FORWARDED-FOR:125.210.188.36','Content-Type:application/json;charset=UTF-8');
+        $ch = curl_init();//初始化curl
+
+        $options = array(CURLOPT_URL => $postUrl, //抓取指定网页
+                        CURLOPT_HTTPHEADER=>$header,
+                        CURLOPT_HEADER =>0,         
+                        CURLOPT_RETURNTRANSFER =>0, //要求结果为字符串且输出到屏幕上
+                        CURLOPT_POST =>1,           //post提交方式  
+                        CURLOPT_POSTFIELDS =>$curlPost //参数
+                        );
+        curl_setopt_array($ch, $options);
+        $data = curl_exec($ch);//运行curl
+        curl_close($ch);
+        
+        echo($data); echo '</br>';
+        $data_logistics =[];
+        $data_logistics = json_decode($data,true);
+        if(empty($data_logistics['data']['content'])){
+            return '无数据';
+        }
+        echo '<pre>';
+        var_dump($data_logistics);
+        echo '</pre>'; exit;
+      
+        return $data_logistics;
+          
+    }
     
     public function  zhongyuan($waybillNum='' ,$boxNum='') {
         $waybillNum = substr($waybillNum,3);

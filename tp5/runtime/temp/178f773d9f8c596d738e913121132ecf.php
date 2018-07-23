@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_shouqian.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:81:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_dship.html";i:1531300152;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,17 +25,14 @@
     <body>
         <link rel="stylesheet" href="/static/admin/css/route_add.css">
         <form class="layui-form" action="">
-            <div class="route layui-row">
-                <!-- 是否收钱 -->
+            <div class="route layui-row" style="margin-top: 80px;">
+                <!-- 待走船 -->
                 <div class="layui-form-item">
-                    <label class="layui-form-label">是否收款：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="sex" value="是" title="是">
-                        <input type="radio" name="sex" value="否" title="否，后面有柜" checked="">
-                        <input type="radio" name="sex" value="月结客户" title="月结客户" checked="">
+                    <div style="margin-bottom: 10px;">实际到港时间：</div>
+                    <div class="layui-col-xs12">
+                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-
                 <!-- 按钮 -->
                 <div class="layui-form-item">
                     <div class="layui-input-block an">

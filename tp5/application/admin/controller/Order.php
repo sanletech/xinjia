@@ -112,14 +112,7 @@ class Order extends Base
         $trackM = new OrderM;
         $response = $trackM ->waybillNum ($order_num,$container_num,$track_num, $track_sum);
         if(!array_key_exists('fail', $response)){
-            //将对应的order_father 的 state 状态改为3
-            $sql = "update hl_order_father set state = '3' where order_num = '$order_num' ";
-            $res =Db::execute($sql);
             $status =['msg'=>'录入运单号成功','status'=>1];
-            if($res!==1){
-                $status =['msg'=>'修改录入运单号失败','status'=>0];
-            }
-            
         }else   {
             $status =['msg'=>'录入运单号失败','status'=>0]; 
         }
@@ -130,11 +123,11 @@ class Order extends Base
     //待派车list页面
     public function listSendCar() 
     {      
-        $data = new OrderM;
-        $list = $data->sendCarList();
+        $dataM = new OrderM;
+        $list = $dataM->listSendCar($pages=5,$state='2');
         $page =$list->render();
         $count =  count($list);
-//      $this->_p($list);exit;
+        $this->_p($list);exit;
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
@@ -157,12 +150,43 @@ class Order extends Base
     public function tosendCar() 
     {  
         $data =$this->request->param();
-        $this->_v($data);exit;
-        $data = new OrderM;
-        $list = $data->sendCarList();
-        return $this->view->fetch('Order/sendCarInfo');
+        //$this->_v($data);exit;
+        $Order= new OrderM;
+        $response = $Order->tosendCar($data);
+        if(!array_key_exists('fail', $response)){
+            $status =['msg'=>'录入运单号成功','status'=>1];
+        }else {
+            $status =['msg'=>'录入运单号失败','status'=>0]; 
+        } 
+        return json($status);
     }
     
+    //待装货展示页面
+    public function listLoad() 
+    {   
+        $dataM = new OrderM;
+        $list = $dataM->listBook($pages=5,$state='3');
+        $page =$list->render();
+        $count =  count($list);
+//      $this->_p($list);exit;
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        return $this->view->fetch('listOrder/list_load');
+    }
+    
+    //待装货展示页面添加装货时间
+        public function addLoadTime() 
+    {   
+//        $order_num =$this->request->get('order_num');
+//        //根据定单号展示柜号
+//        $data = Db::name('order_son')->where($data)
+//        $this->assign([
+//        'order_num'  => $order_num,
+//        'container_num' => $container_num
+//        ]);
+//        return $this->view->fetch('Order/sendCarInfo');
+    }
     
     //处理订单送货
     public function list_songhuo() 

@@ -44,7 +44,7 @@ class Port extends Base
 //        $this->_v($port_array);exit;
         $portadd = new PortM;
         $res = $portadd->port_add($city_id ,$port_array);
-         if(!array_key_exists('fail', $res)){
+        if(!array_key_exists('fail', $res)){
             $status =1; 
         }else {$status =0;} 
         json_encode($status);   

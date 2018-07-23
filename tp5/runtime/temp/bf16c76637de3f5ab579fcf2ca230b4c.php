@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:87:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\listOrder\list_sendCar.html";i:1532327548;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\listOrder\list_load.html";i:1532330490;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,7 +23,7 @@
 </head>
 <body>    
 <link rel="stylesheet" href="/static/admin/css/order_list.css">
-<!-- 待派车 -->
+<!-- 待装货 -->
 <div class="layui-tab-item layui-show">
 <xblock>
     <button class="layui-btn layui-btn-danger" onclick="delAll()">
@@ -62,12 +62,12 @@
                 <p>箱型*箱量: <?php echo $vo['type']; ?>*<?php echo $vo['container_num']; ?></p>
             </div>
             <div class="layui-col-md2">
-                <p class="se">状态：待派车</p>
+                <p class="se">状态：待装货</p>
                 <p class="se">天数: <?php $timediff =time()-$vo['mtime']; $days = intval($timediff/86400); echo $days;?>天</p>
             </div>
             <div class="layui-col-md1">
                 <p class="a_niu">
-                    <a title="录入派车信息" onclick="x_admin_show('<?php echo $vo['order_num']; ?>录入派车信息','<?php echo url('Order/sendCarInfo'); ?>?order_num=<?php echo $vo['order_num']; ?>&container_num=<?php echo $vo['container_num']; ?>',800,600)" href="javascript:;">确认</a>
+                    <a title="录入派车信息" onclick="x_admin_show('<?php echo $vo['order_num']; ?>录入装货时间','<?php echo url('admin/Order/addLoadTime'); ?>?order_num=<?php echo $vo['order_num']; ?>',800,600)" href="javascript:;">确认</a>
                 </p>
                 <p class="a_niu">
                     <a class="qu" href="">取消</a>
@@ -90,5 +90,9 @@
     </div>
 </div>
 </div>
+<script>
+    
+</script>
+
 </body>
 </html>

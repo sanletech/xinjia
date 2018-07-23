@@ -29,19 +29,19 @@
         <tr>
             <td>车队名字</td> <?php 
             for($i=0;$i<$container_num;$i++){
-                echo '<td> <input type="text" name="carName[]" lay-verify="title" autocomplete="off" placeholder="请输入车队名字" class="layui-input"></td>';
+                echo '<td> <input type="text" name="car_name[]" lay-verify="title" autocomplete="off" placeholder="请输入车队名字" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>司机姓名</td><?php 
             for($i=0;$i<$container_num;$i++){
-                echo '<td><input type="text" name="driverName[]" lay-verify="title" autocomplete="off" placeholder="司机姓名" class="layui-input"></td>';
+                echo '<td><input type="text" name="driver_name[]" lay-verify="title" autocomplete="off" placeholder="司机姓名" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>车牌号</td><?php 
             for($i=0;$i<$container_num;$i++){
-                echo '<td><input type="text" name="carCode[]" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input"></td>';
+                echo '<td><input type="text" name="truck_code[]" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
@@ -59,7 +59,7 @@
         <tr>
             <td>柜号</td><?php 
             for($i=0;$i<$container_num;$i++){
-                echo '<td><input type="text" name="container[]" lay-verify="title" autocomplete="off" placeholder="手机号" class="layui-input"></td>';
+                echo '<td><input type="text" name="container_id[]" lay-verify="title" autocomplete="off" placeholder="柜号" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
@@ -77,7 +77,7 @@
         <tr>
             <td>装货时间</td><?php 
             for($i=0;$i<$container_num;$i++){
-                echo '<td><input type="date" name="consigneeTime[]" lay-verify="title" autocomplete="off" placeholder="装货时间" class="layui-input"></td>';
+                echo '<td><input type="date" name="load_time[]" lay-verify="title" autocomplete="off" placeholder="装货时间" class="layui-input"></td>';
             } ?>
         </tr>
     </tbody>
