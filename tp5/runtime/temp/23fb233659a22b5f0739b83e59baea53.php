@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\sendCarInfo.html";i:1532334545;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:82:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\sendCarInfo.html";i:1532400948;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,7 +29,7 @@
     <colgroup>
         <col width="6%">
         <?php 
-        for($i=0;$i<$container_num;$i++){
+        for($i=0;$i<$container_sum;$i++){
           echo "<col width='8%'>";
         }
         ?>
@@ -37,68 +37,69 @@
     </colgroup>
     <thead>
         <tr>
-            <th>栏目\序号<?php echo $container_num; ?></th>
+            <th>栏目\序号<?php echo $container_sum; ?></th>
             <?php 
-            for($i=1;$i<=$container_num;$i++){
+            for($i=1;$i<=$container_sum;$i++){
               echo "<th>司机$i</th>";
             }
             ?>
         </tr> 
     </thead>
+    <input type="hidden" name='container_code' value="<?php echo $container_code; ?>">
+    <input type="hidden" name='container_sum' value="<?php echo $container_sum; ?>">
     <input type="hidden" name='order_num' value="<?php echo $order_num; ?>">
-    <input type="hidden" name='container_num' value="<?php echo $container_num; ?>">
     <tbody>
         <tr>
             <td>车队名字</td> <?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td> <input type="text" name="car_name[]" lay-verify="title" autocomplete="off" placeholder="请输入车队名字" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>司机姓名</td><?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="text" name="driver_name[]" lay-verify="title" autocomplete="off" placeholder="司机姓名" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>车牌号</td><?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="text" name="truck_code[]" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>身份证</td><?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="text" name="identity[]" lay-verify="title" autocomplete="off" placeholder="身份证" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>手机号</td><?php 
-              for($i=0;$i<$container_num;$i++){
+              for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="text" name="mobile[]" lay-verify="title" autocomplete="off" placeholder="手机号" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>柜号</td><?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="text" name="container_id[]" lay-verify="title" autocomplete="off" placeholder="柜号" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>封条号</td><?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="text" name="seal_id[]" lay-verify="title" autocomplete="off" placeholder="封条号" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>收货人</td> <?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="text" name="consignee[]" lay-verify="title" autocomplete="off" placeholder="收货人" class="layui-input"></td>';
             } ?>
         </tr>
         <tr>
             <td>装货时间</td><?php 
-            for($i=0;$i<$container_num;$i++){
+            for($i=0;$i<$container_sum;$i++){
                 echo '<td><input type="date" name="load_time[]" lay-verify="title" autocomplete="off" placeholder="装货时间" class="layui-input"></td>';
             } ?>
         </tr>

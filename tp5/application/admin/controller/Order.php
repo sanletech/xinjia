@@ -30,7 +30,7 @@ class Order extends Base
        if (request()->isAjax()){
            $data =$this->request->param();
            $id=  implode(',', $data['id']);
-           $sql = 'update hl_order_father set state = "2" where id  in  ('.$id.')';
+           $sql = 'update hl_order_father set state = "1" where id  in  ('.$id.')';
            //var_dump($sql);exit;
            $res =Db::execute($sql);
            return json($res ? 1 : 0) ;
@@ -85,10 +85,12 @@ class Order extends Base
     //展示录入运单号的页面信息
     public function list_booking() 
     {  
-        $container_num  = $this->request->param('container_num');
+        $container_sum  = $this->request->param('container_sum');
         $order_num = $this->request->param('order_num');
+        $container_code  = $this->request->param('container_code');
         $this->view->assign('order_num',$order_num);
-        $this->view->assign('container_num',$container_num);
+        $this->view->assign('container_sum',$container_sum);
+        $this->view->assign('container_code',$container_code);
         return $this->view->fetch('Order/list_booking');
     }
     //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
@@ -97,12 +99,12 @@ class Order extends Base
         $data = $this->request->param();
        // var_dump($data['waybillNum']);
         $track_num =  preg_split('/[,|，| ]+/', $data['waybillNum'], -1, PREG_SPLIT_NO_EMPTY);
-        $container_num = $data['container_num'];
-        settype($container_num,'integer'); //转换成int类型
+        $container_sum = $data['container_sum'];
+        settype($container_sum,'integer'); //转换成int类型
         $order_num = $data['order_num'];
         $track_sum =count($track_num);///输入的运单号码数量
         //运单号,订单号,集装箱数量,输入的运单号数量
-        $data=array('track_num'=>$track_num ,'order_num'=>$order_num,'container_num'=>$container_num,'track_sum'=>$track_sum);
+        $data=array('track_num'=>$track_num ,'order_num'=>$order_num,'container_sum'=>$container_sum,'track_sum'=>$track_sum);
         $result = $this->validate($data ,'Order');
         if(true !== $result){
             // 验证失败 输出错误信息
@@ -110,7 +112,7 @@ class Order extends Base
         }
 
         $trackM = new OrderM;
-        $response = $trackM ->waybillNum ($order_num,$container_num,$track_num, $track_sum);
+        $response = $trackM ->waybillNum ($order_num,$container_sum,$track_num, $track_sum);
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'录入运单号成功','status'=>1];
         }else   {
@@ -138,10 +140,12 @@ class Order extends Base
     public function sendCarInfo() 
     {  
         $order_num =$this->request->get('order_num');
-        $container_num =$this->request->get('container_num');
+        $container_sum =$this->request->get('container_sum');
+        $container_code =$this->request->get('container_code');
         $this->assign([
         'order_num'  => $order_num,
-        'container_num' => $container_num
+        'container_sum' => $container_sum,
+        'container_code' => $container_code
         ]);
         return $this->view->fetch('Order/sendCarInfo');
     }
@@ -150,7 +154,7 @@ class Order extends Base
     public function tosendCar() 
     {  
         $data =$this->request->param();
-        //$this->_v($data);exit;
+      //$this->_v($data);exit;
         $Order= new OrderM;
         $response = $Order->tosendCar($data);
         if(!array_key_exists('fail', $response)){
@@ -165,10 +169,10 @@ class Order extends Base
     public function listLoad() 
     {   
         $dataM = new OrderM;
-        $list = $dataM->listBook($pages=5,$state='3');
+        $list = $dataM->listSendCar($pages=5,$state='3');
         $page =$list->render();
         $count =  count($list);
-//      $this->_p($list);exit;
+     //   $this->_p($list);exit;
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
@@ -176,17 +180,32 @@ class Order extends Base
     }
     
     //待装货展示页面添加装货时间
-        public function addLoadTime() 
+    public function addLoadTime() 
     {   
-//        $order_num =$this->request->get('order_num');
-//        //根据定单号展示柜号
-//        $data = Db::name('order_son')->where($data)
-//        $this->assign([
-//        'order_num'  => $order_num,
-//        'container_num' => $container_num
-//        ]);
-//        return $this->view->fetch('Order/sendCarInfo');
+        $order_num =$this->request->get('order_num');
+        //根据定单号展示柜号
+        $data = Db::name('order_son')->where("order_num = '$order_num'")->column('container_code');
+       // $this->_v($data);exit;
+        $this->assign([
+        'order_num'  => $order_num,
+        'data' => $data
+        ]);
+        return $this->view->fetch('Order/load_time');
     }
+    
+        
+    //添加实际装货时间
+    public function toLoadTime() 
+    {   
+        $order_num = $this->request->post('order_num');
+        $data = $this->request->except('order_num');
+        //var_dump($data);exit;
+        //根据运单号和 柜号 添加对应的实际装货时间
+         $dataM = new OrderM;
+        $res = $dataM->toLoadTime($order_num,$data);
+    
+    }
+    
     
     //处理订单送货
     public function list_songhuo() 

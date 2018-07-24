@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\listOrder\list_book.html";i:1532327576;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\listOrder\list_book.html";i:1532403389;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -59,7 +59,7 @@
             </div>
             <div class="layui-col-md3">
                 <p>航线: <?php echo $vo['s_port_name']; ?>-<?php echo $vo['e_port_name']; ?></p>
-                <p>箱型*箱量: <?php echo $vo['type']; ?>*<?php echo $vo['container_num']; ?></p>
+                <p>箱型*箱量: <?php echo $vo['type']; ?>*<?php echo $vo['container_sum']; ?></p>
             </div>
             <div class="layui-col-md2">
                 <p class="se">状态：待订舱</p>
@@ -67,7 +67,7 @@
             </div>
             <div class="layui-col-md1">
                 <p class="a_niu">
-                    <a title="确认" onclick="x_admin_show('确认','<?php echo url('admin/Order/list_booking'); ?>?container_num=<?php echo $vo['container_num']; ?>&order_num=<?php echo $vo['order_num']; ?>',600,250)" href="javascript:;">确认</a>
+                    <a title="确认" onclick="x_admin_show('确认','<?php echo url('admin/Order/list_booking'); ?>?container_sum=<?php echo $vo['container_sum']; ?>&order_num=<?php echo $vo['order_num']; ?>',600,250)" href="javascript:;">确认</a>
                 </p>
                 <p class="a_niu">
                     <a class="qu" href="">取消</a>

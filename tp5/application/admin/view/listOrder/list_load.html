@@ -37,7 +37,7 @@
             </div>
             <div class="layui-col-md3">
                 <p>航线: <{$vo.s_port_name}>-<{$vo.e_port_name}></p>
-                <p>箱型*箱量: <{$vo.type}>*<{$vo.container_num}></p>
+                <p>箱型*箱量: <{$vo.type}>*<{$vo.container_sum}></p>
             </div>
             <div class="layui-col-md2">
                 <p class="se">状态：待装货</p>
@@ -45,7 +45,7 @@
             </div>
             <div class="layui-col-md1">
                 <p class="a_niu">
-                    <a title="录入派车信息" onclick="x_admin_show('<{$vo.order_num}>录入装货时间','<{:url('admin/Order/addLoadTime')}>?order_num=<{$vo.order_num}>',800,600)" href="javascript:;">确认</a>
+                    <a title="录入派车信息" onclick="x_admin_show('<{$vo.order_num}>录入装货时间','<{:url('admin/Order/addLoadTime')}>?order_num=<{$vo.order_num}>',600,400)" href="javascript:;">确认</a>
                 </p>
                 <p class="a_niu">
                     <a class="qu" href="">取消</a>
@@ -62,15 +62,12 @@
     <{/volist}>
 
 </div>
-<div class="page">
-    <div>
-        <{$page_book}>
+    <div class="page">
+        <div>
+            <{$page_book}>
+        </div>
     </div>
 </div>
-</div>
-<script>
-    
-</script>
 
 </body>
 </html>

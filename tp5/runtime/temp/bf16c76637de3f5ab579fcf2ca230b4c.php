@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\listOrder\list_load.html";i:1532348159;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:84:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\listOrder\list_load.html";i:1532432122;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -59,7 +59,7 @@
             </div>
             <div class="layui-col-md3">
                 <p>航线: <?php echo $vo['s_port_name']; ?>-<?php echo $vo['e_port_name']; ?></p>
-                <p>箱型*箱量: <?php echo $vo['type']; ?>*<?php echo $vo['container_num']; ?></p>
+                <p>箱型*箱量: <?php echo $vo['type']; ?>*<?php echo $vo['container_sum']; ?></p>
             </div>
             <div class="layui-col-md2">
                 <p class="se">状态：待装货</p>
@@ -67,7 +67,7 @@
             </div>
             <div class="layui-col-md1">
                 <p class="a_niu">
-                    <a title="录入派车信息" onclick="x_admin_show('<?php echo $vo['order_num']; ?>录入装货时间','<?php echo url('admin/Order/addLoadTime'); ?>?order_num=<?php echo $vo['order_num']; ?>',800,600)" href="javascript:;">确认</a>
+                    <a title="录入派车信息" onclick="x_admin_show('<?php echo $vo['order_num']; ?>录入装货时间','<?php echo url('admin/Order/addLoadTime'); ?>?order_num=<?php echo $vo['order_num']; ?>',600,400)" href="javascript:;">确认</a>
                 </p>
                 <p class="a_niu">
                     <a class="qu" href="">取消</a>
@@ -84,15 +84,12 @@
     <?php endforeach; endif; else: echo "" ;endif; ?>
 
 </div>
-<div class="page">
-    <div>
-        <?php echo $page_book; ?>
+    <div class="page">
+        <div>
+            <?php echo $page_book; ?>
+        </div>
     </div>
 </div>
-</div>
-<script>
-    
-</script>
 
 </body>
 </html>

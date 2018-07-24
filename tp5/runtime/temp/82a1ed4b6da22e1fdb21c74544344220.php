@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1532081160;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\list_booking.html";i:1532400190;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="/static/admin/css/route_add.css">
         <form class="layui-form" action="" id="waybillNum_form" >
         <input type="hidden" name='order_num' value="<?php echo $order_num; ?>">
-        <input type="hidden" name='container_num' value="<?php echo $container_num; ?>">
+        <input type="hidden" name='container_sum' value="<?php echo $container_sum; ?>">
             <div class="route layui-row">
                 <!-- 运单号 -->
                 <div class="layui-form-item">
