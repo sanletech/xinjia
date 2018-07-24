@@ -289,4 +289,10 @@ function toajax(url, data) {
     }
   });
   //return false;//只此一句
+
+
+  
+
 }
+
+console.log(123);
