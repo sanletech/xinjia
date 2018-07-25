@@ -2,6 +2,7 @@
 namespace app\admin\model;
 use think\Model;
 use think\Db;
+use think\session;
 //订单模块
 class Order extends Model
 {
@@ -66,6 +67,7 @@ class Order extends Model
         $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
         return $list;
     }
+    
    //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
     //订单号 集装箱数量, 运单号, 运单号数量
     public function waybillNum ($order_num,$container_sum,$track_num, $track_sum){
@@ -80,24 +82,29 @@ class Order extends Model
         $date = date("md");
         for($i=0;$i<$j;$i++){
             $container_code = $track_num[$i].'d'.$date.'n'.$i;  //设置虚拟集装箱编码 等待派车后录入真正的集装箱编码再修改
-            $str .= "('$order_num','$track_num[$i]','$container_code') ,";   
+            $str .= "('$order_num','$track_num[$i]','$container_code','2') ,";   
         }
         $str = rtrim($str,',');
-        $sql ="insert into hl_order_son(order_num,track_num,container_code) values".$str;
+        $sql ="insert into hl_order_son(order_num,track_num,container_code,state) values".$str;
    //   var_dump($sql);exit;
         $response =[];
         $res =Db::execute($sql);
         $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';
        
+//        if(!empty($res)){
+//            //订单状态显示0待确认 1待订舱 2待派车 3待装货 4待报柜号 5待配船 6待到港 7待卸船 8待收钱 9待送货
+//            //将对应的order_father 的 state 状态改为2  从录入运单号之后，需要修改father和 son订单的两个状态
+//            $sql2 = "update hl_order_father set state = '2' where order_num = '$order_num' ";
+//            $res2 =Db::execute($sql2);
+//            $res2 ? $response['success'][]='修改待订舱成功' :$response['fail'][]='修改待订舱失败';
+//        }
+         
         if(!empty($res)){
-            //订单状态显示0待确认 1待订舱 2待派车 3待装货 4待报柜号 5待配船 6待到港 7待卸船 8待收钱 9待送货
-            //将对应的order_father 的 state 状态改为2  从录入运单号之后，需要修改father和 son订单的两个状态
-            $sql2 = "update hl_order_father set state = '2' where order_num = '$order_num' ";
-            $res2 =Db::execute($sql2);
-            $res2 ? $response['success'][]='修改待订舱成功' :$response['fail'][]='修改待订舱失败';
+            $father=['order_num'=>$order_num,'state'=>'2','action'=>'待派车'];
+            $res2=  $this->updateState($father) ;
+            $res2 ? $response['success'][]='修改待订舱状态成功' :$response['fail'][]='修改待订舱状态失败';
         }
      
-        // var_dump($response);exit;
         return $response;
     }
     
@@ -234,39 +241,74 @@ class Order extends Model
             
             
     }
-    //修改订单状态的同时 ,记录修改时间和 修改人
-     public function updateState($order_num,$state) 
+    
+/** 
+* updateState
+* 在变更father和son订单的状态同时 在order_state 做登记
+* @access public 
+* @param  $father 父订单的 array(订单order_num数组 state  action) $father=['order_num','state','action']
+* @param  $son    子订单的 array(订单order_num数组 container_code数组, state, action) $son=['order_num','container_code','state','action']
+*/  
+    public function updateState($father='',$son='') 
     { 
-        
         // 取值（当前作用域）
-        $user['loginname']  = Session::get('user_info');
-
- 
-         
-         // 启动事务
-        Db::startTrans();
-        try{
-            
-            
-        $res1 = Db::name('order_father')->where('order_num',$order_num)->setField('state',$state);
-        $res1 ? $response['success'][]='修改order_father待订舱成功' :$response['fail'][]='修改order_father待订舱失败';
-        
-        $res2 = Db::name('order_son')->where('order_num',$order_num)->setField('state',$state);
-        $res2 ? $response['success'][]='修改order_son待订舱成功' :$response['fail'][]='修改order_son待订舱失败';
-        
-        
-        if(array_key_exists('fail', $response)){
-            throw new \Exception('fail');
-        } 
-         Db::commit();
-        } catch (\Exception $e) {
-           // 回滚事务
-        Db::rollback();
-            if($e->getMessage()=='fail'){
-                $response['fail'][]= '提交派车信息失败数据回滚';
+        $loginname= Session::get('user_info','think');
+        $change_time = time();  
+        $response=[];
+        $fatherFuc = function() use($father,$loginname,$change_time){ 
+            $state =$father['state'];
+            $order_num = $father['order_num'];
+            $action =$father['action'];
+            $idArr = Db::name('order_father')->where('order_num','in',$order_num)->column('id');
+            $response=[];
+            //修改订单状态
+            $res1 = Db::name('order_father')->where('id','in',$idArr)->setField('state',$state);
+           
+            $id= implode('_', $idArr);
+            $res1 ? $response['success'][]="修改order_father:{$id}待订舱成功" :$response['fail'][]= "修改order_father:{$id}待订舱失败";
+            //登记到order_status
+            foreach($idArr as $v){
+            $data[] = ['state'=>$state,'action'=>$action,'order_father_id'=>$v,'change_time'=> $change_time,'submit_man_code'=>$loginname];
             }
+            $res2 = Db::name('order_status')->insertAll($data);
+            echo  Db::getLastSql();
+            $res2 ? $response['success'][]="登记order_father的state成功" :$response['fail'][]= "登记order_father的state失败";
+            return $response;
+        };
+        
+        $sonFuc = function() use($son,$loginname,$change_time){ 
+            $state =$son['state'];
+            $order_num =$son['order_num'];
+            $container_code = $son['container_code'];
+            $action =$son['action'];
+            $idArr = Db::name('order_son')->where('order_num','in',$order_num)->where('container_code','in',$container_code)->column('id');
+            $response=[];
+            $res = Db::name('order_son')->where('id','in',$idArr)->setField('state',$state);
+            $id= implode('_', $idArr);
+            $res ? $response['success'][]="修改order_son:{$id}待订舱成功" :$response['fail'][]="修改order_son{$id}待订舱失败";
+            //登记到order_status
+            foreach($son['id'] as $v){
+                $data[] = ['state'=>$state,'action'=>$action,'order_son_id'=>$v,'change_time'=> $change_time,'submit_man_code'=>$loginname];
+            }
+            $res2 = Db::name('order_status')->insertAll($data);
+            $res2 ? $response['success'][]="登记order_son的state成功" :$response['fail'][]= "登记order_son的state失败";
+            return $response;
+        };
+        
+        if(!empty($father)){
+            $fatherFuc();
+        } 
+        if(!empty($son)){
+            $sonFuc();
+        } 
+        
+        if(!array_key_exists('fail', $response)){
+            $status = true;
+        }else   {
+            $status =false; 
         }
-        return $response ;
+        return $status ;
     }
+    
     
 }

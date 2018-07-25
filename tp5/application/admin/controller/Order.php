@@ -41,11 +41,12 @@ class Order extends Base
     public function order_audit_del() 
     {
          if (request()->isAjax()){
-           $data =$this->request->param();
-           $id=  implode(',', $data['id']);
-           $sql = 'update hl_order_fahter set state = "1" where id  in'. $id;
-           $res =Db::execute($sql);
-           return json($res ? 1 : 0) ;
+            $data =$this->request->param();
+            $id=  implode(',', $data['id']);
+            $data = new OrderM;
+            $sql = 'update hl_order_fahter set state = "10" where id  in'. $id;
+            $res =Db::execute($sql);
+            return json($res ? 1 : 0) ;
        }
         
     }
@@ -69,7 +70,9 @@ class Order extends Base
     
     //待订舱页面list
     public function listBook() 
-    {
+    {   
+         
+        
         $data = new OrderM;
         $list = $data->listBook();
         $page =$list->render();
