@@ -1,7 +1,29 @@
-<{include file='./public/header' /}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Order\order_center.html";i:1532321093;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1531300152;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   <!--处理订单的公共页面-->
   <body>
-    <link rel="stylesheet" href="__STATIC__/css/order_list.css">
+    <link rel="stylesheet" href="/static/admin/css/order_list.css">
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -65,7 +87,7 @@
             <xblock>
               <button class="layui-btn layui-btn-danger" onclick="delAll()">
                 <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url(" ")}>',600,400)">
+              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
                 <i class="layui-icon"></i>添加</button>
               <span class="x-right" style="line-height:40px">总共有
                 <{}>条记录</span>
@@ -113,8 +135,8 @@
                   </div>
                 </div>
                 <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
+                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
               </div>
@@ -125,7 +147,7 @@
             <xblock>
               <button class="layui-btn layui-btn-danger" onclick="delAll()">
                 <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url(" ")}>',600,400)">
+              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
                 <i class="layui-icon"></i>添加</button>
               <span class="x-right" style="line-height:40px">总共有
                 <{}>条记录</span>
@@ -164,7 +186,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('信息','<{:url('Order/list_peiship')}>',1100,380)" href="javascript:;">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_peiship'); ?>',1100,380)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -173,8 +195,8 @@
                   </div>
                 </div>
                 <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
+                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
               </div>
@@ -185,7 +207,7 @@
             <xblock>
               <button class="layui-btn layui-btn-danger" onclick="delAll()">
                 <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url(" ")}>',600,400)">
+              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
                 <i class="layui-icon"></i>添加</button>
               <span class="x-right" style="line-height:40px">总共有
                 <{}>条记录</span>
@@ -224,7 +246,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('信息','<{:url('Order/list_dship')}>',700,380)" href="javascript:;">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_dship'); ?>',700,380)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -233,8 +255,8 @@
                   </div>
                 </div>
                 <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
+                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
               </div>
@@ -245,7 +267,7 @@
             <xblock>
               <button class="layui-btn layui-btn-danger" onclick="delAll()">
                 <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url(" ")}>',600,400)">
+              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
                 <i class="layui-icon"></i>添加</button>
               <span class="x-right" style="line-height:40px">总共有
                 <{}>条记录</span>
@@ -284,7 +306,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('信息','<{:url('Order/list_zship')}>',700,380)" href="javascript:;">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_zship'); ?>',700,380)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -293,8 +315,8 @@
                   </div>
                 </div>
                 <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
+                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
               </div>
@@ -305,7 +327,7 @@
             <xblock>
               <button class="layui-btn layui-btn-danger" onclick="delAll()">
                 <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url(" ")}>',600,400)">
+              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
                 <i class="layui-icon"></i>添加</button>
               <span class="x-right" style="line-height:40px">总共有
                 <{}>条记录</span>
@@ -344,7 +366,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('信息','<{:url('Order/list_shouqian')}>',700,300)" href="javascript:;">确认</a>
+                        <a title="确认" onclick="x_admin_show('信息','<?php echo url('Order/list_shouqian'); ?>',700,300)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -353,8 +375,8 @@
                   </div>
                 </div>
                 <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
+                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
               </div>
@@ -365,7 +387,7 @@
             <xblock>
               <button class="layui-btn layui-btn-danger" onclick="delAll()">
                 <i class="layui-icon"></i>批量删除</button>
-              <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url(" ")}>',600,400)">
+              <button class="layui-btn" onclick="x_admin_show('添加用户','<?php echo url(" "); ?>',600,400)">
                 <i class="layui-icon"></i>添加</button>
               <span class="x-right" style="line-height:40px">总共有
                 <{}>条记录</span>
@@ -404,7 +426,7 @@
                     </div>
                     <div class="layui-col-md1">
                       <p class="a_niu">
-                        <a title="确认" onclick="x_admin_show('查看','<{:url('Order/list_songhuo')}>',700,500)" href="javascript:;">确认</a>
+                        <a title="确认" onclick="x_admin_show('查看','<?php echo url('Order/list_songhuo'); ?>',700,500)" href="javascript:;">确认</a>
                       </p>
                       <p class="a_niu">
                         <a class="qu" href="">取消</a>
@@ -413,8 +435,8 @@
                   </div>
                 </div>
                 <div class="fo">
-                  <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
-                  <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+                  <a title="查看" onclick="x_admin_show('查看','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">查看订单</a>
+                  <a title="修改" onclick="x_admin_show('修改','<?php echo url('Price/route_edit'); ?>',700,500)" href="javascript:;">修改订单</a>
                   <a title="删除" onclick="" href="javascript:;">删除订单</a>
                 </div>
               </div>
@@ -430,7 +452,7 @@
       function search() {
         $.ajax({
           type: 'post',
-          url: "<{:url('admin/Contact/search')}>",
+          url: "<?php echo url('admin/Contact/search'); ?>",
           data: $("#searchform").serialize(),
           dataType: "json",
           success: function (data) {
@@ -488,7 +510,7 @@
         function toajax(dataArray) {
           $.ajax({
             type: 'POST',
-            url: "<{:url('admin/member/toDel')}>",
+            url: "<?php echo url('admin/member/toDel'); ?>",
             data: dataArray,
             dataType: "json",
             success: function (data) {
@@ -502,9 +524,9 @@
         }
       
     $(document).ready(function() {
-        yemian('a1','b1' , "<{:url('admin/Order/listBook')}>")
-        yemian('a2','b2' , "<{:url('admin/Order/listSendCar')}>")
-        yemian('a3','b3' , "<{:url('admin/Order/listLoad')}>")
+        yemian('a1','b1' , "<?php echo url('admin/Order/listBook'); ?>")
+        yemian('a2','b2' , "<?php echo url('admin/Order/listSendCar'); ?>")
+        yemian('a3','b3' , "<?php echo url('admin/Order/listLoad'); ?>")
     });
 	
     function yemian(id1,id2,url){   

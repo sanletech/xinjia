@@ -12,10 +12,10 @@ class Order extends Validate
 //      var_dump($data);     echo '</br>';
 //        var_dump($rule); 
         $order_num =$data['order_num'];//订单号码
-        $container_num =$data['container_num'];
+        $container_sum =$data['container_sum'];
         $track_sum =$data['track_sum'];//输入的运单号数量
         $response=true;
-        if(!($track_sum==$container_num || $track_sum==1)){
+        if(!($track_sum==$container_sum || $track_sum==1)){
             return  $response='输入的运单号码个数与订单中的集装箱个数不匹配';
         }
         $str ='';
