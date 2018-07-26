@@ -253,3 +253,45 @@ button:hover{
     }
   }
 }
+
+
+//省市区联动
+#address{
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 30px;
+  width: 428px;
+  height: 175px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  ul{
+    list-style: none;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 2px solid $lan;
+    li{
+      float: left;
+      height: 30px;
+      width: 100px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .lanse{
+      background: $lan;
+    }
+  }
+  #dizhi{
+    a{
+      display: inline-block;
+      height: 25px;
+      text-align: center;
+      line-height: 25px;
+      margin:0 5px;
+      &:hover{
+        color:red;
+      }
+    }
+  }
+}

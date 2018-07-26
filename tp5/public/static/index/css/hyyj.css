@@ -193,4 +193,36 @@ button:hover {
       margin: 0 auto;
       margin-top: 38px; }
 
+#address {
+  display: none;
+  position: absolute;
+  top: 80px;
+  left: 30px;
+  width: 428px;
+  height: 175px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  background: #fff; }
+  #address ul {
+    list-style: none;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 2px solid #2e8de5; }
+    #address ul li {
+      float: left;
+      height: 30px;
+      width: 100px;
+      text-align: center;
+      cursor: pointer; }
+    #address ul .lanse {
+      background: #2e8de5; }
+  #address #dizhi a {
+    display: inline-block;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    margin: 0 5px; }
+    #address #dizhi a:hover {
+      color: red; }
+
 /*# sourceMappingURL=hyyj.css.map */
