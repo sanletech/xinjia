@@ -85,8 +85,13 @@ class Order extends Model
             $str .= "('$order_num','$track_num[$i]','$container_code','2') ,";   
         }
         $str = rtrim($str,',');
+        //插入之前先判断是否已经已经存在了运单号
+        $num= Db::name('order_son')->where('order_num',$order_num)->find();
+        if(!($num->isEmpty())){
+             return $response['fail']='运单号已经输入过了';
+        }
+        
         $sql ="insert into hl_order_son(order_num,track_num,container_code,state) values".$str;
-   //   var_dump($sql);exit;
         $response =[];
         $res =Db::execute($sql);
         $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';
@@ -100,7 +105,7 @@ class Order extends Model
 //        }
          
         if(!empty($res)){
-            $father=['order_num'=>$order_num,'state'=>'2','action'=>'待派车'];
+            $father=['order_num'=>$order_num,'state'=>'2','action'=>'输入运单号完毕'];
             $res2=  $this->updateState($father) ;
             $res2 ? $response['success'][]='修改待订舱状态成功' :$response['fail'][]='修改待订舱状态失败';
         }
@@ -194,14 +199,16 @@ class Order extends Model
 
         }
        
-        //同时修改状态
-        $res4 = Db::name('order_father')->where('order_num',$order_num)->setField('state',3);
-        $res4 ? $response['success'][]='修改order_father待订舱成功' :$response['fail'][]='修改order_father待订舱失败';
-        
-        $res5 = Db::name('order_son')->where('order_num',$order_num)->setField('state',3);
-        $res5 ? $response['success'][]='修改order_son待订舱成功' :$response['fail'][]='修改order_son待订舱失败';
+        //修改order_state的状态
+        $father =['order_num'=>[$order_num],'state'=>3,'action'=>'录入派车信息完毕'];
+        $son =['order_num'=>[$order_num],'container_code'=>$container_id,'state'=>3,'action'=>'录入派车信息完毕'];
+        $res =$this->updateState($father,$son) ;
+        array_push($response ,$res);
+//        $res4 = Db::name('order_father')->where('order_num',$order_num)->setField('state',3);
+//        $res4 ? $response['success'][]='修改order_father待订舱成功' :$response['fail'][]='修改order_father待订舱失败';
+//        $res5 = Db::name('order_son')->where('order_num',$order_num)->setField('state',3);
+//        $res5 ? $response['success'][]='修改order_son待订舱成功' :$response['fail'][]='修改order_son待订舱失败';
        
-        
         if(array_key_exists('fail', $response)){
             throw new \Exception('fail');
         } 
@@ -210,7 +217,7 @@ class Order extends Model
            // 回滚事务
         Db::rollback();
             if($e->getMessage()=='fail'){
-                $response['fail'][]= '提交派车信息失败数据回滚';
+                $response['fail']= '提交派车信息失败数据回滚';
             }
            
         }
@@ -220,27 +227,44 @@ class Order extends Model
     
       //添加实际装货时间
     public function toLoadTime($order_num,$data) 
-    { 
-        $container_id1=$data['container_code'][0];
-        $loading_time1=$data['loading_time'][0];
-        $container_id2=$data['container_code'][1];
-        $loading_time2=$data['loading_time'][1];
-        $res1 = Db::name('car_receive')->where('order_num',$order_num)
-                ->where('container_id',$container_id1)->update('loading_time',$loading_time1);
-        $res2 = Db::name('car_receive')->where('order_num',$order_num)
-                ->where('container_id',$container_id2)->update('loading_time',$loading_time2);
-        if(!($res1 && $res2)){
-            $status =['msg'=>'录入装货时间失败','status'=>0];
-        }  else {
-            $status =['msg'=>'录入装货时间成功','status'=>1];
-         
+    {    
+        $container_codeArr =$data['container_code'];
+        $loading_timeArr = $data['loading_time'];
+        $sqlData = array_combine($container_codeArr ,$loading_timeArr);
+        $response=[];
+           // 启动事务
+        Db::startTrans();
+        try{
+        
+        foreach ($sqlData as $key => $value) {
+            $order_num =$key;
+            $loading_time = strtotime($value);
+            $res = Db::name('car_receive')->where('order_num',$order_num)
+                    ->where('container_id',$container_id)->update('loading_time',$loading_time);
+            $res ? $response['success'][]="添加柜子:{$container_id}实际装货时间成功" :$response['fail'][]= "添加柜子:{$container_id}实际装货时间失败";
         }
-            return $status;
-            
-            
-            
+        //修改order_state的状态
+        $father =['order_num'=>[$order_num],'state'=>4,'action'=>'录入实际装货时间完毕'];
+        $son =['order_num'=>[$order_num],'container_code'=>$container_codeArr,'state'=>4,'action'=>'录入实际装货时间完毕'];
+        $res =$this->updateState($father,$son) ;
+        array_push($response ,$res);
+        
+        if(array_key_exists('fail', $response)){
+            $msg = implode('', $response['fail']);
+            throw new \Exception($msg);
+        } 
+        Db::commit();
+        } catch (\Exception $e) {
+           // 回滚事务
+        Db::rollback();
+            $response['fail']= $e->getMessage();
+        }
+        
+        return $status;
             
     }
+    
+    //
     
 /** 
 * updateState
@@ -253,25 +277,36 @@ class Order extends Model
     { 
         // 取值（当前作用域）
         $loginname= Session::get('user_info','think');
+       // var_dump($loginname);exit;
         $change_time = time();  
         $response=[];
+        
+        // 启动事务
+        Db::startTrans();
+        try{
         $fatherFuc = function() use($father,$loginname,$change_time){ 
             $state =$father['state'];
             $order_num = $father['order_num'];
             $action =$father['action'];
             $idArr = Db::name('order_father')->where('order_num','in',$order_num)->column('id');
             $response=[];
+            //先查询状态是否是最新的 如果不是就返回
+            $stateMax = Db::name('order_father')->where('id','in',$idArr)->max('state');
+            if($state<=$stateMax){
+               return $response['fail']= '提交的信息已经更新过';
+            }
+            
             //修改订单状态
             $res1 = Db::name('order_father')->where('id','in',$idArr)->setField('state',$state);
-           
+            
             $id= implode('_', $idArr);
-            $res1 ? $response['success'][]="修改order_father:{$id}待订舱成功" :$response['fail'][]= "修改order_father:{$id}待订舱失败";
+            $res1 ? $response['success'][]="修改order_father:{$id}状态成功" :$response['fail'][]= "修改order_father:{$id}状态失败";
             //登记到order_status
             foreach($idArr as $v){
             $data[] = ['state'=>$state,'action'=>$action,'order_father_id'=>$v,'change_time'=> $change_time,'submit_man_code'=>$loginname];
             }
             $res2 = Db::name('order_status')->insertAll($data);
-            echo  Db::getLastSql();
+            
             $res2 ? $response['success'][]="登记order_father的state成功" :$response['fail'][]= "登记order_father的state失败";
             return $response;
         };
@@ -281,7 +316,15 @@ class Order extends Model
             $order_num =$son['order_num'];
             $container_code = $son['container_code'];
             $action =$son['action'];
-            $idArr = Db::name('order_son')->where('order_num','in',$order_num)->where('container_code','in',$container_code)->column('id');
+            //先查询状态是否是最新的 如果不是就返回
+            $stateMax = Db::name('order_son')->where('order_num','in',$order_num)
+                    ->where('container_code','in',$container_code)->max('state');
+            if($state<$stateMax){
+                return  $response['fail']= '提交的信息已经更新过';
+            }
+            
+            $idArr = Db::name('order_son')->where('order_num','in',$order_num)
+                    ->where('container_code','in',$container_code)->column('id');
             $response=[];
             $res = Db::name('order_son')->where('id','in',$idArr)->setField('state',$state);
             $id= implode('_', $idArr);
@@ -294,20 +337,30 @@ class Order extends Model
             $res2 ? $response['success'][]="登记order_son的state成功" :$response['fail'][]= "登记order_son的state失败";
             return $response;
         };
-        
         if(!empty($father)){
-            $fatherFuc();
+            $res1 = $fatherFuc();
+            var_dump($res1);exit;
+            if(array_key_exists('fail', $res1)){
+                $msg = implode('', $res1['fail']);
+            throw new \Exception($msg);
+            } 
         } 
         if(!empty($son)){
-            $sonFuc();
+            $res2 = $sonFuc();
+            if(array_key_exists('fail', $res2)){
+                $msg2 = implode('', $res2['fail']);
+            throw new \Exception($msg2);
+            } 
         } 
-        
-        if(!array_key_exists('fail', $response)){
-            $status = true;
-        }else   {
-            $status =false; 
+        Db::commit();
+        } catch (\Exception $e) {
+           // 回滚事务
+        Db::rollback();
+            $response['fail'][]= $e->getMessage();
+            
         }
-        return $status ;
+        
+        return $response;
     }
     
     
