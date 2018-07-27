@@ -145,10 +145,13 @@ class Order extends Base
         $order_num =$this->request->get('order_num');
         $container_sum =$this->request->get('container_sum');
         $container_code =$this->request->get('container_code');
+        $track_num = Db::name('order_son')->where('order_num',$order_num)->column('track_num');
+      // var_dump($track_num);exit;
         $this->assign([
         'order_num'  => $order_num,
         'container_sum' => $container_sum,
-        'container_code' => $container_code
+        'container_code' => $container_code,
+        'track_num'=>$track_num
         ]);
         return $this->view->fetch('Order/sendCarInfo');
     }
@@ -187,15 +190,14 @@ class Order extends Base
     {   
         $order_num =$this->request->get('order_num');
         //根据定单号展示柜号
-        $data = Db::name('order_son')->where("order_num = '$order_num'")->column('container_code');
-       // $this->_v($data);exit;
+        $data = Db::name('order_son')->where("order_num = '$order_num'")->column('track_num','container_code');
+      // $this->_v($data);exit;
         $this->assign([
         'order_num'  => $order_num,
         'data' => $data
         ]);
         return $this->view->fetch('Order/load_time');
     }
-    
         
     //添加实际装货时间
     public function toLoadTime() 
@@ -206,8 +208,21 @@ class Order extends Base
         //根据运单号和 柜号 添加对应的实际装货时间
          $dataM = new OrderM;
         $res = $dataM->toLoadTime($order_num,$data);
-    
     }
+        //展示需要向船公司提交柜号的list页面
+    public function listBaogui() 
+    {   
+        $dataM = new OrderM;
+        $list = $dataM->listSendCar($pages=5,$state='4');
+        $page =$list->render();
+        $count =  count($list);
+       $this->_p($list);exit;
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        return $this->view->fetch('listOrder/list_baogui');
+    }
+    
     
     
     //处理订单送货

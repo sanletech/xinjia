@@ -1,3 +1,1 @@
-insert into hl_order_father 
-(order_num,cargo,container_size,container_num,weight,cargo_cost,container_type_id,comment,mtime,add_id ,book_line_id,member_code,state) 
-values('1531105950kehu001530','钢材,'1','2','410','142','1','阿萨德发送到发送','1531105950','1' ,'5','kehu001','1')
+*.runtime

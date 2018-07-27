@@ -40,19 +40,20 @@
               <p>箱型*箱量：20GP*1</p>
             </div>
             <div class="layui-col-md2">
-              <p class="se">状态：待报柜号</p>
+              <p class="se">状态：待报柜fsfsd号</p>
               <p class="se">天数：7天</p>
             </div>
             <div class="layui-col-md1">
-              <p class="a_niu">
-                <a href="">确认</a>
-              </p>
-              <p class="a_niu">
-                <a class="qu" href="">取消</a>
-              </p>
+                <p class="a_niu">
+                  <a href="">确认</a>
+                </p>
+                <p class="a_niu">
+                  <a class="qu" href="">取消</a>
+                </p>
             </div>
           </div>
         </div>
+
         <div class="fo">
           <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
           <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
@@ -60,6 +61,25 @@
         </div>
       </div>
     </div>
+      <div class="layui-col-md2">
+              <p class="se">状态：待报柜号</p>
+              <p class="se">天数：7天</p>
+            </div>
   </div>
+
+
+<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['element', 'layer'], function(){
+  var element = layui.element;
+  var layer = layui.layer;
+  
+  //监听折叠
+  element.on('collapse(test)', function(data){
+    layer.msg('展开状态：'+ data.show);
+  });
+});
+</script>
 </body>
 </html>

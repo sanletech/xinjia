@@ -141,10 +141,11 @@ class Order extends Model
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
                         . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . 'LK2.company ')
-                ->group('OF.id')->where('OF.state','eq',$state)
+                ->group('OF.order_num')->where('OS.state','eq',$state)
+             //   ->group('OF.id')->where('OF.state','eq',$state)
                // ->where('OA.member_code = OF.member_code')
                 ->order('OF.id ,OF.mtime desc')->buildSql();
-      //  var_dump($fatherSql);exit;
+        // var_dump($fatherSql);exit;
         $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
         return $list;
     }
@@ -152,11 +153,11 @@ class Order extends Model
     public function tosendCar($data) 
     {  
         $order_num =$data['order_num'];
+        $track_num =$data['track_num'];
         $container_code = $data['container_code'];  //虚拟的集装箱编码 
         $container_code = explode('_', $container_code); //转换为数组 
         $container_id = $data['container_id']; //录入的集装箱编码 
         $container_sum = $data['container_sum']; //一个订单里的集装箱数量
-       
        
         //将装货时间处理成时间戳
         $arrTime = $data['load_time'];
@@ -171,40 +172,51 @@ class Order extends Model
         //将$data数组由行转成列
         $arr =[];$arr1 =[]; $arr2=[];
         $arr= array_keys($data);
-        $response=[];
-        
         $mtime =  time();
+        $response=[];
         // 启动事务
         Db::startTrans();
         try{
             
         for($i=0;$i< $container_sum;$i++){
             $arr1 = array_column($data, $i);
-            $arr2 = array_combine($arr,$arr1);
-            $arr2['mtime'] =$mtime;  //添加时间戳
-            $res1 = Db::name('car_receive')->insert($arr2);
-            $res1 ? $response['success'][]="添加第$i个柜子派车信息成功" :$response['fail'][]="添加第$i个柜子派车信息成功";
-            $id[] = Db::name('car_receive')->getLastInsID();
+            $arr2[$i] = array_combine($arr,$arr1);
+            $arr2[$i]['mtime'] =$mtime;  //添加时间戳
+           // $res1 = Db::name('car_receive')->insert($arr2);
+            //$id[] = Db::name('car_receive')->getLastInsID();
+            //var_dump(Db::getLastSql());
+            //$res1 ? $response['success'][]="添加第$i个柜子派车信息成功" :$response['fail'][]="添加第$i个柜子派车信息成功";
         }
-       
-        // 根据获取的 虚拟的集装箱编码 首先将派车信息id添加到order_son表里
-        // 再将container_code 修改为实际的集装箱编码
         
-        for($k=0;$k< $container_sum;$k++){
-            $res2 = Db::name('order_son')->where('container_code',$container_code[$k])->setField('car_receive_id', $id[$k]);
-            $res2 ? $response['success'][]="修改$id[$k]派车id成功" :$response['fail'][]="修改$id[$k]派车id失败";
+         $res1 = Db::name('car_receive')->insertAll($arr2);
+         $res1 ? $response['success'][]="添加派车信息成功" :$response['fail'][]="添加派车信息成功";
+         
+       for($k=0;$k<$container_sum;$k++){
+        
+            // 将container_code 修改为实际的集装箱编码
+            $res3 = Db::name('order_son')->where('track_num',$track_num[$k])->where('container_code',$container_code[$k])->setField('container_code', $container_id[$k]);
             
-            $res3 = Db::name('order_son')->where('container_code',$container_code[$k])->setField('container_code', $container_id[$k]);
             $res3 ? $response['success'][]="修改$container_code[$k]集装箱成功" :$response['fail'][]="修改$container_code[$k]集装箱失败";
+            $id = Db::name('car_receive')->where('track_num',$track_num[$k])->where('container_id',$container_id[$k])->value('id');
+            // 根据获取的 虚拟的集装箱编码 首先将派车信息id添加到order_son表里
+            $res2 = Db::name('order_son')->where('track_num',$track_num[$k])->where('container_code',$container_id[$k])->setField('car_receive_id', $id );
+            $res2 ? $response['success'][]="修改$container_code[$k]派车id成功" :$response['fail'][]="修改$container_code[$k]派车id失败";
 
         }
-       
-        //修改order_state的状态
+ 
+//        //修改order_state的状态
         $father =['order_num'=>[$order_num],'state'=>3,'action'=>'录入派车信息完毕'];
         $son =['order_num'=>[$order_num],'container_code'=>$container_id,'state'=>3,'action'=>'录入派车信息完毕'];
         $res =$this->updateState($father,$son) ;
+        if(array_key_exists('fail', $res)){
+            
+            throw new \Exception('fail');
+        }  else {
+            $response['success'][]= $res
+        } 
+        
         array_push($response ,$res);
-//        $res4 = Db::name('order_father')->where('order_num',$order_num)->setField('state',3);
+////        $res4 = Db::name('order_father')->where('order_num',$order_num)->setField('state',3);
 //        $res4 ? $response['success'][]='修改order_father待订舱成功' :$response['fail'][]='修改order_father待订舱失败';
 //        $res5 = Db::name('order_son')->where('order_num',$order_num)->setField('state',3);
 //        $res5 ? $response['success'][]='修改order_son待订舱成功' :$response['fail'][]='修改order_son待订舱失败';
@@ -221,8 +233,8 @@ class Order extends Model
             }
            
         }
-        // var_dump($response);exit;
-        return $response;
+         var_dump($response);exit;
+        //return $response;
     }
     
       //添加实际装货时间
@@ -230,19 +242,24 @@ class Order extends Model
     {    
         $container_codeArr =$data['container_code'];
         $loading_timeArr = $data['loading_time'];
+        $track_numArr =  $data['track_num'];
         $sqlData = array_combine($container_codeArr ,$loading_timeArr);
         $response=[];
            // 启动事务
         Db::startTrans();
         try{
-        
+        $i=0;  
         foreach ($sqlData as $key => $value) {
-            $order_num =$key;
+            $container_id =$key;
             $loading_time = strtotime($value);
-            $res = Db::name('car_receive')->where('order_num',$order_num)
-                    ->where('container_id',$container_id)->update('loading_time',$loading_time);
+            $track_num =$track_numArr[$i];
+            $i++;
+            $res = Db::name('car_receive')->where('track_num',$track_num)
+                    ->where('container_id',$container_id)->update(['loading_time'=>$loading_time]);
             $res ? $response['success'][]="添加柜子:{$container_id}实际装货时间成功" :$response['fail'][]= "添加柜子:{$container_id}实际装货时间失败";
+                   // var_dump(Db::getLastSql());exit;
         }
+
         //修改order_state的状态
         $father =['order_num'=>[$order_num],'state'=>4,'action'=>'录入实际装货时间完毕'];
         $son =['order_num'=>[$order_num],'container_code'=>$container_codeArr,'state'=>4,'action'=>'录入实际装货时间完毕'];
@@ -259,8 +276,8 @@ class Order extends Model
         Db::rollback();
             $response['fail']= $e->getMessage();
         }
-        
-        return $status;
+        var_dump($response);exit;
+        return  $response;
             
     }
     

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-07-26 18:07:16
+Date: 2018-07-27 18:08:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3616,13 +3616,13 @@ CREATE TABLE `hl_car_receive` (
   `loading_time` varchar(12) DEFAULT NULL COMMENT '实际装货时间',
   `mtime` varchar(12) DEFAULT NULL COMMENT '创建修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_car_receive
 -- ----------------------------
-INSERT INTO `hl_car_receive` VALUES ('5', null, null, '美女车队', '阿萨德', '粤Adfa4', '42112545456465', '421125454564', 'asdf545456465', null, 'asdfas12545456465', '发生的', '1532361600', null, null);
-INSERT INTO `hl_car_receive` VALUES ('6', null, null, '饿了不车队', '阿斯蒂芬', '粤Adfa4', '42112545456465', '421125454564', 'fassd2545456465', null, '42112545456465', '法撒旦法', '1532361600', null, null);
+INSERT INTO `hl_car_receive` VALUES ('3', 'ADSFASD', null, '美团', '王大成', '粤AAA', '4454646464', '123456789', 'guihao1111', null, 's6fa4sd6f', '司法所', '1530633600', null, '1532684302');
+INSERT INTO `hl_car_receive` VALUES ('4', 'ADSFASD', null, '饿了么', '王大妈', '粤BBB', '464646464', '123456789', 'guihao222', null, '6sd5fa4s6', '阿斯蒂芬', '1531238400', null, '1532684302');
 
 -- ----------------------------
 -- Table structure for `hl_car_send`
@@ -4565,7 +4565,7 @@ CREATE TABLE `hl_order_son` (
   `ship_order_id` varchar(12) DEFAULT NULL COMMENT '船运表ID',
   `car_send_id` int(10) DEFAULT NULL COMMENT '送货车表的ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_son
@@ -4573,7 +4573,8 @@ CREATE TABLE `hl_order_son` (
 INSERT INTO `hl_order_son` VALUES ('1', '201806251702', 'ZHY1817NSKRZ031', 'asdf545456465', '3', '5', null, null);
 INSERT INTO `hl_order_son` VALUES ('2', '201806251702', 'ZHY1817NSKRZ035', 'fassd2545456465', '3', '6', null, null);
 INSERT INTO `hl_order_son` VALUES ('9', '201806251705', 'YYYYY', 'YYYYYd0725n0', '2', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('21', '1531107265kehu001555', 'ADSFASD', 'ADSFASDd0726n0', '2', null, null, null);
+INSERT INTO `hl_order_son` VALUES ('18', '1531107265kehu001555', 'ADSFASD', 'guihao1111', '2', '3', null, null);
+INSERT INTO `hl_order_son` VALUES ('21', '1531107265kehu001555', 'ADSFASD', 'guihao222', '2', '4', '', null);
 
 -- ----------------------------
 -- Table structure for `hl_order_status`
@@ -4588,13 +4589,11 @@ CREATE TABLE `hl_order_status` (
   `action` varchar(50) DEFAULT NULL COMMENT '更改状态的说明',
   `submit_man_code` varchar(10) DEFAULT NULL COMMENT '修改订单的员工id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_status
 -- ----------------------------
-INSERT INTO `hl_order_status` VALUES ('1', '2', '1532518399', '2', null, '待派车', '0');
-INSERT INTO `hl_order_status` VALUES ('2', '2', '1532584294', '3', null, '输入运单号完毕', 'aaa');
 
 -- ----------------------------
 -- Table structure for `hl_order_time`
@@ -5319,7 +5318,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1532576563', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1532655216', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
