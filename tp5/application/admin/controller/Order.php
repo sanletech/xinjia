@@ -178,7 +178,7 @@ class Order extends Base
         $list = $dataM->listSendCar($pages=5,$state='3');
         $page =$list->render();
         $count =  count($list);
-     //   $this->_p($list);exit;
+       $this->_p($list);exit;
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
