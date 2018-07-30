@@ -71,8 +71,6 @@ class Order extends Base
     //待订舱页面list
     public function listBook() 
     {   
-         
-        
         $data = new OrderM;
         $list = $data->listBook();
         $page =$list->render();
@@ -96,6 +94,7 @@ class Order extends Base
         $this->view->assign('container_code',$container_code);
         return $this->view->fetch('Order/list_booking');
     }
+    
     //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
      public function waybillNum () 
     {  
@@ -178,7 +177,7 @@ class Order extends Base
         $list = $dataM->listSendCar($pages=5,$state='3');
         $page =$list->render();
         $count =  count($list);
-       $this->_p($list);exit;
+     //  $this->_p($list);exit;
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
@@ -206,23 +205,42 @@ class Order extends Base
         $data = $this->request->except('order_num');
         //var_dump($data);exit;
         //根据运单号和 柜号 添加对应的实际装货时间
-         $dataM = new OrderM;
-        $res = $dataM->toLoadTime($order_num,$data);
+        $dataM = new OrderM;
+        $response= $dataM->toLoadTime($order_num,$data);
+        if(!array_key_exists('fail', $response)){
+            $status =['msg'=>'录入运单号成功','status'=>1];
+        }else {
+            $status =['msg'=>'录入运单号失败','status'=>0]; 
+        } 
+        return json($status);
     }
-        //展示需要向船公司提交柜号的list页面
+    
+    //展示需要向船公司提交柜号的list页面
     public function listBaogui() 
     {   
         $dataM = new OrderM;
         $list = $dataM->listSendCar($pages=5,$state='4');
+//        $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
-       $this->_p($list);exit;
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
         return $this->view->fetch('listOrder/list_baogui');
     }
     
+    //处理报柜号
+    public function toBaogui() {
+        $data= $this->request->param();
+        $dataM = new OrderM;
+        $response  = $dataM->toBaogui($data);
+        if(!array_key_exists('fail', $response)){
+            $status =['msg'=>'录入运单号成功','status'=>1];
+        }else {
+            $status =['msg'=>'录入运单号失败','status'=>0]; 
+        } 
+        return json($status);
+    }
     
     
     //处理订单送货
