@@ -325,21 +325,46 @@ class Order extends Model
     }
     //录入配船信息页面的 展示原有的航线详情信息
     public function cargoPlan($order_num){
+
        $data =Db::name('order_father')->alias('OF')
-                ->join('hl_book_line BL','OF.book_line_id = BL.id ','left')
+                ->join('hl_book_line BL','OF.book_line_id = BL.id','left')
 //                ->join('hl_car_listprice CLP_s',"CLP_s.id = BL.s_pricecar_id and  CLP_s.variable='s'",'left')//门到港送货价格表
 //                ->join('hl_car_listprice CLP_r',"CLP_r.id = BL.r_pricecar_id and  CLP_r.variable='r'",'left')//门到港装货价格表
                 ->join('hl_seaprice SP','SP.id=BL.seaprice_id','left')//海运价格
-                ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')//船公司
-                ->join('hl_boat B','SP.boat_code= B.boat_code')//船舶
+               // ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')//船公司
+                ->join('hl_boat B','SP.boat_code= B.boat_code','left')//船舶
                 ->join('hl_ship_route SR','SR.id=SP.route_id','left')//海运航线表
-                ->join('hl_sea_middle SM','SM.sealine_id=SR.middle_id')//中间港口航线
-                ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id')//两头港口航线
+                ->join('hl_sea_middle SM','SM.sealine_id=SR.middle_id','left')//中间港口航线
+                ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//两头港口航线
+//                ->join('hl_port P1','P1.port_code =SB.sl_start','left')//起始港口
+//                ->join('hl_port P2','P2.port_code =SB.sl_end','left')//目的港口
+//                ->join('hl_port P3','P3.port_code =SM.sl_middle','left')//中间港口
+                ->file("OF.order_num,B.boat_name")
+               ->where('OF.order_num',"'$order_num'")
+               ->buildSql();
+       var_dump($data);exit;
+       
+       
+       
+              $data =Db::name('order_father')->alias('OF')
+                ->join('hl_book_line BL','OF.book_line_id = BL.id','left')
+//                ->join('hl_car_listprice CLP_s',"CLP_s.id = BL.s_pricecar_id and  CLP_s.variable='s'",'left')//门到港送货价格表
+//                ->join('hl_car_listprice CLP_r',"CLP_r.id = BL.r_pricecar_id and  CLP_r.variable='r'",'left')//门到港装货价格表
+                ->join('hl_seaprice SP','SP.id=BL.seaprice_id','left')//海运价格
+               // ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')//船公司
+                ->join('hl_boat B','SP.boat_code= B.boat_code','left')//船舶
+                ->join('hl_ship_route SR','SR.id=SP.route_id','left')//海运航线表
+                ->join('hl_sea_middle SM','SM.sealine_id=SR.middle_id','left')//中间港口航线
+                ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//两头港口航线
                 ->join('hl_port P1','P1.port_code =SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code =SB.sl_end','left')//目的港口
                 ->join('hl_port P3','P3.port_code =SM.sl_middle','left')//中间港口
-                ->file('SP');
-               
+                ->file("OF.order_num,B.boat_name,P1.port_name port_s ,"
+                        . "P2.port_name port_e,"
+                        . "group_concat(P3.port_name  order by sequence separate '_') port_middle")
+               ->where('OF.order_num',"'$order_num'")
+               ->buildSql();
+       
        
         
         

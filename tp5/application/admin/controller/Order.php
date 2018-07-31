@@ -261,7 +261,7 @@ class Order extends Base
         $container_code = explode('_', $this->request->get('container_code'));
         //查询对应订单的运线详情
         $dataM = new OrderM;
-        //$data= $dataM->cargoPlan($order_num);
+        $data= $dataM->cargoPlan($order_num);
         $this->view->assign([
             'order_num'=>$order_num,
             'container_code'=>$container_code
