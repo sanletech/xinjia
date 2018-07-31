@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-07-30 21:41:31
+Date: 2018-07-31 18:01:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3244,8 +3244,8 @@ DROP TABLE IF EXISTS `hl_book_line`;
 CREATE TABLE `hl_book_line` (
   `mtime` varchar(12) DEFAULT NULL COMMENT '修改创建时间',
   `seaprice_id` int(11) DEFAULT NULL COMMENT '船运价格表的id',
-  `s_pricecar_id` int(11) unsigned DEFAULT NULL COMMENT '车装货价格表的id',
-  `r_pricecar_id` int(11) DEFAULT NULL COMMENT '车装货价格表的id',
+  `s_pricecar_id` int(11) unsigned DEFAULT NULL COMMENT '车送货目录价格car_listprice表的id',
+  `r_pricecar_id` int(11) DEFAULT NULL COMMENT '车装货目录价格car_listprice表的id',
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
@@ -3570,6 +3570,41 @@ INSERT INTO `hl_car_line` VALUES ('36', '河北省石家庄市新华区宁安街
 INSERT INTO `hl_car_line` VALUES ('37', '北京市北京市丰台区右安门街道', '110106001', '110100002');
 INSERT INTO `hl_car_line` VALUES ('38', '北京市北京市通州区玉桥街道', '110112004', '110100003');
 INSERT INTO `hl_car_line` VALUES ('39', '安徽省合肥市瑶海区明光路街道', '340102001', '120100009');
+
+-- ----------------------------
+-- Table structure for `hl_car_listprice`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_car_listprice`;
+CREATE TABLE `hl_car_listprice` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '车运目录定价ID',
+  `cl_id` int(20) DEFAULT NULL COMMENT 'car_line的id即路线id',
+  `price_20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子车运价格',
+  `price_40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子车运价格',
+  `latest_order_time` int(10) DEFAULT NULL COMMENT '最新的合作订单时间',
+  `variable` char(1) DEFAULT NULL COMMENT '区分是装货还是送货  装货为r 送货为s',
+  `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_car_listprice
+-- ----------------------------
+INSERT INTO `hl_car_listprice` VALUES ('30', '33', '1000.00', '111111112.00', null, 'r', '1528782891');
+INSERT INTO `hl_car_listprice` VALUES ('31', '33', '200.00', '2000.00', null, 's', '1528782891');
+INSERT INTO `hl_car_listprice` VALUES ('32', '31', '5000.00', '55555.00', null, 'r', '1528783034');
+INSERT INTO `hl_car_listprice` VALUES ('33', '31', '555.00', '445454.00', null, 's', '1528783034');
+INSERT INTO `hl_car_listprice` VALUES ('34', '32', '2000.00', '4111.00', null, 'r', '1530002159');
+INSERT INTO `hl_car_listprice` VALUES ('35', '32', '1220.00', '455000.00', null, 's', '1530002159');
+INSERT INTO `hl_car_listprice` VALUES ('36', '35', '500.00', '1000.00', null, 'r', '1530071239');
+INSERT INTO `hl_car_listprice` VALUES ('37', '35', '500.00', '1200.00', null, 's', '1530071239');
+INSERT INTO `hl_car_listprice` VALUES ('38', '36', '800.00', '1600.00', null, 'r', '1530071320');
+INSERT INTO `hl_car_listprice` VALUES ('39', '36', '800.00', '1700.00', null, 's', '1530071320');
+INSERT INTO `hl_car_listprice` VALUES ('42', '37', '500.00', '1000.00', null, 'r', '1530172947');
+INSERT INTO `hl_car_listprice` VALUES ('43', '37', '550.00', '1200.00', null, 's', '1530172947');
+INSERT INTO `hl_car_listprice` VALUES ('44', '38', '600.00', '1500.00', null, 'r', '1530172993');
+INSERT INTO `hl_car_listprice` VALUES ('45', '38', '700.00', '1550.00', null, 's', '1530172993');
+INSERT INTO `hl_car_listprice` VALUES ('46', '39', '200.00', '500.00', null, 'r', '1530672893');
+INSERT INTO `hl_car_listprice` VALUES ('47', '39', '200.00', '500.00', null, 's', '1530672893');
 
 -- ----------------------------
 -- Table structure for `hl_car_port`
@@ -4576,8 +4611,8 @@ CREATE TABLE `hl_order_son` (
 INSERT INTO `hl_order_son` VALUES ('1', '201806251702', 'ZHY1817NSKRZ031', 'asdf545456465', '3', '5', null, null);
 INSERT INTO `hl_order_son` VALUES ('2', '201806251702', 'ZHY1817NSKRZ035', 'fassd2545456465', '3', '6', null, null);
 INSERT INTO `hl_order_son` VALUES ('9', '201806251705', 'YYYYY', '565', '2', '5', null, null);
-INSERT INTO `hl_order_son` VALUES ('18', '1531107265kehu001555', 'ADSFASD', 'GUIZI44444', '4', '16', null, null);
-INSERT INTO `hl_order_son` VALUES ('21', '1531107265kehu001555', 'ADSFASD', 'GUIZI5555555', '4', '17', '', null);
+INSERT INTO `hl_order_son` VALUES ('18', '1531107265kehu001555', 'ADSFASD', 'ANNSTIA180491174', '5', '16', null, null);
+INSERT INTO `hl_order_son` VALUES ('21', '1531107265kehu001555', 'ADSFASD', 'ANNSTIA180491175', '5', '17', '', null);
 
 -- ----------------------------
 -- Table structure for `hl_order_status`
@@ -4603,6 +4638,8 @@ INSERT INTO `hl_order_status` VALUES ('3', '3', '1532917607', null, '21', '录�
 INSERT INTO `hl_order_status` VALUES ('10', '4', '1532919008', '3', null, '录入实际装货时间完毕', 'aaa');
 INSERT INTO `hl_order_status` VALUES ('11', '4', '1532919008', null, '18', '录入实际装货时间完毕', 'aaa');
 INSERT INTO `hl_order_status` VALUES ('12', '4', '1532919008', null, '21', '录入实际装货时间完毕', 'aaa');
+INSERT INTO `hl_order_status` VALUES ('13', '5', '1533006615', null, '18', '申报柜号完毕', 'aaa');
+INSERT INTO `hl_order_status` VALUES ('14', '5', '1533006615', null, '21', '申报柜号完毕', 'aaa');
 
 -- ----------------------------
 -- Table structure for `hl_order_time`
@@ -5327,7 +5364,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1532953968', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533002124', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

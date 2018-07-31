@@ -242,7 +242,34 @@ class Order extends Base
         return json($status);
     }
     
-    
+    //待配船list
+    public function  listCargo(){
+        $dataM = new OrderM;
+        $list = $dataM->listSendCar($pages=5,$state='5');
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        return $this->view->fetch('listOrder/list_cargo');
+        
+    }
+    ///录入配船信息的页面
+    public function cargoPlan() {
+        $order_num = $this->request->get('order_num');
+        $container_code = explode('_', $this->request->get('container_code'));
+        //查询对应订单的运线详情
+        $dataM = new OrderM;
+        //$data= $dataM->cargoPlan($order_num);
+        $this->view->assign([
+            'order_num'=>$order_num,
+            'container_code'=>$container_code
+        ]);
+        return $this->view->fetch('Order/cargoPlan');
+    }
+
+
     //处理订单送货
     public function list_songhuo() 
     {
@@ -253,11 +280,7 @@ class Order extends Base
     {
         return $this->view->fetch('Order/list_shouqian');
     }
-    //处理订单待配船
-    public function list_dship() 
-    {
-        return $this->view->fetch('Order/list_dship');
-    }
+ 
     //处理订单卸船
     public function list_zship() 
     {

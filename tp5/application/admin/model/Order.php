@@ -293,13 +293,13 @@ class Order extends Model
         //如果$containerSql 和 提交进来$container_codeArr对比有差异 说明 还有部分没有提交
         $diff_arr = array_diff($containerSql,$container_codeArr);
         if(!empty($diff_arr)){
-            $father =['order_num'=>[$order_num],'state'=>4,'action'=>'申报柜号完毕'];
+            $father=['order_num'=>$order_num,'state'=>4,'action'=>'申报柜号完毕'];
         }  else {
             $father ='';
         }
         //修改order_state的状态
         
-        $son =['order_num'=>[$order_num],'container_code'=>$container_codeArr,'state'=>5,'action'=>'申报柜号完毕'];
+        $son =['order_num'=>$order_num,'container_code'=>$container_codeArr,'state'=>5,'action'=>'申报柜号完毕'];
         $res =$this->updateState($father,$son) ;    
         if(array_key_exists('fail',$res)){
             $response['fail'][]= $res['fail'];
@@ -320,10 +320,31 @@ class Order extends Model
             $response['fail']= $e->getMessage();
         }
         
-        var_dump($response);exit;
         return  $response;
      
     }
+    //录入配船信息页面的 展示原有的航线详情信息
+    public function cargoPlan($order_num){
+       $data =Db::name('order_father')->alias('OF')
+                ->join('hl_book_line BL','OF.book_line_id = BL.id ','left')
+//                ->join('hl_car_listprice CLP_s',"CLP_s.id = BL.s_pricecar_id and  CLP_s.variable='s'",'left')//门到港送货价格表
+//                ->join('hl_car_listprice CLP_r',"CLP_r.id = BL.r_pricecar_id and  CLP_r.variable='r'",'left')//门到港装货价格表
+                ->join('hl_seaprice SP','SP.id=BL.seaprice_id','left')//海运价格
+                ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')//船公司
+                ->join('hl_boat B','SP.boat_code= B.boat_code')//船舶
+                ->join('hl_ship_route SR','SR.id=SP.route_id','left')//海运航线表
+                ->join('hl_sea_middle SM','SM.sealine_id=SR.middle_id')//中间港口航线
+                ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id')//两头港口航线
+                ->join('hl_port P1','P1.port_code =SB.sl_start','left')//起始港口
+                ->join('hl_port P2','P2.port_code =SB.sl_end','left')//目的港口
+                ->join('hl_port P3','P3.port_code =SM.sl_middle','left')//中间港口
+                ->file('SP');
+               
+       
+        
+        
+    }
+    
     
     
     
@@ -336,7 +357,7 @@ class Order extends Model
 */  
     public function updateState($father='',$son='') 
     { 
-        
+       
         // 取值（当前作用域）
         $loginname= Session::get('user_info','think');
        // var_dump($loginname);exit;
@@ -389,10 +410,10 @@ class Order extends Model
                 }
             }
            //var_dump(Db::getLastSql());exit;
-           var_dump($order_num);var_dump($container_code);exit;
+        
             $idArr = Db::name('order_son')->where('order_num','in',$order_num)
                     ->where('container_code','in',$container_code)->column('id'); 
-            var_dump(Db::getLastSql());exit;
+            
             $res = Db::name('order_son')->where('id','in',$idArr)->setField('state',$state);
            // var_dump(Db::getLastSql());
             $id= implode(' and ', $idArr);
