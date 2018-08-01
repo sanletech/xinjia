@@ -261,10 +261,25 @@ class Order extends Base
         $container_code = explode('_', $this->request->get('container_code'));
         //查询对应订单的运线详情
         $dataM = new OrderM;
-        $data= $dataM->cargoPlan($order_num);
+        $data = $dataM->cargoPlan($order_num);
+        $portArr =[];
+        if(!$data['middle_id']){
+            $portArr = explode('_', $data['middle_id']);
+            array_unshift($portArr,$data['port_s']);
+            array_push($portArr,$data['port_e']);
+        }  else {
+            $portArr[]=$data['port_s'];
+            $portArr[]=$data['port_e'];
+        }
+       
+        $num =count($portArr)-1;
+       
         $this->view->assign([
             'order_num'=>$order_num,
-            'container_code'=>$container_code
+            'container_code'=>$container_code,
+            'data'=>$data,
+            'portArr'=>$portArr,
+            'num'=>$num 
         ]);
         return $this->view->fetch('Order/cargoPlan');
     }
