@@ -338,8 +338,10 @@ class Order extends Model
                 ->join('hl_port P1','P1.port_code =SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code =SB.sl_end','left')//目的港口
                 ->join('hl_port P3','P3.port_code =SM.sl_middle','left')//中间港口
-                ->field("OF.order_num,B.boat_code,B.boat_name,SR.bothend_id,P1.port_name port_s ,"
-                        . "P2.port_name port_e, SR.middle_id,"
+                ->field("OF.order_num,B.boat_code,B.boat_name,SR.bothend_id,"
+                        . "P1.port_code port_code_s,P1.port_name port_s ,"
+                        . "P2.port_code port_code_e,P2.port_name port_e, SR.middle_id,"
+                         . "group_concat(distinct P3.port_code  order by SM.sequence separator '_') port_middle_code,"
                         . "group_concat(distinct P3.port_name  order by SM.sequence separator '_') port_middle")
                 ->where('OF.order_num',$order_num)->find();
 //var_dump($data);  exit;

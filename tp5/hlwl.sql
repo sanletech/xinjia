@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-07-31 18:01:45
+Date: 2018-08-02 18:38:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3257,7 +3257,7 @@ INSERT INTO `hl_book_line` VALUES (null, '1', '39', '36', '1');
 INSERT INTO `hl_book_line` VALUES (null, '2', '39', '36', '2');
 INSERT INTO `hl_book_line` VALUES (null, '1', '39', '44', '3');
 INSERT INTO `hl_book_line` VALUES (null, '1', '43', '36', '4');
-INSERT INTO `hl_book_line` VALUES (null, '1', '43', '44', '5');
+INSERT INTO `hl_book_line` VALUES (null, '2', '43', '44', '5');
 
 -- ----------------------------
 -- Table structure for `hl_book_line_444`
@@ -4648,8 +4648,9 @@ DROP TABLE IF EXISTS `hl_order_time`;
 CREATE TABLE `hl_order_time` (
   `id` int(10) NOT NULL,
   `track_num` varchar(12) DEFAULT NULL COMMENT '运单号码',
-  `arrival_time` int(12) DEFAULT NULL COMMENT '到港时间',
-  `unship_time` int(12) DEFAULT NULL COMMENT '卸船时间',
+  `container_code` varchar(18) DEFAULT NULL COMMENT '集装箱编码',
+  ` status_time` varchar(12) DEFAULT NULL COMMENT '集装箱运输动态时间',
+  `status_name` varchar(10) DEFAULT NULL COMMENT '运输状态1装船,2离港,3到港,4卸船',
   `submit_man_code` int(11) DEFAULT NULL COMMENT '修改订单的员工id',
   `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
@@ -5364,7 +5365,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533002124', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533173539', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

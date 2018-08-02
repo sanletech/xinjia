@@ -262,16 +262,23 @@ class Order extends Base
         //查询对应订单的运线详情
         $dataM = new OrderM;
         $data = $dataM->cargoPlan($order_num);
-        $portArr =[];
-        if(!$data['middle_id']){
-            $portArr = explode('_', $data['middle_id']);
+       
+        $portArr =[]; $portCodeArr=[];
+        if(!empty($data['middle_id'])){
+            $portArr = explode('_', $data['port_middle']);
             array_unshift($portArr,$data['port_s']);
             array_push($portArr,$data['port_e']);
+            
+            $portCodeArr = explode('_', $data['port_middle_code']);
+            array_unshift($portCodeArr,$data['port_code_s']);
+            array_push($portCodeArr,$data['port_code_e']);
+           
         }  else {
             $portArr[]=$data['port_s'];
             $portArr[]=$data['port_e'];
+            $portCodeArr[]=$data['port_code_s'];
+            $portCodeArr[]=$data['port_code_e'];
         }
-       
         $num =count($portArr)-1;
        
         $this->view->assign([
@@ -279,11 +286,17 @@ class Order extends Base
             'container_code'=>$container_code,
             'data'=>$data,
             'portArr'=>$portArr,
-            'num'=>$num 
+            'num'=>$num,
+            'portCodeArr'=>$portCodeArr    
         ]);
         return $this->view->fetch('Order/cargoPlan');
     }
 
+    //处理待配船的信息
+    public function toCargoPlan() {
+        $data =  $this->request->param();
+        $this->_p($data);die();
+    }
 
     //处理订单送货
     public function list_songhuo() 
