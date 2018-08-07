@@ -244,6 +244,7 @@ class Order extends Model
             $i++;
             $res = Db::name('car_receive')->where('track_num',$track_num)
                     ->where('container_id',$container_id)->update(['loading_time'=>$loading_time]);
+    var_dump(Db::getLastSql());
             $res ? $response['success'][]="添加柜子{$container_id}实际装货时间成功" :$response['fail'][]= "添加柜子{$container_id}:实际装货时间失败";
         }
         //修改order_state的状态
@@ -269,6 +270,7 @@ class Order extends Model
             $response['fail']= $e->getMessage();
         }
       
+       
         return  $response;
             
     }
@@ -344,7 +346,7 @@ class Order extends Model
                          . "group_concat(distinct P3.port_code  order by SM.sequence separator '_') port_middle_code,"
                         . "group_concat(distinct P3.port_name  order by SM.sequence separator '_') port_middle")
                 ->where('OF.order_num',$order_num)->find();
-//var_dump($data);  exit;
+//$this->_p($data);exit;
         return $data;
     }
     

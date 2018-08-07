@@ -171,6 +171,20 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
         $this->initialize();
     }
 
+    
+    public function _p($value){
+        echo'<pre>';
+        print_r($value);
+        echo '</pre>';
+    }
+     public function _v($value){
+        echo'<pre>';
+        var_dump($value);
+        echo '</pre>';
+    }
+    
+    
+    
     /**
      * 创建模型的查询对象
      * @access protected

@@ -235,9 +235,9 @@ class Order extends Base
         $dataM = new OrderM;
         $response  = $dataM->toBaogui($data);
         if(!array_key_exists('fail', $response)){
-            $status =['msg'=>'录入运单号成功','status'=>1];
+            $status =['msg'=>'报柜号成功','status'=>1];
         }else {
-            $status =['msg'=>'录入运单号失败','status'=>0]; 
+            $status =['msg'=>'报柜号失败','status'=>0]; 
         } 
         return json($status);
     }
