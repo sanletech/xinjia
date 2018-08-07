@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
+Source Server         : root
 Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-08-07 20:17:08
+Date: 2018-08-07 23:15:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5160,12 +5160,15 @@ CREATE TABLE `hl_ship` (
   `id` int(11) NOT NULL,
   `oder_id` varchar(11) DEFAULT NULL COMMENT '订单id',
   `ship_name` varchar(11) DEFAULT NULL COMMENT '船名',
+  `ship route` varchar(11) DEFAULT NULL COMMENT '航线',
+  ` voyage_num` varchar(11) DEFAULT NULL COMMENT '航次',
   `loadPort` int(11) DEFAULT NULL COMMENT '装货港口',
   `shipment_time` varchar(11) DEFAULT NULL COMMENT '实际开船时间',
   `dispatch_time` varchar(11) DEFAULT NULL COMMENT '离港时间',
   `departurePort` int(10) DEFAULT NULL COMMENT '卸货港口',
   `arrival_time` varchar(11) DEFAULT NULL COMMENT '到港时间',
   `discharge_time` varchar(11) DEFAULT NULL COMMENT '卸船时间',
+  `field_add` int(8) DEFAULT NULL COMMENT '一共需要填写7个字段',
   `sail_status` varchar(20) DEFAULT NULL COMMENT '航行状态一次装船 卸船为一次航行',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -5173,7 +5176,7 @@ CREATE TABLE `hl_ship` (
 -- ----------------------------
 -- Records of hl_ship
 -- ----------------------------
-INSERT INTO `hl_ship` VALUES ('1', null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_ship` VALUES ('1', null, null, null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `hl_shipcompany`
@@ -5375,7 +5378,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533623868', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533652742', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');
