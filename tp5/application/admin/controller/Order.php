@@ -280,7 +280,7 @@ class Order extends Base
             $portCodeArr[]=$data['port_code_e'];
         }
         $num =count($portArr)-1;
-       
+         //一共有多少次卸船 就生成对应的
         $this->view->assign([
             'order_num'=>$order_num,
             'container_code'=>$container_code,
