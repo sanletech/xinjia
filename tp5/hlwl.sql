@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-08-08 18:07:28
+Date: 2018-08-09 19:27:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5352,7 +5352,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533693498', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533795465', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

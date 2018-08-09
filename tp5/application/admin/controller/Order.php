@@ -291,6 +291,8 @@ class Order extends Base
         ]);
         return $this->view->fetch('Order/cargoPlan');
     }
+    
+    // 根据配船表的数据多少
 
     //处理待配船的信息
     public function toCargoPlan() {
