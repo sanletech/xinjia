@@ -280,7 +280,9 @@ class Order extends Base
             $portCodeArr[]=$data['port_code_e'];
         }
         $num =count($portArr)-1;
-       
+       //生成对应order_ship表 贮存对应的航线信息
+        $res = $this->ordeShip($order_num,$portArr,$portCodeArr);
+       //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
         $this->view->assign([
             'order_num'=>$order_num,
             'container_code'=>$container_code,
@@ -291,6 +293,24 @@ class Order extends Base
         ]);
         return $this->view->fetch('Order/cargoPlan');
     }
+    //order_ship表 贮存对应的航线信息$loadPort,$departurePort
+    public function ordeShip($order_num,$portArr,$portCodeArr) {
+        //查询是否已经录入航线信息了
+        $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
+        if(!$res1){
+        $sqlArr=[];
+        for($i=0;$i<(count($portArr)-1);$i++){
+            $sqlArr[]= ['order_id'=>$order_num,
+                'loadPort'=>$portCodeArr[$i],'loadPortName'=>$portArr[$i],
+                'departurePort'=>$portCodeArr[$i+1], 'departurePortName'=>$portArr[$i+1],
+               'sequence'=>($i+1) ];
+        }
+        $res = Db::name('order_ship')->insertAll($sqlArr);
+        return $res ? true :false ;
+        }
+        return $res1 ? true :false ;
+    }
+    
 
     //处理待配船的信息
     public function toCargoPlan() {
