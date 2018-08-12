@@ -46,7 +46,7 @@
             <input   type="text" name="routes[]" required lay-verify="required" placeholder="请输入航线" autocomplete="off" class="layui-input"/>
             <input   type="text" name="voyage[]" required lay-verify="required" placeholder="请输入航次" autocomplete="off" class="layui-input"/>
           </div></td>
-          <td><input type="hidden" name="loadPortCodeArr[]" value="<{portCodeArr[$i]}>" autocomplete="off" class="layui-input"/>
+          <td><input type="hidden" name="loadPortCodeArr[]" value="<{$portCodeArr[$i]}>" autocomplete="off" class="layui-input"/>
               <input type="text" name="loadPort[]"  readOnly="true" required  lay-verify="required" placeholder="请输入装货港口名" value="<{$portArr[$i]}>" autocomplete="off" class="layui-input"/></td>
        <td><div class="layui-input-inline">
             <input class="layui-input time" name="shipment_time[]"  placeholder="yyyy-MM-dd HH:mm:ss" type="text">
@@ -54,7 +54,7 @@
         <td><div class="layui-input-inline"> 
             <input class="layui-input time" name="dispatch_time[]" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
         </div</td>
-         <td><input type="hidden" name="departurePort[]" value="<{portCodeArr[$i+1]}>" autocomplete="off" class="layui-input"/>
+         <td><input type="text" name="departurePort[]" value="<{$portCodeArr[$i+1]}>" autocomplete="off" class="layui-input"/>
              <input type="text" name="departurePort[]" readOnly="true" required  lay-verify="required" placeholder="请输入卸货港口名" value="<{$portArr[$i+1]}>" autocomplete="off" class="layui-input"/></td>
          <td><div class="layui-input-inline">
             <input class="layui-input time" name="arrival_time[]" placeholder="yyyy-MM-dd HH:mm:ss" type="text">

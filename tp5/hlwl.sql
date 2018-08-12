@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : root
+Source Server         : localhost_3306
 Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
@@ -10,7 +10,11 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
+<<<<<<< HEAD
 Date: 2018-08-12 23:21:36
+=======
+Date: 2018-08-10 20:25:12
+>>>>>>> a4f1fefa9a3a863893eb3ebdf0cfbc3a5178c7ca
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5380,7 +5384,11 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
+<<<<<<< HEAD
 INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1534080650', '10086123', 'wangwu@qq.com', '0', '', '2018');
+=======
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1533795465', '10086123', 'wangwu@qq.com', '0', '', '2018');
+>>>>>>> a4f1fefa9a3a863893eb3ebdf0cfbc3a5178c7ca
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

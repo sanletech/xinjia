@@ -280,9 +280,13 @@ class Order extends Base
             $portCodeArr[]=$data['port_code_e'];
         }
         $num =count($portArr)-1;
+
        //生成对应order_ship表 贮存对应的航线信息
         $res = $this->ordeShip($order_num,$portArr,$portCodeArr);
        //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
+
+         //一共有多少次卸船 就生成对应的
+
         $this->view->assign([
             'order_num'=>$order_num,
             'container_code'=>$container_code,
@@ -293,6 +297,7 @@ class Order extends Base
         ]);
         return $this->view->fetch('Order/cargoPlan');
     }
+
     //order_ship表 贮存对应的航线信息$loadPort,$departurePort
     public function ordeShip($order_num,$portArr,$portCodeArr) {
         //查询是否已经录入航线信息了
@@ -311,6 +316,9 @@ class Order extends Base
         return $res1 ? true :false ;
     }
     
+
+    // 根据配船表的数据多少
+
 
     //处理待配船的信息
     public function toCargoPlan() {
