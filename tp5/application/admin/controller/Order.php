@@ -282,7 +282,7 @@ class Order extends Base
         $num =count($portArr)-1;
 
        //生成对应order_ship表 贮存对应的航线信息
-        $res = $this->ordeShip($order_num,$portArr,$portCodeArr);
+        $res = $this->orderShip($order_num,$portArr,$portCodeArr);
        //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
 
          //一共有多少次卸船 就生成对应的
@@ -299,7 +299,7 @@ class Order extends Base
     }
 
     //order_ship表 贮存对应的航线信息$loadPort,$departurePort
-    public function ordeShip($order_num,$portArr,$portCodeArr) {
+    public function orderShip($order_num,$portArr,$portCodeArr) {
         //查询是否已经录入航线信息了
         $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
         if(!$res1){
@@ -308,7 +308,7 @@ class Order extends Base
             $sqlArr[]= ['order_id'=>$order_num,
                 'loadPort'=>$portCodeArr[$i],'loadPortName'=>$portArr[$i],
                 'departurePort'=>$portCodeArr[$i+1], 'departurePortName'=>$portArr[$i+1],
-               'sequence'=>($i+1) ];
+               'sequence'=>($i+1),'field_add'=>'7' ];
         }
         $res = Db::name('order_ship')->insertAll($sqlArr);
         return $res ? true :false ;
@@ -317,8 +317,19 @@ class Order extends Base
     }
     
 
-    // 根据配船表的数据多少
-
+    // 根据配船表的数据多少  参数为订单id和几次周转
+    public function orderInput($order_num,$num) {
+        $arr = array_range(1,$num);
+        $res =Db::name('order_ship')->where('order_id',$order_num)
+            ->where('sequence','in',$arr)->column('field_add')
+            ->order('sequence');
+        for($i=0;$i<$num;$i++){
+            if($res[$i]<8){
+                
+            }
+        }
+        
+    }
 
     //处理待配船的信息
     public function toCargoPlan() {
