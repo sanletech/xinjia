@@ -280,61 +280,55 @@ class Order extends Base
             $portCodeArr[]=$data['port_code_e'];
         }
         $num =count($portArr)-1;
-
+       
        //生成对应order_ship表 贮存对应的航线信息
-        $res = $this->orderShip($order_num,$portArr,$portCodeArr);
+        $res = $dataM->orderShip($order_num,$portArr,$portCodeArr);
        //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
-
-         //一共有多少次卸船 就生成对应的
-
+        $inputData = $dataM->orderInput($order_num);
+//        $this->_p($inputData);exit;
         $this->view->assign([
             'order_num'=>$order_num,
             'container_code'=>$container_code,
-            'data'=>$data,
-            'portArr'=>$portArr,
-            'num'=>$num,
-            'portCodeArr'=>$portCodeArr    
+            'inputData' =>$inputData
         ]);
         return $this->view->fetch('Order/cargoPlan');
     }
 
-    //order_ship表 贮存对应的航线信息$loadPort,$departurePort
-    public function orderShip($order_num,$portArr,$portCodeArr) {
-        //查询是否已经录入航线信息了
-        $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
-        if(!$res1){
-        $sqlArr=[];
-        for($i=0;$i<(count($portArr)-1);$i++){
-            $sqlArr[]= ['order_id'=>$order_num,
-                'loadPort'=>$portCodeArr[$i],'loadPortName'=>$portArr[$i],
-                'departurePort'=>$portCodeArr[$i+1], 'departurePortName'=>$portArr[$i+1],
-               'sequence'=>($i+1),'field_add'=>'7' ];
-        }
-        $res = Db::name('order_ship')->insertAll($sqlArr);
-        return $res ? true :false ;
-        }
-        return $res1 ? true :false ;
-    }
-    
 
-    // 根据配船表的数据多少  参数为订单id和几次周转
-    public function orderInput($order_num,$num) {
-        $arr = array_range(1,$num);
-        $res =Db::name('order_ship')->where('order_id',$order_num)
-            ->where('sequence','in',$arr)->column('field_add')
-            ->order('sequence');
-        for($i=0;$i<$num;$i++){
-            if($res[$i]<8){
-                
-            }
-        }
-        
-    }
 
     //处理待配船的信息
     public function toCargoPlan() {
         $data =  $this->request->param();
-        $this->_p($data);die();
+        $this->_v($data);exit;
+        $order_id =$data['order_id'];
+        unset($data['order_id'],$data['loadPort'],$data['loadPortName'],$data['departurePort'],$data['departurePortName']); //删除固定值
+        $tmpArr=[]; $sqlArr=[]; //临时数组 ,最终数组
+        $dataArr = array_keys($data); 
+        $num =count($data['ship_name']);// 几行记录
+        for($i=0;$i<$num;$i++){
+            $tmpArr =  array_column($data, $i);
+            //排除空的
+            $arrNum =count($tmpArr);
+            if($arrNum>0){
+                preg_replace(array('/W/', '/W/'), '*', '', -1 , $count);
+                $sqlArr[] = array_combine($dataArr, $tmpArr);
+            }
+            
+        }
+        //更新数据库
+        $response =[];
+        for($j=0;$j<$num;$j++){
+            $res =Db::name('order_ship')->where('order_id',$order_id)->where('sequence',$j)
+                    ->update($sqlArr[$j]);
+            $res ? $response['success'][]="$j条记录修改状态成功" :$response['fail'][]= "$j条记录修改状态失败";
+        }
+        if(!array_key_exists('fail', $response)){
+            $status =['msg'=>'录入配船成功','status'=>1];
+        }else {
+            $status =['msg'=>'录入配船失败','status'=>0]; 
+        } 
+        return json($status);
+       
     }
 
     //处理订单送货

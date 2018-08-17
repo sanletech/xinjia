@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-08-15 17:57:55
+Date: 2018-08-17 18:05:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4597,41 +4597,31 @@ INSERT INTO `hl_order_price` VALUES ('2', '31', '33', '16', '100', '20', '2', nu
 DROP TABLE IF EXISTS `hl_order_ship`;
 CREATE TABLE `hl_order_ship` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` varchar(11) DEFAULT NULL COMMENT '订单id',
+  `order_id` varchar(20) DEFAULT NULL COMMENT '订单id',
   `ship_name` varchar(11) DEFAULT NULL COMMENT '船名',
   `ship_route` varchar(11) DEFAULT NULL COMMENT '航线',
-  ` voyage_num` varchar(11) DEFAULT NULL COMMENT '航次',
+  `voyage_num` varchar(11) DEFAULT NULL COMMENT '航次',
   `loadPortName` varchar(11) DEFAULT NULL COMMENT '装货港口',
   `loadPort` int(11) DEFAULT NULL COMMENT '装货港口code',
-  `shipment_time` varchar(11) DEFAULT NULL COMMENT '实际开船时间',
-  `dispatch_time` varchar(11) DEFAULT NULL COMMENT '离港时间',
+  `shipment_time` datetime DEFAULT NULL COMMENT '实际开船时间',
+  `dispatch_time` datetime DEFAULT NULL COMMENT '离港时间',
   `departurePortName` varchar(11) DEFAULT NULL COMMENT '卸货港口',
   `departurePort` int(10) DEFAULT NULL COMMENT '卸货港口code',
-  `arrival_time` varchar(11) DEFAULT NULL COMMENT '到港时间',
-  `discharge_time` varchar(11) DEFAULT NULL COMMENT '卸船时间',
-  `field_add` int(8) DEFAULT '8' COMMENT '一共需要填写7个字段',
+  `arrival_time` datetime DEFAULT NULL COMMENT '到港时间',
+  `discharge_time` datetime DEFAULT NULL COMMENT '卸船时间',
+  `field_status` varchar(14) DEFAULT '8' COMMENT '一共需要填写3个部分添加记录 除了第一部分为可写w其余为只读r',
   `mtime` varchar(11) DEFAULT NULL COMMENT '最后一次修改时间',
   `sequence` int(4) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_ship
 -- ----------------------------
-INSERT INTO `hl_order_ship` VALUES ('1', '1531107265k', null, null, null, '空城计', '110100003', null, null, '丑八怪', '110100005', null, null, '8', null, '1');
-INSERT INTO `hl_order_ship` VALUES ('2', '1531107265k', null, null, null, '丑八怪', '110100005', null, null, '美人计', '110100006', null, null, '8', null, '2');
-INSERT INTO `hl_order_ship` VALUES ('3', '1531107265k', null, null, null, '美人计', '110100006', null, null, '里程碑', '110100007', null, null, '8', null, '3');
-INSERT INTO `hl_order_ship` VALUES ('4', '1531107265k', null, null, null, '里程碑', '110100007', null, null, '擎天柱', '110100002', null, null, '8', null, '4');
-INSERT INTO `hl_order_ship` VALUES ('5', '20180625170', null, null, null, '空城计', '110100003', null, null, '擎天柱', '110100002', null, null, '8', null, '1');
-INSERT INTO `hl_order_ship` VALUES ('6', '1531107265k', null, null, null, '空城计', '110100003', null, null, '丑八怪', '110100005', null, null, '8', null, '1');
-INSERT INTO `hl_order_ship` VALUES ('7', '1531107265k', null, null, null, '丑八怪', '110100005', null, null, '美人计', '110100006', null, null, '8', null, '2');
-INSERT INTO `hl_order_ship` VALUES ('8', '1531107265k', null, null, null, '美人计', '110100006', null, null, '里程碑', '110100007', null, null, '8', null, '3');
-INSERT INTO `hl_order_ship` VALUES ('9', '1531107265k', null, null, null, '里程碑', '110100007', null, null, '擎天柱', '110100002', null, null, '8', null, '4');
-INSERT INTO `hl_order_ship` VALUES ('10', '1531107265k', null, null, null, '空城计', '110100003', null, null, '丑八怪', '110100005', null, null, '8', null, '1');
-INSERT INTO `hl_order_ship` VALUES ('11', '1531107265k', null, null, null, '丑八怪', '110100005', null, null, '美人计', '110100006', null, null, '8', null, '2');
-INSERT INTO `hl_order_ship` VALUES ('12', '1531107265k', null, null, null, '美人计', '110100006', null, null, '里程碑', '110100007', null, null, '8', null, '3');
-INSERT INTO `hl_order_ship` VALUES ('13', '1531107265k', null, null, null, '里程碑', '110100007', null, null, '擎天柱', '110100002', null, null, null, null, '4');
-INSERT INTO `hl_order_ship` VALUES ('14', null, null, null, null, null, null, null, null, null, null, null, null, '8', null, null);
+INSERT INTO `hl_order_ship` VALUES ('1', '1531107265kehu001555', null, null, null, '空城计', '110100003', null, null, '丑八怪', '110100005', null, null, 'W_R_R_R_R_R_R', null, '1');
+INSERT INTO `hl_order_ship` VALUES ('2', '1531107265kehu001555', null, null, null, '丑八怪', '110100005', null, null, '美人计', '110100006', null, null, 'R_R_R_R_R_R_R', null, '2');
+INSERT INTO `hl_order_ship` VALUES ('3', '1531107265kehu001555', null, null, null, '美人计', '110100006', null, null, '里程碑', '110100007', null, null, 'R_R_R_R_R_R_R', null, '3');
+INSERT INTO `hl_order_ship` VALUES ('4', '1531107265kehu001555', null, null, null, '里程碑', '110100007', null, null, '擎天柱', '110100002', null, null, 'R_R_R_R_R_R_R', null, '4');
 
 -- ----------------------------
 -- Table structure for `hl_order_son`
@@ -5394,7 +5384,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1534211090', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1534490762', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

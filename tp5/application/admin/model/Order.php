@@ -244,7 +244,7 @@ class Order extends Model
             $i++;
             $res = Db::name('car_receive')->where('track_num',$track_num)
                     ->where('container_id',$container_id)->update(['loading_time'=>$loading_time]);
-    var_dump(Db::getLastSql());
+   // var_dump(Db::getLastSql());
             $res ? $response['success'][]="添加柜子{$container_id}实际装货时间成功" :$response['fail'][]= "添加柜子{$container_id}:实际装货时间失败";
         }
         //修改order_state的状态
@@ -454,6 +454,43 @@ class Order extends Model
 //        var_dump($response);exit;
         return $response;
     }
+    
+    
+      //order_ship表 贮存对应的航线信息$loadPort,$departurePort
+    public function orderShip($order_num,$portArr,$portCodeArr) {
+        //查询是否已经录入航线信息了
+        $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
+   
+        if(empty($res1)){
+        $sqlArr=[]; 
+        $num =count($portArr)-1 ; //生成几行转车
+        for($i=0;$i<$num;$i++){
+            $field_status ='R_R_R_R_R_R_R';
+            //第一条字段状态前面几个可写
+            if($i==0){
+                $field_status ='W_R_R_R_R_R_R';
+            }
+            $sqlArr[$i]= array('order_id'=>$order_num,
+                'loadPort'=>$portCodeArr[$i],
+                'loadPortName'=>$portArr[$i],
+                'departurePort'=>$portCodeArr[$i+1], 
+                'departurePortName'=>$portArr[$i+1],
+                'sequence'=>($i+1),
+                'field_status'=>$field_status );
+        }
+        $res = Db::name('order_ship')->insertAll($sqlArr);
+        return $res ? true :false ;
+        }
+        return $res1 ? true :false ;
+    }
+    // 读取order_ship的数据
+    public function orderInput($order_num) {
+        $res= Db::name('order_ship')->where('order_id',$order_num)->select();
+        foreach ($res as $key => $value) {
+            $res[$key]['field_status'] =  explode( '_',$value['field_status']);
+        }
+        return $res;
+    }  
     
     
 }

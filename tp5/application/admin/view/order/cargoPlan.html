@@ -14,56 +14,57 @@
   <legend>船期录入</legend>
 </fieldset>
  
-<form class="layui-form"  id="cargoPlanForm">
+<form class="layui-form"  id="cargoPlanForm">                                    
+    <p><h1>　　集装箱编码:　　<?php for($i=0;$i<count($container_code);$i++){ echo $container_code[$i].'&nbsp&nbsp&nbsp'; }  ?></h1> </p>
 <table class="layui-table">
-  <colgroup>
-    <col width="150">
-     <col width="150">
-     <col width="150">
-     <col width="150">
-     <col width="150">
-     <col width="150">
-     <col width="150">
-     <col width="150">
-  </colgroup>
+    <p><h1>　　订单编号　　　<input type="text" name="order_id" value ="<{$order_num}>" readonly unselectable="on" 　class="layui-input"/></h1></p>
   <thead>
     <tr>
-      <th>船名</th>
-      <th>航线/航次</th>
-      <th>装货港</th>
-      <th>实际装船时间</th>
-      <th>离港时间</th>
-      <th>卸货港</th>
-       <th>到港时间</th>
-       <th>卸船时间</th>
+<!--        <th>
+            <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+        </th>-->
+        <th>航次</th>
+        <th>船名</th>
+        <th>航线/航次</th>
+        <th>装货港</th>
+        <th>实际装船时间</th>
+        <th>离港时间</th>
+        <th>卸货港</th>
+        <th>到港时间</th>
+        <th>卸船时间</th>
     </tr> 
   </thead>
   <tbody>
-    <{for start="0" end="$num"}> 
+   <{volist name ='inputData' id ='vo'}>
     <tr>
-      <td><input type="text" name="boatName[]" required  lay-verify="required" placeholder="请输入船名" autocomplete="off" class="layui-input"/></td>
-      <td><div class="layui-input-inline ">
-            <input   type="text" name="routes[]" required lay-verify="required" placeholder="请输入航线" autocomplete="off" class="layui-input"/>
-            <input   type="text" name="voyage[]" required lay-verify="required" placeholder="请输入航次" autocomplete="off" class="layui-input"/>
+<!--        <td>
+            <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.sequence}>'><i class="layui-icon">&#xe605;</i></div>
+        </td>-->        
+        <td class="tdata"><{$vo.sequence}></td>                          
+        <td><input type="text" name="ship_name[]" value="<{$vo.ship_name}>"  <{eq name="$vo.field_status.0" value="r"}> readonly="readonly"<{/eq}> required  lay-verify="required" placeholder="请输入船名" class="layui-input"/></td>
+        <td><div class="layui-input-inline ">
+            <input   type="text" name="ship_route[]" value ="<{$vo.ship_route}>" <{eq name="$vo.field_status.1" value="r"}> readonly="readonly"<{/eq}> required lay-verify="required" placeholder="请输入航线"  class="layui-input"/>
+            <input   type="text" name="voyage_num[]" value ="<{$vo.voyage_num}>" <{eq name="$vo.field_status.2" value="r"}> readonly="readonly"<{/eq}>   required lay-verify="required" placeholder="请输入航次"  class="layui-input"/>
           </div></td>
-          <td><input type="hidden" name="loadPortCodeArr[]" value="<{$portCodeArr[$i]}>" autocomplete="off" class="layui-input"/>
-              <input type="text" name="loadPort[]"  readOnly="true" required  lay-verify="required" placeholder="请输入装货港口名" value="<{$portArr[$i]}>" autocomplete="off" class="layui-input"/></td>
+        <td><input type="hidden" name="loadPort[]" value ="<{$vo.loadPort}>" />
+            <input type="text" name="loadPortName[]" value ="<{$vo.loadPortName}>" readonly="readonly" required  lay-verify="required" placeholder="请输入装货港口名" class="layui-input"/></td>
        <td><div class="layui-input-inline">
-            <input class="layui-input time" name="shipment_time[]"  placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+        <input  name="shipment_time[]" value ="<{$vo.shipment_time}>" <{eq name="$vo.field_status.3" value="r"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}>  placeholder="开船时间" type="text">
         </div></td>
         <td><div class="layui-input-inline"> 
-            <input class="layui-input time" name="dispatch_time[]" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+            <input  name="dispatch_time[]" value ="<{$vo.dispatch_time}>" <{eq name="$vo.field_status.4" value="r"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}> placeholder="离港时间" type="text">
         </div</td>
-         <td><input type="text" name="departurePort[]" value="<{$portCodeArr[$i+1]}>" autocomplete="off" class="layui-input"/>
-             <input type="text" name="departurePort[]" readOnly="true" required  lay-verify="required" placeholder="请输入卸货港口名" value="<{$portArr[$i+1]}>" autocomplete="off" class="layui-input"/></td>
+         <td><input type="hidden" name="departurePort[]" value ="<{$vo.departurePort}>"   autocomplete="off" class="layui-input"/>
+             <input type="text" name="departurePortName[]" value ="<{$vo.departurePortName}>"  readonly="readonly"  required  lay-verify="required" placeholder="请输入卸货港口名" class="layui-input"/></td>
          <td><div class="layui-input-inline">
-            <input class="layui-input time" name="arrival_time[]" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+            <input name="arrival_time[]" value ="<{$vo.arrival_time}>" <{eq name="$vo.field_status.5" value="r"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}> placeholder="到港时间" type="text">
         </div</td>
         <td><div class="layui-input-inline">
-            <input class="layui-input time" name="discharge_time[]" placeholder="yyyy-MM-dd HH:mm:ss" type="text">
+            <input  name="discharge_time[]" value ="<{$vo.discharge_time}>" <{eq name="$vo.field_status.6" value="r"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}>  placeholder="卸船时间" type="text">
         </div</td>
+        <input type="hidden" name="field_status[]" value ="<{$vo.field_status|implode='_',###}>" />
     </tr>
-    <{/for}>
+  <{/volist}>
   </tbody>
 </table>
   <div class="layui-form-item">
@@ -83,8 +84,11 @@ layui.use('laydate', function(){
   lay('.time').each(function(){
     laydate.render({
         elem: this
-      ,type: 'datetime'
-      ,trigger: 'click'
+        ,type: 'datetime'
+        ,min: -7 //7天前
+        ,max: 7 //7天后
+        ,calendar: true //节假日
+        ,show:false
     });
   });
  
