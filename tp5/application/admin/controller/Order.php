@@ -245,13 +245,15 @@ class Order extends Base
     //待配船list
     public function  listCargo(){
         $dataM = new OrderM;
-        $list = $dataM->listSendCar($pages=5,$state='5');
-//        $this->_p($list);exit;
+        $list = $dataM->listShip($pages=5,$state='505,515,525,535');
+        
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
+        $this->view->assign('ship_status','待配船'); 
+        $this->view->assign('url','admin/order/cargoPlan'); 
         return $this->view->fetch('listOrder/list_cargo');
         
     }
@@ -284,74 +286,169 @@ class Order extends Base
        //生成对应order_ship表 贮存对应的航线信息
         $res = $dataM->orderShip($order_num,$portArr,$portCodeArr);
        //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
-        $inputData = $dataM->orderInput($order_num);
-//        $this->_p($inputData);exit;
+        $inputData = $dataM->orderShipInput($order_num);
+//   $this->_p($inputData);exit;
         $this->view->assign([
             'order_num'=>$order_num,
             'container_code'=>$container_code,
-            'inputData' =>$inputData
+            'inputData' =>$inputData,
+            'url'=>'admin/order/toCargoPlan'
         ]);
         return $this->view->fetch('Order/cargoPlan');
     }
-
-
-
     //处理待配船的信息
     public function toCargoPlan() {
         $data =  $this->request->param();
-        $this->_v($data);exit;
+        //$this->_p($data);exit;
         $order_id =$data['order_id'];
-        unset($data['order_id'],$data['loadPort'],$data['loadPortName'],$data['departurePort'],$data['departurePortName']); //删除固定值
-        $tmpArr=[]; $sqlArr=[]; //临时数组 ,最终数组
-        $dataArr = array_keys($data); 
-        $num =count($data['ship_name']);// 几行记录
-        for($i=0;$i<$num;$i++){
-            $tmpArr =  array_column($data, $i);
-            //排除空的
-            $arrNum =count($tmpArr);
-            if($arrNum>0){
-                preg_replace(array('/W/', '/W/'), '*', '', -1 , $count);
-                $sqlArr[] = array_combine($dataArr, $tmpArr);
-            }
-            
-        }
-        //更新数据库
-        $response =[];
-        for($j=0;$j<$num;$j++){
-            $res =Db::name('order_ship')->where('order_id',$order_id)->where('sequence',$j)
-                    ->update($sqlArr[$j]);
-            $res ? $response['success'][]="$j条记录修改状态成功" :$response['fail'][]= "$j条记录修改状态失败";
-        }
-        if(!array_key_exists('fail', $response)){
+        $container_code =$data['container_code'];
+        unset($data['container_code'],$data['order_id']);
+        $dataM = new OrderM;
+        $res = $dataM->toOrderShip($data,$order_id);
+        var_dump($res);
+        if(!array_key_exists('fail', $res)){
             $status =['msg'=>'录入配船成功','status'=>1];
+            //修改订单状态
+            $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入配船完毕'.$res['sequence']];
+            $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入配船完毕'.$res['sequence']];
+            $dataM->updateState($father, $son);
         }else {
             $status =['msg'=>'录入配船失败','status'=>0]; 
         } 
         return json($status);
        
     }
-
+    
+    //展示待到港信息的页面
+    public function  listArrival(){
+        $dataM = new OrderM;
+        $list = $dataM->listShip($pages=5,$state='506,516,526,536');
+        //$this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        $this->view->assign('ship_status','待到港'); 
+        $this->view->assign('url','admin/order/arrivalPort'); 
+        return $this->view->fetch('listOrder/list_cargo'); 
+    }
+    //录入待港口信息页面
+    public function arrivalPort() {
+        $order_num = $this->request->get('order_num');
+        $container_code = explode('_', $this->request->get('container_code'));
+        //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
+        $dataM = new OrderM;
+        $inputData = $dataM->orderShipInput($order_num);
+        $this->view->assign([
+            'order_num'=>$order_num,
+            'container_code'=>$container_code,
+            'inputData' =>$inputData,
+            'url'=>'admin/order/toArrivalPort'
+        ]);
+        return $this->view->fetch('Order/cargoPlan');
+    }
+    //处理待港口的信息
+    public function toArrivalPort() {
+        $data =  $this->request->param();
+        //$this->_p($data);exit;
+        $order_id =$data['order_id'];
+        $container_code =$data['container_code'];
+        unset($data['container_code'],$data['order_id']);
+        $dataM = new OrderM;
+        $res = $dataM->toOrderShip($data,$order_id);
+       // var_dump($res);
+        if(!array_key_exists('fail', $res)){
+            $status =['msg'=>'录入待到港成功','status'=>1];
+            //修改订单状态
+            $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入待到港完毕'.$res['sequence']];
+            $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入待到港完毕'.$res['sequence']];
+            $dataM->updateState($father, $son);
+        }else {
+            $status =['msg'=>'录入待到港失败','status'=>0]; 
+        } 
+        return json($status);
+       
+    }
+    
+    //展示待卸船信息的页面
+    public function  listUnShip(){
+        $dataM = new OrderM;
+        $list = $dataM->listShip($pages=5,$state='507,517,527,537');
+        //$this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        $this->view->assign('ship_status','待卸船'); 
+        $this->view->assign('url','admin/order/unShip'); 
+        return $this->view->fetch('listOrder/list_cargo'); 
+    }
+    //录入待卸船信息页面
+    public function unShip() {
+        $order_num = $this->request->get('order_num');
+        $container_code = explode('_', $this->request->get('container_code'));
+        //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
+        $dataM = new OrderM;
+        $inputData = $dataM->orderShipInput($order_num);
+        $this->view->assign([
+            'order_num'=>$order_num,
+            'container_code'=>$container_code,
+            'inputData' =>$inputData,
+            'url'=>'admin/order/toUnShip'
+        ]);
+        return $this->view->fetch('Order/cargoPlan');
+    }
+    //处理待卸船的信息
+    public function toUnShip() {
+        $data =  $this->request->param();
+        //$this->_p($data);exit;
+        $order_id =$data['order_id'];
+        $container_code =$data['container_code'];
+        unset($data['container_code'],$data['order_id']);
+        $dataM = new OrderM;
+        $res = $dataM->toOrderShip($data,$order_id);
+       // var_dump($res);
+        if(!array_key_exists('fail', $res)){
+            $status =['msg'=>'录入待卸船成功','status'=>1];
+            //修改订单状态
+            $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入待卸船完毕'.$res['sequence']];
+            $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入待卸船完毕'.$res['sequence']];
+            $dataM->updateState($father, $son);
+        }else {
+            $status =['msg'=>'录入待卸船失败','status'=>0]; 
+        } 
+        return json($status);
+       
+    }
+    
+      //处理订单收款
+    public function listtoCollect () 
+    {   
+        $dataM = new OrderM;
+        $list = $dataM->listSendCar($pages=5,$state='800');
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        return $this->view->fetch('listOrder/list_baogui');
+        return $this->view->fetch('Order/list_shouqian');
+    }
+         //处理订单收款
+    public function toCollect (){}
+    
+    
     //处理订单送货
     public function list_songhuo() 
     {
         return $this->view->fetch('Order/list_songhuo');
     }
-    //处理订单收款
-    public function list_shouqian() 
-    {
-        return $this->view->fetch('Order/list_shouqian');
-    }
+  
  
-    //处理订单卸船
-    public function list_zship() 
-    {
-        return $this->view->fetch('Order/list_zship');
-    }
-    //处理订单待配船
-    public function list_peiship() 
-    {
-        return $this->view->fetch('Order/list_peiship');
-    }
+
 
     
 } 
