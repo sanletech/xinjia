@@ -9,7 +9,7 @@ class Login extends Model
         $member_name=$data['membername'];
         $company =$data['company'];
         $password =md5($data['password']);
-        $create_time =time();
+        $create_time = date('y-m-d');
         $phone = $data['phone'];//手机号码
         $member_code = $data['member_code'];//登录帐号
 

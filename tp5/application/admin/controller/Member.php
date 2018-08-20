@@ -21,7 +21,7 @@ class Member extends Base
         $user = new MemberM ;
         //企业用户company 个人用户person
         $list = $user->memberList($account,'person','5');
-       $this->_p($list);exit;
+       //$this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
          $this->view->assign('page',$page);
