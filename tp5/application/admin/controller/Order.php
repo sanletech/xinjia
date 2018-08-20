@@ -428,23 +428,63 @@ class Order extends Base
     {   
         $dataM = new OrderM;
         $list = $dataM->listSendCar($pages=5,$state='800');
-//        $this->_p($list);exit;
+       // $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
-        return $this->view->fetch('listOrder/list_baogui');
-        return $this->view->fetch('Order/list_shouqian');
+        $this->view->assign('url','admin/order/toCollect');
+        return $this->view->fetch('listOrder/list_collect');
     }
          //处理订单收款
-    public function toCollect (){}
+    public function toCollect (){
+        $data= $this->request->param();
+        $this->_p($data);exit;
+        $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入收款完毕'];
+        $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入收款完毕'];
+        $dataM->updateState($father, $son);
+        if(!array_key_exists('fail', $response)){
+            $status =['msg'=>'收钱成功','status'=>1];
+        }else {
+            $status =['msg'=>'收钱失败','status'=>0]; 
+        } 
+        return json($status);
+        
+    }
     
     
-    //处理订单送货
-    public function list_songhuo() 
+    //展示订单送货
+    public function listDelivery () 
     {
-        return $this->view->fetch('Order/list_songhuo');
+        $dataM = new OrderM;
+        $list = $dataM->listSendCar($pages=5,$state='900');
+       // $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count_book',$count);
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page_book',$page);
+        $this->view->assign('page_book',$page);
+        $this->view->assign('url','admin/order/toDelivery');
+        return $this->view->fetch('listOrder/list_collect');
+    }
+       //处理订单送货
+    public function toDelivery() {
+        $data= $this->request->param();
+        $this->_p($data);exit;
+        $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入送货完毕'];
+        $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入送货完毕'];
+        $dataM->updateState($father, $son);
+        if(!array_key_exists('fail', $response)){
+            $status =['msg'=>'收钱成功','status'=>1];
+        }else {
+            $status =['msg'=>'收钱失败','status'=>0]; 
+        } 
+        return json($status);
+        
+  
+        
     }
   
  
