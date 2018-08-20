@@ -65,6 +65,7 @@
                 <input type="text" name="load[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
               </div>
             </div>
+            <{if(strstr($url,'trailer'))}>
             <div class="layui-form-item">
               <label class="layui-form-label">装货车队名:</label>
                 <div class="layui-input-inline" >
@@ -73,6 +74,7 @@
                 </select>
                 </div>
             </div>
+            <{/if}>
           </div>
         </div>
         <!-- 中间线 -->
@@ -93,6 +95,7 @@
                   <input type="text" name="send[price_40HQ]" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
+            <{if(strstr($url,'trailer'))}>
               <div class="layui-form-item">
                 <label class="layui-form-label">送货车队名:</label>
                 <div class="layui-input-inline" >
@@ -101,6 +104,7 @@
                     </select>
                 </div>
               </div>
+            <{/if}>
             </div>
           </div>
         </div>
@@ -134,7 +138,7 @@
         var js_port = JS_PORT;
          
         
-        var url="<{:url('admin/price/trailer_toadd')}>";    
+        var url="<{:url($url)}>";    
                 
         layui.use(['jquery', 'form'], function() {
             $ = layui.jquery;

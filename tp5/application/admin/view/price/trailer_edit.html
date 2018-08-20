@@ -77,6 +77,7 @@
                   <input type="text" name="send[price_40HQ]" value="<{$data.0.s_40HQ}>" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
+                <{if !(isset($carView))}>
               <div class="layui-form-item">
                 <label class="layui-form-label">送货车队名:</label>
                 <div class="layui-input-inline" >
@@ -85,6 +86,7 @@
                     </select>
                 </div>
               </div>
+                <{/if}>
             </div>
           </div>
         </div>
@@ -107,6 +109,7 @@
                 <input type="text" name="load[price_40HQ]" value="<{$data.0.r_40HQ}>"  lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
               </div>
             </div>
+             <{if !(isset($carView))}>
             <div class="layui-form-item">
               <label class="layui-form-label">装货车队名:</label>
                 <div class="layui-input-inline" >
@@ -115,6 +118,7 @@
                 </select>
                 </div>
             </div>
+              <{/if}>
           </div>
         </div>
 

@@ -220,7 +220,7 @@ class Order extends Base
     {   
         $dataM = new OrderM;
         $list = $dataM->listSendCar($pages=5,$state='4');
-//        $this->_p($list);exit;
+ //       $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count_book',$count);
