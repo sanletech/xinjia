@@ -1,4 +1,26 @@
-<{include file='./public/header'/}>
+<?php if (!defined('THINK_PATH')) exit(); /*a:2:{s:83:"E:\xampp\htdocs\xinjia\tp5\public/../application/admin\view\Member\member_list.html";i:1534778655;s:68:"E:\xampp\htdocs\xinjia\tp5\application\admin\view\public\header.html";i:1527898250;}*/ ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/static/admin/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/static/admin/css/font.css">
+    <link rel="stylesheet" href="/static/admin/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/css/xadmin.css">
+                   
+        
+    <script type="text/javascript" src="/static/admin/js/jquery-3.2.1.min.js"></script>
+    <script src="/static/admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/static/admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="/static/admin/js/area.js"></script>
+
+</head>
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -13,7 +35,7 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-            <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入账号名" autocomplete="off" class="layui-input">
+            <input type="text" name="account" value="<?php echo !empty($account)?$account:'';; ?>" placeholder="请输入账号名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -35,30 +57,30 @@
           </tr>
         </thead>
         <tbody >
-            <{volist name="list" id ="vo"}>
+            <?php if(is_array($list) || $list instanceof \think\Collection || $list instanceof \think\Paginator): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>
           <tr>
             <td>
               <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td><{$vo.member_code}></td>
-            <td><{$vo.name}></td>
-            <td><{$vo.phone}></td>
-            <td><{$vo.company}></td>
-            <td><{$vo.sales_name}></td>
-            <td><{$vo.logintime}></td>
-            <td><{$vo.create_time}></td>
+            <td><?php echo $vo['member_code']; ?></td>
+            <td><?php echo $vo['name']; ?></td>
+            <td><?php echo $vo['phone']; ?></td>
+            <td><?php echo $vo['company']; ?></td>
+            <td><?php echo $vo['sales_name']; ?></td>
+            <td><?php echo $vo['logintime']; ?></td>
+            <td><?php echo $vo['create_time']; ?></td>
             <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-mini" title="<{$vo.status}>">已启用</span></td>
+                <span class="layui-btn layui-btn-normal layui-btn-mini" title="<?php echo $vo['status']; ?>">已启用</span></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/member_edit")}>',700,550)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改信息','<?php echo url("Member/member_edit"); ?>',700,550)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="禁用" onclick="stop(<{$vo.id}>)" href="javascript:;">
+              <a title="禁用" onclick="stop(<?php echo $vo['id']; ?>)" href="javascript:;">
                 <i class="layui-icon">&#xe60b;</i>
               </a>
             </td>
           </tr>
-          <{/volist}>
+          <?php endforeach; endif; else: echo "" ;endif; ?>
         </tbody>
       </table>
       <div class="page">
@@ -83,19 +105,7 @@
         });
       });
     function stop(id){
-        $.ajax({
-                type:'POST',
-                url:"<{:url('admin/member/toStop')}>",    
-                data:dataArray,
-                dataType:"json",
-                success:function(data){
-                    if(data.status==1){
-                      return 1;
-                    }else{
-                        return 0 ;
-                  }
-                }
-            })
+        console.log(id);
         
     }
   
@@ -127,7 +137,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<?php echo url('admin/member/toDel'); ?>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
