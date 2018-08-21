@@ -86,8 +86,8 @@ class Order extends Model
         }
         $str = rtrim($str,',');
         //插入之前先判断是否已经已经存在了运单号
-        $num= Db::name('order_son')->where('order_num',$order_num)->find();
-        if(!($num->isEmpty())){
+        $num = Db::name('order_son')->where('order_num',$order_num)->find();
+        if(!(empty($num))){
              return $response['fail']='运单号已经输入过了';
         }
         
@@ -420,6 +420,8 @@ class Order extends Model
                 $response['fail']= 'order_father提交的信息已更新过';
                 return  $response;
             }
+            //查询order_son 下面的 同一个订单编号的是否更新过了 
+            
             //修改订单状态
             $res1 = Db::name('order_father')->where('id','in',$idArr)->setField('state',$state); 
            // var_dump(Db::getLastSql());
@@ -569,7 +571,7 @@ class Order extends Model
             if(($i+1)<$num){
                 $goto =$i+1;
                 $orderStatus[] =515;//录入卸船信息完毕转下一行
-            }elseif ($i==$num) { //最后一航走完
+            }elseif (($i+1)==$num) { //最后一航走完
                 $orderStatus[] =800;//录入卸船信息完毕转代收钱     
             } 
             break;
@@ -591,6 +593,7 @@ class Order extends Model
        
         //最后的更新状态码数
         $sequence =max(array_column($sqlArr,'sequence'));
+        var_dump(array_column($sqlArr,'sequence'),$orderStatus);
         $orderStatusMax =  max($orderStatus)+ (($sequence-1)*10);
           //更新数据库
         //$this->_p($sqlArr);exit;

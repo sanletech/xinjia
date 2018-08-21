@@ -1,19 +1,30 @@
 <?php
+/*
+ * 用户管理
+ */
 namespace app\admin\controller;
 use app\admin\common\Base;
-use app\admin\model\User ;
+use app\admin\model\Member as MemberM ;
 use think\Request;
 use think\Db;
 class Member extends Base
 {    
 
-    public function __construct(Request $request = null) {
-        parent::__construct($request);
-        $this->request= $request;
-    }
+ 
     //用户列表
-    public function member_list()
-    {
+    public function memberList()
+    {   //帐号搜索
+        $account = input('get.account');
+        if($account){
+             $this->view->assign('account',$account); 
+        }
+        $user = new MemberM ;
+        //企业用户company 个人用户person
+        $list = $user->memberList($account,'person','5');
+       //$this->_p($list);exit;
+        $page = $list->render();
+        $this->view->assign('list',$list);
+         $this->view->assign('page',$page);
         return $this->view->fetch('Member/member_list'); 
     }
     //用户列表修改
