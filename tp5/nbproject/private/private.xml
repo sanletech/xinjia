@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>application/admin/controller/Order.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>138</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/order/order_list.html</file>
-=======
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/controller/Order.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/price/price_route.html</file>
->>>>>>> bdeb31dd35e95415df0914d7df28f6b470ebb94c
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/order/list_booking.html</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/listOrder/list_cargo.html</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/listOrder/list_baogui.html</file>
             <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/model/Order.php</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/order/cargoPlan.html</file>
             <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/Order.php</file>
         </group>
     </open-files>

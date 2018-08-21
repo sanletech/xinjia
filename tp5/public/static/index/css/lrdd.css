@@ -268,11 +268,11 @@ button {
     background: #f5f5f5; }
   #wt1 .biao .xin li .nei {
     border: 1px solid #808080;
-    padding: 10px;
+    padding: 5px;
     overflow: hidden; }
     #wt1 .biao .xin li .nei .tiao {
-      height: 25px;
-      line-height: 25px;
+      height: 15px;
+      line-height: 15px;
       margin: 10px 0; }
     #wt1 .biao .xin li .nei .le {
       float: left;

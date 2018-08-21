@@ -1,0 +1,118 @@
+<{include file='./public/header' /}>
+<style>
+    .layui-table td, .layui-table th{
+        padding:4.5px 7px;
+       
+    }
+</style>
+<body>
+<blockquote class="layui-elem-quote layui-text">
+ 实时船期
+</blockquote>
+              
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+  <legend>船期录入</legend>
+</fieldset>
+ <?php //for($i=0;$i<count($container_code);$i++){ echo $container_code[$i].'&nbsp&nbsp&nbsp'; }  ?>
+<form class="layui-form"  id="cargoPlanForm">                                    
+    <p><h1>　　集装箱编码:<{foreach name ="container_code" item ="container"}>
+        <input type="text" name="container_code[]" title="<{$container}>" value="<{$container}>" lay-skin="primary" readonly="readonly"> <{/foreach}>　　</h1> </p>
+<table class="layui-table">
+    <p><h1>　　订单编号　　　<input type="text" name="order_id" value ="<{$order_num}>" readonly unselectable="on" 　class="layui-input"/></h1></p>
+  <thead>
+    <tr>
+<!--        <th>
+            <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
+        </th>-->
+        <th>航次</th>
+        <th>船名</th>
+        <th>航线/航次</th>
+        <th>装货港</th>
+        <th>实际装船时间</th>
+        <th>离港时间</th>
+        <th>卸货港</th>
+        <th>到港时间</th>
+        <th>卸船时间</th>
+    </tr> 
+  </thead>
+  <tbody>
+   <{volist name ='inputData' id ='vo'}>
+    <tr>
+        <input type="hidden" name="sequence[]" value ="<{$vo.sequence}>" />
+        <td class="tdata"><{$vo.sequence}></td>                          
+        <td><input type="text" name="ship_name[]" value="<{$vo.ship_name}>"  <{eq name="$vo.field_status.0" value="R"}> readonly="readonly"<{/eq}> required  lay-verify="required" placeholder="请输入船名" class="layui-input"/></td>
+        <td><div class="layui-input-inline ">
+            <input   type="text" name="ship_route[]" value ="<{$vo.ship_route}>" <{eq name="$vo.field_status.1" value="R"}> readonly="readonly"<{/eq}> required lay-verify="required" placeholder="请输入航线"  class="layui-input"/>
+            <input   type="text" name="voyage_num[]" value ="<{$vo.voyage_num}>" <{eq name="$vo.field_status.2" value="R"}> readonly="readonly"<{/eq}>   required lay-verify="required" placeholder="请输入航次"  class="layui-input"/>
+          </div></td>
+        <td><input type="hidden" name="loadPort[]" value ="<{$vo.loadPort}>" />
+            <input type="text" name="loadPortName[]" value ="<{$vo.loadPortName}>" readonly="readonly" required  lay-verify="required" placeholder="请输入装货港口名" class="layui-input"/></td>
+       <td><div class="layui-input-inline">
+        <input  name="shipment_time[]" value ="<{$vo.shipment_time}>" <{eq name="$vo.field_status.3" value="R"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}>  placeholder="开船时间" type="text">
+        </div></td>
+        <td><div class="layui-input-inline"> 
+            <input  name="dispatch_time[]" value ="<{$vo.dispatch_time}>" <{eq name="$vo.field_status.4" value="R"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}> placeholder="离港时间" type="text">
+        </div</td>
+         <td><input type="hidden" name="departurePort[]" value ="<{$vo.departurePort}>"   autocomplete="off" class="layui-input"/>
+             <input type="text" name="departurePortName[]" value ="<{$vo.departurePortName}>"  readonly="readonly"  required  lay-verify="required" placeholder="请输入卸货港口名" class="layui-input"/></td>
+         <td><div class="layui-input-inline">
+            <input name="arrival_time[]" value ="<{$vo.arrival_time}>" <{eq name="$vo.field_status.5" value="R"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}> placeholder="到港时间" type="text">
+        </div</td>
+        <td><div class="layui-input-inline">
+            <input  name="discharge_time[]" value ="<{$vo.discharge_time}>" <{eq name="$vo.field_status.6" value="R"}> class="layui-input "  readonly="readonly"<{else/}>class="layui-input time"<{/eq}>  placeholder="卸船时间" type="text">
+        </div</td>
+        <input type="hidden" name="field_status[]" value ="<{$vo.field_status|implode='_',###}>" />
+       
+    </tr>
+  <{/volist}>
+  </tbody>
+</table>
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+        <button type="button" class="layui-btn" id="login" >立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+</form>
+<script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  
+  //同时绑定多个
+  lay('.time').each(function(){
+    laydate.render({
+        elem: this
+        ,type: 'datetime'
+        ,min: -7 //7天前
+        ,max: 7 //7天后
+        ,calendar: true //节假日
+        ,show:false
+    });
+  });
+ 
+});
+
+$(function(){
+        $("#login").on('click',function (event) {
+        $.ajax({
+          type: 'post',
+          url: "<{:url($url)}>",
+          data: $("#cargoPlanForm").serialize(),
+          dataType: "json",
+          success: function (data) {
+            if (data.status == 1) {
+                alert("提交成功");
+                parent.location.reload()
+            } else {
+              alert(data.msg+"提交失败");
+            }
+          }
+        })
+      })
+  })
+
+</script>
+</body>
+</html>

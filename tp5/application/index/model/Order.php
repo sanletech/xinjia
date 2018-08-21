@@ -112,7 +112,9 @@ class Order extends Model
         $member_code =Session::get('member_code');
        // var_dump($member_code);exit;
         $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
-        $order_num = $mtime.$member_code.rand(100,999);
+        //生成订单编号
+        $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+        $order_num =  $yCode[intval(date('Y')) - 2018] ."  ". strtoupper(dechex(date('m')))."  ".date('d')."  ".substr(time(), -5) ."  ".substr(microtime(), 2, 5) ."  ".sprintf('%02d', rand(0, 99));
        // var_dump($order_num);exit;
         $cargo = $data['cargo'];
         $container_size = $data['container_size'];

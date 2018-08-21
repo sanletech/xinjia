@@ -78,7 +78,9 @@ function selectlink(url) {
         dataType: "json",
         success: function (status) {
             //接受数据 展示页面
-            wt(status);
+             wt(status);
+//            status =JSON.parse(status)
+//            console.log(status);
         }
     });
 }
@@ -98,7 +100,7 @@ function wt(data) {
             + '<div class="tiao">装货地址：</div>'
             + '</div>'
             + '<div class="rig">'
-            + '<div class="tiao_id" style="display: none;">' + dataArray[i].id + '</div>'
+            + '<div class="tiao_id" style="display: none;"> '+ dataArray[i].id + '</div>'
             + '<div class="tiao">' + dataArray[i].name + '</div>'
             + '<div class="tiao">' + dataArray[i].phone + '</div>'
             + '<div class="tiao">' + dataArray[i].company + '</div>'

@@ -15,7 +15,13 @@
     </colgroup>
     <thead>
         <tr>
-            <th>栏目\序号<{$container_sum}></th>
+            <th>运单号</th>
+            <?php  foreach($track_num as $v){
+                echo '<th> <input type="text" readOnly="true" name="track_num[]" value="'.$v.'" lay-verify="title" autocomplete="off" class="layui-input"></th>';
+            }  ?>
+        </tr> 
+        <tr>
+            <th>栏目\<{$container_sum}>个柜</th>
             <?php 
             for($i=1;$i<=$container_sum;$i++){
               echo "<th>司机$i</th>";
