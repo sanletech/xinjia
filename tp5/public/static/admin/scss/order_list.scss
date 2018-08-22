@@ -82,3 +82,41 @@ $hui:#aaa;
         }
     }
 }
+#yd{
+    float: left;
+    width: 100%;
+    .ydh{
+        width: 100%;
+        overflow: hidden;
+        li{
+            background: #fff;
+            line-height: 30px;
+            margin:5px 0;
+            padding-left: 10px;
+            font-size: 16px;
+            float: left;
+            margin-right: 10px;
+            >div.layui-form-checked[lay-skin=primary] i{
+                 background: #ff9f19;
+            }
+            a{
+                display: inline-block;
+                margin: 0 10px;
+            }
+            dl{
+                display: none;
+                dd{
+                    height: 25px;
+                    line-height: 25px;
+                }
+            }
+        }
+    }
+    button{
+        float: right;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 10px;
+        display: block !important;
+    }
+}

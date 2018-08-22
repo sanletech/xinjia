@@ -61,4 +61,35 @@
     .order_list .urgent .fo {
       border-top: 2px solid red !important; }
 
+#yd {
+  float: left;
+  width: 100%; }
+  #yd .ydh {
+    width: 100%;
+    overflow: hidden; }
+    #yd .ydh li {
+      background: #fff;
+      line-height: 30px;
+      margin: 5px 0;
+      padding-left: 10px;
+      font-size: 16px;
+      float: left;
+      margin-right: 10px; }
+      #yd .ydh li > div.layui-form-checked[lay-skin=primary] i {
+        background: #ff9f19; }
+      #yd .ydh li a {
+        display: inline-block;
+        margin: 0 10px; }
+      #yd .ydh li dl {
+        display: none; }
+        #yd .ydh li dl dd {
+          height: 25px;
+          line-height: 25px; }
+  #yd button {
+    float: right;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px;
+    display: block !important; }
+
 /*# sourceMappingURL=order_list.css.map */
