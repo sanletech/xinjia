@@ -1,0 +1,199 @@
+<{include file='./public/header'/}>
+  <style>
+    .layui-table td{
+      text-align: center;
+      position: relative;
+    }
+    .layui-table td input,.yw>.layui-unselect{
+      position: absolute;
+      width: 100%;
+      height: 98%;
+      top: 0;
+      left: 0;
+    }
+    .yw>.layui-unselect{
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    .xiu_bao{
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+    }
+    
+  </style>
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+            <input type="radio"  name="type" value="sales"  title="业务" <?php if(!isset($type)){echo 'checked';}elseif($type=='sales'){echo 'checked';}?> >
+            <input type="radio"  name="type" value="customer"  title="客户"  <?php if(isset($type)&&($type=='customer')){echo 'checked';}?> >
+            <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入账号/姓名" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+      </div>
+      <table class="layui-table layui-row layui-form">
+        <thead>
+          <tr>
+            <th>业务</th>
+            <th>客户</th>
+            <th>中良</th>
+            <th>宁波海洋</th>
+            <th>中海洋</th>
+            <th>中外运</th>
+            <th>安通</th>
+            <th>中远</th>
+            <th>中谷</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody >
+            <{volist name="list" id ="value"}>
+          <tr>
+            <td class="yw">
+              <div class="layui-col-md6"><{$value.id}><{$value.sales_name}></div>
+              <div class="layui-col-md6"><{$value.sales_code}></div>
+              <select name="city" lay-verify="" lay-search>
+                  <option value="<{$value.sales_code}>"><{$value.sales_name}></option>
+                  <option value="021">form</option>
+                  <option value="0571" selected>layim</option>
+              </select>
+            </td>
+            <td>
+              <div class="layui-col-md6"><{$value.member_name}></div>
+              <div class="layui-col-md6"><{$value.member_code}></div>
+            </td>
+            <td><input type="text" name="title" value="<{$value.zhongliang}>"></td>
+            <td><input type="text" name="title" value="<{$value.ningboyuanyang}>"></td>
+            <td><input type="text" name="title" value="<{$value.zhonghaiyang}>"></td>
+            <td><input type="text" name="title" value="<{$value.zhongwaiyun}>"></td>
+            <td><input type="text" name="title" value="<{$value.antong}>"></td>
+            <td><input type="text" name="title" value="<{$value.zhongyuan}>"></td>
+            <td><input type="text" name="title" value="<{$value.zhonggu}>"></td>
+            <td class="td-manage">
+                <!-- <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/pushMoneyEdit")}>?id=<{$value.id}>',700,550)" href="javascript:;">
+                    <i class="layui-icon">&#xe642;</i>
+                </a> -->
+                <button class="xiu_bao layui-btn layui-btn-xs">修改</button>
+            </td>
+          </tr>
+          <{/volist}>
+        </tbody>
+      </table>
+        <div class="page">
+            <div>
+                <{$page}>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        
+       
+        
+        
+        
+        
+      layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+      });
+    function stop(id){
+        $.ajax({
+                type:'GET',
+                url:"<{:url('admin/member/memberStop')}>?id="+id,    
+                success:function(data){
+                    if(data==true){
+                      $('#'+id).parent("tr").hide();
+                    }else{
+                        alert('失败') ;
+                  }
+                }
+            })
+    }
+    
+  
+      /*用户-删除*/
+    function member_del(obj,did){
+        layer.confirm('确认要删除吗？',function(index){
+            //转成数组形式
+            var dataA=new Array()
+            dataA[0]=did ;
+            var dataArray={id:dataA}
+            toajax(dataArray);
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!',{icon:1,time:1000});
+         });
+      }
+
+   function delAll (argument) {
+        var data = tableCheck.getData();
+        layer.confirm('确认要删除吗？'+data,function(index){
+            //捉到所有被选中的，发异步进行删除
+            var dataArray={id:data};
+            toajax(dataArray);
+            layer.msg('删除成功', {icon: 1});
+            $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+      }
+
+
+       function toajax (dataArray){
+            $.ajax({
+                type:'POST',
+                url:"<{:url('admin/member/toDel')}>",    
+                data:dataArray,
+                dataType:"json",
+                success:function(data){
+                    if(data.status==1){
+                      return 1;
+                    }else{
+                        return 0;
+                  }
+                }
+            })
+        }
+    $('tbody td input').css('border','0');
+    $('tbody td input').attr('readonly','readonly');
+    $('.xiu_bao').click(function(){
+      let inp = $(this).parents('td').siblings('td').find('input');//点击当前ID的
+      if ($(this).html() == '保存') {
+        $(this).html('修改');
+        $(this).removeClass('layui-btn-warm');
+        inp.css('border','0');
+        inp.attr('readonly','readonly');
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').hide();
+        
+      }else{
+        $(this).html('保存');
+        $(this).addClass('layui-btn-warm');
+        inp.css('border','1px solid #e6e6e6');
+        inp.removeAttr('readonly');
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').show();
+      }
+    });
+    </script>
+ 
+  </body>
+
+</html>
