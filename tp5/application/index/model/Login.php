@@ -34,6 +34,9 @@ class Login extends Model
                 $sales_code ?$sales_code :0;
                 $data =['sales_code'=>$sales_code ,'sales_name'=>$salesName ,'member_code'=>$member_code ,'member_name'=>$member_name];
                 $res = Db::name('sales_member')->insert($data);
+                //同时默认设置客户的利润价格为200
+                $data2 =['member_code'=>$sales_code ];
+                $res2 = Db::name('member_profit')->insert($data2);
             }
         }
         

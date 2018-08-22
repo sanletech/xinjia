@@ -13,29 +13,94 @@ class Member extends Base
  
     //用户列表
     public function memberList()
-    {   //帐号搜索
-        $account = input('get.account');
+    {   
+       $type = input('get.type'); //企业用户company 个人用户person
+       $account = input('get.account');  //帐号搜索
         if($account){
              $this->view->assign('account',$account); 
         }
+        if($type){
+             $this->view->assign('type',$type); 
+        }else{
+            $type='company';
+        }
         $user = new MemberM ;
-        //企业用户company 个人用户person
-        $list = $user->memberList($account,'person','5');
-       //$this->_p($list);exit;
+        //var_dump($account,$type,1,'5');
+        $list = $user->memberList($account,$type,1,'5');
+//       $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
          $this->view->assign('page',$page);
         return $this->view->fetch('Member/member_list'); 
     }
+    //精致使用帐号
+    public function memberStop() {
+        $id = $this->request->param();
+        $res =Db::name('member')->where('id','in',$id)->update(['status'=>'0']);
+        return $res ?TRUE:FALSE;
+    }
+    //恢复帐号的使用
+    public function memberEnabled() {
+        $id = $this->request->param();
+        $res =Db::name('member')->where('id','in',$id)->update(['status'=>'1']);
+        return $res ?TRUE:FALSE;
+    }
+    //帐号的删除
+    public function memberDel() {
+        $idArr = $this->request->param();
+        $id =$idArr['id'];
+        $res =Db::name('member')->where('id','in',$id)->delete();
+        //var_dump(Db::getLastSql());exit;
+        return $res ?TRUE:FALSE;
+    }
+    
+    //业务对应客户的提成管理
+    public function  pushMoneyList() {
+        //$shipCompany = Db::query("select COLUMN_NAME,column_comment from INFORMATION_SCHEMA.Columns where table_name='hl_member_profit'");
+        $type = input('get.type'); //业务sales 用户customer
+        $account = input('get.account');  //帐号搜索
+        if($account){
+             $this->view->assign('account',$account); 
+        }
+        $type ?$type:'sales';
+        $this->view->assign('type',$type); 
+        $user = new MemberM ;
+        $list = $user->pushMoneyList($type,$account,5);
+      //  array_column($list, $list)
+        
+       // $this->_p($list);exit;
+        $page = $list->render();
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        return $this->view->fetch('Member/pushMoney_List'); 
+    }
+    //业务对应客户的提成管理的修改
+    public function  pushMoneyEdit(){
+        $id = input('get.id'); //客户id
+      //  查询对应业务 和利润设置价格
+        $list = Db::name('sales_member')->alias('SM')
+               ->join('hl_member_profit MP','MP.member_code = SM.member_code','left')
+               ->field('SM.sales_name,SM.sales_code,SM.member_name,MP.*')
+                ->where('MP.id',$id)
+               ->group('MP.member_code')->order('SM.id');
+        $salesList =Db::name('sales_member')->column('sales_code,sales_name');
+        $this->view->assign('list',$list);
+        $this->view->assign('salesList',$salesList);
+        return $this->view->fetch('Member/member_edit');
+        
+    }
+    
     //用户列表修改
-    public function member_edit()
+    public function memberEdit()
     {
+        $id = input('get.id');
+        
         return $this->view->fetch('Member/member_edit'); 
     }
-    //用户查价
-    public function member_check()
+    //根据用户前台搜搜的记录做回访
+    public function memberCallback()
     {
-        return $this->view->fetch('Member/member_check'); 
+        return $this->view->fetch('Member/member_callback'); 
     }
     //用户状态修改
     public function state_edit()
@@ -43,25 +108,24 @@ class Member extends Base
         return $this->view->fetch('Member/state_edit'); 
     }
 
-    //企业列表
-    public function company_list()
-    {
-        return $this->view->fetch('Member/company_list'); 
-    }
-    //企业列表修改
-    public function company_add()
-    {
-        return $this->view->fetch('Member/company_add'); 
-    }
-    //企业列表修改
-    public function company_edit()
-    {
-        return $this->view->fetch('Member/company_edit'); 
-    }
-
     //禁用账号
-    public function disable_list()
-    {
+    public function disableList()
+    {   
+        $type = input('get.type'); //企业用户company 个人用户person
+        $account = input('get.account');  //帐号搜索
+        if($account){
+             $this->view->assign('account',$account); 
+        }
+        if($type){
+             $this->view->assign('type',$type); 
+        }else{
+            $type='company';
+        }
+        $user = new MemberM ;
+        $list = $user->memberList($account,$type,0,'5');
+        $page = $list->render();
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
         return $this->view->fetch('Member/disable_list'); 
     }
 

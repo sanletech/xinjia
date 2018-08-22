@@ -12,66 +12,63 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-<!--        <form class="layui-form layui-col-md12 x-so">
-            <input type="radio"  name="type" value="company"  title="公司" <?php if(!isset($type)){echo 'checked';}elseif($type=='company'){echo 'checked';}?> >
-                   <input type="radio"  name="type" value="person"  title="个人"  <?php if(isset($type)&&($type=='person')){echo 'checked';}?> >
-            <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入账号名" autocomplete="off" class="layui-input">
+        <form class="layui-form layui-col-md12 x-so">
+            <input type="radio"  name="type" value="sales"  title="业务" <?php if(!isset($type)){echo 'checked';}elseif($type=='sales'){echo 'checked';}?> >
+            <input type="radio"  name="type" value="customer"  title="客户"  <?php if(isset($type)&&($type=='customer')){echo 'checked';}?> >
+            <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入账号/姓名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
-        </form>-->
+        </form>
       </div>
       <table class="layui-table">
         <thead>
           <tr>
-            <th>
-              <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
-            </th>
-            <th>帐号</th>
-            <th>用户名</th>
-            <th>手机号</th>
-            <th>公司名</th>
-            <th>推荐人</th>
-            <th>最新登录时间</th>
-            <th>创建时间</th>
-            <th>状态</th>
+            <th>业务</th>
+            <th>客户</th>
+            <th>中良</th>
+            <th>宁波海洋</th>
+            <th>中海洋</th>
+            <th>中外运</th>
+            <th>安通</th>
+            <th>中远</th>
+            <th>中谷</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody >
-            <{volist name="list" id ="vo"}>
+            <{volist name="list" id ="value"}>
           <tr>
-            <td style='display: none' id ='<{$vo.id}>' ><{$vo.id}></td>
-            <td>
-            <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
-            </td>
-            <td><{$vo.member_code}></td>
-            <td><{$vo.name}></td>
-            <td><{$vo.phone}></td>
-            <td><{$vo.company}></td>
-            <td><{$vo.sales_name}></td>
-            <td><{$vo.logintime}></td>
-            <td><{$vo.create_time}></td>
-            <td class="td-status">
-                <span class="layui-btn layui-btn-warm layui-btn-mini" title="<{$vo.status}>">禁用</span></td>
+            <td><{$value.sales_name}>　<{$value.sales_code}></td>
+            <td><{$value.member_name}>　<{$value.member_code}></td>
+            <td><{$value.zhongliang}></td>
+            <td><{$value.ningboyuanyang}></td>
+            <td><{$value.zhonghaiyang}></td>
+            <td><{$value.zhongwaiyun}></td>
+            <td><{$value.antong}></td>
+            <td><{$value.zhongyuan}></td>
+            <td><{$value.zhonggu}></td>
             <td class="td-manage">
-              <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
-                <i class="layui-icon">&#xe640;</i>
-              </a>
-              <a title="启用" onclick="stop(<{$vo.id}>)" href="javascript:;">
-                <i class="layui-icon">&#xe601;</i>
-              </a>
+                <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/pushMoneyEdit")}>?id=<{$value.id}>',700,550)" href="javascript:;">
+                    <i class="layui-icon">&#xe642;</i>
+                </a>
             </td>
           </tr>
           <{/volist}>
         </tbody>
       </table>
-      <div class="page">
-        <div>
-           
+        <div class="page">
+            <div>
+                <{$page}>
+            </div>
         </div>
-      </div>
 
     </div>
     <script>
+        
+       
+        
+        
+        
+        
       layui.use('laydate', function(){
         var laydate = layui.laydate;
         
@@ -88,7 +85,7 @@
     function stop(id){
         $.ajax({
                 type:'GET',
-                url:"<{:url('admin/member/memberEnabled')}>?id="+id,    
+                url:"<{:url('admin/member/memberStop')}>?id="+id,    
                 success:function(data){
                     if(data==true){
                       $('#'+id).parent("tr").hide();
@@ -128,7 +125,7 @@
        function toajax (dataArray){
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/memberDel')}>",    
+                url:"<{:url('admin/member/toDel')}>",    
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
