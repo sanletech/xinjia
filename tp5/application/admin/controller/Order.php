@@ -9,9 +9,7 @@ use think\Db;
 use app\admin\model\Order as OrderM;
 use think\Validate;
 class Order extends Base
-{   
-    
-    
+{       
         //审核订单
     public function order_audit() 
     {
