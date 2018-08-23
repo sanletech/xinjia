@@ -10,6 +10,8 @@ use app\admin\model\Order as OrderM;
 use think\Validate;
 class Order extends Base
 {       
+    //订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货
+    
         //审核订单
     public function order_audit() 
     {
@@ -26,11 +28,8 @@ class Order extends Base
     public function order_audit_pass() 
     { 
        if (request()->isAjax()){
-           $data =$this->request->param();
-           $id=  implode(',', $data['id']);
-           $sql = 'update hl_order_father set state = "1" where id  in  ('.$id.')';
-           //var_dump($sql);exit;
-           $res =Db::execute($sql);
+           $idArr =$this->request->param();
+           $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>100,'action'=>'通过审核>待订舱']);
            return json($res ? 1 : 0) ;
        }
     }
@@ -39,12 +38,9 @@ class Order extends Base
     public function order_audit_del() 
     {
          if (request()->isAjax()){
-            $data =$this->request->param();
-            $id=  implode(',', $data['id']);
-            $data = new OrderM;
-            $sql = 'update hl_order_fahter set state = "10" where id  in'. $id;
-            $res =Db::execute($sql);
-            return json($res ? 1 : 0) ;
+            $idArr =$this->request->param();
+           $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404,'action'=>'订单删除']);
+           return json($res ? 1 : 0) ;
        }
         
     }
@@ -70,7 +66,7 @@ class Order extends Base
     public function listBook() 
     {   
         $data = new OrderM;
-        $list = $data->listBook();
+        $list = $data->listOrder($pages=5,$state='100');
         $page =$list->render();
         $count =  count($list);
 //      $this->_p($list);exit;
@@ -126,7 +122,7 @@ class Order extends Base
     public function listSendCar() 
     {      
         $dataM = new OrderM;
-        $list = $dataM->listSendCar($pages=5,$state='2');
+        $list = $dataM->listOrder($pages=5,$state='200');
         $page =$list->render();
         $count =  count($list);
        // $this->_p($list);exit;
@@ -172,7 +168,7 @@ class Order extends Base
     public function listLoad() 
     {   
         $dataM = new OrderM;
-        $list = $dataM->listSendCar($pages=5,$state='3');
+        $list = $dataM->listOrder($pages=5,$state='300');
         $page =$list->render();
         $count =  count($list);
      //  $this->_p($list);exit;
@@ -217,8 +213,8 @@ class Order extends Base
     public function listBaogui() 
     {   
         $dataM = new OrderM;
-        $list = $dataM->listSendCar($pages=5,$state='4');
- //       $this->_p($list);exit;
+        $list = $dataM->listOrder($pages=5,$state='400');
+//    $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count_book',$count);
@@ -243,7 +239,7 @@ class Order extends Base
     //待配船list
     public function  listCargo(){
         $dataM = new OrderM;
-        $list = $dataM->listShip($pages=5,$state='505,515,525,535');
+        $list = $dataM->listOrder($pages=5,$state='505,515,525,535');
         
         $page =$list->render();
         $count =  count($list);
@@ -307,9 +303,9 @@ class Order extends Base
         if(!array_key_exists('fail', $res)){
             $status =['msg'=>'录入配船成功','status'=>1];
             //修改订单状态
-            $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入配船完毕'.$res['sequence']];
-            $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入配船完毕'.$res['sequence']];
-            $dataM->updateState($father, $son);
+            $state =$res['orderStatus']; $action= '录入配船完毕'.$res['sequence'];
+            $res1 = $dataM->updateState($order_id,$container_code,$state,$action);
+            $res1 ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";   
         }else {
             $status =['msg'=>'录入配船失败','status'=>0]; 
         } 
@@ -320,7 +316,7 @@ class Order extends Base
     //展示待到港信息的页面
     public function  listArrival(){
         $dataM = new OrderM;
-        $list = $dataM->listShip($pages=5,$state='506,516,526,536');
+        $list = $dataM->listOrder($pages=5,$state='506,516,526,536');
         //$this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
@@ -359,9 +355,9 @@ class Order extends Base
         if(!array_key_exists('fail', $res)){
             $status =['msg'=>'录入待到港成功','status'=>1];
             //修改订单状态
-            $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入待到港完毕'.$res['sequence']];
-            $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入待到港完毕'.$res['sequence']];
-            $dataM->updateState($father, $son);
+            $state =$res['orderStatus']; $action= '录入到港完毕'.$res['sequence'];
+            $res1 = $dataM->updateState($order_id,$container_code,$state,$action);
+            $res1 ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
         }else {
             $status =['msg'=>'录入待到港失败','status'=>0]; 
         } 
@@ -372,7 +368,7 @@ class Order extends Base
     //展示待卸船信息的页面
     public function  listUnShip(){
         $dataM = new OrderM;
-        $list = $dataM->listShip($pages=5,$state='507,517,527,537');
+        $list = $dataM->listOrder($pages=5,$state='507,517,527,537');
         //$this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
@@ -411,9 +407,9 @@ class Order extends Base
         if(!array_key_exists('fail', $res)){
             $status =['msg'=>'录入待卸船成功','status'=>1];
             //修改订单状态
-            $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入待卸船完毕'.$res['sequence']];
-            $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入待卸船完毕'.$res['sequence']];
-            $dataM->updateState($father, $son);
+            $state =$res['orderStatus']; $action= '录入卸船完毕'.$res['sequence'];
+            $res1 = $dataM->updateState($order_id,$container_code,$state,$action);
+            $res1 ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
         }else {
             $status =['msg'=>'录入待卸船失败','status'=>0]; 
         } 
@@ -425,7 +421,7 @@ class Order extends Base
     public function listtoCollect () 
     {   
         $dataM = new OrderM;
-        $list = $dataM->listSendCar($pages=5,$state='800');
+        $list = $dataM->listOrder($pages=5,$state='800');
        // $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
@@ -437,11 +433,7 @@ class Order extends Base
     }
          //处理订单收款
     public function toCollect (){
-        $data= $this->request->param();
-        $this->_p($data);exit;
-        $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入收款完毕'];
-        $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入收款完毕'];
-        $dataM->updateState($father, $son);
+      
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'收钱成功','status'=>1];
         }else {
@@ -456,7 +448,7 @@ class Order extends Base
     public function listDelivery () 
     {
         $dataM = new OrderM;
-        $list = $dataM->listSendCar($pages=5,$state='900');
+        $list = $dataM->listOrder($pages=5,$state='900');
        // $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);

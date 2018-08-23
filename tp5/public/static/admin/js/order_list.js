@@ -22,6 +22,7 @@ $('#yd .yes').click(function(){
     if(list.length == 0){
         alert("请选择运单号集装箱");
     }
+    console.log(list);
 });
 var st = '';
 var i = 0;

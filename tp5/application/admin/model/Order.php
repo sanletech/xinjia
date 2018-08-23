@@ -6,6 +6,8 @@ use think\session;
 //订单模块
 class Order extends Model
 {
+    
+    //订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货
     //审核客户提交的订单
     public function order_audit($pages=5,$state='0')
     {
@@ -24,7 +26,7 @@ class Order extends Model
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
                 ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
                 ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->field('OF.id ,OF.order_num,MB.phone,MB.membername,SA.salesname,'
+                ->field('OF.id ,OF.order_num,MB.phone,MB.name membername,SA.salesname,'
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
                         . 'OF.cargo,SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime')
                 ->group('OF.id')->where('OF.state','eq',$state)
@@ -34,124 +36,8 @@ class Order extends Model
         return $list;
     }
     
-    // 待订舱页面的list
-    public function listBook($pages=5,$state='1') {
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        //查询客户的订单编号order_father 查询对应的订单信息
-        $fatherSql= Db::name('order_father')->alias('OF')
-                ->join('hl_container_size CS','CS.id =OF.container_size','left')  //箱型20gp 40hq
-                ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
-                ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
-                ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
-                ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
-                ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
-                ->join('hl_port P2','P2.port_code = SB.sl_end','left')   //船运目的港口
-                ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
-                ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船公司合作的船舶
-                ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
-                ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
-                ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
-              //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
-                ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
-                ->field('OF.id ,OF.order_num,SA.salesname,'
-                        . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
-                        . 'OF.cargo,CS.type,OF.container_sum,'
-                        . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
-                        . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
-                        . 'LK2.company ')
-                ->group('OF.id')->where('OF.state','eq',$state)
-               // ->where('OA.member_code = OF.member_code')
-                ->order('OF.id ,OF.mtime desc')->buildSql();
-        //var_dump($fatherSql);exit;
-        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
-        return $list;
-    }
-    
-   //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
-    //订单号 集装箱数量, 运单号, 运单号数量
-    public function waybillNum ($order_num,$container_sum,$track_num, $track_sum){
-         //输入一个订单 就填充集装箱数量个订单号
-        if($track_sum ==1){
-            $j= $container_sum;
-            $track_num = array_fill(0,$container_sum,$track_num['0']);
-        }else{
-            $j= $track_sum;
-        }
-        $str ='';
-        $date = date("md");
-        for($i=0;$i<$j;$i++){
-            $container_code = $track_num[$i].'d'.$date.'n'.$i;  //设置虚拟集装箱编码 等待派车后录入真正的集装箱编码再修改
-            $str .= "('$order_num','$track_num[$i]','$container_code','2') ,";   
-        }
-        $str = rtrim($str,',');
-        //插入之前先判断是否已经已经存在了运单号
-        $num = Db::name('order_son')->where('order_num',$order_num)->find();
-        if(!(empty($num))){
-             return $response['fail']='运单号已经输入过了';
-        }
-        
-        $sql ="insert into hl_order_son(order_num,track_num,container_code,state) values".$str;
-        $response =[];
-        $res =Db::execute($sql);
-        $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';
-       
-//        if(!empty($res)){
-//            //订单状态显示0待确认 1待订舱 2待派车 3待装货 4待报柜号 5待配船 6待到港 7待卸船 8待收钱 9待送货
-//            //将对应的order_father 的 state 状态改为2  从录入运单号之后，需要修改father和 son订单的两个状态
-//            $sql2 = "update hl_order_father set state = '2' where order_num = '$order_num' ";
-//            $res2 =Db::execute($sql2);
-//            $res2 ? $response['success'][]='修改待订舱成功' :$response['fail'][]='修改待订舱失败';
-//        }
-         
-        if(!empty($res)){
-            $father=['order_num'=>[$order_num],'state'=>'2','action'=>'输入运单号完毕'];
-            $res2=  $this->updateState($father) ;
-            $res2 ? $response['success'][]='修改待订舱状态成功' :$response['fail'][]='修改待订舱状态失败';
-        }
-     
-        return $response;
-    }
-    
-    //待派车页面list
-    public function listSendCar($pages=5,$state='2') {
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        //查询客户的订单编号order_father 查询对应的订单信息
-        $fatherSql= Db::name('order_father')->alias('OF')
-                ->join('hl_container_size CS','CS.id =OF.container_size','left')  //箱型20gp 40hq
-                ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
-                ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
-                ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
-                ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
-                ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
-                ->join('hl_port P2','P2.port_code = SB.sl_end','left')   //船运目的港口
-                ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
-                ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船公司合作的船舶
-                ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
-                ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
-                ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
-              //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
-                ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
-                ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
-                ->field('OF.id ,OF.order_num,SA.salesname,'
-                        . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
-                        . "OF.cargo,CS.type,OF.container_sum, group_concat(distinct OS.track_num order by OS.id separator '_') track_num,"
-                        . " group_concat(distinct OS.container_code order by OS.id separator '_') container_code, "
-                        . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
-                        . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
-                        . 'LK2.company ')
-                ->group('OF.order_num')->where('OS.state','eq',$state)
-             //   ->group('OF.id')->where('OF.state','eq',$state)
-               // ->where('OA.member_code = OF.member_code')
-                ->order('OF.id ,OF.mtime desc')->buildSql();
-        // var_dump($fatherSql);exit;
-        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
-        return $list;
-    }
-    
-    //待配船 到港 卸船
-    public function listShip($pages=5,$state='') {
+        //订单页面list 
+    public function listOrder($pages=5,$state='200') {
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         //查询客户的订单编号order_father 查询对应的订单信息
         $fatherSql= Db::name('order_father')->alias('OF')
@@ -179,15 +65,49 @@ class Order extends Model
                         . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . 'LK2.company ')
                 ->group('OF.order_num')->where('OS.state','in',$state)
-             //   ->group('OF.id')->where('OF.state','eq',$state)
-               // ->where('OA.member_code = OF.member_code')
                 ->order('OF.id ,OF.mtime desc')->buildSql();
         // var_dump($fatherSql);exit;
         $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
         return $list;
     }
     
-     //录入派车信息
+
+   //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
+    //订单号 集装箱数量, 运单号, 运单号数量
+    public function waybillNum ($order_num,$container_sum,$track_num, $track_sum){
+         //输入一个订单 就填充集装箱数量个订单号
+        if($track_sum ==1){
+            $j= $container_sum;
+            $track_num = array_fill(0,$container_sum,$track_num['0']);
+        }else{
+            $j= $track_sum;
+        }
+        $str ='';
+        $date = date("md");
+        for($i=0;$i<$j;$i++){
+            $container_code = $track_num[$i].'d'.$date.'n'.$i;  //设置虚拟集装箱编码 等待派车后录入真正的集装箱编码再修改
+            $str .= "('$order_num','$track_num[$i]','$container_code','200','录入运单号>待订车') ,";   
+        }
+        $str = rtrim($str,',');
+        //插入之前先判断是否已经已经存在了运单号
+        $num = Db::name('order_son')->where('order_num',$order_num)->find();
+        if(!(empty($num))){
+             return $response['fail']='运单号已经输入过了';
+        }
+        
+        $sql ="insert into hl_order_son(order_num,track_num,container_code,state,action) values".$str;
+        $response =[];
+        $res =Db::execute($sql);
+        $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';
+       // 修改父订单的状态
+        if(!empty($res)){
+            $res2 =Db::name('order_father')->where('order_num',$order_num)->update(['state'=>2,'action'=>'录入运单号>待订车']);
+            $res2 ? $response['success'][]='修改待订舱状态成功' :$response['fail'][]='修改待订舱状态失败';
+        }
+        return $response;
+    }
+    
+    //录入派车信息
     public function tosendCar($data) 
     {  
         $order_num =$data['order_num'];
@@ -247,16 +167,12 @@ class Order extends Model
         Db::rollback();
             $response['fail'][]=$e->getMessage();
         }
-        
-        //修改order_state的状态
-        $father =['order_num'=>[$order_num],'state'=>3,'action'=>'录入派车信息完毕'];
-        $son =['order_num'=>[$order_num],'container_code'=>$container_id,'state'=>3,'action'=>'录入派车信息完毕'];
-        $res = self::updateState($father,$son);
-        
         if(array_key_exists('fail',$res)){
             $response['fail'][]= $res['fail'];
         }else{
-            $response['success'][]= $res['success'];
+            //修改order_state的状态
+             $res4 = $this->updateState($order_num, $container_id,'300','录完派车信息>待装货');
+             $res4?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
         }
         
         
@@ -285,16 +201,11 @@ class Order extends Model
    // var_dump(Db::getLastSql());
             $res ? $response['success'][]="添加柜子{$container_id}实际装货时间成功" :$response['fail'][]= "添加柜子{$container_id}:实际装货时间失败";
         }
+    
         //修改order_state的状态
-        $father =['order_num'=>[$order_num],'state'=>4,'action'=>'录入实际装货时间完毕'];
-        $son =['order_num'=>[$order_num],'container_code'=>$container_codeArr,'state'=>4,'action'=>'录入实际装货时间完毕'];
-        $res =$this->updateState($father,$son) ;
-        if(array_key_exists('fail',$res)){
-            $response['fail'][]= $res['fail'];
-        }else{
-            $response['success'][]= $res['success'];
-        }
-        
+        $res1 = $this->updateState($order_num,$container_codeArr,'400','录完实际装货时间>待配船');
+        $res1 ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
+       
         if(array_key_exists('fail', $response)){
             $msg = implode('', $response['fail']);
             throw new \Exception($msg);
@@ -307,62 +218,20 @@ class Order extends Model
         Db::rollback();
             $response['fail']= $e->getMessage();
         }
-      
-       
         return  $response;
             
+    }
+     //处理报柜号 接受订单好和柜号
+     public function toBaogui($order_num,$container_codeArr){
+       //修改order_state的状态
+        $res = $this->updateState($order_num,$container_codeArr,'400','录完实际装货时间>待配船');
+        $res ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";   
+        return  $response;
+     
     }
     
-     //处理报柜号
-    public function toBaogui($data){
-       
-            // 启动事务
-        Db::startTrans();
-        $response= [];
-        try{
-            foreach ($data as $key=>$value){
-                //$key 是柜子编码, $value是订单编号
-                $res = Db::name('order_son')->where('container_code',$key)->where('order_num',$value)->setField('state',5);
-                //var_dump(Db::getLastSql());
-                $res ? $response['success'][]="柜子{$value}修改状态成功" :$response['fail'][]= "柜子{$value}修改状态失败";
-            }
-        $order_num = array_values($data);
-        $container_codeArr =  array_keys($data);
-         //查询同一个订单下 箱子code是否都提交进来, 如果是就更新father的状态
-        $containerSql = Db::name('order_son')->where('order_num',$value)->column('container_code');
-        //如果$containerSql 和 提交进来$container_codeArr对比有差异 说明 还有部分没有提交
-        $diff_arr = array_diff($containerSql,$container_codeArr);
-        if(!empty($diff_arr)){
-            $father=['order_num'=>$order_num,'state'=>505,'action'=>'申报柜号完毕'];
-        }  else {
-            $father ='';
-        }
-        //修改order_state的状态
-        
-        $son =['order_num'=>$order_num,'container_code'=>$container_codeArr,'state'=>505,'action'=>'申报柜号完毕'];
-        $res =$this->updateState($father,$son) ;    
-        if(array_key_exists('fail',$res)){
-            $response['fail'][]= $res['fail'];
-        }else{
-            $response['success'][]= $res['success'];
-        }
-            
-        if(array_key_exists('fail', $response)){
-            $msg = implode('', $response['fail']);
-            throw new \Exception($msg);
-        }  else {
-            Db::commit();
-        } 
-     
-        } catch (\Exception $e) {
-           // 回滚事务
-        Db::rollback();
-            $response['fail']= $e->getMessage();
-        }
-        
-        return  $response;
-     
-    }
+    
+
     //录入配船信息页面的 展示原有的航线详情信息
     public function cargoPlan($order_num){
         $data =Db::name('order_father')->alias('OF')
@@ -396,9 +265,260 @@ class Order extends Model
 * 在变更father和son订单的状态同时 在order_state 做登记
 * @access public 
 * @param  $father 父订单的 array(订单order_num数组 state  action) $father=['order_num','state','action']
-* @param  $son    子订单的 array(订单order_num数组 container_code数组, state, action) $son=['order_num','container_code','state','action']
+* @param  $son    子订单的 array(订单order_num container_code数组, state, action) $son=['order_num','container_code','state','action']
 */  
-    public function updateState($father='',$son='') 
+        public function updateState($order_num,$container_code=array(),$state,$action) 
+    { 
+       
+        // 取值（当前作用域）
+        $loginname= Session::get('user_info','think');
+       // var_dump($loginname);exit;
+        $change_time = time();  
+        $response=[];
+    
+        //先查询提交的柜子是不是对订单的全部柜子,不是则提示需要拆掉或者重新确认
+//        $order_num= $son['order_num'];
+//        $container_code = $son['container_code'];
+//        $state = $son['state'];  $action = $son['action'];
+        $sqlContainer= Db::name('order_son')->where('order_num',$order_num)->column('container_code');
+        $miss = array_diff($sqlContaine,$container_code);
+        $more = array_diff($container_code,$sqlContaine);
+        if( $miss||$more){
+            $str1= implode('_', $miss);
+            $str2= implode('_', $more);
+            $miss ? $response['fail'][]= '柜子申报有缺失'.$str1 :'';
+            $more ? $response['fail'][]= '柜子申报有多报'.$str2 :'';
+            return $response;
+        }
+        //检查同一个订单下的柜子状态是否一样的
+        $stateArr = Db::name('order_son')->where('container_code','in',$container)->where('order_num',$order_num)->column('state');
+        $stateCount = array_count_values($stateArr);
+        list($key,$value) = each($stateCount);
+        if($value !== count($stateArr)){
+            $response['fail']= '订单的状态不一致';
+            return $response;
+        }
+        if($key>$state){
+            $response['fail']= '订单的状态已经更新过';
+            return $response;
+        }
+        //同时更新更新状态
+             // 启动事务
+        Db::startTrans();
+        try{
+        $res  = Db::name('order_son')->where('container_code','in',$container)->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action]);
+        $res2 = Db::name('order_father')->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action]);
+        $res ? $response['success'][]="登记order_son{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_son{$order_num}的{$state}{$action}失败";
+        $res2 ? $response['success'][]="登记order_fathe{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_fathe{$order_num}的{$state}{$action}失败";
+        //记录是谁何时操作的状态    
+        if(!array_key_exists('fail',$response)){
+            Db::commit();
+        } 
+        
+        } catch (\Exception $e) {
+           // 回滚事务
+        Db::rollback();
+            $response['fail'][]=$e->getMessage();
+        }
+        return $response;
+    }
+    
+    
+      //order_ship表 贮存对应的航线信息$loadPort,$departurePort
+    public function orderShip($order_num,$portArr,$portCodeArr) {
+        //查询是否已经录入航线信息了
+        $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
+   
+        if(empty($res1)){
+        $sqlArr=[]; 
+        $num =count($portArr)-1 ; //生成几行转车
+        for($i=0;$i<$num;$i++){
+            $field_status ='R_R_R_R_R_R_R';
+            //第一条字段状态前面几个可写
+            if($i==0){
+                $field_status ='W_W_W_W_W_R_R';
+            }
+            $sqlArr[$i]= array('order_id'=>$order_num,
+                'loadPort'=>$portCodeArr[$i],
+                'loadPortName'=>$portArr[$i],
+                'departurePort'=>$portCodeArr[$i+1], 
+                'departurePortName'=>$portArr[$i+1],
+                'sequence'=>($i+1),
+                'field_status'=>$field_status );
+        }
+        $res = Db::name('order_ship')->insertAll($sqlArr);
+        return $res ? true :false ;
+        }
+        return $res1 ? true :false ;
+    }
+    // 读取order_ship的数据
+    public function orderShipInput($order_num) {
+        $res= Db::name('order_ship')->where('order_id',$order_num)->select();
+        foreach ($res as $key => $value) {
+            $res[$key]['field_status'] =  explode( '_',$value['field_status']);
+        }
+        return $res;
+    }  
+    // 添加order_ship的数据
+    public function toOrderShip($data,$order_id){
+       // $this->_v($data);exit;
+        $response =[];
+        unset($data['order_id'],$data['loadPort'],$data['loadPortName'],$data['departurePort'],$data['departurePortName']); //删除固定值
+        $tmpArr=[]; $sqlArr=[]; //临时数组 ,最终数组
+        $dataArr = array_keys($data); 
+        $dataArr[]='mtime';
+        $num =count($data['ship_name']);// 几行记录
+        $mtime =  $mtime = date('Y-m-d h:i:s'); //修改时间
+        $orderStatus=[]; //贮存状态
+        for($i=0;$i<$num;$i++){
+            $tmpArr =  array_column($data, $i);
+            //排除空的
+            $arrNum =count(array_filter($tmpArr));
+            //$data["field_status"]的去除下划线_
+            $string = preg_replace('/_/','',$tmpArr[8]);
+            $W =strrpos($string,'W');
+          // var_dump(array_filter($tmpArr),$arrNum,$string, $W);exit;
+            $W= ($W!==false) ?$W :-1; //如果找不到W说明填满8个数据
+      
+            if(!(($W+3)== $arrNum||$arrNum==9)){ //判断传回来的数据的个数是否一致或者又不是填满状态
+                $response['fail'][]="回来的数据的个数是不一致又不是填满状态";
+                return $response;
+            }
+            
+            switch ($W){
+            case 4:
+            $field_status = 'R_R_R_R_R_W_R';
+            $orderStatus[] =506;//录入配船信息完毕
+            break;
+            case 5:
+            $field_status = 'R_R_R_R_R_R_W';
+            $orderStatus[] =507;//录入到港信息完毕    
+            break;
+            case 6:
+            $field_status = 'R_R_R_R_R_R_R';//这一行数据填写完成同时 下一行前五个改成可写W
+            if(($i+1)<$num){
+                $goto =$i+1;
+                $orderStatus[] =515;//录入卸船信息完毕转下一行
+            }elseif (($i+1)==$num) { //最后一航走完
+                $orderStatus[] =800;//录入卸船信息完毕转代收钱     
+            } 
+            break;
+            case -1:
+            continue 2; //跳出此循环
+            default:
+            $response['fail'][]="找不到W，存在异常"; 
+            return $response;
+            }
+            $tmpArr[8] =$field_status;
+            $tmpArr[9] = $mtime;
+           //$this->_p($dataArr);  $this->_p($tmpArr);exit;
+            //过滤空的数据
+            $sqlArr[$i] = array_filter(array_combine($dataArr, $tmpArr));
+        }
+        if(isset($goto)){
+            $sqlArr[$goto]=array('sequence'=>$goto+1,'field_status'=>'W_W_W_W_W_R_R');
+        }
+       
+        //最后的更新状态码数
+        $sequence =max(array_column($sqlArr,'sequence'));
+        var_dump(array_column($sqlArr,'sequence'),$orderStatus);
+        $orderStatusMax =  max($orderStatus)+ (($sequence-1)*10);
+          //更新数据库
+        //$this->_p($sqlArr);exit;
+        foreach($sqlArr as $key =>$sqldata){
+            $res =Db::name('order_ship')->where('order_id',$order_id)->where('sequence',$sqldata['sequence'])
+                    ->update($sqldata);
+            $res ? $response['success'][]="{$key}条记录修改状态成功" :$response['fail'][]= "{$key}条记录修改状态失败";
+        }
+        $response['orderStatus']=$orderStatusMax;$response['sequence']=$sequence;
+        return $response;
+       
+    }
+    
+        // 待订舱页面的list
+    public function listBook($pages=5,$state='100') {
+//        $pageParam  = ['query' =>[]]; //设置分页查询参数
+//        //查询客户的订单编号order_father 查询对应的订单信息
+//        $fatherSql= Db::name('order_father')->alias('OF')
+//                ->join('hl_container_size CS','CS.id =OF.container_size','left')  //箱型20gp 40hq
+//                ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
+//                ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
+//                ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
+//                ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
+//                ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
+//                ->join('hl_port P2','P2.port_code = SB.sl_end','left')   //船运目的港口
+//                ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
+//                ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船公司合作的船舶
+//                ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
+//                ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
+//                ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
+//                ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
+//              //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
+//                ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
+//                
+//                                ->field('OF.id ,OF.order_num,SA.salesname,'
+//                        . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
+//                        . "OF.cargo,CS.type,OF.container_sum, group_concat(distinct OS.track_num order by OS.id separator '_') track_num,"
+//                        . " group_concat(distinct OS.container_code order by OS.id separator '_') container_code, "
+//                        . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
+//                        . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
+//                        . 'LK2.company ')
+//                ->group('OF.order_num')->where('OS.state','in',$state)
+//                ->order('OF.id ,OF.mtime desc')->buildSql();
+//                
+//                
+//                ->field('OF.id ,OF.order_num,SA.salesname,'
+//                        . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
+//                        . 'OF.cargo,CS.type,OF.container_sum,'
+//                        . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
+//                        . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
+//                        . 'LK2.company ')
+//                ->group('OF.id')->where('OF.state','eq',$state)
+//               // ->where('OA.member_code = OF.member_code')
+//                ->order('OF.id ,OF.mtime desc')->buildSql();
+//        //var_dump($fatherSql);exit;
+//        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
+//        return $list;
+    }
+    
+        //待配船 到港 卸船
+    public function listShip($pages=5,$state='') {
+//        $pageParam  = ['query' =>[]]; //设置分页查询参数
+//        //查询客户的订单编号order_father 查询对应的订单信息
+//        $fatherSql= Db::name('order_father')->alias('OF')
+//                ->join('hl_container_size CS','CS.id =OF.container_size','left')  //箱型20gp 40hq
+//                ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
+//                ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
+//                ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
+//                ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
+//                ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
+//                ->join('hl_port P2','P2.port_code = SB.sl_end','left')   //船运目的港口
+//                ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
+//                ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船公司合作的船舶
+//                ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
+//                ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
+//                ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
+//                ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
+//              //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
+//                ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
+//                ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
+//                ->field('OF.id ,OF.order_num,SA.salesname,'
+//                        . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
+//                        . "OF.cargo,CS.type,OF.container_sum, group_concat(distinct OS.track_num order by OS.id separator '_') track_num,"
+//                        . " group_concat(distinct OS.container_code order by OS.id separator '_') container_code, "
+//                        . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
+//                        . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
+//                        . 'LK2.company ')
+//                ->group('OF.order_num')->where('OS.state','in',$state)
+//                ->order('OF.id ,OF.mtime desc')->buildSql();
+//        // var_dump($fatherSql);exit;
+//        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
+//        return $list;
+    }
+    
+        
+    
+    public function updateStatefeiqi($father='',$son='') 
     { 
        
         // 取值（当前作用域）
@@ -495,118 +615,53 @@ class Order extends Model
         return $response;
     }
     
-    
-      //order_ship表 贮存对应的航线信息$loadPort,$departurePort
-    public function orderShip($order_num,$portArr,$portCodeArr) {
-        //查询是否已经录入航线信息了
-        $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
-   
-        if(empty($res1)){
-        $sqlArr=[]; 
-        $num =count($portArr)-1 ; //生成几行转车
-        for($i=0;$i<$num;$i++){
-            $field_status ='R_R_R_R_R_R_R';
-            //第一条字段状态前面几个可写
-            if($i==0){
-                $field_status ='W_W_W_W_W_R_R';
+        public function toBaogui111($data){
+       
+            // 启动事务
+        Db::startTrans();
+        $response= [];
+        try{
+            foreach ($data as $key=>$value){
+                //$key 是柜子编码, $value是订单编号
+                $res = Db::name('order_son')->where('container_code',$key)->where('order_num',$value)->setField('state',5);
+                //var_dump(Db::getLastSql());
+                $res ? $response['success'][]="柜子{$value}修改状态成功" :$response['fail'][]= "柜子{$value}修改状态失败";
             }
-            $sqlArr[$i]= array('order_id'=>$order_num,
-                'loadPort'=>$portCodeArr[$i],
-                'loadPortName'=>$portArr[$i],
-                'departurePort'=>$portCodeArr[$i+1], 
-                'departurePortName'=>$portArr[$i+1],
-                'sequence'=>($i+1),
-                'field_status'=>$field_status );
+        $order_num = array_values($data);
+        $container_codeArr =  array_keys($data);
+         //查询同一个订单下 箱子code是否都提交进来, 如果是就更新father的状态
+        $containerSql = Db::name('order_son')->where('order_num',$value)->column('container_code');
+        //如果$containerSql 和 提交进来$container_codeArr对比有差异 说明 还有部分没有提交
+        $diff_arr = array_diff($containerSql,$container_codeArr);
+        if(!empty($diff_arr)){
+            $father=['order_num'=>$order_num,'state'=>505,'action'=>'申报柜号完毕'];
+        }  else {
+            $father ='';
         }
-        $res = Db::name('order_ship')->insertAll($sqlArr);
-        return $res ? true :false ;
+        //修改order_state的状态
+        
+        $son =['order_num'=>$order_num,'container_code'=>$container_codeArr,'state'=>505,'action'=>'申报柜号完毕'];
+        $res =$this->updateState($father,$son) ;    
+        if(array_key_exists('fail',$res)){
+            $response['fail'][]= $res['fail'];
+        }else{
+            $response['success'][]= $res['success'];
         }
-        return $res1 ? true :false ;
-    }
-    // 读取order_ship的数据
-    public function orderShipInput($order_num) {
-        $res= Db::name('order_ship')->where('order_id',$order_num)->select();
-        foreach ($res as $key => $value) {
-            $res[$key]['field_status'] =  explode( '_',$value['field_status']);
-        }
-        return $res;
-    }  
-    // 添加order_ship的数据
-    public function toOrderShip($data,$order_id) {
-       // $this->_v($data);exit;
-        $response =[];
-        unset($data['order_id'],$data['loadPort'],$data['loadPortName'],$data['departurePort'],$data['departurePortName']); //删除固定值
-        $tmpArr=[]; $sqlArr=[]; //临时数组 ,最终数组
-        $dataArr = array_keys($data); 
-        $dataArr[]='mtime';
-        $num =count($data['ship_name']);// 几行记录
-        $mtime =  $mtime = date('Y-m-d h:i:s'); //修改时间
-        $orderStatus=[]; //贮存状态
-        for($i=0;$i<$num;$i++){
-            $tmpArr =  array_column($data, $i);
-            //排除空的
-            $arrNum =count(array_filter($tmpArr));
-            //$data["field_status"]的去除下划线_
-            $string = preg_replace('/_/','',$tmpArr[8]);
-            $W =strrpos($string,'W');
-          // var_dump(array_filter($tmpArr),$arrNum,$string, $W);exit;
-            $W= ($W!==false) ?$W :-1; //如果找不到W说明填满8个数据
-      
-            if(!(($W+3)== $arrNum||$arrNum==9)){ //判断传回来的数据的个数是否一致或者又不是填满状态
-                $response['fail'][]="回来的数据的个数是不一致又不是填满状态";
-                return $response;
-            }
             
-            switch ($W){
-            case 4:
-            $field_status = 'R_R_R_R_R_W_R';
-            $orderStatus[] =506;//录入配船信息完毕
-            break;
-            case 5:
-            $field_status = 'R_R_R_R_R_R_W';
-            $orderStatus[] =507;//录入到港信息完毕    
-            break;
-            case 6:
-            $field_status = 'R_R_R_R_R_R_R';//这一行数据填写完成同时 下一行前五个改成可写W
-            if(($i+1)<$num){
-                $goto =$i+1;
-                $orderStatus[] =515;//录入卸船信息完毕转下一行
-            }elseif (($i+1)==$num) { //最后一航走完
-                $orderStatus[] =800;//录入卸船信息完毕转代收钱     
-            } 
-            break;
-            case -1:
-            continue 2; //跳出此循环
-            default:
-            $response['fail'][]="找不到W，存在异常"; 
-            return $response;
-            }
-            $tmpArr[8] =$field_status;
-            $tmpArr[9] = $mtime;
-           //$this->_p($dataArr);  $this->_p($tmpArr);exit;
-            //过滤空的数据
-            $sqlArr[$i] = array_filter(array_combine($dataArr, $tmpArr));
+        if(array_key_exists('fail', $response)){
+            $msg = implode('', $response['fail']);
+            throw new \Exception($msg);
+        }  else {
+            Db::commit();
+        } 
+     
+        } catch (\Exception $e) {
+           // 回滚事务
+        Db::rollback();
+            $response['fail']= $e->getMessage();
         }
-        if(isset($goto)){
-            $sqlArr[$goto]=array('sequence'=>$goto+1,'field_status'=>'W_W_W_W_W_R_R');
-        }
-       
-        //最后的更新状态码数
-        $sequence =max(array_column($sqlArr,'sequence'));
-        var_dump(array_column($sqlArr,'sequence'),$orderStatus);
-        $orderStatusMax =  max($orderStatus)+ (($sequence-1)*10);
-          //更新数据库
-        //$this->_p($sqlArr);exit;
-        foreach($sqlArr as $key =>$sqldata){
-            $res =Db::name('order_ship')->where('order_id',$order_id)->where('sequence',$sqldata['sequence'])
-                    ->update($sqldata);
-            $res ? $response['success'][]="{$key}条记录修改状态成功" :$response['fail'][]= "{$key}条记录修改状态失败";
-        }
-        $response['orderStatus']=$orderStatusMax;$response['sequence']=$sequence;
-        return $response;
-       
+        
+        return  $response;
+     
     }
-    
-    
-    
 }
