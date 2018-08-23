@@ -1,4 +1,6 @@
-var list = []; //选中的运单号集装箱
+var list; //选中的运单号集装箱
+var j;
+var st;
 $('.ydh li a').click(function(e){//点击运单号显示隐藏集装箱
     $(this).next().toggle();
 });
@@ -13,27 +15,28 @@ $('#yd li>div').click(function(){
 })
 //确认
 $('#yd .yes').click(function(){
-    var nei = $('#yd li dl dd>div');
+    list = [];
+    j = 0;
+    st = '';
+    let nei = $(this).parent('div').siblings('.ydh').find('li dl dd>div');
     for (let i=0;i<nei.length; i++) {
         if($(nei[i]).hasClass('layui-form-checked')){
-            shu($(nei[i]).parents('dl').siblings('a').html(),$(nei[i]).find('span').html())
+            shu($(nei[i]).parents('dl').siblings('a').html(),$(nei[i]).find('span').html());
         }
     }
     if(list.length == 0){
         alert("请选择运单号集装箱");
     }
-    console.log(list)
+    console.log(list);//获取选中的数据
 });
-var st = '';
-var i = 0;
-function shu(a,b){
+function shu(a,b){  
     if(st == a){
-        list[i][st].push(b);
+        list[j][st].push(b);
     }else{
         if(st){
-            i++;
+            j++;
         }
-        list[i] = {[a]:[b]};
+        list[j] = {[a]:[b]};
     }
     st = a;
 }

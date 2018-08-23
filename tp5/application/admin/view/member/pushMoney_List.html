@@ -21,7 +21,11 @@
       line-height: 30px;
       padding: 0 10px;
     }
-    
+    #sales_id{
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
   </style>
   <body>
     <div class="x-nav">
@@ -62,21 +66,20 @@
             <{volist name="list" id ="value"}>
           <tr>
             <td class="yw">
-              <div class="layui-col-md6"><{$value.id}><{$value.sales_name}></div>
+              <div id="sales_id"><{$value.id}></div>
+              <div class="layui-col-md6"><{$value.sales_name}></div>
               <div class="layui-col-md6"><{$value.sales_code}></div>
               <select name="city" lay-verify="" lay-search>
                   <option value="<{$value.sales_code}>"><{$value.sales_name}></option>
-                  <option value="021">form</option>
-                  <option value="0571" selected>layim</option>
               </select>
             </td>
             <td>
-              <div class="layui-col-md6"><{$value.member_name}></div>
-              <div class="layui-col-md6"><{$value.member_code}></div>
+              <div name="member_name" class="layui-col-md6 inpu"><{$value.member_name}></div>
+              <div name="member_code" class="layui-col-md6 inpu"><{$value.member_code}></div>
             </td>
             <td><input type="text" name="title" value="<{$value.zhongliang}>"></td>
             <td><input type="text" name="title" value="<{$value.ningboyuanyang}>"></td>
-            <td><input type="text" name="title" value="<{$value.zhonghaiyang}>"></td>
+            <td><input type="text" name="age" value="<{$value.zhonghaiyang}>"></td>
             <td><input type="text" name="title" value="<{$value.zhongwaiyun}>"></td>
             <td><input type="text" name="title" value="<{$value.antong}>"></td>
             <td><input type="text" name="title" value="<{$value.zhongyuan}>"></td>
@@ -172,26 +175,48 @@
                   }
                 }
             })
-        }
-    $('tbody td input').css('border','0');
-    $('tbody td input').attr('readonly','readonly');
+        };
+
+    $('tbody td input').css('border','0');//默认input无边框
+    $('tbody td input').attr('readonly','readonly');//默认input只读
     $('.xiu_bao').click(function(){
-      let inp = $(this).parents('td').siblings('td').find('input');//点击当前ID的
+      let inp = $(this).parents('td').siblings('td').find('input');//点击当前ID的数据
       if ($(this).html() == '保存') {
         $(this).html('修改');
-        $(this).removeClass('layui-btn-warm');
-        inp.css('border','0');
-        inp.attr('readonly','readonly');
-        $(this).parents('td').siblings('.yw').find('.layui-unselect').hide();
-        
+        $(this).removeClass('layui-btn-warm');//改变按钮颜色
+        inp.css('border','0');//input去掉边框
+        inp.attr('readonly','readonly');//input只读
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').hide();//隐藏下拉框
+        let shuju = huo_input($(this),inp);//调用huo_input方法获取数据
+        console.log(shuju);//获取到的数据
       }else{
         $(this).html('保存');
-        $(this).addClass('layui-btn-warm');
-        inp.css('border','1px solid #e6e6e6');
-        inp.removeAttr('readonly');
-        $(this).parents('td').siblings('.yw').find('.layui-unselect').show();
+        $(this).addClass('layui-btn-warm');//改变按钮颜色
+        inp.css('border','1px solid #e6e6e6');//input增加边框
+        inp.removeAttr('readonly');//input可写
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').show();//显示下拉框
       }
     });
+
+    function huo_input(wo,inp){//数据处理
+      let huoqu = [];
+      let xuan= wo.parents('td').siblings('.yw').find('.layui-anim .layui-this');//获取下拉值
+      let sales_id = wo.parents('td').siblings('.yw').find('#sales_id').html();//获取ID
+      let member = wo.parents('td').siblings('td').find('.inpu');
+      inp.each(function(){
+        huoqu.push({[$(this).attr('name')]:$(this).val()});
+      });
+      member.each(function(){
+        huoqu.push({[$(this).attr('name')]:$(this).html()});
+      });
+      huoqu.splice(0,1);
+      huoqu.push({'sales_name':xuan.html()});
+      huoqu.push({'sales_code':xuan.attr('lay-value')});
+      huoqu.push({'sales_id':sales_id});
+      return huoqu;
+    }
+
+    
     </script>
  
   </body>
