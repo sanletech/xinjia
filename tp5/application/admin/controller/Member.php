@@ -66,28 +66,37 @@ class Member extends Base
         $this->view->assign('type',$type); 
         $user = new MemberM ;
         $list = $user->pushMoneyList($type,$account,5);
-      //  array_column($list, $list)
-        
-       // $this->_p($list);exit;
+        //业务的全程
+        $salesArr =Db::name('salesman')->field('sales_code,sales_name')->where('status','1')->select();
+//        $this->_p($salesArr);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
+        $this->view->assign('salesArr',$salesArr);
+        $this->view->assign('page',$page);
         $this->view->assign('page',$page);
         return $this->view->fetch('Member/pushMoney_List'); 
     }
     //业务对应客户的提成管理的修改
     public function  pushMoneyEdit(){
-        $id = input('get.id'); //客户id
-      //  查询对应业务 和利润设置价格
-        $list = Db::name('sales_member')->alias('SM')
-               ->join('hl_member_profit MP','MP.member_code = SM.member_code','left')
-               ->field('SM.sales_name,SM.sales_code,SM.member_name,MP.*')
-                ->where('MP.id',$id)
-               ->group('MP.member_code')->order('SM.id');
-        $salesList =Db::name('sales_member')->column('sales_code,sales_name');
-        $this->view->assign('list',$list);
-        $this->view->assign('salesList',$salesList);
-        return $this->view->fetch('Member/member_edit');
+        $data = $this->request->param();
+        $arr= [];
+        foreach ($data as $key => $value) {
+            $arr += $value;
+        }
+        //sales_code
+        $sales['sales_name'] = $arr['sales_name'];$sales['sales_code']= $arr['sales_code'];
+        $member_code= $arr['member_code'];$id = $arr['customer_id'];
+        $res =Db::name('sales_member')->where('member_code',$member_code)->update($sales);
+        $status[] =$res ? true :false;
+        unset($arr['sales_name'],$arr['sales_code'],$arr['member_code'],$arr['member_name'],$arr['customer_id']);
         
+        $res1 =Db::name('member_profit')->where('member_code',$member_code)->where('id',$id)->update($arr);
+           
+        $status[] =$res1 ? true :false;
+        if(array_key_exists('false', $status)){
+            return 0;
+        }
+        return 1;
     }
     
     //用户列表修改

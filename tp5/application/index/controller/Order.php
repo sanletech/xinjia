@@ -11,7 +11,6 @@ class Order extends Base
     //海运运价
     public function order_list()
     {
-   
         $start_add =$this->request->param('start_add');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
         $end_add =$this->request->param('end_add');
@@ -61,14 +60,16 @@ class Order extends Base
     }
     
     
-        //确认下单页面提交选择航线信息
-    public function book()
+    //确认下单页面提交选择航线信息
+    public function orderBook()
     {
         $data =$this->request->param();
-//        var_dump($data);exit;
-//        array(3) { ["sea_id"]=> string(1) "1" ["s_car_id"]=> string(14) "39$r_car_id=36" ["container_size"]=> string(1) "1" } 
+        $sea_id = $data['sea_id'];
+        $r_car_id = $data['r_car_id'];
+        $s_car_id = $data['s_car_id'];
+        $container_size = $data['container_size'];
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->book($data);
+        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size);
         $this->view->assign('list',$list);
       
         return $this->view->fetch('Order/place_order');
@@ -118,7 +119,7 @@ class Order extends Base
       public function order_data()
     {
         $data =$this->request->param();
-       // $this->_P($data);exit;
+//        $this->_P($data);exit;
        //线路价格sea_id r_id s_id  存进book_line表里
         $sea_id =$data['sea_id'];
         $rid =$data['rid'];

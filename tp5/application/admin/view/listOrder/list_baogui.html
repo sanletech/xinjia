@@ -25,7 +25,7 @@
                             </div>
                             <span class="top_ma">
                                 <span>业务员:
-                                    <{$vo.salesname}>
+                                    <{$vo.sales_name}>
                                 </span>
                                 <span>船期:
                                     <{$vo.shipping_date|date="y-m-d" ,###}>
@@ -42,7 +42,7 @@
                             <div class="cen_le layui-col-md12">
                                 <div class="layui-col-md3">
                                     <p>订单号:
-                                        <inpu type='text' id='order_num' value='<{$vo.order_num}>'>
+                                        <inpu type='text' name="order_num" id='order_num' value='<{$vo.order_num}>'>
                                             <{$vo.order_num}>
                                     </p>
                                     <p>船公司/船名/航次:
@@ -79,6 +79,7 @@
                         <div class="fo">
                             <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
                             <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+                            <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">拆分订单</a>
                             <a title="删除" onclick="" href="javascript:;">删除订单</a>
                         </div>
                     </div>
@@ -115,21 +116,27 @@
                 </div>
             </div>
         </div>
-     <script src="__STATIC__/js/order_list.js"></script>
+
         <script> 
-           
             layui.use('form', function () {
                 var form = layui.form;
                 form.render('checkbox');
             });
+        </script>
+
+         <script src="__STATIC__/js/order_list.js"></script>
+         <script>
             function toajax(data) {
+                console.log(data);
+                var jsonData =JSON.stringify(data)
                 var loading = layer.load(1);
                 post_adduser = true;
                 $.ajax({
                     type: 'POST',
                     url: "<{:url('admin/Order/toBaogui')}>",
-                    data: data,
-                    dataType: "json",
+                    data: jsonData,
+                    dataType:"JSON",
+                    contentType: "application/json",
                     success: function (status) {
                         if (status > 0) {
                             post_adduser = false;
@@ -155,10 +162,9 @@
                 });
                 return false;//只此一句
             }    
-            
-      
-        </script>
-      
+             
+         </script>
+
     </body>
 
     </html>

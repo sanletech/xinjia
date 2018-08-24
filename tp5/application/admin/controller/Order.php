@@ -226,8 +226,21 @@ class Order extends Base
     //处理报柜号
     public function toBaogui() {
         $data= $this->request->param();
+        $arr= [];
+        foreach ($data as $key => $value) {
+            $arr += $value;
+        }
+        $order_id = $arr['order_num'];
+        unset($arr['order_num']);
+        $container_arr =[];
+        foreach ($arr as  $v) {
+            foreach ($v as  $v1) {
+                $container_arr[] =$v1;
+            }
+        }
+       // $this->_p($container_arr);exit;
         $dataM = new OrderM;
-        $response  = $dataM->toBaogui($data);
+        $response  = $dataM->toBaogui($order_id,$container_arr);
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'报柜号成功','status'=>1];
         }else {
@@ -472,11 +485,11 @@ class Order extends Base
             $status =['msg'=>'收钱失败','status'=>0]; 
         } 
         return json($status);
-        
-  
+    }
+    //查看订单的信息
+    public function checkOrder() {
         
     }
-  
  
 
 

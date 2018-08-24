@@ -26,7 +26,7 @@ class Order extends Model
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
                 ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
                 ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->field('OF.id ,OF.order_num,MB.phone,MB.name membername,SA.salesname,'
+                ->field('OF.id ,OF.order_num,MB.phone,MB.name membername,SA.sales_name,'
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
                         . 'OF.cargo,SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime')
                 ->group('OF.id')->where('OF.state','eq',$state)
@@ -57,13 +57,13 @@ class Order extends Model
               //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
                 ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
                 ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
-                ->field('OF.id ,OF.order_num,SA.salesname,'
+                ->field('OF.id ,OF.order_num,SA.sales_name,'
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
                         . "OF.cargo,CS.type,OF.container_sum, group_concat(distinct OS.track_num order by OS.id separator '_') track_num,"
                         . " group_concat(distinct OS.container_code order by OS.id separator '_') container_code, "
-                        . 'SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
-                        . 'SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
-                        . 'LK2.company ')
+                        . ' SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
+                        . ' SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
+                        . ' LK2.company ')
                 ->group('OF.order_num')->where('OS.state','in',$state)
                 ->order('OF.id ,OF.mtime desc')->buildSql();
         // var_dump($fatherSql);exit;
@@ -225,8 +225,8 @@ class Order extends Model
      public function toBaogui($order_num,$container_codeArr){
        //修改order_state的状态
         $res = $this->updateState($order_num,$container_codeArr,'400','录完实际装货时间>待配船');
-        $res ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";   
-        return  $response;
+        var_dump($res);exit;
+        return $res;
      
     }
     
@@ -280,18 +280,20 @@ class Order extends Model
 //        $order_num= $son['order_num'];
 //        $container_code = $son['container_code'];
 //        $state = $son['state'];  $action = $son['action'];
-        $sqlContainer= Db::name('order_son')->where('order_num',$order_num)->column('container_code');
-        $miss = array_diff($sqlContaine,$container_code);
-        $more = array_diff($container_code,$sqlContaine);
+        $sqlContainer = Db::name('order_son')->where('order_num',$order_num)->column('container_code');
+  
+        $miss = array_diff($sqlContainer,$container_code);
+        $more = array_diff($container_code,$sqlContainer);
+       // var_dump($miss,$more);exit;
         if( $miss||$more){
             $str1= implode('_', $miss);
             $str2= implode('_', $more);
-            $miss ? $response['fail'][]= '柜子申报有缺失'.$str1 :'';
-            $more ? $response['fail'][]= '柜子申报有多报'.$str2 :'';
+            $miss ? $response['fail'][]= '柜子申报缺失柜号'.$str1 :'';
+            $more ? $response['fail'][]= '柜子申报多报柜号'.$str2 :'';
             return $response;
         }
         //检查同一个订单下的柜子状态是否一样的
-        $stateArr = Db::name('order_son')->where('container_code','in',$container)->where('order_num',$order_num)->column('state');
+        $stateArr = Db::name('order_son')->where('container_code','in',$container_code)->where('order_num',$order_num)->column('state');
         $stateCount = array_count_values($stateArr);
         list($key,$value) = each($stateCount);
         if($value !== count($stateArr)){
@@ -306,7 +308,7 @@ class Order extends Model
              // 启动事务
         Db::startTrans();
         try{
-        $res  = Db::name('order_son')->where('container_code','in',$container)->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action]);
+        $res  = Db::name('order_son')->where('container_code','in',$container_code)->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action]);
         $res2 = Db::name('order_father')->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action]);
         $res ? $response['success'][]="登记order_son{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_son{$order_num}的{$state}{$action}失败";
         $res2 ? $response['success'][]="登记order_fathe{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_fathe{$order_num}的{$state}{$action}失败";

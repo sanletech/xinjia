@@ -6,8 +6,8 @@ use think\Db;
 use think\Session;
 class Order extends Model
 {
-
-
+    
+   
     //前台页面展示门到门的价格表
     public function  price_sum($start_add='',$end_add='',$load_time=''){
         $pageParam  = ['query' =>[]]; //设置分页查询参数
@@ -59,31 +59,57 @@ class Order extends Model
        
     }
     //展示已经选择好的价格信息
-    public function book($data) {
-        $sea_id = $data['sea_id'];
-        $r_car_id = $data['r_car_id'];
-        $s_car_id = $data['s_car_id'];
-        $container_size = $data['container_size'];
-        
-        if($container_size ==1){
-            $price_size ='A.price_20GP';
-        }elseif($container_size ==2) {
-            $price_size ='A.price_40HQ';
+    public function orderBook($sea_id,$r_car_id,$s_car_id,$container_size) {
+        if(!($container_size =='20GP'||$container_size =='40HQ')){
+            return '参数错误';
         } 
-     //   var_dump($container_size);exit;
         $list= $this->price_sum();
-       
-       $res = Db::table($list.' A')
+        //航线信息
+        $res = Db::table($list.' A')
             ->where('sea_id',$sea_id)
             ->where('rid',$r_car_id)
             ->where('sid',$s_car_id)
-            ->field('A.sea_id, A.rid, A.sid, A.ship_short_name, A.shipping_date,'
+            ->field('A.sea_id, A.rid, A.sid,A.ship_id, A.ship_short_name, A.shipping_date,'
                 . 'A.boat_code, A.boat_name, A.sea_limitation,A.ETA,'
                 . 'A.sl_start,A.s_port_name,A.r_add ,A.sl_end,A.e_port_name,A.s_add ,'
                 . $price_size.' price' )->find();
-             // 将集装箱字的尺寸添加到数组中
-            $res['container_size']=$container_size;
-            //   var_dump($res);exit;
+        // 将集装箱字的尺寸添加到数组中
+        $res['container_size']=$container_size;
+        if(empty($res)){
+        //对客户的提成也加进去
+        $member_code =  $member_code =Session::get('member_code');
+        $ship_short_name =$res['ship_short_name'];
+        //查询members_porfit表里客户对应船公司的价格
+        $ship_name='';
+        switch ($ship_short_name){
+        case '中良':
+            $ship_name ='zhongliang';
+            break;
+        case '宁波远洋':
+            $ship_name ='ningboyuanyang';
+            break;
+        case '中海洋':
+            $ship_name ='zhonghaiyang';
+            break;
+        case '中外运':
+            $ship_name ='zhongwaiyun';
+            break;
+        case '安通':
+            $ship_name ='antong';
+            break;
+        case '中远':
+            $ship_name ='zhongyuan';
+            break;
+        case '中谷':
+            $ship_name ='zhonggu';
+            break;
+        default : 
+            $ship_name ='';
+            break;
+        }
+        $member_porfit =Db::name('member_profit')->where('member_code',$member_code)->value($ship_name)  ;
+                
+        }       
         return $res;            
     }
     
@@ -95,42 +121,41 @@ class Order extends Model
         $company = $data['company'];
         $add = $data['add'];
         $member_code =Session::get('member_code');
-        $time = time();
-    $sql= "insert into hl_linkman(name ,phone ,company ,address,mtime,member_code) "
-        . " values('$link_name','$phone','$company','$add','$time','$member_code')";
-
-    $res =  Db::execute($sql);
-    $res ?  $response['success'][]='添加linkman表': $response['fail'][]='添加linkman表';
-    return  $response;    
+        $time = date("Y-m-d H:i:s"); 
+        $sql= "insert into hl_linkman(name ,phone ,company ,address,mtime,member_code) "
+         . " values('$link_name','$phone','$company','$add','$time','$member_code')";
+        $res =  Db::execute($sql);
+        $res ?  $response['success'][]='添加linkman表': $response['fail'][]='添加linkman表';
+        return  $response;    
         
     }
     
     //处理客户提交的订单信息
     public function order_data($data,$book_line_id) {
         //添加数据到hl_order_fahter表里
-        $mtime =  time();
+        $mtime =  date("Y-m-d H:i:s"); 
         $member_code =Session::get('member_code');
        // var_dump($member_code);exit;
         $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
         //生成订单编号
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
-        $order_num =  $yCode[intval(date('Y')) - 2018] ."  ". strtoupper(dechex(date('m')))."  ".date('d')."  ".substr(time(), -5) ."  ".substr(microtime(), 2, 5) ."  ".sprintf('%02d', rand(0, 99));
+        $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
        // var_dump($order_num);exit;
         $cargo = $data['cargo'];
         $container_size = $data['container_size'];
-        $container_num = $data['container_num'];
+        $container_sum = $data['container_sum'];
         $weight = $data['weight'];
         $container_type = $data['container_type'];
 //        $sea_id=$data['sea_id']; $rid =$data['rid']; $sid=$data['sid'];
 //        $book_line = $this->book_line($sea_id, $rid, $sid);
         $cargo_cost= $data['cargo_cost'];
         $comment =$data['comment'];
-        $state = 1;
+        $state = 0;
         $sql ="insert into hl_order_father (order_num,cargo,container_size,"
-                . "container_num,weight,cargo_cost,container_type_id"
+                . "container_sum,weight,cargo_cost,container_type_id"
                 . ",comment,mtime,add_id ,book_line_id,member_code,state) "
                 . "  values('$order_num','$cargo','$container_size',"
-                . "'$container_num','$weight','$cargo_cost','$container_type',"
+                . "'$container_sum','$weight','$cargo_cost','$container_type',"
                 . "'$comment','$mtime','$add_id' ,'$book_line_id','$member_code','$state')";
         
         

@@ -1,4 +1,32 @@
 <{include file='./public/header'/}>
+  <style>
+    .layui-table td{
+      text-align: center;
+      position: relative;
+    }
+    .layui-table td input,.yw>.layui-unselect{
+      position: absolute;
+      width: 100%;
+      height: 98%;
+      top: 0;
+      left: 0;
+    }
+    .yw>.layui-unselect{
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    .xiu_bao{
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+    }
+    #customer_id{
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+  </style>
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -19,7 +47,7 @@
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
-      <table class="layui-table">
+      <table class="layui-table layui-row layui-form">
         <thead>
           <tr>
             <th>业务</th>
@@ -37,19 +65,32 @@
         <tbody >
             <{volist name="list" id ="value"}>
           <tr>
-            <td><{$value.sales_name}>　<{$value.sales_code}></td>
-            <td><{$value.member_name}>　<{$value.member_code}></td>
-            <td><{$value.zhongliang}></td>
-            <td><{$value.ningboyuanyang}></td>
-            <td><{$value.zhonghaiyang}></td>
-            <td><{$value.zhongwaiyun}></td>
-            <td><{$value.antong}></td>
-            <td><{$value.zhongyuan}></td>
-            <td><{$value.zhonggu}></td>
+            <td class="yw">
+              <div id="customer_id"><{$value.id}></div>
+              <div class="layui-col-md6"><{$value.sales_name}></div>
+              <div class="layui-col-md6"><{$value.sales_code}></div>
+              <select name="city" lay-verify="" lay-search>
+                  <{volist name ="salesArr" id ="va"}>
+                  <option value="<{$va.sales_code}>"><{$va.sales_name}></option>
+                  <{/volist}>
+              </select>
+            </td>
+            <td>
+              <div name="member_name" class="layui-col-md6 inpu"><{$value.member_name}></div>
+              <div name="member_code" class="layui-col-md6 inpu"><{$value.member_code}></div>
+            </td>
+            <td><input type="text" name="zhongliang" value="<{$value.zhongliang}>"></td>
+            <td><input type="text" name="ningboyuanyang" value="<{$value.ningboyuanyang}>"></td>
+            <td><input type="text" name="zhonghaiyang" value="<{$value.zhonghaiyang}>"></td>
+            <td><input type="text" name="zhongwaiyun" value="<{$value.zhongwaiyun}>"></td>
+            <td><input type="text" name="antong" value="<{$value.antong}>"></td>
+            <td><input type="text" name="zhongyuan" value="<{$value.zhongyuan}>"></td>
+            <td><input type="text" name="zhonggu" value="<{$value.zhonggu}>"></td>
             <td class="td-manage">
-                <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/pushMoneyEdit")}>?id=<{$value.id}>',700,550)" href="javascript:;">
+                <!-- <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/pushMoneyEdit")}>?id=<{$value.id}>',700,550)" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
-                </a>
+                </a> -->
+                <button class="xiu_bao layui-btn layui-btn-xs">修改</button>
             </td>
           </tr>
           <{/volist}>
@@ -122,23 +163,69 @@
       }
 
 
-       function toajax (dataArray){
+       function toajax (data){
+            var dataArray =JSON.stringify(data);
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<{:url('admin/member/pushMoneyEdit')}>",    
                 data:dataArray,
-                dataType:"json",
+                dataType:"JSON",
+                contentType: "application/json",
                 success:function(data){
-                    if(data.status==1){
-                      return 1;
+                    if(data==1){
+                        alert('修改成功');
+                        location.assign(location);
                     }else{
-                        return 0 ;
+                        alert('修改失败');
+                        location.assign(location);
                   }
                 }
             })
-        }
+        };
+
+    $('tbody td input').css('border','0');//默认input无边框
+    $('tbody td input').attr('readonly','readonly');//默认input只读
+    $('.xiu_bao').click(function(){
+      let inp = $(this).parents('td').siblings('td').find('input');//点击当前ID的数据
+      if ($(this).html() == '保存') {
+        $(this).html('修改');
+        $(this).removeClass('layui-btn-warm');//改变按钮颜色
+        inp.css('border','0');//input去掉边框
+        inp.attr('readonly','readonly');//input只读
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').hide();//隐藏下拉框
+        let shuju = huo_input($(this),inp);//调用huo_input方法获取数据
+        toajax(shuju);//获取到的数据
+        
+      }else{
+        $(this).html('保存');
+        $(this).addClass('layui-btn-warm');//改变按钮颜色
+        inp.css('border','1px solid #e6e6e6');//input增加边框
+        inp.removeAttr('readonly');//input可写
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').show();//显示下拉框
+      }
+    });
+
+    function huo_input(wo,inp){//数据处理
+      let huoqu = [];
+      let xuan= wo.parents('td').siblings('.yw').find('.layui-anim .layui-this');//获取下拉值
+      let sales_id = wo.parents('td').siblings('.yw').find('#customer_id').html();//获取ID
+      let member = wo.parents('td').siblings('td').find('.inpu');
+      inp.each(function(){
+        huoqu.push({[$(this).attr('name')]:$(this).val()});
+      });
+      member.each(function(){
+        huoqu.push({[$(this).attr('name')]:$(this).html()});
+      });
+      huoqu.splice(0,1);
+      huoqu.push({'sales_name':xuan.html()});
+      huoqu.push({'sales_code':xuan.attr('lay-value')});
+      huoqu.push({'customer_id':sales_id});
+      return huoqu;
+    }
+
+    
     </script>
- 
+    
   </body>
 
 </html>
