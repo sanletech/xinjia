@@ -53,13 +53,7 @@
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
-            <span>
-                <{switch name="list.container_size"}>
-                <{case value="1"}>20GP<{/case}>
-                <{case value="2"}>40HQ<{/case}>
-                <{default /}>未知集装箱型号
-                <{/switch}>
-            </span>
+            <span><{$list.container_size}> </span>
               <p>￥
                 <strong class="money"><{$list.price}></strong>
               </p>
@@ -207,9 +201,7 @@
               <div class="layui-col-xs4">
                 <span>*&nbsp;</span>集装箱规格：</div>
               <div class="layui-col-xs6">
-                <input type="text" name="container" value="<?php if($list['container_size'] ==1){
-                       echo '20GP';  }else{echo '40HQ';} ?>" readonly="readonly">
-                <input type="hidden" name="container_size" value="<{$list.container_size}>">
+                  <input type="text" name="container" value="<{$list.container_size}>" readonly="readonly">
               </div>
             </div>
           </div>
@@ -282,6 +274,7 @@
         </div>
         <!-- 总运费 -->
         <div class="sun">
+            <span>客户提成：<strong id ='member_porfit'>￥<{$list.member_porfit}>元</strong></span>
             <span>总运费：<strong id ='price_sum'>￥0000.00元</strong></span>
         </div>
 

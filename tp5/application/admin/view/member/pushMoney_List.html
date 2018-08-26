@@ -52,13 +52,9 @@
           <tr>
             <th>业务</th>
             <th>客户</th>
-            <th>中良</th>
-            <th>宁波海洋</th>
-            <th>中海洋</th>
-            <th>中外运</th>
-            <th>安通</th>
-            <th>中远</th>
-            <th>中谷</th>
+            <{volist name="ship_nameArr" id="vo"}>
+            <th><{$vo}></th>
+            <{/volist}>
             <th>操作</th>
           </tr>
         </thead>
@@ -79,13 +75,13 @@
               <div name="member_name" class="layui-col-md6 inpu"><{$value.member_name}></div>
               <div name="member_code" class="layui-col-md6 inpu"><{$value.member_code}></div>
             </td>
-            <td><input type="text" name="zhongliang" value="<{$value.zhongliang}>"></td>
-            <td><input type="text" name="ningboyuanyang" value="<{$value.ningboyuanyang}>"></td>
-            <td><input type="text" name="zhonghaiyang" value="<{$value.zhonghaiyang}>"></td>
-            <td><input type="text" name="zhongwaiyun" value="<{$value.zhongwaiyun}>"></td>
-            <td><input type="text" name="antong" value="<{$value.antong}>"></td>
-            <td><input type="text" name="zhongyuan" value="<{$value.zhongyuan}>"></td>
-            <td><input type="text" name="zhonggu" value="<{$value.zhonggu}>"></td>
+            <{volist name="$value['money']" id ="v" key='k'}>
+            <td><input type="text" name="money" value="<{$v}>"></td>
+            <{/volist}>
+            <{volist name="$value['ship_id']" id ="v1"   key='k1'}>
+            <td style="display:none"><input type="hidden" name="ship_id" value="<{$v1}>"></td>
+            <{/volist}>
+         
             <td class="td-manage">
                 <!-- <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/pushMoneyEdit")}>?id=<{$value.id}>',700,550)" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
@@ -98,7 +94,7 @@
       </table>
         <div class="page">
             <div>
-                <{$page}>
+         
             </div>
         </div>
 

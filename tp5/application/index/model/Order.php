@@ -72,44 +72,23 @@ class Order extends Model
             ->field('A.sea_id, A.rid, A.sid,A.ship_id, A.ship_short_name, A.shipping_date,'
                 . 'A.boat_code, A.boat_name, A.sea_limitation,A.ETA,'
                 . 'A.sl_start,A.s_port_name,A.r_add ,A.sl_end,A.e_port_name,A.s_add ,'
-                . $price_size.' price' )->find();
+                . 'price_'.$container_size.' as price' )->find();
         // 将集装箱字的尺寸添加到数组中
         $res['container_size']=$container_size;
-        if(empty($res)){
+        if(!empty($res)){
         //对客户的提成也加进去
         $member_code =  $member_code =Session::get('member_code');
-        $ship_short_name =$res['ship_short_name'];
+        $ship_id =$res['ship_id'];
         //查询members_porfit表里客户对应船公司的价格
-        $ship_name='';
-        switch ($ship_short_name){
-        case '中良':
-            $ship_name ='zhongliang';
-            break;
-        case '宁波远洋':
-            $ship_name ='ningboyuanyang';
-            break;
-        case '中海洋':
-            $ship_name ='zhonghaiyang';
-            break;
-        case '中外运':
-            $ship_name ='zhongwaiyun';
-            break;
-        case '安通':
-            $ship_name ='antong';
-            break;
-        case '中远':
-            $ship_name ='zhongyuan';
-            break;
-        case '中谷':
-            $ship_name ='zhonggu';
-            break;
-        default : 
-            $ship_name ='';
-            break;
-        }
-        $member_porfit =Db::name('member_profit')->where('member_code',$member_code)->value($ship_name)  ;
-                
-        }       
+      
+        $member_porfit =Db::name('member_profit')
+                ->where('member_code',$member_code)
+                ->where('ship_id',$ship_id)
+                ->value('money');
+        $res['member_porfit']=$member_porfit; ;
+        }    
+      
+       // $this->_p($res);exit;
         return $res;            
     }
     
@@ -142,7 +121,7 @@ class Order extends Model
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
        // var_dump($order_num);exit;
         $cargo = $data['cargo'];
-        $container_size = $data['container_size'];
+        $container_size = $data['container'];
         $container_sum = $data['container_sum'];
         $weight = $data['weight'];
         $container_type = $data['container_type'];
@@ -217,8 +196,8 @@ class Order extends Model
     
     //保存发票信息
     public function invoice($data) {
-        $mtime =time();
-        $title = $data['title'];
+        $mtime = date('y-m-d h:i:s');
+        $title = $data['invoice_title'];
         $taxpayer_id =$data['taxpayer_id'];
         $registered_address =$data['registered_address'];
         $registered_phone = $data['registered_phone'];

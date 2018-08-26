@@ -29,7 +29,7 @@ class Order extends Base
     { 
        if (request()->isAjax()){
            $idArr =$this->request->param();
-           $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>100,'action'=>'通过审核>待订舱']);
+           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>100,'action'=>'通过审核>待订舱']);
            return json($res ? 1 : 0) ;
        }
     }
@@ -125,7 +125,7 @@ class Order extends Base
         $list = $dataM->listOrder($pages=5,$state='200');
         $page =$list->render();
         $count =  count($list);
-       // $this->_p($list);exit;
+//       $this->_p($list);exit;
         $this->view->assign('count_book',$count);
         $this->view->assign('list_book',$list);
         $this->view->assign('page_book',$page);
@@ -156,10 +156,11 @@ class Order extends Base
       //$this->_v($data);exit;
         $Order= new OrderM;
         $response = $Order->tosendCar($data);
+       // var_dump($response);exit;
         if(!array_key_exists('fail', $response)){
-            $status =['msg'=>'录入运单号成功','status'=>1];
+            $status =['msg'=>'录入派车信息成功','status'=>1];
         }else {
-            $status =['msg'=>'录入运单号失败','status'=>0]; 
+            $status =['msg'=>'录入派车信息失败','status'=>0]; 
         } 
         return json($status);
     }
@@ -183,8 +184,8 @@ class Order extends Base
     {   
         $order_num =$this->request->get('order_num');
         //根据定单号展示柜号
-        $data = Db::name('order_son')->where("order_num = '$order_num'")->column('track_num','container_code');
-      // $this->_v($data);exit;
+        $data = Db::name('order_son')->where("order_num = '$order_num'")->field('track_num,container_code')->select();
+//        $this->_v($data);exit;
         $this->assign([
         'order_num'  => $order_num,
         'data' => $data
@@ -214,7 +215,7 @@ class Order extends Base
     {   
         $dataM = new OrderM;
         $list = $dataM->listOrder($pages=5,$state='400');
-//    $this->_p($list);exit;
+       // $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count_book',$count);
