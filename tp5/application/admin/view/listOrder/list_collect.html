@@ -1,153 +1,160 @@
 <{include file='./public/header' /}>
-<body>    
-<link rel="stylesheet" href="__STATIC__/css/order_list.css">
-<!-- 待报柜号 -->
-<div class="layui-tab-item layui-show">
-<xblock>
-    <button class="layui-btn layui-btn-danger" onclick="delAll()">
-    <i class="layui-icon"></i>批量删除</button>
-    <span class="x-right" style="line-height:40px">总共有
-    <{$count_book}>条记录</span>
-</xblock>
-    <!-- 内容 -->
-    <form id="cargoPlanForm">
-<div class="order_list layui-row">
-    <{volist name="list_book" id="vo" }>  
+
+<body>
+    <link rel="stylesheet" href="__STATIC__/css/order_list.css">
+    <script src="__STATIC__/lib/layui/layui.all.js"></script>
+    <!-- 待报柜号 -->
+    <div class="layui-tab-item layui-show">
+        <xblock>
+            <button class="layui-btn layui-btn-danger" onclick="delAll()">
+                <i class="layui-icon"></i>批量删除</button>
+            <span class="x-right" style="line-height:40px">总共有
+                <{$count}>条记录</span>
+        </xblock>
+        <!-- 内容 -->
+
+    <div class="order_list layui-row">
+    <{volist name="list_book" id="vo" }>
     <div class="nei layui-col-md12">
-        <div class="top">
-            <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
-                <i class="layui-icon">&#xe605;</i>
-                <span>创建时间: <{$vo.mtime|date="y-m-d",###}></span>
-            </div>
-            <span class="top_ma">
-                <span>业务员: <{$vo.sales_name}></span>
-                <span>船期: <{$vo.shipping_date|date="y-m-d",###}></span>
-                <span>海上时效: <{$vo.sea_limitation}></span>
-                <span>截单时间: <{$vo.cutoff_date|date="y-m-d",###}></span>
+    <div class="top">
+        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
+            <i class="layui-icon">&#xe605;</i>
+            <span>创建时间:
+                <{$vo.mtime}>
             </span>
         </div>
-        <div class="cen">
-            <div class="cen_le layui-col-md12">
-            <div class="layui-col-md3">
-                <p>订单号:<inpu type='text' id ='order_num' value='<{$vo.order_num}>'><{$vo.order_num}></p>
-                <p>船公司/船名/航次: <{$vo.ship_short_name}> <{$vo.boat_name}>/<{$vo.boat_code}></p>
+        <span class="top_ma">
+            <span>业务员:
+                <{$vo.sales_name}>
+            </span>
+            <span>船期:
+                <{$vo.shipping_date|date="y-m-d" ,###}>
+            </span>
+            <span>海上时效:
+                <{$vo.sea_limitation}>
+            </span>
+            <span>截单时间:
+                <{$vo.cutoff_date|date="y-m-d" ,###}>
+            </span>
+        </span>
+    </div>
+    <div class="cen">
+    <div class="cen_le layui-col-md12">
+    <div class="layui-col-md3">
+    <p>订单号:
+        <inpu type='text' name="order_num" id='order_num' value='<{$vo.order_num}>'>
+        <{$vo.order_num}>
+    </p>
+    <p>船公司/船名/航次:
+    <{$vo.ship_short_name}>
+    <{$vo.boat_name}>/
+    <{$vo.boat_code}>
+    </p>
+    </div>
+    <div class="layui-col-md3">
+        <p>收货人:
+            <{$vo.company}>
+        </p>
+        <p>货名:
+            <{$vo.cargo}>
+        </p>
+    </div>
+    <div class="layui-col-md3">
+        <p>航线:
+            <{$vo.s_port_name}>-
+                <{$vo.e_port_name}>
+        </p>
+        <p>箱型*箱量:
+            <{$vo.type}>*
+                <{$vo.container_sum}>
+        </p>
+    </div>
+    <div class="layui-col-md2">
+        <p class="se">状态：<{$status}></p>
+        <p class="se">天数:
+            <?php $timediff =time()-$vo['mtime']; $days = intval($timediff/86400); echo $days;?>天</p>
+    </div>
+<div class="layui-col-md1">
+<p class="a_niu">
+    <a title="删除" onclick="order_pass(this,'<{$vo.order_num}>')" href="javascript:;"></a>
+</p>
+<p class="a_niu">
+    <a class="qu" href="">取消</a>
+</p>
+</div>
             </div>
-            <div class="layui-col-md3">
-                <p>收货人: <{$vo.company}></p>
-                <p>货名: <{$vo.cargo}></p>
-            </div>
-            <div class="layui-col-md3">
-                <p>航线: <{$vo.s_port_name}>-<{$vo.e_port_name}></p>
-                <p>箱型*箱量: <{$vo.type}>*<{$vo.container_sum}></p>
-            </div>
-            <div class="layui-col-md2">
-                <p class="se">状态：待报柜</p>
-                <p class="se">天数: <?php $timediff =time()-$vo['mtime']; $days = intval($timediff/86400); echo $days;?>天</p>
-            </div>
-            <div class="layui-col-md1">
-                <p class="a_niu">
-                <li >运单号</li>
-                
-                <li ><input type="text" readOnly="ture" name="track_num" value="<{$vo.track_num}>"></li>
-                    <ul class="fruit">
-                    <?php  $guiziArr =explode('_', $vo['container_code']) ;
-                            foreach( $guiziArr as $key=>$value){
-                             echo '<li><input type="text" name ="container_code" value="'.$value.'"/>'.$value.'</li>';
-                            }
-                    ?>
-                    </ul>
-               
-                    <button class="chooseFruit" type="button">确认</button>
-                    <!--此处复选框 样式需要修改-->
-<!--                    <a title="录入派车信息" onclick="x_admin_show('',600,400)" href="javascript:;">确认</a>-->
-</form>
-                </p>
-                <p class="a_niu">
-                    <a class="qu" href="">取消</a>
-                </p>
-            </div>
-          </div>
         </div>
         <div class="fo">
             <a title="查看" onclick="x_admin_show('查看','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">查看订单</a>
             <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">修改订单</a>
+            <a title="修改" onclick="x_admin_show('修改','<{:url('Price/route_edit')}>',700,500)" href="javascript:;">拆分订单</a>
             <a title="删除" onclick="" href="javascript:;">删除订单</a>
         </div>
     </div>
-    <{/volist}>
 
-</div>
-    <div class="page">
-        <div>
-            <{$page_book}>
+            <{/volist}>
+
         </div>
+
+        <div class="text-center" id="pages"></div>
     </div>
-</div>
 
+    <script> 
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render('checkbox');
+        });
+    </script>
 
-
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-layui.use(['element', 'layer'], function(){
-  var element = layui.element;
-  var layer = layui.layer;
-  
-  //监听折叠
-  element.on('collapse(test)', function(data){
-    layer.msg('展开状态：'+ data.show);
-  });
-});
-
-</script>
-<script>
-
-//<!--获取选中复选框的值-->
-            $(".chooseFruit").click(function(){
-               var obj =document.getElementsByName("container_code");
-               var obj2 =document.getElementById("order_num");
-               var order_num  = obj2.innerHTML;
-                 check_val = {};
-                 for(k in obj){
-                    if(obj[k].checked){
-                        check_val[obj[k].value] = order_num;
-                    }   
-                }  
-                toajax(check_val);
+    <script>
+        
+              /*用户-删除*/
+    function order_pass(obj,id){
+        layer.confirm('确认已收款了么？',function(index){
+            //发异步删除数据
+            toajax('{order_num:'+id+'}');
+            layer.msg('已删除!',{icon:1,time:1000});
+        });
+    }
+    function toajax(data) {
+        console.log(data);
+        $.ajax({
+            type: 'POST',
+            url: "<{$ajaxurl}>",
+            data: data,
+            dataType:"JSON",
+             contentType: "application/json",
+            success: function (data) {
+            }
             });
-            
-        function toajax(data){
-            var loading = layer.load(1);
-            post_adduser = true;    
-                $.ajax({
-                    type:'POST',
-                    url:"<{:url($url)}>",    
-                    data: $("#cargoPlanForm").serialize(),
-                    dataType:"json",
-                    success:function(status){
-                        if(status>0){
-                            post_adduser = false;
-                            layer.close(loading);
-                            layer.msg("添加成功", { icon: 6, time: 1000 }, function () {
-                            // 获得frame索引
-                            parent.location.reload();
-                            var index = parent.layer.getFrameIndex(window.name);
-                            //关闭当前frame
-                            parent.layer.close(index);
-                        });
-                        }else{
-                            post_adduser = false;
-                            layer.close(loading);
-                            layer.msg("添加失败", { icon: 5 });
-                            }
-                            },
-                        error: function () {
-                                post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
-                                layer.close(loading);
-                                layer.msg("添加失败", { icon: 5 });
-                            }
-                });
-                return false;//只此一句
-            }    
+        }    
+        
+        
+    layui.use('laypage', function () {
+      var laypage = layui.laypage;
+      //执行一个laypage实例        
+      laypage.render({
+        elem: 'pages',
+        limit:"<{$limit}>",
+        limits: [5, 10, 15],
+        count:"<{$count}>",
+        layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+        curr:"<{$page}>",
+        theme: '#c00',
+        jump: function (obj, first) {
+          //obj包含了当前分页的所有参数，比如：
+          //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+          //console.log(obj.limit); //得到每页显示的条数
+          //首次不执行
+          if (!first) {
+            //do something
+            window.location.href = "<{$page_url}>?page=" + obj.curr + '&limit=' + obj.limit;
+          }
+        }
+      });
+    })     
+
+
 </script>
 </body>
 </html>

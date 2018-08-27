@@ -37,10 +37,10 @@ class Order extends Model
     }
     
         //订单页面list 
-    public function listOrder($pages=5,$state='200') {
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
+    public function listOrder($tol,$limit,$state='100') {
+        
         //查询客户的订单编号order_father 查询对应的订单信息
-        $fatherSql= Db::name('order_father')->alias('OF')
+        $listSql = Db::name('order_father')->alias('OF')
                 ->join('hl_container_size CS','CS.id =OF.container_size','left')  //箱型20gp 40hq
                 ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
                 ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
@@ -65,10 +65,14 @@ class Order extends Model
                         . ' SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . ' LK2.company ')
                 ->group('OF.order_num')->where('OF.state','in',$state)
-                ->order('OF.id ,OF.mtime desc')->buildSql();
-        // var_dump($fatherSql);exit;
-        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
-        return $list;
+                ->buildSql();
+        //获取总页数
+        $count =  Db::table($listSql.' A')->count(); 
+        // 查询出当前页数显示的数据
+        $list = Db::table($listSql.' B')->order('B.id ,B.mtime desc')->limit($tol,$limit)->select();
+       // $this->_p($list);exit;
+      //  var_dump(Db::getLastSql());exit;
+        return array($list,$count);
     }
     
 
@@ -217,14 +221,14 @@ class Order extends Model
         return  $response;
             
     }
-     //处理报柜号 接受订单好和柜号
-     public function toBaogui($order_num,$container_codeArr){
-       //修改order_state的状态
-        $res = $this->updateState($order_num,$container_codeArr,'400','录完实际装货时间>待配船');
-        var_dump($res);exit;
-        return $res;
-     
-    }
+//     //处理报柜号 接受订单好和柜号
+//     public function toBaogui($order_num,$container_codeArr){
+//       //修改order_state的状态
+//        $res = $this->updateState($order_num,$container_codeArr,'505','录完实际装货时间>待配船');
+//        
+//        return $res;
+//     
+//    }
     
     
 

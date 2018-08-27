@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : root
+Source Server         : localhost_3306
 Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-08-26 23:46:34
+Date: 2018-08-27 19:34:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4496,7 +4496,7 @@ INSERT INTO `hl_member` VALUES ('10', '客户哥哥个', 'e10adc3949ba59abbe56e0
 INSERT INTO `hl_member` VALUES ('11', '客户哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00', '0000-00-00', '10086', 'aaa@qq.com', '0', null, '0000-00-00', '2', '新闻公司', 'kehu008', 'company');
 INSERT INTO `hl_member` VALUES ('12', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'cshengle', 'company');
 INSERT INTO `hl_member` VALUES ('13', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'cshengle1', 'company');
-INSERT INTO `hl_member` VALUES ('14', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao', 'company');
+INSERT INTO `hl_member` VALUES ('14', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company');
 INSERT INTO `hl_member` VALUES ('15', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao11', 'company');
 INSERT INTO `hl_member` VALUES ('16', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao122', 'company');
 INSERT INTO `hl_member` VALUES ('17', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao4', 'company');
@@ -4680,15 +4680,15 @@ CREATE TABLE `hl_order_father` (
 -- ----------------------------
 -- Records of hl_order_father
 -- ----------------------------
-INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '1', '2', '2000', '8848', '5', '这个是针对订单具体信息', '0000-00-00 00:00:00', '2', '1', 'kehu001', null, '800', null);
-INSERT INTO `hl_order_father` VALUES ('2', '201806251705', '牲畜', '2', '1', '8000', '54321', '2', '这是一个订单下另一种货物', '0000-00-00 00:00:00', '1', '2', 'kehu002', null, '400', null);
-INSERT INTO `hl_order_father` VALUES ('3', '1531107265kehu001555', '钢材', '1', '2', '410', '142', '1', '阿萨德发送到发送', '0000-00-00 00:00:00', '1', '5', 'kehu001', null, '400', null);
-INSERT INTO `hl_order_father` VALUES ('4', '1531118326kehu001205', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '0000-00-00 00:00:00', '1', '1', 'kehu001', null, '300', null);
-INSERT INTO `hl_order_father` VALUES ('5', '1531118344kehu001875', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '0000-00-00 00:00:00', '1', '1', 'kehu001', null, '100', null);
-INSERT INTO `hl_order_father` VALUES ('6', '1531119660kehu001132', '黄金沙子', '1', '1', '100', '1000', '1', '昂贵物品丢失不赔', '0000-00-00 00:00:00', '1', '1', 'kehu001', null, '100', null);
-INSERT INTO `hl_order_father` VALUES ('7', '1531190282kehu001737', '饮料', '1', '3', '100', '100', '2', '发货所得税法撒旦法', '0000-00-00 00:00:00', '1', '3', 'kehu001', null, '800', null);
+INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '1', '2', '2000', '8848', '5', '这个是针对订单具体信息', '2018-08-22 11:30:19', '2', '1', 'kehu001', null, '800', null);
+INSERT INTO `hl_order_father` VALUES ('2', '201806251705', '牲畜', '2', '1', '8000', '54321', '2', '这是一个订单下另一种货物', '2018-08-31 11:30:26', '1', '2', 'kehu002', null, '400', null);
+INSERT INTO `hl_order_father` VALUES ('3', '1531107265kehu001555', '钢材', '1', '2', '410', '142', '1', '阿萨德发送到发送', '2018-08-27 11:30:30', '1', '5', 'kehu001', null, '400', null);
+INSERT INTO `hl_order_father` VALUES ('4', '1531118326kehu001205', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '2018-08-15 11:30:34', '1', '1', 'kehu001', null, '300', null);
+INSERT INTO `hl_order_father` VALUES ('5', '1531118344kehu001875', '木头', '1', '3', '100', '50', '1', '卖家必须要发货速度块', '2018-08-27 11:30:30', '1', '1', 'kehu001', null, '100', null);
+INSERT INTO `hl_order_father` VALUES ('6', '1531119660kehu001132', '黄金沙子', '1', '1', '100', '1000', '1', '昂贵物品丢失不赔', '2018-08-27 11:30:30', '1', '1', 'kehu001', null, '100', null);
+INSERT INTO `hl_order_father` VALUES ('7', '1531190282kehu001737', '饮料', '1', '3', '100', '100', '2', '发货所得税法撒旦法', '2018-08-16 11:30:41', '1', '3', 'kehu001', null, '800', null);
 INSERT INTO `hl_order_father` VALUES ('8', 'A824106096329230', 'aaa', '1', '7', '600', '100', '2', '订单备注 ,要注意冷冻保存', '2018-05-05 00:00:00', '1', '4', 'kehu001', null, '0', null);
-INSERT INTO `hl_order_father` VALUES ('9', 'A826921016606912', '猪肉', '40HQ', '3', '100', '100', '1', '测试订单测试订单', '2018-08-26 11:45:08', '1', '1', 'taobao6', null, '400', '录完实际装货时间>待配船');
+INSERT INTO `hl_order_father` VALUES ('9', 'A826921016606912', '猪肉', '40HQ', '3', '100', '100', '1', '测试订单测试订单', '2018-08-27 01:26:04', '1', '1', 'taobao6', null, '800', '录入卸船完毕1');
 INSERT INTO `hl_order_father` VALUES ('10', 'A826944504106855', '猪肉', '40HQ', '3', '100', '100', '1', '测试订单测试订单', '2018-08-26 22:40:50', '1', '1', 'taobao6', null, '0', null);
 
 -- ----------------------------
@@ -4761,7 +4761,7 @@ CREATE TABLE `hl_order_ship` (
   `mtime` varchar(11) DEFAULT NULL COMMENT '最后一次修改时间',
   `sequence` int(4) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_ship
@@ -4772,6 +4772,7 @@ INSERT INTO `hl_order_ship` VALUES ('3', '1531107265kehu001555', null, null, nul
 INSERT INTO `hl_order_ship` VALUES ('4', '1531107265kehu001555', null, null, null, '里程碑', '110100007', null, null, '擎天柱', '110100002', null, null, 'R_R_R_R_R_R_R', null, '4');
 INSERT INTO `hl_order_ship` VALUES ('5', '201806251702', 'aaa', 'dfas5', '45as4df5a', '空城计', '110100003', '2018-08-20 09:43:27', '2018-08-20 09:43:28', '擎天柱', '110100002', '2018-08-20 09:44:02', '2018-08-20 00:00:00', 'R_R_R_R_R_R_R', '2018-08-20 ', '1');
 INSERT INTO `hl_order_ship` VALUES ('6', '1531190282kehu001737', 'AAA', 'ASASADA', 'AAA', '空城计', '110100003', '2018-08-20 15:24:14', '2018-08-20 15:24:16', '擎天柱', '110100002', '2018-08-20 15:25:44', '2018-08-20 15:26:00', 'R_R_R_R_R_R_R', '2018-08-20 ', '1');
+INSERT INTO `hl_order_ship` VALUES ('7', 'A826921016606912', '爱的色放', '546d', '546da', '空城计', '110100003', '2018-08-27 13:17:26', '2018-08-27 13:17:28', '擎天柱', '110100002', '2018-08-27 13:24:48', '2018-08-27 13:26:03', 'R_R_R_R_R_R_R', '2018-08-27 ', '1');
 
 -- ----------------------------
 -- Table structure for `hl_order_son`
@@ -4805,9 +4806,9 @@ INSERT INTO `hl_order_son` VALUES ('24', '1531190282kehu001737', '5806863751', '
 INSERT INTO `hl_order_son` VALUES ('25', '1531118326kehu001205', 'YUN78945655', '185855', '300', null, '21', null, null, null);
 INSERT INTO `hl_order_son` VALUES ('26', '1531118326kehu001205', 'YUN78945655', '185855', '300', null, '21', null, null, null);
 INSERT INTO `hl_order_son` VALUES ('27', '1531118326kehu001205', 'YUN78945655', '185855', '300', null, '21', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('28', 'A826921016606912', 'AAAAAAAA', '6465464', '400', '录完实际装货时间>待配船', '24', null, null, '2018-08-26 11:45:08');
-INSERT INTO `hl_order_son` VALUES ('29', 'A826921016606912', 'AAAAAAAA', '46464', '400', '录完实际装货时间>待配船', '25', null, null, '2018-08-26 11:45:08');
-INSERT INTO `hl_order_son` VALUES ('30', 'A826921016606912', 'AAAAAAAA', '464641', '400', '录完实际装货时间>待配船', '25', null, null, '2018-08-26 11:45:08');
+INSERT INTO `hl_order_son` VALUES ('28', 'A826921016606912', 'AAA5555', '6465464', '800', '录入卸船完毕1', '24', null, null, '2018-08-27 01:26:04');
+INSERT INTO `hl_order_son` VALUES ('29', 'A826921016606912', 'AAAAAAAA', '46464', '800', '录入卸船完毕1', '25', null, null, '2018-08-27 01:26:04');
+INSERT INTO `hl_order_son` VALUES ('30', 'A826921016606912', 'AAAAAAAA', '464641', '800', '录入卸船完毕1', '25', null, null, '2018-08-27 01:26:04');
 
 -- ----------------------------
 -- Table structure for `hl_order_status`
@@ -5578,7 +5579,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 INSERT INTO `hl_user` VALUES ('1', 'zhangsan', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647');
 INSERT INTO `hl_user` VALUES ('2', 'zhangsan1', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647');
-INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535250808', '10086123', 'wangwu@qq.com', '0', '', '2018');
+INSERT INTO `hl_user` VALUES ('3', 'aaa', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535333326', '10086123', 'wangwu@qq.com', '0', '', '2018');
 INSERT INTO `hl_user` VALUES ('4', 'bbbb', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('5', 'ccc', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '0', null, '2147483647');
 INSERT INTO `hl_user` VALUES ('6', 'ddd', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '0', null, '2147483647');

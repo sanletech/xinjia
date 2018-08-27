@@ -58,21 +58,31 @@ class Order extends Base
     
     //处理订单的公共头部
     public function orderCenter() 
-    {
+    { 
         return $this->view->fetch('Order/order_center'); 
     }
     
     //待订舱页面list
     public function listBook() 
     {   
-        $data = new OrderM;
-        $list = $data->listOrder($pages=5,$state='100');
-        $page =$list->render();
-        $count =  count($list);
-//      $this->_p($list);exit;
-        $this->view->assign('count_book',$count);
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
+        $dataM = new OrderM;
+        $listArr = $dataM->listOrder($tol,$limit,$state='100');
+        //分页数据
+        $list =$listArr[0];
+        // 总页数
+        $count = $listArr[1];
+     
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listBook'));
         return $this->view->fetch('listOrder/list_book'); 
     }
     
@@ -121,14 +131,25 @@ class Order extends Base
     //待派车list页面
     public function listSendCar() 
     {      
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
+        
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='200');
-        $page =$list->render();
-        $count =  count($list);
-//       $this->_p($list);exit;
-        $this->view->assign('count_book',$count);
+        $listArr = $dataM->listOrder($tol,$limit,$state='200');
+       // $this->_p($list);exit;
+        //分页数据
+        $list =$listArr[0];
+       // 总页数
+        $count = $listArr[1];
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listSendCar')); 
         return $this->view->fetch('listOrder/list_sendCar');
     }
     
@@ -167,15 +188,24 @@ class Order extends Base
     
     //待装货展示页面
     public function listLoad() 
-    {   
+    {    //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='300');
-        $page =$list->render();
-        $count =  count($list);
-     //  $this->_p($list);exit;
-        $this->view->assign('count_book',$count);
+        $listArr = $dataM->listOrder($tol,$limit,$state='300');
+        //分页数据
+        $list =$listArr[0];
+//        $this->_p($listArr);exit;
+       // 总页数
+        $count = $listArr[1];
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listLoad')); 
         return $this->view->fetch('listOrder/list_load');
     }
     
@@ -210,38 +240,48 @@ class Order extends Base
         return json($status);
     }
     
+    
+    
     //展示需要向船公司提交柜号的list页面
     public function listBaogui() 
     {   
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='400');
+        $listArr = $dataM->listOrder($tol,$limit,$state='400');
+        //分页数据
+        $list =$listArr[0];
+     
+        foreach ($list as $key => $value) {
+            $list[$key]['container_code']= explode('_', $value['container_code']);
+            $list[$key]['track_num']=explode('_', $value['track_num']);
+        }
        // $this->_p($list);exit;
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count_book',$count);
+       // 总页数
+        $count = $listArr[1];
+     
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listBaogui')); 
         return $this->view->fetch('listOrder/list_baogui');
     }
     
     //处理报柜号
     public function toBaogui() {
         $data= $this->request->param();
-        $arr= [];
-        foreach ($data as $key => $value) {
-            $arr += $value;
-        }
-        $order_id = $arr['order_num'];
-        unset($arr['order_num']);
-        $container_arr =[];
-        foreach ($arr as  $v) {
-            foreach ($v as  $v1) {
-                $container_arr[] =$v1;
-            }
-        }
-       // $this->_p($container_arr);exit;
+        $order_num =  array_splice($data, -1);
+        $order_id = $order_num[0]['order_num'];
+        $container_code = array_column($data,'container_code');
+       // $this->_p($order_num);$this->_p($container_code);exit;
         $dataM = new OrderM;
-        $response  = $dataM->toBaogui($order_id,$container_arr);
+        //直接更改状态
+        $response  = $dataM->updateState($order_num,$container_codeArr,'505','录完实际装货时间>待配船');
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'报柜号成功','status'=>1];
         }else {
@@ -252,14 +292,24 @@ class Order extends Base
     
     //待配船list
     public function  listCargo(){
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='505,515,525,535');
-        
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count_book',$count);
+        $listArr = $dataM->listOrder($tol,$limit,$state='505,515,525,535');
+        //分页数据
+        $list =$listArr[0];
+//        $this->_p($listArr);exit;
+       // 总页数
+        $count = $listArr[1];
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listCargo'));
         $this->view->assign('ship_status','待配船'); 
         $this->view->assign('url','admin/order/cargoPlan'); 
         return $this->view->fetch('listOrder/list_cargo');
@@ -329,14 +379,24 @@ class Order extends Base
     
     //展示待到港信息的页面
     public function  listArrival(){
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='506,516,526,536');
-        //$this->_p($list);exit;
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count_book',$count);
+        $listArr = $dataM->listOrder($tol,$limit,$state='506,516,526,536');
+        //分页数据
+        $list =$listArr[0];
+//        $this->_p($listArr);exit;
+       // 总页数
+        $count = $listArr[1];
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listArrival'));
         $this->view->assign('ship_status','待到港'); 
         $this->view->assign('url','admin/order/arrivalPort'); 
         return $this->view->fetch('listOrder/list_cargo'); 
@@ -381,14 +441,24 @@ class Order extends Base
     
     //展示待卸船信息的页面
     public function  listUnShip(){
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='507,517,527,537');
-        //$this->_p($list);exit;
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count_book',$count);
+        $listArr = $dataM->listOrder($tol,$limit,$state='507,517,527,537');
+        //分页数据
+        $list =$listArr[0];
+//        $this->_p($listArr);exit;
+       // 总页数
+        $count = $listArr[1];
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listUnShip'));
         $this->view->assign('ship_status','待卸船'); 
         $this->view->assign('url','admin/order/unShip'); 
         return $this->view->fetch('listOrder/list_cargo'); 
@@ -431,23 +501,38 @@ class Order extends Base
        
     }
     
-      //处理订单收款
-    public function listtoCollect () 
+      //订单收款list页面
+    public function listtoCollect() 
     {   
+      //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='800');
-       // $this->_p($list);exit;
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count_book',$count);
+        $listArr = $dataM->listOrder($tol,$limit,$state='800');
+        //分页数据
+        $list =$listArr[0];
+//        $this->_p($listArr);exit;
+       // 总页数
+        $count = $listArr[1];
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
-        $this->view->assign('url','admin/order/toCollect');
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('status','待收款'); 
+        $this->view->assign('page_url',url('admin/order/listUnShip'));
+        $this->view->assign('ajaxurl',url('admin/order/toCollect'));
         return $this->view->fetch('listOrder/list_collect');
     }
-         //处理订单收款
+    //处理订单收款
     public function toCollect (){
-      
+        $order_num = $this->request->param();
+        var_dump($order_num);exit;
+         //直接更改状态
+        $container_codeArr =Db::name('order_son')->where('order_num',$order_num)->column('container_code');
+        $response  = $dataM->updateState($order_num,$container_codeArr,'900','收款完毕>待送货');
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'收钱成功','status'=>1];
         }else {
@@ -461,29 +546,39 @@ class Order extends Base
     //展示订单送货
     public function listDelivery () 
     {
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
         $dataM = new OrderM;
-        $list = $dataM->listOrder($pages=5,$state='900');
-       // $this->_p($list);exit;
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count_book',$count);
+        $listArr = $dataM->listOrder($tol,$limit,$state='900');
+        //分页数据
+        $list =$listArr[0];
+//        $this->_p($listArr);exit;
+       // 总页数
+        $count = $listArr[1];
         $this->view->assign('list_book',$list);
-        $this->view->assign('page_book',$page);
-        $this->view->assign('page_book',$page);
-        $this->view->assign('url','admin/order/toDelivery');
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('status','待送货'); 
+        $this->view->assign('page_url',url('admin/order/listDelivery'));
+        $this->view->assign('ajaxurl',url('admin/order/toDelivery'));
         return $this->view->fetch('listOrder/list_collect');
     }
        //处理订单送货
     public function toDelivery() {
-        $data= $this->request->param();
-        $this->_p($data);exit;
-        $father =['order_num'=>[$order_id],'state'=>$res['orderStatus'],'action'=>'录入送货完毕'];
-        $son =['order_num'=>[$order_id],'container_code'=>$container_code,'state'=>$res['orderStatus'],'action'=>'录入送货完毕'];
-        $dataM->updateState($father, $son);
+       $order_num = $this->request->param();
+        var_dump($order_num);exit;
+         //直接更改状态
+        $container_codeArr =Db::name('order_son')->where('order_num',$order_num)->column('container_code');
+        $response  = $dataM->updateState($order_num,$container_codeArr,'999','送货完成>订单完成');
         if(!array_key_exists('fail', $response)){
-            $status =['msg'=>'收钱成功','status'=>1];
+            $status =['msg'=>'送货成功','status'=>1];
         }else {
-            $status =['msg'=>'收钱失败','status'=>0]; 
+            $status =['msg'=>'送货失败','status'=>0]; 
         } 
         return json($status);
     }

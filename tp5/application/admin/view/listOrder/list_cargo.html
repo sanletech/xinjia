@@ -7,7 +7,7 @@
     <button class="layui-btn layui-btn-danger" onclick="delAll()">
     <i class="layui-icon"></i>批量删除</button>
     <span class="x-right" style="line-height:40px">总共有
-    <{$count_book}>条记录</span>
+    <{$count}>条记录</span>
 </xblock>
 <!-- 内容 -->
 <div class="order_list layui-row">
@@ -16,7 +16,7 @@
         <div class="top">
             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
                 <i class="layui-icon">&#xe605;</i>
-                <span>创建时间: <{$vo.mtime|date="y-m-d",###}></span>
+                <span>创建时间: <{$vo.mtime}></span>
             </div>
             <span class="top_ma">
                 <span>业务员: <{$vo.sales_name}></span>
@@ -62,11 +62,36 @@
     <{/volist}>
 
 </div>
-<div class="page">
-    <div>
-        <{$page_book}>
-    </div>
+<div class="text-center" id="pages"></div>
 </div>
-</div>
+<script>
+       layui.use('laypage', function () {
+          var laypage = layui.laypage;
+       //   var $data = $("#search_price input");
+//          var start_add = $data[0].value;
+//          var end_add = $data[1].value;
+//          var load_time = $data[2].value;
+          //执行一个laypage实例        
+          laypage.render({
+            elem: 'pages',
+            limit:"<{$limit}>",
+            limits: [5, 10, 15],
+            count:"<{$count}>",
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+            curr:"<{$page}>",
+            theme: '#c00',
+            jump: function (obj, first) {
+              //obj包含了当前分页的所有参数，比如：
+              //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+              //console.log(obj.limit); //得到每页显示的条数
+              //首次不执行
+              if (!first) {
+                //do something
+                window.location.href = "<{$page_url}>?page=" + obj.curr + '&limit=' + obj.limit;
+              }
+            }
+          });
+        })     
+</script>
 </body>
 </html>
