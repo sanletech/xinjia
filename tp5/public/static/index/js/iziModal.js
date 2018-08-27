@@ -121,7 +121,7 @@
             this.$element.addClass(PLUGIN_NAME + " " + options.theme);
 
             // Adjusting vertical positioning
-            this.$element.css('margin-top', parseInt(-(this.$element.innerHeight() / 2)) + 'px');
+			this.$element.css('margin-top', parseInt(-(this.$element.innerHeight() / 2)) + 'px');
 
 
             if(this.$element.find('.'+PLUGIN_NAME+'-header').length){

@@ -82,7 +82,6 @@ $("#modal-default").iziModal({
   title: "发票填写",
   iconClass: 'icon-announcement',
   width: 700,
-  top: 30,
   padding: 20
 });
 //启动模态窗
@@ -96,7 +95,7 @@ $("#wt1").iziModal({
   title: "请选择",
   iconClass: 'icon-announcement',
   width: 1000,
-  padding: 20
+  padding: 20 
 });
 //启动模态窗
 $(document).on('click', '.wt1', function (event) {
