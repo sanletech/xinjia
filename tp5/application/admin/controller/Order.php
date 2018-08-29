@@ -30,6 +30,10 @@ class Order extends Base
        if (request()->isAjax()){
            $idArr =$this->request->param();
            $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>100,'action'=>'通过审核>待订舱']);
+           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+            foreach ($order_numArr as $order_num) {
+               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>100,'action'=>'通过审核>待订舱'], 'controller');
+            }
            return json($res ? 1 : 0) ;
        }
     }
@@ -39,7 +43,11 @@ class Order extends Base
     {
          if (request()->isAjax()){
             $idArr =$this->request->param();
-           $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404,'action'=>'订单删除']);
+            $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404,'action'=>'订单删除']);
+            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+            foreach ($order_numArr as $order_num) {
+               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>404,'action'=>'订单删除'], 'controller');
+            }
            return json($res ? 1 : 0) ;
        }
         
@@ -165,7 +173,8 @@ class Order extends Base
         'order_num'  => $order_num,
         'container_sum' => $container_sum,
         'container_code' => $container_code,
-        'track_num'=>$track_num
+        'track_num'=>$track_num,
+        'sendCarUrl'=>url('admin/Order/tosendCar')    
         ]);
         return $this->view->fetch('Order/sendCarInfo');
     }
@@ -282,6 +291,7 @@ class Order extends Base
         $dataM = new OrderM;
         //直接更改状态
         $response  = $dataM->updateState($order_num,$container_codeArr,'505','录完实际装货时间>待配船');
+       
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'报柜号成功','status'=>1];
         }else {
@@ -358,17 +368,18 @@ class Order extends Base
     public function toCargoPlan() {
         $data =  $this->request->param();
         //$this->_p($data);exit;
-        $order_id =$data['order_id'];
+        $order_num =$data['order_id'];
         $container_code =$data['container_code'];
         unset($data['container_code'],$data['order_id']);
         $dataM = new OrderM;
         $res = $dataM->toOrderShip($data,$order_id);
-        var_dump($res);
+        //var_dump($res);
         if(!array_key_exists('fail', $res)){
             $status =['msg'=>'录入配船成功','status'=>1];
             //修改订单状态
-            $state =$res['orderStatus']; $action= '录入配船完毕'.$res['sequence'];
-            $res1 = $dataM->updateState($order_id,$container_code,$state,$action);
+            $state =$res['orderStatus'];  $action= '录入配船完毕'.$res['sequence'];
+            $res1 = $dataM->updateState($order_num,$container_code,$state,$action);
+        
             $res1 ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";   
         }else {
             $status =['msg'=>'录入配船失败','status'=>0]; 
@@ -431,6 +442,7 @@ class Order extends Base
             //修改订单状态
             $state =$res['orderStatus']; $action= '录入到港完毕'.$res['sequence'];
             $res1 = $dataM->updateState($order_id,$container_code,$state,$action);
+            
             $res1 ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
         }else {
             $status =['msg'=>'录入待到港失败','status'=>0]; 
@@ -528,11 +540,12 @@ class Order extends Base
     }
     //处理订单收款
     public function toCollect (){
-        $order_num = $this->request->param();
-        var_dump($order_num);exit;
+        $order_num = $this->request->param('order_num');
          //直接更改状态
         $container_codeArr =Db::name('order_son')->where('order_num',$order_num)->column('container_code');
+        $dataM = new OrderM;
         $response  = $dataM->updateState($order_num,$container_codeArr,'900','收款完毕>待送货');
+        
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'收钱成功','status'=>1];
         }else {
@@ -543,7 +556,7 @@ class Order extends Base
     }
     
     
-    //展示订单送货
+    //展示订单送货list页面
     public function listDelivery () 
     {
         //获取每页显示的条数
@@ -567,12 +580,24 @@ class Order extends Base
         $this->view->assign('page_url',url('admin/order/listDelivery'));
         $this->view->assign('ajaxurl',url('admin/order/toDelivery'));
         return $this->view->fetch('listOrder/list_collect');
+        //return $this->view->fetch('listOrder/list_loadCar');
     }
-       //处理订单送货
-    public function toDelivery() {
-       $order_num = $this->request->param();
-        var_dump($order_num);exit;
-         //直接更改状态
+       //展示处理订单送货页面
+    public function deliveryInfo() {
+        $order_num = $this->request->param('order_num');
+//        $container_sum =$this->request->get('container_sum');
+//        $container_code = $this->request->param('container_code');
+//        $track_num = Db::name('order_son')->where('order_num',$order_num)->column('track_num');
+//         $this->assign([
+//        'order_num'  => $order_num,
+//        'container_sum' => $container_sum,
+//        'container_code' => $container_code,
+//        'track_num'=>$track_num,
+//        'sendCarUrl'=>url('admin/Order/tosendCar')    
+//        ]);
+//        return $this->view->fetch('Order/sendCarInfo');
+//        
+        //直接更改状态
         $container_codeArr =Db::name('order_son')->where('order_num',$order_num)->column('container_code');
         $response  = $dataM->updateState($order_num,$container_codeArr,'999','送货完成>订单完成');
         if(!array_key_exists('fail', $response)){
@@ -582,6 +607,9 @@ class Order extends Base
         } 
         return json($status);
     }
+    //送货派车信息处理
+    
+    
     //查看订单的信息
     public function checkOrder() {
         

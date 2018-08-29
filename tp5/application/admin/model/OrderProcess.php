@@ -10,7 +10,6 @@ class OrderProcess  extends Model{
     public function Order_Detail($order_num) {
         //查询客户的订单编号order_father 查询对应的订单信息
         $list = Db::name('order_father')->alias('OF')
-                ->join('hl_container_size CS','CS.id =OF.container_size','left')  //箱型20gp 40hq
                 ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
                 ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
                 ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
@@ -25,10 +24,11 @@ class OrderProcess  extends Model{
                 ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
                 ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
                 ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
+                ->join('hl_container_type CT','CT.id=OF.container_type_id'.'left')//柜子的种类
                 ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
                 ->field('OF.id ,OF.order_num,SA.sales_name,'
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
-                        . "OF.cargo,CS.type,OF.container_sum,OF.member_code,OF.comment "
+                        . "OF.cargo,OF.container_size,CT.container_type,OF.container_sum,OF.member_code,OF.comment "
                         . ' SC.ship_short_name,B.boat_code,B.boat_name,OF.mtime,'
                         . ' SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . ' LK2.company ')

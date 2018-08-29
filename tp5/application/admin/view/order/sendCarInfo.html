@@ -116,7 +116,7 @@
     function toajax() {
         $.ajax({
           type: 'post',
-          url: "<{:url('admin/Order/tosendCar')}>",
+          url: "<{senCarUrl}>",
           data: $("#sendCar_form").serialize(),
           dataType: "json",
           success: function (data) {

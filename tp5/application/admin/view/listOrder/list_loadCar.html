@@ -74,14 +74,14 @@
         <p class="se">天数:
             <?php $timediff =time()-$vo['ctime']; $days = intval($timediff/86400); echo $days;?>天</p>
     </div>
-<div class="layui-col-md1">
-<p class="a_niu">
-    <a title="提交" onclick="order_pass(this,'<{$vo.order_num}>')" href="javascript:;">提交</a>
-</p>
-<p class="a_niu">
-    <a class="qu" href="">取消</a>
-</p>
-</div>
+    <div class="layui-col-md1">
+        <p class="a_niu">
+            <a title="录入送货派车信息" onclick="x_admin_show('<{$vo.order_num}>录入派车信息','<{:url('Order/deliveryInfo')}>?order_num=<{$vo.order_num}>&container_sum=<{$vo.container_sum}>&container_code=<{$vo.container_code}>',800,600)" href="javascript:;">确认</a>
+        </p>
+        <p class="a_niu">
+            <a class="qu" href="">取消</a>
+        </p>
+    </div>
             </div>
         </div>
         <div class="fo">
@@ -108,25 +108,25 @@
 
     <script>
         
-              /*用户-删除*/
-    function order_pass(obj,id){
-        layer.confirm('确认<{$status}>了么？',function(index){
-            //发异步删除数据
-            toajax({'order_num':id});
-            layer.msg('已删除!',{icon:1,time:1000});
-        });
-    }
-    function toajax(data) {
-        $.ajax({
-            type: 'GET',
-            url: "<{$ajaxurl}>",
-            data: data,
-            dataType:"JSON",
-           // contentType: "application/json; charset=utf-8",
-            success: function (data) {
-            }
-            });
-        }    
+//              /*用户-删除*/
+//    function order_pass(obj,id){
+//        layer.confirm('确认已收款了么？',function(index){
+//            //发异步删除数据
+//            toajax({'order_num':id});
+//            layer.msg('已删除!',{icon:1,time:1000});
+//        });
+//    }
+//    function toajax(data) {
+//        $.ajax({
+//            type: 'GET',
+//            url: "<{$ajaxurl}>",
+//            data: data,
+//            dataType:"JSON",
+//           // contentType: "application/json; charset=utf-8",
+//            success: function (data) {
+//            }
+//            });
+//        }    
         
         
     layui.use('laypage', function () {

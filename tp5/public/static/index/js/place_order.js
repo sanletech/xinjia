@@ -170,7 +170,6 @@ function toajax(url, data) {
     });
     //return false;//只此一
 }
-
 //计算运费
 function zong_sum(shu) {
     var money = $('.money').text();//纯运费
@@ -178,15 +177,13 @@ function zong_sum(shu) {
     var bxje = $('#bxje').val();//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje * 6;//总价格
-    console.log(zong,zong * 1.038,zong * 1.06);
     if (shu == 1) {//发票6%
         zong = zong * 1.038;        
     }else if(shu == 2){//发票10%
-        zong = zong * 1.06;  
+        zong = zong * 1.06;
     }
     zong = Math.round(zong*100)/100;//保留小数点后面两位
-    $('#price_sum').html('￥' + zong); 
-
+    $('#price_sum input').val(zong); 
 }
 $('#container_sum').change(function () {//监听柜量
     zong_sum(0);
