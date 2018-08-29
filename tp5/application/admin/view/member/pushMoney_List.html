@@ -21,7 +21,7 @@
       line-height: 30px;
       padding: 0 10px;
     }
-    #sales_id{
+    #customer_id{
       height: 0;
       width: 0;
       visibility: hidden;
@@ -52,13 +52,9 @@
           <tr>
             <th>业务</th>
             <th>客户</th>
-            <th>中良</th>
-            <th>宁波海洋</th>
-            <th>中海洋</th>
-            <th>中外运</th>
-            <th>安通</th>
-            <th>中远</th>
-            <th>中谷</th>
+            <{volist name="ship_nameArr" id="vo"}>
+            <th><{$vo}></th>
+            <{/volist}>
             <th>操作</th>
           </tr>
         </thead>
@@ -66,24 +62,26 @@
             <{volist name="list" id ="value"}>
           <tr>
             <td class="yw">
-              <div id="sales_id"><{$value.id}></div>
+              <div id="customer_id"><{$value.id}></div>
               <div class="layui-col-md6"><{$value.sales_name}></div>
               <div class="layui-col-md6"><{$value.sales_code}></div>
               <select name="city" lay-verify="" lay-search>
-                  <option value="<{$value.sales_code}>"><{$value.sales_name}></option>
+                  <{volist name ="salesArr" id ="va"}>
+                  <option value="<{$va.sales_code}>"><{$va.sales_name}></option>
+                  <{/volist}>
               </select>
             </td>
             <td>
               <div name="member_name" class="layui-col-md6 inpu"><{$value.member_name}></div>
               <div name="member_code" class="layui-col-md6 inpu"><{$value.member_code}></div>
             </td>
-            <td><input type="text" name="title" value="<{$value.zhongliang}>"></td>
-            <td><input type="text" name="title" value="<{$value.ningboyuanyang}>"></td>
-            <td><input type="text" name="age" value="<{$value.zhonghaiyang}>"></td>
-            <td><input type="text" name="title" value="<{$value.zhongwaiyun}>"></td>
-            <td><input type="text" name="title" value="<{$value.antong}>"></td>
-            <td><input type="text" name="title" value="<{$value.zhongyuan}>"></td>
-            <td><input type="text" name="title" value="<{$value.zhonggu}>"></td>
+            <{volist name="$value['money']" id ="v" key='k'}>
+            <td><input type="text" name="money" value="<{$v}>"></td>
+            <{/volist}>
+            <{volist name="$value['ship_id']" id ="v1"   key='k1'}>
+            <td style="display:none"><input type="hidden" name="ship_id" value="<{$v1}>"></td>
+            <{/volist}>
+         
             <td class="td-manage">
                 <!-- <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/pushMoneyEdit")}>?id=<{$value.id}>',700,550)" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
@@ -96,7 +94,7 @@
       </table>
         <div class="page">
             <div>
-                <{$page}>
+         
             </div>
         </div>
 
@@ -161,17 +159,21 @@
       }
 
 
-       function toajax (dataArray){
+       function toajax (data){
+            var dataArray =JSON.stringify(data);
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/toDel')}>",    
+                url:"<{:url('admin/member/pushMoneyEdit')}>",    
                 data:dataArray,
-                dataType:"json",
+                dataType:"JSON",
+                contentType: "application/json",
                 success:function(data){
-                    if(data.status==1){
-                      return 1;
+                    if(data==1){
+                        alert('修改成功');
+                        location.assign(location);
                     }else{
-                        return 0;
+                        alert('修改失败');
+                        location.assign(location);
                   }
                 }
             })
@@ -188,7 +190,8 @@
         inp.attr('readonly','readonly');//input只读
         $(this).parents('td').siblings('.yw').find('.layui-unselect').hide();//隐藏下拉框
         let shuju = huo_input($(this),inp);//调用huo_input方法获取数据
-        console.log(shuju);//获取到的数据
+        toajax(shuju);//获取到的数据
+        
       }else{
         $(this).html('保存');
         $(this).addClass('layui-btn-warm');//改变按钮颜色
@@ -201,7 +204,7 @@
     function huo_input(wo,inp){//数据处理
       let huoqu = [];
       let xuan= wo.parents('td').siblings('.yw').find('.layui-anim .layui-this');//获取下拉值
-      let sales_id = wo.parents('td').siblings('.yw').find('#sales_id').html();//获取ID
+      let sales_id = wo.parents('td').siblings('.yw').find('#customer_id').html();//获取ID
       let member = wo.parents('td').siblings('td').find('.inpu');
       inp.each(function(){
         huoqu.push({[$(this).attr('name')]:$(this).val()});
@@ -212,13 +215,13 @@
       huoqu.splice(0,1);
       huoqu.push({'sales_name':xuan.html()});
       huoqu.push({'sales_code':xuan.attr('lay-value')});
-      huoqu.push({'sales_id':sales_id});
+      huoqu.push({'customer_id':sales_id});
       return huoqu;
     }
 
     
     </script>
- 
+    
   </body>
 
 </html>

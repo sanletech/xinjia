@@ -66,28 +66,50 @@ class Member extends Base
         $this->view->assign('type',$type); 
         $user = new MemberM ;
         $list = $user->pushMoneyList($type,$account,5);
-      //  array_column($list, $list)
-        
-       // $this->_p($list);exit;
-        $page = $list->render();
+        //所有业务的集合
+        $salesArr =Db::name('salesman')->field('sales_code,sales_name')->where('status','1')->select();
+        //船公司的集合
+        $ship_nameArr = $list[0]['ship_name'];
+       // $ship_name = Db::name('shipcompany')->column($field)
+     //   $this->_p($ship_nameArr);exit;
+      //  $page = $list->render();
         $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
+        $this->view->assign('salesArr',$salesArr);
+        $this->view->assign('ship_nameArr',$ship_nameArr);
+      //  $this->view->assign('page',$page);
+        $this->view->assign('ship_nameArr',$ship_nameArr);
         return $this->view->fetch('Member/pushMoney_List'); 
     }
     //业务对应客户的提成管理的修改
     public function  pushMoneyEdit(){
-        $id = input('get.id'); //客户id
-      //  查询对应业务 和利润设置价格
-        $list = Db::name('sales_member')->alias('SM')
-               ->join('hl_member_profit MP','MP.member_code = SM.member_code','left')
-               ->field('SM.sales_name,SM.sales_code,SM.member_name,MP.*')
-                ->where('MP.id',$id)
-               ->group('MP.member_code')->order('SM.id');
-        $salesList =Db::name('sales_member')->column('sales_code,sales_name');
-        $this->view->assign('list',$list);
-        $this->view->assign('salesList',$salesList);
-        return $this->view->fetch('Member/member_edit');
-        
+        $data = $this->request->param();
+        $arr= [];
+        $dataArr = array_splice($data, -5);
+        foreach ($dataArr as $key => $value) {
+            $arr += $value;
+        }
+        $moneyArr = array_splice($data, 0,(count($data)/2));
+        //形成以ship_id为键,money 为值的数组
+       // $this->_p($data);$this->_p($moneyArr);exit;
+        $money_ship = array_combine(array_column($data,'ship_id'),array_column($moneyArr,'money'));
+       
+        //sales_code
+        $sales['sales_name'] = $arr['sales_name'];$sales['sales_code']= $arr['sales_code'];
+        $member_code= $arr['member_code'];$id = $arr['customer_id'];
+        $res =Db::name('sales_member')->where('member_code',$member_code)->update($sales);
+        $status[] =$res ? true :false;
+        unset($arr['sales_name'],$arr['sales_code'],$arr['member_code'],$arr['member_name'],$arr['customer_id']);
+        $mtime =date('y-m-d h:i:s');
+        foreach ($money_ship as $shipSql =>$moneySql){
+            $res1 =Db::name('member_profit')->where('member_code',$member_code)
+                    ->where('ship_id',$shipSql)
+                    ->update(['money'=>$moneySql,'mtime'=>$mtime]);
+            $status[] =$res1 ? true :false;
+        }
+        if(array_key_exists('false', $status)){
+            return 0;
+        }
+        return 1;
     }
     
     //用户列表修改

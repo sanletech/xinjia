@@ -68,19 +68,19 @@ for (let i = 1; i < 31; i++) {
 
 
 // 接受后台的联系人资料
-function selectlink(url) {
+function selectlink() {
     var member_code = 'kehu001';
     var data = { 'member_code': member_code };
     $.ajax({
         type: 'POST',
-        url: url,
+        url: selectlinkUrl,
         data: data,
         dataType: "json",
         success: function (status) {
             //接受数据 展示页面
              wt(status);
-//            status =JSON.parse(status)
-//            console.log(status);
+            status =JSON.parse(status)
+            console.log(status);
         }
     });
 }
@@ -139,23 +139,20 @@ function nei(zj) {
 
 //收货/发货人的表单提交 
 function linkman_btn() {
-    var url = "<{:url('index/order/linkman')}>";
     var data = $("#linkman_form").serialize();
-    toajax(url, data);
+    toajax(linkmanUrl , data);
 }
 
 //发票的信息提交 
 function invoice() {
-    var url = "<{:url('index/order/invoice')}>";
     var data = $("#invoice_form").serialize();
-    toajax(url, data);
+    toajax(invoiceUrl, data);
 }
 
 //订单信息的提交
 function order_data() {
-    var url = "<{:url('index/order/order_data')}>";
     var data = $("#order_data_form").serialize();
-    toajax(url, data);
+    toajax(OrderUrl, data);
 }
 
 function toajax(url, data) {
@@ -167,7 +164,7 @@ function toajax(url, data) {
         success: function (status) {
             if (status == 1) {
                 alert('提交表单成功');
-                window.location.href = "<{:url('index/order/order_list')}>"
+             
             }
         }
     });
@@ -177,7 +174,7 @@ function toajax(url, data) {
 //计算运费
 function zong_sum(shu) {
     var money = $('.money').text();//纯运费
-    var sum = $("#container_num option:selected").val();//柜量
+    var sum = $("#container_sum option:selected").val();//柜量
     var bxje = $('#bxje').val();//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje * 6;//总价格
@@ -191,7 +188,7 @@ function zong_sum(shu) {
     $('#price_sum').html('￥' + zong); 
 
 }
-$('#container_num').change(function () {//监听柜量
+$('#container_sum').change(function () {//监听柜量
     zong_sum(0);
 })
 $('#bxje').bind('input propertychange', function () {//监听保险金额

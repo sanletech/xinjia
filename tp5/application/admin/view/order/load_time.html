@@ -18,13 +18,13 @@
         </tr> 
     </thead>
     <tbody>
-        <{foreach name="data"  item="vo" key="k" }>
+        <{volist name="data"  id="vo" }>
         <tr>
-            <td><input type="text" name="track_num[]" readOnly="true"  value="<{$vo}>" class="layui-input"></td>
-            <td><input type="text" name="container_code[]" readOnly="true"  value="<{$k}>" class="layui-input"></td>
+            <td><input type="text" name="track_num[]" readOnly="true"  value="<{$vo.track_num}>" class="layui-input"></td>
+            <td><input type="text" name="container_code[]" readOnly="true"  value="<{$vo.container_code}>" class="layui-input"></td>
             <td><input type="date" name="loading_time[]" value="" class="layui-input"></td>
         </tr>
-        <{/foreach}>
+        <{/volist}>
     </tbody>
     </table>
 </div>

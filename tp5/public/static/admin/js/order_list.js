@@ -24,10 +24,12 @@ $('#yd .yes').click(function(){
             shu($(nei[i]).parents('dl').siblings('a').html(),$(nei[i]).find('span').html());
         }
     }
+    let order_num = $(this).parent('div').parent('div').prev().find('#order_num');
+    list.push({[order_num.attr('name')]:order_num.attr('value')});
     if(list.length == 0){
         alert("请选择运单号集装箱");
     }
-    console.log(list);//获取选中的数据
+    toajax(list);
 });
 function shu(a,b){  
     if(st == a){

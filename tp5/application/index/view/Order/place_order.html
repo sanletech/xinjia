@@ -53,13 +53,7 @@
           </div>
           <div class="layui-col-xs4 dd">
             <div class="zhong">
-            <span>
-                <{switch name="list.container_size"}>
-                <{case value="1"}>20GP<{/case}>
-                <{case value="2"}>40HQ<{/case}>
-                <{default /}>未知集装箱型号
-                <{/switch}>
-            </span>
+            <span><{$list.container_size}> </span>
               <p>￥
                 <strong class="money"><{$list.price}></strong>
               </p>
@@ -207,9 +201,7 @@
               <div class="layui-col-xs4">
                 <span>*&nbsp;</span>集装箱规格：</div>
               <div class="layui-col-xs6">
-                <input type="text" name="container" value="<?php if($list['container_size'] ==1){
-                       echo '20GP';  }else{echo '40HQ';} ?>" readonly="readonly">
-                <input type="hidden" name="container_size" value="<{$list.container_size}>">
+                  <input type="text" name="container" value="<{$list.container_size}>" readonly="readonly">
               </div>
             </div>
           </div>
@@ -219,7 +211,7 @@
                 <span>*&nbsp;</span>柜量：</div>
               <div class="layui-col-xs6">
                 <div class="select">
-                  <select name='container_num' class="guil" id='container_num'>
+                  <select name='container_sum' class="guil" id='container_sum'>
                   </select>
                 </div>
               </div>
@@ -282,6 +274,7 @@
         </div>
         <!-- 总运费 -->
         <div class="sun">
+            <span>客户提成：<strong id ='member_porfit'>￥<{$list.member_porfit}>元</strong></span>
             <span>总运费：<strong id ='price_sum'>￥0000.00元</strong></span>
         </div>
 
@@ -385,12 +378,12 @@
       <!-- 填写发票窗口 -->
       <div id="modal-default">
         <form class="layui-form"id ='invoice_form'>
-            <input type="hidden" name='member_code' value="kehu001"> 
+            <input type="hidden" name='member_code' value="<{$Think.session.member_code}>"> 
             <!--需要贮存客户session_id-->
           <div class="layui-form-item">
             <label class="layui-form-label">发票抬头</label>
             <div class="layui-input-block">
-              <input type="text" name="title" lay-verify="invoice_title" autocomplete="off" placeholder="发票抬头" class="layui-input">
+              <input type="text" name="invoice_title" lay-verify="invoice_title" autocomplete="off" placeholder="发票抬头" class="layui-input">
             </div>
           </div>
           <div class="layui-form-item">
@@ -531,5 +524,17 @@
     <script src="__STATIC__/js/iziModal.js"></script>
     <script src="__STATIC__/js/lrdd.js"></script>
     <script src="__STATIC__/js/place_order.js"></script> 
+    <script>
+        //获取session 的客户的code
+        var member_code = '<{$Think.session.member_code}>';
+        //客户的收货人,发货人选择
+        var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
+         //收货/发货人的表单提交 
+        var linkmanUrl = "<{:url('index/order/linkman')}>";
+        //发票的信息提交 
+        var invoiceUrl = "<{:url('index/order/invoice')}>";
+        //订单信息的提交
+        var OrderUrl = "<{:url('index/order/order_data')}>";
+</script> 
   </body>
   </html>

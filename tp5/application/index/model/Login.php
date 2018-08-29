@@ -30,23 +30,41 @@ class Login extends Model
             if(!empty($salesName)){
                 //根据业务姓名查询其业务编号 如果没有就填0
                // $sql= "select sales_code from hl_salesman where salesname ='$salesName'";
-                $sales_code =Db::name('salesman')->where('salesname',$salesName)->value('sales_code');
-                $sales_code ?$sales_code :0;
-                $data =['sales_code'=>$sales_code ,'sales_name'=>$salesName ,'member_code'=>$member_code ,'member_name'=>$member_name];
-                $res = Db::name('sales_member')->insert($data);
-                //同时默认设置客户的利润价格为200
-                $data2 =['member_code'=>$sales_code ];
-                $res2 = Db::name('member_profit')->insert($data2);
+                $sales_code =Db::name('salesman')->where('sales_name',$salesName)->value('sales_code');
+                $sales_code = $sales_code ?$sales_code :0;
             }
+           
+        } else {
+            $sales_code=0; $salesName='nobody';
         }
-        
-        ;
+        $sales_code = $sales_code ?$sales_code :0;
+        //将业务对应客户的关系插入
+        $data =['sales_code'=>$sales_code ,'sales_name'=>$salesName ,'member_code'=>$member_code ,'member_name'=>$member_name];
+        $res = Db::name('sales_member')->insert($data);
+         
+        $this->memberProfit($member_code);
+      
         if ($res){
             $status= true;
         } else {
              $status= false;
         }
         return $status;
+    }
+    //设置客户的利润
+    public function memberProfit($member_code) {
+            $ship_name =Db::name('shipcompany')->column('id');
+            $data=[]; $mtime =date('y-m-d h:i:s');
+            foreach ($ship_name as $key=>$value) {
+                $data[$key]['member_code']=$member_code;
+                $data[$key]['ship_id']= $value;
+                $data[$key]['money']= 200;
+                $data[$key]['mtime']= $mtime;
+            }
+//            $this->_v($data);exit;
+            //同时默认设置客户的利润价格为200
+            $res = Db::name('member_profit')->insertAll($data);
+             //var_dump($res);exit;
     }
     
 }
