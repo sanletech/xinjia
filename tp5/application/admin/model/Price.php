@@ -57,7 +57,7 @@ class Price extends Model
     
     //船运航价的添加
      public function  price_route_add($data)
-    {
+    {        
         $pricedata['ship_id'] = strstr($data['ship'],'_', true);
         $pricedata['price_20GP'] = $data['price_20GP'];
         $pricedata['price_40HQ'] = $data['price_40HQ'];

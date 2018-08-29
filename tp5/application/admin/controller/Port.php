@@ -22,7 +22,7 @@ class Port extends Base
         }
         $port_list = new PortM;
         $list = $port_list->port_list($port_name ,5);
-       // $this->_p($list);exit;
+   //  $this->_p($list);exit;
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
@@ -126,6 +126,7 @@ class Port extends Base
     }
     //添加船名
     public function boat_add(){
+        
         return $this->view->fetch('port/boat_add');
     }
     //执行添加船名

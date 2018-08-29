@@ -177,14 +177,17 @@ class Port extends Model
         $sl_end = array_pop($port_arr);
         $bothend_id =  $this->bothEndLine($sl_start,$sl_end);
         $sl_middle = $port_arr;
+       
         if(!empty($sl_middle)){
             $middle_id =  $this->middleLine($sl_middle);
         } else {
             $middle_id = 0;
         }
+        
         $mtime = time();
         $sql1 ="select id from hl_ship_route where bothend_id ='$bothend_id' and "
                 . "  middle_id ='$middle_id'";
+        
         $res = Db::query($sql1);
        
         if(empty($res)){
@@ -216,24 +219,27 @@ class Port extends Model
     
         //查询航线是否存在 参数为中间港口的id依照航行顺序排列的数组
     public function  middleLine($sl_middle){
+     
         $v = implode(',', $sl_middle);
         $k = implode(',', array_keys($sl_middle));
-        $sql1 = "select sealine_id, group_concat(sl_middle) as middle_str, group_concat(sequence) as sequence_str from hl_sea_middle group by sealine_id";
+        $sql1 = "select sealine_id, group_concat(distinct sl_middle order by sequence ) as middle_str, group_concat(distinct sequence order by sequence) as sequence_str from hl_sea_middle group by sealine_id";
         $sql2 = "select sealine_id from ($sql1) as STR  where  STR.middle_str like '$v' and STR.sequence_str like '$k'"; 
         $res = Db::query($sql2);
         if(empty($res)){
             $sealine_id = Db::name('sea_middle')->max('sealine_id')+1;
             $str = '';
             $mtime = time();
-            for($i=1;$i<count($sl_middle);$i++){
+            for($i=0;$i<count($sl_middle);$i++){
                 $str .="  ('$sealine_id', '$sl_middle[$i]', '$i', '$mtime')  ,";
             }
             $str = trim($str, ',');
             $sql3 = "insert into hl_sea_middle(sealine_id, sl_middle, sequence, mtime)  values".$str;
+           
             $res = Db::execute($sql3);
         }else{
             $sealine_id = $res['0']['sealine_id'] ;
         }
+     
         return $sealine_id ;
     }
     

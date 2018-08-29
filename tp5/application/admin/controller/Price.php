@@ -36,6 +36,7 @@ class Price extends Base
     }
     //航线详情添加展示页面
     public function route_add(){
+   
 //        //传递船公司下面的船只
 //        $sql ="select * from hl_boat ";
 //        $boat_data = Db::query($sql);

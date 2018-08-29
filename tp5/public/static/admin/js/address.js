@@ -80,6 +80,7 @@ document.write("<script language='javascript' src='/static/admin/js/area.js'><\/
                 var code = d[0];
                 var areaName = d[1];
                 //console.log(data.value);
+                
                 var towns = toajax(code);
             });
         }
@@ -87,13 +88,11 @@ document.write("<script language='javascript' src='/static/admin/js/area.js'><\/
                 
          //加载镇
         function loadtown(towns){
-           // console.log(towns);
             if (towns=='') {
             $form.find('select[name=town]').parent().hide();
             } else {
                 towns = JSON.parse(towns)
                 towns =  eval('('+towns+')')
-         //       towns = $.parseJSON(towns);
                 var townHtml = '';
                 for (let i in  towns){
                     townHtml += '<option value="' + i +'_'+ towns[i] + '">' + towns[i] + '</option>';
@@ -101,7 +100,6 @@ document.write("<script language='javascript' src='/static/admin/js/area.js'><\/
                 $form.find('select[name=town]').html(townHtml).parent().show();
                 form.render();
                 form.on('select(town)', function(data) {
-                  //  console.log(data);
                    $('#oldadd').remove();
                    
             });
@@ -112,7 +110,7 @@ document.write("<script language='javascript' src='/static/admin/js/area.js'><\/
             var townurl = addressURL +'?twoncode='+townCode;
             $.ajax( {
                     type:'POST',
-                    url:townurl,    
+                    url:townurl,
                     dataType:"json",
                     success:function(data){
                             loadtown(data);

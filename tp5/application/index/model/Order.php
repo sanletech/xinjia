@@ -144,7 +144,8 @@ class Order extends Model
             $invoice_id = 0;
         }else{
             $sql3 ="select id from hl_invoice where member_code = '$member_code' and mtime = (select max(mtime) from hl_invoice ) ";
-            //$invoice_id = Db::name('invoice')->field('id')->where('member_code',$member_code)->where('mtime','(select max(mtime) from hl_invoice )');
+            $invoice_id = Db::name('invoice')->field('id')->where('member_code',$member_code)->where('mtime','(select max(mtime) from hl_invoice )');
+           // $invoice_id = Db::name('invoice')->where('member_code',$member_code)->where('mtime'=>)
             $invoice_id = Db::query($sql3);
             $invoice_id = $invoice_id['0']['id'];
         }

@@ -59,7 +59,7 @@ class Login extends Model
                 $data[$key]['member_code']=$member_code;
                 $data[$key]['ship_id']= $value;
                 $data[$key]['money']= 200;
-                $data[$key]['mtime']= $mtime;
+                $data[$key]['ctime']= $mtime;
             }
 //            $this->_v($data);exit;
             //同时默认设置客户的利润价格为200

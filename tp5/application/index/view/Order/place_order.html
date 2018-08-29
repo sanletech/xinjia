@@ -5,6 +5,16 @@
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
     <link rel="stylesheet" href="__STATIC__/css/xiala.css">
     <link rel="stylesheet" href="__STATIC__/css/all_order.css">
+    <style>
+        #price_sum input{
+            border:0;
+            color: red;
+            /*max-width: auto;*/
+            width: 90px;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+        }
+    </style>
     <div class="banner"></div>
     <form class="" id ='order_data_form'>
       <div class="xxtx">
@@ -275,7 +285,8 @@
         <!-- 总运费 -->
         <div class="sun">
             <span>客户提成：<strong id ='member_porfit'>￥<{$list.member_porfit}>元</strong></span>
-            <span>总运费：<strong id ='price_sum'>￥0000.00元</strong></span>
+            <span>总运费:<strong id ='price_sum'>￥<input name="total_price"  value="0000.00"  readonly="true">元</strong></span>
+
         </div>
 
         <!-- 付款方式 -->

@@ -84,6 +84,7 @@ class Ship extends Base
         //传递所有的港口给前台页面
         $sql3="select *  from  hl_port ";
         $port_data =Db::query($sql3);
+       
          //转成json格式传给js
         $js_port=json_encode($port_data);
         
