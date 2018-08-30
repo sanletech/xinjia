@@ -30,7 +30,7 @@ class Keeper extends Base
     {  
         $list =Db::name('user')->alias('U')
                 ->join('hl_user_area UA','UA.user_id=U.id','left')
-                ->join('');
+                ->field('U.id,U.user_code,U.user_name,U.type,U')
         
       //  return $this->view->fetch('Keeper/user_list'); 
     }
