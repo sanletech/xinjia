@@ -23,9 +23,9 @@ class Order extends Model
                 ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
                 ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船公司合作的船舶
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
-                ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
+                ->join('hl_user U',"U.user_code= SM.sales_code and U.type='sales'",'left')  //业务表
                 ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->field('OF.id ,OF.order_num,MB.phone,MB.name membername,SA.sales_name,'
+                ->field('OF.id ,OF.order_num,MB.phone,MB.name membername,U.user_name,'
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
                         . 'OF.cargo,SC.ship_short_name,B.boat_code,B.boat_name,OF.ctime')
                 ->group('OF.id')->where('OF.state','eq',$state)
@@ -49,13 +49,13 @@ class Order extends Model
                 ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
                 ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船公司合作的船舶
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
-                ->join('hl_salesman SA','SA.sales_code= SM.sales_code','left')  //业务表
+                ->join('hl_user U',"U.user_code= SM.sales_code and U.type='sales'",'left')  //业务表
                 ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
                 ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
               //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
                 ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
                 ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
-                ->field('OF.id ,OF.order_num,SA.sales_name,'
+                ->field('OF.id ,OF.order_num,U.user_name, '
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
                         . "OF.cargo,OF.container_size,OF.container_sum, group_concat(distinct OS.track_num order by OS.id separator '_') track_num,"
                         . " group_concat(distinct OS.container_code order by OS.id separator '_') container_code, "

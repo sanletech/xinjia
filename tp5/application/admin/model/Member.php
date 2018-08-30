@@ -47,10 +47,7 @@ class Member extends Model
                        . "group_concat(MP.money order by MP.ship_id separator ',') money")
                ->group('MP.member_code')->order('SM.id')->buildSql();    
 //var_dump($list);exit;
-//        $list = Db::name('sales_member')->alias('SM')
-//               ->join('hl_member_profit MP','MP.member_code = SM.member_code','left')
-//               ->field('SM.sales_name,SM.sales_code,SM.member_name,MP.*')
-//               ->group('MP.member_code')->order('SM.id')->buildSql();   
+
         $pageParam  = ['query' =>[]]; //设置分页查询参数  
         if($type=='sales'&&!empty($account)){
             $list =Db::table($list.' b')

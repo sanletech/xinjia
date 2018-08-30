@@ -2,7 +2,7 @@
 namespace app\admin\common;
 use think\Controller;
 use think\Session;
-
+//use app\admin\common\Auth as AuthC;
 use think\Db;
 class Base extends Controller
 {
@@ -16,6 +16,14 @@ class Base extends Controller
             $this->notlogin();
         }
        // $this->middle();
+             
+       import('app.admin.common.Auth');//加载类库
+     //  $auth=new AuthC;
+       $auth=new Auth();
+//       if(!$auth->check(MODULE_NAME.'-'.ACTION_NAME,session('uid'))){
+//            $this->error('你没有权限');
+//       }
+  
         
     }
     

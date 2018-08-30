@@ -19,7 +19,7 @@
                 <span>创建时间: <{$vo.ctime}></span>
             </div>
             <span class="top_ma">
-                <span>业务员: <{$vo.sales_name}></span>
+                <span>业务员: <{$vo.user_name}></span>
                 <span>船期: <{$vo.shipping_date|date="y-m-d",###}></span>
                 <span>海上时效: <{$vo.sea_limitation}></span>
                 <span>截单时间: <{$vo.cutoff_date|date="y-m-d",###}></span>
@@ -37,7 +37,7 @@
             </div>
             <div class="layui-col-md3">
                 <p>航线: <{$vo.s_port_name}>-<{$vo.e_port_name}></p>
-                <p>箱型*箱量: <{$vo.type}>*<{$vo.container_sum}></p>
+                <p>箱型*箱量: <{$vo.container_size}>*<{$vo.container_sum}></p>
             </div>
             <div class="layui-col-md2">
                 <p class="se">状态：<{$ship_status}></p>

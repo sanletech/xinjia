@@ -1,6 +1,6 @@
 <?php
 
-namespace app\admin\controller;
+namespace app\admin\common;
 use think\Controller;
 
 /**
@@ -19,12 +19,12 @@ class Auth{
         'AUTH_RULE' => 'hl_auth_rule', //权限规则表
         'AUTH_USER' => 'hl_members'//用户信息表
     );
-    public function __construct() {
-        if (C('AUTH_CONFIG')) {
-            //可设置配置项 AUTH_CONFIG, 此配置项为数组。
-            $this->_config = array_merge($this->_config, C('AUTH_CONFIG'));
-        }
-    }
+//    public function __construct() {
+//        if (C('AUTH_CONFIG')) {
+//            //可设置配置项 AUTH_CONFIG, 此配置项为数组。
+//            $this->_config = array_merge($this->_config, C('AUTH_CONFIG'));
+//        }
+//    }
     //获得权限$name 可以是字符串或数组或逗号分割， uid为 认证的用户id， $or 是否为or关系，为true是， name为数组，只要数组中有一个条件通过则通过，如果为false需要全部条件通过。
     public function check($name, $uid, $relation='or') {
         if (!$this->_config['AUTH_ON'])
