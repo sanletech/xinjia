@@ -4,7 +4,7 @@ $("#modal-default").iziModal({
     iconClass: 'icon-announcement',
     width: 700,
     padding: 20
-});
+}); 
 //启动模态窗
 $(document).on('click', '.trigger-default', function (event) {
     event.preventDefault();
@@ -30,6 +30,7 @@ layui.use(['form', 'layedit', 'laydate'], function () {
 //初始数据
 var areaData = Area;//获取所有地区
 var inp;//选择文本框并赋值区县
+var boot;//判断地址是否是起点还是终点
 //单击省份
 $('#address li').eq(0).click(function () {
     loadProvince();
@@ -41,7 +42,6 @@ function loadProvince() {
     for (let i in areaData) {
         $('#dizhi').append('<a href="javascript:void(0)" onclick=loadCity(' + areaData[i].provinceCode +  ')>' + areaData[i].provinceName + '</a>');
     }
-    $(inp).val('');
     $('#address li').removeClass('lanse').eq(0).addClass('lanse');
 }
 
@@ -57,7 +57,16 @@ function loadCity(citys_id) {
             if (arry == false) {
                 $('#address').hide();
             }
-            $(inp).val(data.provinceName);//当前选中的值
+            inp.val('');
+            if(boot){
+                add.start_id = data.provinceCode;
+                add.start_name = data.provinceName;
+            }else{
+                add.end_id = data.provinceCode;
+                add.end_name = data.provinceName;
+            }
+            
+            inp.val(data.provinceName);//当前选中的值
             $('#address li').removeClass('lanse').eq(1).addClass('lanse');//选中城市
         }
     })
@@ -77,7 +86,14 @@ function loadPort(areas_id) {
                 if (arry[i] == false) {//当后面没有数据的时候
                     $('#address').hide();
                 }
-                $(inp).val($(inp).val()+arry[i].cityName);//当前选中的值
+                if(boot){
+                    add.start_id = arry[i].cityCode;
+                    add.start_name = arry[i].cityName;
+                }else{
+                    add.end_id = arry[i].cityCode;
+                    add.end_name = arry[i].cityName;
+                }
+                inp.val(inp.val()+arry[i].cityName);//当前选中的值
                 $('#address li').removeClass('lanse').eq(2).addClass('lanse');
             }
         }
@@ -86,38 +102,59 @@ function loadPort(areas_id) {
 
 // 加载街道
 function jie_dao(jie_id,jie_name) {
-    $(inp).val($(inp).val()+jie_name);//当前选中的值
+    inp.val(inp.val()+jie_name);//当前选中的值
+    if(boot){
+        add.start_id = jie_id;
+        add.start_name = jie_name;
+    }else{
+        add.end_id = jie_id;
+        add.end_name = jie_name;
+    }
     var townurl = addressURL +'?twoncode='+jie_id;
     $.ajax({//通过AJAX去数据库获取街道值
         type:'POST',
         url:townurl,
         dataType:"json",
         success:function(data){
-            let arry = data;
-            arry = JSON.parse(arry)
-            arry =  eval('('+arry+')')
-            $('#dizhi').html('');
-            for (let i in arry) {           
-                $('#dizhi').append('<a href="javascript:void(0)" onclick="add_food(this)">' + arry[i] + '</a>');
+            if (data) {
+                let arry = data;
+                arry = JSON.parse(arry)
+                arry =  eval('('+arry+')')
+                $('#dizhi').html('');
+                for (let i in arry) {           
+                    $('#dizhi').append('<a href="javascript:void(0)" onclick="add_food('+i+',this)">' + arry[i] + '</a>');
+                }
+                $('#address li').removeClass('lanse').eq(3).addClass('lanse');
+            }else{
+                $('#address').hide();
             }
-            $('#address li').removeClass('lanse').eq(3).addClass('lanse');
+            
         },
     })
 }
 
 //街道之后
-function add_food(zj){
-    $(inp).val($(inp).val()+$(zj).html());//当前选中的值
+function add_food(dao_id,zj){
+    if(boot){
+        add.start_id = dao_id;
+        add.start_name = $(zj).html();
+    }else{
+        add.end_id = dao_id;
+        add.end_name = $(zj).html();
+    }
+    inp.val(inp.val()+$(zj).html());//当前选中的值
     $('#address').hide();
 }
 
 $('#start_add').focus(function () {//选择地址
     inp = $('#start_add');
+    boot = true;
     $('#address').css('top', '80px');
     $('#address').show();
     loadProvince();  //默认展示省份
 })
 $('#end_add').focus(function () {//选择地址
+    boot = false;
     inp = $('#end_add');
     $('#address').css('top', '140px');
     $('#address').show();

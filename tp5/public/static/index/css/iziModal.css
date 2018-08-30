@@ -148,16 +148,25 @@
     margin-bottom: -4px;
     transition: height 0.3s ease;
 }
+.motai{
+    height: 300px;
+    width: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #000;
+}
 .iziModal-overlay{
+    height: 300px;
+    width: 100px;
+    overflow: hidden;
     display: block;
     position: fixed;
-    /*background: rgba(0, 0, 0, 0.4);*/
-    z-index: 998;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-}
+
+    /* background: rgba(0, 0, 0, 0.4); */
+
+    top: 10px;
+}  
 
 body.iziModal-attached{
     overflow: hidden;
