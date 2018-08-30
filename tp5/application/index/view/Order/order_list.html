@@ -5,15 +5,15 @@
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
     <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
 
-
     <div class="banner">
       <div class="gnhy">
-        <div class="gnhy_top">国内海运</div>  
+        <div class="gnhy_top">国内海运</div>
         <form class="layui-form layui-col-md12 x-so" id="search_price">
           <div class="gnhy_nei layui-row">
             <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>" placeholder="请输入起始地" class="layui-col-xs12">
             <input type="text" name="end_add" id="end_add" value="<{$end_add ? $end_add : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
-            <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>" placeholder="装货时间" class="layui-col-xs12" autocomplete="off">
+            <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>" placeholder="装货时间" class="layui-col-xs12"
+              autocomplete="off">
           </div>
 
           <div class="gnhy_di">
@@ -24,25 +24,25 @@
                 <i class="fa fa-warning fa-lg c"></i>&nbsp;国家禁运品声明</a>
             </div>
             <div class="di_you">
-              <!--              <button  type="button" onclick="toajax()">查价</button>-->
-              <button class="layui-btn" lay-submit="" lay-filter="sreach">查价</button>
+              <button type="button" onclick="toajax()">查价</button>
+              <!-- <button class="layui-btn" lay-submit="" lay-filter="sreach">查价</button> -->
             </div>
           </div>
 
 
-        <!-- ====================================== -->
-        <!-- 省市区联动 -->
-        <div id="address">
-          <ul>
-            <li>省份</li>
-            <li>城市</li>
-            <li>区县</li>
-            <li>街道</li>
-          </ul>
-          <div id="dizhi">
-            
+          <!-- ====================================== -->
+          <!-- 省市区联动 -->
+          <div id="address">
+            <ul>
+              <li>省份</li>
+              <li>城市</li>
+              <li>区县</li>
+              <li>街道</li>
+            </ul>
+            <div id="dizhi">
+
+            </div>
           </div>
-        </div>
         </form>
       </div>
     </div>
@@ -133,14 +133,16 @@
                         ￥
                         <{$vo.price_20GP}>
                           <div class="dian">
-                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=20GP" class="gp">下单</a>
+                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=20GP"
+                              class="gp">下单</a>
                           </div>
                       </li>
                       <li>
                         ￥
                         <{$vo.price_40HQ}>
                           <div class="dian">
-                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=40HQ" class="gp">下单</a>
+                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=40HQ"
+                              class="gp">下单</a>
                           </div>
                       </li>
                     </ul>
@@ -159,7 +161,7 @@
 
             <div class="text-center" id="pages"></div>
       </div>
-
+      <div class="motai">122</div>
       <!-- 模态窗口 -->
       <div id="modal-default" class="iziModal">
         <div class="mo_cen">
@@ -194,11 +196,18 @@
           </div>
         </div>
       </div>
-      <script src="__STATIC__/js/iziModal.min.js"></script>
+      <script>
+        var addressURL = "<{:url('admin.php/address/town')}>";
+        var add = { start_id: '', start_name: '', end_id: '', end_name: '', load_time: '' };
+        //          起点ID        起点名称        终点ID        终点名称      装货时间
+      </script>
+      <script src="__STATIC__/js/iziModal.js"></script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
       <script src="__STATIC__/js/order_list.js"></script>
       <script>
         function toajax() {
+          add.load_time = $('#load_time').val();
+          console.log(add);
           $.ajax({
             type: 'GET',
             url: "<{:url('index/order/order_list')}>",
@@ -223,11 +232,11 @@
           //执行一个laypage实例        
           laypage.render({
             elem: 'pages',
-            limit:"<{$limit}>",
+            limit: "<{$limit}>",
             limits: [5, 10, 15],
-            count:"<{$count}>",
+            count: "<{$count}>",
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-            curr:"<{$page}>",
+            curr: "<{$page}>",
             theme: '#c00',
             jump: function (obj, first) {
               //obj包含了当前分页的所有参数，比如：
@@ -242,7 +251,7 @@
           });
         })
       </script>
-  
-    </body>
+
+  </body>
 
   </html>
