@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-08-30 18:03:50
+Date: 2018-08-31 18:01:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3231,9 +3231,9 @@ INSERT INTO `hl_auth_group` VALUES ('11', '车队运价管理', '1', '51,52,53,5
 INSERT INTO `hl_auth_group` VALUES ('1', '用户管理', '1', '8,9,10,11,12,14');
 INSERT INTO `hl_auth_group` VALUES ('5', '运价查看', '1', '47');
 INSERT INTO `hl_auth_group` VALUES ('12', '车队运价查看', '1', '51');
-INSERT INTO `hl_auth_group` VALUES ('13', '客户例如查看', '1', '13');
-INSERT INTO `hl_auth_group` VALUES ('15', '业务部门', '1', '');
-INSERT INTO `hl_auth_group` VALUES ('16', '订单修改', '1', '待完成');
+INSERT INTO `hl_auth_group` VALUES ('13', '客户利润查看', '1', '13');
+INSERT INTO `hl_auth_group` VALUES ('15', '业务部门', '1', '3,9,13');
+INSERT INTO `hl_auth_group` VALUES ('16', '客服部门', '1', '3,47,48,49,50');
 
 -- ----------------------------
 -- Table structure for `hl_auth_group_access`
@@ -5619,22 +5619,21 @@ CREATE TABLE `hl_user` (
   `status` tinyint(1) NOT NULL COMMENT '启用状态:0表示禁用 1表示启用',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注信息',
   `update_time` int(12) DEFAULT NULL,
-  `type` varchar(5) DEFAULT NULL COMMENT '操作员,业务,管理员,老板',
-  `area` varchar(255) DEFAULT NULL COMMENT '管理区域的id,用,连接',
+  `type` varchar(10) DEFAULT NULL COMMENT '操作员,业务,管理员,老板',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '1', '', '2147483647', 'sales', '1');
-INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', '2');
-INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null);
-INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null);
-INSERT INTO `hl_user` VALUES ('5', 'sales5', 'yw005', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null);
-INSERT INTO `hl_user` VALUES ('6', 'sales6', 'yw006', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '1', null, '2147483647', 'sales', null);
-INSERT INTO `hl_user` VALUES ('8', 'sales7', 'yw007', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null);
-INSERT INTO `hl_user` VALUES ('9', 'caozuoyuan', 'asdfa', '打发', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535595768', '', '', '0', null, '2018', 'opera', null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647', 'sales');
+INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647', 'sales');
+INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018', 'sales');
+INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales');
+INSERT INTO `hl_user` VALUES ('5', 'service1', 'yw005', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'service');
+INSERT INTO `hl_user` VALUES ('6', 'service2', 'yw006', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '1', null, '2147483647', 'service ');
+INSERT INTO `hl_user` VALUES ('8', 'service3', 'yw007', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535678628', '10086', 'aaa@qq.com', '1', null, '2018', 'service ');
+INSERT INTO `hl_user` VALUES ('9', 'service4', 'asdfa', '打发', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535595768', '', '', '0', null, '2018', 'service ');
 
 -- ----------------------------
 -- Table structure for `hl_user-zzz`
@@ -5675,7 +5674,7 @@ CREATE TABLE `hl_user_area` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(15) DEFAULT NULL,
   `area_code` varchar(15) DEFAULT NULL COMMENT '港口的code 或者city_code',
-  `type` varchar(10) DEFAULT NULL COMMENT '判断是存储的是city 还是port的id',
+  `area_type` varchar(10) DEFAULT NULL COMMENT '判断是存储的是city 还是port的id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
@@ -5686,3 +5685,23 @@ INSERT INTO `hl_user_area` VALUES ('1', '1', '23,24,25,26', 'port');
 INSERT INTO `hl_user_area` VALUES ('2', '2', '120100', 'city');
 INSERT INTO `hl_user_area` VALUES ('3', '1', '25,28,29', 'port');
 INSERT INTO `hl_user_area` VALUES ('26', '1', '22,24,26', 'port');
+
+-- ----------------------------
+-- Table structure for `hl_user_team`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_user_team`;
+CREATE TABLE `hl_user_team` (
+  `uid` int(10) DEFAULT NULL,
+  `team_id` int(10) DEFAULT NULL COMMENT '部门id',
+  `type` varchar(255) DEFAULT NULL COMMENT '部门代码',
+  `boss_id` int(10) DEFAULT NULL COMMENT '上司的uid',
+  `title` varchar(10) DEFAULT NULL COMMENT '部门名称'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_user_team
+-- ----------------------------
+INSERT INTO `hl_user_team` VALUES ('1', '15', 'sales', '0', '业务部门');
+INSERT INTO `hl_user_team` VALUES ('5', '16', 'service ', '6', '客服部门');
+INSERT INTO `hl_user_team` VALUES ('2', '15', 'sales', '1', '业务部门');
+INSERT INTO `hl_user_team` VALUES ('6', '16', 'service', '0', '客服部门');

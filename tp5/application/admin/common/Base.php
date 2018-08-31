@@ -27,16 +27,7 @@ class Base extends Controller
         
     }
     
-    public function _p($value){
-        echo'<pre>';
-        print_r($value);
-        echo '</pre>';
-    }
-     public function _v($value){
-        echo'<pre>';
-        var_dump($value);
-        echo '</pre>';
-    }
+
 
         protected function notlogin()
     {
@@ -71,6 +62,17 @@ class Base extends Controller
      //   return $this->view->fetch('public/middle'); 
     
    }
+   
+      public function _p($value){
+        echo'<pre>';
+        print_r($value);
+        echo '</pre>';
+    }
+     public function _v($value){
+        echo'<pre>';
+        var_dump($value);
+        echo '</pre>';
+    }
     
     
 }

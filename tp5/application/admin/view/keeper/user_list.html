@@ -33,39 +33,44 @@
       <table class="layui-table">
         <thead>
           <tr>
+            <th>ID</th>
             <th>账号</th>
             <th>姓名</th>
-            <th>联系电话</th>
-            <th>用户角色</th>
+            <th>部门</th>
+            <th>负责区域</th>
             <th>用户状态</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
+            
+        <{volist name="list" id ="vo"}>
           <tr>
-            <td class="tdata">18865483321</td>
-            <td>小猪</td>
-            <td>13055493654</td>
-            <td>普通用户</td>
-            <td><span class="layui-btn layui-btn-mini zt">启用</span></td>
+            <td class="tdata"><{$vo.id}></td>
+            <td><{$vo.user_code}></td>
+            <td><{$vo.user_name}></td>
+            <td><{$vo.title}></td>
+            <td>
+            <?php if(array_key_exists('area_list',$vo)){
+                foreach($vo['area_list'] as $code=>$area){
+                     echo"<input type='text' name=".$code." value=".$area."  class ='layui-btn layui-btn-mini' >";
+                }
+               } ?>
+            </td>
+            <td class="td-status">
+                <?php echo $vo['status']==1? '<span class="layui-btn layui-btn-mini zt">启用</span></td>' : 
+                   '<span class="layui-btn layui-btn-mini zt layui-btn-disabled">停用</span></td>'
+                ?>
             <td class="td-manage">
-              <a title="编辑" onclick="x_admin_show('账单修改','<{:url("Keeper/user_edit")}>',500,350)" href="javascript:;">
+              <a onclick="member_stop(this,'<{$vo.id}>')" href="javascript:;"  title="启用">
+                <i class="layui-icon">&#xe601;</i>
+              </a>
+              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('admin/keeper/userEdit')}>?uid=<{$vo.id}>',600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
             </td>
           </tr>
-          <tr>
-            <td class="tdata">18865483321</td>
-            <td>小猪</td>
-            <td>13055493654</td>
-            <td>业务员</td>
-            <td><span class="layui-btn layui-btn-mini zt">禁用</span></td>
-            <td class="td-manage">
-              <a title="编辑" onclick="x_admin_show('账单修改','<{:url("Keeper/user_edit")}>',500,350)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-            </td>
-          </tr>
+         <{/volist}>
         </tbody>
       </table>
       <div class="page">
@@ -92,14 +97,53 @@
 
       //给状态加样式
       for (let i = 0; i <  $('.zt').length; i++) {
-        console.log($('.zt').eq(i).html());
-        
+      //  console.log($('.zt').eq(i).html());
         if( $('.zt').eq(i).html() == '启用'){
           $('.zt').eq(i).addClass('layui-btn-normal');
         }else{
           $('.zt').eq(i).addClass('layui-btn-danger');
         }
       }
+               /*用户-停用*/
+        function member_stop(obj,id){
+            layer.confirm('确认要停用吗？',function(index){
+                if($(obj).attr('title')=='启用'){
+                    
+                  //发异步把用户状态进行更改
+                    toajax(id,'status=0')
+                  $(obj).attr('title','停用')
+                  $(obj).find('i').html('&#xe62f;');
+
+                  $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                  layer.msg('停用!',{icon: 5,time:1000});
+
+                }else{
+                    toajax(id,'status=1')
+                  $(obj).attr('title','启用')
+                  $(obj).find('i').html('&#xe601;');
+
+                  $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                  layer.msg('启用!',{icon: 5,time:1000});
+                }
+
+            } );
+        }   
+      function  toajax(id,status){
+        $.ajax({
+        type: 'post',
+        url: "<{:url('admin/keeper/userStop')}>?id="+id+'&'+status,
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+                if (data == 1) {
+                alert("提交成功");
+                } else {
+                  alert("提交失败");
+                }
+            }
+        })
+    }
+      
     </script>
 
   </body>

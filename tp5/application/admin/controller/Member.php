@@ -30,7 +30,7 @@ class Member extends Base
     //    $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
-         $this->view->assign('page',$page);
+        $this->view->assign('page',$page);
         return $this->view->fetch('Member/member_list'); 
     }
     //禁止使用帐号
