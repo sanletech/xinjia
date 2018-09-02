@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50505
+Source Server         : root
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50505
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-08-31 18:01:24
+Date: 2018-09-02 23:24:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5226,7 +5226,7 @@ CREATE TABLE `hl_sea_bothend` (
   `sealine_id` int(11) DEFAULT NULL COMMENT '航线的编号',
   `mtime` int(11) DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sea_bothend
@@ -5256,6 +5256,9 @@ INSERT INTO `hl_sea_bothend` VALUES ('22', '440400003', '440400002', '22', null)
 INSERT INTO `hl_sea_bothend` VALUES ('23', '440400004', '440400003', '23', null);
 INSERT INTO `hl_sea_bothend` VALUES ('24', '440400005', '440400004', '24', null);
 INSERT INTO `hl_sea_bothend` VALUES ('25', '110100004', '120100009', '25', null);
+INSERT INTO `hl_sea_bothend` VALUES ('26', '120100002', '440100006', '26', null);
+INSERT INTO `hl_sea_bothend` VALUES ('27', '440100003', '440100006', '27', null);
+INSERT INTO `hl_sea_bothend` VALUES ('28', '440100003', '440100002', '28', null);
 
 -- ----------------------------
 -- Table structure for `hl_sea_middle`
@@ -5268,7 +5271,7 @@ CREATE TABLE `hl_sea_middle` (
   `sequence` int(11) DEFAULT NULL COMMENT '中间港口的顺序',
   `mtime` int(11) DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sea_middle
@@ -5315,6 +5318,12 @@ INSERT INTO `hl_sea_middle` VALUES ('40', '19', '110100005', '1', '1528965845');
 INSERT INTO `hl_sea_middle` VALUES ('41', '19', '110100006', '2', '1528965845');
 INSERT INTO `hl_sea_middle` VALUES ('42', '19', '110100004', '3', '1528965845');
 INSERT INTO `hl_sea_middle` VALUES ('43', '20', '110100006', '1', '1529560787');
+INSERT INTO `hl_sea_middle` VALUES ('44', '21', '440100003', '0', '1535894830');
+INSERT INTO `hl_sea_middle` VALUES ('45', '22', '440100004', '0', '1535894883');
+INSERT INTO `hl_sea_middle` VALUES ('46', '23', '440100005', '0', '1535894950');
+INSERT INTO `hl_sea_middle` VALUES ('47', '23', '440100007', '1', '1535894950');
+INSERT INTO `hl_sea_middle` VALUES ('48', '24', '440100002', '0', '1535895026');
+INSERT INTO `hl_sea_middle` VALUES ('49', '24', '440100005', '1', '1535895026');
 
 -- ----------------------------
 -- Table structure for `hl_sequence`
@@ -5568,7 +5577,7 @@ CREATE TABLE `hl_ship_route` (
   `middle_id` int(11) DEFAULT NULL COMMENT '中间港口的路线id',
   `mtime` int(11) DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_ship_route
@@ -5601,6 +5610,7 @@ INSERT INTO `hl_ship_route` VALUES ('25', '7', '7', '1514736000');
 INSERT INTO `hl_ship_route` VALUES ('26', '25', '0', '1529560731');
 INSERT INTO `hl_ship_route` VALUES ('27', '25', '20', '1529560787');
 INSERT INTO `hl_ship_route` VALUES ('28', '12', '0', null);
+INSERT INTO `hl_ship_route` VALUES ('32', '27', '24', '1535895026');
 
 -- ----------------------------
 -- Table structure for `hl_user`
@@ -5626,7 +5636,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '99999', 'aaa@qq.com', '0', '', '2147483647', 'sales');
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535844776', '99999', 'aaa@qq.com', '0', '', '2018', 'sales');
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647', 'sales');
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018', 'sales');
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales');
@@ -5691,17 +5701,20 @@ INSERT INTO `hl_user_area` VALUES ('26', '1', '22,24,26', 'port');
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_user_team`;
 CREATE TABLE `hl_user_team` (
-  `uid` int(10) DEFAULT NULL,
-  `team_id` int(10) DEFAULT NULL COMMENT '部门id',
-  `type` varchar(255) DEFAULT NULL COMMENT '部门代码',
-  `boss_id` int(10) DEFAULT NULL COMMENT '上司的uid',
-  `title` varchar(10) DEFAULT NULL COMMENT '部门名称'
+  `id` int(10) NOT NULL DEFAULT '0' COMMENT '部门id',
+  `uid` varchar(10) DEFAULT NULL COMMENT 'user_code',
+  `pid` int(10) DEFAULT NULL COMMENT '上司的uid',
+  `title` varchar(20) DEFAULT NULL COMMENT '部门名称',
+  `job` varchar(20) DEFAULT NULL COMMENT '职位',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user_team
 -- ----------------------------
-INSERT INTO `hl_user_team` VALUES ('1', '15', 'sales', '0', '业务部门');
-INSERT INTO `hl_user_team` VALUES ('5', '16', 'service ', '6', '客服部门');
-INSERT INTO `hl_user_team` VALUES ('2', '15', 'sales', '1', '业务部门');
-INSERT INTO `hl_user_team` VALUES ('6', '16', 'service', '0', '客服部门');
+INSERT INTO `hl_user_team` VALUES ('1', '0', '0', '业务部门', 'saleDepartme');
+INSERT INTO `hl_user_team` VALUES ('2', '0', '0', '客服部门', 'serviceDepartme');
+INSERT INTO `hl_user_team` VALUES ('3', '2', '5', '业务', 'sale');
+INSERT INTO `hl_user_team` VALUES ('4', '8', '6', '客服', 'service');
+INSERT INTO `hl_user_team` VALUES ('5', '1', '1', '业务经理', 'saleManager');
+INSERT INTO `hl_user_team` VALUES ('6', '6', '2', '客服经理', 'serviceManag');
