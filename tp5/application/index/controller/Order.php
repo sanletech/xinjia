@@ -7,6 +7,11 @@ use think\Db;
 use think\Session;
 class Order extends Base 
 {
+    //路线详情
+    public function order_xq()
+    {
+       return $this->view->fetch('order/order_xq');
+    }
     
     //海运运价
     public function order_list()

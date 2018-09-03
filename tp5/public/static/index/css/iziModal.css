@@ -148,14 +148,7 @@
     margin-bottom: -4px;
     transition: height 0.3s ease;
 }
-.motai{
-    height: 300px;
-    width: 100px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    background-color: #000;
-}
+
 .iziModal-overlay{
     height: 300px;
     width: 100px;

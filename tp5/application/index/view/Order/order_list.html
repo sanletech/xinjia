@@ -2,9 +2,9 @@
 <{include file='./public/head' /}>
 
   <body>
+    <script> 
+    </script>
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
-
     <div class="banner">
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
@@ -149,7 +149,10 @@
                   </div>
 
                   <div class="nei_rig">
-                    <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a>
+
+                    <!-- <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> -->
+                    <a onclick="mo()" href="javascript:;">航线详情</a>
+
                   </div>
 
                   <div class="sm">
@@ -161,47 +164,46 @@
 
             <div class="text-center" id="pages"></div>
       </div>
-      <div class="motai">122</div>
+
       <!-- 模态窗口 -->
-      <div id="modal-default" class="iziModal">
-        <div class="mo_cen">
-          <div class="xian"></div>
-          <div class="mo_nei layui-row">
-            <div class="layui-col-xs4 la">
-              <!-- 进过地址加y类样式 -->
-              <div class="guan">广州
-                <br/>3018-03-14
-                <div class="nn">
-                  <div class="yuan y"></div>
-                </div>
+      <div class="mo_cen">
+        <div class="xian"></div>
+        <div class="mo_nei layui-row">
+          <div class="layui-col-xs4 la">
+            <!-- 进过地址加y类样式 -->
+            <div class="guan">
+              <span>广州</span>
+              <br/><span>3018-03-14</span>
+              <div class="nn">
+                <div class="yuan y"></div>
               </div>
             </div>
-            <div class="layui-col-xs4 la">
-              <!-- 航船经过加chuan类样式 -->
-              <div class="guan chuan">
-                <div class="nn">
-                  <div class="yuan">船</div>
-                </div>中转地
-                <br/>3018-03-14 </div>
-            </div>
+          </div>
+          <div class="layui-col-xs4 la">
+            <!-- 航船经过加chuan类样式 -->
+            <div class="guan chuan">
+              <div class="nn">
+                <div class="yuan">船</div>
+              </div>中转地
+              <br/>3018-03-14 </div>
+          </div>
 
-            <div class="layui-col-xs4 la">
-              <div class="guan">天津
-                <br/>3018-03-14
-                <div class="nn">
-                  <div class="yuan"></div>
-                </div>
+          <div class="layui-col-xs4 la">
+            <div class="guan">天津
+              <br/>3018-03-14
+              <div class="nn">
+                <div class="yuan"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <script>
         var addressURL = "<{:url('admin.php/address/town')}>";
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', load_time: '' };
         //          起点ID        起点名称        终点ID        终点名称      装货时间
       </script>
-      <script src="__STATIC__/js/iziModal.js"></script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
       <script src="__STATIC__/js/order_list.js"></script>
       <script>
@@ -222,8 +224,25 @@
             }
           })
         }
+        var xq={};
+        function mo(){
+            layer.open({
+            type: 1,
+            title:'路线详情',
+            area:['700px','300px'],
+            content: $('.mo_cen'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            skin: 'demo-class',
+            scrollbar: false,
+            fixed : false,
+            success: function(){
+              xq.qi = '广州';
+              xq.sj = '3018-03-14';
+              console.log(xq)
+            }
+          });
+        }
 
-        layui.use('laypage', function () {
+        layui.use('laypage', function () {          
           var laypage = layui.laypage;
           var $data = $("#search_price input");
           var start_add = $data[0].value;

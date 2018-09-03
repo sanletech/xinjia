@@ -1,15 +1,21 @@
-//模态窗口基本设置
-$("#modal-default").iziModal({
-    title: "航线详情",
-    iconClass: 'icon-announcement',
-    width: 700,
-    padding: 20
-}); 
-//启动模态窗
-$(document).on('click', '.trigger-default', function (event) {
-    event.preventDefault();
-    $('#modal-default').iziModal('open');
+// //模态窗口基本设置
+// $("#modal-default").iziModal({
+//     title: "航线详情",
+//     iconClass: 'icon-announcement',
+//     width: 700,
+//     padding: 20
+// }); 
+// //启动模态窗
+// $(document).on('click', '.trigger-default', function (event) {
+//     event.preventDefault();
+//     $('#modal-default').iziModal('open');
+// });
+
+//监听滚动条
+$(parent.window).scroll(function () {
+    $(".demo-class").css('top',$(parent.window).scrollTop());
 });
+
 
 // 日期
 layui.use(['form', 'layedit', 'laydate'], function () {
@@ -40,7 +46,7 @@ $('#address li').eq(0).click(function () {
 function loadProvince() {
     $('#dizhi').html('');
     for (let i in areaData) {
-        $('#dizhi').append('<a href="javascript:void(0)" onclick=loadCity(' + areaData[i].provinceCode +  ')>' + areaData[i].provinceName + '</a>');
+        $('#dizhi').append('<a href="javascript:void(0)" onclick=loadCity(' + areaData[i].provinceCode + ')>' + areaData[i].provinceName + '</a>');
     }
     $('#address li').removeClass('lanse').eq(0).addClass('lanse');
 }
@@ -58,14 +64,14 @@ function loadCity(citys_id) {
                 $('#address').hide();
             }
             inp.val('');
-            if(boot){
+            if (boot) {
                 add.start_id = data.provinceCode;
                 add.start_name = data.provinceName;
-            }else{
+            } else {
                 add.end_id = data.provinceCode;
                 add.end_name = data.provinceName;
             }
-            
+
             inp.val(data.provinceName);//当前选中的值
             $('#address li').removeClass('lanse').eq(1).addClass('lanse');//选中城市
         }
@@ -80,20 +86,20 @@ function loadPort(areas_id) {
             if (arry[i].cityCode == areas_id) {
                 $('#dizhi').html('');
                 for (let h in arry[i].mallAreaList) {
-                    let st = arry[i].mallAreaList[h].areaCode +",'"+arry[i].mallAreaList[h].areaName+"'";
+                    let st = arry[i].mallAreaList[h].areaCode + ",'" + arry[i].mallAreaList[h].areaName + "'";
                     $('#dizhi').append('<a href="javascript:void(0)" onclick="jie_dao(' + st + ')">' + arry[i].mallAreaList[h].areaName + '</a>');
                 }
                 if (arry[i] == false) {//当后面没有数据的时候
                     $('#address').hide();
                 }
-                if(boot){
+                if (boot) {
                     add.start_id = arry[i].cityCode;
                     add.start_name = arry[i].cityName;
-                }else{
+                } else {
                     add.end_id = arry[i].cityCode;
                     add.end_name = arry[i].cityName;
                 }
-                inp.val(inp.val()+arry[i].cityName);//当前选中的值
+                inp.val(inp.val() + arry[i].cityName);//当前选中的值
                 $('#address li').removeClass('lanse').eq(2).addClass('lanse');
             }
         }
@@ -101,48 +107,48 @@ function loadPort(areas_id) {
 }
 
 // 加载街道
-function jie_dao(jie_id,jie_name) {
-    inp.val(inp.val()+jie_name);//当前选中的值
-    if(boot){
+function jie_dao(jie_id, jie_name) {
+    inp.val(inp.val() + jie_name);//当前选中的值
+    if (boot) {
         add.start_id = jie_id;
         add.start_name = jie_name;
-    }else{
+    } else {
         add.end_id = jie_id;
         add.end_name = jie_name;
     }
-    var townurl = addressURL +'?twoncode='+jie_id;
+    var townurl = addressURL + '?twoncode=' + jie_id;
     $.ajax({//通过AJAX去数据库获取街道值
-        type:'POST',
-        url:townurl,
-        dataType:"json",
-        success:function(data){
+        type: 'POST',
+        url: townurl,
+        dataType: "json",
+        success: function (data) {
             if (data) {
                 let arry = data;
                 arry = JSON.parse(arry)
-                arry =  eval('('+arry+')')
+                arry = eval('(' + arry + ')')
                 $('#dizhi').html('');
-                for (let i in arry) {           
-                    $('#dizhi').append('<a href="javascript:void(0)" onclick="add_food('+i+',this)">' + arry[i] + '</a>');
+                for (let i in arry) {
+                    $('#dizhi').append('<a href="javascript:void(0)" onclick="add_food(' + i + ',this)">' + arry[i] + '</a>');
                 }
                 $('#address li').removeClass('lanse').eq(3).addClass('lanse');
-            }else{
+            } else {
                 $('#address').hide();
             }
-            
+
         },
     })
 }
 
 //街道之后
-function add_food(dao_id,zj){
-    if(boot){
+function add_food(dao_id, zj) {
+    if (boot) {
         add.start_id = dao_id;
         add.start_name = $(zj).html();
-    }else{
+    } else {
         add.end_id = dao_id;
         add.end_name = $(zj).html();
     }
-    inp.val(inp.val()+$(zj).html());//当前选中的值
+    inp.val(inp.val() + $(zj).html());//当前选中的值
     $('#address').hide();
 }
 

@@ -204,6 +204,11 @@ button:hover{
 }
 
 // 模态窗口样式
+.demo-class .layui-layer-title{
+  background-color: $lan;
+  color: #fff;
+}
+
 .mo_cen{
   height:100px;
   padding:50px 0;
@@ -294,4 +299,17 @@ button:hover{
       }
     }
   }
+}
+
+html {
+  width: 100%;
+  height:auto;
+  overflow-x: hidden;
+}
+
+body {
+  text-align: left;
+  width: 100%;
+  background: #e9dfc7;
+  overflow-y:scroll;
 }

@@ -154,6 +154,10 @@ button:hover {
         line-height: 55px;
         color: #8c8c8c; }
 
+.demo-class .layui-layer-title {
+  background-color: #2e8de5;
+  color: #fff; }
+
 .mo_cen {
   height: 100px;
   padding: 50px 0;
@@ -224,5 +228,16 @@ button:hover {
     margin: 0 5px; }
     #address #dizhi a:hover {
       color: red; }
+
+html {
+  width: 100%;
+  height: auto;
+  overflow-x: hidden; }
+
+body {
+  text-align: left;
+  width: 100%;
+  background: #e9dfc7;
+  overflow-y: scroll; }
 
 /*# sourceMappingURL=hyyj.css.map */
