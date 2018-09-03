@@ -35,64 +35,25 @@ class ShipMan extends Base {
         return $this->view->fetch('carshipman/shipman_list');
     }
 
-    //怎么把船公司及下面的港口传到页面上选择
+    //把船公司及下面的港口传到页面上选择
     public function man_add() {
-//        $portsql = 'select SP.ship_id ,P.city_id , '
-//                . 'SP.port_id,P.port_name from hl_ship_port SP '
-//                . 'left join hl_port P on P.port_code = SP.port_id  '
-//                . 'left join hl_shipcompany SC on SC.id = SP.ship_id  '
-//                . 'left join hl_city C on C.city_id = P.city_id '
-//                . 'order by SP.ship_id ,P.city_id,SP.seq';
+
         function  arrsql( $str ='SP.port_id,P.port_name,P.city_id ,C.city ,SP.ship_id ,SC.ship_short_name ship_name',$map){ 
-       
             $arr  = Db::name('ship_port')->alias('SP')
                         ->join('hl_port P','P.port_code = SP.port_id','left')
                         ->join('hl_shipcompany SC','SC.id = SP.ship_id','left')
                         ->join('hl_city C','C.city_id = P.city_id','left')
                         ->order('SP.ship_id ,P.city_id,SP.seq')
-                        ->field($str)->where($map)->select();
+                        ->group($map)->field($str)->select();
             return $arr;
         }
-        $ship_arr = arrsql('P.city_id ,SP.ship_id ,SC.ship_short_name ship_name');
-        foreach ($ship_arr as  $city_v) {
-            $ship_arr['citylist'][]= arrsql('P.city_id ,C.city','SP.ship_id = $city_v');
-        }
         
-        
-       $this->_p($port_arr);exit;
-        foreach ($port_arr as $key=>$value){
-            if($port_arr[$key]['ship_id']==$value['ship_id']){
-                $port_city_ship[]=['ship_id'=>$value['ship_id'],'ship_name'=>$value['ship_name']];
-            }
-        
-        
-                
-       // $port_arr = Db::query($portsql);
-        
-        $citysql = 'select SP.ship_id ,P.city_id,C.city from hl_ship_port SP '
-                . 'left join hl_port P on P.port_code = SP.port_id  '
-                . 'left join hl_shipcompany SC on SC.id = SP.ship_id  '
-                . 'left join hl_city C on C.city_id = P.city_id  '
-                . 'group by P.city_id , SP.ship_id  '
-                . 'order by SP.ship_id ,P.city_id,SP.seq';
-        $city_arr = Db::query($citysql);
-        
-        $shipsql = 'select SP.ship_id ,SC.ship_short_name ship_name '
-                . ' from hl_ship_port SP '
-                . 'left join hl_shipcompany SC on SC.id = SP.ship_id  '
-                . 'group by  SP.ship_id  '
-                . 'order by SP.ship_id ,SP.seq';
-        $ship_arr = Db::query($shipsql);
-//        $this->_p($ship_arr);
-//        $this->_p($city_arr);
-//        $this->_p($port_arr);
-//        exit;
-//        foreach ($ship_arr as $ship_k => $ship_v) {
-//             $ship_v['ship_id']
-//            $ship_arr[$ship_k]['citylist'][] =
-//        }
-//        
-        
+        $port_arr= arrsql('SP.ship_id ,P.city_id ,SP.port_id,P.port_name','SP.ship_id ,P.city_id ,SP.port_id');
+        $city_arr =arrsql('SP.ship_id ,P.city_id,C.city','C.city_id,SP.ship_id');
+        $ship_arr = arrsql('SP.ship_id ,SC.ship_short_name ship_name','SP.ship_id');
+//        $this->_p( $port_arr); echo '</br>';
+//        $this->_p($city_arr); echo '</br>';
+//        $this->_p($ship_arr); echo '</br>'; exit;
         
         $ship_arr_count =count($ship_arr);
         $city_arr_count =count($city_arr);
@@ -103,22 +64,16 @@ class ShipMan extends Base {
                 for($i=0;$i<$port_arr_count;$i++){
                     if( $city_arr[$j]['ship_id']==$port_arr[$i]['ship_id']  &&
                         $city_arr[$j]['city_id']==$port_arr[$i]['city_id'] ){
-                        $city_arr[$j]['portlist'][$i]=$port_arr[$i];
-                        if($i==$port_arr_count-1){
-                            $city_arr[$j]['portlist'] = array_values($city_arr[$j]['portlist']);   
-                        }
+                        $city_arr[$j]['portlist'][$i]=array('port_id'=>$port_arr[$i]['port_id'],'port_name'=>$port_arr[$i]['port_name']);
                     }
                 }
                 if($ship_arr[$k]['ship_id'] ==$city_arr[$j]['ship_id']){
-                    $ship_arr[$k]['citylist'][$j]=$city_arr[$j];
-                }
-                if($j==$city_arr_count-1){
-                    $ship_arr[$k]['citylist'] =  array_values( $ship_arr[$k]['citylist']);
+                    $ship_arr[$k]['citylist'][$j]=array('city_id'=>$city_arr[$j]['city_id'],'city'=>$city_arr[$j]['city'],'portlist'=>  array_values($city_arr[$j]['portlist']));
                 }
             }
-              
+            $ship_arr[$k]['citylist'] =  array_values( $ship_arr[$k]['citylist']);
         }
-        $this->_p($ship_arr);exit;
+        
        
         $js_port = json_encode($ship_arr);
         $js_port = 'var SHIP_PORT ='.$js_port;
@@ -130,7 +85,7 @@ class ShipMan extends Base {
         }  
         return $this->view->fetch('carshipman/shipman_add');
     }
-    }
+   
     public function to_add() {
         $data = $this->request->param();
        // $this->_v($data);exit;

@@ -30,7 +30,7 @@ class Login extends Model
             if(!empty($salesName)){
                 //根据业务姓名查询其业务编号 如果没有就填0
                // $sql= "select sales_code from hl_salesman where salesname ='$salesName'";
-                $sales_code =Db::name('salesman')->where('sales_name',$salesName)->value('sales_code');
+                $sales_code =Db::name('user')->where('user_name',$salesName)->where('type','sales')->value('user_code');
                 $sales_code = $sales_code ?$sales_code :0;
             }
            

@@ -6,21 +6,29 @@ namespace app\admin\controller;
 use app\admin\common\Base;
 use think\Request;
 use think\Db;
-use app\admin\model\Order as OrderM;
+use app\admin\model\OrderProcess as OrderPM;
 use think\Validate;
 use think\session;
 class OrderProcess extends Base
 {  
    
      //查看完成的详细订单
-    public function OrderDetail() {
-        
-        
+    public function OrderDetail($order_num) {
+        $M= new OrderPM;
+        $res =$M->OrderDetail($order_num);
+        return $res;
     } 
     //拆订单
     public function orderSplit() {
         
     }
+    
+    //查看订单的进行状态
+    public function OrderDynamic($order_num) {
+        $res =Db::name('order_status')->where('order_num',$order_num)->select();
+        return $res;
+    } 
+    
     
     //修改订单
     public function orderModify()  {
