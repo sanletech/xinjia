@@ -122,15 +122,17 @@
         $(this).addClass('head_li').siblings('li').removeClass('head_li');
       });
     function toajax (){
+      let obj = $("#track_form").serializeArray();
+      console.log(obj);
       $.ajax({
           type:'POST',
-          url:"<{:url('index/Cargotrack/tracking')}>",    
+          url:"<{:url('index/LogisticsQuery/order_query')}>",    
           data:$("#track_form").serialize(),
           dataType:"json",
-          success:function(status){
-                      console.log(status)
-                      }
-      })
+          success:function(data){
+            console.log(data);
+          }
+      });
     }
     
       
