@@ -119,10 +119,11 @@ class Keeper extends Base
             ->field('UT.uid,U.user_name,T.*')
             ->group('UT.id,T.id')
             ->select();
+//    $this->_p($array);exit;
         $list = $this->generateTree($array);
        
        // $list = $this->procHtml($listArr);
-//        $this->_p($list);exit;
+        $this->_p($list);exit;
       return json_encode($list,true);
     }
     
@@ -171,8 +172,10 @@ class Keeper extends Base
     function generateTree($array){
         //第一步 构造数据
         $items = array();
+        $i=1;
         foreach($array as $value){
-            $items[$value['id']] = $value;
+            $items[$i] = $value;
+            $i++;
         }
 //        $this->_p($items);exit;
         //第二部 遍历数据 生成树状结构

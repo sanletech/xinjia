@@ -75,16 +75,9 @@
             <?php $timediff =time()-$vo['ctime']; $days = intval($timediff/86400); echo $days;?>天</p>
     </div>
 <div class="layui-col-md1">
-<p class="a_niu" stlye="">
-    <input type="radio" name="payment" value="monthly" title="月结">月结
-    <input type="radio" name="payment" value="pledge" title="压柜" >压柜
-    <input type="radio" name="payment" value="cash" title="现款" >现款
-</p>
-    
 <p class="a_niu">
     <a title="提交" onclick="order_pass(this,'<{$vo.order_num}>')" href="javascript:;">提交</a>
 </p>
-
 <p class="a_niu">
     <a class="qu" href="">取消</a>
 </p>
