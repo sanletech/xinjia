@@ -1,31 +1,34 @@
-.route {
-  width: 80%;
-  margin: 50px auto; }
-  .route .gkou {
-    overflow: hidden; }
-    .route .gkou .le {
-      text-align: right;
-      line-height: 45px; }
-    .route .gkou .rig .inpu {
-      margin-left: 20px;
-      margin-bottom: 10px;
-      position: relative; }
-      .route .gkou .rig .inpu a {
-        position: absolute;
-        top: 8px;
-        right: 5px; }
-        .route .gkou .rig .inpu a i {
-          font-size: 22px; }
-    .route .gkou .rig .jia {
+#route {
+  padding: 10px 20px; }
+  #route span {
+    font-size: 16px; }
+  #route .fenge {
+    border: 1px solid #2e8de5;
+    margin: 10px 0; }
+  #route .route_top {
+    margin-bottom: 5px;
+    overflow: hidden;
+    font-weight: 700; }
+    #route .route_top > div {
+      font-size: 20px;
+      float: left; }
+    #route .route_top .you {
       text-align: center;
-      margin-left: 20px;
-      margin-bottom: 10px; }
-      .route .gkou .rig .jia i {
-        font-size: 25px;
-        line-height: 40px; }
-
-.an {
-  width: 170px;
-  margin: 20px auto; }
+      color: red;
+      float: right; }
+  #route .layui-col-xs12 {
+    margin: 10px 0; }
+  #route .dingdan {
+    padding-top: 10px; }
+    #route .dingdan .dd_xq {
+      border: 1px solid #ff9f19;
+      padding: 5px;
+      margin: 10px 0; }
+  #route .dbgh .db_zt .db_top {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    color: red;
+    cursor: pointer; }
 
 /*# sourceMappingURL=route_add.css.map */
