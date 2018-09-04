@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : root
-Source Server Version : 50553
+Source Server         : localhost_3306
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-02 23:24:52
+Date: 2018-09-04 10:20:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5613,6 +5613,31 @@ INSERT INTO `hl_ship_route` VALUES ('28', '12', '0', null);
 INSERT INTO `hl_ship_route` VALUES ('32', '27', '24', '1535895026');
 
 -- ----------------------------
+-- Table structure for `hl_team`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_team`;
+CREATE TABLE `hl_team` (
+  `id` int(10) NOT NULL DEFAULT '0' COMMENT '部门id',
+  `pid` int(10) DEFAULT NULL COMMENT '上司的uid',
+  `title` varchar(20) DEFAULT NULL COMMENT '部门名称',
+  `job` varchar(20) DEFAULT NULL COMMENT '职位',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_team
+-- ----------------------------
+INSERT INTO `hl_team` VALUES ('1', '0', '业务部门', 'saleDepartme');
+INSERT INTO `hl_team` VALUES ('2', '0', '客服部门', 'serviceDepartme');
+INSERT INTO `hl_team` VALUES ('3', '0', '财务部门', 'financeDepartment ');
+INSERT INTO `hl_team` VALUES ('4', '1', '业务经理', 'saleManager');
+INSERT INTO `hl_team` VALUES ('5', '2', '客服经理', 'serviceManag');
+INSERT INTO `hl_team` VALUES ('6', '3', '财务经理', 'financeManager');
+INSERT INTO `hl_team` VALUES ('7', '4', '业务', 'sale');
+INSERT INTO `hl_team` VALUES ('8', '5', '客服', 'service');
+INSERT INTO `hl_team` VALUES ('9', '6', '财务', 'finance');
+
+-- ----------------------------
 -- Table structure for `hl_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_user`;
@@ -5622,8 +5647,8 @@ CREATE TABLE `hl_user` (
   `user_code` varchar(10) NOT NULL COMMENT '员工编号',
   `user_name` varchar(10) NOT NULL COMMENT '业务姓名',
   `password` varchar(32) NOT NULL COMMENT '密码',
-  `create_time` int(12) NOT NULL COMMENT '创建时间',
-  `logintime` int(12) NOT NULL COMMENT '最近一次登录时间',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `logintime` datetime NOT NULL COMMENT '最近一次登录时间',
   `phone` varchar(15) NOT NULL COMMENT '手机号码',
   `email` varchar(20) NOT NULL COMMENT '邮箱',
   `status` tinyint(1) NOT NULL COMMENT '启用状态:0表示禁用 1表示启用',
@@ -5631,19 +5656,19 @@ CREATE TABLE `hl_user` (
   `update_time` int(12) DEFAULT NULL,
   `type` varchar(10) DEFAULT NULL COMMENT '操作员,业务,管理员,老板',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535844776', '99999', 'aaa@qq.com', '0', '', '2018', 'sales');
-INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '11111111', 'ssssi@qq.com', '0', '', '2147483647', 'sales');
-INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0', '1529371849', '10086123', 'wangwu@qq.com', '0', '', '2018', 'sales');
-INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales');
-INSERT INTO `hl_user` VALUES ('5', 'service1', 'yw005', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '10086', 'aaa@qq.com', '1', null, '2147483647', 'service');
-INSERT INTO `hl_user` VALUES ('6', 'service2', 'yw006', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1111111', 'asaa@qq.com', '1', null, '2147483647', 'service ');
-INSERT INTO `hl_user` VALUES ('8', 'service3', 'yw007', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535678628', '10086', 'aaa@qq.com', '1', null, '2018', 'service ');
-INSERT INTO `hl_user` VALUES ('9', 'service4', 'asdfa', '打发', 'e10adc3949ba59abbe56e057f20f883e', '0', '1535595768', '', '', '0', null, '2018', 'service ');
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '99999', 'aaa@qq.com', '1', '', '2018', 'sales');
+INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales');
+INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales');
+INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales');
+INSERT INTO `hl_user` VALUES ('5', 'service1', 'yw005', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'service');
+INSERT INTO `hl_user` VALUES ('6', 'service2', 'yw006', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1111111', 'asaa@qq.com', '1', null, '2147483647', 'service ');
+INSERT INTO `hl_user` VALUES ('7', 'service4', 'asdfa', '打发', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '', '1', null, '2018', 'service ');
+INSERT INTO `hl_user` VALUES ('8', 'service3', 'yw007', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2018', 'service ');
 
 -- ----------------------------
 -- Table structure for `hl_user-zzz`
@@ -5703,18 +5728,18 @@ DROP TABLE IF EXISTS `hl_user_team`;
 CREATE TABLE `hl_user_team` (
   `id` int(10) NOT NULL DEFAULT '0' COMMENT '部门id',
   `uid` varchar(10) DEFAULT NULL COMMENT 'user_code',
-  `pid` int(10) DEFAULT NULL COMMENT '上司的uid',
-  `title` varchar(20) DEFAULT NULL COMMENT '部门名称',
-  `job` varchar(20) DEFAULT NULL COMMENT '职位',
+  `team_id` int(10) DEFAULT NULL COMMENT '上司的uid',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user_team
 -- ----------------------------
-INSERT INTO `hl_user_team` VALUES ('1', '0', '0', '业务部门', 'saleDepartme');
-INSERT INTO `hl_user_team` VALUES ('2', '0', '0', '客服部门', 'serviceDepartme');
-INSERT INTO `hl_user_team` VALUES ('3', '2', '5', '业务', 'sale');
-INSERT INTO `hl_user_team` VALUES ('4', '8', '6', '客服', 'service');
-INSERT INTO `hl_user_team` VALUES ('5', '1', '1', '业务经理', 'saleManager');
-INSERT INTO `hl_user_team` VALUES ('6', '6', '2', '客服经理', 'serviceManag');
+INSERT INTO `hl_user_team` VALUES ('1', '1', '4');
+INSERT INTO `hl_user_team` VALUES ('2', '2', '5');
+INSERT INTO `hl_user_team` VALUES ('3', '3', '6');
+INSERT INTO `hl_user_team` VALUES ('4', '4', '7');
+INSERT INTO `hl_user_team` VALUES ('5', '5', '8');
+INSERT INTO `hl_user_team` VALUES ('6', '6', '7');
+INSERT INTO `hl_user_team` VALUES ('7', '7', '9');
+INSERT INTO `hl_user_team` VALUES ('8', '8', '7');
