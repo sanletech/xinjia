@@ -1,7 +1,6 @@
 <{include file='./public/head' /}>
 
   <body>
-    <link rel="stylesheet" type="text/css" href="__STATIC__/css/iziModal.css">
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
     <link rel="stylesheet" href="__STATIC__/css/xiala.css">
     <link rel="stylesheet" href="__STATIC__/css/all_order.css">
@@ -30,7 +29,7 @@
                 <li><span>4</span> 完成</li>
                 </ul>
         </div>
-        <!-- 订单信息 -->A.sea_id, A.rid, A.sid
+        <!-- 订单信息 -->
             <input type="hidden" name='sea_id' value="<{$list.sea_id}>">
             <input type="hidden" name='rid' value="<{$list.rid}>">
             <input type="hidden" name='sid' value="<{$list.sid}>">
@@ -388,7 +387,7 @@
     </form>
       <!-- 填写发票窗口 -->
       <div id="modal-default">
-        <form class="layui-form"id ='invoice_form'>
+        <form class="layui-form" id ='invoice_form'>
             <input type="hidden" name='member_code' value="<{$Think.session.member_code}>"> 
             <!--需要贮存客户session_id-->
           <div class="layui-form-item">
@@ -532,7 +531,6 @@
             </from>
         </div>
       </div>
-    <script src="__STATIC__/js/iziModal.js"></script>
     <script src="__STATIC__/js/lrdd.js"></script>
     <script src="__STATIC__/js/place_order.js"></script> 
     <script>
@@ -546,6 +544,7 @@
         var invoiceUrl = "<{:url('index/order/invoice')}>";
         //订单信息的提交
         var OrderUrl = "<{:url('index/order/order_data')}>";
+
 </script> 
   </body>
   </html>

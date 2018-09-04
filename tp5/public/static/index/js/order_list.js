@@ -1,21 +1,3 @@
-// //模态窗口基本设置
-// $("#modal-default").iziModal({
-//     title: "航线详情",
-//     iconClass: 'icon-announcement',
-//     width: 700,
-//     padding: 20
-// }); 
-// //启动模态窗
-// $(document).on('click', '.trigger-default', function (event) {
-//     event.preventDefault();
-//     $('#modal-default').iziModal('open');
-// });
-
-//监听滚动条
-$(parent.window).scroll(function () {
-    $(".demo-class").css('top',$(parent.window).scrollTop());
-});
-
 
 // 日期
 layui.use(['form', 'layedit', 'laydate'], function () {

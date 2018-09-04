@@ -338,10 +338,9 @@ button{
     }
   }
 }
-#wt1,#wt2{
-  .iziModal-header{
-    background-color: $lan !important;
-  }
+#wt1,#wt2,#modal-default{
+  padding: 10px;
+  display: none;
 }
 
 #wt1 .biao .xin{
@@ -378,4 +377,9 @@ button{
       }
     }
   }
+}
+
+.demo-class .layui-layer-title{
+  background-color: $lan;
+  color: #fff;
 }

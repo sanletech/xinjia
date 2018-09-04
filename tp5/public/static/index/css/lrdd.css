@@ -256,8 +256,9 @@ button {
       background-color: #2e8de5;
       border-radius: 10px; }
 
-#wt1 .iziModal-header, #wt2 .iziModal-header {
-  background-color: #2e8de5 !important; }
+#wt1, #wt2, #modal-default {
+  padding: 10px;
+  display: none; }
 
 #wt1 .biao .xin li {
   padding: 10px 15px;
@@ -283,5 +284,9 @@ button {
       float: left; }
       #wt1 .biao .xin li .nei .rig .wu {
         height: 50px; }
+
+.demo-class .layui-layer-title {
+  background-color: #2e8de5;
+  color: #fff; }
 
 /*# sourceMappingURL=lrdd.css.map */

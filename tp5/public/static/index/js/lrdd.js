@@ -46,6 +46,13 @@ layui.use(['form', 'layedit', 'laydate'], function () {
   });
 });
 
+
+function gun(){
+  //监听滚动条
+  $('html',window.parent.document).css('overflow-y','hidden');
+  $(".demo-class").css('top',$(parent.window).scrollTop()-100);
+  
+}
 //表单切换
 layui.use('element', function () {
   var $ = layui.jquery
@@ -75,43 +82,63 @@ layui.use('element', function () {
   };
 });
 
-
-
-//提交模态窗口基本设置
-$("#modal-default").iziModal({
-  title: "发票填写",
-  iconClass: 'icon-announcement',
-  width: 700,
-  padding: 20
-});
-//启动模态窗
-$(document).on('click', '.trigger-default', function (event) {
-  event.preventDefault();
-  $('#modal-default').iziModal('open');
-});
-
-//选择模态窗口基本设置
-$("#wt1").iziModal({
-  title: "请选择",
-  iconClass: 'icon-announcement',
-  width: 1000,
-  padding: 20 
-});
-//启动模态窗
-$(document).on('click', '.wt1', function (event) {
-  event.preventDefault();
-  $('#wt1').iziModal('open');
-});
-
-//添加模态窗口基本设置
-$("#wt2").iziModal({
-  title: "添加",
-  iconClass: 'icon-announcement',
-  width: 600,
-  padding: 20
-});
-//启动模态窗
-$(document).on('click', '.wt2', function (event) {
-  event.preventDefault();
-  $('#wt2').iziModal('open');
-});
+//选择模态框
+$('.wt1').click(function(){
+  layer.open({
+    type: 1,
+    title:'路线详情',
+    area:['1000px','500px'],
+    content: $('#wt1'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+    skin: 'demo-class',
+    scrollbar: false,
+    fixed : false,
+    success: function(){
+      // 模态框成功调用
+      gun();
+    },
+    //关闭窗口时
+    cancel:function(){
+      $('html',window.parent.document).css('overflow-y','auto');
+    }
+  });
+})
+//添加模态框
+$('.wt2').click(function(){
+  layer.open({
+    type: 1,
+    title:'路线详情',
+    area:['600px'],
+    content: $('#wt2'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+    skin: 'demo-class',
+    scrollbar: false,
+    fixed : false,
+    success: function(){
+      // 模态框成功调用
+      gun();
+    },
+    //关闭窗口时
+    cancel:function(){
+      $('html',window.parent.document).css('overflow-y','auto');
+    }
+  });
+})
+//发票模态框
+$('.trigger-default').click(function(){
+  layer.open({
+    type: 1,
+    title:'路线详情',
+    area:['600px'],
+    content: $('#modal-default'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+    skin: 'demo-class',
+    scrollbar: false,
+    fixed : false,
+    success: function(){
+      // 模态框成功调用
+      gun();
+    },
+    //关闭窗口时
+    cancel:function(){
+      $('html',window.parent.document).css('overflow-y','auto');
+    }
+  });
+})

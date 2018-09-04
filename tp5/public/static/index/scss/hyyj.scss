@@ -210,6 +210,7 @@ button:hover{
 }
 
 .mo_cen{
+  display: none;
   height:100px;
   padding:50px 0;
   position: relative;
@@ -299,17 +300,4 @@ button:hover{
       }
     }
   }
-}
-
-html {
-  width: 100%;
-  height:auto;
-  overflow-x: hidden;
-}
-
-body {
-  text-align: left;
-  width: 100%;
-  background: #e9dfc7;
-  overflow-y:scroll;
 }

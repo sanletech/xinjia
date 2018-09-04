@@ -205,7 +205,7 @@
         //          起点ID        起点名称        终点ID        终点名称      装货时间
       </script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
-      <script src="__STATIC__/js/order_list.js"></script>
+      <script src="__STATIC__/js/order_list.js"></script> 
       <script>
         function toajax() {
           add.load_time = $('#load_time').val();
@@ -224,20 +224,24 @@
             }
           })
         }
-        var xq={};
+
         function mo(){
             layer.open({
             type: 1,
             title:'路线详情',
-            area:['700px','300px'],
+            area:['700px'],
             content: $('.mo_cen'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
             skin: 'demo-class',
             scrollbar: false,
             fixed : false,
             success: function(){
-              xq.qi = '广州';
-              xq.sj = '3018-03-14';
-              console.log(xq)
+              //监听滚动条
+              $('html',window.parent.document).css('overflow-y','hidden');
+              $(".demo-class").css('top',$(parent.window).scrollTop());
+            },
+            //关闭窗口时
+            cancel:function(){
+              $('html',window.parent.document).css('overflow-y','auto');
             }
           });
         }
