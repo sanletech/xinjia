@@ -213,7 +213,7 @@
           $.ajax({
             type: 'GET',
             url: "<{:url('index/order/order_list')}>",
-            data: $("#search_price").serialize(),
+            data: add,
             dataType: "json",
             success: function (data) {
               if (data.status == 1) {

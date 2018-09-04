@@ -65,7 +65,7 @@
                 <{$vo.e_port_name}>
         </p>
         <p>箱型*箱量:
-            <{$vo.type}>*
+            <{$vo.container_size}>*
                 <{$vo.container_sum}>
         </p>
     </div>
@@ -121,7 +121,7 @@
             type: 'GET',
             url: "<{$ajaxurl}>",
             data: data,
-            dataType:"JSON",
+            datacontainer_size:"JSON",
            // contentType: "application/json; charset=utf-8",
             success: function (data) {
             }

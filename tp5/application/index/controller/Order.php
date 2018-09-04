@@ -16,9 +16,9 @@ class Order extends Base
     //海运运价
     public function order_list()
     {
-        $start_add =$this->request->param('start_add');
+        $start_add =$this->request->param('start_id');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
-        $end_add =$this->request->param('end_add');
+        $end_add =$this->request->param('end_id');
         if($end_add){ $this->view->assign('end_add',$end_add);  }
         $load_time =$this->request->param('load_time');
         if($load_time){ $this->view->assign('load_time',$load_time);  
@@ -41,7 +41,7 @@ class Order extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-      //$this->_p($list);exit;
+//      $this->_p($list);exit;
        return $this->view->fetch('Order/order_list');
     }
     

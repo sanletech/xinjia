@@ -17,8 +17,19 @@
                   <span class="x-red">*</span>职务
               </label>
               <div class="layui-input-inline">
-                  <input type="text" id="L_username" name="job" required="" lay-verify="nikename"
-                  autocomplete="off" class="layui-input">
+               <select name="job">
+                    <option value="">请选择</option>
+                <{volist name="jobList" id="vo"}>
+                <optgroup label="<{$vo.title}>">
+                     <{volist name="$vo.childMenus" id ='v1'}> 
+                        <option value="<{$v1.id}>"><{$v1.title}></option>
+                            <{volist name="$v1.childMenus" id ='v2'}>
+                            <option value="<{$v2.id}>"><{$v2.title}></option>
+                            <{/volist}>
+                        <{/volist}>
+                    </optgroup>
+              <{/volist}>
+              </select>
               </div>
           </div>
         <div class="layui-form-item">
@@ -90,17 +101,21 @@
 	    	  data:data.field,
 	    	  dataType:'json',
 	    	  success:function(data){
-	    		  //这里获取到数据执行显示
+	    		 if(data==1){
+                                 //发异步，把数据提交给php
+                                layer.alert("增加成功", {icon: 6},function () {
+                                    // 获得frame索引
+                                    var index = parent.layer.getFrameIndex(window.name);
+                                    //关闭当前frame
+                                    parent.layer.close(index);
+                                });
+                        }else {
+                            layer.alert("增加失败", {icon: 5})
+                        }
 	    	  }
 	      });
             
-            //发异步，把数据提交给php
-            layer.alert("增加成功", {icon: 6},function () {
-                // 获得frame索引
-                var index = parent.layer.getFrameIndex(window.name);
-                //关闭当前frame
-                parent.layer.close(index);
-            });
+        
             return false;
           });
         });
