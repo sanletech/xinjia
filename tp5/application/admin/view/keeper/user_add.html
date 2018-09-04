@@ -54,14 +54,14 @@
           <div class="layui-form-item">
               <label for="L_repass" class="layui-form-label">
               </label>
-              <button   class="layui-btn" lay-filter="add" lay-submit="">
+              <button   class="layui-btn"  lay-filter="add" lay-submit="">
                   增加
               </button>
           </div>
       </form>
     </div>
     <script>
-        layui.use(['form','layer'], function(){
+        layui.use(['form','layer','laydate'], function(){
             $ = layui.jquery;
           var form = layui.form
           ,layer = layui.layer;
@@ -82,12 +82,12 @@
 //          });
 
           //监听提交
-          form.on('submit(*)', function(data){
-            console.log(data);
+          form.on('submit(add)', function(data){
+            console.log(data.field);
              $.ajax({//异步请求返回给后台
 	    	  url:'<{:url("admin/keeper/userToAdd")}>',
 	    	  type:'POST',
-	    	  data:data.serialize(),
+	    	  data:data.field,
 	    	  dataType:'json',
 	    	  success:function(data){
 	    		  //这里获取到数据执行显示
@@ -103,10 +103,6 @@
             });
             return false;
           });
-          
-          
-          
-          
         });
     </script>    
 </body>
