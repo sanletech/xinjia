@@ -1,0 +1,77 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <style>
+            div,
+            .layui-form-label {
+                font-size: 16px;
+            }
+
+            .cf {
+                padding: 10px 20px;
+            }
+
+            .ddh span,.ydh {
+                font-size: 20px;
+                color: blue;
+            }
+
+            .ddh span:nth-child(2) {
+                float: right;
+            }
+        </style>
+        <div class="cf">
+            <div class="ddh">
+                <span>订单号：<r class="ydh">TDGS3648645613</r></span>
+                <span>运单号：<r class="ydh">TES133165135</r></span>
+            </div>
+
+            <form class="layui-form">
+                <div class="layui-form-item" pane="">
+                    <label class="layui-form-label">柜号：</label>
+                    <div class="layui-input-block" lay-filter='filter'>
+                        <input type="checkbox" name='che' lay-filter='filter' lay-skin="primary" title="TES133165135" value="TES1">
+                        <input type="checkbox" name='che'  lay-filter='filter' lay-skin="primary" title="TES133165135" value="TES2">
+                        <input type="checkbox" name='che' lay-filter='filter' lay-skin="primary" title="TES133165135" value="TES3">
+                        <input type="checkbox" name='che' lay-filter='filter' lay-skin="primary" title="TES133165135" value="TES4">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">运单号：</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="new_track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input yundan">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <a class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</a>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            layui.use('form', function () {
+                var form = layui.form;
+                form.on('submit(demo1)', function (data) {//点击提交
+                    let list = [{container:[]},{container_code:[]}];//表单所有数据
+                    list.push({order_num:$('.ydh').eq(0).html()});//订单号
+                    list.push({track_num:$('.ydh').eq(1).html()});//运单号
+                    list.push({new_track_num:$('.yundan').val()});//新运单号
+                    let check = $('input[name="che"]');//获取所有复选框
+                    check.each(function(){
+                        if($(this).prop('checked')){//判断是否选中
+                            list[0].container.push($(this).val());//选中
+                        }else{
+                            list[1].container_code.push($(this).val());//未选中
+                        }
+                    });
+                    console.log(list);
+                });
+            });
+
+        </script>
+    </body>
+
+    </html>

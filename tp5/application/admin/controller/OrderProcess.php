@@ -10,18 +10,16 @@ use app\admin\model\OrderProcess as OrderPM;
 use think\Validate;
 use think\session;
 class OrderProcess extends Base
-{  
-   
+{     
      //查看完成的详细订单
     public function OrderDetail() {
-        $order_num=  $this->request->param('order_num');
-        $M= new OrderPM;
-        $res =$M->OrderDetail($order_num);
-        return $res;
+        // $M= new OrderPM;
+        // $res =$M->OrderDetail($order_num);
+        return $this->view->fetch('OrderProcess\orderprocess_list'); 
     } 
     //拆订单
     public function orderSplit() {
-        
+        return $this->view->fetch('OrderProcess\orderprocess_add'); 
     }
     
     //查看订单的进行状态
@@ -33,8 +31,7 @@ class OrderProcess extends Base
     
     //修改订单
     public function orderModify()  {
-    
-        
+        return $this->view->fetch('OrderProcess\orderprocess_edit'); 
     }
     
     //记录订单修改的状态和时间操作人

@@ -9,6 +9,7 @@ class Price extends Model
     protected $cutoff_date = 'cutoff_date';
     protected $ETA = 'ETA';
     protected $EDD = 'EDD';
+  
      //船运航价的展示
     public function  price_route_list($port_start,$port_over,$pages=5,$seaprice_id=0)
     {   

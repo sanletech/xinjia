@@ -154,15 +154,15 @@
 //        }
       
     $(document).ready(function() {
-        yemian('a1','b1' , "<{:url('admin/Order/listBook')}>")
-        yemian('a2','b2' , "<{:url('admin/Order/listSendCar')}>")
-        yemian('a3','b3' , "<{:url('admin/Order/listLoad')}>")
-        yemian('a4','b4' , "<{:url('admin/Order/listBaogui')}>")//
-        yemian('a5','b5' , "<{:url('admin/Order/listCargo')}>")
-        yemian('a6','b6' , "<{:url('admin/Order/listArrival')}>")
-        yemian('a7','b7' , "<{:url('admin/Order/listUnShip')}>")
-        yemian('a8','b8' , "<{:url('admin/Order/listtoCollect')}>")
-        yemian('a9','b9' , "<{:url('admin/Order/listDelivery')}>")
+        yemian('a1','b1' , "<{:url('admin/Order/listBook')}>");//待订舱
+        yemian('a2','b2' , "<{:url('admin/Order/listSendCar')}>");//待派车
+        yemian('a3','b3' , "<{:url('admin/Order/listLoad')}>");//带装货
+        yemian('a4','b4' , "<{:url('admin/Order/listBaogui')}>");//带报柜号
+        yemian('a5','b5' , "<{:url('admin/Order/listCargo')}>");//带配船
+        yemian('a6','b6' , "<{:url('admin/Order/listArrival')}>");//待到港
+        yemian('a7','b7' , "<{:url('admin/Order/listUnShip')}>");//待卸船
+        yemian('a8','b8' , "<{:url('admin/Order/listtoCollect')}>");//待收款
+        yemian('a9','b9' , "<{:url('admin/Order/listDelivery')}>");//待送货
     });
 	
     function yemian(id1,id2,url){   

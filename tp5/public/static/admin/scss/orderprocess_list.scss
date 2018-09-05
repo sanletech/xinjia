@@ -1,0 +1,61 @@
+$lan : #2e8de5;
+#orderprocess{
+    padding: 10px 20px;
+    span{
+        display: inline-block;  
+        font-size: 16px;
+        margin: 3px 0;
+        input{
+            padding: 2px 5px;
+            
+        }
+    }
+    .fenge{
+        border: 1px solid $lan;
+        margin: 10px 0;
+    }
+    .orderprocess_top{
+        margin-bottom: 5px;
+        overflow: hidden;
+        >div{
+            font-size: 20px;
+            float: left;
+        }
+        font-weight: 700;
+        .you{
+            text-align: center;
+            color: red;
+            float: right;
+        }
+    }
+    .layui-col-xs12{
+        margin: 10px 0;
+    }
+    .dingdan{
+        padding-top: 10px;
+        .dd_xq{
+            border: 1px solid #ff9f19;
+            padding: 5px;
+            margin: 10px 0;
+        }
+    }
+    .fo_rig{
+        overflow: hidden;
+        padding-right: 20px;
+        text-align: right;
+        .sjzh{
+            float: left;
+        }
+    }
+    .dbgh{
+        .db_zt{
+            .db_top{
+                font-size: 20px;
+                font-weight: 700;
+                text-align: center;
+                color: red;
+                cursor: pointer;
+            }
+        }
+    }
+}
