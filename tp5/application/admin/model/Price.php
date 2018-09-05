@@ -9,16 +9,7 @@ class Price extends Model
     protected $cutoff_date = 'cutoff_date';
     protected $ETA = 'ETA';
     protected $EDD = 'EDD';
-     //船运航价的删除
-     public function  price_route_del($seaprice_id)
-    {
-        $res3 = Db::name('seaprice')->where('id','in',$seaprice_id)->delete();
-        if($res3){
-            $response['success'][] = '删除seaprice表';  
-        }else{ $response['fail'][] = '删除seaprice表';   }
-    
-    return  $response;
-    }
+  
      //船运航价的展示
     public function  price_route_list($port_start,$port_over,$pages=5,$seaprice_id=0)
     {   
