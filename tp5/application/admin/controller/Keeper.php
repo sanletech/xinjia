@@ -93,10 +93,25 @@ class Keeper extends Base
                 ->join('hl_user_team UT','UT.uid=U.id','left')
                 ->join('hl_team T','T.id=UT.team_id','left')
                 ->field('U.user_code,U.user_name,UA.area_code,UA.area_type,T.title,T.job')
+                ->where('U.id',$uid)
                 ->group('U.id')->find();
         $this->view->assign('data',$data);
         return $this->view->fetch('Keeper/user_edit'); 
     }
+    //执行用户修改
+    public function userToEdit(){
+        $data= $this->request->param();
+        $user_code = $data['user_code'];
+        $job= $data['job'];
+        $port=  implode(',',$data['port_code']);
+        $res =Db::name('user')->update([
+            ''
+            
+            ]);
+        
+    }
+
+
     //停用账户
     public function userStop() {
         $id = $this->request->get('id');
@@ -107,10 +122,7 @@ class Keeper extends Base
 
 
     
-    //部门调整
-    public function teamEdit() {
-       
-    }
+
     
     public function teamdata() {
        $array = Db::name('team')->alias('T')
@@ -136,7 +148,7 @@ class Keeper extends Base
         return $this->view->fetch('Keeper/user_add');
     }
     
-        //部门调整处理
+    //部门调整处理
     public function teamToEidt() 
     {
         $array = Db::name('team')->group('id')->select();
