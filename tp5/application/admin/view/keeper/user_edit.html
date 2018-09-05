@@ -12,17 +12,19 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">职务：</label>
                     <div class="layui-input-block">
-                        <select name="job">
-                        <option value="">请选择职位</option>
-                        <optgroup label="业务部门">
-                            <option value="saleManager" <?php if($data['job']=='saleManager'){echo'selected';} ?> >业务经理</option>
-                            <option value="sale" <?php if($data['job']=='sale'){echo'selected';} ?>  >业务</option>
-                        </optgroup>
-                        <optgroup label="客服部门">
-                        <option value="serviceManag" <?php if($data['job']=='serviceManag'){echo'selected';} ?>  >客服经理</option>
-                        <option value="service"  <?php if($data['job']=='service'){echo'selected';} ?>  >客服</option>
-                        </optgroup>
-                        </select>
+               <select name="job">
+                    <option value="">请选择</option>
+                <{volist name="jobList" id="vo"}>
+                <optgroup label="<{$vo.title}>">
+                     <{volist name="$vo.childMenus" id ='v1'}> 
+                     <option value="<{$v1.jobID}>" <?php if($v1['id']==$data['jobID']){echo'selected'; } ?> ><{$v1.title}></option>
+                            <{volist name="$v1.childMenus" id ='v2'}>
+                            <option value="<{$v2.jobID}>" <?php if($v1['id']==$data['jobID']){echo'selected'; } ?>  ><{$v2.title}></option>
+                            <{/volist}>
+                        <{/volist}>
+                    </optgroup>
+              <{/volist}>
+              </select>                        
                     </div>
                 </div>
                 <!--区域 -->

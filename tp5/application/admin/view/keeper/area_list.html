@@ -43,18 +43,16 @@
         </thead>
         <tbody>
             
-        <{volist name="list" id ="vo"}>
+        <{volist name="arealist" id ="vo"}>
           <tr>
             <td class="tdata"><{$vo.id}></td>
             <td><{$vo.user_code}></td>
             <td><{$vo.user_name}></td>
             <td><{$vo.title}></td>
             <td>
-            <?php if(array_key_exists('area_list',$vo)){
-                foreach($vo['area_list'] as $code=>$area){
-                     echo"<input type='text' name=".$code." value=".$area."  class ='layui-btn layui-btn-mini' >";
-                }
-               } ?>
+              <{volist name="$vo.area_list" id="area"}>
+              <{$area.port_name}>
+              <{/volist}>
             </td>
             <td class="td-status">
                 <?php echo $vo['status']==1? '<span class="layui-btn layui-btn-mini zt">启用</span></td>' : 
