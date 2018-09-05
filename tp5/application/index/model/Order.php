@@ -114,7 +114,7 @@ class Order extends Model
         //添加数据到hl_order_fahter表里
         $mtime =  date("Y-m-d H:i:s"); 
         $member_code =Session::get('member_code');
-       // var_dump($member_code);exit;
+      
         $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
         //生成订单编号
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
@@ -155,19 +155,19 @@ class Order extends Model
             $tax_rate =0;
         }
         $payer = $data['payer']  ;
-        if($payer ==3){
+        if($payer =='thirdPayment'){
             $payer = $data['payer_name'].'_'.$data['payer_phone'];
         }
         $payment_method = $data['payment_method'];
         if(array_key_exists('message_send', $data)){
-            $message_send = 1;
+            $message_send = 'y';
         }  else {
-            $message_send = 2;
+            $message_send = 'n';
         }
         if(array_key_exists('sign_receipt', $data)){
-            $sign_receipt = 1;
+            $sign_receipt = 'y';
         } else {
-            $sign_receipt = 2;
+            $sign_receipt = 'n';
         }
         $sql2 = "insert into hl_order_comment (order_num,payer,payment_method,tax_rate,invoice_id,message_send,sign_receipt,mtime)"
             . "values ('$order_num','$payer','$payment_method','$tax_rate','$invoice_id','$message_send','$sign_receipt','$mtime')";

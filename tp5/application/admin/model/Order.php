@@ -89,7 +89,7 @@ class Order extends Model
         $mtime = date('y-m-d h:i:s');
         for($i=0;$i<$j;$i++){
             $container_code = $track_num[$i].'d'.$date.'n'.$i;  //设置虚拟集装箱编码 等待派车后录入真正的集装箱编码再修改
-            $str .= "('$order_num','$track_num[$i]','$container_code','200','录入运单号>待订车',$mtime) ,";   
+            $str .= "('$order_num','$track_num[$i]','$container_code','200','录入运单号>待订车','$mtime') ,";   
         }
         $str = rtrim($str,',');
         //插入之前先判断是否已经已经存在了运单号
@@ -99,6 +99,7 @@ class Order extends Model
         }
   
         $sql ="insert into hl_order_son(order_num,track_num,container_code,state,action,mtime) values".$str;
+       
         $response =[];
         $res =Db::execute($sql);
         $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';

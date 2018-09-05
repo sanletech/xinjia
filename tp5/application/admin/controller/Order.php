@@ -126,7 +126,7 @@ class Order extends Base
         }
 
         $trackM = new OrderM;
-        $response = $trackM ->waybillNum ($order_num,$container_sum,$track_num, $track_sum);
+        $response = $trackM ->waybillNum($order_num,$container_sum,$track_num, $track_sum);
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'录入运单号成功','status'=>1];
         }else   {
@@ -579,7 +579,7 @@ class Order extends Base
         $this->view->assign('status','待送货'); 
         $this->view->assign('page_url',url('admin/order/listDelivery'));
         $this->view->assign('ajaxurl',url('admin/order/toDelivery'));
-        return $this->view->fetch('listOrder/list_collect');
+        return $this->view->fetch('listOrder/list_delivery');
         //return $this->view->fetch('listOrder/list_loadCar');
     }
        //展示处理订单送货页面

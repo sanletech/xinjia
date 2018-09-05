@@ -222,9 +222,9 @@ class Price extends Model
         $send_price_20GP = $send['price_20GP'];
         $send_price_40HQ = $send['price_40HQ'];
         //送货 s 装货 r
-        $sql = "insert into hl_carprice(cl_id ,car_id ,price_20GP,price_40HQ , variable ,mtime)  "
-                . " values('$cl_id','$load_car','$load_price_20GP','$load_price_40HQ','r','$mtime'),"
-                . "       ('$cl_id','$send_car','$send_price_20GP','$send_price_40HQ','s','$mtime')  ";
+        $sql = "insert into hl_carprice(cl_id  ,price_20GP,price_40HQ , variable ,mtime)  "
+                . " values('$cl_id','0','$load_price_20GP','$load_price_40HQ','r','$mtime'),"
+                . "       ('$cl_id','0','$send_price_20GP','$send_price_40HQ','s','$mtime')  ";
         $res = Db::execute($sql);
         $res ? $response['success'][] = '添加carprice表':$response['fail'][] = '添加carprice表';
         return $response ;
@@ -271,10 +271,10 @@ class Price extends Model
         $send_price_20GP = $data['send']['price_20GP'];
         $send_price_40HQ = $data['send']['price_40HQ'];
         
-        $sql = "update hl_carprice set cl_id ='$cl_id',car_id ='$load_car',"
+        $sql = "update hl_carprice set cl_id ='$cl_id',car_id ='0',"
                 . "price_20GP ='$load_price_20GP',price_40HQ ='$load_price_40HQ'"
                 . ",mtime='$mtime'  where id ='$r_id'";
-        $sql2 = "update hl_carprice set cl_id ='$cl_id',car_id ='$load_car',"
+        $sql2 = "update hl_carprice set cl_id ='$cl_id',car_id ='0',"
                 . "price_20GP ='$send_price_20GP',price_40HQ ='$send_price_40HQ'"
                 . ",mtime='$mtime'  where id ='$s_id'";
         $res = Db::execute($sql); $res2 = Db::execute($sql2);

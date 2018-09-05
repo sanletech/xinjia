@@ -13,9 +13,16 @@ class OrderProcess extends Base
 {     
      //查看完成的详细订单
     public function OrderDetail() {
+<<<<<<< HEAD
         // $M= new OrderPM;
         // $res =$M->OrderDetail($order_num);
         return $this->view->fetch('OrderProcess\orderprocess_list'); 
+=======
+        $order_num=  $this->request->param('order_num');
+        $M= new OrderPM;
+        $res =$M->OrderDetail($order_num);
+        return $res;
+>>>>>>> 139ee27fdf73a4b9f0c209ba036f81bded325fdf
     } 
     //拆订单
     public function orderSplit() {

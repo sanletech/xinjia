@@ -18,18 +18,21 @@ class Keeper extends Base
     public function userAdd() {
         $array = Db::name('team')->group('id')->select();
         $list = $this->generateTree($array);
+//        $this->_p($list);exit;
         $this->view->assign('jobList',$list);
         return $this->view->fetch('Keeper/user_add');
         
     }
     public function userToAdd() {
         $data= $this->request->param();
+        //$this->_p($data);exit;
         $job =$data['job'];//team表里职位id
         $userdata=[];
         $userdata['user_name'] =$data['user_name'];
-        $userdata['passwoed'] =$data['password'];
+        $userdata['password'] =md5($data['password']);
         $teamJob =Db::name('team')->where('id',$job)->value('job');
         $userdata['type']=$teamJob;
+//        var_dump($teamJob);exit;
         if(strstr($teamJob,'service')){
             $jobName='kf';
         }elseif (strstr($teamJob,'sale')) {
@@ -37,15 +40,18 @@ class Keeper extends Base
         }elseif (strstr($teamJob,'finance')){
             $jobName='cw';
         }
-        $user_max_id =Db::name('user')->max(id);
+        $userdata['status'] =1;$userdata['phone']=$data['phone'];$userdata['email']=$data['email'];
+        $user_max_id =Db::name('user')->max('id');
         if($user_max_id<10000){
             $user_max_id = sprintf("%05d",$user_max_id);
         }
         $userdata['user_code'] = $jobName.$user_max_id;
-        $userdata['loginname'] = $user_code;
+        $userdata['loginname'] = $userdata['user_code'];
         $userdata['create_time'] = date('y-m-d h:i:s');
+       
         $res =Db::name('user')->insert($userdata);
         $userId = Db::name('user')->getLastInsID();
+//                var_dump($userId,$job);exit;
         $res2 =Db::name('user_team')->insert(['uid'=>$userId,'team_id'=>$job]);
         if($res&&$res2){
             return 1;
@@ -113,10 +119,11 @@ class Keeper extends Base
             ->field('UT.uid,U.user_name,T.*')
             ->group('UT.id,T.id')
             ->select();
+//    $this->_p($array);exit;
         $list = $this->generateTree($array);
-//        $this->_p($array);exit;
+       
        // $list = $this->procHtml($listArr);
-      //  $this->_p($list);exit;
+//        $this->_p($list);exit;
       return json_encode($list,true);
     }
     
@@ -165,9 +172,12 @@ class Keeper extends Base
     function generateTree($array){
         //第一步 构造数据
         $items = array();
+        $i=1;
         foreach($array as $value){
-            $items[$value['id']] = $value;
+            $items[$i] = $value;
+            $i++;
         }
+//        $this->_p($items);exit;
         //第二部 遍历数据 生成树状结构
         $tree = array();
         foreach($items as $key => $item){

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-04 10:20:13
+Date: 2018-09-04 17:59:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3552,7 +3552,7 @@ CREATE TABLE `hl_carprice` (
   `variable` char(1) DEFAULT NULL COMMENT '区分是装货还是送货  装货为r 送货为s',
   `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_carprice
@@ -3573,6 +3573,8 @@ INSERT INTO `hl_carprice` VALUES ('44', '38', '5', '600.00', '1500.00', null, 'r
 INSERT INTO `hl_carprice` VALUES ('45', '38', '17', '700.00', '1550.00', null, 's', '1530172993');
 INSERT INTO `hl_carprice` VALUES ('46', '39', '13', '200.00', '500.00', null, 'r', '1530672893');
 INSERT INTO `hl_carprice` VALUES ('47', '39', '6', '200.00', '500.00', null, 's', '1530672893');
+INSERT INTO `hl_carprice` VALUES ('48', '40', '0', '0.00', '0.00', null, 'r', '1536050138');
+INSERT INTO `hl_carprice` VALUES ('49', '40', '0', '0.00', '0.00', null, 's', '1536050138');
 
 -- ----------------------------
 -- Table structure for `hl_carprice1`
@@ -3680,7 +3682,7 @@ CREATE TABLE `hl_car_line` (
   `address_id` int(11) DEFAULT NULL COMMENT 'id',
   `port_id` int(11) DEFAULT NULL COMMENT '港口的port_code',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_car_line
@@ -3703,6 +3705,7 @@ INSERT INTO `hl_car_line` VALUES ('36', '河北省石家庄市新华区宁安街
 INSERT INTO `hl_car_line` VALUES ('37', '北京市北京市丰台区右安门街道', '110106001', '110100002');
 INSERT INTO `hl_car_line` VALUES ('38', '北京市北京市通州区玉桥街道', '110112004', '110100003');
 INSERT INTO `hl_car_line` VALUES ('39', '安徽省合肥市瑶海区明光路街道', '340102001', '120100009');
+INSERT INTO `hl_car_line` VALUES ('40', '', '0', '0');
 
 -- ----------------------------
 -- Table structure for `hl_car_listprice`
@@ -5656,7 +5659,7 @@ CREATE TABLE `hl_user` (
   `update_time` int(12) DEFAULT NULL,
   `type` varchar(10) DEFAULT NULL COMMENT '操作员,业务,管理员,老板',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user
@@ -5669,6 +5672,7 @@ INSERT INTO `hl_user` VALUES ('5', 'service1', 'yw005', '马九', 'e10adc3949ba5
 INSERT INTO `hl_user` VALUES ('6', 'service2', 'yw006', '李七', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1111111', 'asaa@qq.com', '1', null, '2147483647', 'service ');
 INSERT INTO `hl_user` VALUES ('7', 'service4', 'asdfa', '打发', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '', '1', null, '2018', 'service ');
 INSERT INTO `hl_user` VALUES ('8', 'service3', 'yw007', '哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2018', 'service ');
+INSERT INTO `hl_user` VALUES ('9', 'yw00008', 'yw00008', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-09-04 11:39:08', '0000-00-00 00:00:00', '', '', '1', null, null, 'saleManage');
 
 -- ----------------------------
 -- Table structure for `hl_user-zzz`
@@ -5726,20 +5730,21 @@ INSERT INTO `hl_user_area` VALUES ('26', '1', '22,24,26', 'port');
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_user_team`;
 CREATE TABLE `hl_user_team` (
-  `id` int(10) NOT NULL DEFAULT '0' COMMENT '部门id',
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT '部门id',
   `uid` varchar(10) DEFAULT NULL COMMENT 'user_code',
   `team_id` int(10) DEFAULT NULL COMMENT '上司的uid',
+  `pid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user_team
 -- ----------------------------
-INSERT INTO `hl_user_team` VALUES ('1', '1', '4');
-INSERT INTO `hl_user_team` VALUES ('2', '2', '5');
-INSERT INTO `hl_user_team` VALUES ('3', '3', '6');
-INSERT INTO `hl_user_team` VALUES ('4', '4', '7');
-INSERT INTO `hl_user_team` VALUES ('5', '5', '8');
-INSERT INTO `hl_user_team` VALUES ('6', '6', '7');
-INSERT INTO `hl_user_team` VALUES ('7', '7', '9');
-INSERT INTO `hl_user_team` VALUES ('8', '8', '7');
+INSERT INTO `hl_user_team` VALUES ('1', '1', '4', null);
+INSERT INTO `hl_user_team` VALUES ('2', '2', '5', null);
+INSERT INTO `hl_user_team` VALUES ('3', '3', '6', null);
+INSERT INTO `hl_user_team` VALUES ('4', '4', '7', null);
+INSERT INTO `hl_user_team` VALUES ('5', '5', '8', null);
+INSERT INTO `hl_user_team` VALUES ('6', '6', '7', null);
+INSERT INTO `hl_user_team` VALUES ('7', '7', '9', null);
+INSERT INTO `hl_user_team` VALUES ('8', '9', '7', null);
