@@ -268,7 +268,7 @@
                 <div class="layui-col-xs6">
                   <div class="select">
                     <select name='tax_rate' disabled="ture" class="layui-disabled fp01">
-                      <option  value='0' selected>请选择</option>
+                      <option  value='0' selected>不需要</option>
                       <option  value='1'>6%</option>
                       <option  value='2'>10%</option>
                     </select>
@@ -300,11 +300,11 @@
                 <span>*&nbsp;</span>付款人：</div>
               <div class="layui-col-xs8">
                 <div class="select">
+                    <!--monthly月结pledge压柜cash现款--> 
                   <select name='payer' id="fk">
-                    <option  value='0' selected="selected">请选择</option>
-                    <option  value='1'>已方付款</option>
-                    <option  value='2'>对方付款</option>
-                    <option  value='3'>第三方付款</option>
+                    <option  value='ourPayment'>已方付款</option>
+                    <option  value='collectCall'>对方付款</option>
+                    <option  value='thirdPayment'>第三方付款</option>
                   </select>
                 </div>
               </div>
@@ -335,10 +335,11 @@
                 <span>*&nbsp;</span>结账方式：</div>
               <div class="layui-col-xs6">
                 <div class="select">
+                    <!--monthly月结pledge压柜cash现款--> 
                   <select name='payment_method'>
-                    <option  value='0' selected>请选择</option>
-                    <option  value='1'>到港付</option>
-                    <option  value='2'>月结付</option>
+                    <option  value='cash'>到港付</option>
+                    <option  value='monthly'>月结付</option>
+                    <option  value='pledge'>压柜付</option>
                   </select>
                 </div>
               </div>
@@ -347,10 +348,10 @@
             <div class="layui-col-xs9">
               <div class="zhong layui-form">
                 <div class="chec">
-                  <input type="checkbox" name="message_send" title="&nbsp;通 知 送 货" value='1' lay-skin="primary">
+                  <input type="checkbox" name="message_send" title="&nbsp;通 知 送 货" value='y' lay-skin="primary">
                 </div>
                 <div class="chec">
-                  <input type="checkbox" name="sign_receipt" title="箱内签回单"  value='1' lay-skin="primary">
+                  <input type="checkbox" name="sign_receipt" title="箱内签回单"  value='y' lay-skin="primary">
                 </div>
               </div>
             </div>

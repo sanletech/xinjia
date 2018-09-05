@@ -126,7 +126,7 @@ class Order extends Base
         }
 
         $trackM = new OrderM;
-        $response = $trackM ->waybillNum ($order_num,$container_sum,$track_num, $track_sum);
+        $response = $trackM ->waybillNum($order_num,$container_sum,$track_num, $track_sum);
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'录入运单号成功','status'=>1];
         }else   {

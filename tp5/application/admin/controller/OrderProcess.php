@@ -13,7 +13,8 @@ class OrderProcess extends Base
 {  
    
      //查看完成的详细订单
-    public function OrderDetail($order_num) {
+    public function OrderDetail() {
+        $order_num=  $this->request->param('order_num');
         $M= new OrderPM;
         $res =$M->OrderDetail($order_num);
         return $res;

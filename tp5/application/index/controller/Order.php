@@ -124,7 +124,7 @@ class Order extends Base
       public function order_data()
     {
         $data =$this->request->param();
-//        $this->_P($data);exit;
+        $this->_P($data);exit;
        //线路价格sea_id r_id s_id  存进book_line表里
         $sea_id =$data['sea_id'];
         $rid =$data['rid'];
