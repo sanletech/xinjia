@@ -175,11 +175,23 @@ class Keeper extends Base
     {
         $array = Db::name('team')->group('id')->select();
         $list = $this->generateTree($array);
-        $this->view->assign('jobList',$list);
-        return $this->view->fetch('Keeper/user_add');
+//        $this->_p($list);exit;
+        $tree= $this->procHtml($list);
+         
+        $this->view->assign('tree',$tree);
+        $this->view->engine->layout('Keeper/team_public');
+        return $this->view->fetch('Keeper/team_edit');
     }
     
-    
+    //部门添加
+    public function teamAdd() 
+    {
+        $array = Db::name('team')->group('id')->select();
+        $list = $this->generateTree($array);
+        $this->view->assign('jobList',$list);
+        return $this->view->fetch('Keeper/team_add');
+    }
+
     
     //获取树节点
     public function getTree($array, $pid =0, $level = 0) {

@@ -614,8 +614,5 @@ class Order extends Base
     public function checkOrder() {
         
     }
- 
-
-
     
 } 
