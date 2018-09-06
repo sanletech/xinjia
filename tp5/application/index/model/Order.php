@@ -11,7 +11,7 @@ class Order extends Model
     //前台页面展示门到门的价格表
     public function  price_sum($start_add='',$end_add='',$load_time=''){
         $pageParam  = ['query' =>[]]; //设置分页查询参数
-        $nowtime= time();//要设置船期
+        $nowtime= date('y-m-d h:i:s');//要设置船期
         
         $price_sea = Db::name('seaprice')->alias('SP')
             ->join('hl_ship_route SR','SR.id =SP.route_id','left')
@@ -110,73 +110,43 @@ class Order extends Model
     }
     
     //处理客户提交的订单信息
-    public function order_data($data,$book_line_id) {
+    public function order_data($data,$shipper,$consigner,$book_line_id) {
         //添加数据到hl_order_fahter表里
         $mtime =  date("Y-m-d H:i:s"); 
         $member_code =Session::get('member_code');
-      
         $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
         //生成订单编号
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
        // var_dump($order_num);exit;
-        $cargo = $data['cargo'];
-        $container_size = $data['container'];
-        $container_sum = $data['container_sum'];
-        $weight = $data['weight'];
-        $container_type = $data['container_type'];
-//        $sea_id=$data['sea_id']; $rid =$data['rid']; $sid=$data['sid'];
-//        $book_line = $this->book_line($sea_id, $rid, $sid);
-        $cargo_cost= $data['cargo_cost'];
-        $comment =$data['comment'];
-        $state = 0;
-        $sql ="insert into hl_order_father (order_num,cargo,container_size,"
-                . "container_sum,weight,cargo_cost,container_type_id"
-                . ",comment,mtime,add_id ,book_line_id,member_code,state) "
-                . "  values('$order_num','$cargo','$container_size',"
-                . "'$container_sum','$weight','$cargo_cost','$container_type',"
-                . "'$comment','$mtime','$add_id' ,'$book_line_id','$member_code','$state')";
-        
-        
-        //添加数据到 订单补充表 hl_order_comment表里
-       
-        if(array_key_exists('invoice_id', $data)){
-            $invoice_id = 0;
-        }else{
-            $sql3 ="select id from hl_invoice where member_code = '$member_code' and mtime = (select max(mtime) from hl_invoice ) ";
-            $invoice_id = Db::name('invoice')->field('id')->where('member_code',$member_code)->where('mtime','(select max(mtime) from hl_invoice )');
-           // $invoice_id = Db::name('invoice')->where('member_code',$member_code)->where('mtime'=>)
-            $invoice_id = Db::query($sql3);
-            $invoice_id = $invoice_id['0']['id'];
-        }
-        if(array_key_exists('tax_rate', $data)){
-            $tax_rate = $data['tax_rate'];
-        }  else {
+       //转换税率 
+        switch ($data['tax_rate']){
+            case 1:
             $tax_rate =0;
+            break;
+            case 2:
+            $tax_rate =0.04; 
+            break;
+            case 3:
+            $tax_rate =0.07; 
+            break;
         }
-        $payer = $data['payer']  ;
-        if($payer =='thirdPayment'){
+        //如果是第三付款则合拼第三方人的姓名电话
+        if($data['payer'] =='thirdPayment'){
             $payer = $data['payer_name'].'_'.$data['payer_phone'];
-        }
-        $payment_method = $data['payment_method'];
-        if(array_key_exists('message_send', $data)){
-            $message_send = 'y';
         }  else {
-            $message_send = 'n';
+            $payer =$data['payer'];
         }
-        if(array_key_exists('sign_receipt', $data)){
-            $sign_receipt = 'y';
-        } else {
-            $sign_receipt = 'n';
-        }
-        $sql2 = "insert into hl_order_comment (order_num,payer,payment_method,tax_rate,invoice_id,message_send,sign_receipt,mtime)"
-            . "values ('$order_num','$payer','$payment_method','$tax_rate','$invoice_id','$message_send','$sign_receipt','$mtime')";
-       // var_dump($sql2);exit;
-        $res =Db::execute($sql);
-        $res2 =Db::execute($sql2);
-        $respones = [];
-        $res ? $respones['success'][]='order_father表' : $respones['fail'][]='order_father表';
-        $res2 ? $respones['success'][]='order_comment表' : $respones['fail'][]='order_comment表';
+        
+        $sqldata =['order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$data['container'],
+                'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],
+                 'cargo_cost'=>$data['cargo_cost'], 'container_type_id'=>$data['container_type'],
+                  'comment'=>$data['comment'],
+                    'mtime'=>$mtime,'book_line_id'=>$book_line_id,'member_code'=>$member_code,'belong_order'=>0,'state'=>0,'action'=>'下单=>待审核',
+                    'ctime'=>$mtime,'payer'=>$payer,'payment_method'=>$data['payment_method'],'message_send'=>$data['message_send'],
+                  'sign_receipt'=>$data['sign_receipt'],'tax_rate'=>$tax_rate,'invoice_id'=>$data['invoice_id'],'add_id'=>1];
+        $res =Db::name('order_father')->insert($sqldata);
+        $res ? $response['success'][]='添加order_father表成功':$response['fail'][]='添加order_father表失败';
         return $respones;
     }
     

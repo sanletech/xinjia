@@ -45,7 +45,7 @@ class Port extends Model
       //港口执行修改
     public function  port_toedit($id,$city,$port_code,$port_name)
     {  
-        $mtime = time();
+        $mtime = date('y-m-d h:i:s');
         $sql ="update hl_port set port_code ='$port_code',port_name ='$port_name',"
                 . "city_id ='$city' ,mtime ='$mtime' where id ='$id'";
 //        var_dump($sql);exit;
@@ -59,7 +59,7 @@ class Port extends Model
     //港口添加
     public function port_add($city_id ,$port_array)
     {   
-        $mtime = time();
+        $mtime = date('y-m-d h:i:s');
         $port_code = Db::name('port')->where('city_id',"'$city_id'")->max('port_code');
         if($port_code < $city_id * 1000){
             $port_code = $city_id * 1000+1;
@@ -184,7 +184,7 @@ class Port extends Model
             $middle_id = 0;
         }
         
-        $mtime = time();
+        $mtime = date('y-m-d h:i:s');
         $sql1 ="select id from hl_ship_route where bothend_id ='$bothend_id' and "
                 . "  middle_id ='$middle_id'";
         
@@ -228,7 +228,7 @@ class Port extends Model
         if(empty($res)){
             $sealine_id = Db::name('sea_middle')->max('sealine_id')+1;
             $str = '';
-            $mtime = time();
+            $mtime = date('y-m-d h:i:s');
             for($i=0;$i<count($sl_middle);$i++){
                 $str .="  ('$sealine_id', '$sl_middle[$i]', '$i', '$mtime')  ,";
             }
@@ -310,7 +310,7 @@ class Port extends Model
        //船名添加
     public function boat_add($ship_id, $boat_code,$boat_name)
     {   
-        $mtime = time();
+        $mtime = date('y-m-d h:i:s');
         $sql = "insert into hl_boat(ship_id ,boat_code,boat_name ,mtime) "
                 . "values('$ship_id','$boat_code','$boat_name','$mtime')";
         $res = Db::execute($sql);

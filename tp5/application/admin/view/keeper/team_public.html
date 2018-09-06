@@ -7,7 +7,7 @@
         <!-- 头部区域（可配合layui已有的水平导航） --> 
         <ul class="layui-nav layui-layout-left"> 
             <li class="layui-nav-item"><a href="<{:url('admin/keeper/areaList')}>">区域划分</a></li>
-            <li class="layui-nav-item"><a href="#">部门调整</a></li>
+            <li class="layui-nav-item"><a href="<{:url('admin/keeper/teamList')}>">部门调整</a></li>
             <li class="layui-nav-item"><a href="#">权限调整</a></li> 
 <!--            <li class="layui-nav-item"> <a href="javascript:;">其它功能</a>
                 <dl class="layui-nav-child"> 
@@ -34,7 +34,7 @@
  
  <div class="layui-body"> 
     <!-- 中心固定区域 --> 
-   <{include file='./keeper/area_list' /}>
+     {__CONTENT__}
  </div> 
 </div>
 

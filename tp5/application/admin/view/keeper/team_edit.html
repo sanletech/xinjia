@@ -1,7 +1,7 @@
 <{include file='./public/header' /}>
 
     <body>
-        <link rel="stylesheet" href="__STATIC__/css/route_add.css">
+      
         <form class="layui-form" action="">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>姓名<input class="layui-input" type="text" name="user_name" value="<{$data.user_name}>" readOnly="readOnly">
@@ -63,29 +63,7 @@
 
         </form>
 
-        <script type="text/javascript">
-            $('.cancel').click(function () {
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
-            });
 
-
-            layui.use(['form', 'layedit', 'laydate'], function () {
-                var form = layui.form
-                    , layer = layui.layer
-                    , layedit = layui.layedit
-                    , laydate = layui.laydate;
-
-                //日期
-                laydate.render({
-                    elem: '#date'
-                });
-                laydate.render({
-                    elem: '#date1'
-                });
-
-            });
-        </script>
 <script type="text/javascript" src="/static/admin/js/area.js"></script>
 <script type="text/javascript" src="/static/admin/js/port.js"></script>
 <script>
@@ -218,10 +196,9 @@
          
         function toajax (){
                 var loading = layer.load(1);
-                post_adduser = true;    
                 $.ajax({
                     type:'POST',
-                    url:url,
+                    url:<{:url('admin/keeper/userToEdit')}>,
                     data:$("#routeaddform").serialize(),
                     dataType:"json",
                     success:function(status){

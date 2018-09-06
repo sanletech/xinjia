@@ -94,10 +94,17 @@ class Order extends Base
         json_encode($status);   
         return $status ;
     }
+    
+    //传给前台客户对应的发票信息
+    public function selectInvoice() {
+        $member_code =Session::get('member_code');
+        $res = Db::name('invoice')->where('member_code',$member_code)->select();
+        return json_encode($res);
+    }
+    
     //传给前台页面客户所有的联系人
       public function selectlinkman()
     {
-        $data =$this->request->param();
         $member_code =Session::get('member_code');
         $res = Db::name('linkman')->where('member_code',$member_code)->order('mtime desc')->select();
         // $this->_v($res);exit;
@@ -125,14 +132,20 @@ class Order extends Base
     {
         $data =$this->request->param();
         $this->_P($data);exit;
-       //线路价格sea_id r_id s_id  存进book_line表里
-        $sea_id =$data['sea_id'];
-        $rid =$data['rid'];
-        $sid =$data['sid'];
+       //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id  存进book_line表里
+        $sea_id =$data['sea_id'];  $rid =$data['rid']; $sid =$data['sid'];
         $sea_pirce =new OrderM;
         $book_line_id = $sea_pirce ->book_line($sea_id,$rid,$sid);
-        unset($data['sea_id'],$data['rid'],$data['sid']);
-        $response = $sea_pirce ->order_data($data,$book_line_id);
+        //储存发货人和 收货人的信息
+        $shipper   = $data['r_name'].','.$data['r_phone'].','.$data['r_add'].','.$data['r_company'];
+        $consigner = $data['s_name'].','.$data['s_phone'].','.$data['s_add'].','.$data['s_company'];
+        //储存客户的地址薄
+        //待完成
+        unset($data['sea_id'],$data['rid'],$data['sid'],$data['r_name'],
+                $data['r_phone'],$data['r_add'],$data['r_company'],
+                $data['s_name'],$data['s_phone'],$data['s_add'],$data['s_company']);
+        
+        $response = $sea_pirce ->order_data($data,$shipper,$consigner,$book_line_id);
         if(!array_key_exists('fail', $response)){
             $status =1; 
         }else {

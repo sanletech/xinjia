@@ -64,24 +64,29 @@ class Keeper extends Base
     public function areaList() 
     {  
         $list =Db::name('user')->alias('U')
-                ->join('hl_user_area UA','UA.user_id=U.id','left')
                 ->join('hl_user_team UT','UT.uid=U.id','left')
                 ->join('hl_team T','T.id=UT.team_id','left')
                 ->join('hl_auth_group_access AA','AA.uid=U.id','left')
-                ->field('U.id,U.user_code,U.user_name,U.type,U.status,UA.area_code,UA.area_type,T.title')
+                ->field('U.id,U.user_code,U.user_name,U.type,U.status,T.title')
                 ->group('U.id')->select();
-        foreach($list as $key =>$value ){
-            $type =$value['area_type'];
-            $area_code =$value['area_code'];
-            if($type=='city'){
-                $list[$key]['area_list']= Db::name('city')->where('city_id','in',$area_code)->column('city');//,'city_id'
-            }elseif ($type=='port') {
-                $list[$key]['area_list']= Db::name('port')->where('id','in',$area_code)->column('port_name');//,'port_code'
+        
+        $areaList =Db::name('user_area')->alias('UA')
+                ->join('hl_port P','P.port_code=UA.area_code','left')
+                ->field('UA.user_id,P.port_code,P.port_name')->group('P.port_code')
+                ->select();
+        //  $this->_p($list);   $this->_p($areaList);exit;
+        foreach ($list as $k=>$v){
+            foreach ($areaList as $key => $value) {
+                if($v['id']==$value['user_id']){
+                    $list[$k]['area_list'][]=$value;
+                }
             }
         }
-      
-        $this->view->assign('list',$list);
-        return $this->view->fetch('Keeper/teamList'); 
+//      $this->_p($list);exit;
+        
+        $this->view->engine->layout('Keeper/team_public');
+        $this->view->assign('arealist',$list);
+        return $this->view->fetch('Keeper/area_list'); 
     }
     
     //职位调调
@@ -89,14 +94,41 @@ class Keeper extends Base
     {   
         $uid = $this->request->get('uid');
         $data = Db::name('user')->alias('U')
-                ->join('hl_user_area UA','UA.user_id=U.id','left')
                 ->join('hl_user_team UT','UT.uid=U.id','left')
                 ->join('hl_team T','T.id=UT.team_id','left')
-                ->field('U.user_code,U.user_name,UA.area_code,UA.area_type,T.title,T.job')
+                ->field('U.id user_id,U.user_code,U.user_name,T.id jobID,T.title,T.job')
+                ->where('U.id',$uid)
                 ->group('U.id')->find();
+        $areaArr =Db::name('user_area')->alias('UA')
+                ->join('hl_port P','P.port_code=UA.area_code','left')
+                ->where('UA.user_id',$uid) ->group('UA.area_code')
+                ->field('UA.user_id,P.port_code,P.port_name')->select();
+//        $this->_p($data);  $this->_p($areaArr);exit;
+
+        $array = Db::name('team')->group('id')->select();
+        $jobList = $this->generateTree($array);
+//      $this->_p($data);$this->_p($areaArr);  $this->_p($jobList);exit;
+        
+        $this->view->assign('jobList',$jobList);
+        $this->view->assign('areaArr',$areaArr);
         $this->view->assign('data',$data);
         return $this->view->fetch('Keeper/user_edit'); 
     }
+    
+    //执行用户修改
+    public function userToEdit(){
+        $data= $this->request->param();
+        $user_code = $data['user_code'];
+        $job= $data['job'];
+        $port=  implode(',',$data['port_code']);
+        $res =Db::name('user')->update([
+            ''
+            
+            ]);
+        
+    }
+
+
     //停用账户
     public function userStop() {
         $id = $this->request->get('id');
@@ -107,11 +139,8 @@ class Keeper extends Base
 
 
     
-    //部门调整
-    public function teamEdit() {
-       
-    }
-    
+
+    //侧边栏数据
     public function teamdata() {
        $array = Db::name('team')->alias('T')
             ->join('hl_user_team UT','UT.team_id=T.id','left')   
@@ -126,18 +155,23 @@ class Keeper extends Base
 //        $this->_p($list);exit;
       return json_encode($list,true);
     }
+   
     
-    //部门调整
-    public function teamEidt() 
+    //部门list
+    public function teamList() 
     {
         $array = Db::name('team')->group('id')->select();
         $list = $this->generateTree($array);
-        $this->view->assign('jobList',$list);
-        return $this->view->fetch('Keeper/user_add');
+//        $this->_p($list);exit;
+        $tree= $this->procHtml($list);
+         
+        $this->view->assign('tree',$tree);
+        $this->view->engine->layout('Keeper/team_public');
+        return $this->view->fetch('Keeper/team_list');
     }
     
-        //部门调整处理
-    public function teamToEidt() 
+    //部门修改
+    public function teamEdit() 
     {
         $array = Db::name('team')->group('id')->select();
         $list = $this->generateTree($array);
@@ -194,19 +228,29 @@ class Keeper extends Base
     {
         $html = '';
         foreach($tree as $t)
-        {   
-          if( @$t['son'] =='')
-            {
-                $html .= "<li class='layui-nav-item'>{$t['title']}--{$t['user_name']}--{$t['job']}--{$t['id']}</li>";
+        {  
+            $id=$t['id'];
+            $strE =  url('@admin/keeper/teamEdit',"id=$id");
+            $strA =  url('@admin/keeper/teamAdd',"id=$id");
+            $strD =  url('@admin/keeper/teamDel',"id=$id");
+          if(!isset($t['childMenus']))
+            {   
+                $html .= "<li >{$t['title']}"
+                . "<a href='$strE' >编辑</a>&nbsp"
+                . "<a href='$strA'>子类目</a>&nbsp"
+                . "<a href='$strD'>删除</a></li>&nbsp";
             }
             else
-            {
-                $html .= '<li class="layui-nav-item">'."{$t['title']}--{$t['user_name']}--{$t['job']}--{$t['id']}";
-               @$html .= $this->procHtml($t['son']);
+            {   
+                $html .= "<li class='layui-nav-item'>{$t['title']}"
+                . "<a href='$strE' >编辑</a>&nbsp"
+                . "<a href='$strA'>子类目</a>&nbsp";
+              
+                $html .= $this->procHtml($t['childMenus']);
                 $html = $html."</li>";
             }
         }
-        return $html ? '<ul class="layui-nav layui-nav-tree" lay-filter="">'.$html.'</ul>' : $html ;
+        return $html ? '<ul class="layui-nav-tree" lay-filter="">'.$html.'</ul>' : $html ;
     }
 
 } 
