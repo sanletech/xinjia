@@ -41,7 +41,7 @@
             </div>
             <div class="layui-col-md2">
                 <p class="se">状态：待派车</p>
-                <p class="se">天数: <?php $timediff =time()-$vo['ctime']; $days = intval($timediff/86400); echo $days;?>天</p>
+                <p class="se">天数: <?php $timediff =date('y-m-d h:i:s')-$vo['ctime']; $days = intval($timediff); echo $days;?>天</p>
             </div>
             <div class="layui-col-md1">
                 <p class="a_niu">

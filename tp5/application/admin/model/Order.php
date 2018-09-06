@@ -265,7 +265,7 @@ class Order extends Model
         // 取值（当前作用域）
         $loginname= Session::get('user_info','think');
        // var_dump($loginname);exit;
-        $change_time = time();  
+        $change_time = date('y-m-d h:i:s');  
         $response=[];
     
         //先查询提交的柜子是不是对订单的全部柜子,不是则提示需要拆掉或者重新确认

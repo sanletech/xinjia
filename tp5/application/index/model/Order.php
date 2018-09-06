@@ -11,7 +11,7 @@ class Order extends Model
     //前台页面展示门到门的价格表
     public function  price_sum($start_add='',$end_add='',$load_time=''){
         $pageParam  = ['query' =>[]]; //设置分页查询参数
-        $nowtime= time();//要设置船期
+        $nowtime= date('y-m-d h:i:s');//要设置船期
         
         $price_sea = Db::name('seaprice')->alias('SP')
             ->join('hl_ship_route SR','SR.id =SP.route_id','left')

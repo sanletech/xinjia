@@ -1,4 +1,6 @@
 <{include file='./public/header' /}>
+
+  <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -13,72 +15,28 @@
       </a>
     </div>
     <div class="x-body">
-      <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username" placeholder="账号名" autocomplete="off" class="layui-input">
-          <button class="layui-btn" lay-submit="" lay-filter="sreach">
-            <i class="layui-icon">&#xe615;</i>
-          </button>
-        </form>
-      </div>
-      <xblock>
-<!--        <button class="layui-btn layui-btn-danger" onclick="delAll()">
-          <i class="layui-icon"></i>批量删除</button>-->
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url("admin/keeper/userAdd")}>',600,400)">
-          <i class="layui-icon"></i>添加员工帐号</button>
-        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
-      </xblock>
-      <table class="layui-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>账号</th>
-            <th>姓名</th>
-            <th>部门</th>
-            <th>负责区域</th>
-            <th>用户状态</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-            
-        <{volist name="arealist" id ="vo"}>
-          <tr>
-            <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.user_code}></td>
-            <td><{$vo.user_name}></td>
-            <td><{$vo.title}></td>
-            <td>
-             <?php if(isset($vo['area_list'])){
-                   foreach($vo['area_list'] as $area){
-                     echo $area['port_name'].'&nbsp;&nbsp';
-                   }
-             
-             } ?>
-            </td>
-            <td class="td-status">
-                <?php echo $vo['status']==1? '<span class="layui-btn layui-btn-mini zt">启用</span></td>' : 
-                   '<span class="layui-btn layui-btn-mini zt layui-btn-disabled">停用</span></td>'
-                ?>
-            <td class="td-manage">
-              <a onclick="member_stop(this,'<{$vo.id}>')" href="javascript:;"  title="启用">
-                <i class="layui-icon">&#xe601;</i>
-              </a>
-              <a title="编辑"  onclick="x_admin_show('编辑','<{:url('admin/keeper/userEdit')}>?uid=<{$vo.id}>',600,400)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>
-            </td>
-          </tr>
-         <{/volist}>
-        </tbody>
-      </table>
-      <div class="page">
-        <div>
-
+        <!--无限极部门分类-->
+        <div style="float: left" >
+            <{$tree}>
         </div>
-      </div>
-
+        <div style="float:left;width: 1px;height:400px; background: #000;"></div> 
+        <!--编辑子类目-->
+        <div style="float: left" >
+            <label class="layui-form-label">新增部门</label>
+            <div class="layui-input-inline">
+                <input name="cutoff_date"class="layui-input" value="11111111111" type="text">
+            </div>
+            <div class="layui-input-inline">
+                <input name="cutoff_date"class="layui-input" value="11111111111" type="text">
+            </div>
+            <div class="layui-input-inline">
+                <input name="cutoff_date"class="layui-input" value="11111111111" type="text">
+            </div>
+        </div>
+     
     </div>
+    
+ 
     <script>
       layui.use('laydate', function () {
         var laydate = layui.laydate;
@@ -144,3 +102,7 @@
     }
       
     </script>
+
+  </body>
+
+  </html>

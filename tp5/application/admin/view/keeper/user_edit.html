@@ -3,8 +3,8 @@
     <body>
         <form class="layui-form"  id ="userEdit_form">
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-                <legend>姓名<input class="layui-input" type="text" name="user_name" value="<{$data.user_name}>" readOnly="readOnly">
-                        工号<input class="layui-input"  type="text" name="user_code" value="<{$data.user_code}>" readOnly="readOnly">
+                <legend>姓名<input class=" layui-show-sm-block" type="text" name="user_name" value="<{$data.user_name}>" readOnly="readOnly">
+                        工号<input class=" layui-show-sm-block"  type="text" name="user_code" value="<{$data.user_code}>" readOnly="readOnly">
                 </legend>
             </fieldset>
             <div class="route layui-row">
@@ -17,9 +17,9 @@
                 <{volist name="jobList" id="vo"}>
                 <optgroup label="<{$vo.title}>">
                      <{volist name="$vo.childMenus" id ='v1'}> 
-                     <option value="<{$v1.jobID}>" <?php if($v1['id']==$data['jobID']){echo'selected'; } ?> ><{$v1.title}></option>
+                     <option value="<{$v1.id}>" <?php if($v1['id']==$data['jobID']){echo'selected'; } ?> ><{$v1.title}></option>
                             <{volist name="$v1.childMenus" id ='v2'}>
-                            <option value="<{$v2.jobID}>" <?php if($v1['id']==$data['jobID']){echo'selected'; } ?>  ><{$v2.title}></option>
+                            <option value="<{$v2.id}>" <?php if($v2['id']==$data['jobID']){echo'selected'; } ?>  ><{$v2.title}></option>
                             <{/volist}>
                         <{/volist}>
                     </optgroup>
@@ -53,6 +53,13 @@
                 <div class="layui-input-inline">
                     <div class="layui-form-item" id ="search_port">
                     </div> 
+                </div>
+                <div class="layui">
+                <ul>
+                 <{volist name='areaArr'  id='area'}>    
+                 <li><{$area.port_name}></li> 
+                 <{/volist}>
+                 </ul>
                 </div>
                 <!-- 按钮 -->
                 <div class="layui-form-item">

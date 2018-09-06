@@ -102,7 +102,7 @@ class Ship extends Model
         }
         $str = rtrim($str ,', ');
         $sql2 = "insert into hl_ship_port(port_id,seq,ship_id)  values".$str;
-        $mtime = time(); 
+        $mtime = date('y-m-d h:i:s'); 
         $sql3 = "update hl_shipcompany set ship_short_name ='$ship_short_name' ,"
                 . "  ship_name ='$ship_name',mtime ='$mtime ' where id = '$ship_id' ";    
         $res1 =Db::execute($sql); 

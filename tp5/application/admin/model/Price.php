@@ -69,7 +69,7 @@ class Price extends Model
         $pricedata['ETA'] = strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day');
         $pricedata['EDD'] = strtotime("+3day",$pricedata['ETA']);
         $pricedata['generalize'] = $data['generalize'];
-        $pricedata['mtime'] = time();
+        $pricedata['mtime'] = date('y-m-d h:i:s');
         $sl_start = $data['port_code']['0'];
         $sl_end   = $data['port_code']['1'];
         $bothend = new \app\admin\model\Port;
@@ -118,7 +118,7 @@ class Price extends Model
         $pricedata['ETA'] = strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day');
         $pricedata['EDD'] = strtotime("+3day",$pricedata['ETA']);
         $pricedata['generalize'] = $data['generalize'];
-        $pricedata['mtime'] = time();
+        $pricedata['mtime'] = date('y-m-d h:i:s');
         if(!isset($data['route_id'])){
         $sl_start = $data['port_code']['0'];
         $sl_end   = $data['port_code']['1'];
@@ -203,7 +203,7 @@ class Price extends Model
     //车队运价的添加
     public function price_trailer_toadd($port_id, $address_data, $load, $send){
         $cl_id = $this->lineCar($port_id,$address_data);
-        $mtime =  time();
+        $mtime =  date('y-m-d h:i:s');
        // var_dump($load);exit;
         $load_car =$load['car'];
         $load_price_20GP = $load['price_20GP'];
@@ -251,7 +251,7 @@ class Price extends Model
           
             $cl_id = $this->lineCar($port_id,$address_data);
         }
-        $mtime =  time(); //修改时间
+        $mtime =  date('y-m-d h:i:s'); //修改时间
         
        //装货和送货车队的id ,价格
         $load_car = strstr($data['car_load'],'_',true); 

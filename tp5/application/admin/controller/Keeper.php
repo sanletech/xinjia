@@ -83,8 +83,10 @@ class Keeper extends Base
             }
         }
 //      $this->_p($list);exit;
+        
+        $this->view->engine->layout('Keeper/team_public');
         $this->view->assign('arealist',$list);
-        return $this->view->fetch('Keeper/teamList'); 
+        return $this->view->fetch('Keeper/area_list'); 
     }
     
     //职位调调
@@ -102,10 +104,13 @@ class Keeper extends Base
                 ->where('UA.user_id',$uid) ->group('UA.area_code')
                 ->field('UA.user_id,P.port_code,P.port_name')->select();
 //        $this->_p($data);  $this->_p($areaArr);exit;
-//        $data['areaList']=$areaArr;   $this->_p($data);exit;
+
         $array = Db::name('team')->group('id')->select();
-        $list = $this->generateTree($array);
-        $this->view->assign('jobList',$list);
+        $jobList = $this->generateTree($array);
+//      $this->_p($data);$this->_p($areaArr);  $this->_p($jobList);exit;
+        
+        $this->view->assign('jobList',$jobList);
+        $this->view->assign('areaArr',$areaArr);
         $this->view->assign('data',$data);
         return $this->view->fetch('Keeper/user_edit'); 
     }
@@ -135,7 +140,7 @@ class Keeper extends Base
 
     
 
-    
+    //侧边栏数据
     public function teamdata() {
        $array = Db::name('team')->alias('T')
             ->join('hl_user_team UT','UT.team_id=T.id','left')   
@@ -153,16 +158,20 @@ class Keeper extends Base
    
     
     //部门list
-    public function teamlist() 
+    public function teamList() 
     {
         $array = Db::name('team')->group('id')->select();
         $list = $this->generateTree($array);
-        $this->view->assign('jobList',$list);
-        return $this->view->fetch('Keeper/user_add');
+//        $this->_p($list);exit;
+        $tree= $this->procHtml($list);
+         
+        $this->view->assign('tree',$tree);
+        $this->view->engine->layout('Keeper/team_public');
+        return $this->view->fetch('Keeper/team_list');
     }
     
-    //部门调整处理
-    public function teamAdd() 
+    //部门修改
+    public function teamEdit() 
     {
         $array = Db::name('team')->group('id')->select();
         $list = $this->generateTree($array);
@@ -219,19 +228,29 @@ class Keeper extends Base
     {
         $html = '';
         foreach($tree as $t)
-        {   
-          if( @$t['son'] =='')
-            {
-                $html .= "<li class='layui-nav-item'>{$t['title']}--{$t['user_name']}--{$t['job']}--{$t['id']}</li>";
+        {  
+            $id=$t['id'];
+            $strE =  url('@admin/keeper/teamEdit',"id=$id");
+            $strA =  url('@admin/keeper/teamAdd',"id=$id");
+            $strD =  url('@admin/keeper/teamDel',"id=$id");
+          if(!isset($t['childMenus']))
+            {   
+                $html .= "<li >{$t['title']}"
+                . "<a href='$strE' >编辑</a>&nbsp"
+                . "<a href='$strA'>子类目</a>&nbsp"
+                . "<a href='$strD'>删除</a></li>&nbsp";
             }
             else
-            {
-                $html .= '<li class="layui-nav-item">'."{$t['title']}--{$t['user_name']}--{$t['job']}--{$t['id']}";
-               @$html .= $this->procHtml($t['son']);
+            {   
+                $html .= "<li class='layui-nav-item'>{$t['title']}"
+                . "<a href='$strE' >编辑</a>&nbsp"
+                . "<a href='$strA'>子类目</a>&nbsp";
+              
+                $html .= $this->procHtml($t['childMenus']);
                 $html = $html."</li>";
             }
         }
-        return $html ? '<ul class="layui-nav layui-nav-tree" lay-filter="">'.$html.'</ul>' : $html ;
+        return $html ? '<ul class="layui-nav-tree" lay-filter="">'.$html.'</ul>' : $html ;
     }
 
 } 

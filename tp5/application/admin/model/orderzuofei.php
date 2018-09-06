@@ -106,7 +106,7 @@ class orderzuofei {
         // 取值（当前作用域）
         $loginname= Session::get('user_info','think');
        // var_dump($loginname);exit;
-        $change_time = time();  
+        $change_time = date('y-m-d h:i:s');  
         $response=[];
     
         $fatherFuc = function() use($father,$loginname,$change_time){ 
