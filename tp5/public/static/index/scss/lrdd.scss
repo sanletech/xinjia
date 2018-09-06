@@ -308,6 +308,34 @@ button{
     color:red;
     margin-right: 40px;
   }
+  .fapiao{
+    float: left;
+    width: 55%;
+    text-align: left;
+    padding-left: 28px;
+    height: 50px;
+    white-space:nowrap;
+    overflow: auto;
+    overflow-y: hidden;
+    margin-top: -5px;
+    line-height: 50px;
+    .fp_tt{
+      display: inline-block;
+      height: 50px;
+      position: relative;
+      margin-right: 5px;
+      .shanchu{
+        display: inline-block;
+        cursor: pointer;
+        position: absolute;
+        right: 3px;
+        top: 5px;
+        height:30px;
+        width: 16px;
+        padding-top: -20px;
+      }
+    }
+  }
 }
 
 #modal-default{

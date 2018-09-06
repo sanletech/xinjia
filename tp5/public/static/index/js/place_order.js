@@ -18,15 +18,12 @@ input_wu();
 $('.in').css('border', '0');
 function xiu() {
     var gai = $('.er_anniu .wt3').val();
-    console.log(gai);
-
     if (gai == '修改' || gai == '') {
         $('.er_anniu .wt3').val('确认');
         $('.in').css('border', '1px solid #e6e6e6');
         $('.in').removeAttr('readonly');
         input_null();
     } else if (gai == '确认') {
-
         $('.er_anniu .wt3').val('修改');
         $('.in').css('border', '0');
         $('.in').attr('readonly', 'readonly');
@@ -36,7 +33,7 @@ function xiu() {
 //发票设置
 $('#fk').change(function () {
     let fk = $(this).children('option:selected').val();
-    if (fk == 3) {
+    if (fk == 'thirdPayment') {//付款方式（第三方）
         $('.jin input').removeClass('layui-disabled').attr('disabled', false);
     } else {
         $('.jin input').addClass('layui-disabled').attr('disabled', true);
@@ -52,12 +49,13 @@ function kfp(fp) {
     }
 };
 //设置发票增税值
+$('.fapiao').hide();
 $('.fp01').change(function () {
     let fk = $(this).children('option:selected').val();
     if (fk == 0) {
-        $('.tx').hide();
+        $('.tx,.fapiao').hide();
     } else {
-        $('.tx').show();
+        $('.tx,.fapiao').show();
     }
 });
 
@@ -80,7 +78,7 @@ function selectlink() {
             //接受数据 展示页面
              wt(status);
             status =JSON.parse(status)
-            console.log(status);
+            // console.log(status);
         }
     });
 }
@@ -122,19 +120,21 @@ function nei(zj) {
             nei = arr[i];
         }
     }
-
     if ($(lei).hasClass('song')) {
         $(input[0]).val(nei.company);
         $(input[1]).val(nei.name);
         $(input[2]).val(nei.phone);
         $(input[3]).val(nei.address);
+        $(input[4]).val(nei.id);
     } else {
-        $(input[4]).val(nei.company);
-        $(input[5]).val(nei.name);
-        $(input[6]).val(nei.phone);
-        $(input[7]).val(nei.address);
+        $(input[5]).val(nei.company);
+        $(input[6]).val(nei.name);
+        $(input[7]).val(nei.phone);
+        $(input[8]).val(nei.address);
+        $(input[9]).val(nei.id);
     }
-    $('#wt1').iziModal('close');
+    layer.close(layer.index);
+    $('html',window.parent.document).css('overflow-y','auto');
 }
 
 //收货/发货人的表单提交 
@@ -151,11 +151,19 @@ function invoice() {
 
 //订单信息的提交
 function order_data() {
-    var data = $("#order_data_form").serialize();
-    toajax(OrderUrl, data);
+    var data = $("#order_data_form").serializeArray();
+    let obj = {};
+    $.each(data,function(i,v){
+        obj[v.name] = v.value;
+    });
+    obj['money'] = $('.money').html();//纯运费
+    obj['member_porfit'] = $('#member_porfit').html();//客户提成
+    obj['price_sum'] = $('#price_sum').html();//总运费
+    console.log(obj);
+    toajax(OrderUrl, obj);
 }
 
-function toajax(url, data) {
+function toajax(url, data) {   
     $.ajax({
         type: 'POST',
         url: url,
@@ -178,12 +186,12 @@ function zong_sum(shu) {
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje * 6;//总价格
     if (shu == 1) {//发票6%
-        zong = zong * 1.038;        
+        zong = zong * 1.038;     
     }else if(shu == 2){//发票10%
         zong = zong * 1.06;
     }
     zong = Math.round(zong*100)/100;//保留小数点后面两位
-    $('#price_sum input').val(zong); 
+    $('#price_sum').html(zong); 
 }
 $('#container_sum').change(function () {//监听柜量
     zong_sum(0);

@@ -36,14 +36,6 @@ layui.use(['form', 'layedit', 'laydate'], function () {
     });
     layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
   });
-
-  //监听提交
-  form.on('submit(demo1)', function (data) {
-    layer.alert(JSON.stringify(data.field), {
-      title: '最终的提交信息'
-    })
-    return false;
-  });
 });
 
 
