@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-06 16:01:20
+Date: 2018-09-06 21:33:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4444,18 +4444,17 @@ CREATE TABLE `hl_linkman` (
 -- ----------------------------
 -- Records of hl_linkman
 -- ----------------------------
-INSERT INTO `hl_linkman` VALUES ('1', '送A', '55555', '送货A公司', '北京市北京市东城区东华门街道', 'kehu001', '110101001', null);
-INSERT INTO `hl_linkman` VALUES ('2', '装B', '6666', '收货B公司', '天津市天津市和平区新兴街道', 'kehu001', '120101004', null);
-INSERT INTO `hl_linkman` VALUES ('3', '送C', '55555', '送货C公司', '北京市北京市东城区东华门街道', 'kehu001', '110101001', null);
-INSERT INTO `hl_linkman` VALUES ('4', '装D', '55555', '收货D公司', '北京市北京市东城区东华门街道', 'kehu001', '110101001', null);
-INSERT INTO `hl_linkman` VALUES ('5', '送E', '55555', '送货E公司', '北京市北京市东城区东华门街道', 'kehu002', '110101001', null);
-INSERT INTO `hl_linkman` VALUES ('6', '阿斯蒂芬 ', '阿斯蒂芬', ' 是否 ', '速读法', 'kehu003', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_linkman` VALUES ('7', '阿斯蒂芬 ', '185752880024', '阿里司机公司 ', '广州百老汇商业街', 'kehu004', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_linkman` VALUES ('8', '赵前程', '10086', '火星物流', '广州火车站', 'kehu005', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_linkman` VALUES ('9', '路人贾一平', '10086110254', '赵富国有限公司', '广州天河客运站地铁五号线', '', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_linkman` VALUES ('10', '测试老', '100085556', '测试老', '东莞广东省科技', 'kehu001', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_linkman` VALUES ('11', '测试老', '100085556', '测试老', '东莞广东省科技', 'kehu001', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_linkman` VALUES ('12', 'aaa', '5111152', '似的发射点', '似的发射点', 'taobao6', null, '2018-08-26 21:36:23');
+INSERT INTO `hl_linkman` VALUES ('1', 'AA', '55555', '送货A公司', '北京市北京市东城区东华门街道', 'kehu001', '110101001', null);
+INSERT INTO `hl_linkman` VALUES ('2', 'BB', '6666', '收货B公司', '天津市天津市和平区新兴街道', 'kehu001', '120101004', null);
+INSERT INTO `hl_linkman` VALUES ('3', 'CC', '55555', '送货C公司', '北京市北京市东城区东华门街道', 'kehu001', '110101001', null);
+INSERT INTO `hl_linkman` VALUES ('4', 'DD', '55555', '收货D公司', '北京市北京市东城区东华门街道', 'kehu001', '110101001', null);
+INSERT INTO `hl_linkman` VALUES ('5', 'EE', '100085556', '收货E公司', '啊gas大', 'kehu001', null, '0000-00-00 00:00:00');
+INSERT INTO `hl_linkman` VALUES ('6', 'FFF', '100085556', '收货F公司', '光啦阿古斯gas的', 'kehu001', null, '0000-00-00 00:00:00');
+INSERT INTO `hl_linkman` VALUES ('7', '送E', '55555', '送货E公司', '北京市北京市东城区东华门街道', 'kehu002', '110101001', null);
+INSERT INTO `hl_linkman` VALUES ('1213', '阿斯蒂芬 ', '阿斯蒂芬', ' 是否 ', '速读法', 'kehu003', null, '0000-00-00 00:00:00');
+INSERT INTO `hl_linkman` VALUES ('2131', '阿斯蒂芬 ', '185752880024', '阿里司机公司 ', '广州百老汇商业街', 'kehu004', null, '0000-00-00 00:00:00');
+INSERT INTO `hl_linkman` VALUES ('3541', '赵前程', '10086', '火星物流', '广州火车站', 'kehu005', null, '0000-00-00 00:00:00');
+INSERT INTO `hl_linkman` VALUES ('5341', 'aaa', '5111152', '似的发射点', '似的发射点', 'taobao6', null, '2018-08-26 21:36:23');
 
 -- ----------------------------
 -- Table structure for `hl_logistic`
@@ -4588,6 +4587,28 @@ INSERT INTO `hl_member` VALUES ('18', '王达成', 'e10adc3949ba59abbe56e057f20f
 INSERT INTO `hl_member` VALUES ('19', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25', '0000-00-00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company');
 
 -- ----------------------------
+-- Table structure for `hl_member_add`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_member_add`;
+CREATE TABLE `hl_member_add` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `member_code` varchar(10) DEFAULT NULL COMMENT '用户_code',
+  `shipper_linkmanID` int(10) DEFAULT NULL COMMENT '发货人linkman_id    ',
+  `consigner_linkmanID` int(10) DEFAULT NULL COMMENT '收货人linkman_id',
+  `mtime` datetime DEFAULT NULL COMMENT '创建时间',
+  `is_default` int(10) DEFAULT NULL COMMENT '是否设为默认地址,1是2不是',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_member_add
+-- ----------------------------
+INSERT INTO `hl_member_add` VALUES ('1', 'kehu002', '2', '1', null, null);
+INSERT INTO `hl_member_add` VALUES ('2', 'kehu001', '2', '1', null, null);
+INSERT INTO `hl_member_add` VALUES ('3', 'kehu001', '5', '6', null, '1');
+INSERT INTO `hl_member_add` VALUES ('4', 'kehu001', '2', '2', null, '1');
+
+-- ----------------------------
 -- Table structure for `hl_member_order`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_member_order`;
@@ -4689,26 +4710,6 @@ CREATE TABLE `hl_node` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `hl_order_add`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_order_add`;
-CREATE TABLE `hl_order_add` (
-  `id` int(10) NOT NULL,
-  `order_num` varchar(10) DEFAULT NULL COMMENT '订单id',
-  `consigner_linkmanID` int(10) DEFAULT NULL COMMENT '收货人linkman_id',
-  `shipper_linkmanID` int(10) DEFAULT NULL COMMENT '收货人linkman_id    ',
-  `mtime` datetime DEFAULT NULL COMMENT '创建时间',
-  `is_default` int(10) DEFAULT NULL COMMENT '是否设为默认地址,1是2不是',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_order_add
--- ----------------------------
-INSERT INTO `hl_order_add` VALUES ('1', 'kehu002', '1', '2', null, null);
-INSERT INTO `hl_order_add` VALUES ('2', 'kehu001', '1', '2', null, null);
-
--- ----------------------------
 -- Table structure for `hl_order_comment`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_order_comment`;
@@ -4755,7 +4756,7 @@ CREATE TABLE `hl_order_father` (
   `mtime` datetime DEFAULT NULL COMMENT '修改时间',
   `book_line_id` int(11) DEFAULT NULL COMMENT '海运价格表门到门的',
   `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
-  ` belong_order` varchar(20) DEFAULT NULL COMMENT '从那里拆开的订单编码',
+  `belong_order` varchar(20) DEFAULT '0' COMMENT '从那里拆开的订单编码',
   `state` int(5) DEFAULT NULL COMMENT '订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货',
   `action` varchar(12) DEFAULT NULL COMMENT '状态说明',
   `ctime` datetime DEFAULT NULL COMMENT '创建时间',
@@ -4765,27 +4766,44 @@ CREATE TABLE `hl_order_father` (
   `sign_receipt` varchar(2) DEFAULT 'n' COMMENT '是否需要箱内签会单y需要n不需要',
   `tax_rate` double(10,0) DEFAULT NULL COMMENT '税率种类选择1不需要,2为6%实际4% ,3为11%实际7%',
   `invoice_id` varchar(10) DEFAULT NULL COMMENT '发票id',
-  `add_id` int(11) DEFAULT NULL COMMENT '发货收货地址',
   `shipper` varchar(100) DEFAULT NULL COMMENT '订单的发货人资料,姓名,手机号,公司,地址',
   `consigner` varchar(100) DEFAULT NULL COMMENT '订单的收货人资料,姓名,手机号,公司,地址',
   `send_payment` varchar(12) DEFAULT '付款方式发货时候的选择' COMMENT 'monthly月结pledge压柜cash现款 ',
+  `seaprice_id` int(5) DEFAULT NULL COMMENT '海运价格表id',
+  `carprice_rid` int(5) DEFAULT NULL COMMENT '车运装货价格表id',
+  `carprice_sid` int(5) DEFAULT NULL COMMENT '车送装货价格表id',
+  `carprice_r` float(5,0) DEFAULT NULL COMMENT '车运装货费',
+  `carprice_s` float(5,0) DEFAULT NULL COMMENT '车运送货费',
+  `seaprice` int(4) DEFAULT NULL COMMENT '海运费',
+  `premium` int(4) DEFAULT NULL COMMENT '保险费',
+  `profit` int(2) DEFAULT NULL COMMENT '业务利润',
+  `cost` int(4) DEFAULT NULL COMMENT '成本价格',
+  `quoted_price` float(5,0) DEFAULT NULL COMMENT '报价,总的费用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_father
 -- ----------------------------
-INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '40HQ', '2', '2000', '8848', '5', '这个是针对订单具体信息', '2018-08-22 11:30:19', '1', 'kehu001', null, '800', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '2', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('2', '201806251705', '牲畜', '40HQ', '1', '8000', '54321', '2', '这是一个订单下另一种货物', '2018-08-31 11:30:26', '2', 'kehu002', null, '400', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('3', '1531107265kehu001555', '钢材', '20GP', '2', '410', '142', '1', '阿萨德发送到发送', '2018-08-27 11:30:30', '5', 'kehu001', null, '400', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('4', '1531118326kehu001205', '木头', '40HQ', '3', '100', '50', '1', '卖家必须要发货速度块', '2018-08-15 11:30:34', '1', 'kehu001', null, '505', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('5', '1531118344kehu001875', '木头', '20GP', '3', '100', '50', '1', '卖家必须要发货速度块', '2018-08-27 11:30:30', '1', 'kehu001', null, '0', '通过审核>待订舱', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('6', '1531119660kehu001132', '黄金沙子', '20GP', '1', '100', '1000', '1', '昂贵物品丢失不赔', '2018-08-27 11:30:30', '1', 'kehu001', null, '0', '通过审核>待订舱', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('7', '1531190282kehu001737', '饮料', '20GP', '3', '100', '100', '2', '发货所得税法撒旦法', '2018-08-16 11:30:41', '3', 'kehu001', null, '800', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('8', 'A824106096329230', 'aaa', '40HQ', '7', '600', '100', '2', '订单备注 ,要注意冷冻保存', '2018-05-05 00:00:00', '4', 'kehu001', null, '200', '录入运单号>待订车', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('9', 'A826921016606912', '猪肉', '40HQ', '3', '100', '100', '1', '测试订单测试订单', '2018-08-28 02:14:45', '1', 'taobao6', null, '900', '收款完毕>待送货', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('10', 'A826944504106855', '猪肉', '40HQ', '3', '100', '100', '1', '测试订单测试订单', '2018-08-26 22:40:50', '1', 'taobao6', null, '100', '通过审核>待订舱', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, '1', null, null, '付款方式');
-INSERT INTO `hl_order_father` VALUES ('11', 'A905211650866546', '猪肉', '40HQ', '4', '100', '50', '2', '猪肉猪肉不要发臭了', '2018-09-05 12:19:25', '2', 'kehu001', null, '0', null, null, null, null, 'n', 'n', null, null, '1', null, null, '付款方式发货时候的选择');
+INSERT INTO `hl_order_father` VALUES ('1', '201806251702', '钢筋', '40HQ', '2', '2000', '8848', '5', '这个是针对订单具体信息', '2018-08-22 11:30:19', '1', 'kehu001', null, '800', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('2', '201806251705', '牲畜', '40HQ', '1', '8000', '54321', '2', '这是一个订单下另一种货物', '2018-08-31 11:30:26', '2', 'kehu002', null, '400', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('3', '1531107265kehu001555', '钢材', '20GP', '2', '410', '142', '1', '阿萨德发送到发送', '2018-08-27 11:30:30', '5', 'kehu001', null, '400', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('4', '1531118326kehu001205', '木头', '40HQ', '3', '100', '50', '1', '卖家必须要发货速度块', '2018-08-15 11:30:34', '1', 'kehu001', null, '505', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('5', '1531118344kehu001875', '木头', '20GP', '3', '100', '50', '1', '卖家必须要发货速度块', '2018-08-27 11:30:30', '1', 'kehu001', null, '0', '通过审核>待订舱', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('6', '1531119660kehu001132', '黄金沙子', '20GP', '1', '100', '1000', '1', '昂贵物品丢失不赔', '2018-08-27 11:30:30', '1', 'kehu001', null, '0', '通过审核>待订舱', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('7', '1531190282kehu001737', '饮料', '20GP', '3', '100', '100', '2', '发货所得税法撒旦法', '2018-08-16 11:30:41', '3', 'kehu001', null, '800', null, '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('8', 'A824106096329230', 'aaa', '40HQ', '7', '600', '100', '2', '订单备注 ,要注意冷冻保存', '2018-05-05 00:00:00', '4', 'kehu001', null, '200', '录入运单号>待订车', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('9', 'A826921016606912', '猪肉', '40HQ', '3', '100', '100', '1', '测试订单测试订单', '2018-08-28 02:14:45', '1', 'taobao6', null, '900', '收款完毕>待送货', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('10', 'A826944504106855', '猪肉', '40HQ', '3', '100', '100', '1', '测试订单测试订单', '2018-08-26 22:40:50', '1', 'taobao6', null, '100', '通过审核>待订舱', '2018-08-22 11:30:19', null, null, 'n', 'n', null, null, null, null, '付款方式', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('11', 'A905211650866546', '猪肉', '40HQ', '4', '100', '50', '2', '猪肉猪肉不要发臭了', '2018-09-05 12:19:25', '2', 'kehu001', null, '0', null, null, null, null, 'n', 'n', null, null, null, null, '付款方式发货时候的选择', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('12', 'A906352508944526', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-06 20:00:50', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:00:50', '第三方付款_1855888858', 'cash', 'y', 'y', '0', '3', 'EE,100085556,啊gas大,收货E公司', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('13', 'A906352923474585', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-06 20:01:32', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:01:32', '第三方付款_1855888858', 'cash', 'y', 'y', '0', '3', 'EE,100085556,啊gas大,收货E公司', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('14', 'A906353031424552', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-06 20:01:43', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:01:43', '第三方付款_1855888858', 'cash', 'y', 'y', '0', '3', 'EE,100085556,啊gas大,收货E公司', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('15', 'A906353429154595', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-06 20:02:22', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:02:22', '第三方付款_1855888858', 'cash', 'y', 'y', '0', '3', 'EE,100085556,啊gas大,收货E公司', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('16', 'A906363225694589', '猪肉', '20GP', '4', '100', '50', '1', '猪肉驻欧三大', '2018-09-06 20:18:42', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:18:42', 'collectCall', 'cash', 'y', 'y', '0', '1', 'EE,100085556,啊gas大,收货E公司', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('17', 'A906364926004596', '猪肉', '20GP', '4', '100', '50', '1', '使得积分卡死机', '2018-09-06 20:21:32', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:21:32', 'ourPayment', 'pledge', 'y', 'y', '0', '1', 'EE,100085556,啊gas大,收货E公司', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '44', '39', null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('18', 'A906370739044583', '芒果', '20GP', '1', '50', '100', '1', '大师法', '2018-09-06 20:31:13', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:31:13', 'ourPayment', 'cash', 'n', 'n', '0', '3', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', '付款方式发货时候的选择', '1', '44', '39', null, null, null, null, null, null, null);
+INSERT INTO `hl_order_father` VALUES ('19', 'A906371578264503', '芒果', '20GP', '3', '50', '100', '1', '大师法', '2018-09-06 20:32:37', null, 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:32:37', '阿斯蒂芬撒_11111555', 'monthly', 'y', 'y', '0', '3', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', '付款方式发货时候的选择', '1', '44', '39', null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
