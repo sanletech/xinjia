@@ -15,7 +15,7 @@ class Base extends Controller
         if(is_null($this->member_code)){
             $this->notlogin();
         }
-       // $this->top();
+      
         
     }
     
@@ -31,7 +31,7 @@ class Base extends Controller
     }
       protected function alreadylogin()
     {
-        //如果登录常量为非nll，表示没有登录
+        //如果登录常量为非nll，表示已经登录
       if(!is_null($this->member_code)){
           $this->error('请不要重复登录','login/login');
           
@@ -45,6 +45,7 @@ class Base extends Controller
        //  $limit = $this->user_id;
          
     }
+    
     //公共top页面
     protected function  top(){
         return $this->view->fetch('public/top'); 
