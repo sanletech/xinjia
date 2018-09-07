@@ -248,14 +248,14 @@ class Keeper extends Base
           if(!isset($t['childMenus']))
             {   
                 $html .= "<li >{$t['title']}"
-                . "<a href='$strE' >编辑</a>&nbsp"
+                . "<a href='javascript:void(0);' id='$id'>编辑</a>&nbsp"
                 . "<a href='$strA'>子类目</a>&nbsp"
                 . "<a href='$strD'>删除</a></li>&nbsp";
             }
             else
             {   
                 $html .= "<li class='layui-nav-item'>{$t['title']}"
-                . "<a href='$strE' >编辑</a>&nbsp"
+                . "<a href='javascript:void(0);' id='$id' >编辑</a>&nbsp"
                 . "<a href='$strA'>子类目</a>&nbsp";
               
                 $html .= $this->procHtml($t['childMenus']);
