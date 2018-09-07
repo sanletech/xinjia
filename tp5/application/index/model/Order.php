@@ -99,7 +99,7 @@ class Order extends Model
     
     //处理客户提交的订单信息
     public function order_data($member_code,$data,$shipper,$consigner,$seaprice_id,$carprice_rid,$carprice_sid,
-                 $carprice_r,$carprice_s,$seaprice,$premium,$profit,$cost,$quoted_price) {
+                 $carprice_r,$carprice_s,$seaprice,$premium,$profit,$cost,$quoted_price,$tax_rate) {
         //添加数据到hl_order_fahter表里
         $mtime =  date("Y-m-d H:i:s"); 
         $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
@@ -107,18 +107,6 @@ class Order extends Model
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
        // var_dump($order_num);exit;
-       //转换税率 
-        switch ($data['tax_rate']){
-            case 1:
-            $tax_rate =0;
-            break;
-            case 2:
-            $tax_rate =0.04; 
-            break;
-            case 3:
-            $tax_rate =0.07; 
-            break;
-        }
         //如果是第三付款则合拼第三方人的姓名电话
         if($data['payer'] =='thirdPayment'){
             $payer = $data['payer_name'].'_'.$data['payer_phone'];
@@ -141,7 +129,7 @@ class Order extends Model
                 'sign_receipt'=>$data['sign_receipt'],'tax_rate'=>$tax_rate,'invoice_id'=>$data['invoice_id'],'shipper'=>$shipper,
                 'consigner'=>$consigner,'seaprice_id'=>$seaprice_id,'carprice_rid'=>$carprice_rid,'carprice_sid'=>$carprice_sid,
                 'carprice_r'=>$carprice_r,'carprice_s'=>$carprice_s,'seaprice'=>$seaprice,'premium'=>$premium,'profit'=>$profit,
-                'cost'=>$cost,'quoted_price'=>$quoted_price
+                'cost'=>$cost,'quoted_price'=>$quoted_price,'shipper_id'=>$data['r_id'], 'consigner_id'=>$data['s_id']
             ];
           
         $response=[];

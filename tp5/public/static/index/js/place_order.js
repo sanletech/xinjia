@@ -188,9 +188,9 @@ function zong_sum(shu) {
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje * 6;//总价格
     if (shu == 1) {//发票6%
-        zong = zong * 1.038;     
+        zong = zong * 1.04;     
     }else if(shu == 2){//发票10%
-        zong = zong * 1.06;
+        zong = zong * 1.07;
     }
     zong = Math.round(zong*100)/100;//保留小数点后面两位
     $('#price_sum').html(zong); 

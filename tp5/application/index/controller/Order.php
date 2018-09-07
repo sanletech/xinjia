@@ -145,23 +145,30 @@ class Order extends Base
         $profit = Db::name('member_profit')->alias('MP')  //利润
                 ->join('hl_seaprice SP','SP.ship_id=MP.ship_id','left')
                 ->field('MP.money')->where('SP.id',$seaprice_id)->group('SP.id,SP.ship_id')->value('MP.money');
-        $cost = ($carprice_r + $carprice_s + $seaprice + $profit)*$data['container_sum']; 
-        //转换税率
-        if($data['tax_rate']==1){
-            $tax_rate =0.04; 
-        }elseif ($data['tax_rate']==2) {
-            $tax_rate =0.07;
-        }elseif ($data['tax_rate']==0) {
+        $cost = ($carprice_r + $carprice_s + $seaprice + $profit); //单个成本
+          //转换税率 
+        switch ($data['tax_rate']){
+            case 0:
             $tax_rate =0;
-        } 
-        $quoted_price  = $cost*(1+$tax_rate) + $premium; //总报价
-        var_dump($data['money'],$carprice_r,$carprice_s,$seaprice,$profit);exit;
-        if(($data['money']-$carprice_r-$carprice_s-$seaprice-$profit)!==0){
-            return '0000';
+            break;
+            case 1:
+            $tax_rate =0.04; 
+            break;
+            case 2:
+            $tax_rate =0.07; 
+            break;
         }
-        if(($data['price_sum']-$quoted_pricet)!==0){
-            return '111';
+        $total_cost = $cost*$data['container_sum']; //总成本
+        $quoted_price  = ($total_cost+$premium)*(1+$tax_rate) ; //总报价
+       
+        if(bccomp($data['money'],$cost,2)!==0){
+            return json(['status'=>1,'message'=>'报价错误']);
         }
+//        var_dump($data['price_sum'],$quoted_price);exit;
+        if(bccomp($data['price_sum'],$quoted_price,2)!==0){
+            return json(['status'=>1,'message'=>'报价错误']);
+        }
+        
         $sea_pirce =new OrderM;
         //储存发货人和 收货人的信息
         $shipper   = $data['r_name'].','.$data['r_phone'].','.$data['r_add'].','.$data['r_company'];
@@ -182,7 +189,7 @@ class Order extends Base
                 $data['s_name'],$data['s_phone'],$data['s_add'],$data['s_company']);
         
         $response = $sea_pirce ->order_data($member_code,$data,$shipper,$consigner,$seaprice_id,$carprice_rid,$carprice_sid,
-                 $carprice_r,$carprice_s,$seaprice,$premium,$profit,$cost,$quoted_price);
+                 $carprice_r,$carprice_s,$seaprice,$premium,$profit,$cost,$quoted_price,$tax_rate);
         if(!array_key_exists('fail', $response)){
             $status =1; 
         }else {
