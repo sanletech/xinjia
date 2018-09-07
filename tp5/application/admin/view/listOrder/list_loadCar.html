@@ -28,13 +28,13 @@
                 <{$vo.user_name}>
             </span>
             <span>船期:
-                <{$vo.shipping_date|date="y-m-d" ,###}>
+                <{$vo.shipping_date}>
             </span>
             <span>海上时效:
                 <{$vo.sea_limitation}>
             </span>
             <span>截单时间:
-                <{$vo.cutoff_date|date="y-m-d" ,###}>
+                <{$vo.cutoff_date}>
             </span>
         </span>
     </div>
@@ -71,8 +71,7 @@
     </div>
     <div class="layui-col-md2">
         <p class="se">状态：<{$status}></p>
-        <p class="se">天数:
-            <?php $timediff =date('y-m-d h:i:s')-$vo['ctime']; $days = intval($timediff); echo $days;?>天</p>
+        <p class="se">天数:<{$vo.differ_day}>天</p>
     </div>
     <div class="layui-col-md1">
         <p class="a_niu">

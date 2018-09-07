@@ -15,7 +15,8 @@ class Order extends Base
     
     //海运运价
     public function order_list()
-    {
+    {   
+        $member_code =Session::get('member_code','think');
         $start_add =$this->request->param('start_id');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
         $end_add =$this->request->param('end_id');
@@ -24,7 +25,7 @@ class Order extends Base
         if($load_time){ $this->view->assign('load_time',$load_time);  
         $load_time =strtotime($load_time); }
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->price_sum($start_add,$end_add,$load_time);
+        $list = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time);
         //获取总页数
         $count =  Db::table($list.' A')->count(); 
         //获取每页显示的条数
@@ -48,9 +49,10 @@ class Order extends Base
 
      //海运运价 分页数据
     public function pagedata()
-    {
+    {   
+        $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->price_sum();
+        $list = $sea_pirce ->price_sum($member_code);
         $count =  Db::table($list.' A')->count(); //获取总页数
         //获取每页显示的条数
         $limit= $this->Request->param('limit');
@@ -73,8 +75,9 @@ class Order extends Base
         $r_car_id = $data['r_car_id'];
         $s_car_id = $data['s_car_id'];
         $container_size = $data['container_size'];
+        $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size);
+        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code);
         $this->view->assign('list',$list);
       
         return $this->view->fetch('Order/place_order');
@@ -131,21 +134,62 @@ class Order extends Base
       public function order_data()
     {
         $data =$this->request->param();
-        $this->_P($data);exit;
-       //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id  存进book_line表里
-        $sea_id =$data['sea_id'];  $rid =$data['rid']; $sid =$data['sid'];
+       $member_code =Session::get('member_code');
+       //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
+        $seaprice_id =$data['sea_id'];  $carprice_rid=$data['rid']; $carprice_sid =$data['sid'];
+        //计算出车装货价格 送货价格 船运价格 保险费, 法税 ,利润
+        $carprice_r= Db::name('carprice')->where('id',$carprice_rid)->value('price_'.$data['container']); //车装货费
+        $carprice_s= Db::name('carprice')->where('id',$carprice_sid)->value('price_'.$data['container']); //车送货费
+        $seaprice = Db::name('seaprice')->where('id',$seaprice_id)->value('price_'.$data['container']); //海运费
+        $premium  = $data['cargo_cost']*6; //保险费
+        $profit = Db::name('member_profit')->alias('MP')  //利润
+                ->join('hl_seaprice SP','SP.ship_id=MP.ship_id','left')
+                ->field('MP.money')->where('SP.id',$seaprice_id)->group('SP.id,SP.ship_id')->value('MP.money');
+        $cost = ($carprice_r + $carprice_s + $seaprice + $profit); //单个成本
+          //转换税率 
+        switch ($data['tax_rate']){
+            case 0:
+            $tax_rate =0;
+            break;
+            case 1:
+            $tax_rate =0.04; 
+            break;
+            case 2:
+            $tax_rate =0.07; 
+            break;
+        }
+        $total_cost = $cost*$data['container_sum']; //总成本
+        $quoted_price  = ($total_cost+$premium)*(1+$tax_rate) ; //总报价
+       
+        if(bccomp($data['money'],$cost,2)!==0){
+            return json(['status'=>1,'message'=>'报价错误']);
+        }
+//        var_dump($data['price_sum'],$quoted_price);exit;
+        if(bccomp($data['price_sum'],$quoted_price,2)!==0){
+            return json(['status'=>1,'message'=>'报价错误']);
+        }
+        
         $sea_pirce =new OrderM;
-        $book_line_id = $sea_pirce ->book_line($sea_id,$rid,$sid);
         //储存发货人和 收货人的信息
         $shipper   = $data['r_name'].','.$data['r_phone'].','.$data['r_add'].','.$data['r_company'];
         $consigner = $data['s_name'].','.$data['s_phone'].','.$data['s_add'].','.$data['s_company'];
-        //储存客户的地址薄
-        //待完成
+        //储存客户的地址薄 
+        $shipper_linkmanID =  $data['r_id']; 
+        $consigner_linkmanID= $data['s_id'];
+        $res =Db::name('member_add')->where(['shipper_linkmanID'=>$shipper_linkmanID,
+            'consigner_linkmanID'=>$consigner_linkmanID,
+            'member_code'=> $member_code])->find();
+        if(empty($res)){
+        $res2 = Db::name('member_add')->insert(['shipper_linkmanID'=>$shipper_linkmanID,
+            'consigner_linkmanID'=>$consigner_linkmanID,
+            'member_code'=> $member_code,'is_default'=>1]);
+        }
         unset($data['sea_id'],$data['rid'],$data['sid'],$data['r_name'],
                 $data['r_phone'],$data['r_add'],$data['r_company'],
                 $data['s_name'],$data['s_phone'],$data['s_add'],$data['s_company']);
         
-        $response = $sea_pirce ->order_data($data,$shipper,$consigner,$book_line_id);
+        $response = $sea_pirce ->order_data($member_code,$data,$shipper,$consigner,$seaprice_id,$carprice_rid,$carprice_sid,
+                 $carprice_r,$carprice_s,$seaprice,$premium,$profit,$cost,$quoted_price,$tax_rate);
         if(!array_key_exists('fail', $response)){
             $status =1; 
         }else {

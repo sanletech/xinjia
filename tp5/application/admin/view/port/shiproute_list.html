@@ -57,7 +57,7 @@
                         <td><{$vo.id}></td>
                         <td class="tdata"><{$vo.s_port_name}>/<{$vo.e_port_name}></td>
                         <td><?php echo strtr($vo['port_name'],',','>')?></td>
-                        <td><{$vo.mtime|date="Y-m-d",###}></td>
+                        <td><{$vo.mtime}></td>
                         <td class="td-manage">
                             <a title="删除" onclick="del(this,'<{$vo.id}>')" href="javascript:;">
                                 <i class="layui-icon">&#xe640;</i>

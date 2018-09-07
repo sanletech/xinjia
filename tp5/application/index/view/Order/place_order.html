@@ -315,22 +315,20 @@
         <!-- 总运费 -->
         <div class="sun">
           <div class="fapiao layui-form-item layui-form">
+              <!--<{//:url('index/order/selectInvoice ')}>-->
             <div class="fp_tt">
-              <input type="radio" name="fp" value="1" title="发票抬头" checked="">
+              <input type="radio" name="invoice_id" value="1" title="发票抬头" checked="">
               <i class="layui-icon shanchu">&#x1006;</i>
             </div>
             <div class="fp_tt">
-              <input type="radio" name="fp" value="2" title="发票抬头" checked="">
+              <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
               <i class="layui-icon shanchu">&#x1006;</i>
             </div>
             <div class="fp_tt">
-              <input type="radio" name="fp" value="3" title="发票抬头" checked="">
+              <input type="radio" name="invoice_id" value="3" title="发票抬头" checked="">
               <i class="layui-icon shanchu">&#x1006;</i>
             </div>
           </div>
-          <span>客户提成：
-            <strong>￥<span id='member_porfit'><{$list.member_porfit}></span>元</strong>
-          </span>
           <span>总运费:
             <strong>￥
               <span id="price_sum">0.00</span>元</strong>

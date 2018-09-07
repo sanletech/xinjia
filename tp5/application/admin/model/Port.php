@@ -206,10 +206,11 @@ class Port extends Model
         $sql = "select sealine_id from hl_sea_bothend where sl_start = '$sl_start'  "
                 . "and  sl_end = '$sl_end'";
         $res = Db::query($sql);
+        $mtime =  date('y-m-d h:i:s');
         if(empty($res)){
             $sealine_id = Db::name('sea_bothend')->max('sealine_id')+1;
-            $sql2 = "insert into hl_sea_bothend(sl_start,sl_end,sealine_id)  "
-                    . " values('$sl_start','$sl_end','$sealine_id')";
+            $sql2 = "insert into hl_sea_bothend(sl_start,sl_end,sealine_id,mtime)  "
+                    . " values('$sl_start','$sl_end','$sealine_id','$mtime')";
             $res = Db::execute($sql2);
         }else{
             $sealine_id = $res['0']['sealine_id'] ;

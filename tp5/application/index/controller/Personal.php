@@ -1,13 +1,15 @@
 <?php
 namespace app\index\controller;
-use think\Db;
-use think\Controller;
-class Personal extends Controller 
+
+use app\index\common\Base;
+use think\db;
+class Personal extends Base
 {
     //个人中心
     public function steward()
-    {
-       return $this->view->fetch('personal/steward');
+    {   
+       
+        return $this->view->fetch('personal/steward');
     }
     //所有订单
     public function all_order()

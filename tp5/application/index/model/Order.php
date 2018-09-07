@@ -9,7 +9,7 @@ class Order extends Model
     
    
     //前台页面展示门到门的价格表
-    public function  price_sum($start_add='',$end_add='',$load_time=''){
+    public function  price_sum($member_code,$start_add='',$end_add='',$load_time=''){
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         $nowtime= date('y-m-d h:i:s');//要设置船期
         
@@ -33,14 +33,15 @@ class Order extends Model
                 ->join($price_car.' C','A.sl_end =C.port_id','left')
                 ->join('hl_shipcompany SC','SC.id = A.ship_id')
                 ->join('hl_boat BA','BA.boat_code =A.boat_code')
+                ->join('hl_member_profit MP',"MP.member_code='$member_code' and MP.ship_id=SC.id" ,'left')
 //                ->field('A.id,B.id rid,C.id sid,A.route_id,A.middle_id,A.ship_id,SC.ship_short_name,A.shipping_date'
 //                     )
                 ->field('A.id sea_id,B.id rid,C.id sid,A.route_id,A.middle_id,A.ship_id,SC.ship_short_name,A.shipping_date,'
                         . 'A.cutoff_date,A.boat_code,BA.boat_name,A.sea_limitation,'
                         . 'A.ETA,A.EDD,A.generalize,A.mtime,'
                         . 'A.sl_start,A.s_port_name,B.address_name r_add ,A.sl_end,A.e_port_name,C.address_name s_add ,'
-                        . '(select A.price_20GP + B.price_20GP + C.price_20GP  ) as price_20GP,'
-                        . '(select A.price_40HQ + B.price_40HQ + C.price_40HQ  ) as price_40HQ')
+                        . '(select A.price_20GP + B.price_20GP + C.price_20GP + MP.money ) as price_20GP,'
+                        . '(select A.price_40HQ + B.price_40HQ + C.price_40HQ + MP.money ) as price_40HQ')
                 ->where('B.variable', '=',"r")->where('C.variable', '=',"S")
                 ->buildSql();
 
@@ -59,11 +60,11 @@ class Order extends Model
        
     }
     //展示已经选择好的价格信息
-    public function orderBook($sea_id,$r_car_id,$s_car_id,$container_size) {
+    public function orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code) {
         if(!($container_size =='20GP'||$container_size =='40HQ')){
             return '参数错误';
         } 
-        $list= $this->price_sum();
+        $list= $this->price_sum($member_code);
         //航线信息
         $res = Db::table($list.' A')
             ->where('sea_id',$sea_id)
@@ -75,20 +76,7 @@ class Order extends Model
                 . 'price_'.$container_size.' as price' )->find();
         // 将集装箱字的尺寸添加到数组中
         $res['container_size']=$container_size;
-        if(!empty($res)){
-        //对客户的提成也加进去
-        $member_code =  $member_code =Session::get('member_code');
-        $ship_id =$res['ship_id'];
-        //查询members_porfit表里客户对应船公司的价格
-      
-        $member_porfit =Db::name('member_profit')
-                ->where('member_code',$member_code)
-                ->where('ship_id',$ship_id)
-                ->value('money');
-        $res['member_porfit']=$member_porfit; ;
-        }    
-      
-       // $this->_p($res);exit;
+        
         return $res;            
     }
     
@@ -110,44 +98,44 @@ class Order extends Model
     }
     
     //处理客户提交的订单信息
-    public function order_data($data,$shipper,$consigner,$book_line_id) {
+    public function order_data($member_code,$data,$shipper,$consigner,$seaprice_id,$carprice_rid,$carprice_sid,
+                 $carprice_r,$carprice_s,$seaprice,$premium,$profit,$cost,$quoted_price,$tax_rate) {
         //添加数据到hl_order_fahter表里
         $mtime =  date("Y-m-d H:i:s"); 
-        $member_code =Session::get('member_code');
         $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
         //生成订单编号
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
        // var_dump($order_num);exit;
-       //转换税率 
-        switch ($data['tax_rate']){
-            case 1:
-            $tax_rate =0;
-            break;
-            case 2:
-            $tax_rate =0.04; 
-            break;
-            case 3:
-            $tax_rate =0.07; 
-            break;
-        }
         //如果是第三付款则合拼第三方人的姓名电话
         if($data['payer'] =='thirdPayment'){
             $payer = $data['payer_name'].'_'.$data['payer_phone'];
         }  else {
             $payer =$data['payer'];
         }
+        if(!isset($data['message_send'])){
+            $data['message_send']='n';
+        } 
+        if(!isset($data['sign_receipt'])){
+            $data['sign_receipt']='n';
+        } 
         
         $sqldata =['order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$data['container'],
                 'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],
-                 'cargo_cost'=>$data['cargo_cost'], 'container_type_id'=>$data['container_type'],
-                  'comment'=>$data['comment'],
-                    'mtime'=>$mtime,'book_line_id'=>$book_line_id,'member_code'=>$member_code,'belong_order'=>0,'state'=>0,'action'=>'下单=>待审核',
-                    'ctime'=>$mtime,'payer'=>$payer,'payment_method'=>$data['payment_method'],'message_send'=>$data['message_send'],
-                  'sign_receipt'=>$data['sign_receipt'],'tax_rate'=>$tax_rate,'invoice_id'=>$data['invoice_id'],'add_id'=>1];
+                'cargo_cost'=>$data['cargo_cost'], 'container_type_id'=>$data['container_type'],
+                'comment'=>$data['comment'],
+                'mtime'=>$mtime,'member_code'=>$member_code,'belong_order'=>0,'state'=>0,'action'=>'下单=>待审核',
+                'ctime'=>$mtime,'payer'=>$payer,'payment_method'=>$data['payment_method'],'message_send'=>$data['message_send'],
+                'sign_receipt'=>$data['sign_receipt'],'tax_rate'=>$tax_rate,'invoice_id'=>$data['invoice_id'],'shipper'=>$shipper,
+                'consigner'=>$consigner,'seaprice_id'=>$seaprice_id,'carprice_rid'=>$carprice_rid,'carprice_sid'=>$carprice_sid,
+                'carprice_r'=>$carprice_r,'carprice_s'=>$carprice_s,'seaprice'=>$seaprice,'premium'=>$premium,'profit'=>$profit,
+                'cost'=>$cost,'quoted_price'=>$quoted_price,'shipper_id'=>$data['r_id'], 'consigner_id'=>$data['s_id']
+            ];
+          
+        $response=[];
         $res =Db::name('order_father')->insert($sqldata);
         $res ? $response['success'][]='添加order_father表成功':$response['fail'][]='添加order_father表失败';
-        return $respones;
+        return $response;
     }
     
     //保存订单的航线价格信息

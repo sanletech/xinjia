@@ -112,7 +112,8 @@ class Order extends Base
     {  
         $data = $this->request->param();
        // var_dump($data['waybillNum']);
-        $track_num =  preg_split('/[,|，| ]+/', $data['waybillNum'], -1, PREG_SPLIT_NO_EMPTY);
+        //$track_num =  preg_split('/[,|，| ]+/', $data['waybillNum'], -1, PREG_SPLIT_NO_EMPTY);
+        $track_num= trim($data['waybillNum']);
         $container_sum = $data['container_sum'];
         settype($container_sum,'integer'); //转换成int类型
         $order_num = $data['order_num'];
@@ -284,13 +285,14 @@ class Order extends Base
     //处理报柜号
     public function toBaogui() {
         $data= $this->request->param();
+       
         $order_num =  array_splice($data, -1);
         $order_id = $order_num[0]['order_num'];
-        $container_code = array_column($data,'container_code');
+        $container_codeArr = array_column($data,'container_code');
        // $this->_p($order_num);$this->_p($container_code);exit;
         $dataM = new OrderM;
         //直接更改状态
-        $response  = $dataM->updateState($order_num,$container_codeArr,'505','录完实际装货时间>待配船');
+        $response  = $dataM->updateState($order_id,$container_codeArr,'505','录完实际装货时间>待配船');
        
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'报柜号成功','status'=>1];
@@ -372,7 +374,7 @@ class Order extends Base
         $container_code =$data['container_code'];
         unset($data['container_code'],$data['order_id']);
         $dataM = new OrderM;
-        $res = $dataM->toOrderShip($data,$order_id);
+        $res = $dataM->toOrderShip($data,$order_num);
         //var_dump($res);
         if(!array_key_exists('fail', $res)){
             $status =['msg'=>'录入配船成功','status'=>1];
@@ -534,13 +536,16 @@ class Order extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('status','待收款'); 
-        $this->view->assign('page_url',url('admin/order/listUnShip'));
+        $this->view->assign('page_url',url('admin/order/listtoCollect'));
         $this->view->assign('ajaxurl',url('admin/order/toCollect'));
         return $this->view->fetch('listOrder/list_collect');
     }
     //处理订单收款
     public function toCollect (){
         $order_num = $this->request->param('order_num');
+        $payment = $this->request->param('payment');
+        //将收款方式写进order_father里
+        $res =Db::name('order_father')->where('order_num',$order_num)->update(['send_payment'=>$payment]);
          //直接更改状态
         $container_codeArr =Db::name('order_son')->where('order_num',$order_num)->column('container_code');
         $dataM = new OrderM;

@@ -88,6 +88,7 @@ var arr = [];
 function wt(data) {
     var dataArray = eval(data);
     arr = dataArray;
+    $('.xin').html('');
     for (let i in dataArray) {
         $('.xin').append('<li class="layui-col-xs6">'
             + '<div class="nei" onclick="nei(this)">'
@@ -111,15 +112,16 @@ function wt(data) {
 }
 //委托信息放input上
 function nei(zj) {
-    let id = $(zj).find('.tiao_id').html();//获取当前选中ID
+    let id = $(zj).find('.tiao_id').html();//点击当前的ID
     let lei = $(zj).parents('.xin')[0];//判断是送货还是收货
     let input = $('.er .in');//获取委托信息的input
     let nei;//当前选中的内容
     for (let i in arr) {
-        if (arr[i].id = id) {
+        if (arr[i].id == id) {
             nei = arr[i];
         }
     }
+    
     if ($(lei).hasClass('song')) {
         $(input[0]).val(nei.company);
         $(input[1]).val(nei.name);
@@ -151,13 +153,13 @@ function invoice() {
 
 //订单信息的提交
 function order_data() {
+    //提交后禁止 
     var data = $("#order_data_form").serializeArray();
     let obj = {};
     $.each(data,function(i,v){
         obj[v.name] = v.value;
     });
     obj['money'] = $('.money').html();//纯运费
-    obj['member_porfit'] = $('#member_porfit').html();//客户提成
     obj['price_sum'] = $('#price_sum').html();//总运费
     console.log(obj);
     toajax(OrderUrl, obj);
@@ -186,9 +188,9 @@ function zong_sum(shu) {
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje * 6;//总价格
     if (shu == 1) {//发票6%
-        zong = zong * 1.038;     
+        zong = zong * 1.04;     
     }else if(shu == 2){//发票10%
-        zong = zong * 1.06;
+        zong = zong * 1.07;
     }
     zong = Math.round(zong*100)/100;//保留小数点后面两位
     $('#price_sum').html(zong); 

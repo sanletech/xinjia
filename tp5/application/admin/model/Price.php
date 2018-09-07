@@ -62,12 +62,12 @@ class Price extends Model
         $pricedata['ship_id'] = strstr($data['ship'],'_', true);
         $pricedata['price_20GP'] = $data['price_20GP'];
         $pricedata['price_40HQ'] = $data['price_40HQ'];
-        $pricedata['shipping_date'] = strtotime($data['shipping_date']);
-        $pricedata['cutoff_date'] = strtotime($data['cutoff_date']);
+        $pricedata['shipping_date'] = date('y-m-d h:i:s',strtotime($data['shipping_date']));
+        $pricedata['cutoff_date'] = date('y-m-d h:i:s',strtotime($data['cutoff_date']));
         $pricedata['boat_code'] = $data['boat_code'];
         $pricedata['sea_limitation'] = $data['sea_limitation'];
-        $pricedata['ETA'] = strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day');
-        $pricedata['EDD'] = strtotime("+3day",$pricedata['ETA']);
+        $pricedata['ETA'] = date('y-m-d h:i:s',strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day'));
+        $pricedata['EDD'] = date('y-m-d h:i:s',strtotime("+3day",$pricedata['ETA']));
         $pricedata['generalize'] = $data['generalize'];
         $pricedata['mtime'] = date('y-m-d h:i:s');
         $sl_start = $data['port_code']['0'];

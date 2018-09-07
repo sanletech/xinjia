@@ -14,8 +14,7 @@ class Order extends Model
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         //查询客户的订单编号order_father 查询对应的订单信息
         $fatherSql= Db::name('order_father')->alias('OF')
-                ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
-                ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
+                ->join('hl_seaprice SP','SP.id= OF.seaprice_id','left')  //对应的船运价格表
                 ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
                 ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
                 ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
@@ -40,8 +39,7 @@ class Order extends Model
         
         //查询客户的订单编号order_father 查询对应的订单信息
         $listSql = Db::name('order_father')->alias('OF')
-                ->join('hl_book_line BL','BL.id = OF.book_line_id','left')   //船运 车运 价格中间表
-                ->join('hl_seaprice SP','SP.id= BL.seaprice_id','left')  //对应的船运价格表
+                ->join('hl_seaprice SP','SP.id= OF.seaprice_id','left')  //对应的船运价格表
                 ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
                 ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
                 ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
@@ -51,9 +49,8 @@ class Order extends Model
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
                 ->join('hl_user U',"U.user_code= SM.sales_code and U.type='sales'",'left')  //业务表
                 ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->join('hl_order_add OA','OA.id = OF.add_id ','left') //地址表
-              //  ->join('hl_linkman LK1','OA.s_linkman_id=LK1.id','left') //送货人资料
-                ->join('hl_linkman LK2','OA.r_linkman_id=LK2.id','left')//收货人资料
+                //  ->join('hl_linkman LK1','OF.shipper_id=LK1.id','left') //发货人资料
+                ->join('hl_linkman LK2','OF.consigner_id=LK2.id','left')//收货人资料
                 ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
                 ->field('OF.id ,OF.order_num,U.user_name, '
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
@@ -68,7 +65,11 @@ class Order extends Model
         $count =  Db::table($listSql.' A')->count(); 
         // 查询出当前页数显示的数据
         $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->limit($tol,$limit)->select();
-       // $this->_p($list);exit;
+        foreach ($list as $key => $value) {
+            $differ_day =1 + ceil((time()-strtotime($value['ctime']))/60/60/24);
+            $list[$key]['differ_day']= $differ_day;
+        }
+//        $this->_p($list);exit;
       //  var_dump(Db::getLastSql());exit;
         return array($list,$count);
     }
@@ -80,7 +81,7 @@ class Order extends Model
          //输入一个订单 就填充集装箱数量个订单号
         if($track_sum ==1){
             $j= $container_sum;
-            $track_num = array_fill(0,$container_sum,$track_num['0']);
+            $track_num = array_fill(0,$container_sum,$track_num);
         }else{
             $j= $track_sum;
         }
@@ -99,7 +100,7 @@ class Order extends Model
         }
   
         $sql ="insert into hl_order_son(order_num,track_num,container_code,state,action,mtime) values".$str;
-       
+//        var_dump($sql);EXIT;
         $response =[];
         $res =Db::execute($sql);
         $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';
@@ -227,10 +228,9 @@ class Order extends Model
     //录入配船信息页面的 展示原有的航线详情信息
     public function cargoPlan($order_num){
         $data =Db::name('order_father')->alias('OF')
-                ->join('hl_book_line BL','OF.book_line_id = BL.id','left')
                 //->join('hl_car_listprice CLP_s',"CLP_s.id = BL.s_pricecar_id and  CLP_s.variable='s'",'left')//门到港送货价格表
                 //->join('hl_car_listprice CLP_r',"CLP_r.id = BL.r_pricecar_id and  CLP_r.variable='r'",'left')//门到港装货价格表
-                ->join('hl_seaprice SP','SP.id=BL.seaprice_id','left')//海运价格
+                ->join('hl_seaprice SP','SP.id= OF.seaprice_id','left')  //对应的船运价格表
                 // ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')//船公司
                 ->join('hl_boat B','SP.boat_code= B.boat_code','left')//船舶
                 ->join('hl_ship_route SR','SR.id=SP.route_id','left')//海运航线表
@@ -261,7 +261,7 @@ class Order extends Model
 */  
         public function updateState($order_num,$container_code=array(),$state,$action) 
     { 
-       
+//            var_dump($order_num,$container_code,$state,$action);exit;
         // 取值（当前作用域）
         $loginname= Session::get('user_info','think');
        // var_dump($loginname);exit;
@@ -276,7 +276,7 @@ class Order extends Model
   
         $miss = array_diff($sqlContainer,$container_code);
         $more = array_diff($container_code,$sqlContainer);
-       // var_dump($miss,$more);exit;
+//        var_dump($miss,$more);exit;
         if( $miss||$more){
             $str1= implode('_', $miss);
             $str2= implode('_', $more);
@@ -419,7 +419,7 @@ class Order extends Model
        
         //最后的更新状态码数
         $sequence =max(array_column($sqlArr,'sequence'));
-        var_dump(array_column($sqlArr,'sequence'),$orderStatus);
+       // var_dump(array_column($sqlArr,'sequence'),$orderStatus);
         $orderStatusMax =  max($orderStatus)+ (($sequence-1)*10);
           //更新数据库
         //$this->_p($sqlArr);exit;
