@@ -1,0 +1,37 @@
+<{include file='./public/header' /}>
+
+
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite>
+        </a>
+      </span>
+      <a class="layui-btn layui-btn-small an" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon">ဂ</i>
+      </a>
+      <a class="layui-btn layui-btn-warm an" href="javastript:viod(0);" title="增加">增加部门</a>
+    </div>
+    <div class="x-body layui-row">
+      <!--无限极部门分类-->
+      <div class="layui-col-xs2 bumen">
+        <{$tree}>
+      </div>
+
+      <!--编辑子类目-->
+      <div class="layui-col-xs9 zi">
+        <span>现有部门：</span>
+        <form id="add_son_team">
+              <div class="layui-input-inline">
+                    <input type="text" id="car_name" name="name" class="layui-input" value="">
+                </div>
+        </form>
+      </div>
+      
+    </div>
+
+    </body>
+</html>

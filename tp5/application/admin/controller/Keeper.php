@@ -164,8 +164,8 @@ class Keeper extends Base
         $list = $this->generateTree($array);
 //        $this->_p($list);exit;
         $tree= $this->procHtml($list);
-         
         $this->view->assign('tree',$tree);
+         $this->view->assign('list',$list);
         $this->view->engine->layout('Keeper/team_public');
         return $this->view->fetch('Keeper/team_list');
     }
@@ -182,15 +182,28 @@ class Keeper extends Base
         $this->view->engine->layout('Keeper/team_public');
         return $this->view->fetch('Keeper/team_edit');
     }
-    
-    //部门添加
-    public function teamAdd() 
-    {
+     
+    //添加子类目
+    public function teamSonAdd() 
+    {   //获取节点的id
+        $pid= $this->request->param('id');
+      
         $array = Db::name('team')->group('id')->select();
+        static:: $arr;
+        
+        
         $list = $this->generateTree($array);
+        
+        $tree= $this->procHtml($list);
+        
+        
+        $this->view->assign('tree',$tree);
         $this->view->assign('jobList',$list);
-        return $this->view->fetch('Keeper/team_add');
+       
+        $this->view->engine->layout('Keeper/team_public');
+        return $this->view->fetch('Keeper/team_sonadd');
     }
+    
 
     
     //获取树节点
@@ -243,7 +256,7 @@ class Keeper extends Base
         {  
             $id=$t['id'];
             $strE =  url('@admin/keeper/teamEdit',"id=$id");
-            $strA =  url('@admin/keeper/teamAdd',"id=$id");
+            $strA =  url('@admin/keeper/teamSonAdd',"id=$id");
             $strD =  url('@admin/keeper/teamDel',"id=$id");
           if(!isset($t['childMenus']))
             {   

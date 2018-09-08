@@ -25,15 +25,11 @@
       <div class="layui-col-xs9 zi">
         <span>现有部门：</span>
         <form id="eide_team">
+            <{volist name='list' id ='item'}>    
             <div class="layui-input-inline you">
-                <input name="cutoff_date" class="layui-input" value="11111111111" type="text">
-              </div>
-              <div class="layui-input-inline you">
-                <input name="cutoff_date" class="layui-input" value="11111111111" type="text">
-              </div>
-              <div class="layui-input-inline you">
-                <input name="cutoff_date" class="layui-input" value="11111111111" type="text">
-              </div>
+                <input name="old_job_team" class="layui-input" value="<{$item.title}>" type="text">
+            </div>
+            <{/volist}>
         </form>
         <!-- 新增部门 -->
         <div class="layui-col-xs12 xin">
