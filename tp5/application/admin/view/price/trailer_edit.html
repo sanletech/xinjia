@@ -165,16 +165,15 @@
         } );     
      
               
-           //加载省数据
+       //加载省数据
         function loadProvince1() {
-            
             var proHtml = '';
-            for (var i = 0; i < areaData.length; i++) {
-                proHtml += '<option value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+            for (var i = 0; i < js_port.length; i++) {
+                proHtml += '<option value="' + areaData[i].provinceCode + '_' + js_port[i].mallCityList.length + '_' + i + '">' + js_port[i].provinceName + '</option>';
             }
             //初始化省数据
             $form.find('select[name=province1]').append(proHtml);
-            form.render();  
+            form.render();
             form.on('select(province1)', function(data) {
                 $form.find('select[name=area1]').html('<option value="">请选择县/区</option>').parent().hide();
                 var value = data.value;
@@ -183,7 +182,7 @@
                 var count = d[1];
                 var index = d[2];
                 if (count > 0) {
-                    loadCity1(areaData[index].mallCityList);
+                    loadCity1(js_port[index].mallCityList);
                 } else {
                     $form.find('select[name=city1]').parent().hide();
                 }
@@ -194,7 +193,8 @@
         function loadCity1(citys) {
             var cityHtml = '';
             for (var i = 0; i < citys.length; i++) {
-                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+              //  cityHtml += '<option  style="width: 40px" value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
             }
             $form.find('select[name=city1]').html(cityHtml).parent().show();
             form.render();
@@ -207,7 +207,7 @@
                 if (count > 0) {
                     //将城市Id 传给港口loadPort()
                     //console.log(citys[index].cityCode);
-                    loadPort(citys[index].cityCode);
+                   loadPort(citys[index].mallPortList);
                   // loadArea(citys[index].mallAreaList);
                 } else {
                     $form.find('select[name=port]').parent().hide();
@@ -217,15 +217,9 @@
      
         //加载对应城市的港口，并显示已经选中了
         function loadPort(CityCode){
-            var port_arr =  js_port[CityCode];
             var areaHtml = '';
-            if(typeof(port_arr) !== 'undefined' && port_arr!=0){
-                var port_length =port_arr.length;
-                for(var i=0;i<port_length;i++){
-                    areaHtml += '<option  value="' + port_arr[i].id +'_'+ port_arr[i].port_name + '">' + port_arr[i].port_name + '</option>';  
-                }
-            }else{
-                    areaHtml = '<option  value="">此城市无港口</option>'; 
+            for(var i=0;i<ports.length;i++){
+                areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
             }
             $form.find('select[name=port]').html(areaHtml).parent().show();
             form.render();

@@ -12,19 +12,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/controller/Port.php</file>
             <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/controller/Keeper.php</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/view/keeper/user_edit.html</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/index/controller/LogisticsQuery.php</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/index/view/Order/order_list.html</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/index/view/index/index.html</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/view/keeper/user_list.html</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/index/controller/Index.php</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/view/public/middle.html</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/index/controller/Order.php</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/view/keeper/area_list.html</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/view/port/shiproute_add.html</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/index/controller/Login.php</file>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/view/keeper/teamList.html</file>
+            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/model/Port.php</file>
         </group>
     </open-files>
 </project-private>

@@ -44,7 +44,7 @@
        var url="<{:url('admin/Port/boat_toadd')}>";
        //初始数据
         var areaData = port_list;
-        console.log(areaData);
+       // console.log(areaData);
         var $form;
         var form;
         var $;
@@ -73,7 +73,7 @@
                 var count = d[1];
                 var index = d[2];
                 if (count > 0) {
-                    loadcity(areaData[index].citylist);
+                    
                 } else {
                     $form.find('select[name=ship]').parent().hide();
                 }
