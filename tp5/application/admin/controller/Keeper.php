@@ -186,16 +186,16 @@ class Keeper extends Base
     //添加子类目
     public function teamSonAdd() 
     {   //获取节点的id
-        $pid= $this->request->param('id');
+        $id= $this->request->param('id');
       
         $array = Db::name('team')->group('id')->select();
-        $listfather= $this->getFatherTree($array,$pid);
+        $listfather= $this->getFatherTree($array,$id);
         array_multisort(array_column($listfather,'level'),SORT_DESC,$listfather);
-//        $this->_p($listfather);exit;
-//        $list = $this->generateTree($array);
-//        $this->view->assign('jobList',$list);
-//        $tree= $this->procHtml($list);
-//        $this->view->assign('tree',$tree);
+        $this->view->assign('id',$id);
+        $list = $this->generateTree($array);
+        $this->view->assign('jobList',$list);
+        $tree= $this->procHtml($list);
+        $this->view->assign('tree',$tree);
         
         $this->view->assign('list',$listfather);
     
@@ -205,11 +205,26 @@ class Keeper extends Base
         return $this->view->fetch('Keeper/team_sonadd');
     }
     
+    //处理添加子类目
+    public function toSonAdd(){
+        $data =  $this->request->param();
+        $father_id =$data['father_id'];
+        $son_title = $data['$son_title'];
+        $son_job = $data['$son_job'];
+        foreach ($son_title as $key) {
+            $res =Db::name('team')->insert(['pid'=>$father_id,'title'=>$son_title[$key],'job'=>$son_job[$key]]);
+        }
+      
+    }
+
+
+
+
     //获取树节点的所有父节点
     public function getFatherTree($array,$id =0, $level = 0) {
         static $list = [];
         foreach ($array as $key => $value){
-            if($value['id'] == $id && $id!==0){
+            if($value['id'] == $id && !($id==0)){
                 $value['level'] = $level;
                 $list[]=$value;
                 unset($array[$key]);
