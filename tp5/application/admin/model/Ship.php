@@ -61,23 +61,23 @@ class Ship extends Model
         return $response;
     }  
     
-    public function to_add($port_arr,$ship_name ,$ship_short_name) {
+    public function to_add($ship_name ,$ship_short_name) {
         
         $sql = "insert into hl_shipcompany(ship_name, ship_short_name) "
                 . "values('$ship_name','$ship_short_name') ";
         $res = Db::execute($sql);
-        $ship_id = Db::name('shipcompany')->getLastInsID();
-        $str ='';
-        foreach ($port_arr as $k=>$v){
-            $k = $k + 1;
-            $str .= "($v,$k,$ship_id) , ";
-        }
-        $str = rtrim($str ,', ');
-        $sql2 = "insert into hl_ship_port(port_id,seq,ship_id)  values".$str;
-        $res1 =Db::execute($sql2); 
+//        $ship_id = Db::name('shipcompany')->getLastInsID();
+//        $str ='';
+//        foreach ($port_arr as $k=>$v){
+//            $k = $k + 1;
+//            $str .= "($v,$k,$ship_id) , ";
+//        }
+//        $str = rtrim($str ,', ');
+//        $sql2 = "insert into hl_ship_port(port_id,seq,ship_id)  values".$str;
+//        $res1 =Db::execute($sql2); 
         
         $res ? $response['success'][] = '添加shipcompany表': $response['fail'][] = '添加shipcompany表';
-        $res1 ? $response['success'][] = '添加ship_port表': $response['fail'][] = '添加ship_port表';
+        //$res1 ? $response['success'][] = '添加ship_port表': $response['fail'][] = '添加ship_port表';
         return $response;
     }
     

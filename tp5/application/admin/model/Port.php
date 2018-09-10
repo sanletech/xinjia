@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\model;
 use think\Model;
-use think\db;
+use think\Db;
 class Port extends Model
 {
  
@@ -58,7 +58,14 @@ class Port extends Model
     
     //港口添加
     public function port_add($city_id ,$port_array)
-    {   
+    {  
+        $response=[];
+        //先查询是否存在同名的港口
+        $res2 =Db::name('port')->where('city_id',$city_id)->where('port_name','in',$port_array)->column('port_name');
+        if($res2){
+            $port_name_list=  implode(',', $res2);
+             return $response['fail'][] = '添加port表存在港口'.$port_name_list;
+        }
         $mtime = date('y-m-d h:i:s');
         $port_code = Db::name('port')->where('city_id',"'$city_id'")->max('port_code');
         if($port_code < $city_id * 1000){
@@ -82,11 +89,65 @@ class Port extends Model
         return $response ;
     }
     
-    //港口js文件管理 ,其他的方法进行港口的增删改,都需要执行这个函数
+    
+           //港口js文件管理 ,其他的方法进行港口的增删改,都需要执行这个函数
     public function port_js() {
+        
+        function  query($str ,$group ,$map='P.id>0'){
+            $sql = "select " .$str
+                    . " from hl_port P  "
+                    . "left join hl_city C on C.city_id = P.city_id "
+                    . "left join hl_province PR on C.father=PR.province_id  "
+                    . "where $map group by ".$group;
+            //var_dump($sql); echo"</br>";
+            $data = Db::query($sql);
+            return $data;
+        
+        }
+        
+        //$str = "P.port_code portCode, P.port_name portName,P.city_id cityCode ,C.city cityName,PR.province_id provinceCode,PR.province provinceName";
+       
+        $strP = "PR.province_id provinceCode,PR.province provinceName";
+        $groupP = "PR.province_id";
+        $province = query($strP,$groupP);
+      //  $this->_p($province);exit;
+        
+        $result =   array();
+        //依照provinceCode 分组对应的city
+        foreach($province as $k=>$v){
+            $strC = "P.city_id cityCode ,C.city cityName";
+            $mapC = "PR.province_id =".$v['provinceCode'];
+            $groupC ="P.city_id";
+            $province[$k]['mallCityList']=  query($strC,$groupC,$mapC);
+        } 
+        foreach ($province as $key=> $value) {
+            foreach ($value['mallCityList'] as $kk =>$vv){
+                $str = "P.port_code portCode, P.port_name portName";
+                $group ="P.port_code";
+                $map ="P.city_id =".$vv['cityCode'];
+                $province[$key]['mallCityList'][$kk]['mallPortList']= query($str,$group,$map);
+            }
+        }
+        
+//        $this->_p($province);exit;
+
+        $js_port = json_encode($province,true);
+        $js_port = 'var JS_PORT ='.$js_port;
+        $filename ="./static/admin/js/port.js"; 
+        if(file_exists($filename)){
+            $handle = fopen($filename, "w");//写入文件
+            fwrite($handle, $js_port);
+            fclose($handle);
+        }  
+    }
+    
+    
+    //港口js文件管理 ,其他的方法进行港口的增删改,都需要执行这个函数
+    public function port_jszzz() {
         $sql = "select P.port_code , P.port_name ,P.city_id ,C.city  from hl_port P "
-                . "left join hl_city C on C.city_id = P.city_id "
-                . "where P.id > 0";
+                . "left join hl_city C on C.city_id = P.city_id"
+                . "left join hl_province P on C.father=P.province_id "
+                . "where P.id > 0 group by P.id";
         $data = Db::query($sql);
         $result =   array();
         //依照ship_id 分组对应的port_id

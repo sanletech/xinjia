@@ -97,11 +97,11 @@ class Ship extends Base
    public function to_add() {
         $data = $this->request->param();
      //   $this->_p($data);exit;
-        $port_arr =$data['port_code'];
+       // $port_arr =$data['port_code'];
         $ship_short_name = $data['ship_short_name'];
         $ship_name = $data['ship_name'];
         $ship= new ShipM;
-        $res =$ship->to_add($port_arr,$ship_name ,$ship_short_name); 
+        $res =$ship->to_add($ship_name ,$ship_short_name); 
         if(!array_key_exists('fail', $res)){
                   $status =1; 
               }else {

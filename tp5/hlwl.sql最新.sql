@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50505
+Source Server         : root
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50505
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-07 20:30:52
+Date: 2018-09-09 22:44:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3347,7 +3347,7 @@ CREATE TABLE `hl_boat` (
   `boat_name` varchar(8) DEFAULT NULL COMMENT '船名',
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_boat
@@ -3368,6 +3368,7 @@ INSERT INTO `hl_boat` VALUES ('15', '2', 'bbbc', '艾弗森', '0000-00-00 00:00:
 INSERT INTO `hl_boat` VALUES ('16', '2', 'bbbd', '艾弗森', '0000-00-00 00:00:00');
 INSERT INTO `hl_boat` VALUES ('20', '4', 'bbbe', '阿斯蒂芬', '0000-00-00 00:00:00');
 INSERT INTO `hl_boat` VALUES ('21', '3', '888a', '伊利涨', '0000-00-00 00:00:00');
+INSERT INTO `hl_boat` VALUES ('22', '2', '154FA', '路飞', '2018-09-09 07:29:05');
 
 -- ----------------------------
 -- Table structure for `hl_book_line`
@@ -4995,7 +4996,7 @@ CREATE TABLE `hl_port` (
   `mtime` datetime DEFAULT NULL COMMENT '创建或修改时间',
   `city_id` int(11) DEFAULT NULL COMMENT '市级id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_port
@@ -5024,6 +5025,9 @@ INSERT INTO `hl_port` VALUES ('38', '440400002', '发生的', '0000-00-00 00:00:
 INSERT INTO `hl_port` VALUES ('39', '440400003', '速读法', '0000-00-00 00:00:00', '440400');
 INSERT INTO `hl_port` VALUES ('40', '440400004', '撒旦发射', '0000-00-00 00:00:00', '440400');
 INSERT INTO `hl_port` VALUES ('41', '440400005', '速读法速', '0000-00-00 00:00:00', '440400');
+INSERT INTO `hl_port` VALUES ('42', '210200002', '大连港', '2018-09-09 05:35:52', '210200');
+INSERT INTO `hl_port` VALUES ('43', '140200002', '大', '2018-09-09 05:37:55', '140200');
+INSERT INTO `hl_port` VALUES ('44', '140200003', '港', '2018-09-09 05:37:55', '140200');
 
 -- ----------------------------
 -- Table structure for `hl_province`
@@ -5718,7 +5722,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-07 08:19:40', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-09 03:34:18', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
