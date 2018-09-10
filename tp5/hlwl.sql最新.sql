@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : root
-Source Server Version : 50553
+Source Server         : localhost_3306
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-09 22:44:24
+Date: 2018-09-10 18:04:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5030,6 +5030,35 @@ INSERT INTO `hl_port` VALUES ('43', '140200002', '大', '2018-09-09 05:37:55', '
 INSERT INTO `hl_port` VALUES ('44', '140200003', '港', '2018-09-09 05:37:55', '140200');
 
 -- ----------------------------
+-- Table structure for `hl_price_incidental`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_price_incidental`;
+CREATE TABLE `hl_price_incidental` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `port_code` int(10) DEFAULT NULL,
+  `ship_id` int(10) DEFAULT NULL COMMENT '船公司',
+  `40GP` int(10) DEFAULT NULL,
+  `20HQ` int(10) DEFAULT NULL,
+  `type` varchar(5) DEFAULT NULL COMMENT '装货港receive r 发货港口send s',
+  `mtime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_price_incidental
+-- ----------------------------
+INSERT INTO `hl_price_incidental` VALUES ('1', '110100002', '1', '100', '150', 'r', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('2', '110100002', '1', '150', '100', 's', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('3', '110100004', '2', '250', '340', 'r', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('4', '110100004', '2', '350', '300', 's', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('5', '110100007', '3', '400', '310', 'r', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('6', '110100007', '3', '450', '300', 's', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('7', '110100008', '4', '400', '310', 'r', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('8', '110100008', '4', '480', '258', 's', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('9', '110100010', '5', '440', '250', 'r', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('10', '110100010', '5', '400', '200', 's', '2018-09-03 11:26:16');
+
+-- ----------------------------
 -- Table structure for `hl_province`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_province`;
@@ -5230,7 +5259,7 @@ CREATE TABLE `hl_seaprice` (
   `generalize` int(1) unsigned zerofill DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
   `mtime` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_seaprice
@@ -5722,7 +5751,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-09 03:34:18', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-10 05:36:14', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

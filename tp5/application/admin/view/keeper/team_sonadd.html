@@ -23,7 +23,10 @@
 
       <!--编辑子类目-->
       <div class="layui-col-xs9 zi">
-        <span>现有部门：</span>
+        <span><{volist name="list" id ="volist"}>
+             <{$volist.title}/
+              <{/volist}>
+        </span>
         <form id="add_son_team">
               <div class="layui-input-inline">
                     <input type="text" id="car_name" name="name" class="layui-input" value="">
