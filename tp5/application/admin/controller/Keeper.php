@@ -189,27 +189,42 @@ class Keeper extends Base
         $pid= $this->request->param('id');
       
         $array = Db::name('team')->group('id')->select();
-        static:: $arr;
+        $listfather= $this->getFatherTree($array,$pid);
+        array_multisort(array_column($listfather,'level'),SORT_DESC,$listfather);
+//        $this->_p($listfather);exit;
+//        $list = $this->generateTree($array);
+//        $this->view->assign('jobList',$list);
+//        $tree= $this->procHtml($list);
+//        $this->view->assign('tree',$tree);
         
-        
-        $list = $this->generateTree($array);
-        
-        $tree= $this->procHtml($list);
-        
-        
-        $this->view->assign('tree',$tree);
-        $this->view->assign('jobList',$list);
+        $this->view->assign('list',$listfather);
+    
+    
        
         $this->view->engine->layout('Keeper/team_public');
         return $this->view->fetch('Keeper/team_sonadd');
     }
     
-
+    //获取树节点的所有父节点
+    public function getFatherTree($array,$id =0, $level = 0) {
+        static $list = [];
+        foreach ($array as $key => $value){
+            if($value['id'] == $id && $id!==0){
+                $value['level'] = $level;
+                $list[]=$value;
+                unset($array[$key]);
+                $this->getFatherTree($array,$value['pid'],$level+1);
+            }
+        }
+        return $list;
+    }
+    
+    
     
     //获取树节点
-    public function getTree($array, $pid =0, $level = 0) {
+    public function getTree($array, $pid =0, $level = 0,&$list=array()) {
       //声明静态数组,避免递归调用时,多次声明导致数组覆盖
-        static $list = [];
+//        static $list = [];
         foreach ($array as $key => $value){
             //第一次遍历,找到父节点为根节点的节点 也就是pid=0的节点
             if ($value['pid'] == $pid){
