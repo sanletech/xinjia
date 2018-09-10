@@ -239,14 +239,14 @@ class Price extends Base
     
     //港口杂费修改
     public function incidentalEdit(){
-        
+        return $this->view->fetch('price/price_incidentaledit'); 
     }
     //港口杂费删除
     public function incidentalDel(){
         
     }
-        //港口杂费修改
+        //添加港口杂费
     public function incidentalAdd(){
-        
+        return $this->view->fetch('price/price_incidentaladd'); 
     }
 }

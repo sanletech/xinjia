@@ -12,52 +12,6 @@
                 </select>  
             </div>
         </div>
-        <!-- 船名 -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">船名</label>
-            <div class="layui-input-inline">
-                <select name="boat_code" lay-filter="boat" lay-search>
-                    <option value="" >请选择船名</option>
-                </select>  
-            </div>
-        </div>
-        <!-- 船期 -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">船期</label>
-            <div class="layui-input-inline">
-                <input type="text" name="shipping_date" id="date" lay-verify="date" placeholder="YY-MM-DD" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <!-- 截单时间 -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">截单时间</label>
-            <div class="layui-input-inline">
-                <input type="text" name="cutoff_date" id="date1" lay-verify="date" placeholder="YY-MM-DD" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <!-- 海上时效 -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">海上时效</label>
-            <div class="layui-input-inline">
-                <select name="sea_limitation"  id="day" >
-                    <option value="">选择天数</option>
-                </select>
-            </div>
-        </div>
-        <!-- 20GP -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">20GP</label>
-            <div class="layui-input-inline">
-                <input type="text" name="price_20GP" lay-verify="title" autocomplete="off" placeholder="20GP" class="layui-input">
-            </div>
-        </div>
-        <!-- 40HQ -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">40HQ</label>
-            <div class="layui-input-inline">
-                <input type="text" name="price_40HQ" lay-verify="title" autocomplete="off" placeholder="40HQ" class="layui-input"/>
-            </div>
-        </div>
         <!-- 港口航线 -->
         <div class="layui-form-item">
             <div class="layui-inline">
@@ -78,9 +32,6 @@
                     </select>
                 </div>
               <div class="layui-form-item" id ="search_port">
-            </div
-              <div class="layui-input-inline" style="width: 82px;">
-                    <button type ="button" class="layui-btn" onclick="routeSelect()">确认</button>
               </div>
             </div>
           </div>
@@ -102,26 +53,8 @@
             <div class="layui-input-inline">
                 <input type="text" name="end_20GP_fee" lay-verify="title" autocomplete="off" placeholder="20GP目的港杂费" class="layui-input"/>
             </div>
-        </div>
-        <!-- 航线详情 -->
-        <div class="layui-form-item ">
-            <label class="layui-form-label">航线详情</label>
-            <div class="layui-input-inline" >
-                <select name ="route"  lay-filter="route" lay-search>
-                    <option value="">请选择航线</option>
-                </select>
-            </div>
-        </div>
-        
+        </div>        
 
-        <!-- 是否推荐 -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">推荐</label>
-            <div class="layui-input-block">
-                <input type="radio" name="generalize" value="1" title="是">
-                <input type="radio" name="generalize" value="0" title="否" checked="">
-            </div>
-        </div>
         <!-- 按钮 -->
         <div class="layui-form-item">
             <div class="layui-input-block an">
@@ -142,12 +75,6 @@
           parent.layer.close(index);
         });
 
-        //海上时效天数
-        for (let i = 1; i < 31; i++) {
-          $('#day').append('<option value="' + i + '">' + i + '天</option>');
-        }
-        //默认第五天
-        $("#day").val(5);
 
         layui.use(['form', 'layedit', 'laydate'], function () {
             var form = layui.form
@@ -295,7 +222,7 @@
                 }
             });
         }
-    
+     
         //加载对应城市的港口，
         function loadPort(ports){
             //console.log(ports);
@@ -330,7 +257,7 @@
                         areaHtml += '<option  value="' +i+'">路线'+j+'\-'+'直航'+'</option>';
                     }else{
                         areaHtml += '<option  value="' +i+'">路线'+j+'\-'+ route_arr[i]+ '</option>';   
-                    }
+                        }
                 }
             }else{
                     areaHtml = '<option  value="">无此航线</option>'; 
@@ -342,7 +269,7 @@
             } ) 
         
         }
-        var gangkou = 2;//只能有两个港口
+        
         function  selectPortShip(port_id,port_name,mark){
             var btn =document.createElement('button');
                 btn.className="layui-btn layui-btn-normal";
@@ -362,13 +289,7 @@
                  i_tag.innerHTML="&#xe640\;";
             btn.appendChild(ipt);   
             btn.appendChild(i_tag);
-            if (gangkou) {
-                gangkou--;
-                mark.appendChild(btn);
-            }else{
-                alert('最多两个港口');
-            }
-           
+            $(mark).html(btn);
          }
          
         function del(obj){
@@ -380,7 +301,6 @@
                 }
                 //删除本身button
                 obj.parentNode.removeChild(obj);
-                gangkou++;
          }
         function routeSelect(){
             var sl_start = $("input[name='port_code[]']:eq(0)").val();
