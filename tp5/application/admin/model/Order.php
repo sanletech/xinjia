@@ -65,6 +65,7 @@ class Order extends Model
         $count =  Db::table($listSql.' A')->count(); 
         // 查询出当前页数显示的数据
         $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->limit($tol,$limit)->select();
+        //下单时间和当前时间相差多少天
         foreach ($list as $key => $value) {
             $differ_day =1 + ceil((time()-strtotime($value['ctime']))/60/60/24);
             $list[$key]['differ_day']= $differ_day;

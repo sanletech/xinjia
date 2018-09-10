@@ -73,7 +73,7 @@ class ShipMan extends Base {
             }
             $ship_arr[$k]['citylist'] =  array_values( $ship_arr[$k]['citylist']);
         }
-        
+        $this->_p($ship_arr);exit;
        
         $js_port = json_encode($ship_arr);
         $js_port = 'var SHIP_PORT ='.$js_port;

@@ -304,5 +304,33 @@ class Price extends Model
  
     }
     
+    public function priceIncidental($tol,$limit,$port_name,$ship_name){
+        $param =[];
+        if($port_name){
+            $param['P.port_name'] =['like',"%{$port_name}%"];
+        }
+        if($ship_name){
+            $param['SC.ship_short_name'] =['like',"%{$ship_name}%"];
+        }
+//        if(empty($param)){
+//            $param['PI']=['>',0];
+//        }
+//        var_dump($param);exit;
+        $listSql =Db::name('price_incidental')->alias('PI')
+                ->join('hl_port P','P.port_code=PI.port_code','left')
+                ->join('hl_shipcompany SC','SC.id=PI.ship_id','left')
+                ->field('PI.*,P.port_name,SC.ship_short_name')
+                ->where($param)->group('PI.id')->buildSql();
+        
+        $list = Db::table($listSql.' A')
+                ->join("$listSql B","A.port_code=B.port_code and A.ship_id=B.ship_id and A.type='r'and B.type='s'")
+                ->field('A.id rid,B.id sid,A.port_code,A.port_name,A.40GP r40GP,A.20HQ r20HQ,B.40GP s40GP,B.20HQ s20HQ ,A.ship_id ,A.ship_short_name')
+                ->order('A.id ,A.mtime desc')->limit($tol,$limit)->select();
+//$this->_p($list);exit;
+        $count =  count($list); 
+        return array($list,$count);
+
+    }
+    
     
 }

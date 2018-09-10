@@ -209,4 +209,44 @@ class Price extends Base
         json_encode($status);   
         return $status;   
     }
+    //港口杂费
+    public function priceIncidental(){
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //获取查询条件
+        $port_name =$this->request->param('port_name');
+        $ship_name =$this->request->param('ship_name');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
+        $dataM = new PriceM;
+        $listArr = $dataM->priceIncidental($tol,$limit,$port_name,$ship_name);
+        //分页数据
+        $list =$listArr[0];
+        // 总页数
+        $count = $listArr[1];
+        $this->view->assign('port_name',$port_name);
+        $this->view->assign('ship_name',$ship_name);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/price/priceIncidental'));
+        return $this->view->fetch('price/price_incidental'); 
+        
+    }
+    
+    //港口杂费修改
+    public function incidentalEdit(){
+        
+    }
+    //港口杂费删除
+    public function incidentalDel(){
+        
+    }
+        //港口杂费修改
+    public function incidentalAdd(){
+        
+    }
 }
