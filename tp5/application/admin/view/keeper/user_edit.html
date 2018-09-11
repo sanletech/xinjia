@@ -16,7 +16,7 @@
                     <option value="">请选择</option>
                 <{volist name="jobList" id="vo"}>
                 <optgroup label="<{$vo.title}>">
-                     <{volist name="$vo.childMenus" id ='v1'}> 
+                     <{volist name="$vo.childMenus" id ='v1'}>
                      <option value="<{$v1.id}>" <?php if($v1['id']==$data['jobID']){echo'selected'; } ?> ><{$v1.title}></option>
                             <{volist name="$v1.childMenus" id ='v2'}>
                             <option value="<{$v2.id}>" <?php if($v2['id']==$data['jobID']){echo'selected'; } ?>  ><{$v2.title}></option>
@@ -24,7 +24,7 @@
                         <{/volist}>
                     </optgroup>
               <{/volist}>
-              </select>                        
+              </select>
                     </div>
                 </div>
                 <!--区域 -->

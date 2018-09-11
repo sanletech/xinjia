@@ -1,4 +1,3 @@
-
 // 日期
 layui.use(['form', 'layedit', 'laydate'], function () {
     var form = layui.form
@@ -24,16 +23,19 @@ $('#address li').eq(0).click(function () {
     loadProvince();
     $('#address li').removeClass('lanse').eq(0).addClass('lanse');
 });
+
+var areaData = JS_PORT;
 //加载省数据
 function loadProvince() {
+    console.log(areaData)
     $('#dizhi').html('');
     for (let i in areaData) {
-        $('#dizhi').append('<a href="javascript:void(0)" onclick=loadCity(' + areaData[i].provinceCode + ')>' + areaData[i].provinceName + '</a>');
+        $('#dizhi').append('<a onclick=loadCity(' + areaData[i].provinceCode + ')>' + areaData[i].provinceName + '</a>');
     }
     $('#address li').removeClass('lanse').eq(0).addClass('lanse');
 }
 
-//加载城市市数据
+//加载港口
 function loadCity(citys_id) {
     $.each(Area, function (i, data) {
         if (data.provinceCode == citys_id) {
@@ -68,8 +70,9 @@ function loadPort(areas_id) {
             if (arry[i].cityCode == areas_id) {
                 $('#dizhi').html('');
                 for (let h in arry[i].mallAreaList) {
+                    console.log(arry[i]);
                     let st = arry[i].mallAreaList[h].areaCode + ",'" + arry[i].mallAreaList[h].areaName + "'";
-                    $('#dizhi').append('<a href="javascript:void(0)" onclick="jie_dao(' + st + ')">' + arry[i].mallAreaList[h].areaName + '</a>');
+                    $('#dizhi').append('<a href="javascript:void(0)" onclick="jie_dao(' + st + ',this)">' + arry[i].mallAreaList[h].areaName + '</a>');
                 }
                 if (arry[i] == false) {//当后面没有数据的时候
                     $('#address').hide();
@@ -88,41 +91,7 @@ function loadPort(areas_id) {
     })
 }
 
-// 加载街道
-function jie_dao(jie_id,jie_name) {
-    inp.val(inp.val() + jie_name);//当前选中的值
-    if (boot) {
-        add.start_id = jie_id;
-        add.start_name = jie_name;
-    } else {
-        add.end_id = jie_id;
-        add.end_name = jie_name;
-    }
-    var townurl = addressURL + '?twoncode=' + jie_id;
-    $.ajax({//通过AJAX去数据库获取街道值
-        type: 'POST',
-        url: townurl,
-        dataType: "json",
-        success: function (data) {
-            if (data) {
-                let arry = data;
-                arry = JSON.parse(arry)
-                arry = eval('(' + arry + ')')
-                $('#dizhi').html('');
-                for (let i in arry) {
-                    $('#dizhi').append('<a href="javascript:void(0)" onclick="add_food(' + i + ',this)">' + arry[i] + '</a>');
-                }
-                $('#address li').removeClass('lanse').eq(3).addClass('lanse');
-            } else {
-                $('#address').hide();
-            }
-
-        },
-    })
-}
-
-//街道之后
-function add_food(dao_id, zj) {
+function jie_dao(dao_id,zj) {
     if (boot) {
         add.start_id = dao_id;
         add.start_name = $(zj).html();
@@ -133,6 +102,7 @@ function add_food(dao_id, zj) {
     inp.val(inp.val() + $(zj).html());//当前选中的值
     $('#address').hide();
 }
+
 
 $('#start_add').focus(function () {//选择地址
     inp = $('#start_add');

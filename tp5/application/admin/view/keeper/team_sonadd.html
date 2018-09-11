@@ -2,6 +2,23 @@
 
 
   <body>
+    <style>
+      .you {
+        text-align: right;
+      }
+      .yin{
+        display: inline-block;
+        visibility: hidden;
+      }
+      .xin{
+        margin: 5px 0;
+      }
+      .zilei i {
+        font-size: 26px;
+        line-height: 26px;
+        cursor: pointer;
+      }
+    </style>
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -13,7 +30,6 @@
       <a class="layui-btn layui-btn-small an" href="javascript:location.replace(location.href);" title="刷新">
         <i class="layui-icon">ဂ</i>
       </a>
-      <a class="layui-btn layui-btn-warm an" href="javastript:viod(0);" title="增加">增加部门</a>
     </div>
     <div class="x-body layui-row">
       <!--无限极部门分类-->
@@ -23,57 +39,58 @@
 
       <!--编辑子类目-->
       <div class="layui-col-xs9 zi">
-        <span><{volist name="list" id ="volist"}>
+        <span>
+          <{volist name="list" id="volist" }>
             <{$volist.title}>&nbsp;
               <{/volist}>
         </span>
         <form id="add_son_team">
-            <div class="layui-input-inline">
-                <intpu type="hidden" name="father_id" value="<{$id}>">
-                <input type="text"  name="son_title[]" class="layui-input" value="">
-                <input type="text"  name="son_job[]" class="layui-input" value="">
+          <intpu type="hidden" name="father_id" value="<{$id}>">
+            <div class="zilei layui-inline">
+              <div class="layui-col-xs12">
+                <div class="layui-input-inline">
+                  <input type="text" placeholder="中文名" name="son_title[]" class="layui-input" value="">
+                </div>
+                
+                <div class="layui-input-inline">
+                  <input type="text" placeholder="英文名" name="son_job[]" class="layui-input" value="">
+                </div>
+                <div class="layui-input-inline icon">
+                  <i class="layui-icon" onclick="zeng()">&#xe654;</i>
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item you">
+              <a class="layui-btn an" href="javastript:viod(0);" title="增加">确定</a>
             </div>
         </form>
       </div>
-      
     </div>
-  <srcipt >
-  
-$("body").on('click','.addInputReturn',function () {
- 
-    //添加减号
-    var $content = "";
-    $content += '<a href="javascript:;" class="delInput" >';
-    $content += '<span class="glyphicon glyphicon-minus"></span>';
-    $content += '</a>';
-    $(this).parent().append($content);
- 
-    //去除加号
-    this.remove();
- 
-    var html = "";
-    html += '<div class="form-group">';
-    html += '<label class="col-md-2 control-label">硬件信息';
-    html += '</label>';
-    html += '<div class="col-sm-3 col-md-3 col-xs-3">';
-    html += '<select class="form-control input-sm flagHrad hardName" style="color: #555" name="hardName">';
-    html += '<option value="" selected>请选择硬件类型</option>';
-    html += '<option value="1">网卡</option>';
-    html += '<option value="2">摄像头</option>';
-    html += '</select>';
-    html += '</div>';
-    html += '<div class="col-sm-5 col-md-5 col-xs-5">';
-    html += '<input type="text" name="hardSerialNum" readonly="readonly" style="color: #555" class="form-control input-sm hardSerialNum" placeholder="请填硬件编号"/>';
-    html += '</div>';
-    html += '<div class="col-sm-1 col-md-1 col-xs-1 my-icon">';
-    html += '<a href="javascript:;" class="addInputReturn" >';
-    html += '<span class="glyphicon glyphicon-plus"></span>';
-    html += '</a>';
-    html += '</div>';
-    html += '</div>';
- 
-    $("#index-div").append(html);
-  })
-  </srcipt>
-    </body>
-</html>
+    <script>
+      function zeng() {
+        $('.zilei').append('<div class="layui-col-xs12 xin">' +
+          '<div class="layui-input-inline">' +
+          '<input type="text" placeholder="中文名" name="son_title[]" class="layui-input" value="">' +
+          '</div>' +
+          '<div class="yin">-</div>'+
+          '<div class="layui-input-inline">' +
+          '<input type="text" placeholder="英文名" name="son_job[]" class="layui-input" value="">' +
+          '</div>' +
+          '<div class="layui-input-inline icon">' +
+          '<i class="layui-icon" onclick="zeng()">&#xe654;</i>' +
+          '<i class="layui-icon" onclick="del(this)">&#x1006;</i>' +
+          '</div>' +
+          '</div>');
+      }
+      function del(zj) {
+        $(zj).parents('.xin').remove();
+      }
+      $('.you .an').click(function(){
+        let data = $('#add_son_team').serialize();
+        console.log(data);
+      });
+    </script>
+
+  </body>
+
+  </html>

@@ -146,6 +146,7 @@
         
            //加载省数据
         function loadProvince1() {
+            console.log(js_port)
             var proHtml = '';
             for (var i = 0; i < js_port.length; i++) {
                 proHtml += '<option value="' + areaData[i].provinceCode + '_' + js_port[i].mallCityList.length + '_' + i + '">' + js_port[i].provinceName + '</option>';
@@ -185,9 +186,9 @@
                 var index = d[2];
                 if (count > 0) {
                     //将城市Id 传给港口loadPort()
-                    //console.log(citys[index].cityCode);
+                    console.log(data,citys);
                    loadPort(citys[index].mallPortList);
-                  // loadArea(citys[index].mallAreaList);
+                //   loadArea(citys[index].mallAreaList);
                 } else {
                     $form.find('select[name=port]').parent().hide();
                 }
@@ -196,7 +197,7 @@
      
         //加载对应城市的港口，并显示已经选中了
         function loadPort(ports){
-           //console.log(ports);
+        //    console.log(ports);
             var areaHtml = '';
             for(var i=0;i<ports.length;i++){
                 areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
