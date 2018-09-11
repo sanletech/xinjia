@@ -10,7 +10,7 @@ use think\Db;
 class Car extends Base
 {   
 
-    public function car_list() 2331
+    public function car_list()
     {   
         $data= array_filter($this->request->param());
         $car = new CarM;

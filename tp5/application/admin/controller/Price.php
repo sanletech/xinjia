@@ -239,14 +239,48 @@ class Price extends Base
     
     //港口杂费修改
     public function incidentalEdit(){
+        $data = $this->request->only(['rid','sid'],'get');
+       // var_dump($data);exit;
+        $list =Db::name('price_incidental')->alias('R')->
+                join('hl_price_incidental S',"R.port_code=S.port_code " 
+                        . "and R.ship_id =S.ship_id and R.type='R' and  S.type='S' and S.id <> R.id",'left')
+                ->join('hl_port P','P.port_code=R.port_code','left')
+                ->join('hl_shipcompany SC','SC.id=R.ship_id','left')
+                ->where('S.id',$data['sid'])->where('R.id',$data['rid'])
+                ->field('R.id rid,S.id sid,R.port_code,P.port_name,R.40HQ r40HQ,'
+                        . 'R.20GP r20GP,S.40HQ s40HQ,S.20GP s20GP ,R.ship_id ,SC.ship_short_name')
+                ->group('R.id,S.id')
+                ->find();
+//        $this->_p($list);EXIT;
+        $this->view->assign('list',$list);
         return $this->view->fetch('price/price_incidentaledit'); 
     }
     //港口杂费删除
     public function incidentalDel(){
-        
+        $id = $this->request->only(['id'],'post');
+        $idArr = explode('_', $id['id']['0']);
+        $res =Db::name('price_incidental')->where('id','in',$idArr)->delete();
+        return  $res ?$response=['status'=>1,'mssage'=>'删除成功']:$response=['status'=>0,'message'=>'删除失败'];
     }
         //添加港口杂费
     public function incidentalAdd(){
         return $this->view->fetch('price/price_incidentaladd'); 
+    }
+    public function incidentalToAdd(){
+        $data =  $this->request->only(['ship','port_code','end_20GP_fee','end_40HQ_fee','start_20GP_fee','start_40HQ_fee'],'post');
+        $mtime = date('y-m-d h:i:s');
+        $port_code=$data['port_code'][0]; $ship_id=$data['ship'];
+        $response =[];
+        //先查询是否已经存在港口了
+        $res1 = Db::name('price_incidental')->where('port_code',$port_code)->find();
+        if(!$res1){
+            $insertData[0] = ['port_code'=>$port_code,'ship_id'=>$ship_id,'40HQ'=>$data['start_40HQ_fee'],'20GP'=>$data['start_20GP_fee'],'type'=>'r','mtime'=>$mtime];
+            $insertData[1] = ['port_code'=>$port_code,'ship_id'=>$ship_id,'40HQ'=>$data['end_40HQ_fee'],'20GP'=>$data['end_20GP_fee'],'type'=>'s','mtime'=>$mtime];
+            $res= Db::name('price_incidental')->insertAll($insertData);
+            return  $res ?$response=['status'=>1,'mssage'=>'添加成功']:$response=['status'=>0,'message'=>'添加失败'];
+        }  else {
+            return $response=['status'=>0,'message'=>'已经存在此港口请先删除再做添加'];;
+        }
+      
     }
 }
