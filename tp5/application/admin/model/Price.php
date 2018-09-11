@@ -324,7 +324,7 @@ class Price extends Model
         
         $list = Db::table($listSql.' A')
                 ->join("$listSql B","A.port_code=B.port_code and A.ship_id=B.ship_id and A.type='r'and B.type='s'")
-                ->field('A.id rid,B.id sid,A.port_code,A.port_name,A.40GP r40GP,A.20HQ r20HQ,B.40GP s40GP,B.20HQ s20HQ ,A.ship_id ,A.ship_short_name')
+                ->field('A.id rid,B.id sid,A.port_code,A.port_name,A.40HQ r40HQ,A.20GP r20GP,B.40HQ s40HQ,B.20GP s20GP ,A.ship_id ,A.ship_short_name')
                 ->order('A.id ,A.mtime desc')->limit($tol,$limit)->select();
 //$this->_p($list);exit;
         $count =  count($list); 

@@ -39,12 +39,12 @@
           <tr >
             <td><{$vo.port_name}></td>
             <td><{$vo.ship_short_name}></td> 
-            <td>￥<{$vo.r20HQ}></td>
-            <td>￥<{$vo.r40GP}></td>
-            <td>￥<{$vo.s20HQ}></td>
-            <td>￥<{$vo.s40GP}></td>
+            <td>￥<{$vo.r20GP}></td>
+            <td>￥<{$vo.r40HQ}></td>
+            <td>￥<{$vo.s20GP}></td>
+            <td>￥<{$vo.s40HQ}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/incidentalEdit')}>?rid=<{$vo.rid}>&s_id=<{$vo.sid}>&r_id=<{$vo.sid}>',1200,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/incidentalEdit')}>?rid=<{$vo.rid}>&sid=<{$vo.sid}>',1200,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<{$vo.rid}>_<{$vo.sid}>')" href="javascript:;">
@@ -134,9 +134,9 @@
                 dataType:"json",
                 success:function(data){
                     if(data.status==1){
-                      return 1;
+                      alert(data.message)
                     }else{
-                        return 0 ;
+                       alert(data.message)
                   }
                 }
             })
