@@ -19,7 +19,7 @@
         </form>
       </div>
       <xblock>
-        <button class="layui-btn" onclick="x_admin_show('添加','<{:url('Price/incidentalAdd')}>',1200,400)" href="javascript:;"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加','<{:url('Price/incidentalAdd')}>',600,400)" href="javascript:;"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -44,7 +44,7 @@
             <td>￥<{$vo.s20GP}></td>
             <td>￥<{$vo.s40HQ}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/incidentalEdit')}>?rid=<{$vo.rid}>&sid=<{$vo.sid}>',1200,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/incidentalEdit')}>?rid=<{$vo.rid}>&sid=<{$vo.sid}>',600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<{$vo.rid}>_<{$vo.sid}>')" href="javascript:;">
@@ -59,33 +59,6 @@
 <div class="text-center" id="pages"></div>
 
 <script>
-/*执行搜索车队或者港口*/
-//    function search(){
-//         $.ajax({
-//                type:'get',
-//                url:"<{:url('admin/Price/price_trailer')}>",     
-//                data: $("#searchform").serialize(),
-//                dataType:"json",
-//                async:false,
-//                success:function(data){
-//                  if(data.status==1){
-//                    return 1;
-//                  }else{
-//                      return 0 ;
-//                 }
-//                         
-//               }, error: function(XMLHttpRequest, textStatus, errorThrown) {
-//                console.log(XMLHttpRequest.status);
-//               console.log(XMLHttpRequest.readyState);
-//               console.log(textStatus);
-//                  },
-//
-//        });
-//        return 1;
-//    }    
-        
-        
-        
       layui.use('laydate', function(){
         var laydate = layui.laydate;
         

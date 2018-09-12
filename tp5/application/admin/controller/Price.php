@@ -255,6 +255,13 @@ class Price extends Base
         $this->view->assign('list',$list);
         return $this->view->fetch('price/price_incidentaledit'); 
     }
+    
+    //港口杂费执行修改
+    public function incidentalToEdit() {
+        $data = $this->request->param();
+        var_dump($data);exit;
+    }
+    
     //港口杂费删除
     public function incidentalDel(){
         $id = $this->request->only(['id'],'post');
