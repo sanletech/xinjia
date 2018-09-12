@@ -12,7 +12,7 @@ class Order extends Model
     public function  price_sum($member_code,$start_add='',$end_add='',$load_time=''){
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         $nowtime= date('y-m-d h:i:s');//要设置船期
-        
+        //海运费
         $price_sea = Db::name('seaprice')->alias('SP')
             ->join('hl_ship_route SR','SR.id =SP.route_id','left')
             ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
@@ -24,25 +24,27 @@ class Order extends Model
         if($load_time){
             $price_sea = Db::table($price_sea.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
         }
+        //车运费
         $price_car = Db::name('carprice')->alias('CP')
             ->join('hl_car_line CL','CL.id =CP.cl_id','left')
             ->field('CP.*,CL.port_id,CL.address_name')
             ->order('CP.cl_id')->buildSql();
+        
+        
         $price_sql = Db::table($price_sea.' A')
-                ->join($price_car.' B','A.sl_start =B.port_id','left')
-                ->join($price_car.' C','A.sl_end =C.port_id','left')
+                ->join($price_car.' B',"A.sl_start =B.port_id and B.variable='r'") //车运费
+                ->join($price_car.' C',"A.sl_end =C.port_id and C.variable='s'")
+                ->join('hl_price_incidental PIR',"A.sl_start= PIR.port_code and PIR.type ='r'")     //港口杂费
+                ->join('hl_price_incidental PIL',"A.sl_end = PIL.port_code and PIL.type ='r'")
                 ->join('hl_shipcompany SC','SC.id = A.ship_id')
                 ->join('hl_boat BA','BA.boat_code =A.boat_code')
                 ->join('hl_member_profit MP',"MP.member_code='$member_code' and MP.ship_id=SC.id" ,'left')
-//                ->field('A.id,B.id rid,C.id sid,A.route_id,A.middle_id,A.ship_id,SC.ship_short_name,A.shipping_date'
-//                     )
                 ->field('A.id sea_id,B.id rid,C.id sid,A.route_id,A.middle_id,A.ship_id,SC.ship_short_name,A.shipping_date,'
                         . 'A.cutoff_date,A.boat_code,BA.boat_name,A.sea_limitation,'
                         . 'A.ETA,A.EDD,A.generalize,A.mtime,'
                         . 'A.sl_start,A.s_port_name,B.address_name r_add ,A.sl_end,A.e_port_name,C.address_name s_add ,'
-                        . '(select A.price_20GP + B.price_20GP + C.price_20GP + MP.money ) as price_20GP,'
-                        . '(select A.price_40HQ + B.price_40HQ + C.price_40HQ + MP.money ) as price_40HQ')
-                ->where('B.variable', '=',"r")->where('C.variable', '=',"S")
+                        . '(select A.price_20GP + PIR.20GP + B.price_20GP + PIL.20GP + C.price_20GP + MP.money ) as price_20GP,'
+                        . '(select A.price_40HQ + PIL.40HQ +B.price_40HQ +  PIL.40HQ + C.price_40HQ + MP.money ) as price_40HQ')
                 ->buildSql();
 
    // var_dump($price_sql);exit;
@@ -119,6 +121,8 @@ class Order extends Model
         if(!isset($data['sign_receipt'])){
             $data['sign_receipt']='n';
         } 
+        //更新车运表的last_order_time
+        $res =Db::name('carprice')->where('id',$carprice_rid )->whereOr('id',$carprice_sid)->update(['last_order_time'=>$mtime]);
         
         $sqldata =['order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$data['container'],
                 'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],

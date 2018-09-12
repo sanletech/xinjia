@@ -1,15 +1,17 @@
 <{include file='./public/header' /}>
 <body>
     <!--<link rel="stylesheet" href="__STATIC__/css/route_add.css">-->
-     <form class="layui-form" id="routeaddform">
+     <form class="layui-form" id="editform">
     <div class="route layui-row">
         <!-- 航务公司 -->
         <div class="layui-form-item">
             <label class="layui-form-label">船务公司</label>
             <div class="layui-input-inline">
-                <select name="ship" lay-filter="ship" lay-search>
+                    <input type="hidden" name="ship_id"  value="<{$list.ship_id}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
+                    <input type="text" name="ship_name"  value="<{$list.ship_short_name}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
+<!--                <select name="ship" lay-filter="ship" lay-search>
                     <option value="" >请选择船公司</option>
-                </select>  
+                </select>  -->
             </div>
         </div>
         <!-- 港口航线 -->
@@ -17,6 +19,10 @@
             <div class="layui-inline">
               <label class="layui-form-label">港口</label>
                 <div class="layui-input-inline">
+                    <input type="hidden" name="port_code"  value="<{$list.port_code}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
+                    <input type="text" name="port_name"  value="<{$list.port_name}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
+                </div>
+<!--                <div class="layui-input-inline">
                     <select name="province" lay-filter="province" >
                         <option value="">请选择省</option>
                     </select>
@@ -30,7 +36,7 @@
                     <select name="area"  lay-filter="area">
                         <option value="">请选择起点/终点港口</option>
                     </select>
-                </div>
+                </div>-->
               <div class="layui-form-item" id ="search_port">
               </div>
             </div>
@@ -101,7 +107,7 @@
             $form = $('form');
             loadProvince();  //选择港口
             loadship();//原有船公司的港口和城市
-            selectPortShip("<{$list.port_code}>","<{$list.port_name}>",document.getElementById('search_port'))
+       //     selectPortShip("<{$list.port_code}>","<{$list.port_name}>",document.getElementById('search_port'))
         });     
         
         //加载 所有的船公司名字简称和相应boat的id
@@ -247,11 +253,11 @@
                 post_adduser = true;    
                 $.ajax({
                     type:'POST',
-                    url:url,
-                    data:$("#routeaddform").serialize(),
+                    url:"<{:url('price/incidentalToEdit')}>",
+                    data:$("#editform").serialize(),
                     dataType:"json",
-                    success:function(status){
-                        if(status>0){
+                    success:function(data){
+                        if(data.status==1){
                             post_adduser = false;
                             layer.close(loading);
                             layer.msg("修改成功", { icon: 6, time: 1000 }, function () {

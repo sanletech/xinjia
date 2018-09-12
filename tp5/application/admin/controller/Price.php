@@ -255,6 +255,29 @@ class Price extends Base
         $this->view->assign('list',$list);
         return $this->view->fetch('price/price_incidentaledit'); 
     }
+    //港口杂费执行修改
+    public function incidentalToEdit(){
+        $data = $this->request->param();
+        $ship_id = $data['ship_id'];
+        $port_code =$data['port_code'];
+        $start_40HQ_fee =$data['start_40HQ_fee'];
+        $start_20GP_fee =$data['start_20GP_fee'];
+        $end_40HQ_fee = $data['end_40HQ_fee'];
+        $end_20GP_fee = $data['end_20GP_fee'];
+        $mtime =  date('y-m-d h:i:s');
+        $res =Db::name('price_incidental')
+                ->where(array('ship_id'=>$ship_id,'port_code'=>$port_code,'type'=>'r'))
+                ->update(array('40HQ'=>$start_40HQ_fee,'20GP'=>$start_20GP_fee,'mtime'=>$mtime));
+        $res1 =Db::name('price_incidental')
+               ->where(array('ship_id'=>$ship_id,'port_code'=>$port_code,'type'=>'s'))
+               ->update(array('40HQ'=>$end_40HQ_fee,'20GP'=>$end_20GP_fee,'mtime'=>$mtime));
+        $response =[];
+        
+        $res?$response=['status'=>1,'mssage'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
+        $res1?$response=['status'=>1,'mssage'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
+        return $response;
+    }
+    
     //港口杂费删除
     public function incidentalDel(){
         $id = $this->request->only(['id'],'post');

@@ -37,7 +37,7 @@
           </div>
         <!--港口杂费 -->
         <div class="layui-form-item">
-            <label class="layui-form-label">装货港口杂费</label>
+            <label class="layui-form-label">起运港口杂费</label>
             <div class="layui-input-inline">
                 <input type="text" name="start_40HQ_fee" lay-verify="title" autocomplete="off" placeholder="40HQ起运港杂费" class="layui-input"/>
             </div>
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">卸货港口杂费</label>
+            <label class="layui-form-label">目的港口杂费</label>
             <div class="layui-input-inline">
                 <input type="text" name="end_40HQ_fee" lay-verify="title" autocomplete="off" placeholder="40HQ目的港杂费" class="layui-input"/>
             </div>
@@ -128,12 +128,24 @@
         function loadProvince() {
             var proHtml = '';
             for (var i = 0; i < areaData.length; i++) {
+                console.log(areaData);
                 proHtml += '<option  style="width: 40px"  value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
             }
             //初始化省数据
             $form.find('select[name=province]').append(proHtml);
             form.render();
-            form.on('select(province)', function(data) {
+               form.on('select(province)', function(data) {
+                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadCity(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city]').parent().hide();
+                }
             });
         }
         

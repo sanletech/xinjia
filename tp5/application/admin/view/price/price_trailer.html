@@ -58,23 +58,17 @@
             <td class="tdata"><{$vo.cl_id}></td>
             <td><{$vo.port_name}></td> 
             <td><{$vo.address_name}></td>
-            
-<!--            <td><{$vo.s_id}></td>
-            <td><{$vo.s_carid}></td>-->
-            <!--<td><{$vo.s_carname}></td>-->
+            <!--<td><{$vo.s_id}></td>-->
             <td>￥<{$vo.s_20GP}></td>
             <td>￥<{$vo.s_40HQ}></td> 
-            <td><{$vo.s_ordertime|date="y-m-d",###}></td>
-<!--            <td><{$vo.s_variable}></td>
-            
-            <td><{$vo.r_id}></td>
-            <td><{$vo.r_carid}></td>-->
-            <!--<td><{$vo.r_carname}></td>-->
+            <td><{$vo.s_ordertime}></td>
+<!--           <td><{$vo.s_variable}></td>
+            <td><{$vo.r_id}></td>-->
             <td>￥<{$vo.r_20GP}></td>
             <td>￥<{$vo.r_40HQ}></td> 
-            <td><{$vo.r_ordertime|date="y-m-d",###}></td>
-<!--            <td><{$vo.r_variable}></td>
-            -->
+            <td><{$vo.r_ordertime}></td>
+           <!--<td><{$vo.r_variable}></td>-->
+           
             <td class="td-manage">
               <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/trailer_edit')}>?cl_id=<{$vo.cl_id}>&s_id=<{$vo.s_id}>&r_id=<{$vo.r_id}>',1200,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
