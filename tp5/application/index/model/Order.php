@@ -12,7 +12,7 @@ class Order extends Model
     public function  price_sum($member_code,$start_add='',$end_add='',$load_time=''){
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         $nowtime= date('y-m-d h:i:s');//要设置船期
-        
+        //海运费
         $price_sea = Db::name('seaprice')->alias('SP')
             ->join('hl_ship_route SR','SR.id =SP.route_id','left')
             ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
@@ -24,10 +24,13 @@ class Order extends Model
         if($load_time){
             $price_sea = Db::table($price_sea.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
         }
+        //车运费
         $price_car = Db::name('carprice')->alias('CP')
             ->join('hl_car_line CL','CL.id =CP.cl_id','left')
             ->field('CP.*,CL.port_id,CL.address_name')
             ->order('CP.cl_id')->buildSql();
+       // $price_car
+        
         $price_sql = Db::table($price_sea.' A')
                 ->join($price_car.' B','A.sl_start =B.port_id','left')
                 ->join($price_car.' C','A.sl_end =C.port_id','left')
