@@ -32,7 +32,11 @@ class OrderProcess  extends Model{
             $order_son = Db::name('order_son')->alias('OS') //派车送货信息
                     ->join('hl_car_receive CR','CR.track_num =OS.track_num and CR.container_id =OS.container_code','left')
                     ->group('CR.track_num,CR.container_id')->where('OS.order_num',$order_num)->find();
-            $order_ship = Db::name('order_ship')->alias('OS')->join('hl_order_son HOS','HOS.')->where('order_id',$order_num)->select();  //配船信息
+
+            $order_ship = Db::name('order_ship')->alias('OS')
+                    ->where('OS.order_id',$order_num)
+                    ->select();  //配船信息
+//                var_dump($order_ship);exit;
             $order_status =Db::name('order_status')->where('order_num',$order_num)->select(); //状态信息
         
         //查询对应的发票信息
