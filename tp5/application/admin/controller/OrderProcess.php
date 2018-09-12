@@ -16,11 +16,16 @@ class OrderProcess extends Base
         $M= new OrderPM;
        // $res =$M->OrderDetail($order_num);
         $res =$M->OrderDetail('A906353031424552');
-        foreach ($res as $v){
-            $this->_p($v);
-            echo '</br></br></br>';
-            
-        }
+        $father =$res[0];
+        $car = $res[1];
+        $ship =$res[2];
+        $status = $res[3];
+        $this->view->assign([
+           'father'=>$father,
+            'car'=>$car,
+            'ship'=>$ship,
+            'status'=>$status
+        ]);
         return $this->view->fetch('OrderProcess\orderprocess_list'); 
     } 
     //拆订单

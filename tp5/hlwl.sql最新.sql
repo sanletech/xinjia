@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-10 18:04:44
+Date: 2018-09-12 16:10:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3549,7 +3549,7 @@ CREATE TABLE `hl_carprice` (
   `car_id` int(20) DEFAULT NULL COMMENT '车队id',
   `price_20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子车运价格',
   `price_40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子车运价格',
-  `latest_order_time` int(10) DEFAULT NULL COMMENT '最新的合作订单时间',
+  `last_order_time` datetime DEFAULT NULL COMMENT '最新的合作订单时间',
   `variable` char(1) DEFAULT NULL COMMENT '区分是装货还是送货  装货为r 送货为s',
   `mtime` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
@@ -3558,24 +3558,24 @@ CREATE TABLE `hl_carprice` (
 -- ----------------------------
 -- Records of hl_carprice
 -- ----------------------------
-INSERT INTO `hl_carprice` VALUES ('30', '33', '5', '1000.00', '111111112.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('31', '33', '6', '200.00', '2000.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('32', '31', '5', '5000.00', '55555.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('33', '31', '5', '555.00', '445454.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('34', '32', '1', '2000.00', '4111.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('35', '32', '2', '1220.00', '455000.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('36', '35', '1', '500.00', '1000.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('37', '35', '2', '500.00', '1200.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('38', '36', '8', '800.00', '1600.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('39', '36', '11', '800.00', '1700.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('42', '37', '5', '500.00', '1000.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('43', '37', '13', '550.00', '1200.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('44', '38', '5', '600.00', '1500.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('45', '38', '17', '700.00', '1550.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('46', '39', '13', '200.00', '500.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('47', '39', '6', '200.00', '500.00', null, 's', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('48', '40', '0', '0.00', '0.00', null, 'r', '0000-00-00 00:00:00');
-INSERT INTO `hl_carprice` VALUES ('49', '40', '0', '0.00', '0.00', null, 's', '0000-00-00 00:00:00');
+INSERT INTO `hl_carprice` VALUES ('30', '33', null, '1000.00', '111111112.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('31', '33', null, '200.00', '2000.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('32', '31', null, '5000.00', '55555.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('33', '31', null, '555.00', '445454.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('34', '32', null, '2000.00', '4111.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('35', '32', null, '1220.00', '455000.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('36', '35', null, '500.00', '1000.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('37', '35', null, '500.00', '1200.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('38', '36', null, '800.00', '1600.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('39', '36', null, '800.00', '1700.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('42', '37', null, '500.00', '1000.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('43', '37', null, '550.00', '1200.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('44', '38', null, '600.00', '1500.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('45', '38', null, '700.00', '1550.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('46', '39', null, '200.00', '500.00', null, 'r', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('47', '39', null, '200.00', '500.00', null, 's', '2018-09-12 15:21:31');
+INSERT INTO `hl_carprice` VALUES ('48', '40', null, '200.00', '250.00', null, 'r', '0000-00-00 00:00:00');
+INSERT INTO `hl_carprice` VALUES ('49', '40', null, '200.00', '20.00', null, 's', '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for `hl_carprice1`
@@ -5037,26 +5037,28 @@ CREATE TABLE `hl_price_incidental` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `port_code` int(10) DEFAULT NULL,
   `ship_id` int(10) DEFAULT NULL COMMENT '船公司',
-  `40GP` int(10) DEFAULT NULL,
-  `20HQ` int(10) DEFAULT NULL,
+  `40HQ` int(10) DEFAULT NULL,
+  `20GP` int(10) DEFAULT NULL,
   `type` varchar(5) DEFAULT NULL COMMENT '装货港receive r 发货港口send s',
   `mtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_price_incidental
 -- ----------------------------
-INSERT INTO `hl_price_incidental` VALUES ('1', '110100002', '1', '100', '150', 'r', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('2', '110100002', '1', '150', '100', 's', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('3', '110100004', '2', '250', '340', 'r', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('4', '110100004', '2', '350', '300', 's', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('1', '110100002', '1', '1000', '1500', 'r', '2018-09-12 11:12:48');
+INSERT INTO `hl_price_incidental` VALUES ('2', '110100002', '1', '54564', '45646', 's', '2018-09-12 11:12:48');
+INSERT INTO `hl_price_incidental` VALUES ('3', '110100004', '2', '555', '550', 'r', '2018-09-12 11:12:18');
+INSERT INTO `hl_price_incidental` VALUES ('4', '110100004', '2', '350', '300', 's', '2018-09-12 11:12:18');
 INSERT INTO `hl_price_incidental` VALUES ('5', '110100007', '3', '400', '310', 'r', '2018-09-03 11:26:16');
 INSERT INTO `hl_price_incidental` VALUES ('6', '110100007', '3', '450', '300', 's', '2018-09-03 11:26:16');
 INSERT INTO `hl_price_incidental` VALUES ('7', '110100008', '4', '400', '310', 'r', '2018-09-03 11:26:16');
 INSERT INTO `hl_price_incidental` VALUES ('8', '110100008', '4', '480', '258', 's', '2018-09-03 11:26:16');
 INSERT INTO `hl_price_incidental` VALUES ('9', '110100010', '5', '440', '250', 'r', '2018-09-03 11:26:16');
 INSERT INTO `hl_price_incidental` VALUES ('10', '110100010', '5', '400', '200', 's', '2018-09-03 11:26:16');
+INSERT INTO `hl_price_incidental` VALUES ('11', '110100006', '1', '2000', '1000', 'r', '2018-09-12 11:23:51');
+INSERT INTO `hl_price_incidental` VALUES ('12', '110100006', '1', '250', '100', 's', '2018-09-12 11:23:51');
 
 -- ----------------------------
 -- Table structure for `hl_province`
@@ -5751,7 +5753,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-10 05:36:14', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-12 10:08:04', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

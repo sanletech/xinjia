@@ -43,10 +43,10 @@ class Order extends Base
     {
          if (request()->isAjax()){
             $idArr =$this->request->param();
-            $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404,'action'=>'订单删除']);
+            $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404040,'action'=>'订单删除']);
             $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
             foreach ($order_numArr as $order_num) {
-               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>404,'action'=>'订单删除'], 'controller');
+               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>404040,'action'=>'订单删除'], 'controller');
             }
            return json($res ? 1 : 0) ;
        }
@@ -60,9 +60,44 @@ class Order extends Base
     }
     //废弃订单
     public function order_waste() 
-    {
+    {  
+        $data = new OrderM;
+        $list = $data->order_audit($pages=5,$state=404040);
+//        var_dump($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
         return $this->view->fetch('Order/order_waste'); 
     }
+     //废弃订单的恢复
+    public function order_waste_pass() 
+    { 
+       if (request()->isAjax()){
+           $idArr =$this->request->param();
+           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>0,'action'=>'通过恢复>待审核']);
+           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+            foreach ($order_numArr as $order_num) {
+               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>0,'action'=>'通过恢复>待审核'], 'controller');
+            }
+           return json($res ? 1 : 0) ;
+       }
+    }
+    
+      //废弃订单 的删除
+    public function order_waste_del() 
+    {
+         if (request()->isAjax()){
+            $idArr =$this->request->param();
+            $res =Db::name('order_father')->where('id','in',$idArr)->delete();
+            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+     
+           return json($res ? 1 : 0) ;
+       }
+        
+    }
+        
     
     //处理订单的公共头部
     public function orderCenter() 
