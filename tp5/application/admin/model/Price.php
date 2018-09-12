@@ -149,20 +149,18 @@ class Price extends Model
     }
     
     
-
-    
     
     //车队运价展示
     public function price_trailer_list($port_name ,$pages=15,$cl_id ='') {
         
          $list = Db::name('carprice')->alias('CP')
                 ->join('hl_car_line L', 'CP.cl_id = L.id', 'left')
-                ->join('hl_cardata CD','CP.car_id = CD.id', 'left')
+                //->join('hl_cardata CD','CP.car_id = CD.id', 'left')
                 ->join('hl_port P', 'L.port_id =P.port_code', 'left')
-                ->field('CP.id ,CP.cl_id ,L.address_id ,L.address_name ,CP.car_id ,'
-                        . ' CD.car_name ,L.port_id , P.port_name ,'
+                ->field('CP.id ,CP.cl_id ,L.address_id ,L.address_name,L.port_id ,P.port_name ,'
+                      //  . 'CP.car_id , CD.car_name ,'
                         . 'CP.price_20GP ,CP.price_40HQ ,variable , '
-                        . 'CP.latest_order_time')
+                        . 'CP.last_order_time')
                 ->order('CP.cl_id, CP.variable')->buildSql();
         
         $pageParam  = ['query' =>[]]; //设置分页查询参数
@@ -179,12 +177,13 @@ class Price extends Model
         $lista =Db::table($list.' a')
                 ->join("($list) as b",'b.cl_id =a.cl_id AND a.variable <> b.variable','left')
                 ->field('a.cl_id ,a.port_id ,a.port_name,a.address_id ,a.address_name ,a.id s_id,'
-                        . ' a.car_id s_carid ,a.car_name s_carname ,'
+                        // . ' a.car_id s_carid ,a.car_name s_carname ,'
                         . 'a.price_20GP s_20GP ,a.price_40HQ s_40HQ ,'
-                        . 'a.latest_order_time s_ordertime , a.variable s_variable , '
-                        . 'b.id r_id , b.car_id r_carid ,b.car_name r_carname ,'
+                        . 'a.last_order_time s_ordertime , a.variable s_variable , '
+                        . 'b.id r_id , '
+                        // . 'b.car_id r_carid ,b.car_name r_carname ,'
                         . 'b.price_20GP r_20GP ,b.price_40HQ r_40HQ '
-                        . ',b.latest_order_time r_ordertime , b.variable r_variable ')
+                        . ',b.last_order_time r_ordertime , b.variable r_variable ')
                 ->group('a.cl_id, b.cl_id')
                 ->paginate($pages,false,$pageParam);   
 //            echo '<pre>';
