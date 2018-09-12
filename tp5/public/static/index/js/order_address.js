@@ -15,7 +15,7 @@ layui.use(['form', 'layedit', 'laydate'], function () {
 });
 
 //初始数据
-var areaData = Area;//获取所有地区
+var areaData = JS_PORT;//获取所有地区
 var inp;//选择文本框并赋值区县
 var boot;//判断地址是否是起点还是终点
 //单击省份
@@ -24,10 +24,9 @@ $('#address li').eq(0).click(function () {
     $('#address li').removeClass('lanse').eq(0).addClass('lanse');
 });
 
-var areaData = JS_PORT;
+
 //加载省数据
 function loadProvince() {
-    console.log(areaData)
     $('#dizhi').html('');
     for (let i in areaData) {
         $('#dizhi').append('<a onclick=loadCity(' + areaData[i].provinceCode + ')>' + areaData[i].provinceName + '</a>');
@@ -37,7 +36,7 @@ function loadProvince() {
 
 //加载港口
 function loadCity(citys_id) {
-    $.each(Area, function (i, data) {
+    $.each(areaData, function (i, data) {
         if (data.provinceCode == citys_id) {
             let arry = data.mallCityList;
             $('#dizhi').html('');
@@ -62,17 +61,15 @@ function loadCity(citys_id) {
     })
 }
 
-// 加载区县
+// 加载港口
 function loadPort(areas_id) {
-    $.each(Area, function (j, data) {
-        let arry = data.mallCityList;
+    $.each(areaData, function (j, data) {
+        let arry = data.mallCityList;        
         for (let i in arry) {
             if (arry[i].cityCode == areas_id) {
                 $('#dizhi').html('');
-                for (let h in arry[i].mallAreaList) {
-                    console.log(arry[i]);
-                    let st = arry[i].mallAreaList[h].areaCode + ",'" + arry[i].mallAreaList[h].areaName + "'";
-                    $('#dizhi').append('<a href="javascript:void(0)" onclick="jie_dao(' + st + ',this)">' + arry[i].mallAreaList[h].areaName + '</a>');
+                for (let h in arry[i].mallPortList) {
+                    $('#dizhi').append('<a href="javascript:void(0)" onclick="jie_dao(' + arry[i].mallPortList[h].portCode + ',this)">' + arry[i].mallPortList[h].portName + '</a>');
                 }
                 if (arry[i] == false) {//当后面没有数据的时候
                     $('#address').hide();

@@ -160,43 +160,29 @@ button:hover {
 
 .mo_cen {
   display: none;
-  height: 100px;
   padding: 50px 0;
   position: relative; }
-  .mo_cen .xian {
-    border: 1px solid #2E8DE6;
-    position: absolute;
-    height: 0px;
-    width: 495px;
-    top: 50%;
-    left: 50%;
-    margin-left: -276px; }
-  .mo_cen .mo_nei {
-    height: 100px;
-    width: 600px; }
-    .mo_cen .mo_nei .nn {
-      width: 40px;
-      height: 30px;
-      background-color: #fff;
-      margin: 0 auto; }
-    .mo_cen .mo_nei .yuan {
-      width: 20px;
-      height: 20px;
-      border: 2px solid #2E8DE6;
-      border-radius: 50%;
-      position: relative;
-      margin-left: 50%;
-      left: -10px; }
-    .mo_cen .mo_nei .la:nth-last-child(1) .guan {
-      float: right; }
-    .mo_cen .mo_nei .guan {
-      width: 80px;
+  .mo_cen .man {
+    display: flex;
+    flex-direction: row; }
+    .mo_cen .man > div {
+      flex: 1;
       text-align: center; }
-      .mo_cen .mo_nei .guan .y {
-        background-color: #2E8DE6; }
-    .mo_cen .mo_nei .chuan {
-      margin: 0 auto;
-      margin-top: 38px; }
+    .mo_cen .man .xian {
+      flex: 2;
+      height: 0;
+      border: 1px solid #2e8de5;
+      margin-top: 18px;
+      position: relative; }
+      .mo_cen .man .xian > div {
+        width: 7px;
+        height: 7px;
+        border-top: 2px solid #2e8de5;
+        border-right: 2px solid #2e8de5;
+        transform: rotate(45deg);
+        position: absolute;
+        top: -4.5px;
+        right: 0; }
 
 #address {
   display: none;

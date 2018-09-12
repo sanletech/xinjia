@@ -211,51 +211,32 @@ button:hover{
 
 .mo_cen{
   display: none;
-  height:100px;
+  // height:100px;
   padding:50px 0;
   position: relative;
-  .xian{
-    border:1px solid #2E8DE6;
-    position: absolute;
-    height: 0px;
-    width:495px;
-    top:50%;
-    left: 50%;
-    margin-left: -276px;
-  }
-  .mo_nei{
-    height:100px;
-    width: 600px;
-    .nn{
-      width: 40px;
-      height: 30px;
-      background-color: #fff;
-      margin: 0 auto;
-    }
-    .yuan{
-      width: 20px;
-      height: 20px;
-      border:2px solid #2E8DE6;
-      border-radius:50%;
-      position: relative;
-      margin-left: 50%;
-      left:-10px;
-    }
-    .la:nth-last-child(1){
-      .guan{
-        float: right;
-      }
-    }
-    .guan{
-      width:80px;
+  .man{
+    display: flex;
+    flex-direction: row;
+    >div{
+      flex: 1;
       text-align: center;
-      .y{
-        background-color: #2E8DE6;
-      }
     }
-    .chuan{
-      margin: 0 auto;
-      margin-top:38px;
+    .xian{
+      flex: 2;
+      height: 0;
+      border: 1px solid $lan;
+      margin-top: 18px;
+      position: relative;
+      >div{
+        width: 7px;
+        height: 7px;
+        border-top:2px solid $lan;
+        border-right:2px solid $lan;
+        transform: rotate(45deg);
+        position: absolute;
+        top: -4.5px;
+        right: 0;
+      }
     }
   }
 }

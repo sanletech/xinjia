@@ -168,35 +168,16 @@
 
       <!-- 模态窗口 -->
       <div class="mo_cen">
-        <div class="xian"></div>
-        <div class="mo_nei layui-row">
-          <div class="layui-col-xs4 la">
-            <!-- 进过地址加y类样式 -->
-            <div class="guan">
-              <span>广州</span>
-              <br/><span>3018-03-14</span>
-              <div class="nn">
-                <div class="yuan y"></div>
-              </div>
-            </div>
+        <div class="man">
+          <div>
+            <span>广州</span>
+            <p>2018-2-12</p>
           </div>
-          <div class="layui-col-xs4 la">
-            <!-- 航船经过加chuan类样式 -->
-            <div class="guan chuan">
-              <div class="nn">
-                <div class="yuan">船</div>
-              </div>中转地
-              <br/>3018-03-14 </div>
-          </div>
-
-          <div class="layui-col-xs4 la">
-            <div class="guan">天津
-              <br/>3018-03-14
-              <div class="nn">
-                <div class="yuan"></div>
-              </div>
-            </div>
-          </div>
+          <div class="xian"><div></div></div>
+          <div>
+            <span>天津</span>
+            <p>2018-3-12</p>
+          </div>         
         </div>
       </div>
 
@@ -207,7 +188,7 @@
       </script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
       <!-- <script src="__STATIC__/js/order_list.js"></script>  -->
-      <script src="__STATIC__/js/port.js"></script>
+      <script src="__STATIC__/../admin/js/port.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
       <script>
         function toajax() {
@@ -232,7 +213,7 @@
             layer.open({
             type: 1,
             title:'路线详情',
-            area:['700px'],
+            area:['900px'],
             content: $('.mo_cen'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
             skin: 'demo-class',
             scrollbar: false,
