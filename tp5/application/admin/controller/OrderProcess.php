@@ -20,11 +20,18 @@ class OrderProcess extends Base
         $car = $res[1];
         $ship =$res[2];
         $status = $res[3];
+        $orderInvoice =$res[4];
+        $container_code =$res[5];
+        $track_num  =$res[6];
+       $statusArr = array_column($status, 'change_time','status');
+      
         $this->view->assign([
            'father'=>$father,
             'car'=>$car,
             'ship'=>$ship,
-            'status'=>$status
+            'statusArr'=>$statusArr,
+            'container_code'=>$container_code,
+            'track_num'=>$track_num    
         ]);
         return $this->view->fetch('OrderProcess\orderprocess_list'); 
     } 
