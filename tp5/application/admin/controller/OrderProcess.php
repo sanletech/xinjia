@@ -37,7 +37,16 @@ class OrderProcess extends Base
     } 
     //拆订单
     public function orderSplit() {
-        return $this->view->fetch('OrderProcess\orderprocess_add'); 
+//        $order_num =$this->request->param('order_num');  
+        $order_num ='A906371578264503';
+        $data =Db::name('order_son')->where('order_num',$order_num)->column('container_code,track_num');
+        $tmpArr =[];
+        $container_code = array_keys($data);
+        $track_num = array_unique(array_values($data))[0];
+        $tmpArr =['order_num'=>$order_num ,'track_num'=>$track_num,'container_code'=>$container_code];
+      //  var_dump($tmpArr);exit;
+        $this->view->assign('list',$tmpArr);
+        return $this->view->fetch('OrderProcess\orderprocess_split'); 
     }
     
     //查看订单的进行状态
