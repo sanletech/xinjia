@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-14 11:55:56
+Date: 2018-09-14 19:51:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4912,10 +4912,10 @@ INSERT INTO `hl_order_son` VALUES ('34', 'A824106096329230', 'DSF54AS6F', 'DSF54
 INSERT INTO `hl_order_son` VALUES ('35', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n4', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
 INSERT INTO `hl_order_son` VALUES ('36', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n5', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
 INSERT INTO `hl_order_son` VALUES ('37', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n6', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('38', 'A906353031424552', 'AAAAAAAFFDS', '4654654', '900', '收款完毕>待送货', '27', null, null, '2018-09-07 02:04:11');
-INSERT INTO `hl_order_son` VALUES ('39', 'A906371578264503', 'ADSFADSF', '46464AAA', '900', '收款完毕>待送货', '28', null, null, '2018-09-07 02:25:22');
-INSERT INTO `hl_order_son` VALUES ('40', 'A906371578264503', 'ADSFADSF', '46464AAA', '900', '收款完毕>待送货', '28', null, null, '2018-09-07 02:25:22');
-INSERT INTO `hl_order_son` VALUES ('41', 'A906371578264503', 'ADSFADSF', '4646AAA', '900', '收款完毕>待送货', '30', null, null, '2018-09-07 02:25:22');
+INSERT INTO `hl_order_son` VALUES ('38', 'A906353031424552', 'AAAAAAAFFDS', '11111', '900', '收款完毕>待送货', '27', null, null, '2018-09-07 02:04:11');
+INSERT INTO `hl_order_son` VALUES ('39', 'A906371578264503', 'ADSFADSF', '2222', '900', '收款完毕>待送货', '28', null, null, '2018-09-07 02:25:22');
+INSERT INTO `hl_order_son` VALUES ('40', 'A906371578264503', 'ADSFADSF', '333', '900', '收款完毕>待送货', '28', null, null, '2018-09-07 02:25:22');
+INSERT INTO `hl_order_son` VALUES ('41', 'A906371578264503', 'ADSFADSF', '444', '900', '收款完毕>待送货', '30', null, null, '2018-09-07 02:25:22');
 INSERT INTO `hl_order_son` VALUES ('42', 'A906353429154595', 'DFSDFAS', 'asdfas', '800', '录入卸船完毕1', '31', null, null, '2018-09-07 03:42:29');
 INSERT INTO `hl_order_son` VALUES ('43', 'A906363225694589', 'adsfsa465', 'adsfsa465d0913n0', '200', '录入运单号>待订车', null, null, null, '2018-09-13 11:19:30');
 INSERT INTO `hl_order_son` VALUES ('44', 'A906363225694589', 'adsfsa465', 'adsfsa465d0913n1', '200', '录入运单号>待订车', null, null, null, '2018-09-13 11:19:30');

@@ -6,7 +6,7 @@
             <!-- 联系方式 -->
             <div class="orderprocess_top">
                 <div class="zuo">联系方式:</div>
-                <div class="you">收款状态：<?php if(isset($statusArr['505']){echo"已收款";}else{echo"未收款";} ?></div>
+                <div class="you">收款状态：<?php if(isset($statusArr['505'])){echo"已收款";}else{echo"未收款";}; ?> </div>
             </div>
             <div class="layui-row">
                 <div class="layui-col-xs12">
@@ -122,7 +122,7 @@
                                         </div>
                                         <div>
                                             <span>封条号：
-                                                <input name="name" type="text" value="TES133165135">
+                                                <input name="seal_id" type="text" value="<{$carlist.seal_id}>">
                                             </span>
                                         </div>
                                     </div>
@@ -132,116 +132,8 @@
                         <{/volist}>
                     </ul>
                 </li>
-                <!-- 已装货 -->
-                <li class="db_zt">
-                    <div class="db_top">已装货</div>
-                    <ul class="dingdan">
-                        <li class="dd_xq">
-                            <div class="layui-row">
-                                <div class="layui-col-xs12">
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车队名字：
-                                                <input name="name" type="text" value="海浪物流有限公司" readonly='true'> </span>
-                                        </div>
-                                        <div>
-                                            <span>司机：
-                                                <input name="name" type="text" value="小明"> </span>
-                                        </div>
-                                        <div>
-                                            <span>手机号：
-                                                <input name="name" type="text" value="13597564534"> </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车牌：
-                                                <input name="name" type="text" value="粤Y365424"> </span>
-                                        </div>
-                                        <div>
-                                            <span>身份证：
-                                                <input name="name" type="text" value="12345678901234567">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>柜号：
-                                                <input name="name" type="text" value="TES133165135"> </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>收货人：
-                                                <input name="name" type="text" value="小王">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>装货时间：
-                                                <input name="name" type="text" value="2018/5/20">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>封条号：
-                                                <input name="name" type="text" value="TES133165135">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dd_xq">
-                            <div class="layui-row">
-                                <div class="layui-col-xs12">
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车队名字：
-                                                <input name="name" type="text" value="海浪物流有限公司" readonly='true'> </span>
-                                        </div>
-                                        <div>
-                                            <span>司机：
-                                                <input name="name" type="text" value="小明"> </span>
-                                        </div>
-                                        <div>
-                                            <span>手机号：
-                                                <input name="name" type="text" value="13597564534"> </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车牌：
-                                                <input name="name" type="text" value="粤Y365424"> </span>
-                                        </div>
-                                        <div>
-                                            <span>身份证：
-                                                <input name="name" type="text" value="12345678901234567">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>柜号：
-                                                <input name="name" type="text" value="TES133165135"> </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>收货人：
-                                                <input name="name" type="text" value="小王">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>装货时间：
-                                                <input name="name" type="text" value="2018/5/20">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>封条号：
-                                                <input name="name" type="text" value="TES133165135">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+             
+                <{if condition="(isset($statusArr['505']))"}>
                 <!-- 已报柜号 -->
                 <li class="db_zt">
                     <div class="db_top">已报柜号</div>
@@ -251,24 +143,23 @@
                                 <div class="layui-col-xs12">
                                     <div class="layui-col-xs4">
                                         <span>报柜号：
-                                            <input name="name" type="text" value="ATK2665555555">
+                                            <input name="container_code" type="text" value="<?php foreach($container_code as $value){echo $value ;} ?>">
                                         </span>
                                     </div>
                                     <div class="layui-col-xs4">
                                         <span>报柜时间：
-                                            <input name="name" type="text" value="2018/9/20 21：18：09">
+                                            <input name="baogui_time" type="text" value="<{$statusArr['505']}>">
                                         </span>
                                     </div>
-                                    <div class="layui-col-xs4">
-                                        <span>提交人：
-                                            <input name="name" type="text" value="小明">
-                                        </span>
-                                    </div>
+
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </li>
+                <{/if}>
+                
+                <{if condition="(isset($statusArr['506']))"}>
                 <!-- 已配船 / 已到港 / 已卸船 -->
                 <li class="db_zt">
                     <div class="db_top">已配船 / 已到港 / 已卸船</div>
@@ -277,19 +168,12 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs12">
                                     <span>集装箱编码：</span>
-                                    <div class="bi">
-                                        <input name="name" type="text" value="24202101">
-                                    </div>
-                                    <div class="bi">
-                                        <input name="name" type="text" value="24202101">
-                                    </div>
-                                    <div class="bi">
-                                        <input name="name" type="text" value="24202101">
-                                    </div>
+                                      <?php foreach($container_code as $value){echo '<div class="bian1">'.$value.'</div>' ;} ?>
+               
                                 </div>
                                 <div class="layui-col-xs12">
                                     <span>订单编号：
-                                        <input name="name" type="text" value="A906363225694589">
+                                         <span>订单编号：<{$father.order_num}></span>
                                     </span>
                                 </div>
                                 <div class="layui-col-xs12">
@@ -307,68 +191,37 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <{volist  name ="ship" id ="listship"}>
                                             <tr>
                                                 <td>
-                                                    <input class="td_inp" name="name" type="text" value="贤心1">
+                                                    <input class="td_inp" name="ship_name" type="text" value="<{$listship.ship_name}>">
                                                 </td>
-                                                <td>
+                                                 <td>
                                                     <div>
-                                                        <input class="td_inp" name="name" type="text" value="天津/黄埔">
+                                                        <input class="td_inp" name="ship_route" type="text" value="<{$listship.ship_route}>" style="width: 40%;">
+                                                        <span>-</span>
+                                                        <input class="td_inp" name="voyage_num" type="text" value="<{$listship.voyage_num}>" style="width: 40%;">
                                                     </div>
-                                                    <div>
-                                                        <input class="td_inp" name="name" type="text" value="中远">
-                                                    </div>
+                                                </td>
+                                                 <td>
+                                                    <input class="td_inp" name="loadPortName" type="text" value="<{$listship.loadPortName}>">
+                                                </td> <td>
+                                                    <input class="td_inp" name="shipment_time" type="text" value="<{$listship.shipment_time}>">
+                                                </td> 
+                                                <td>
+                                                    <input class="td_inp" name="dispatch_time" type="text" value="<{$listship.dispatch_time}>">
+                                                </td> 
+                                                <td>
+                                                    <input class="td_inp" name="departurePortName" type="text" value="<{$listship.departurePortName}>">
                                                 </td>
                                                 <td>
-                                                    <input class="td_inp" name="name" type="text" value="天津港">
+                                                    <input class="td_inp" name="arrival_time" type="text" value="<{$listship.arrival_time}>">
                                                 </td>
                                                 <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/11/12">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/12/12">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="黄埔港">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/12/16">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/12/24">
+                                                    <input class="td_inp" name="discharge_time" type="text" value="<{$listship.discharge_time}>">
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="贤心1">
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <input class="td_inp" name="name" type="text" value="天津/黄埔">
-                                                    </div>
-                                                    <div>
-                                                        <input class="td_inp" name="name" type="text" value="中远">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="天津港">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/11/12">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/12/12">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="黄埔港">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/12/16">
-                                                </td>
-                                                <td>
-                                                    <input class="td_inp" name="name" type="text" value="2018/12/24">
-                                                </td>
-                                            </tr>
+                                            <{/volist}>
                                         </tbody>
                                     </table>
                                 </div>
@@ -376,7 +229,9 @@
                         </li>
                     </ul>
                 </li>
+                <{/if}>
                 <!-- 已收款 -->
+                <{if condition="(isset($statusArr['505']))"}>
                 <li class="db_zt">
                     <div class="db_top">已收款</div>
                     <ul class="dingdan">
@@ -386,21 +241,23 @@
                                     <div class="layui-col-xs6">
                                         <select name="city" lay-verify="">
                                             <option value="">收款方式：</option>
-                                            <option value="1" selected>月结</option>
-                                            <option value="2">到港付</option>
-                                            <option value="3">压柜</option>
+                                            <option value="monthly" <?php if($father['payment_method']=='monthly'){echo'selected';}  ?> >月结</option>
+                                            <option value="pledge" <?php if($father['payment_method']=='pledge'){echo'selected';}  ?>  >压柜</option>
+                                            <option value="cash"  <?php if($father['payment_method']=='cash'){echo'selected';}  ?>  >现款</option>
                                         </select>
                                     </div>
                                     <div class="layui-col-xs6">
-                                        <span>收款时间：
-                                            <input name="name" type="text" value="2018年9月10日10:34:06"> </span>
+                                            <span>收款时间：<{$statusArr['900']}> </span>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </li>
+                <{/if}>
+                
                 <!-- 已送货 -->
+                <{if condition="(isset($statusArr['999']))"}>
                 <li class="db_zt">
                     <div class="db_top">已送货</div>
                     <ul class="dingdan">
@@ -408,25 +265,18 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs12 zhong">
                                     <div class="layui-col-xs4">
-                                        <select name="city" lay-verify="">
-                                            <option value="">货物状态：</option>
-                                            <option value="1" selected>未送货</option>
-                                            <option value="2">已送货</option>
-                                        </select>
+                                        <span>货物状态：已送货 </span>
                                     </div>
                                     <div class="layui-col-xs4">
-                                        <span>送货时间：
-                                            <input name="name" type="text" value="2018年9月10日10:34:06"> </span>
+                                        <<span>送货时间：<{$statusArr[999]}> </span>
                                     </div>
-                                    <div class="layui-col-xs4">
-                                        <span>收货人：
-                                            <input name="name" type="text" value="小王"> </span>
-                                    </div>
+          
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </li>
+                <{/if}>
             </ul>
             <div class="fo_rig">
                 <a class="layui-btn cd" lay-submit="" lay-filter="demo1">立即提交</a>

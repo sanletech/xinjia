@@ -145,7 +145,7 @@
                     </div>
                 </div>
             </div>
-
+           
             <!-- 分割线 -->
             <div class="fenge"></div>
             <!-- 联系方式 -->
@@ -155,6 +155,7 @@
             </div>
             <ul class="dbgh">
                 <!-- 已订舱 -->
+                   <{if condition="(isset($statusArr['200']))"}>
                 <li class="db_zt">
                     <div class="db_top">已订舱</div>
                     <ul class="dingdan">
@@ -169,7 +170,9 @@
                         </li>
                     </ul>
                 </li>
+                <{/if}>
                 <!-- 已派车 -->
+                 <{if condition="(isset($statusArr['300']))"}>
                 <li class="db_zt">
                    <?php  if($father['state']<400){echo'<div class="db_top">已派车</div> '; }else{
                    echo'<div class="db_top">已派车 >>> 已装货</div> ';  } ?> 
@@ -208,7 +211,7 @@
                                             <span>装柜时间&nbsp;&nbsp;实际时间：<{$carlist.load_time}>&nbsp;&nbsp;<{$carlist.loading_time}></span>
                                         </div>
                                         <div>
-                                            <span>封条号：<{$carlist.load_time}></span>
+                                            <span>封条号：<{$carlist.seal_id}></span>
                                         </div>
                                     </div>
                                 </div>
@@ -217,7 +220,7 @@
                     <{/volist}>
                     </ul>
                 </li>
-
+                <{/if}>
                 <!-- 已报柜号 -->
                 <{if condition="(isset($statusArr['505']))"}>
                 <li class="db_zt">
@@ -237,6 +240,8 @@
                         </li>
                     </ul>
                 </li>
+                <{/if}>
+                
                 <{if condition="(isset($statusArr['506']))"}>
                 <!-- 已配船 / 已到港 / 已卸船-->
                 <li class="db_zt">
@@ -246,12 +251,10 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs12">
                                     <span>集装箱编码：</span>
-                                    <div class="bian1">24202101</div>
-                                    <div class="bian1">24202101</div>
-                                    <div class="bian1">24202101</div>
+                                    <?php foreach($container_code as $value){echo '<div class="bian1">'.$value.'</div>' ;} ?>
                                 </div>
                                 <div class="layui-col-xs12">
-                                    <span>订单编号：A906363225694589</span>
+                                    <span>订单编号：<{$father.order_num}></span>
                                 </div>
                                 <div class="layui-col-xs12">
                                     <table class="layui-table" lay-even lay-skin="nob">

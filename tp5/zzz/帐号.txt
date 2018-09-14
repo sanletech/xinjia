@@ -19,3 +19,15 @@ ssh root@193.112.13.241
 新网站：  Bbm@2018
 mysql :  root /   Bbm@mysql
 mysql -uroot -pBbm@mysql
+
+
+海浪物流
+120.78.235.101
+hailang@2018
+
+阿里云
+海浪集团
+hailang@2018
+
+
+https://lnmp.org/install.html
