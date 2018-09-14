@@ -1,40 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
-        <file>
-            <url>application/admin/controller/Order.php</url>
-            <bookmark id="1">
-                <name/>
-                <line>139</line>
-                <key/>
-            </bookmark>
-        </file>
-    </editor-bookmarks>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/model/Member.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/Keeper.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/Price.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/keeper/area_list.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/price/price_route.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/port/boat_name.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/Port.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/OrderProcess.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/port/port_list.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/keeper/user_list.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/keeper/team_list.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/view/Order/order_list.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/OrderProcess/orderprocess_list.html</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/model/Order.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/model/OrderProcess.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/Order.php</file>
-            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/port/shiproute_list.html</file>
-=======
             <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/controller/Port.php</file>
             <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/controller/Keeper.php</file>
             <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/model/Port.php</file>
->>>>>>> 1f0bc4d6f5cb1baee18218c07b5bc1fc9f86d2f7
+            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/model/Price.php</file>
+            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/controller/Price.php</file>
+            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/view/price/price_incidentaledit.html</file>
         </group>
     </open-files>
 </project-private>

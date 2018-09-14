@@ -255,6 +255,7 @@ class Price extends Base
         $this->view->assign('list',$list);
         return $this->view->fetch('price/price_incidentaledit'); 
     }
+
     //港口杂费执行修改
     public function incidentalToEdit(){
         $data = $this->request->param();
@@ -295,7 +296,7 @@ class Price extends Base
         $port_code=$data['port_code'][0]; $ship_id=$data['ship'];
         $response =[];
         //先查询是否已经存在港口了
-        $res1 = Db::name('price_incidental')->where('port_code',$port_code)->find();
+        $res1 = Db::name('price_incidental')->where(['ship_id'=>$ship_id,'port_code'=>$port_code])->find();
         if(!$res1){
             $insertData[0] = ['port_code'=>$port_code,'ship_id'=>$ship_id,'40HQ'=>$data['start_40HQ_fee'],'20GP'=>$data['start_20GP_fee'],'type'=>'r','mtime'=>$mtime];
             $insertData[1] = ['port_code'=>$port_code,'ship_id'=>$ship_id,'40HQ'=>$data['end_40HQ_fee'],'20GP'=>$data['end_20GP_fee'],'type'=>'s','mtime'=>$mtime];

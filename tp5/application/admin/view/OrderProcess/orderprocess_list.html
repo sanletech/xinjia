@@ -6,64 +6,62 @@
             <!-- 订单详情 -->
             <div class="orderprocess_top">
                 <div class="zuo">下单详情:</div>
-                <div class="you">收款状态：未收款</div>
+                <div class="you">收款状态：<?php  if($father['state']<800){echo"未收款";}else{echo"已收款";} ?> </div>
             </div>
             <div class="layui-row">
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs4">
-                        <span>账户：为哦地方</span>
+                        <span>账户：<{$father.member_name}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>下单时间：2018/5/30</span>
+                        <span>下单时间：<{$father.ctime}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>船务公司:中远海船务</span>
+                        <span>船务公司:<{$father.ship_short_name}></span>
                     </div>
                 </div>
 
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs4">
-                        <span>船名：天宝河1882</span>
+                        <span>船名：<{$father.boat_name}><{$father.boat_code}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>启运港：黄埔</span>
+                        <span>启运港:<{$father.s_port_name}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>目的港：天津</span>
+                        <span>目的港:<{$father.e_port_name}></span>
                     </div>
                 </div>
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs4">
-                        <span>40HQ海运费：6666</span>
+                        <span><{$father.container_size}>海运费: <{$father.seaprice}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>船期：2018-9-8号</span>
+                        <span>船期：<{$father.shipping_date}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>截单时间2018-9-5</span>
+                        <span>截单时间<{$father.cutoff_date}></span>
                     </div>
                 </div>
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs4">
-                        <span>装货费用：1550</span>
+                        <span>装货费用：<{$father.carprice_r}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>送货费用：1550</span>
+                        <span>送货费用：<{$father.carprice_s}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>应收款：5000 </span>
+                        <span>应收款：<{$father.quoted_price}> </span>
                     </div>
                 </div>
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs4">
-                        <span>利润：200</span>
+                        <span>利润：<{$father.profit}></span>
                     </div>
                     <div class="layui-col-xs4">
-                        <span>业务员：小王</span>
+                        <span>业务员：<{$father.sales}></span>
                     </div>
-                    <div class="layui-col-xs4">
-                        <span>业务提成：100</span>
-                    </div>
+
                 </div>
             </div>
 
@@ -76,7 +74,7 @@
             <div class="layui-row">
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs6">
-                        <span>收款方式：己方</span>
+                        <span>收款方式：<{$father.payer}></span>
                     </div>
                     <div class="layui-col-xs6">
                         <span>收款方：兴佳物流</span>
@@ -84,10 +82,10 @@
                 </div>
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs6">
-                        <span>签回单：否</span>
+                        <span>签回单：<{$father.sign_receipt}></span>
                     </div>
                     <div class="layui-col-xs6">
-                        <span>等通知送货：是</span>
+                        <span>等通知送货：<{$father.message_send}></span>
                     </div>
                 </div>
             </div>
@@ -101,19 +99,17 @@
             <div class="layui-row">
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs6">
-                        <span>货名：酱油</span>
+                        <span>货名：<{$father.cargo}></span>
                     </div>
                     <div class="layui-col-xs6">
-                        <span>包装：纸箱</span>
+                        <span>包装：<{$father.container_type}></span>
                     </div>
                 </div>
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs6">
-                        <span>重量：18T</span>
+                        <span>重量：<{$father.weight}>T</span>
                     </div>
-                    <div class="layui-col-xs6">
-                        <span>装货时间：2018-9-4</span>
-                    </div>
+
                 </div>
             </div>
 
@@ -121,30 +117,30 @@
             <div class="fenge"></div>
             <!-- 联系方式 -->
             <div class="orderprocess_top">
-                <div class="zuo">联系方式:</div>
+                <div class="zuo">发货收货信息:</div>
             </div>
             <div class="layui-row">
                 <div class="layui-col-xs12">
                     <div class="layui-col-xs6">
                         <div>
-                            <span>装货联系人：小王 </span>
+                            <span>发货联系人：<{$father.r_name}> </span>
                         </div>
                         <div>
-                            <span>装货手机号码：13597564534 </span>
+                            <span>发货手机号码：<{$father.r_phone}> </span>
                         </div>
                         <div>
-                            <span>装货地址：广州天河区长信路口长福路 </span>
+                            <span>发货地址：<{$father.r_address}> </span>
                         </div>
                     </div>
                     <div class="layui-col-xs6">
                         <div>
-                            <span>发货联系人：小王 </span>
+                            <span>收货联系人：<{$father.s_name}> </span>
                         </div>
                         <div>
-                            <span>发货手机号码：13597564534</span>
+                            <span>收货手机号码：<{$father.s_phone}></span>
                         </div>
                         <div>
-                            <span>发货地址：广州天河区长信路口长福路 </span>
+                            <span>收货地址：<{$father.s_address}> </span>
                         </div>
                     </div>
                 </div>
@@ -155,7 +151,7 @@
             <!-- 联系方式 -->
             <div class="orderprocess_top">
                 <div class="zuo">订单流程:</div>
-                <div class="you">订单号：TDGS3648645613</div>
+                <div class="you">订单号：<{$father.order_num}></div>
             </div>
             <ul class="dbgh">
                 <!-- 已订舱 -->
@@ -166,7 +162,7 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs12">
                                     <span>运单号：
-                                        <input type="text" value="AGW1236685544" name="title" class="bian" readonly>
+                                        <input type="text" value="<{$track_num}>" name="track_num" class="bian" readonly>
                                     </span>
                                 </div>
                             </div>
@@ -175,173 +171,55 @@
                 </li>
                 <!-- 已派车 -->
                 <li class="db_zt">
-                    <div class="db_top">已派车</div>
+                   <?php  if($father['state']<400){echo'<div class="db_top">已派车</div> '; }else{
+                   echo'<div class="db_top">已派车 >>> 已装货</div> ';  } ?> 
                     <ul class="dingdan">
+                        <{volist name="car" id ="carlist"}>
                         <li class="dd_xq">
                             <div class="layui-row">
                                 <div class="layui-col-xs12">
                                     <div class="layui-col-xs4">
                                         <div>
-                                            <span>车队名字：海浪物流有限公司 </span>
+                                            <span>车队名字：<{$carlist.car_name}> </span>
                                         </div>
                                         <div>
-                                            <span>司机：小明 </span>
+                                            <span>司机：<{$carlist.driver_name}> </span>
                                         </div>
                                         <div>
-                                            <span>手机号：13597564534 </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车牌：粤Y365424 </span>
-                                        </div>
-                                        <div>
-                                            <span>身份证：12345678901234567</span>
-                                        </div>
-                                        <div>
-                                            <span>柜号：TES133165135 </span>
+                                            <span>手机号：<{$carlist.mobile}> </span>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs4">
                                         <div>
-                                            <span>收货人：小王</span>
+                                            <span>车牌：<{$carlist.truck_code}> </span>
                                         </div>
                                         <div>
-                                            <span>装货时间~实际：2018-5/27~2018/5/20</span>
+                                            <span>身份证：<{$carlist.identity}></span>
                                         </div>
                                         <div>
-                                            <span>封条号：TES133165135</span>
+                                            <span>柜号：<{$carlist.container_code}> </span>
+                                        </div>
+                                    </div>
+                                    <div class="layui-col-xs4">
+                                        <div>
+                                            <span>装柜对接人：<{$carlist.consignee}></span>
+                                        </div>
+                                        <div>
+                                            <span>装柜时间&nbsp;&nbsp;实际时间：<{$carlist.load_time}>&nbsp;&nbsp;<{$carlist.loading_time}></span>
+                                        </div>
+                                        <div>
+                                            <span>封条号：<{$carlist.load_time}></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        <li class="dd_xq">
-                            <div class="layui-row">
-                                <div class="layui-col-xs12">
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车队名字：海浪物流有限公司 </span>
-                                        </div>
-                                        <div>
-                                            <span>司机：小明 </span>
-                                        </div>
-                                        <div>
-                                            <span>手机号：13597564534 </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车牌：粤Y365424 </span>
-                                        </div>
-                                        <div>
-                                            <span>身份证：12345678901234567</span>
-                                        </div>
-                                        <div>
-                                            <span>柜号：TES133165135 </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>收货人：小王</span>
-                                        </div>
-                                        <div>
-                                            <span>装货时间~实际：2018-5/27~2018/5/20</span>
-                                        </div>
-                                        <div>
-                                            <span>封条号：TES133165135</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                    <{/volist}>
                     </ul>
                 </li>
-                <!-- 已装货 -->
-                <li class="db_zt">
-                    <div class="db_top">已装货</div>
-                    <ul class="dingdan">
-                        <li class="dd_xq">
-                            <div class="layui-row">
-                                <div class="layui-col-xs12">
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车队名字：海浪物流有限公司 </span>
-                                        </div>
-                                        <div>
-                                            <span>司机：小明 </span>
-                                        </div>
-                                        <div>
-                                            <span>手机号：13597564534 </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车牌：粤Y365424 </span>
-                                        </div>
-                                        <div>
-                                            <span>身份证：12345678901234567</span>
-                                        </div>
-                                        <div>
-                                            <span>柜号：TES133165135 </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>收货人：小王</span>
-                                        </div>
-                                        <div>
-                                            <span>装货时间~实际：2018-5/27~2018/5/20</span>
-                                        </div>
-                                        <div>
-                                            <span>封条号：TES133165135</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dd_xq">
-                            <div class="layui-row">
-                                <div class="layui-col-xs12">
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车队名字：海浪物流有限公司 </span>
-                                        </div>
-                                        <div>
-                                            <span>司机：小明 </span>
-                                        </div>
-                                        <div>
-                                            <span>手机号：13597564534 </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车牌：粤Y365424 </span>
-                                        </div>
-                                        <div>
-                                            <span>身份证：12345678901234567</span>
-                                        </div>
-                                        <div>
-                                            <span>柜号：TES133165135 </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>收货人：小王</span>
-                                        </div>
-                                        <div>
-                                            <span>装货时间~实际：2018-5/27~2018/5/20</span>
-                                        </div>
-                                        <div>
-                                            <span>封条号：TES133165135</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
+
                 <!-- 已报柜号 -->
+                <{if condition="(isset($statusArr['505']))"}>
                 <li class="db_zt">
                     <div class="db_top">已报柜号</div>
                     <ul class="dingdan">
@@ -349,19 +227,17 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs12">
                                     <div class="layui-col-xs4">
-                                        <span>报柜号：ATK2665555555</span>
+                                        <span>报柜号：<?php foreach($container_code as $value){echo $value ;} ?></span>
                                     </div>
                                     <div class="layui-col-xs4">
-                                        <span>报柜时间：2018/9/20 21：18：09</span>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <span>提交人：小明</span>
+                                        <span>报柜时间：<{$statusArr['505']}></span>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </li>
+                <{if condition="(isset($statusArr['506']))"}>
                 <!-- 已配船 / 已到港 / 已卸船-->
                 <li class="db_zt">
                     <div class="db_top">已配船 / 已到港 / 已卸船</div>
@@ -392,26 +268,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <{volist  name ="ship" id ="listship"}>
                                             <tr>
-                                                <td>贤心1</td>
-                                                <td>天津/黄埔</td>
-                                                <td>天津港</td>
-                                                <td>2018/11/12</td>
-                                                <td>2018/12/12</td>
-                                                <td>黄埔港</td>
-                                                <td>2018/12/16</td>
-                                                <td>2018/12/24</td>
+                                                <td><{$listship.ship_name}></td>
+                                                <td><{$listship.ship_route}> / <{$listship.voyage_num}></td>
+                                                <td><{$listship.loadPortName}></td>
+                                                <td><{$listship.shipment_time}></td>
+                                                <td><{$listship.dispatch_time}></td>
+                                                <td><{$listship.departurePortName}></td>
+                                                <td><{$listship.arrival_time}></td>
+                                                <td><{$listship.discharge_time}></td>
                                             </tr>
-                                            <tr>
-                                                <td>贤心1</td>
-                                                <td>天津/黄埔</td>
-                                                <td>天津港</td>
-                                                <td>2018/11/12</td>
-                                                <td>2018/12/12</td>
-                                                <td>黄埔港</td>
-                                                <td>2018/12/16</td>
-                                                <td>2018/12/24</td>
-                                            </tr>
+                                            <{/volist}>
                                         </tbody>
                                     </table>
                                 </div>
@@ -419,7 +287,9 @@
                         </li>
                     </ul>
                 </li>
+                <{/if}>
                 <!-- 已收款 -->
+             <{if condition="(isset($statusArr['505']))"}>
                 <li class="db_zt">
                     <div class="db_top">已收款</div>
                     <ul class="dingdan">
@@ -427,17 +297,25 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs12 zhong">
                                     <div class="layui-col-xs6">
-                                        <span>收款方式：已收款 </span>
-
+                                        <span>收款方式：
+                                                <{switch name="$father.payment_method"}>
+                                                <{case value="monthly"}>月结<{/case}>
+                                                <{case value="pledge"}>压柜<{/case}>
+                                                <{case value="cash"}>现款<{/case}>
+                                                <{default /}>default
+                                                <{/switch}>
+                                        </span>
                                     </div>
                                     <div class="layui-col-xs6">
-                                        <span>收款时间：2018年9月10日10:34:06 </span>
+                                        <span>收款时间：<{$statusArr['900']}> </span>
                                     </div>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </li>
+            <{/if}>
+              <{if condition="(isset($statusArr['999']))"}>
                 <!-- 已送货 -->
                 <li class="db_zt">
                     <div class="db_top">已送货</div>
@@ -449,16 +327,15 @@
                                         <span>货物状态：已送货 </span>
                                     </div>
                                     <div class="layui-col-xs4">
-                                        <span>送货时间：2018年9月10日10:34:06 </span>
+                                        <span>送货时间：<{$statusArr[999]}> </span>
                                     </div>
-                                    <div class="layui-col-xs4">
-                                        <span>收货人：小王 </span>
-                                    </div>
+
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </li>
+                <{/if}>
             </ul>
         </div>
         <script src="__STATIC__/js/orderprocess.js"></script>
