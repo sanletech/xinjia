@@ -1,7 +1,12 @@
 <{include file='./public/header' /}>
-  <link rel="stylesheet" href="__STATIC__/css/team.css">
-
   <body>
+    <style>
+      .zi span{
+        font-size: 14px;
+        display: inline-block;
+        padding: 5px;
+      }
+    </style>
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -24,24 +29,9 @@
       <!--编辑子类目-->
       <div class="layui-col-xs9 zi">
         <span>现有部门：</span>
-        <form id="eide_team">
-            <{volist name='list' id ='item'}>    
-            <div class="layui-input-inline you">
-                <input name="old_job_team" class="layui-input" value="<{$item.title}>" type="text">
-            </div>
-            <{/volist}>
-        </form>
-        <!-- 新增部门 -->
-        <div class="layui-col-xs12 xin">
-          <span>新增部门：</span>
-          <form id="new_team">
-            
-          </form>
-        </div>
-        <div class="tij">
-            <a class="layui-btn" lay-submit="" lay-filter="demo1">提交</a>
-          </div>
-      </div>
+          <{volist name='list' id ='item'}> 
+          <span><{$item.title}></span>
+          <{/volist}>
     </div>
 
 
@@ -61,38 +51,14 @@
       });
 
       //给状态加样式
-      for (let i = 0; i < $('.zt').length; i++) {
-        //  console.log($('.zt').eq(i).html());
+      for (let i = 0; i < $('.zt').length; i++) { 
         if ($('.zt').eq(i).html() == '启用') {
           $('.zt').eq(i).addClass('layui-btn-normal');
         } else {
           $('.zt').eq(i).addClass('layui-btn-danger');
         }
       }
-      /*用户-停用*/
-      function member_stop(obj, id) {
-        layer.confirm('确认要停用吗？', function (index) {
-          if ($(obj).attr('title') == '启用') {
 
-            //发异步把用户状态进行更改
-            toajax(id, 'status=0')
-            $(obj).attr('title', '停用')
-            $(obj).find('i').html('&#xe62f;');
-
-            $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
-            layer.msg('停用!', { icon: 5, time: 1000 });
-
-          } else {
-            toajax(id, 'status=1')
-            $(obj).attr('title', '启用')
-            $(obj).find('i').html('&#xe601;');
-
-            $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
-            layer.msg('启用!', { icon: 5, time: 1000 });
-          }
-
-        });
-      }
       function toajax(id, status) {
         $.ajax({
           type: 'post',
@@ -110,7 +76,6 @@
       }
 
     </script>
-    <script type="text/javascript" src="__STATIC__/js/team.js"></script>
   </body>
 
   </html>

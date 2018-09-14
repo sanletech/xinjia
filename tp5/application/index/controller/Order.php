@@ -207,5 +207,41 @@ class Order extends Base
          $sea_pirce =new OrderM;
         $route_line= $sea_pirce ->route_detail($data);
         return json_encode($route_line);
-     }
+    }
+    
+    //港到港
+    public function harbor(){
+        $member_code =Session::get('member_code','think');
+        $start_add =$this->request->param('start_id');
+        if($start_add){ $this->view->assign('start_add',$start_add);   }
+        $end_add =$this->request->param('end_id');
+        if($end_add){ $this->view->assign('end_add',$end_add);  }
+        $load_time =$this->request->param('load_time');
+        if($load_time){ $this->view->assign('load_time',$load_time);  
+        $load_time =strtotime($load_time); }
+        $sea_pirce =new OrderM;
+        $list = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time);
+        //获取总页数
+        $count =  Db::table($list.' A')->count(); 
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        // $tol=($page-1)*$limit+1;
+        // 查询出当前页数显示的数据
+        $list = Db::table($list.' A')->limit(($page-1)*$limit,$limit)->select();
+      
+       // $page= $list->render();
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('list',$list);
+        return $this->view->fetch('Order/harbor');
+    }
+
+    //港到港下单
+    public function harbor_order(){
+        return $this->view->fetch('Order/harbor_order');
+    }
 }

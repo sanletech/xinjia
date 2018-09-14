@@ -165,7 +165,7 @@ class Keeper extends Base
 //        $this->_p($list);exit;
         $tree= $this->procHtml($list);
         $this->view->assign('tree',$tree);
-         $this->view->assign('list',$list);
+        $this->view->assign('list',$list);
         $this->view->engine->layout('Keeper/team_public');
         return $this->view->fetch('Keeper/team_list');
     }
@@ -177,7 +177,7 @@ class Keeper extends Base
         $list = $this->generateTree($array);
 //        $this->_p($list);exit;
         $tree= $this->procHtml($list);
-         
+        $this->view->assign('list',$list);
         $this->view->assign('tree',$tree);
         $this->view->engine->layout('Keeper/team_public');
         return $this->view->fetch('Keeper/team_edit');
@@ -291,14 +291,14 @@ class Keeper extends Base
           if(!isset($t['childMenus']))
             {   
                 $html .= "<li >{$t['title']}"
-                . "<a href=javascript:void(0); id='$id'>编辑</a>&nbsp"
+                . "<a href='$strE' id='$id'>编辑</a>&nbsp"
                 . "<a href='$strA'>子类目</a>&nbsp"
                 . "<a href='$strD'>删除</a></li>&nbsp";
             }
             else
             {   
                 $html .= "<li class='layui-nav-item'>{$t['title']}"
-                . "<a href=javascript:void(0); id='$id' >编辑</a>&nbsp"
+                . "<a href='$strE'; id='$id' >编辑</a>&nbsp"
                 . "<a href='$strA'>子类目</a>&nbsp";
               
                 $html .= $this->procHtml($t['childMenus']);
@@ -308,4 +308,20 @@ class Keeper extends Base
         return $html ? '<ul class="layui-nav-tree" lay-filter="">'.$html.'</ul>' : $html ;
     }
 
+    //权限调整
+    function power(){
+        $array = Db::name('team')->group('id')->select();
+        $list = $this->generateTree($array);
+//        $this->_p($list);exit;
+        $tree= $this->procHtml($list);
+        $this->view->assign('list',$list);
+        $this->view->assign('tree',$tree);
+        $this->view->engine->layout('Keeper/team_public');
+        return $this->view->fetch('Keeper/power');
+    }
+
+    //权限调整
+    function power_edit(){
+        return $this->view->fetch('Keeper/power_edit');
+    }
 } 

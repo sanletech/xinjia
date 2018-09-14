@@ -17,8 +17,7 @@
           <div class="gnhy_nei layui-row">
             <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>" placeholder="请输入起始地" class="layui-col-xs12">
             <input type="text" name="end_add" id="end_add" value="<{$end_add ? $end_add : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
-            <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>" placeholder="装货时间" class="layui-col-xs12"
-              autocomplete="off">
+            
           </div>
 
           <div class="gnhy_di">
@@ -41,8 +40,7 @@
             <ul>
               <li>省份</li>
               <li>城市</li>
-              <li>区县</li>
-              <li>街道</li>
+              <li>港口</li>
             </ul>
             <div id="dizhi">
 
@@ -193,7 +191,7 @@
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
       <!-- <script src="__STATIC__/js/order_list.js"></script>  -->
       <script src="__STATIC__/../admin/js/port.js"></script>
-      <script src="__STATIC__/js/order_list.js"></script>
+      <script src="__STATIC__/js/order_address.js"></script>
       <script>
         function toajax() {
           add.load_time = $('#load_time').val();
@@ -265,4 +263,4 @@
 
   </body>
 
-  </html>
+  </html>       
