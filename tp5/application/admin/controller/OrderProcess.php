@@ -48,7 +48,28 @@ class OrderProcess extends Base
     
     
     //修改订单
-    public function orderModify()  {
+    public function orderModify(){
+        $M= new OrderPM;
+       // $res =$M->OrderDetail($order_num);
+        $res =$M->OrderDetail('A906353031424552');
+        $father =$res[0];
+        $car = $res[1];
+        $ship =$res[2];
+        $status = $res[3];
+        $orderInvoice =$res[4];
+        $container_code =$res[5];
+        $track_num  =$res[6];
+        $statusArr = array_column($status, 'change_time','status');
+      
+        $this->view->assign([
+           'father'=>$father,
+            'car'=>$car,
+            'ship'=>$ship,
+            'statusArr'=>$statusArr,
+            'container_code'=>$container_code,
+            'track_num'=>$track_num    
+        ]);
+        
         return $this->view->fetch('OrderProcess\orderprocess_edit'); 
     }
     

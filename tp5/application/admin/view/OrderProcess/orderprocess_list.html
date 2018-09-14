@@ -6,7 +6,7 @@
             <!-- 订单详情 -->
             <div class="orderprocess_top">
                 <div class="zuo">下单详情:</div>
-                <div class="you">收款状态：<?php  if($father['state']<800){echo"未收款";}else{echo"已收款";} ?></div>
+                <div class="you">收款状态：<?php  if($father['state']<800){echo"未收款";}else{echo"已收款";} ?> </div>
             </div>
             <div class="layui-row">
                 <div class="layui-col-xs12">
@@ -197,12 +197,12 @@
                                             <span>身份证：<{$carlist.identity}></span>
                                         </div>
                                         <div>
-                                            <span>柜号：<{$carlist.identity}> </span>
+                                            <span>柜号：<{$carlist.container_code}> </span>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs4">
                                         <div>
-                                            <span>装柜联系人：<{$carlist.consignee}></span>
+                                            <span>装柜对接人：<{$carlist.consignee}></span>
                                         </div>
                                         <div>
                                             <span>装柜时间&nbsp;&nbsp;实际时间：<{$carlist.load_time}>&nbsp;&nbsp;<{$carlist.loading_time}></span>

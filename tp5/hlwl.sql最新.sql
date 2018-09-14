@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-13 19:14:25
+Date: 2018-09-14 11:55:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -5047,7 +5047,7 @@ CREATE TABLE `hl_price_incidental` (
   `type` varchar(5) DEFAULT NULL COMMENT '装货港receive r 发货港口send s',
   `mtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_price_incidental
@@ -5064,6 +5064,12 @@ INSERT INTO `hl_price_incidental` VALUES ('9', '110100010', '5', '440', '250', '
 INSERT INTO `hl_price_incidental` VALUES ('10', '110100010', '5', '400', '200', 's', '2018-09-03 11:26:16');
 INSERT INTO `hl_price_incidental` VALUES ('11', '110100006', '1', '2000', '1000', 'r', '2018-09-12 11:23:51');
 INSERT INTO `hl_price_incidental` VALUES ('12', '110100006', '1', '250', '100', 's', '2018-09-12 11:23:51');
+INSERT INTO `hl_price_incidental` VALUES ('13', '110100005', '2', '100', '11521', 'r', '2018-09-14 11:44:08');
+INSERT INTO `hl_price_incidental` VALUES ('14', '110100005', '2', '15151', '5151', 's', '2018-09-14 11:44:08');
+INSERT INTO `hl_price_incidental` VALUES ('15', '110100003', '2', '55', '555', 'r', '2018-09-14 11:45:44');
+INSERT INTO `hl_price_incidental` VALUES ('16', '110100003', '2', '555', '555', 's', '2018-09-14 11:45:44');
+INSERT INTO `hl_price_incidental` VALUES ('17', '110100002', '2', '100', '1515', 'r', '2018-09-14 11:55:37');
+INSERT INTO `hl_price_incidental` VALUES ('18', '110100002', '2', '1515', '120', 's', '2018-09-14 11:55:37');
 
 -- ----------------------------
 -- Table structure for `hl_province`
@@ -5758,7 +5764,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-13 09:46:05', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-14 09:33:06', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

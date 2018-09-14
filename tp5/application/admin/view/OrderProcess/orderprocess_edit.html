@@ -6,7 +6,7 @@
             <!-- 联系方式 -->
             <div class="orderprocess_top">
                 <div class="zuo">联系方式:</div>
-                <div class="you">收款状态：未收款</div>
+                <div class="you">收款状态：<?php if(isset($statusArr['505']){echo"已收款";}else{echo"未收款";} ?></div>
             </div>
             <div class="layui-row">
                 <div class="layui-col-xs12">
@@ -14,29 +14,29 @@
                         <div class="layui-col-xs6">
                             <div>
                                 <span>装货联系人：
-                                    <input name="name" type="text" value="小王"> </span>
+                                   <input type="text" name="r_phone" value="<{$father.r_name}>"> </span>
                             </div>
                             <div>
                                 <span>装货手机号码：
-                                    <input name="name" type="text" value="13597564534"> </span>
+                                   <input type="text" name="r_phone" value="<{$father.r_phone}>"> </span>
                             </div>
                             <div>
                                 <span>装货地址：
-                                    <input name="name" type="text" value="广州天河区长信路口长福路"> </span>
+                                   <input type="text" name="r_address" value="<{$father.r_address}>"> </span>
                             </div>
                         </div>
                         <div class="layui-col-xs6">
                             <div>
                                 <span>发货联系人：
-                                    <input type="text" name="name" value="小王"> </span>
+                                    <input type="text" name="s_phone" value="<{$father.s_name}>"> </span>
                             </div>
                             <div>
                                 <span>发货手机号码：
-                                    <input type="text" name="name" value="13597564534"> </span>
+                                    <input type="text" name="s_phone" value="<{$father.s_phone}>"> </span>
                             </div>
                             <div>
                                 <span>发货地址：
-                                    <input type="text" name="name" value="广州天河区长信路口长福路"> </span>
+                                    <input type="text" name="s_address" value="<{$father.s_address}>"> </span>
                             </div>
                         </div>
                         <div class="fo_rig">
@@ -51,7 +51,7 @@
             <!-- 订单流程: -->
             <div class="orderprocess_top">
                 <div class="zuo">订单流程:</div>
-                <div class="you">订单号：TDGS3648645613</div>
+                <div class="you">订单号：<{$father.order_num}></div>
             </div>
             <form id="dingdan">
             <ul class="dbgh">
@@ -63,7 +63,7 @@
                             <div class="layui-row">
                                 <div class="layui-col-xs12">
                                     <span>运单号：
-                                        <input type="text" value="AGW1236685544" name="title">
+                                        <input type="text" value="<{$track_num}>" name="track_num">
                                     </span>
                                 </div>
                             </div>
@@ -72,49 +72,52 @@
                 </li>
                 <!-- 已派车 -->
                 <li class="db_zt">
+                    <?php  if($father['state']<400){echo'<div class="db_top">已派车</div> '; }else{
+                   echo'<div class="db_top">已派车 >>> 已装货</div> ';  } ?> 
                     <div class="db_top">已派车</div>
                     <ul class="dingdan">
+                        <{volist name="car" id ="carlist"}>
                         <li class="dd_xq">
                             <div class="layui-row">
                                 <div class="layui-col-xs12">
                                     <div class="layui-col-xs4">
                                         <div>
                                             <span>车队名字：
-                                                <input name="name" type="text" value="海浪物流有限公司" readonly='true'> </span>
+                                                <input name="car_name" type="text" value="<{$carlist.car_name}>" readonly='true'> </span>
                                         </div>
                                         <div>
                                             <span>司机：
-                                                <input name="name" type="text" value="小明"> </span>
+                                                <input name="driver_name" type="text" value="<{$carlist.driver_name}>"> </span>
                                         </div>
                                         <div>
                                             <span>手机号：
-                                                <input name="name" type="text" value="13597564534"> </span>
+                                                <input name="mobile" type="text" value="<{$carlist.mobile}>"> </span>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs4">
                                         <div>
                                             <span>车牌：
-                                                <input name="name" type="text" value="粤Y365424"> </span>
+                                                <input name="truck_code" type="text" value="<{$carlist.truck_code}>"> </span>
                                         </div>
                                         <div>
                                             <span>身份证：
-                                                <input name="name" type="text" value="12345678901234567">
+                                                <input name="identity" type="text" value="<{$carlist.identity}>">
                                             </span>
                                         </div>
                                         <div>
                                             <span>柜号：
-                                                <input name="name" type="text" value="TES133165135"> </span>
+                                                <input name="container_code" type="text" value="<{$carlist.container_code}>"> </span>
                                         </div>
                                     </div>
                                     <div class="layui-col-xs4">
                                         <div>
-                                            <span>收货人：
-                                                <input name="name" type="text" value="小王">
+                                            <span>装柜对接人：
+                                                <input name="consignee" type="text" value="<{$carlist.consignee}>">
                                             </span>
                                         </div>
                                         <div>
-                                            <span>装货时间：
-                                                <input name="name" type="text" value="2018/5/20">
+                                            <span>装柜时间&nbsp;&nbsp;实际时间：
+                                                <input name="name" type="text" value="<{$carlist.load_time}>&nbsp;&nbsp;<{$carlist.loading_time}>">
                                             </span>
                                         </div>
                                         <div>
@@ -126,58 +129,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="dd_xq">
-                            <div class="layui-row">
-                                <div class="layui-col-xs12">
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车队名字：
-                                                <input name="name" type="text" value="海浪物流有限公司" readonly='true'> </span>
-                                        </div>
-                                        <div>
-                                            <span>司机：
-                                                <input name="name" type="text" value="小明"> </span>
-                                        </div>
-                                        <div>
-                                            <span>手机号：
-                                                <input name="name" type="text" value="13597564534"> </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>车牌：
-                                                <input name="name" type="text" value="粤Y365424"> </span>
-                                        </div>
-                                        <div>
-                                            <span>身份证：
-                                                <input name="name" type="text" value="12345678901234567">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>柜号：
-                                                <input name="name" type="text" value="TES133165135"> </span>
-                                        </div>
-                                    </div>
-                                    <div class="layui-col-xs4">
-                                        <div>
-                                            <span>收货人：
-                                                <input name="name" type="text" value="小王">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>装货时间：
-                                                <input name="name" type="text" value="2018/5/20">
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span>封条号：
-                                                <input name="name" type="text" value="TES133165135">
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                        <{/volist}>
                     </ul>
                 </li>
                 <!-- 已装货 -->
