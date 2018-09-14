@@ -242,6 +242,15 @@ class Order extends Base
 
     //港到港下单
     public function harbor_order(){
+        $data =$this->request->param();
+        $sea_id = $data['sea_id'];
+        $r_car_id = $data['r_car_id'];
+        $s_car_id = $data['s_car_id'];
+        $container_size = $data['container_size'];
+        $member_code =Session::get('member_code','think');
+        $sea_pirce =new OrderM;
+        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code);
+        $this->view->assign('list',$list);
         return $this->view->fetch('Order/harbor_order');
     }
 }

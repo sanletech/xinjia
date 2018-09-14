@@ -9,6 +9,15 @@
       #dizhi{
         cursor: pointer;
       }
+      .cen_nei .nei_dao ul li{
+        width:12%;
+      }
+      .cen_nei .nei_nei .hang_nei .nei_le ul li{
+        width: 13.5%;
+      }
+      #hxxq{
+        margin-left: -20px !important;
+      }
     </style>
     <div class="banner">
       <div class="gnhy">
@@ -17,6 +26,13 @@
           <div class="gnhy_nei layui-row">
             <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>" placeholder="请输入起始地" class="layui-col-xs12">
             <input type="text" name="end_add" id="end_add" value="<{$end_add ? $end_add : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
+            <div class="layui-form-item" styel=" z-index:999;">
+                <select name="ship" lay-filter="ship" lay-search>
+                    <option value="" >请选择船公司</option>
+                    <option value="" >中远</option>
+                    <option value="" >谷歌</option>
+                </select>  
+            </div>
             
           </div>
 
@@ -62,7 +78,7 @@
             <li>预计开船日期</li>
             <li>航线</li>
             <li>预计到港日期</li>
-            <li>预计送货日期&nbsp;
+            <!-- <li>预计送货日期&nbsp; -->
               <i class="icon iconfont icon-paixu"></i>
             </li>
             <li>20GP&nbsp;
@@ -101,11 +117,11 @@
                         <{$vo.cutoff_date}>
                       </li>
                       <li>
-                        <{$vo.shipping_date}>
+                        <{$vo.s_port_name}>
                           <div class="dian">
-                            <i class="icon iconfont icon-dingwei se">&nbsp;</i>
+                            <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
                             <span class="hui">
-                              <{$vo.s_port_name}>
+                              <{$vo.shipping_date}>
                             </span>
                           </div>
                       </li>
@@ -121,22 +137,22 @@
                         </div>
                       </li>
                       <li>
-                        <{$vo.ETA}>
+                        <{$vo.e_port_name}>
                           <div class="dian">
-                            <i class="icon iconfont icon-dingwei se">&nbsp;</i>
+                            <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
                             <span class="hui">
-                              <{$vo.e_port_name}>
+                              <{$vo.ETA}>
                             </span>
                           </div>
                       </li>
-                      <li>
+                      <!-- <li>
                         <{$vo.EDD}>
-                      </li>
+                      </li> -->
                       <li>
                         ￥
                         <{$vo.price_20GP}>
                           <div class="dian">
-                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=20GP"
+                            <a href="<{:url('index/Order/harbor_order')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=20GP"
                               class="gp">下单</a>
                           </div>
                       </li>
@@ -144,7 +160,7 @@
                         ￥
                         <{$vo.price_40HQ}>
                           <div class="dian">
-                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=40HQ"
+                            <a href="<{:url('index/Order/harbor_order')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=40HQ"
                               class="gp">下单</a>
                           </div>
                       </li>
@@ -154,7 +170,7 @@
                   <div class="nei_rig">
 
                     <!-- <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> -->
-                    <a onclick="mo()" href="javascript:;">航线详情</a>
+                    <a id="hxxq" onclick="mo()" href="javascript:;">航线详情</a>
 
                   </div>
 

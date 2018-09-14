@@ -46,4 +46,15 @@ class Personal extends Base
     {
        return $this->view->fetch('personal/common_info');
     }
+    //港到港订单
+    public function harbor_order()
+    {
+       return $this->view->fetch('personal/harbor_order_details');
+    }
+
+    //提交柜号资料
+    public function cabinet_number()
+    {
+       return $this->view->fetch('personal/cabinet_number');
+    }
 }

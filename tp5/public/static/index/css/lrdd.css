@@ -121,8 +121,12 @@ button {
           color: red; }
       .xxtx .er .grid-demo input, .xxtx .er .grid-demo .select {
         width: 80%;
-        height: 30px;
+        height: 35px;
         padding-left: 13px; }
+      .xxtx .er .grid-demo .addr {
+        display: inline-block;
+        height: 35px;
+        line-height: 35px; }
       .xxtx .er .grid-demo .select {
         border-radius: 0; }
         .xxtx .er .grid-demo .select select {

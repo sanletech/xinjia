@@ -26,8 +26,7 @@ button:hover {
       font-family: "Microsoft YaHei", "微软雅黑";
       border-bottom: 2px solid #ff9f19; }
     .banner .gnhy .gnhy_nei {
-      padding: 30px 30px 15px;
-      overflow: hidden; }
+      padding: 30px 30px 15px; }
       .banner .gnhy .gnhy_nei input {
         height: 40px;
         padding-left: 13px;

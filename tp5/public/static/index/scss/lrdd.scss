@@ -155,8 +155,13 @@ button{
       }
       input,.select{
         width:80%;
-        height: 30px;
+        height: 35px;
         padding-left: 13px;
+      }
+      .addr{
+        display: inline-block;
+        height: 35px;
+        line-height: 35px;
       }
       .select{
         border-radius: 0;

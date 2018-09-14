@@ -1,0 +1,22 @@
+$lan:#2e8de5;
+$cheng:#ff9f19;
+$hui:#8c8c8c;
+$bian:1px solid #ccc;
+$hei:#4c4c4c;
+//提交柜号模态窗
+#cabinet{
+    display: none;
+    padding:10px 50px 0 0;
+}
+.demo-class .layui-layer-title{
+    background-color: $lan;
+}
+#te{
+    td{
+        a{
+            padding: 5px;
+            color: #fff;
+            background-color: $lan;
+        }
+    }
+}
