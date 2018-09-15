@@ -5,6 +5,16 @@ button:hover {
 .se {
   color: #ff9f19; }
 
+.lan {
+  color: #2e8de5; }
+
+.hong {
+  color: red;
+  font-weight: 700;
+  font-size: 16px; }
+  .hong k {
+    font-size: 10px; }
+
 .banner {
   width: auto;
   height: 500px;
@@ -80,6 +90,8 @@ button:hover {
     margin-bottom: 30px;
     color: #4c4c4c;
     position: relative; }
+    .cen_nei .nei_nei:hover {
+      border: 1px solid #aac9f8; }
     .cen_nei .nei_nei .tj {
       width: 50px;
       height: 50px;
