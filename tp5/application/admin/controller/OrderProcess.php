@@ -62,11 +62,11 @@ class OrderProcess extends Base
          //获取原有订单的 保险费 车装货费，送货费，海运费，利润
         $oldePrice = Db::name('order_father')->where('order_num')
                 ->field('cost,premium,quoted_price,tax_rate，container_sum')
-                ->find() //查询对应的单个柜子成本(车运费海运费利润)，总共的保险费,总报价,税率，总共箱子数量
-        //原有订单的 保险 和总报价 需要根据箱子重新分配
-        $old//
+                ->find(); //查询对应的单个柜子成本(车运费海运费利润)，总共的保险费,总报价,税率，总共箱子数量
+        //修改原有订单的箱子数量,和对应的order_son订单信息， 同时拆除去的订单复制原有订单的信息 
+       // $old_order =Db::name('order_fahther')
         //修改派车表里的信息
-          $cost = ($carprice_r + $carprice_s + $seaprice + $profit); //单个成本
+        //  $cost = ($carprice_r + $carprice_s + $seaprice + $profit); //单个成本
     }
     
     
