@@ -29,8 +29,8 @@
             <div class="layui-form-item" styel=" z-index:999;">
                 <select name="ship" lay-filter="ship" lay-search>
                     <option value="" >请选择船公司</option>
-                    <option value="" >中远</option>
-                    <option value="" >谷歌</option>
+                    <option value="1" >中远</option>
+                    <option value="2" >谷歌</option>
                 </select>  
             </div>
             
@@ -202,7 +202,7 @@
       <script>
         var addressURL = "<{:url('admin.php/address/town')}>";
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', load_time: '' };
-        //          起点ID        起点名称        终点ID        终点名称      装货时间
+        //          起点ID        起点名称        终点ID        终点名称      船公司
       </script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
       <!-- <script src="__STATIC__/js/order_list.js"></script>  -->
@@ -210,8 +210,7 @@
       <script src="__STATIC__/js/order_address.js"></script>
       <script>
         function toajax() {
-          add.load_time = $('#load_time').val();
-          console.log(add);
+          add.load_time = $("#search_price select option:selected").val();
           $.ajax({
             type: 'GET',
             url: "<{:url('index/order/order_list')}>",
@@ -253,7 +252,7 @@
           var $data = $("#search_price input");
           var start_add = $data[0].value;
           var end_add = $data[1].value;
-          var load_time = $data[2].value;
+          var load_time = $("#search_price select option:selected").val();
           //执行一个laypage实例        
           laypage.render({
             elem: 'pages',
