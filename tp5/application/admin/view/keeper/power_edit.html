@@ -1,1 +1,48 @@
-211111
+<{include file='./public/header' /}>
+
+    <body>
+        <style>
+            #power {
+                padding: 20px 20px 0 0;
+            }
+        </style>
+        <form class="layui-form" id="power">
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择权限</label>
+                <div class="layui-input-block">
+                    <select name="interest" lay-filter="quxian">
+                        <option value=""></option>
+                        <option value="1">阅读</option>
+                        <option value="2">游戏</option>
+                        <option value="3">音乐</option>
+                        <option value="4">旅行</option>
+                        <option value="5">写作</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item qu">
+                <label class="layui-form-label">负责区域</label>
+                <div class="layui-input-block yu">
+                </div>
+            </div>
+        </form>
+
+        <script>
+            let list = [{ 'name': '1', 'value': 'a' }, { 'name': '2', 'value': 'b' }, { 'name': '3', 'value': 'c' }];//示例数据
+            layui.use('form', function () {
+                var form = layui.form;
+                $('.qu').hide();
+                form.on('select(quxian)', function (data) {
+                    let id = data.value;//根据下拉框的ID获取数据
+                    for (let i in list) {
+                        $('.yu').append('<input name="' + list[i].name + '" lay-skin="primary" title="' + list[i].value + '" type="checkbox">');
+                    }
+                    $('.qu').show();
+                    layui.form.render();
+                });
+            });
+        </script>
+    </body>
+
+    </html>

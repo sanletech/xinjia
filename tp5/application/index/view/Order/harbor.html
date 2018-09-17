@@ -75,9 +75,9 @@
           <ul>
             <li>航公司</li>
             <li>截单时间</li>
-            <li>预计开船日期</li>
+            <li>起始港</li>
             <li>航线</li>
-            <li>预计到港日期</li>
+            <li>目的港</li>
             <!-- <li>预计送货日期&nbsp; -->
               <i class="icon iconfont icon-paixu"></i>
             </li>
@@ -103,7 +103,7 @@
                   <div class="nei_le">
                     <ul>
                       <li>
-                        <{$vo.ship_short_name}>
+                        <span class="lan"><{$vo.ship_short_name}></span>
                           <div class="dian">
                             <i class="icon iconfont icon-chuan se"></i>&nbsp;
                             <{if condition="$vo['middle_id']=0" }>
@@ -127,13 +127,13 @@
                       </li>
                       <li class="zhi">
                         <div class="hui">
-                          <{$vo.boat_name}>
+                          <span class="lan">3天</span>
                         </div>
                         <div>
                           <div class="j"></div>
                         </div>
                         <div class="hui">
-                          <{$vo.boat_code}>
+                            <{$vo.boat_name}>/<{$vo.boat_code}>
                         </div>
                       </li>
                       <li>
@@ -149,16 +149,16 @@
                         <{$vo.EDD}>
                       </li> -->
                       <li>
-                        ￥
-                        <{$vo.price_20GP}>
+                        
+                        <span class="hong"><k>￥</k><{$vo.price_20GP}></span>
                           <div class="dian">
                             <a href="<{:url('index/Order/harbor_order')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=20GP"
                               class="gp">下单</a>
                           </div>
                       </li>
                       <li>
-                        ￥
-                        <{$vo.price_40HQ}>
+                        
+                        <span class="hong"><k>￥</k><{$vo.price_40HQ}></span>
                           <div class="dian">
                             <a href="<{:url('index/Order/harbor_order')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=40HQ"
                               class="gp">下单</a>
