@@ -16,9 +16,7 @@
     <thead>
         <tr>
             <th>运单号</th>
-            <?php  foreach($track_num as $v){
-                echo '<th> <input type="text" readOnly="true" name="track_num[]" value="'.$v.'" lay-verify="title" autocomplete="off" class="layui-input"></th>';
-            }  ?>
+            <th> <input type="text" readOnly="true" name="track_num" value="'.$v.'" lay-verify="title" autocomplete="off" class="layui-input"></th>
         </tr> 
         <tr>
             <th>栏目\<{$container_sum}>个柜</th>

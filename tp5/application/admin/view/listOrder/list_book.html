@@ -38,6 +38,7 @@
             <div class="layui-col-md3">
                 <p>航线: <{$vo.s_port_name}>-<{$vo.e_port_name}></p>
                 <p>箱型*箱量: <{$vo.container_size}>*<{$vo.container_sum}></p>
+                <p>本订单箱量: <{$vo.container_size}>*<{$vo.container_count}></p>
             </div>
             <div class="layui-col-md2">
                 <p class="se">状态：待订舱</p>
@@ -45,7 +46,7 @@
             </div>
             <div class="layui-col-md1">
                 <p class="a_niu">
-                    <a title="确认" onclick="x_admin_show('确认','<{:url('admin/Order/list_booking')}>?container_sum=<{$vo.container_sum}>&order_num=<{$vo.order_num}>',600,250)" href="javascript:;">确认</a>
+                    <a title="确认" onclick="x_admin_show('确认','<{:url('admin/Order/list_booking')}>?container_sum=<{$vo.container_count}>&track_num=<{$vo.track_num}>&order_num=<{$vo.order_num}>',600,250)" href="javascript:;">确认</a>
                 </p>
                 <p class="a_niu">
                     <a class="qu" href="">取消</a>

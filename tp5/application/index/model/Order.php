@@ -135,8 +135,19 @@ class Order extends Model
                 'carprice_r'=>$carprice_r,'carprice_s'=>$carprice_s,'seaprice'=>$seaprice,'premium'=>$premium,'profit'=>$profit,
                 'cost'=>$cost,'quoted_price'=>$quoted_price,'shipper_id'=>$data['r_id'], 'consigner_id'=>$data['s_id']
             ];
-          
+         
+        //根据有多少柜号生成多少order_son
+         //设置虚拟运单号码 和虚拟柜号
+        $date = date("md");
+        $track_num = time();$sqlSonData=[];
+        for($i=0;$i<count($data['container_sum']);$i++){
+            $sqlSonData[] =['order_num'=>$order_num,'track_num'=>$track_num, 
+            'container_code' =>$track_num.'d'.$date.'n'.$i,'action'=>'下单=>待审核',
+            'state'=>0,    ];  //设置虚拟集装箱编码 等待派车后录入真正的集装箱编码再修改  
+        }
         $response=[];
+        $res1 =Db::name('order_son')->insert($sqlSonData);
+        $res1 ? $response['success'][]='添加order_son表成功':$response['fail'][]='添加order_son表失败';
         $res =Db::name('order_father')->insert($sqldata);
         $res ? $response['success'][]='添加order_father表成功':$response['fail'][]='添加order_father表失败';
         return $response;

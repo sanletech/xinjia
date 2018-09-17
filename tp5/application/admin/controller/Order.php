@@ -135,11 +135,13 @@ class Order extends Base
     {  
         $container_sum  = $this->request->param('container_sum');
         $order_num = $this->request->param('order_num');
+        $track_num = $this->request->param('track_num');
         $container_code  = $this->request->param('container_code');
         $this->view->assign('order_num',$order_num);
         $this->view->assign('container_sum',$container_sum);
+        $this->view->assign('track_num',$track_num);
         $this->view->assign('container_code',$container_code);
-        return $this->view->fetch('order/list_booking');
+        return $this->view->fetch('order/order_booking');
     }
     
     //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
@@ -148,13 +150,14 @@ class Order extends Base
         $data = $this->request->param();
        // var_dump($data['waybillNum']);
         //$track_num =  preg_split('/[,|，| ]+/', $data['waybillNum'], -1, PREG_SPLIT_NO_EMPTY);
-        $track_num= trim($data['waybillNum']);
+        $track_num = $data['track_num'];
+        $newTrack_num= trim($data['waybillNum']);
         $container_sum = $data['container_sum'];
         settype($container_sum,'integer'); //转换成int类型
         $order_num = $data['order_num'];
         $track_sum =count($track_num);///输入的运单号码数量
         //运单号,订单号,集装箱数量,输入的运单号数量
-        $data=array('track_num'=>$track_num ,'order_num'=>$order_num,'container_sum'=>$container_sum,'track_sum'=>$track_sum);
+        $data=array('track_num'=>$newTrack_num ,'order_num'=>$order_num,'container_sum'=>$container_sum,'track_sum'=>$track_sum);
         $result = $this->validate($data ,'Order');
         if(true !== $result){
             // 验证失败 输出错误信息
@@ -162,7 +165,7 @@ class Order extends Base
         }
 
         $trackM = new OrderM;
-        $response = $trackM ->waybillNum($order_num,$container_sum,$track_num, $track_sum);
+        $response = $trackM ->waybillNum($order_num,$container_sum,$track_num,$newTrack_num,$track_sum);
         if(!array_key_exists('fail', $response)){
             $status =['msg'=>'录入运单号成功','status'=>1];
         }else   {
@@ -202,8 +205,8 @@ class Order extends Base
     {  
         $order_num =$this->request->get('order_num');
         $container_sum =$this->request->get('container_sum');
+        $track_num =$this->request->get('track_num');
         $container_code =$this->request->get('container_code');
-        $track_num = Db::name('order_son')->where('order_num',$order_num)->column('track_num');
       // var_dump($track_num);exit;
         $this->assign([
         'order_num'  => $order_num,

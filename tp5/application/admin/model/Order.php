@@ -54,12 +54,13 @@ class Order extends Model
                 ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
                 ->field('OF.id ,OF.order_num,U.user_name, '
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
-                        . "OF.cargo,OF.container_size,OF.container_sum, group_concat(distinct OS.track_num order by OS.id separator '_') track_num,"
+                        . " OF.cargo,OF.container_size,OF.container_sum, count(OS.container_code)container_count, "
+                        . " OS.track_num,"
                         . " group_concat(distinct OS.container_code order by OS.id separator '_') container_code, "
                         . ' SC.ship_short_name,B.boat_code,B.boat_name,OF.ctime,'
                         . ' SP.shipping_date,SP.sea_limitation,SP.cutoff_date,'
                         . ' LK2.company ')
-                ->group('OF.order_num')->where('OF.state','in',$state)
+                ->group('OS.order_num,OS.track_num')->whereOr('OS.state','in',$state)
                 ->buildSql();
         //获取总页数
         $count =  Db::table($listSql.' A')->count(); 
@@ -78,32 +79,28 @@ class Order extends Model
 
    //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
     //订单号 集装箱数量, 运单号, 运单号数量
-    public function waybillNum ($order_num,$container_sum,$track_num, $track_sum){
-         //输入一个订单 就填充集装箱数量个订单号
-        if($track_sum ==1){
-            $j= $container_sum;
-            $track_num = array_fill(0,$container_sum,$track_num);
-        }else{
-            $j= $track_sum;
+    public function waybillNum ($order_num,$container_sum,$track_num,$newTrack_num,$track_sum){
+//         //输入一个订单 就填充集装箱数量个订单号
+//        if($track_sum ==1){
+//            $j= $container_sum;
+//            $track_num = array_fill(0,$container_sum,$track_num);
+//        }else{
+//            $j= $track_sum;
+//        }
+        $response =[];
+        if($track_sum !==1){
+           return $response['fail']='运单号不是一个';
         }
-        $str ='';
-        $date = date("md");
-        $mtime = date('y-m-d h:i:s');
-        for($i=0;$i<$j;$i++){
-            $container_code = $track_num[$i].'d'.$date.'n'.$i;  //设置虚拟集装箱编码 等待派车后录入真正的集装箱编码再修改
-            $str .= "('$order_num','$track_num[$i]','$container_code','200','录入运单号>待订车','$mtime') ,";   
-        }
-        $str = rtrim($str,',');
+      
         //插入之前先判断是否已经已经存在了运单号
         $num = Db::name('order_son')->where('order_num',$order_num)->find();
         if(!(empty($num))){
-             return $response['fail']='运单号已经输入过了';
+            return $response['fail']='运单号已经输入过了';
         }
-  
-        $sql ="insert into hl_order_son(order_num,track_num,container_code,state,action,mtime) values".$str;
-//        var_dump($sql);EXIT;
-        $response =[];
-        $res =Db::execute($sql);
+        //修改在下单时录入的运单号
+        $res =Db::name('order_son')->where('order_num',$order_num)
+                ->where('track_sum',$track_sum)
+                ->update(['track_num'=>$newTrack_num,'state'=>200,'action'=>'录入运单号>待订车']);    
         $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';
        // 修改父订单的状态
         if(!empty($res)){
