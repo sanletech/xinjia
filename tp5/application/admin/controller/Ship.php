@@ -34,7 +34,7 @@ class Ship extends Base
         $this->assign('shiplist', $list);
         $this->assign('page' , $page);
         $this->assign('count',$count);
-        return $this->view->fetch('Ship/ship_list');
+        return $this->view->fetch('ship/ship_list');
     }
     
     //针对船公司依照不同港口展示联系人的资料
@@ -50,7 +50,7 @@ class Ship extends Base
             'port_name' =>'暂无','ship_short_name' =>'暂无',));
         }
          $this->assign('list', $res);
-        return $this->view->fetch('Ship/ship_info');
+        return $this->view->fetch('ship/ship_info');
     }
     
    //执行删除
@@ -90,7 +90,7 @@ class Ship extends Base
         
         $this->view->assign('js_port', $js_port);
         
-        return $this->view->fetch('Ship/ship_add'); 
+        return $this->view->fetch('ship/ship_add'); 
        
    }
    
@@ -127,7 +127,7 @@ class Ship extends Base
         $port_arr = json_encode($port_arr);
         $this->assign('ship', $ship_arr);
         $this->assign('port', $port_arr);
-        return $this->view->fetch('Ship/ship_edit'); 
+        return $this->view->fetch('ship/ship_edit'); 
     }
     
      //执行船公司编辑

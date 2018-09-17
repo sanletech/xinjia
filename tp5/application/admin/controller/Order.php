@@ -22,7 +22,7 @@ class Order extends Base
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
-        return $this->view->fetch('Order/order_audit'); 
+        return $this->view->fetch('order/order_audit'); 
     }
     //审核订单 的通过
     public function order_audit_pass() 
@@ -56,7 +56,7 @@ class Order extends Base
     //查看订单
     public function order_edit() 
     {
-        return $this->view->fetch('Order/order_edit'); 
+        return $this->view->fetch('order/order_edit'); 
     }
     //废弃订单
     public function order_waste() 
@@ -69,7 +69,7 @@ class Order extends Base
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
-        return $this->view->fetch('Order/order_waste'); 
+        return $this->view->fetch('order/order_waste'); 
     }
      //废弃订单的恢复
     public function order_waste_pass() 
@@ -102,7 +102,7 @@ class Order extends Base
     //处理订单的公共头部
     public function orderCenter() 
     { 
-        return $this->view->fetch('Order/order_center'); 
+        return $this->view->fetch('order/order_center'); 
     }
     
     //待订舱页面list
@@ -139,7 +139,7 @@ class Order extends Base
         $this->view->assign('order_num',$order_num);
         $this->view->assign('container_sum',$container_sum);
         $this->view->assign('container_code',$container_code);
-        return $this->view->fetch('Order/list_booking');
+        return $this->view->fetch('order/list_booking');
     }
     
     //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
@@ -212,7 +212,7 @@ class Order extends Base
         'track_num'=>$track_num,
         'sendCarUrl'=>url('admin/Order/tosendCar')    
         ]);
-        return $this->view->fetch('Order/sendCarInfo');
+        return $this->view->fetch('order/sendCarInfo');
     }
     
     //录入派车信息
@@ -265,7 +265,7 @@ class Order extends Base
         'order_num'  => $order_num,
         'data' => $data
         ]);
-        return $this->view->fetch('Order/load_time');
+        return $this->view->fetch('order/load_time');
     }
         
     //添加实际装货时间
@@ -399,7 +399,7 @@ class Order extends Base
             'inputData' =>$inputData,
             'url'=>'admin/order/toCargoPlan'
         ]);
-        return $this->view->fetch('Order/cargoPlan');
+        return $this->view->fetch('order/cargoPlan');
     }
     //处理待配船的信息
     public function toCargoPlan() {
@@ -462,7 +462,7 @@ class Order extends Base
             'inputData' =>$inputData,
             'url'=>'admin/order/toArrivalPort'
         ]);
-        return $this->view->fetch('Order/cargoPlan');
+        return $this->view->fetch('order/cargoPlan');
     }
     //处理待港口的信息
     public function toArrivalPort() {
@@ -525,7 +525,7 @@ class Order extends Base
             'inputData' =>$inputData,
             'url'=>'admin/order/toUnShip'
         ]);
-        return $this->view->fetch('Order/cargoPlan');
+        return $this->view->fetch('order/cargoPlan');
     }
     //处理待卸船的信息
     public function toUnShip() {

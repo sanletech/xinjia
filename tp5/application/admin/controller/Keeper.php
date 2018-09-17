@@ -12,7 +12,7 @@ class Keeper extends Base
     //管理员列表
     public function adminList() 
     {
-        return $this->view->fetch('Keeper/admin_list'); 
+        return $this->view->fetch('keeper/admin_list'); 
     }
     //添加员工
     public function userAdd() {
@@ -20,7 +20,7 @@ class Keeper extends Base
         $list = $this->generateTree($array);
 //        $this->_p($list);exit;
         $this->view->assign('jobList',$list);
-        return $this->view->fetch('Keeper/user_add');
+        return $this->view->fetch('keeper/user_add');
         
     }
     public function userToAdd() {
@@ -86,7 +86,7 @@ class Keeper extends Base
         
         $this->view->engine->layout('Keeper/team_public');
         $this->view->assign('arealist',$list);
-        return $this->view->fetch('Keeper/area_list'); 
+        return $this->view->fetch('keeper/area_list'); 
     }
     
     //职位调调
@@ -112,7 +112,7 @@ class Keeper extends Base
         $this->view->assign('jobList',$jobList);
         $this->view->assign('areaArr',$areaArr);
         $this->view->assign('data',$data);
-        return $this->view->fetch('Keeper/user_edit'); 
+        return $this->view->fetch('keeper/user_edit'); 
     }
     
     //执行用户修改
@@ -167,7 +167,7 @@ class Keeper extends Base
         $this->view->assign('tree',$tree);
         $this->view->assign('list',$list);
         $this->view->engine->layout('Keeper/team_public');
-        return $this->view->fetch('Keeper/team_list');
+        return $this->view->fetch('keeper/team_list');
     }
     
     //部门修改
@@ -180,7 +180,7 @@ class Keeper extends Base
         $this->view->assign('list',$list);
         $this->view->assign('tree',$tree);
         $this->view->engine->layout('Keeper/team_public');
-        return $this->view->fetch('Keeper/team_edit');
+        return $this->view->fetch('keeper/team_edit');
     }
      
     //添加子类目
@@ -202,7 +202,7 @@ class Keeper extends Base
     
        
         $this->view->engine->layout('Keeper/team_public');
-        return $this->view->fetch('Keeper/team_sonadd');
+        return $this->view->fetch('keeper/team_sonadd');
     }
     
     //处理添加子类目
@@ -317,11 +317,11 @@ class Keeper extends Base
         $this->view->assign('list',$list);
         $this->view->assign('tree',$tree);
         $this->view->engine->layout('Keeper/team_public');
-        return $this->view->fetch('Keeper/power');
+        return $this->view->fetch('keeper/power');
     }
 
     //权限调整
     function power_edit(){
-        return $this->view->fetch('Keeper/power_edit');
+        return $this->view->fetch('keeper/power_edit');
     }
 } 

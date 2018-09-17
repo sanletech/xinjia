@@ -66,10 +66,40 @@
                             list[1].container_code.push($(this).val());//未选中
                         }
                     });
-                    console.log(list);
+                    toajax(list);
                 });
             });
 
+        function toajax (list){
+                console.log(list);
+                $.ajax({
+                    type:'POST',
+                    url:"<{:url('admin/OrderProcess/toSplit')}>",    
+                    data: "[{11:222}]",
+                    dataType:"json",
+                    //contentType: "application/json",
+                    success:function(status){
+                        if(status>0){
+              
+                            layer.msg("添加成功", { icon: 6, time: 1000 }, function () {
+                            // 获得frame索引
+                            parent.location.reload();
+                            var index = parent.layer.getFrameIndex(window.name);
+                            //关闭当前frame
+                            parent.layer.close(index);
+                        });
+                        }else{
+                            post_adduser = false;
+                            layer.msg("添加失败", { icon: 5 });
+                            }
+                            }
+                       
+                });
+       
+            }         
+         
+
+  
         </script>
     </body>
 
