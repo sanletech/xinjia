@@ -1,9 +1,25 @@
 // 日期
-layui.use(['form', 'layedit', 'laydate'], function () {
+layui.use(['form', 'layedit', 'laydate','element'], function () {
   var form = layui.form
     , layer = layui.layer
     , layedit = layui.layedit
     , laydate = layui.laydate;
+
+    form.on('checkbox(zhuang)',function(data){
+      if(data.elem.checked){
+        $('#zeng,.zhuanghuo').show();
+      }else{
+        $('#zeng,.zhuanghuo').hide();
+      }
+    })
+
+    form.on('checkbox(song)',function(data){
+      if(data.elem.checked){
+        $('#zeng_song,.songhuo').show();
+      }else{
+        $('#zeng_song,.songhuo').hide();
+      }
+    })
 
   //日期
   laydate.render({
@@ -63,7 +79,6 @@ layui.use('element', function () {
     , tabDelete: function (othis) {
       //删除指定Tab项
       element.tabDelete('demo', '44'); //删除：“商品管理”
-
 
       othis.addClass('layui-btn-disabled');
     }
@@ -134,3 +149,56 @@ $('.trigger-default').click(function(){
     }
   });
 })
+
+//propertychange监听input里面的字符变化,属性改变事件
+$('.bge input').each(function(){
+  $(this).css("width",parseInt($(this).val().length) *12+'px');
+});
+$('.bge_song input').each(function(){
+  $(this).css("width",parseInt($(this).val().length) *12+'px');
+});
+input_a();
+function input_a(){
+  $('.biaoge input').bind('input propertychange', function() {
+    var $this = $(this);
+    var text_length = $this.val().length;//获取当前文本框的长度
+    var current_width = parseInt(text_length) *11;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度
+    $this.css("width",current_width+"px");
+});
+}
+
+//增加装货服务
+function zeng_bge(){
+  $('.bge').append('<tr>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><select name="" class=""><option value="1" selected>柜</option><option value="2">票</option></select></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>'+
+'</tr>');
+input_a();
+}
+
+//增加送货服务
+function zeng_song(){
+  $('.bge_song').append('<tr>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><select name="" class=""><option value="1" selected>柜</option><option value="2">票</option></select></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>'+
+'</tr>');
+input_a();
+}
+
+function dele(zj){
+  $(zj).parents('tr').remove();
+}
