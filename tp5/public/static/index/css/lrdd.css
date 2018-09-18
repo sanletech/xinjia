@@ -122,9 +122,9 @@ body {
     .xxtx .er:last-child {
       border-right: 0px; }
     .xxtx .er .er_anniu {
-      display: none;
       float: right;
-      margin-top: -5px; }
+      margin-top: -5px;
+      margin-right: 10px; }
       .xxtx .er .er_anniu button {
         width: 100px;
         height: 30px;
