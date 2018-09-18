@@ -13,5 +13,8 @@ function cabinet() {
             console.log(list);
         }
     });
+}
 
+if($('.fukuan').html() == '去付款'){
+    $('.fukuan').html('<a  target="_blank" href="/order/harbor_order.html?sea_id=1&s_car_id=39&r_car_id=36&container_size=40HQ">去付款</a>');
 }

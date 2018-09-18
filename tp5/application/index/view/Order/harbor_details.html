@@ -2,9 +2,6 @@
 
   <body>
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
-    <link rel="stylesheet" href="__STATIC__/css/xiala.css">
-    <link rel="stylesheet" href="__STATIC__/css/all_order.css">
-    <div class="banner"></div>
     <form class="" id='order_data_form'>
       <div class="xxtx">
         <!-- 流程 -->
@@ -23,85 +20,12 @@
               <span>4</span> 完成</li>
           </ul>
         </div>
-        <!-- 订单信息 -->
-        <input type="hidden" name='sea_id' value="<{$list.sea_id}>">
-        <input type="hidden" name='rid' value="<{$list.rid}>">
-        <input type="hidden" name='sid' value="<{$list.sid}>">
-        <div class="xxtx_dd">
-          <div class="xx">
-            <strong>订单信息</strong>
-          </div>
-          <div class="dd_nei">
-            <div class="layui-col-xs3 dd">
-              <div class="zhong">
-                <div>
-                  <h2><{$list.ship_short_name}></h2>
-                </div>
-              </div>
-            </div>
-            <div class="layui-col-xs6 dd">
-              <div class="zhong">
-                <div class="layui-col-xs5">
-                  
-                  <h3>
-                    <{$list.s_port_name}>
-                  </h3>
-                  <span>
-                    <{$list.shipping_date}>
-                  </span>
-                </div>
-
-                <div class="layui-col-xs2 jitian">
-                  <!-- <i class="fa fa-ship fa-2x"></i> -->
-                  <div class="hui">
-                      <span>3天</span>
-                    </div>
-                    <div class="jian">
-                      <div class="j"></div>
-                    </div>
-                    <div class="hui">
-                        <{$list.boat_name}>/<{$list.boat_code}>
-                    </div>
-                </div>
-
-                <div class="layui-col-xs5">
-                  
-                  <h3>
-                    <{$list.e_port_name}>
-                  </h3>
-                  <span>
-                    <{$list.ETA}>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div class="layui-col-xs3 dd">
-              <div class="zhong">
-                <span>
-                  <{$list.container_size}>
-                </span>
-                <p>￥
-                  <strong class="money">
-                    <{$list.price}>
-                  </strong>
-                </p>
-              </div>
-              <div class="you">价格说明：这是纯运费</div>
-            </div>
-          </div>
-        </div>
 
         <!-- 委托信息 -->
         <div class="xxtx_dd er">
           <div class="xx" style="margin-bottom:0px;">
             <strong>委托信息</strong>
             <span>提醒：收货联系人需具备与船司办单资质，否则因此造成的一切后果将由客户承担</span>
-            <!-- <div class="er_anniu">
-              <input type="button" class="se wt1" onclick="selectlink('<{:url(" index/order/selectlinkman ")}>');" value="选择">
-              <input type="button" class="se wt2" onclick="javascript:void(0);" value="添加">
-              <input type="button" class="se wt3" onclick="xiu();" value="修改">
-              <input type="button" class="se wt4" onclick="javascript:void(0);" value="设置为默认">
-            </div> -->
           </div>
           <div class="dd_nei">
             <div class="layui-row" style="padding-bottom: 10px;">
@@ -109,22 +33,22 @@
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>发货单位：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="r_company" value="" readonly='readonly' class="in">
+                  <div class="layui-col-xs9"  style="height: 40px;line-height: 40px;">
+                    填写信息
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>装货联系人：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="r_name" value="" readonly='readonly' class="in">
+                  <div class="layui-col-xs9"  style="height: 40px;line-height: 40px;">
+                    填写信息
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>装货联系人电话：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="r_phone" value="" readonly='readonly' class="in">
+                  <div class="layui-col-xs9"  style="height: 40px;line-height: 40px;">
+                    填写信息
                   </div>
                 </div>
 
@@ -134,22 +58,22 @@
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>收货单位：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="s_company" value="" readonly='readonly' class="in">
+                  <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                    填写信息
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>收货联系人：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="s_name" value="" readonly='readonly' class="in">
+                  <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                    填写信息
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>收货联系人电话：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="s_phone" value="" readonly='readonly' class="in">
+                  <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                    填写信息
                   </div>
                 </div>
               </div>
@@ -169,15 +93,8 @@
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>货名：</div>
-                <div class="layui-col-xs6">
-                  <input type="text" name="cargo" value="" placeholder="">
-                  <!--                <div class="select">
-                    <select name ='cargo'>
-                      <option value='0' selected>请选择</option>
-                      <option  value='1'>柜子</option>
-                      <option  value='2'>箱子</option>
-                    </select>
-                  </div>-->
+                <div class="layui-col-xs6" style="text-align: left">
+                    填写信息
                 </div>
               </div>
             </div>
@@ -185,15 +102,8 @@
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>包装：</div>
-                <div class="layui-col-xs6">
-                  <div class="select">
-                    <select name='container_type'>
-                      <option value='1'>杂货集装箱</option>
-                      <option value='2'>散货集装箱</option>
-                      <option value='3'>液体货集装箱</option>
-                    </select>
-                  </div>
-
+                <div class="layui-col-xs6" style="text-align: left">
+                    填写信息
                 </div>
               </div>
             </div>
@@ -201,11 +111,11 @@
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>重量：</div>
-                <div class="layui-col-xs6">
-                  <input type="text" name="weight" value="" placeholder="">
+                <div class="layui-col-xs6" style="text-align: left">
+                    填写信息<span>吨(T)</span>
                 </div>
-                <div class="layui-col-xs2" style="text-align: left;margin-left: 8px; ">
-                  <span>吨(T)</span>
+                <div class="layui-col-xs2" style="text-align: left;">
+                  
                 </div>
               </div>
             </div>
@@ -223,11 +133,8 @@
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>柜量：</div>
-                <div class="layui-col-xs6">
-                  <div class="select">
-                    <select name='container_sum' class="guil" id='container_sum'>
-                    </select>
-                  </div>
+                <div class="layui-col-xs6" style="text-align: left;">
+                    填写信息
                 </div>
               </div>
 
@@ -236,38 +143,22 @@
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>保险金额：</div>
-                <div class="layui-col-xs6">
-                  <input id="bxje" type="text" name="cargo_cost" value="" placeholder="">
+                <div class="layui-col-xs6" style="text-align: left;">
+                    110<span>万</span>
                 </div>
 
-                <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
-                  <span>万</span>
+                <div class="layui-col-xs2" style="text-align: left;">
+                  
                 </div>
               </div>
             </div>
-            <!-- <div class="layui-col-xs4 er">
-              <div class="grid-demo" style="margin-top: 0px;">
-                <div class="layui-col-xs4">
-                  <span>*&nbsp;</span>集装箱规格：</div>
-                <div class="layui-col-xs6">
-                  <input type="text" name="container" value="<{$list.container_size}>" readonly="readonly">
-                </div>
-              </div>
-            </div> -->
 
             <div class="layui-col-xs4 er">
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>结账方式：</div>
-                <div class="layui-col-xs6">
-                  <div class="select">
-                    <select class='mony_fs'>
-                      <option value='moy'>在线结付(优惠)</option>
-                      <!-- <option value='cash'>到港付</option> -->
-                      <option value='monthly'>月结付</option>
-                      <!-- <option value='pledge'>压柜付</option> -->
-                    </select>
-                  </div>
+                <div class="layui-col-xs6" style="text-align: left;">
+                    填写信息
                 </div>
               </div>
 
@@ -299,13 +190,7 @@
                     发票：
                   </div>
                   <div class="layui-col-xs6">
-                    <div class="select">
-                      <select name='tax_rate' disabled="ture" class="layui-disabled fp01">
-                        <option value='0' selected>不需要</option>
-                        <option value='1'>6%</option>
-                        <option value='2'>10%</option>
-                      </select>
-                    </div>
+                    6%
                   </div>
                 </div>
               </div>
@@ -318,16 +203,7 @@
           <div class="sun">
             <div class="fapiao layui-form-item layui-form">
               <div class="fp_tt">
-                <input type="radio" name="invoice_id" value="1" title="发票抬头" checked="">
-                <i class="layui-icon shanchu">&#x1006;</i>
-              </div>
-              <div class="fp_tt">
                 <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
-                <i class="layui-icon shanchu">&#x1006;</i>
-              </div>
-              <div class="fp_tt">
-                <input type="radio" name="invoice_id" value="3" title="发票抬头" checked="">
-                <i class="layui-icon shanchu">&#x1006;</i>
               </div>
             </div>
             <!-- <span>总运费:
@@ -345,7 +221,6 @@
             <div class="dd_nei">
               <div class="layui-col-xs12 layui-form er">
                 <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
-                <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
               </div>
               <div class="layui-col-xs12 er biaoge zhuanghuo">
                 <table class="layui-table" lay-size="sm">
@@ -373,10 +248,7 @@
                         <input type="text" value="1">
                       </td>
                       <td>
-                          <select name='' class="">
-                            <option value='1' selected>柜</option>
-                            <option value='2'>票</option>
-                          </select>
+                        <input type="text" value="柜">
                       </td>
                       <td>
                         <input type="text" value="广州省天河区长福路口长信256">
@@ -411,7 +283,6 @@
             <div class="dd_nei">
                 <div class="layui-col-xs12 layui-form er">
                   <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
-                  <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
                 </div>
                 <div class="layui-col-xs12 er biaoge songhuo">
                   <table class="layui-table" lay-size="sm">
@@ -435,10 +306,7 @@
                           <input type="text" value="1">
                         </td>
                         <td>
-                            <select name='' class="">
-                              <option value='1' selected>柜</option>
-                              <option value='2'>票</option>
-                            </select>
+                            <input type="text" value="柜">
                         </td>
                         <td>
                           <input type="text" value="广州省天河区长福路口长信256">
@@ -486,30 +354,8 @@
             </div>
           </div>
 
-          <!-- 条款声明 -->
-          <div class="xxtx_dd er">
-            <div class="xx">
-              <strong>条款声明</strong>
-            </div>
-            <!-- 条款内容 -->
-            <div class="hx">
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-            </div>
-          </div>
-
           <div class="tjiao">
-            <a href="<{:url('index/Order/harbor_details')}>">确认订单</a>
+            <a href="javascript:void(0);">确认订单</a>
             <a class="shi" href="javascript:void(0);">取消</a>
           </div>
         </div>
@@ -653,7 +499,7 @@
 
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="">确认下单</button>
+              <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="">确定</button>
               <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
           </div>
@@ -661,21 +507,13 @@
       </div>
     </div>
     <script src="__STATIC__/js/lrdd.js"></script>
-    <script src="__STATIC__/js/place_order.js"></script>
     <script>
-      //获取session 的客户的code
-      var member_code = '<{$Think.session.member_code}>';
-      //客户的收货人,发货人选择
-      var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
-      //收货/发货人的表单提交 
-      var linkmanUrl = "<{:url('index/order/linkman')}>";
-      //发票的信息提交 
-      var invoiceUrl = "<{:url('index/order/invoice')}>";
-      //订单信息的提交
-      var OrderUrl = "<{:url('index/order/order_data')}>";
-      $('.in').css('border', '1px solid #e6e6e6');
-      $('.in').removeAttr('readonly');
+      $('.songhuo,.zhuanghuo').show();
+      $('input').attr('readonly');
+      $('input').css('border','0');
+
       input_null();
+      
     </script>
   </body>
 
