@@ -227,10 +227,11 @@ class Order extends Model
 
 
     //录入配船信息页面的 展示原有的航线详情信息
-    public function cargoPlan($order_num){
+    public function cargoPlan($order_num,$track_num){
         $data =Db::name('order_father')->alias('OF')
                 //->join('hl_car_listprice CLP_s',"CLP_s.id = BL.s_pricecar_id and  CLP_s.variable='s'",'left')//门到港送货价格表
                 //->join('hl_car_listprice CLP_r',"CLP_r.id = BL.r_pricecar_id and  CLP_r.variable='r'",'left')//门到港装货价格表
+                ->join('hl_order_son OS','OS.order_num =OF.order_num','left')//中间港口
                 ->join('hl_seaprice SP','SP.id= OF.seaprice_id','left')  //对应的船运价格表
                 // ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')//船公司
                 ->join('hl_boat B','SP.boat_code= B.boat_code','left')//船舶
@@ -245,7 +246,8 @@ class Order extends Model
                         . "P2.port_code port_code_e,P2.port_name port_e, SR.middle_id,"
                          . "group_concat(distinct P3.port_code  order by SM.sequence separator '_') port_middle_code,"
                         . "group_concat(distinct P3.port_name  order by SM.sequence separator '_') port_middle")
-                ->where('OF.order_num',$order_num)->find();
+                ->where('OS.order_num',$order_num)->where('OS.track_num',$track_num)
+                ->group('OS.order_num,OS.track_num')->find();
 //$this->_p($data);exit;
         return $data;
     }
@@ -324,9 +326,9 @@ class Order extends Model
     
     
       //order_ship表 贮存对应的航线信息$loadPort,$departurePort
-    public function orderShip($order_num,$portArr,$portCodeArr) {
+    public function orderShip($order_num,$track_num,$portArr,$portCodeArr) {
         //查询是否已经录入航线信息了
-        $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
+        $res1 =Db::name('order_ship')->where('order_id',$order_num)->where('track_num',$track_num)->find();
    
         if(empty($res1)){
         $sqlArr=[]; 
@@ -337,7 +339,8 @@ class Order extends Model
             if($i==0){
                 $field_status ='W_W_W_W_W_R_R';
             }
-            $sqlArr[$i]= array('order_id'=>$order_num,
+            $sqlArr[$i]= array('order_num'=>$order_num,
+                'track_num'=>$track_num,
                 'loadPort'=>$portCodeArr[$i],
                 'loadPortName'=>$portArr[$i],
                 'departurePort'=>$portCodeArr[$i+1], 
@@ -351,16 +354,17 @@ class Order extends Model
         return $res1 ? true :false ;
     }
     // 读取order_ship的数据
-    public function orderShipInput($order_num) {
-        $res= Db::name('order_ship')->where('order_id',$order_num)->select();
+    public function orderShipInput($order_num,$track_num) {
+        $res= Db::name('order_ship')->where('order_num',$order_num)->where('track_num',$track_num)->select();
         foreach ($res as $key => $value) {
             $res[$key]['field_status'] =  explode( '_',$value['field_status']);
         }
         return $res;
     }  
     // 添加order_ship的数据
-    public function toOrderShip($data,$order_id){
-       // $this->_v($data);exit;
+    public function toOrderShip($data,$order_num,$track_num){
+       // $this->_v($data);exit; 
+        $order_id='';
         $response =[];
         unset($data['order_id'],$data['loadPort'],$data['loadPortName'],$data['departurePort'],$data['departurePortName']); //删除固定值
         $tmpArr=[]; $sqlArr=[]; //临时数组 ,最终数组

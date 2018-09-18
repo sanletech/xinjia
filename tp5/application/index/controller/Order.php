@@ -71,13 +71,15 @@ class Order extends Base
     public function orderBook()
     {
         $data =$this->request->param();
-        $sea_id = $data['sea_id'];
-        $r_car_id = $data['r_car_id'];
-        $s_car_id = $data['s_car_id'];
+        $sea_id = $data['sea_id'];//海运费id
+        $r_car_id = $data['r_car_id']; //起运港装货拖车费
+        $s_car_id = $data['s_car_id']; //目的港送货拖车费
+        $pir_id =$data['pir_id'];//起运港港口杂费
+        $pis_id =$data['pis_id'];//目的港港口杂费
         $container_size = $data['container_size'];
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code);
+        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code,$pir_id,$pis_id);
         $this->view->assign('list',$list);
       
         return $this->view->fetch('order/place_order');
@@ -137,15 +139,18 @@ class Order extends Base
        $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
         $seaprice_id =$data['sea_id'];  $carprice_rid=$data['rid']; $carprice_sid =$data['sid'];
-        //计算出车装货价格 送货价格 船运价格 保险费, 法税 ,利润
+        $pir_id=$data['pir_id']; $pis_id =$data['pis_id'];
+        //计算出车装货价格 送货价格 船运价格 保险费, 法税 ,利润 ,港口杂费
         $carprice_r= Db::name('carprice')->where('id',$carprice_rid)->value('price_'.$data['container']); //车装货费
         $carprice_s= Db::name('carprice')->where('id',$carprice_sid)->value('price_'.$data['container']); //车送货费
         $seaprice = Db::name('seaprice')->where('id',$seaprice_id)->value('price_'.$data['container']); //海运费
+        $portprice_r =Db::name('price_incidental')->where('id',$pir_id)->value($data['container']);    //起运港杂费
+        $portprice_s =Db::name('price_incidental')->where('id',$pis_id)->value($data['container']);    //目的港杂费
         $premium  = $data['cargo_cost']*6; //保险费
         $profit = Db::name('member_profit')->alias('MP')  //利润
                 ->join('hl_seaprice SP','SP.ship_id=MP.ship_id','left')
                 ->field('MP.money')->where('SP.id',$seaprice_id)->group('SP.id,SP.ship_id')->value('MP.money');
-        $cost = ($carprice_r + $carprice_s + $seaprice + $profit); //单个成本
+        $cost = ($carprice_r + $portprice_r + $seaprice + $portprice_s + $carprice_s + $profit); //单个柜子成本
           //转换税率 
         switch ($data['tax_rate']){
             case 0:
@@ -160,11 +165,11 @@ class Order extends Base
         }
         $total_cost = $cost*$data['container_sum']; //总成本
         $quoted_price  = ($total_cost+$premium)*(1+$tax_rate) ; //总报价
-       
+        var_dump($data['money'],$cost);exit;
         if(bccomp($data['money'],$cost,2)!==0){
             return json(['status'=>1,'message'=>'报价错误']);
         }
-//        var_dump($data['price_sum'],$quoted_price);exit;
+        var_dump($data['price_sum'],$quoted_price);exit;
         if(bccomp($data['price_sum'],$quoted_price,2)!==0){
             return json(['status'=>1,'message'=>'报价错误']);
         }

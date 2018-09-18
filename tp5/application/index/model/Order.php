@@ -12,57 +12,91 @@ class Order extends Model
     public function  price_sum($member_code,$start_add='',$end_add='',$load_time=''){
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         $nowtime= date('y-m-d h:i:s');//要设置船期
-        //海运费
-        $price_sea = Db::name('seaprice')->alias('SP')
-            ->join('hl_ship_route SR','SR.id =SP.route_id','left')
-            ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
-            ->join('hl_port P1','P1.port_code=SB.sl_start','left')
-            ->join('hl_port P2','P2.port_code=SB.sl_end','left')
-            ->field('SP.*,SB.sl_start,P1.port_name s_port_name,SB.sl_end,SR.middle_id,P2.port_name e_port_name')
-            //->where('SP.cutoff_date','>',$nowtime)
-            ->group('SP.id')->order('SP.route_id')->buildSql();
-        if($load_time){
-            $price_sea = Db::table($price_sea.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
-        }
-        //车运费
-        $price_car = Db::name('carprice')->alias('CP')
-            ->join('hl_car_line CL','CL.id =CP.cl_id','left')
-            ->field('CP.*,CL.port_id,CL.address_name')
-            ->order('CP.cl_id')->buildSql();
         
-        
-        $price_sql = Db::table($price_sea.' A')
-                ->join($price_car.' B',"A.sl_start =B.port_id and B.variable='r'") //车运费
-                ->join($price_car.' C',"A.sl_end =C.port_id and C.variable='s'")
-                ->join('hl_price_incidental PIR',"A.sl_start= PIR.port_code and PIR.type ='r'")     //港口杂费
-                ->join('hl_price_incidental PIL',"A.sl_end = PIL.port_code and PIL.type ='r'")
-                ->join('hl_shipcompany SC','SC.id = A.ship_id')
-                ->join('hl_boat BA','BA.boat_code =A.boat_code')
-                ->join('hl_member_profit MP',"MP.member_code='$member_code' and MP.ship_id=SC.id" ,'left')
-                ->field('A.id sea_id,B.id rid,C.id sid,A.route_id,A.middle_id,A.ship_id,SC.ship_short_name,A.shipping_date,'
-                        . 'A.cutoff_date,A.boat_code,BA.boat_name,A.sea_limitation,'
-                        . 'A.ETA,A.EDD,A.generalize,A.mtime,'
-                        . 'A.sl_start,A.s_port_name,B.address_name r_add ,A.sl_end,A.e_port_name,C.address_name s_add ,'
-                        . '(select A.price_20GP + PIR.20GP + B.price_20GP + PIL.20GP + C.price_20GP + MP.money ) as price_20GP,'
-                        . '(select A.price_40HQ + PIL.40HQ +B.price_40HQ +  PIL.40HQ + C.price_40HQ + MP.money ) as price_40HQ')
+        $price_list = Db::name('seaprice')->alias('SP')
+                ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
+                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
+                ->join('hl_car_line CLR','CLR.port_id =SB.sl_start') //装货路线
+                ->join('hl_car_line CLS','CLS.port_id =SB.sl_end') //送货路线
+                ->join('hl_carprice CPR',"CPR.cl_id = CLR.id and CPR.variable='r'") //拖车装货费
+                ->join('hl_carprice CPS',"CPS.cl_id = CLS.id and CPS.variable='s'")//拖车送货费
+                ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.type ='r' and CLR.port_id = PIR.port_code") //起运港口杂费
+                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.type ='s' and CLS.port_id = PIS.port_code") //目的港口杂费
+                ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ) //不同客户对应不同船公司的利润
+                ->join('hl_shipcompany SC','SC.id = SP.ship_id')
+                ->join('hl_boat BA','BA.boat_code =SP.boat_code')
+                ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
+                ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
+                ->field('SP.id sea_id, CLR.id rid,CLS.id sid,PIR.id pir_id,PIS.id pis_id,SP.route_id,SC.ship_short_name,SP.shipping_date,'
+                        . ' SP.cutoff_date,SP.boat_code,BA.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.generalize,SP.mtime,'
+                        . ' SP.ship_id,SB.sl_start,SB.sl_end,'
+                        . ' PR.port_name r_port_name,PS.port_name s_port_name,CLR.address_name r_add,CLS.address_name s_add,'
+                        . ' (select SP.price_20GP + PIR.20GP + CPR.price_20GP + PIS.20GP + CPS.price_20GP + MP.money ) as price_20GP,'
+                        . ' (select SP.price_40HQ + PIR.40HQ + CPR.price_40HQ + PIS.40HQ + CPS.price_40HQ + MP.money ) as price_40HQ')
+                ->where('MP.member_code',$member_code)
+                ->group('SP.id,CLR.id,CLS.id,CPR.id,CPS.id,PIR.id,PIS.id,MP.id,SC.id,PR.id,PS.id')
                 ->buildSql();
-
-   // var_dump($price_sql);exit;
+//        if($load_time){
+//            $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
+//        }
         if($start_add){
-            $price_sql = Db::table($price_sql.' F')->where('F.r_add','like',"%$start_add%")->buildSql();
+            $price_list = Db::table($price_list.' F')->where('F.r_add','like',"%$start_add%")->buildSql();
         }
         if($end_add){
-            $price_sql = Db::table($price_sql.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
+            $price_list = Db::table($price_list.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
         }
-//       var_dump($price_sea); echo"</br>";
-//       var_dump($price_car); echo"</br>";
-//       var_dump($price_sql);exit;
-       // $list = Db::table($price_sql.' D')->paginate($pages,false,$pageParam);   
-        return $price_sql;
+        return $price_list;
+        
+      
+//        $price_sql = Db::table($price_sea.' A')
+//                ->join($price_car.' B',"A.sl_start =B.port_id and B.variable='r'") //车运费
+//                ->join($price_car.' C',"A.sl_end =C.port_id and C.variable='s'")
+//                ->join('hl_price_incidental PIR',"PIR.ship_id=A.ship_id  and PIR.type ='r' and A.sl_start= PIR.port_code")     //港口杂费
+//                ->join('hl_price_incidental PIL'," PIL.ship_id=A.ship_id and PIL.type ='s' and A.sl_end = PIL.port_code")
+//                ->join('hl_shipcompany SC','SC.id = A.ship_id')
+//                ->join('hl_boat BA','BA.boat_code =A.boat_code')
+//                ->join('hl_member_profit MP',"MP.member_code='$member_code' and MP.ship_id=SC.id" ,'left')
+//                ->field('A.id sea_id,B.id rid,C.id sid,A.route_id,A.middle_id,A.ship_id,SC.ship_short_name,A.shipping_date,'
+//                        . 'A.cutoff_date,A.boat_code,BA.boat_name,A.sea_limitation,'
+//                        . 'A.ETA,A.EDD,A.generalize,A.mtime,PIR.id pir_id,PIL.id pil_id,'
+//                        . 'A.sl_start,A.s_port_name,B.address_name r_add ,A.sl_end,A.e_port_name,C.address_name s_add ,'
+//                        . '(select A.price_20GP + PIR.20GP + B.price_20GP + PIL.20GP + C.price_20GP + MP.money ) as price_20GP,'
+//                        . '(select A.price_40HQ + PIL.40HQ +B.price_40HQ +  PIL.40HQ + C.price_40HQ + MP.money ) as price_40HQ')
+//                ->group('A.id,B.id,C.id,PIR.id,PIL.id')
+//                ->select();
+//           //海运费
+//        $price_sea = Db::name('seaprice')->alias('SP')
+//            ->join('hl_ship_route SR','SR.id =SP.route_id','left')
+//            ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+//            ->join('hl_port P1','P1.port_code=SB.sl_start','left')
+//            ->join('hl_port P2','P2.port_code=SB.sl_end','left')
+//            ->field('SP.*,SB.sl_start,P1.port_name s_port_name,SB.sl_end,SR.middle_id,P2.port_name e_port_name')
+//            //->where('SP.cutoff_date','>',$nowtime)
+//            ->group('SP.id')->order('SP.route_id')->buildSql();
+//        if($load_time){
+//            $price_sea = Db::table($price_sea.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
+//        }
+//        //车运费
+//        $price_car = Db::name('carprice')->alias('CP')
+//            ->join('hl_car_line CL','CL.id =CP.cl_id','left')
+//            ->field('CP.*,CL.port_id,CL.address_name')
+//            ->order('CP.cl_id')->buildSql();
+//  
+//        if($start_add){
+//            $price_sql = Db::table($price_sql.' F')->where('F.r_add','like',"%$start_add%")->buildSql();
+//        }
+//        if($end_add){
+//            $price_sql = Db::table($price_sql.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
+//        }
+////       var_dump($price_sea); echo"</br>";
+////       var_dump($price_car); echo"</br>";
+////       var_dump($price_sql);exit;
+//       // $list = Db::table($price_sql.' D')->paginate($pages,false,$pageParam);   
+//        return $price_sql;
        
     }
     //展示已经选择好的价格信息
-    public function orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code) {
+    public function orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code,$pir_id,$pis_id) {
         if(!($container_size =='20GP'||$container_size =='40HQ')){
             return '参数错误';
         } 
@@ -72,9 +106,9 @@ class Order extends Model
             ->where('sea_id',$sea_id)
             ->where('rid',$r_car_id)
             ->where('sid',$s_car_id)
-            ->field('A.sea_id, A.rid, A.sid,A.ship_id, A.ship_short_name, A.shipping_date,'
+            ->field('A.sea_id, A.rid, A.sid,A.pir_id,A.pis_id,A.ship_id, A.ship_short_name, A.shipping_date,'
                 . 'A.boat_code, A.boat_name, A.sea_limitation,A.ETA,'
-                . 'A.sl_start,A.s_port_name,A.r_add ,A.sl_end,A.e_port_name,A.s_add ,'
+                . 'A.sl_start,A.r_port_name,A.r_add ,A.sl_end,A.s_port_name,A.s_add ,'
                 . 'price_'.$container_size.' as price' )->find();
         // 将集装箱字的尺寸添加到数组中
         $res['container_size']=$container_size;

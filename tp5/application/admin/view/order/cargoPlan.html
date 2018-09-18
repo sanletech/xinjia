@@ -18,7 +18,9 @@
     <p><h1>　　集装箱编码:<{foreach name ="container_code" item ="container"}>
         <input type="text" name="container_code[]" title="<{$container}>" value="<{$container}>" lay-skin="primary" readonly="readonly"> <{/foreach}>　　</h1> </p>
 <table class="layui-table">
-    <p><h1>　　订单编号　　　<input type="text" name="order_id" value ="<{$order_num}>" readonly unselectable="on" 　class="layui-input"/></h1></p>
+    <p><h1>订单编号　<input type="text" name="order_num" value ="<{$order_num}>" readonly unselectable="on" 　class="layui-input"/></h1>
+        <h1>运单号 <input type="text" name="track_num" value ="<{$track_num}>" readonly unselectable="on" 　class="layui-input"/></h1>
+    </p>
   <thead>
     <tr>
 <!--        <th>

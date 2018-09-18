@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-14 19:51:22
+Date: 2018-09-18 19:20:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3788,30 +3788,11 @@ CREATE TABLE `hl_car_receive` (
   `loading_time` datetime DEFAULT NULL COMMENT '实际装货时间',
   `mtime` datetime DEFAULT NULL COMMENT '创建修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_car_receive
 -- ----------------------------
-INSERT INTO `hl_car_receive` VALUES ('3', 'ADSFASD', null, '美团', '王大成', '粤AAA', '4454646464', '123456789', 'guihao1111', null, 's6fa4sd6f', '司法所', '1530633600', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('4', 'ADSFASD', null, '饿了么', '王大妈', '粤BBB', '464646464', '123456789', 'guihao222', null, '6sd5fa4s6', '阿斯蒂芬', '1531238400', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('5', 'YYYYY', null, 'aa', 'aaa', 'aaa', 'aa', 'aaaaaaaa', '565', null, '45646', 'gasf', '1531238400', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('16', 'ADSFASD', null, '饿了没', '王大成', '粤BAKSD', '4444444546546', '1857555555', 'GUIZI44444', null, 'FDSF564', '王大哥', '1531152000', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('17', 'ADSFASD', null, '饿了不', '玩的人', '粤BAKSD', '4444546446', '18555566464', 'GUIZI5555555', null, 'AS6D5F4', '李大哥', '1531152000', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('18', 'ZHY1817NSKRZ031', null, '美团队', '王大爷', '粤DSBDSB', '56464654', '46464', 'asdf545456465', null, '46464', '王大勇', null, '0000-00-00 00:00:00', null);
-INSERT INTO `hl_car_receive` VALUES ('19', 'ZHY1817NSKRZ035', null, '美人队', '王大哥', '粤SBSBSBS', '4546545464', '46454', 'fassd2545456465', null, '646546', '王大爷', null, '0000-00-00 00:00:00', null);
-INSERT INTO `hl_car_receive` VALUES ('20', 'YYYYY', null, 'sdfads', 'asdfas', 'asdfads', 'asfsad', 'fsadfasfs', 'aasdfasf', null, 'fasdfas', 'asdfasf', '1534867200', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('21', 'YUN78945655', null, '司机姓名', '司机姓名', 'ASDFA ', '4564654SDFAS', '185855', '185855', null, '185855', 'SDF5A6SF4', '1533657600', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('22', 'YUN78945655', null, '司机姓名', '司机姓名', 'FSDFSD', '545646FASF', '185855', '185855', null, '185855', '56F4ASDF6', '1534348800', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('23', 'YUN78945655', null, '司机姓名', '司机姓名', 'SDFASDF', '46546DFASDF', '185855', '185855', null, '185855', '4654FA6SD', '1534262400', null, '0000-00-00 00:00:00');
-INSERT INTO `hl_car_receive` VALUES ('24', 'AAAAAAAA', null, '司机一个', '司机一个', '4554sadf', '4564654646', '654654564', '6465464', null, '46464', '士大夫', '2018-08-22', '2018-09-07 00:00:00', '2018-08-26 11:10:14');
-INSERT INTO `hl_car_receive` VALUES ('25', 'AAAAAAAA', null, '司机一个', '司机一个', '5sad4fa', '4646464', '4654646', '46464', null, '6464', '发射点', '2018-08-21', '2018-09-07 00:00:00', '2018-08-26 11:10:14');
-INSERT INTO `hl_car_receive` VALUES ('26', 'AAAAAAAA', null, '司机一个', '司机一个', 'sadf56as', '4646464', '4646546', '464641', null, '46464', '发士大夫', '2018-08-15', '2018-09-07 00:00:00', '2018-08-26 11:10:14');
-INSERT INTO `hl_car_receive` VALUES ('27', 'AAAAAAAFFDS', null, '司机', '大多数', '456A4DF', '45645464', '18554884', '4654654', null, '465S4DF', '电风扇', '2018-09-19', '2018-09-18 00:00:00', '2018-09-07 11:51:35');
-INSERT INTO `hl_car_receive` VALUES ('28', 'ADSFADSF', null, '啊是短发', '阿斯蒂芬', '45ASD4F', '5645464', '46546464', '46464AAA', null, '4454654', '等发达', '2018-09-26', '2018-09-13 00:00:00', '2018-09-07 02:23:49');
-INSERT INTO `hl_car_receive` VALUES ('29', 'ADSFADSF', null, '阿斯蒂芬', '阿斯蒂芬', '5SD4F6', '64FASD654', '65464564', '46464AAA', null, '4654F464', '速读法', '2018-09-12', '2018-09-13 00:00:00', '2018-09-07 02:23:49');
-INSERT INTO `hl_car_receive` VALUES ('30', 'ADSFADSF', null, '发大水', '反对撒法', '6FA4DS', '46546546', '46464', '4646AAA', null, '4654D', '速读法', '2018-09-19', '2018-09-19 00:00:00', '2018-09-07 02:23:49');
-INSERT INTO `hl_car_receive` VALUES ('31', 'A', null, 'asdfads', 'asdfas', 'asdfa', 'sddfsadfas', 'asdfasf', 'asdfas', null, 'asdfas', 'fasdfas', '2018-09-25', '2018-09-26 00:00:00', '2018-09-07 03:41:25');
 
 -- ----------------------------
 -- Table structure for `hl_car_send`
@@ -4783,27 +4764,21 @@ CREATE TABLE `hl_order_father` (
   `carprice_sid` int(5) DEFAULT NULL COMMENT '车送装货价格表id',
   `carprice_r` float(5,0) DEFAULT NULL COMMENT '车运装货费',
   `carprice_s` float(5,0) DEFAULT NULL COMMENT '车运送货费',
+  `portprice_rid` int(11) DEFAULT NULL COMMENT '起运港口杂费id',
+  `portprice_sid` int(11) DEFAULT NULL COMMENT '目的港口杂费id',
+  `portprice_r` int(5) DEFAULT NULL COMMENT '起运港杂费',
+  `portprice_s` int(5) DEFAULT NULL COMMENT '目的港杂费',
   `seaprice` int(4) DEFAULT NULL COMMENT '海运费',
   `premium` int(4) DEFAULT NULL COMMENT '保险费',
   `profit` int(2) DEFAULT NULL COMMENT '业务利润',
   `cost` int(4) DEFAULT NULL COMMENT '成本价格',
   `quoted_price` float(5,0) DEFAULT NULL COMMENT '报价,总的费用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_father
 -- ----------------------------
-INSERT INTO `hl_order_father` VALUES ('12', 'A906352508944526', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-06 20:00:50', 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:00:50', '第三方付款_1855888858', 'cash', 'y', 'y', '1', '3', '3', 'EE,100085556,啊gas大,收货E公司', '1', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', '600', '1000', '4613', '2000', '313', '2300', null);
-INSERT INTO `hl_order_father` VALUES ('13', 'A906352923474585', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-06 20:01:32', 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:01:32', '第三方付款_1855888858', 'cash', 'y', 'y', '0', '3', '4', 'EE,100085556,啊gas大,收货E公司', '2', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', '500', '151', '1321', '213', '131', null, null);
-INSERT INTO `hl_order_father` VALUES ('14', 'A906353031424552', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-07 02:04:11', 'kehu001', '0', '900', '收款完毕>待送货', '2018-09-06 20:01:43', '第三方付款_1855888858', 'cash', 'y', 'y', '1', '3', '5', 'EE,100085556,啊gas大,收货E公司', '3', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', '500', '156', '321', '13', '3', '13', null);
-INSERT INTO `hl_order_father` VALUES ('15', 'A906353429154595', '猪肉', '20GP', '1', '10', '100', '1', '猪肉阿萨德隧道发生', '2018-09-07 03:42:29', 'kehu001', '0', '800', '录入卸船完毕1', '2018-09-06 20:02:22', '第三方付款_1855888858', 'cash', 'y', 'y', '1', '3', '2', 'EE,100085556,啊gas大,收货E公司', '4', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', '550', '5416', '321', '21', '1', '21', null);
-INSERT INTO `hl_order_father` VALUES ('16', 'A906363225694589', '猪肉', '20GP', '4', '100', '50', '1', '猪肉驻欧三大', '2018-09-06 20:18:42', 'kehu001', '0', '200', '录入运单号>待订车', '2018-09-06 20:18:42', 'collectCall', 'cash', 'y', 'y', '0', '1', '4', 'EE,100085556,啊gas大,收货E公司', '5', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '36', '39', '3400', '46', '321', '3', '31', '3', null);
-INSERT INTO `hl_order_father` VALUES ('17', 'A906364926004596', '猪肉', '20GP', '4', '100', '50', '1', '使得积分卡死机', '2018-09-06 20:21:32', 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:21:32', 'ourPayment', 'pledge', 'y', 'y', '1', '1', '5', 'EE,100085556,啊gas大,收货E公司', '6', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '付款方式发货时候的选择', '1', '44', '39', '500', '31', '321', '12', '5', '13', null);
-INSERT INTO `hl_order_father` VALUES ('18', 'A906370739044583', '芒果', '20GP', '1', '50', '100', '1', '大师法', '2018-09-06 20:31:13', 'kehu001', '0', '0', '下单=>待审核', '2018-09-06 20:31:13', 'ourPayment', 'cash', 'n', 'n', '0', '3', '5', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', '2', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', '付款方式发货时候的选择', '1', '44', '39', '66', '31', '3300', '31', '5', '21', null);
-INSERT INTO `hl_order_father` VALUES ('19', 'A906371578264503', '芒果', '20GP', '3', '50', '100', '1', '大师法', '2018-09-07 02:25:22', 'kehu001', '0', '900', '收款完毕>待送货', '2018-09-06 20:32:37', '阿斯蒂芬撒_11111555', 'monthly', 'y', 'y', '1', '3', '4', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', '3', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', '付款方式发货时候的选择', '1', '44', '39', '220', '161', '21', '3', '5', '31', null);
-INSERT INTO `hl_order_father` VALUES ('20', 'A907858203756269', '阿发', '20GP', '4', '10', '100', '1', '阿斯蒂芬', '2018-09-07 10:03:40', 'kehu001', '0', '0', '下单=>待审核', '2018-09-07 10:03:40', 'collectCall', 'cash', 'y', 'y', '1', '2', '3', 'FFF,100085556,光啦阿古斯gas的,收货F公司', '4', 'BB,6666,天津市天津市和平区新兴街道,收货B公司', '付款方式发货时候的选择', '1', '44', '39', '600', '800', '2000', '600', '5', '3602', '16059');
-INSERT INTO `hl_order_father` VALUES ('21', 'A907867359270252', '钢铁', '40HQ', '3', '50', '100', '1', '钢铁钢铁钢铁钢铁钢铁钢铁钢铁钢铁', '2018-09-07 10:18:55', 'kehu001', '0', '0', '下单=>待审核', '2018-09-07 10:18:55', 'ourPayment', 'cash', 'y', 'n', '2', '1', '2', 'EE,100085556,啊gas大,收货E公司', '1', 'DD,55555,北京市北京市东城区东华门街道,收货D公司', '付款方式发货时候的选择', '2', '36', '39', '1000', '1700', '5500', '600', '202', '8402', '27612');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -4836,7 +4811,8 @@ INSERT INTO `hl_order_price` VALUES ('2', '31', '33', '16', '100', '20', '2', nu
 DROP TABLE IF EXISTS `hl_order_ship`;
 CREATE TABLE `hl_order_ship` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` varchar(20) DEFAULT NULL COMMENT '订单id',
+  `order_num` varchar(20) DEFAULT NULL COMMENT '订单id',
+  `track_num` varchar(18) DEFAULT NULL COMMENT '运单号',
   `ship_name` varchar(11) DEFAULT NULL COMMENT '船名',
   `ship_route` varchar(11) DEFAULT NULL COMMENT '航线',
   `voyage_num` varchar(11) DEFAULT NULL COMMENT '航次',
@@ -4857,18 +4833,18 @@ CREATE TABLE `hl_order_ship` (
 -- ----------------------------
 -- Records of hl_order_ship
 -- ----------------------------
-INSERT INTO `hl_order_ship` VALUES ('1', '1531107265kehu001555', null, null, null, '空城计', '110100003', null, null, '丑八怪', '110100005', null, null, 'W_R_R_R_R_R_R', null, '1');
-INSERT INTO `hl_order_ship` VALUES ('2', '1531107265kehu001555', null, null, null, '丑八怪', '110100005', null, null, '美人计', '110100006', null, null, 'R_R_R_R_R_R_R', null, '2');
-INSERT INTO `hl_order_ship` VALUES ('3', '1531107265kehu001555', null, null, null, '美人计', '110100006', null, null, '里程碑', '110100007', null, null, 'R_R_R_R_R_R_R', null, '3');
-INSERT INTO `hl_order_ship` VALUES ('4', '1531107265kehu001555', null, null, null, '里程碑', '110100007', null, null, '擎天柱', '110100002', null, null, 'R_R_R_R_R_R_R', null, '4');
-INSERT INTO `hl_order_ship` VALUES ('5', '201806251702', 'aaa', 'dfas5', '45as4df5a', '空城计', '110100003', '2018-08-20 09:43:27', '2018-08-20 09:43:28', '擎天柱', '110100002', '2018-08-20 09:44:02', '2018-08-20 00:00:00', 'R_R_R_R_R_R_R', '2018-08-20 ', '1');
-INSERT INTO `hl_order_ship` VALUES ('6', '1531190282kehu001737', 'AAA', 'ASASADA', 'AAA', '空城计', '110100003', '2018-08-20 15:24:14', '2018-08-20 15:24:16', '擎天柱', '110100002', '2018-08-20 15:25:44', '2018-08-20 15:26:00', 'R_R_R_R_R_R_R', '2018-08-20 ', '1');
-INSERT INTO `hl_order_ship` VALUES ('7', 'A826921016606912', '爱的色放', '546d', '546da', '空城计', '110100003', '2018-08-27 13:17:26', '2018-08-27 13:17:28', '擎天柱', '110100002', '2018-08-27 13:24:48', '2018-08-27 13:26:03', 'R_R_R_R_R_R_R', '2018-08-27 ', '1');
-INSERT INTO `hl_order_ship` VALUES ('8', '1531118326kehu001205', null, null, null, '空城计', '110100003', null, null, '擎天柱', '110100002', null, null, 'W_W_W_W_W_R_R', null, '1');
-INSERT INTO `hl_order_ship` VALUES ('9', null, null, null, null, null, null, null, null, null, null, null, null, 'W_W_W_W_W_R_R', null, '1');
-INSERT INTO `hl_order_ship` VALUES ('10', 'A906353031424552', '非法', '54SD4F', '564SDAF6', '空城计', '110100003', '2018-09-07 14:00:25', '2018-09-07 14:00:27', '擎天柱', '110100002', '2018-09-07 14:03:41', '2018-09-07 14:03:52', 'R_R_R_R_R_R_R', '2018-09-07 ', '1');
-INSERT INTO `hl_order_ship` VALUES ('11', 'A906371578264503', '速读法', '5SD4F', '45FASD', '空城计', '110100003', '2018-09-07 14:24:47', '2018-09-07 14:24:49', '擎天柱', '110100002', '2018-09-07 14:25:00', '2018-09-07 14:25:08', 'R_R_R_R_R_R_R', '2018-09-07 ', '1');
-INSERT INTO `hl_order_ship` VALUES ('12', 'A906353429154595', 'ADAFSDFAS', 'ASDF', 'ASDFDSAFAS', '空城计', '110100003', '2018-09-07 15:41:58', '2018-09-07 15:42:00', '擎天柱', '110100002', '2018-09-07 15:42:17', '2018-09-07 15:42:28', 'R_R_R_R_R_R_R', '2018-09-07 ', '1');
+INSERT INTO `hl_order_ship` VALUES ('1', '1531107265kehu001555', null, null, null, null, '空城计', '110100003', null, null, '丑八怪', '110100005', null, null, 'W_R_R_R_R_R_R', null, '1');
+INSERT INTO `hl_order_ship` VALUES ('2', '1531107265kehu001555', null, null, null, null, '丑八怪', '110100005', null, null, '美人计', '110100006', null, null, 'R_R_R_R_R_R_R', null, '2');
+INSERT INTO `hl_order_ship` VALUES ('3', '1531107265kehu001555', null, null, null, null, '美人计', '110100006', null, null, '里程碑', '110100007', null, null, 'R_R_R_R_R_R_R', null, '3');
+INSERT INTO `hl_order_ship` VALUES ('4', '1531107265kehu001555', null, null, null, null, '里程碑', '110100007', null, null, '擎天柱', '110100002', null, null, 'R_R_R_R_R_R_R', null, '4');
+INSERT INTO `hl_order_ship` VALUES ('5', '201806251702', null, 'aaa', 'dfas5', '45as4df5a', '空城计', '110100003', '2018-08-20 09:43:27', '2018-08-20 09:43:28', '擎天柱', '110100002', '2018-08-20 09:44:02', '2018-08-20 00:00:00', 'R_R_R_R_R_R_R', '2018-08-20 ', '1');
+INSERT INTO `hl_order_ship` VALUES ('6', '1531190282kehu001737', null, 'AAA', 'ASASADA', 'AAA', '空城计', '110100003', '2018-08-20 15:24:14', '2018-08-20 15:24:16', '擎天柱', '110100002', '2018-08-20 15:25:44', '2018-08-20 15:26:00', 'R_R_R_R_R_R_R', '2018-08-20 ', '1');
+INSERT INTO `hl_order_ship` VALUES ('7', 'A826921016606912', null, '爱的色放', '546d', '546da', '空城计', '110100003', '2018-08-27 13:17:26', '2018-08-27 13:17:28', '擎天柱', '110100002', '2018-08-27 13:24:48', '2018-08-27 13:26:03', 'R_R_R_R_R_R_R', '2018-08-27 ', '1');
+INSERT INTO `hl_order_ship` VALUES ('8', '1531118326kehu001205', null, null, null, null, '空城计', '110100003', null, null, '擎天柱', '110100002', null, null, 'W_W_W_W_W_R_R', null, '1');
+INSERT INTO `hl_order_ship` VALUES ('9', null, null, null, null, null, null, null, null, null, null, null, null, null, 'W_W_W_W_W_R_R', null, '1');
+INSERT INTO `hl_order_ship` VALUES ('10', 'A906353031424552', null, '非法', '54SD4F', '564SDAF6', '空城计', '110100003', '2018-09-07 14:00:25', '2018-09-07 14:00:27', '擎天柱', '110100002', '2018-09-07 14:03:41', '2018-09-07 14:03:52', 'R_R_R_R_R_R_R', '2018-09-07 ', '1');
+INSERT INTO `hl_order_ship` VALUES ('11', 'A906371578264503', null, '速读法', '5SD4F', '45FASD', '空城计', '110100003', '2018-09-07 14:24:47', '2018-09-07 14:24:49', '擎天柱', '110100002', '2018-09-07 14:25:00', '2018-09-07 14:25:08', 'R_R_R_R_R_R_R', '2018-09-07 ', '1');
+INSERT INTO `hl_order_ship` VALUES ('12', 'A906353429154595', null, 'ADAFSDFAS', 'ASDF', 'ASDFDSAFAS', '空城计', '110100003', '2018-09-07 15:41:58', '2018-09-07 15:42:00', '擎天柱', '110100002', '2018-09-07 15:42:17', '2018-09-07 15:42:28', 'R_R_R_R_R_R_R', '2018-09-07 ', '1');
 
 -- ----------------------------
 -- Table structure for `hl_order_son`
@@ -4886,41 +4862,11 @@ CREATE TABLE `hl_order_son` (
   `car_send_id` int(10) DEFAULT NULL COMMENT '送货车表的ID',
   `mtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_son
 -- ----------------------------
-INSERT INTO `hl_order_son` VALUES ('1', '201806251702', 'ZHY1817NSKRZ031', 'asdf545456465', '400', null, '5', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('2', '201806251702', 'ZHY1817NSKRZ035', 'fassd2545456465', '400', null, '6', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('9', '201806251705', 'YYYYY', 'aasdfasf', '400', null, '20', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('18', '1531107265kehu001555', 'ADSFASD', 'ANNSTIA180491174', '505', null, '16', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('21', '1531107265kehu001555', 'ADSFASD', 'ANNSTIA180491175', '505', null, '17', '', null, null);
-INSERT INTO `hl_order_son` VALUES ('22', '1531190282kehu001737', '5806863751', '5806863751d0820n0', '800', null, null, null, null, null);
-INSERT INTO `hl_order_son` VALUES ('23', '1531190282kehu001737', '5806863751', '5806863751d0820n1', '800', null, null, null, null, null);
-INSERT INTO `hl_order_son` VALUES ('24', '1531190282kehu001737', '5806863751', '5806863751d0820n2', '505', null, null, null, null, null);
-INSERT INTO `hl_order_son` VALUES ('25', '1531118326kehu001205', 'YUN78945655', '185855', '300', null, '21', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('26', '1531118326kehu001205', 'YUN78945655', '185855', '300', null, '21', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('27', '1531118326kehu001205', 'YUN78945655', '185855', '300', null, '21', null, null, null);
-INSERT INTO `hl_order_son` VALUES ('28', 'A826921016606912', 'AAA5555', '6465464', '900', '收款完毕>待送货', '24', null, null, '2018-08-28 02:14:45');
-INSERT INTO `hl_order_son` VALUES ('29', 'A826921016606912', 'AAAAAAAA', '46464', '900', '收款完毕>待送货', '25', null, null, '2018-08-28 02:14:45');
-INSERT INTO `hl_order_son` VALUES ('30', 'A826921016606912', 'AAAAAAAA', '464641', '900', '收款完毕>待送货', '25', null, null, '2018-08-28 02:14:45');
-INSERT INTO `hl_order_son` VALUES ('31', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n0', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('32', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n1', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('33', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n2', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('34', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n3', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('35', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n4', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('36', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n5', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('37', 'A824106096329230', 'DSF54AS6F', 'DSF54AS6Fd0905n6', '200', '录入运单号>待订车', null, null, null, '2018-09-05 10:37:17');
-INSERT INTO `hl_order_son` VALUES ('38', 'A906353031424552', 'AAAAAAAFFDS', '11111', '900', '收款完毕>待送货', '27', null, null, '2018-09-07 02:04:11');
-INSERT INTO `hl_order_son` VALUES ('39', 'A906371578264503', 'ADSFADSF', '2222', '900', '收款完毕>待送货', '28', null, null, '2018-09-07 02:25:22');
-INSERT INTO `hl_order_son` VALUES ('40', 'A906371578264503', 'ADSFADSF', '333', '900', '收款完毕>待送货', '28', null, null, '2018-09-07 02:25:22');
-INSERT INTO `hl_order_son` VALUES ('41', 'A906371578264503', 'ADSFADSF', '444', '900', '收款完毕>待送货', '30', null, null, '2018-09-07 02:25:22');
-INSERT INTO `hl_order_son` VALUES ('42', 'A906353429154595', 'DFSDFAS', 'asdfas', '800', '录入卸船完毕1', '31', null, null, '2018-09-07 03:42:29');
-INSERT INTO `hl_order_son` VALUES ('43', 'A906363225694589', 'adsfsa465', 'adsfsa465d0913n0', '200', '录入运单号>待订车', null, null, null, '2018-09-13 11:19:30');
-INSERT INTO `hl_order_son` VALUES ('44', 'A906363225694589', 'adsfsa465', 'adsfsa465d0913n1', '200', '录入运单号>待订车', null, null, null, '2018-09-13 11:19:30');
-INSERT INTO `hl_order_son` VALUES ('45', 'A906363225694589', 'adsfsa465', 'adsfsa465d0913n2', '200', '录入运单号>待订车', null, null, null, '2018-09-13 11:19:30');
-INSERT INTO `hl_order_son` VALUES ('46', 'A906363225694589', 'adsfsa465', 'adsfsa465d0913n3', '200', '录入运单号>待订车', null, null, null, '2018-09-13 11:19:30');
 
 -- ----------------------------
 -- Table structure for `hl_order_status`
@@ -4929,47 +4875,17 @@ DROP TABLE IF EXISTS `hl_order_status`;
 CREATE TABLE `hl_order_status` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `order_num` varchar(18) DEFAULT NULL COMMENT '子订单Id',
+  `track_num` varchar(18) DEFAULT '' COMMENT '运单号',
   `status` int(2) DEFAULT NULL COMMENT '订单状态显示1待确认2待订舱3待派车4待装货5待报柜号6待配船7待到港8待卸船9待收钱10待送货',
   `change_time` datetime DEFAULT NULL COMMENT '订单修改装的时间',
   `action` varchar(50) DEFAULT NULL COMMENT '更改状态的说明',
   `submit_man_code` varchar(10) DEFAULT NULL COMMENT '修改订单的员工id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_status
 -- ----------------------------
-INSERT INTO `hl_order_status` VALUES ('1', 'A826944504106855', '100', '2018-08-28 11:08:44', '通过审核>待订舱', 'aaa');
-INSERT INTO `hl_order_status` VALUES ('2', 'A826921016606912', '900', '2018-08-28 02:14:45', '收款完毕>待送货', 'aaa');
-INSERT INTO `hl_order_status` VALUES ('3', 'A824106096329230', '200', '2018-09-05 10:37:17', '录入运单号>待订车', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('4', 'A906371578264503', '100', '2018-09-07 10:21:56', '通过审核>待订舱', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('5', 'A906353031424552', '100', '2018-09-07 11:32:28', '通过审核>待订舱', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('6', 'A906353429154595', '100', '2018-09-07 11:32:28', '通过审核>待订舱', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('7', 'A906363225694589', '100', '2018-09-07 11:32:28', '通过审核>待订舱', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('8', 'A906353031424552', '200', '2018-09-07 11:33:27', '录入运单号>待订车', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('9', 'A906353031424552', '300', '2018-09-07 11:51:36', '录完派车信息>待装货', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('10', 'A906353031424552', '400', '2018-09-07 11:52:35', '录完实际装货时间>待配船', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('11', 'A906353031424552', '505', '2018-09-07 01:55:24', '录完实际装货时间>待配船', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('12', 'A906353031424552', '506', '2018-09-07 02:01:19', '录入配船完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('13', 'A906353031424552', '507', '2018-09-07 02:03:43', '录入到港完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('14', 'A906353031424552', '800', '2018-09-07 02:03:53', '录入卸船完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('15', 'A906353031424552', '900', '2018-09-07 02:04:11', '收款完毕>待送货', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('16', 'A906371578264503', '200', '2018-09-07 02:22:54', '录入运单号>待订车', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('17', 'A906371578264503', '300', '2018-09-07 02:23:50', '录完派车信息>待装货', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('18', 'A906371578264503', '400', '2018-09-07 02:24:05', '录完实际装货时间>待配船', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('19', 'A906371578264503', '505', '2018-09-07 02:24:19', '录完实际装货时间>待配船', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('20', 'A906371578264503', '506', '2018-09-07 02:24:52', '录入配船完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('21', 'A906371578264503', '507', '2018-09-07 02:25:02', '录入到港完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('22', 'A906371578264503', '800', '2018-09-07 02:25:09', '录入卸船完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('23', 'A906371578264503', '900', '2018-09-07 02:25:22', '收款完毕>待送货', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('24', 'A906353429154595', '200', '2018-09-07 03:40:53', '录入运单号>待订车', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('25', 'A906353429154595', '300', '2018-09-07 03:41:25', '录完派车信息>待装货', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('26', 'A906353429154595', '400', '2018-09-07 03:41:32', '录完实际装货时间>待配船', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('27', 'A906353429154595', '505', '2018-09-07 03:41:41', '录完实际装货时间>待配船', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('28', 'A906353429154595', '506', '2018-09-07 03:42:09', '录入配船完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('29', 'A906353429154595', '507', '2018-09-07 03:42:20', '录入到港完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('30', 'A906353429154595', '800', '2018-09-07 03:42:29', '录入卸船完毕1', 'sales1');
-INSERT INTO `hl_order_status` VALUES ('31', 'A906363225694589', '200', '2018-09-13 11:19:30', '录入运单号>待订车', 'sales1');
 
 -- ----------------------------
 -- Table structure for `hl_order_time`
@@ -5764,7 +5680,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-14 09:33:06', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-18 09:41:17', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
