@@ -82,11 +82,12 @@
                             <a title="删除" onclick="" href="javascript:;">删除订单</a>
                         </div>
                     </div>
-                    <div id="yd" class="layui-form">
+                <div><button class="yes layui-btn layui-btn-warm  layui-btn-xs" onclick='toajx("<{$vo.track_num}>")'>确认</button></div>
+<!--                    <div id="yd" class="layui-form">
                         <ul class="ydh">
                             <li>
-                                <!--<input class="quan" type="checkbox"  lay-filter="filter" name="" lay-skin="primary" title="">-->
-                                <!--<a href="javascript:;">ZHY1817NSKRZ035</a>-->
+                                <input class="quan" type="checkbox"  lay-filter="filter" name="" lay-skin="primary" title="">
+                                <a href="javascript:;">ZHY1817NSKRZ035</a>
                                 <dl>
                                     <{volist name="$vo.container_code" id ="value"}>
                                     <dd><input type="checkbox" name="container_code[]" lay-skin="primary" title="<{$value}>"></dd>
@@ -95,7 +96,7 @@
                             </li>
                         </ul>
                         <div><button class="yes layui-btn layui-btn-warm  layui-btn-xs">确认</button></div>
-                    </div>
+                    </div>-->
                     <{/volist}>
 
             </div>
@@ -115,8 +116,6 @@
             function toajax(data) {
                 console.log(data);
                 var jsonData =JSON.stringify(data)
-                var loading = layer.load(1);
-                post_adduser = true;
                 $.ajax({
                     type: 'POST',
                     url: "<{:url('admin/Order/toBaogui')}>",
@@ -129,22 +128,10 @@
                             post_adduser = false;
                             layer.close(loading);
                             layer.msg("添加成功", { icon: 6, time: 1000 }, function () {
-                                // 获得frame索引
-                                parent.location.reload();
-                                var index = parent.layer.getFrameIndex(window.name);
-                                //关闭当前frame
-                                parent.layer.close(index);
                             });
                         } else {
-                            post_adduser = false;
-                            layer.close(loading);
                             layer.msg("添加失败", { icon: 5 });
                         }
-                    },
-                    error: function () {
-                        post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
-                        layer.close(loading);
-                        layer.msg("添加失败", { icon: 5 });
                     }
                 });
                 return false;//只此一句

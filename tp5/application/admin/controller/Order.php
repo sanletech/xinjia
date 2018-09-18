@@ -261,8 +261,10 @@ class Order extends Base
     public function addLoadTime() 
     {   
         $order_num =$this->request->get('order_num');
+        $track_num =$this->request->get('track_num');
         //根据定单号展示柜号
-        $data = Db::name('order_son')->where("order_num = '$order_num'")->field('track_num,container_code')->select();
+        $data = Db::name('order_son')->where(['order_num'=>$order_num,'track_num'=>$track_num])
+                ->field('track_num,container_code')->select();
 //        $this->_v($data);exit;
         $this->assign([
         'order_num'  => $order_num,
@@ -368,10 +370,11 @@ class Order extends Base
     ///录入配船信息的页面
     public function cargoPlan() {
         $order_num = $this->request->get('order_num');
+        $track_num = $this->request->get('track_num');
         $container_code = explode('_', $this->request->get('container_code'));
         //查询对应订单的运线详情
         $dataM = new OrderM;
-        $data = $dataM->cargoPlan($order_num);
+        $data = $dataM->cargoPlan($order_num,$track_num);
        
         $portArr =[]; $portCodeArr=[];
         if(!empty($data['middle_id'])){
@@ -392,13 +395,14 @@ class Order extends Base
         $num =count($portArr)-1;
        
        //生成对应order_ship表 贮存对应的航线信息
-        $res = $dataM->orderShip($order_num,$portArr,$portCodeArr);
+        $res = $dataM->orderShip($order_num,$track_num,$portArr,$portCodeArr);
        //查询对应order_ship表 的航线信息 根据对应的信息 设置没到对应的字段为只读
-        $inputData = $dataM->orderShipInput($order_num);
+        $inputData = $dataM->orderShipInput($order_num,$track_num);
 //   $this->_p($inputData);exit;
         $this->view->assign([
             'order_num'=>$order_num,
             'container_code'=>$container_code,
+            'track_num'=>$track_num,
             'inputData' =>$inputData,
             'url'=>'admin/order/toCargoPlan'
         ]);
@@ -408,11 +412,12 @@ class Order extends Base
     public function toCargoPlan() {
         $data =  $this->request->param();
         //$this->_p($data);exit;
-        $order_num =$data['order_id'];
+        $order_num =$data['order_num'];
         $container_code =$data['container_code'];
-        unset($data['container_code'],$data['order_id']);
+        $track_num = $data['track_num'];
+        unset($data['container_code'],$data['order_num'],$data['track_num']);
         $dataM = new OrderM;
-        $res = $dataM->toOrderShip($data,$order_num);
+        $res = $dataM->toOrderShip($data,$order_num,$track_num);
         //var_dump($res);
         if(!array_key_exists('fail', $res)){
             $status =['msg'=>'录入配船成功','status'=>1];

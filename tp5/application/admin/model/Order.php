@@ -54,7 +54,7 @@ class Order extends Model
                 ->join('hl_order_son OS','OS.order_num=OF.order_num','left')
                 ->field('OF.id ,OF.order_num,U.user_name, '
                         . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
-                        . " OF.cargo,OF.container_size,OF.container_sum, count(OS.container_code)container_count, "
+                        . " OF.cargo,OF.container_size,OF.container_sum, count(OS.container_code) container_count, "
                         . " OS.track_num,"
                         . " group_concat(distinct OS.container_code order by OS.id separator '_') container_code, "
                         . ' SC.ship_short_name,B.boat_code,B.boat_name,OF.ctime,'
@@ -122,7 +122,7 @@ class Order extends Model
         $container_sum = $data['container_sum']; //一个订单里的集装箱数量
         
         //删除单个的数组的 container_code order_num container_sum  
-        unset($data['container_code'],$data['order_num'],$data['container_sum']);
+        unset($data['container_code'],$data['order_num'],$data['container_sum'],$data['track_num']);
         //将$data数组由行转成列
         $arr =[];$arr1 =[]; $arr2=[];
  //     $this->_p($data);exit;
@@ -144,7 +144,10 @@ class Order extends Model
         if($res1){
             for($k=0;$k<$container_sum;$k++){
                 // 将container_code 修改为实际的集装箱编码
-                $res3 = Db::name('order_son')->where('track_num',$track_num[$k])->where('container_code',$container_code[$k])->setField('container_code', $container_id[$k]);
+                $res3 = Db::name('order_son')->where('order_num',$order_num)
+                        ->where('track_num',$track_num[$k])
+                        ->where('container_code',$container_code[$k])
+                        ->setField('container_code', $container_id[$k]);
                 $res3 ? $response['success'][]="修改$container_code[$k]柜子编码成功" :$response['fail'][]="修改$container_code[$k]柜子编码失败";
                 if($res3){
                     $id = Db::name('car_receive')->where('track_num',$track_num[$k])->where('container_id',$container_id[$k])->value('id');
@@ -168,7 +171,7 @@ class Order extends Model
             return $response ;
         }else{
             //修改order_state的状态
-             $res4 = $this->updateState($order_num, $container_id,'300','录完派车信息>待装货');
+             $res4 = $this->updateState($order_num,$track_num,$container_id,'300','录完派车信息>待装货');
              $res4?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
         }
         
@@ -201,7 +204,7 @@ class Order extends Model
         }
     
         //修改order_state的状态
-        $res1 = $this->updateState($order_num,$container_codeArr,'400','录完实际装货时间>待配船');
+        $res1 = $this->updateState($order_num,$track_numArr[0],$container_codeArr,'400','录完实际装货时间>待配船');
         
         $res1 ?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
        
@@ -224,10 +227,11 @@ class Order extends Model
 
 
     //录入配船信息页面的 展示原有的航线详情信息
-    public function cargoPlan($order_num){
+    public function cargoPlan($order_num,$track_num){
         $data =Db::name('order_father')->alias('OF')
                 //->join('hl_car_listprice CLP_s',"CLP_s.id = BL.s_pricecar_id and  CLP_s.variable='s'",'left')//门到港送货价格表
                 //->join('hl_car_listprice CLP_r',"CLP_r.id = BL.r_pricecar_id and  CLP_r.variable='r'",'left')//门到港装货价格表
+                ->join('hl_order_son OS','OS.order_num =OF.order_num','left')//中间港口
                 ->join('hl_seaprice SP','SP.id= OF.seaprice_id','left')  //对应的船运价格表
                 // ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')//船公司
                 ->join('hl_boat B','SP.boat_code= B.boat_code','left')//船舶
@@ -242,7 +246,8 @@ class Order extends Model
                         . "P2.port_code port_code_e,P2.port_name port_e, SR.middle_id,"
                          . "group_concat(distinct P3.port_code  order by SM.sequence separator '_') port_middle_code,"
                         . "group_concat(distinct P3.port_name  order by SM.sequence separator '_') port_middle")
-                ->where('OF.order_num',$order_num)->find();
+                ->where('OS.order_num',$order_num)->where('OS.track_num',$track_num)
+                ->group('OS.order_num,OS.track_num')->find();
 //$this->_p($data);exit;
         return $data;
     }
@@ -257,7 +262,7 @@ class Order extends Model
 * @param  $father 父订单的 array(订单order_num数组 state  action) $father=['order_num','state','action']
 * @param  $son    子订单的 array(订单order_num container_code数组, state, action) $son=['order_num','container_code','state','action']
 */  
-        public function updateState($order_num,$container_code=array(),$state,$action) 
+        public function updateState($order_num,$track_num,$container_code=array(),$state,$action) 
     { 
 //            var_dump($order_num,$container_code,$state,$action);exit;
         // 取值（当前作用域）
@@ -270,7 +275,7 @@ class Order extends Model
 //        $order_num= $son['order_num'];
 //        $container_code = $son['container_code'];
 //        $state = $son['state'];  $action = $son['action'];
-        $sqlContainer = Db::name('order_son')->where('order_num',$order_num)->column('container_code');
+        $sqlContainer = Db::name('order_son')->where('order_num',$order_num)->where('track_num',$track_num)->column('container_code');
   
         $miss = array_diff($sqlContainer,$container_code);
         $more = array_diff($container_code,$sqlContainer);
@@ -283,7 +288,7 @@ class Order extends Model
             return $response;
         }
         //检查同一个订单下的柜子状态是否一样的
-        $stateArr = Db::name('order_son')->where('container_code','in',$container_code)->where('order_num',$order_num)->column('state');
+        $stateArr = Db::name('order_son')->where('container_code','in',$container_code)->where('track_num',$track_num)->where('order_num',$order_num)->column('state');
         $stateCount = array_count_values($stateArr);
         list($key,$value) = each($stateCount);
         if($value !== count($stateArr)){
@@ -300,9 +305,9 @@ class Order extends Model
         try{
         $mtime = date('y-m-d h:i:s');
         $res  = Db::name('order_son')->where('container_code','in',$container_code)->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action,'mtime'=>$mtime]);
-        $res2 = Db::name('order_father')->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action,'mtime'=>$mtime]);
+        //$res2 = Db::name('order_father')->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action,'mtime'=>$mtime]);
         
-        action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>$state,'action'=>$action], 'controller');
+        action('OrderProcess/orderRecord', ['order_num'=>$order_num,'track_num'=>$track_num,'status'=>$state,'action'=>$action], 'controller');
         
         $res ? $response['success'][]="登记order_son{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_son{$order_num}的{$state}{$action}失败";
         $res2 ? $response['success'][]="登记order_fathe{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_fathe{$order_num}的{$state}{$action}失败";
@@ -321,9 +326,9 @@ class Order extends Model
     
     
       //order_ship表 贮存对应的航线信息$loadPort,$departurePort
-    public function orderShip($order_num,$portArr,$portCodeArr) {
+    public function orderShip($order_num,$track_num,$portArr,$portCodeArr) {
         //查询是否已经录入航线信息了
-        $res1 =Db::name('order_ship')->where('order_id',$order_num)->find();
+        $res1 =Db::name('order_ship')->where('order_id',$order_num)->where('track_num',$track_num)->find();
    
         if(empty($res1)){
         $sqlArr=[]; 
@@ -334,7 +339,8 @@ class Order extends Model
             if($i==0){
                 $field_status ='W_W_W_W_W_R_R';
             }
-            $sqlArr[$i]= array('order_id'=>$order_num,
+            $sqlArr[$i]= array('order_num'=>$order_num,
+                'track_num'=>$track_num,
                 'loadPort'=>$portCodeArr[$i],
                 'loadPortName'=>$portArr[$i],
                 'departurePort'=>$portCodeArr[$i+1], 
@@ -348,16 +354,17 @@ class Order extends Model
         return $res1 ? true :false ;
     }
     // 读取order_ship的数据
-    public function orderShipInput($order_num) {
-        $res= Db::name('order_ship')->where('order_id',$order_num)->select();
+    public function orderShipInput($order_num,$track_num) {
+        $res= Db::name('order_ship')->where('order_num',$order_num)->where('track_num',$track_num)->select();
         foreach ($res as $key => $value) {
             $res[$key]['field_status'] =  explode( '_',$value['field_status']);
         }
         return $res;
     }  
     // 添加order_ship的数据
-    public function toOrderShip($data,$order_id){
-       // $this->_v($data);exit;
+    public function toOrderShip($data,$order_num,$track_num){
+       // $this->_v($data);exit; 
+        $order_id='';
         $response =[];
         unset($data['order_id'],$data['loadPort'],$data['loadPortName'],$data['departurePort'],$data['departurePortName']); //删除固定值
         $tmpArr=[]; $sqlArr=[]; //临时数组 ,最终数组

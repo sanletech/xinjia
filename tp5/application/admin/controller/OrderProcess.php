@@ -104,11 +104,15 @@ class OrderProcess extends Base
     }
     
     //记录订单修改的状态和时间操作人
-    public function orderRecord($order_num,$status,$action) {
-        $res =Db::name('order_status')->where('order_num',$order_num)->where('status',$status)->find();
+    public function orderRecord($order_num,$track_num,$status,$action) {
+        $res =Db::name('order_status')->where('order_num',$order_num)
+                ->where('track_num',$track_num)->where('status',$status)->find();
         if(empty($res)){
             $submit_man_code =  Session::get('user_info','think');
-            $data =['order_num'=>$order_num,'status'=>$status,'change_time'=>date('y-m-d h:i:s'),'action'=>$action,'submit_man_code'=>$submit_man_code ];
+            $data =['order_num'=>$order_num,'status'=>$status,
+                'change_time'=>date('y-m-d h:i:s'),'action'=>$action,
+                'submit_man_code'=>$submit_man_code,
+                'track_num'=>$track_num];
             $res =Db::name('order_status')->insert($data);
             return $res?['mesg'=>true]: ['mesg'=>FALSE];
         }
