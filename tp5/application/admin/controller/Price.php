@@ -32,7 +32,7 @@ class Price extends Base
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
-        return $this->view->fetch('Price/price_route'); 
+        return $this->view->fetch('price/price_route'); 
     }
     //航线详情添加展示页面
     public function route_add(){
@@ -43,7 +43,7 @@ class Price extends Base
 //        $js_boat=json_encode($boat_data);
 //        $this->view->assign('js_boat',$js_boat);
         
-        return $this->view->fetch('Price/route_add');
+        return $this->view->fetch('price/route_add');
     }
     //传递根据前面选择的起点和终点的中间线路行情
     public function route_select(){
@@ -78,7 +78,7 @@ class Price extends Base
         $res = $seaprice-> price_route_list('','',1,$seaprice_id);
 //        $this->_p($res['0']);exit;
         $this->assign('data',$res['0']);
-        return $this->view->fetch("Price/route_edit");
+        return $this->view->fetch("price/route_edit");
     }
     //航线执行修改
     public function route_toedit(){
@@ -122,7 +122,7 @@ class Price extends Base
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
-        return $this->view->fetch('Price/price_trailer'); 
+        return $this->view->fetch('price/price_trailer'); 
     }
 
     
@@ -143,7 +143,7 @@ class Price extends Base
       //  $this->view->assign('js_port',$js_port);
         $this->view->assign('js_car',$js_car);
         
-        return $this->view->fetch("Price/trailer_add");
+        return $this->view->fetch("price/trailer_add");
     }
     //拖车添加执行页面
     public function trailer_toadd(){

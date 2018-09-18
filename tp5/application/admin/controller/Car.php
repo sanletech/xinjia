@@ -43,7 +43,7 @@ class Car extends Base
         $this->view->assign('count',$count);
         $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);
-        return $this->view->fetch('Car/car_list'); 
+        return $this->view->fetch('car/car_list'); 
     }
     
     //展示修改车队信息
@@ -138,7 +138,7 @@ class Car extends Base
         
         $this->view->assign('js_port',$js_port);
         $this->view->assign('js_ship',$js_ship);
-        return $this->view->fetch('Car/car_add');
+        return $this->view->fetch('car/car_add');
     }
     
     //执行车队的添加

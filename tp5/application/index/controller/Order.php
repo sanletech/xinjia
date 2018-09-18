@@ -43,7 +43,7 @@ class Order extends Base
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
 //      $this->_p($list);exit;
-       return $this->view->fetch('Order/order_list');
+       return $this->view->fetch('order/order_list');
     }
     
 
@@ -80,7 +80,7 @@ class Order extends Base
         $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code);
         $this->view->assign('list',$list);
       
-        return $this->view->fetch('Order/place_order');
+        return $this->view->fetch('order/place_order');
     }
     
     //添加收/发货人的信息
@@ -237,7 +237,7 @@ class Order extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-        return $this->view->fetch('Order/harbor');
+        return $this->view->fetch('order/harbor');
     }
 
     //港到港下单
@@ -251,6 +251,6 @@ class Order extends Base
         $sea_pirce =new OrderM;
         $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code);
         $this->view->assign('list',$list);
-        return $this->view->fetch('Order/harbor_order');
+        return $this->view->fetch('order/harbor_order');
     }
 }

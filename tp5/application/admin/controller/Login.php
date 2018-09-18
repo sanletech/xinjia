@@ -15,13 +15,13 @@ class Login extends Controller
        
     }
         //验证用户登录身份
-    public function check(Request $request)
+    public function check()
     { 
         
        //设置status
         $status=0;
        // 获取表单提交的数据，并报错在变量中
-        $data=$request->param();
+        $data=  $this->request->param();
      
         $loginName = $data['loginname'];
         $passWord = md5($data['password']);

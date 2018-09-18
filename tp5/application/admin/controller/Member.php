@@ -31,7 +31,7 @@ class Member extends Base
         $page = $list->render();
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
-        return $this->view->fetch('Member/member_list'); 
+        return $this->view->fetch('member/member_list'); 
     }
     //禁止使用帐号
     public function memberStop() {
@@ -76,7 +76,7 @@ class Member extends Base
         $this->view->assign('list',$list);
         $this->view->assign('salesArr',$salesArr);
         $this->view->assign('ship_nameArr',$ship_nameArr);
-        return $this->view->fetch('Member/pushMoney_List'); 
+        return $this->view->fetch('member/pushMoney_List'); 
     }
     //业务对应客户的提成管理的修改
     public function  pushMoneyEdit(){
@@ -115,17 +115,17 @@ class Member extends Base
     {
         $id = input('get.id');
         
-        return $this->view->fetch('Member/member_edit'); 
+        return $this->view->fetch('member/member_edit'); 
     }
     //根据用户前台搜搜的记录做回访
     public function memberCallback()
     {
-        return $this->view->fetch('Member/member_callback'); 
+        return $this->view->fetch('member/member_callback'); 
     }
     //用户状态修改
     public function state_edit()
     {
-        return $this->view->fetch('Member/state_edit'); 
+        return $this->view->fetch('member/state_edit'); 
     }
 
     //禁用账号
@@ -146,7 +146,7 @@ class Member extends Base
         $page = $list->render();
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
-        return $this->view->fetch('Member/disable_list'); 
+        return $this->view->fetch('member/disable_list'); 
     }
 
 
