@@ -128,24 +128,6 @@
                   </div>
                 </div>
 
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>装货港口：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="r_add" value="" readonly='readonly' class="in" style="display: none;">
-                    <span class="addr">
-                      <{$list.s_port_name}>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>装货ID：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="r_id" value="" readonly='readonly' class="in">
-                  </div>
-                </div>
               </div>
 
               <div class="layui-col-xs6 er_rig">
@@ -168,24 +150,6 @@
                     <span>*&nbsp;</span>收货联系人电话：</div>
                   <div class="layui-col-xs9">
                     <input type="text" name="s_phone" value="" readonly='readonly' class="in">
-                  </div>
-                </div>
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>收货港口：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="s_add" value="" readonly='readonly' class="in" style="display: none;">
-                    <span class="addr">
-                      <{$list.e_port_name}>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>收货ID：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="s_id" value="" readonly='readonly' class="in">
                   </div>
                 </div>
               </div>
@@ -709,7 +673,9 @@
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交
       var OrderUrl = "<{:url('index/order/order_data')}>";
-
+      $('.in').css('border', '1px solid #e6e6e6');
+      $('.in').removeAttr('readonly');
+      input_null();
     </script>
   </body>
 
