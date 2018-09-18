@@ -261,8 +261,10 @@ class Order extends Base
     public function addLoadTime() 
     {   
         $order_num =$this->request->get('order_num');
+        $track_num =$this->request->get('track_num');
         //根据定单号展示柜号
-        $data = Db::name('order_son')->where("order_num = '$order_num'")->field('track_num,container_code')->select();
+        $data = Db::name('order_son')->where(['order_num'=>$order_num,'track_num'=>$track_num])
+                ->field('track_num,container_code')->select();
 //        $this->_v($data);exit;
         $this->assign([
         'order_num'  => $order_num,
