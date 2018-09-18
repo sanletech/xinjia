@@ -96,12 +96,12 @@
           <div class="xx" style="margin-bottom:0px;">
             <strong>委托信息</strong>
             <span>提醒：收货联系人需具备与船司办单资质，否则因此造成的一切后果将由客户承担</span>
-            <div class="er_anniu">
+            <!-- <div class="er_anniu">
               <input type="button" class="se wt1" onclick="selectlink('<{:url(" index/order/selectlinkman ")}>');" value="选择">
               <input type="button" class="se wt2" onclick="javascript:void(0);" value="添加">
               <input type="button" class="se wt3" onclick="xiu();" value="修改">
               <input type="button" class="se wt4" onclick="javascript:void(0);" value="设置为默认">
-            </div>
+            </div> -->
           </div>
           <div class="dd_nei">
             <div class="layui-row" style="padding-bottom: 10px;">
@@ -128,24 +128,6 @@
                   </div>
                 </div>
 
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>装货港口：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="r_add" value="" readonly='readonly' class="in" style="display: none;">
-                    <span class="addr">
-                      <{$list.s_port_name}>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>装货ID：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="r_id" value="" readonly='readonly' class="in">
-                  </div>
-                </div>
               </div>
 
               <div class="layui-col-xs6 er_rig">
@@ -168,24 +150,6 @@
                     <span>*&nbsp;</span>收货联系人电话：</div>
                   <div class="layui-col-xs9">
                     <input type="text" name="s_phone" value="" readonly='readonly' class="in">
-                  </div>
-                </div>
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>收货港口：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="s_add" value="" readonly='readonly' class="in" style="display: none;">
-                    <span class="addr">
-                      <{$list.e_port_name}>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="grid-demo">
-                  <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>收货ID：</div>
-                  <div class="layui-col-xs9">
-                    <input type="text" name="s_id" value="" readonly='readonly' class="in">
                   </div>
                 </div>
               </div>
@@ -709,7 +673,9 @@
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交
       var OrderUrl = "<{:url('index/order/order_data')}>";
-
+      $('.in').css('border', '1px solid #e6e6e6');
+      $('.in').removeAttr('readonly');
+      input_null();
     </script>
   </body>
 
