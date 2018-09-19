@@ -215,17 +215,17 @@ class Order extends Base
     }
     
     //港到港
-    public function harbor(){
+    public function order_port(){
         $member_code =Session::get('member_code','think');
         $start_add =$this->request->param('start_id');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
         $end_add =$this->request->param('end_id');
         if($end_add){ $this->view->assign('end_add',$end_add);  }
-        $load_time =$this->request->param('load_time');
-        if($load_time){ $this->view->assign('load_time',$load_time);  
-        $load_time =strtotime($load_time); }
+        $ship_id =$this->request->param('ship_id');
+        if($ship_id){ $this->view->assign('ship',$ship_id);  }
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time);
+        $list = $sea_pirce ->price_port($member_code,$start_add,$end_add,$ship_id);
+//        var_dump($list);exit;
         //获取总页数
         $count =  Db::table($list.' A')->count(); 
         //获取每页显示的条数
@@ -236,27 +236,25 @@ class Order extends Base
         // $tol=($page-1)*$limit+1;
         // 查询出当前页数显示的数据
         $list = Db::table($list.' A')->limit(($page-1)*$limit,$limit)->select();
-      
+//        $this->_p($list);exit;
        // $page= $list->render();
         $this->view->assign('page',$page); 
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-        return $this->view->fetch('order/harbor');
+        return $this->view->fetch('order/order_port');
     }
-
+    
     //港到港下单
-    public function harbor_order(){
+    public function portBook(){
         $data =$this->request->param();
         $sea_id = $data['sea_id'];
-        $r_car_id = $data['r_car_id'];
-        $s_car_id = $data['s_car_id'];
         $container_size = $data['container_size'];
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code);
+        $list = $sea_pirce ->portBook($sea_id,$member_code,$container_size);
         $this->view->assign('list',$list);
-        return $this->view->fetch('order/harbor_order');
+        return $this->view->fetch('order/place_order_port');
     }
     //港到港下单详情
     public function harbor_details(){

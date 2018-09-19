@@ -77,49 +77,7 @@ class Member extends Model
   //  $this->_p($list);exit;
         return $list;       
     }
-    
-    public function  pushMoneyListzuofei($type,$account,$pages='5') {
-        if($type=='sales'&&!empty($account)){
-            $salesList =Db::name('sales_member')
-                ->where('sales_name','like',"%{$account}%")
-                ->whereOr('sales_code','like',"%{$account}%")
-                ->field('sales_code,sales_name')->select();
-        }  else {
-               $salesList =Db::name('sales_member')
-                ->where('id','>','0')
-                ->field('sales_code,sales_name')->select();
-        }
-        
-        $listArr =[];$i=0;
-        foreach ($salesList as $v){
-            if($type=='customer'&&!empty($account)){
-                $list = Db::name('sales_member')->alias('SM')
-                    ->join('hl_member_profit MP','MP.member_code = SM.member_code','left')
-                    ->field('SM.sales_code,SM.member_name,MP.*')
-                    ->where('SM.sales_code',$v['sales_code'])
-                    ->where('SM.member_name','like',"%{$account}%")
-                    ->whereOr('SM.member_code','like',"%{$account}%")   
-                    ->group('MP.member_code')->order('SM.id')
-                    ->select();
-            }else{
-             $list = Db::name('sales_member')->alias('SM')
-                    ->join('hl_member_profit MP','MP.member_code = SM.member_code','left')
-                    ->field('SM.sales_code,SM.member_name,MP.*')
-                    ->where('SM.sales_code',$v['sales_code'])
-                    ->group('MP.member_code')->order('SM.id')
-                    ->select();
-            }
-            if(empty($list)){
-                $listArr=[];
-            }else{
-            $listArr[$i]['sales_name']=$v['sales_name'];
-            $listArr[$i]['sales_code']=$v['sales_code'];
-            $listArr[$i]['memberList']=$list;
-            }
-            $i++;
-        }
-        return $listArr;
-    }
+
     
     public function  pushMoneyEdit($memberID){
         $res =Db::name('member_profit')->alias('MP')
@@ -127,14 +85,57 @@ class Member extends Model
                 ->where('MP.id',$memberId)
                 ->group('MP.member_code')->order('SM.id')
                 ->select();
-        
-        
-         
-         
     }
     
-       
+    public function  discountList($type,$account,$pages='10'){
+                    
+           $list = Db::name('discount_normal')->alias('DN')
+                ->join('hl_member M','M.member_code=DN.member_code','left')
+                ->join('hl_shipcompany SC','SC.id = DN.ship_id','left')
+                ->field('DN.*,M.name member_name,SC.ship_short_name')
+               ->group('DN.member_code')->order('DN.id')->buildSql();    
 
+        $pageParam  = ['query' =>[]]; //设置分页查询参数  
+        if($type=='ship_name'&&!empty($account)){
+            $list =Db::table($list.' b')
+                ->where('b.ship_short_name','like',"%{$account}%")
+                ->buildSql(); 
+        } 
+        if($type=='customer'&&!empty($account)){
+            $list =Db::table($list.' c')
+                ->where('c.member_name','like',"%{$account}%")
+                ->whereOr('c.member_code','like',"%{$account}%")   
+                ->buildSql(); 
+        }
+            $pageParam['query']['account'] = $account;
+            $pageParam['query']['type'] = $type;
+        $list =Db::table($list.' d')->order('d.id')->paginate($pages,false,$pageParam);  
+        return $list; 
+    }
 
+    public function  discountSpecial($type,$account,$pages='10'){
+                            
+        $list = Db::name('discount_special')->alias('DS')
+                ->join('hl_shipcompany SC','SC.id = DS.ship_id','left')
+                ->field('DS.*,SC.ship_short_name')
+                ->group('DS.id')->order('DS.id')->buildSql();    
+
+        $pageParam  = ['query' =>[]]; //设置分页查询参数  
+        if($type=='ship_name'&&!empty($account)){
+            $list =Db::table($list.' b')
+                ->where('b.ship_short_name','like',"%{$account}%")
+                ->buildSql(); 
+        } 
+        if($type=='discount_title'&&!empty($account)){
+            $list =Db::table($list.' c')
+                ->where('c.discount_title','like',"%{$account}%")
+                ->buildSql(); 
+        }
+            $pageParam['query']['account'] = $account;
+            $pageParam['query']['type'] = $type;
+        $list =Db::table($list.' d')->order('d.id')->paginate($pages,false,$pageParam);  
+        return $list;
+        
+    }
  }
 ?>
