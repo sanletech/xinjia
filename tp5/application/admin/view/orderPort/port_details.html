@@ -1,0 +1,528 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <link rel="stylesheet" href="__STATIC__/../index/css/lrdd.css">
+        <link rel="stylesheet" href="__STATIC__/../index/css/xiala.css">
+        <link rel="stylesheet" href="__STATIC__/../index/css/all_order.css">
+        <style>
+            .bian {
+                padding-left: 70px !important;
+            }
+
+            .bian>div {
+                margin: 10px 0;
+            }
+        </style>
+        <form class="" id='order_data_form'>
+            <div class="xxtx">
+                <!-- 动态一 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>动态一</strong>
+                    </div>
+                    <div class="dd_nei bian">
+                        <div class="layui-col-xs3">
+                            <span>运单号：SDG96254666</span>
+                        </div>
+                        <div class="layui-col-xs9">
+                            <span>订舱单：
+                                <a href="#">下载</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 动态二 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>动态二</strong>
+                    </div>
+                    <div class="dd_nei bian">
+                        <div class="layui-col-xs4">
+                            <span>柜型：40GP</span>
+                        </div>
+                        <div class="layui-col-xs4">
+                            <span>柜号：SFSAF555555</span>
+                        </div>
+                        <div class="layui-col-xs4">
+                            <span>封号：44312315</span>
+                        </div>
+                        <div class="layui-col-xs4">
+                            <span>货名：黄金</span>
+                        </div>
+                        <div class="layui-col-xs4">
+                            <span>收货人：海运兴佳</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 动态三 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>动态三</strong>
+                    </div>
+                    <div class="dd_nei bian">
+                        <div class="layui-col-xs12">
+                            <span>水运单：
+                                <a href="#">下载</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 是否支付 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>订单状态</strong>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs12 zhifu">
+                            <h2>支付状态：
+                                <span>已付款/未付款/月结</span>
+                            </h2>
+                        </div>
+                        <div class="layui-col-xs3">
+                            <span>订单号：Tas665444555</span>
+                        </div>
+                        <div class="layui-col-xs9">
+                            <span>下单时间：2018-9-19 12:02:09</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 委托信息 -->
+                <div class="xxtx_dd er">
+                    <div class="xx" style="margin-bottom:0px;">
+                        <strong>委托信息</strong>
+                        <span>提醒：收货联系人需具备与船司办单资质，否则因此造成的一切后果将由客户承担</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-row" style="padding-bottom: 10px;">
+                            <div class="layui-col-xs6 er_le">
+                                <div class="grid-demo" style="margin-top: 10px;">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>发货单位：</div>
+                                    <div class="layui-col-xs9">
+                                        <input type="text" name="r_company" value="填写信息" class="in">
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>装货联系人：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <input type="text" name="r_name" value="填写信息" class="in">
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>装货联系人电话：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <input type="text" name="r_phone" value="填写信息" class="in">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="layui-col-xs6 er_rig">
+                                <div class="grid-demo" style="margin-top: 10px;">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货单位：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <input type="text" name="s_company" value="填写信息" class="in">
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货联系人：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <input type="text" name="s_name" value="填写信息" class="in">
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货联系人电话：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <input type="text" name="s_phone" value="填写信息" class="in">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 货物 -->
+                <div class="xxtx_dd">
+                    <div class="xx">
+                        <strong>货物</strong>
+                        <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>货名：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    <input type="text" name="cargo" value="" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>包装：</div>
+                                <div class="layui-col-xs6">
+                                    <div class="select">
+                                        <select name='container_type'>
+                                            <option value='1'>杂货集装箱</option>
+                                            <option value='2'>散货集装箱</option>
+                                            <option value='3'>液体货集装箱</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>重量：</div>
+                                <div class="layui-col-xs6">
+                                    <input type="text" name="weight" value="" placeholder="">
+                                </div>
+                                <div class="layui-col-xs2" style="text-align: left;">
+                                    <span>吨(T)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 费用 -->
+                <div class="xxtx_dd" style="margin-bottom: 0px;">
+                    <div class="xx">
+                        <strong>费用</strong>
+                        <span>发票信息提醒：平台支持开具6%的服务费增值税专用发票，订单完成后联系客服沟通开发票</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>柜量：</div>
+                                <div class="layui-col-xs6">
+                                    <div class="select">
+                                        <select name='container_sum' class="guil" id='container_sum'>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo" style="margin-top: 0px;">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>保险金额：</div>
+                                <div class="layui-col-xs6">
+                                    <input id="bxje" type="text" name="cargo_cost" value="" placeholder="">
+                                </div>
+
+                                <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
+                                    <span>万</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>结账方式：</div>
+                                <div class="layui-col-xs6">
+                                    <div class="select">
+                                        <select class='mony_fs'>
+                                            <option value='moy'>在线结付(优惠)</option>
+                                            <option value='monthly'>月结付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 发票 -->
+                    <div class="kpf">
+                        <div class="layui-col-xs12 bei">
+                            <div class="grid-demo">
+                                <div class="layui-col-xs1 you">
+                                    备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
+                                </div>
+                                <div class="layui-col-xs10 inp">
+                                    <input type="text" name="comment" value="" placeholder="无" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fp layui-col-xs12">
+                            <!-- 是否开取发票 -->
+                            <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
+                                <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1">
+                            </div>
+                            <div class="layui-col-xs1">&nbsp;</div>
+                            <!-- 选择发票 -->
+                            <div class="layui-col-xs3">
+                                <div class="ze">
+                                    <div class="layui-col-xs3 zep">
+                                        发票：
+                                    </div>
+                                    <div class="layui-col-xs6">
+                                        <div class="select">
+                                            <select name='tax_rate' disabled="ture" class="layui-disabled fp01">
+                                                <option value='0' selected>不需要</option>
+                                                <option value='1'>6%</option>
+                                                <option value='2'>10%</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs3 tx">
+                                <a class="trigger-default">填写发票信息</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 总运费 -->
+                    <div class="sun">
+                        <div class="fapiao layui-form-item layui-form">
+                            <div class="fp_tt">
+                                <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
+                            </div>
+                        </div>
+                        <!-- <span>总运费:
+              <strong>￥
+                <span id="price_sum">0.00</span>元</strong>
+            </span> -->
+                    </div>
+
+                    <!-- 拖车服务 -->
+                    <div class="xxtx_dd">
+                        <div class="xx">
+                            <strong>拖车服务</strong>
+                        </div>
+
+                        <div class="dd_nei">
+                            <div class="layui-col-xs12 layui-form er">
+                                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang">
+                                <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
+                            </div>
+                            <div class="layui-col-xs12 er biaoge zhuanghuo">
+                                <table class="layui-table" lay-size="sm">
+                                    <thead>
+                                        <tr>
+                                            <th>单价</th>
+                                            <th>数量</th>
+                                            <th>单位</th>
+                                            <th>装货地址</th>
+                                            <th>联系人姓名</th>
+                                            <th>货主名称</th>
+                                            <th>装货时间</th>
+                                            <th>联系电话</th>
+                                            <th>指定车队</th>
+                                            <th>备注</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bge">
+                                        <tr>
+                                            <td>
+                                                <input type="text" value="100">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="1">
+                                            </td>
+                                            <td>
+                                                    <select name='' class="">
+                                                            <option value='1' selected>柜</option>
+                                                            <option value='2'>票</option>
+                                                        </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" value="广州省天河区长福路口长信256">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="小王">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="小四">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="2016-11-29">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="148936543664">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="人生就像是">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="贤心z四道口附近啊">
+                                            </td>
+                                            <td class="dele">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="dd_nei">
+                            <div class="layui-col-xs12 layui-form er">
+                                <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
+                                <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
+                            </div>
+                            <div class="layui-col-xs12 er biaoge songhuo">
+                                <table class="layui-table" lay-size="sm">
+                                    <thead>
+                                        <tr>
+                                            <th>单价</th>
+                                            <th>数量</th>
+                                            <th>单位</th>
+                                            <th>送货地址</th>
+                                            <th>指定车队</th>
+                                            <th>备注</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bge_song">
+                                        <tr>
+                                            <td>
+                                                <input type="text" value="100">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="1">
+                                            </td>
+                                            <td>
+                                                <select name='' class="">
+                                                    <option value='1' selected>柜</option>
+                                                    <option value='2'>票</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" value="广州省天河区长福路口长信256">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="人生就像是">
+                                            </td>
+                                            <td>
+                                                <input type="text" value="贤心z四道口附近啊">
+                                            </td>
+                                            <td class="dele">
+                                                <span></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 详细费用 -->
+                    <div class="xxtx_dd er">
+                        <div class="xx">
+                            <strong>详细费用</strong>
+                        </div>
+                        <div class="feiyong">
+                            <div class="layui-col-xs12">
+                                <span>海运费：</span>123元
+                                <span class="shuo">已包含：双边</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>保险费：</span>123元
+                                <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>装货费用：</span>123元
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>送货费用：</span>123元
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>优惠：</span>
+                                <strong>123</strong>元
+                                <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>总费用：</span>
+                                <strong class="zongfei">123</strong>元
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tjiao">
+                        <a href="javascript:void(0);">确认订单</a>
+                        <a class="shi" href="javascript:void(0);">取消</a>
+                    </div>
+                </div>
+        </form>
+        <!-- 填写发票窗口 -->
+        <div id="modal-default">
+            <form class="layui-form" id='invoice_form'>
+                <input type="hidden" name='member_code' value="<{$Think.session.member_code}>">
+                <!--需要贮存客户session_id-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">发票抬头</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="invoice_title" lay-verify="invoice_title" autocomplete="off" placeholder="发票抬头" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">纳税人识别号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="taxpayer_id" lay-verify="title" autocomplete="off" placeholder="纳税人识别号" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">注册地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="registered_address" lay-verify="title" autocomplete="off" placeholder="注册地址" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">注册电话</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="registered_phone" lay-verify="title" autocomplete="off" placeholder="注册电话" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开户银行</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="deposit_bank" lay-verify="title" autocomplete="off" placeholder="开户银行" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">银行账户</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bank_account" lay-verify="title" autocomplete="off" placeholder="银行账户" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" onclick='invoice()' lay-filter="demo1">立即保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <script src="__STATIC__/../index/js/lrdd.js"></script>
+        <script src="__STATIC__/../index/js/place_order.js"></script>
+        <script>
+            $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();
+            input_null();
+        </script>
+    </body>
+
+    </html>

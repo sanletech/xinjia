@@ -1,0 +1,88 @@
+<{include file='./public/header' /}>
+  <!--港到港所有订单-->
+  <body>
+    <link rel="stylesheet" href="__STATIC__/../index/css/order_list.css">
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">订单展示</a>
+        <a>
+          <cite>导航元素</cite>
+        </a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);"
+        title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i>
+      </a>
+    </div>
+
+    <div class="biao">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+          <li class="layui-this" id ='a1'>所有订单</li>
+          <li id ='a2'>在线支付</li>
+          <li id ='a3'>月结</li>
+        </ul>
+        <div class="layui-tab-content">
+            <!-- 所有订单 -->
+            <div id='b1' class="layui-tab-item " >
+            </div>
+            <!-- 在线支付 -->
+            <div id='b2'class="layui-tab-item " >
+            </div>
+            <!-- 月结 -->
+            <div id='b3'class="layui-tab-item " >
+            </div>
+        </div>
+  
+    </div>
+    </div>
+    <script>
+      layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+      });
+
+      
+    $(document).ready(function() {
+        yemian('a1','b1' , "<{:url('admin/orderPort/all_ordePport')}>");//所有订单
+        yemian('a2','b2' , "<{:url('admin/orderPort/port_payment')}>");//在线支付
+        yemian('a3','b3' , "<{:url('admin/orderPort/port_month')}>");//月结
+    });
+	
+    function yemian(id1,id2,url){   
+        $("#"+id1).click(function(){
+                var parames={
+                "type1":"paramer1","type2":"paramer2"};
+                $.ajax({
+                url:url,
+                type:'post',
+                dataType:'html',
+                data:parames,
+                error: function(){alert('error');},
+                success:function(data){
+                        // console.log(data);
+                        data = JSON.parse( data );
+                        $("#"+id2).html(data);
+                }
+                }); 
+
+        });  
+    } 
+      
+
+     
+
+    </script>
+
+</body>
+</html>
