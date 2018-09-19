@@ -2,6 +2,56 @@
 
   <body>
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
+    <style>
+      .xxtx .lc ul li:nth-child(3) {
+        width: 15%;
+        height: 15px;
+        line-height: 15px;
+        margin-top: -2.5px;
+        font-size: 12px;
+      }
+
+      .xxtx .lc ul li:nth-child(3) span {
+        width: 15px;
+        height: 15px;
+        line-height: 15px;
+      }
+
+      .xxtx .lc ul li:nth-child(5) {
+        width: 20%;
+        height: 20px;
+        line-height: 20px;
+        margin-top: -2.5px;
+        font-size: 18px;
+        background-color: #2e8de5;
+      }
+
+      .xxtx .lc ul li:nth-child(5) span {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+      }
+
+      .dd_nei .zhifu {
+        margin: 10px 0;
+      }
+
+      .dd_nei .zhifu span {
+        color: red;
+      }
+
+      .dd_nei a {
+        color: #2e8de5;
+      }
+
+      .bian {
+        padding-left: 70px !important;
+      }
+
+      .bian>div {
+        margin: 10px 0;
+      }
+    </style>
     <form class="" id='order_data_form'>
       <div class="xxtx">
         <!-- 流程 -->
@@ -21,6 +71,82 @@
           </ul>
         </div>
 
+        <!-- 动态一 -->
+        <div class="xxtx_dd er">
+          <div class="xx">
+            <strong>动态一</strong>
+          </div>
+          <div class="dd_nei bian">
+            <div class="layui-col-xs3">
+              <span>运单号：SDG96254666</span>
+            </div>
+            <div class="layui-col-xs9">
+              <span>订舱单：
+                <a href="#">下载</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 动态二 -->
+        <div class="xxtx_dd er">
+          <div class="xx">
+            <strong>动态二</strong>
+          </div>
+          <div class="dd_nei bian">
+            <div class="layui-col-xs4">
+              <span>柜型：40GP</span>
+            </div>
+            <div class="layui-col-xs4">
+              <span>柜号：SFSAF555555</span>
+            </div>
+            <div class="layui-col-xs4">
+              <span>封号：44312315</span>
+            </div>
+            <div class="layui-col-xs4">
+              <span>货名：黄金</span>
+            </div>
+            <div class="layui-col-xs4">
+              <span>收货人：海运兴佳</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 动态三 -->
+        <div class="xxtx_dd er">
+          <div class="xx">
+            <strong>动态三</strong>
+          </div>
+          <div class="dd_nei bian">
+            <div class="layui-col-xs12">
+              <span>水运单：
+                <a href="#">下载</a>
+              </span>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- 是否支付 -->
+        <div class="xxtx_dd er">
+          <div class="xx">
+            <strong>订单状态</strong>
+          </div>
+          <div class="dd_nei">
+            <div class="layui-col-xs12 zhifu">
+              <h2>支付状态：
+                <span>已付款/未付款/月结</span>
+              </h2>
+            </div>
+            <div class="layui-col-xs3">
+              <span>订单号：Tas665444555</span>
+            </div>
+            <div class="layui-col-xs9">
+              <span>下单时间：2018-9-19 12:02:09</span>
+            </div>
+          </div>
+        </div>
+
         <!-- 委托信息 -->
         <div class="xxtx_dd er">
           <div class="xx" style="margin-bottom:0px;">
@@ -33,21 +159,21 @@
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>发货单位：</div>
-                  <div class="layui-col-xs9"  style="height: 40px;line-height: 40px;">
+                  <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                     填写信息
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>装货联系人：</div>
-                  <div class="layui-col-xs9"  style="height: 40px;line-height: 40px;">
+                  <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                     填写信息
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>装货联系人电话：</div>
-                  <div class="layui-col-xs9"  style="height: 40px;line-height: 40px;">
+                  <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                     填写信息
                   </div>
                 </div>
@@ -94,7 +220,7 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>货名：</div>
                 <div class="layui-col-xs6" style="text-align: left">
-                    填写信息
+                  填写信息
                 </div>
               </div>
             </div>
@@ -103,7 +229,7 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>包装：</div>
                 <div class="layui-col-xs6" style="text-align: left">
-                    填写信息
+                  填写信息
                 </div>
               </div>
             </div>
@@ -112,10 +238,11 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>重量：</div>
                 <div class="layui-col-xs6" style="text-align: left">
-                    填写信息<span>吨(T)</span>
+                  填写信息
+                  <span>吨(T)</span>
                 </div>
                 <div class="layui-col-xs2" style="text-align: left;">
-                  
+
                 </div>
               </div>
             </div>
@@ -134,7 +261,7 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>柜量：</div>
                 <div class="layui-col-xs6" style="text-align: left;">
-                    填写信息
+                  填写信息
                 </div>
               </div>
 
@@ -144,11 +271,12 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>保险金额：</div>
                 <div class="layui-col-xs6" style="text-align: left;">
-                    110<span>万</span>
+                  110
+                  <span>万</span>
                 </div>
 
                 <div class="layui-col-xs2" style="text-align: left;">
-                  
+
                 </div>
               </div>
             </div>
@@ -158,7 +286,7 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>结账方式：</div>
                 <div class="layui-col-xs6" style="text-align: left;">
-                    填写信息
+                  填写信息
                 </div>
               </div>
 
@@ -173,14 +301,14 @@
                   备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
                 </div>
                 <div class="layui-col-xs10 inp">
-                  <input type="text" name="comment" value="" placeholder="填写备注信息" class="layui-input">
+                  <input type="text" name="comment" value="" placeholder="无" class="layui-input">
                 </div>
               </div>
             </div>
             <div class="fp layui-col-xs12">
               <!-- 是否开取发票 -->
               <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
-                <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1">
+                <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1" disabled>
               </div>
               <div class="layui-col-xs1">&nbsp;</div>
               <!-- 选择发票 -->
@@ -210,7 +338,7 @@
               <strong>￥
                 <span id="price_sum">0.00</span>元</strong>
             </span> -->
-          </div> 
+          </div>
 
           <!-- 拖车服务 -->
           <div class="xxtx_dd">
@@ -220,7 +348,7 @@
 
             <div class="dd_nei">
               <div class="layui-col-xs12 layui-form er">
-                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
+                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" disabled>
               </div>
               <div class="layui-col-xs12 er biaoge zhuanghuo">
                 <table class="layui-table" lay-size="sm">
@@ -236,43 +364,39 @@
                       <th>联系电话</th>
                       <th>指定车队</th>
                       <th>备注</th>
-                      <th>操作</th>
                     </tr>
                   </thead>
                   <tbody class="bge">
                     <tr>
                       <td>
-                        <input type="text" value="100">
+                        100
                       </td>
                       <td>
-                        <input type="text" value="1">
+                        1
                       </td>
                       <td>
-                        <input type="text" value="柜">
+                        柜
                       </td>
                       <td>
-                        <input type="text" value="广州省天河区长福路口长信256">
+                        广州省天河区长福路口长信256
                       </td>
                       <td>
-                        <input type="text" value="小王">
+                        小王
                       </td>
                       <td>
-                        <input type="text" value="小四">
+                        小四
                       </td>
                       <td>
-                        <input type="text" value="2016-11-29">
+                        2016-11-29
                       </td>
                       <td>
-                        <input type="text" value="148936543664">
+                        148936543664
                       </td>
                       <td>
-                        <input type="text" value="人生就像是">
+                        人生就像是
                       </td>
                       <td>
-                        <input type="text" value="贤心z四道口附近啊">
-                      </td>
-                      <td class="dele">
-                        <span></span>
+                        贤心z四道口附近啊
                       </td>
                     </tr>
                   </tbody>
@@ -281,50 +405,46 @@
             </div>
 
             <div class="dd_nei">
-                <div class="layui-col-xs12 layui-form er">
-                  <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
-                </div>
-                <div class="layui-col-xs12 er biaoge songhuo">
-                  <table class="layui-table" lay-size="sm">
-                    <thead>
-                      <tr>
-                        <th>单价</th>
-                        <th>数量</th>
-                        <th>单位</th>
-                        <th>送货地址</th>
-                        <th>指定车队</th>
-                        <th>备注</th>
-                        <th>操作</th>
-                      </tr>
-                    </thead>
-                    <tbody class="bge_song">
-                      <tr>
-                        <td>
-                          <input type="text" value="100">
-                        </td>
-                        <td>
-                          <input type="text" value="1">
-                        </td>
-                        <td>
-                            <input type="text" value="柜">
-                        </td>
-                        <td>
-                          <input type="text" value="广州省天河区长福路口长信256">
-                        </td>
-                        <td>
-                          <input type="text" value="人生就像是">
-                        </td>
-                        <td>
-                          <input type="text" value="贤心z四道口附近啊">
-                        </td>
-                        <td class="dele">
-                          <span></span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <div class="layui-col-xs12 layui-form er">
+                <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="" disabled>
               </div>
+              <div class="layui-col-xs12 er biaoge songhuo">
+                <table class="layui-table" lay-size="sm">
+                  <thead>
+                    <tr>
+                      <th>单价</th>
+                      <th>数量</th>
+                      <th>单位</th>
+                      <th>送货地址</th>
+                      <th>指定车队</th>
+                      <th>备注</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bge_song">
+                    <tr>
+                      <td>
+                        100
+                      </td>
+                      <td>
+                        1
+                      </td>
+                      <td>
+                        柜
+                      </td>
+                      <td>
+                        广州省天河区长福路口长信256
+                      </td>
+                      <td>
+                        人生就像是
+                      </td>
+                      <td>
+                        贤心z四道口附近啊
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
 
           <!-- 详细费用 -->
@@ -334,10 +454,12 @@
             </div>
             <div class="feiyong">
               <div class="layui-col-xs12">
-                <span>海运费：</span>123元<span class="shuo">已包含：双边</span>
+                <span>海运费：</span>123元
+                <span class="shuo">已包含：双边</span>
               </div>
               <div class="layui-col-xs12">
-                <span>保险费：</span>123元<span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+                <span>保险费：</span>123元
+                <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
               </div>
               <div class="layui-col-xs12">
                 <span>装货费用：</span>123元
@@ -346,10 +468,13 @@
                 <span>送货费用：</span>123元
               </div>
               <div class="layui-col-xs12">
-                <span>优惠：</span><strong>123</strong>元<span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+                <span>优惠：</span>
+                <strong>123</strong>元
+                <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
               </div>
               <div class="layui-col-xs12">
-                <span>总费用：</span><strong class="zongfei">123</strong>元
+                <span>总费用：</span>
+                <strong class="zongfei">123</strong>元
               </div>
             </div>
           </div>
@@ -414,106 +539,16 @@
       </form>
     </div>
 
-    <!-- 选择模态框 -->
-    <div id="wt1">
-      <div class="all_order">
-        <form class="" action="index.html" method="post">
-          <div class="layui-row">
-            <!-- 收货人 -->
-            <div class="layui-col-xs8">
-              <div class="grid-demo">
-                <div class="layui-form-item">
-                  <label class="layui-form-label">姓名：</label>
-                  <div class="layui-input-inline">
-                    <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
-                  </div>
-
-                  <div class="layui-input-inline" style="float:right;">
-                    <button class="layui-btn btn_sou" lay-submit="" lay-filter="demo1">搜索</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <!-- 表格 -->
-        <div class="biao">
-          <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-            <ul class="layui-tab-title">
-              <li class="layui-this">收货人</li>
-              <li>发货人</li>
-            </ul>
-            <div class="layui-tab-content" style="height: 100px;">
-              <div class="layui-tab-item layui-show">
-                <ul class="xin song">
-                  <!--送货人-->
-                  <!-- ajax添加数据 -->
-                </ul>
-              </div>
-              <!--收货人-->
-              <div class="layui-tab-item">
-                <ul class="xin shou">
-                  <!-- ajax添加数据 -->
-                </ul>
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
-    <!-- 添加模态框 -->
-    <div id="wt2">
-      <div class="layui-row">
-        <form class="layui-form" id="linkman_form">
-          <div class="layui-form-item">
-            <label class="layui-form-label">姓名：</label>
-            <div class="layui-input-block">
-              <input type="text" name="link_name" lay-verify="title" value="" autocomplete="off" placeholder="请输入姓名" class="layui-input">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">手机号码：</label>
-            <div class="layui-input-block">
-              <input type="text" name="phone" lay-verify="title" value="" autocomplete="off" placeholder="请输入手机" class="layui-input">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">公司名：</label>
-            <div class="layui-input-block">
-              <input type="text" name="company" lay-verify="title" value="" autocomplete="off" placeholder="请输入公司名" class="layui-input">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">收/发货地址:</label>
-            <div class="layui-input-block">
-              <input type="text" name="add" lay-verify="title" value="" autocomplete="off" value="" placeholder="请输入地址" class="layui-input">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <div class="layui-input-block">
-              <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="">确定</button>
-              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-          </div>
-          </from>
-      </div>
-    </div>
     <script src="__STATIC__/js/lrdd.js"></script>
     <script>
       $('.songhuo,.zhuanghuo').show();
-      $('input').attr('readonly');
-      $('input').css('border','0');
+      $('input').attr('readonly', true);
+      $('input').css('border', '0');
 
       input_null();
-      
+
     </script>
   </body>
 
