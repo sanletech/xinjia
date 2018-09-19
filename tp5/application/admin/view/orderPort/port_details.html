@@ -5,12 +5,16 @@
         <link rel="stylesheet" href="__STATIC__/../index/css/xiala.css">
         <link rel="stylesheet" href="__STATIC__/../index/css/all_order.css">
         <style>
-            .bian {
-                padding-left: 70px !important;
+            .layui-input-block {
+                line-height: 35px;
             }
 
-            .bian>div {
-                margin: 10px 0;
+            .layui-input-block a {
+                color: #2e8de5;
+            }
+
+            .shi {
+                background-color: red !important;
             }
         </style>
         <form class="" id='order_data_form'>
@@ -22,12 +26,20 @@
                     </div>
                     <div class="dd_nei bian">
                         <div class="layui-col-xs3">
-                            <span>运单号：SDG96254666</span>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">运单号：</label>
+                                <div class="layui-input-block">
+                                    <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="SDG96254666">
+                                </div>
+                            </div>
                         </div>
                         <div class="layui-col-xs9">
-                            <span>订舱单：
-                                <a href="#">下载</a>
-                            </span>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">订舱单</label>
+                                <div class="layui-input-block">
+                                    <a href="#">上传</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -39,19 +51,64 @@
                     </div>
                     <div class="dd_nei bian">
                         <div class="layui-col-xs4">
-                            <span>柜型：40GP</span>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">柜型：</label>
+                                <div class="layui-input-block">
+                                    <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="40GP"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">货名：</label>
+                                <div class="layui-input-block">
+                                    <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="黄金">
+                                </div>
+                            </div>
                         </div>
                         <div class="layui-col-xs4">
-                            <span>柜号：SFSAF555555</span>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">收货人：</label>
+                                <div class="layui-input-block">
+                                    <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="海运兴佳">
+                                    </div>
+                            </div>
                         </div>
-                        <div class="layui-col-xs4">
-                            <span>封号：44312315</span>
-                        </div>
-                        <div class="layui-col-xs4">
-                            <span>货名：黄金</span>
-                        </div>
-                        <div class="layui-col-xs4">
-                            <span>收货人：海运兴佳</span>
+
+
+                        <div class="guix">
+                            <div class="wenzi">柜型-柜号：</div>
+                            <div class="ggh">
+                                <div class="layui-form-item">
+                                    <div class="guinei">
+                                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="guinei">
+                                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="guinei">
+                                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="guinei">
+                                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="guinei">
+                                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="guinei">
+                                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,30 +120,12 @@
                     </div>
                     <div class="dd_nei bian">
                         <div class="layui-col-xs12">
-                            <span>水运单：
-                                <a href="#">下载</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- 是否支付 -->
-                <div class="xxtx_dd er">
-                    <div class="xx">
-                        <strong>订单状态</strong>
-                    </div>
-                    <div class="dd_nei">
-                        <div class="layui-col-xs12 zhifu">
-                            <h2>支付状态：
-                                <span>已付款/未付款/月结</span>
-                            </h2>
-                        </div>
-                        <div class="layui-col-xs3">
-                            <span>订单号：Tas665444555</span>
-                        </div>
-                        <div class="layui-col-xs9">
-                            <span>下单时间：2018-9-19 12:02:09</span>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">水运单：</label>
+                                <div class="layui-input-block">
+                                    <a href="#">上传</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -337,10 +376,10 @@
                                                 <input type="text" value="1">
                                             </td>
                                             <td>
-                                                    <select name='' class="">
-                                                            <option value='1' selected>柜</option>
-                                                            <option value='2'>票</option>
-                                                        </select>
+                                                <select name='' class="">
+                                                    <option value='1' selected>柜</option>
+                                                    <option value='2'>票</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input type="text" value="广州省天河区长福路口长信256">
@@ -399,7 +438,7 @@
                                                 <input type="text" value="1">
                                             </td>
                                             <td>
-                                                <select name='' class="">
+                                                <select>
                                                     <option value='1' selected>柜</option>
                                                     <option value='2'>票</option>
                                                 </select>
@@ -455,9 +494,42 @@
                         </div>
                     </div>
 
+                    <!-- 是否支付 -->
+                    <div class="xxtx_dd er">
+                        <div class="xx">
+                            <strong>订单状态</strong>
+                        </div>
+                        <div class="dd_nei">
+                            <div class="layui-col-xs12">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">支付状态：</label>
+                                    <div class="layui-input-block">
+                                        已付款/月结(未付款)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs3">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">订单号：</label>
+                                    <div class="layui-input-block">
+                                        <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="Tas665444555">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs9">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">下单时间：</label>
+                                    <div class="layui-input-block">
+                                        <span>2018-9-19 12:02:09</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="tjiao">
-                        <a href="javascript:void(0);">确认订单</a>
-                        <a class="shi" href="javascript:void(0);">取消</a>
+                        <a href="javascript:void(0);">保存</a>
+                        <a class="shi" href="javascript:void(0);">完成订单</a>
                     </div>
                 </div>
         </form>
@@ -521,6 +593,7 @@
         <script src="__STATIC__/../index/js/place_order.js"></script>
         <script>
             $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();
+            $('.in').css('border', '1px solid #e6e6e6');
             input_null();
         </script>
     </body>

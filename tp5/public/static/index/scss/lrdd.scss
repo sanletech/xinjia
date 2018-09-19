@@ -514,3 +514,33 @@ body{
     }
   }
 }
+
+.guix{
+  .ggh{
+    width: 89.5%;
+    overflow: hidden;
+  }
+  .wenzi{
+    margin-left: 30px;
+    line-height: 35px;
+    width:80px;
+    float: left;
+  }
+  .layui-form-item{
+    clear:none;
+    width: 25.6%;
+    float: left;
+    margin-right: 11.6%;
+    &:nth-child(3n){
+      margin-right:0;
+    }
+    .guinei{
+      width: 45%;
+      float: left;
+    }
+    .layui-form-mid{
+      margin: 0 4% 0 4.1%;
+    }
+  }
+}
+

@@ -1,0 +1,33 @@
+#cabinet {
+  display: none;
+  padding: 10px 50px 0 0; }
+  #cabinet .guix .ggh {
+    width: 540px;
+    overflow: hidden; }
+  #cabinet .guix .wenzi {
+    margin-left: 30px;
+    line-height: 35px;
+    width: 80px;
+    float: left; }
+  #cabinet .guix .layui-form-item {
+    clear: none;
+    width: 240px;
+    float: left;
+    margin-right: 60px; }
+    #cabinet .guix .layui-form-item:nth-child(2n) {
+      margin-right: 0; }
+    #cabinet .guix .layui-form-item .guinei {
+      width: 107px;
+      float: left; }
+    #cabinet .guix .layui-form-item .layui-form-mid {
+      margin: 0 10px; }
+
+.demo-class .layui-layer-title {
+  background-color: #2e8de5; }
+
+#te td a {
+  padding: 5px;
+  color: #fff;
+  background-color: #2e8de5; }
+
+/*# sourceMappingURL=place_details.css.map */

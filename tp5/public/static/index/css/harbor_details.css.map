@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAMA,QAAQ;EACJ,OAAO,EAAE,IAAI;EACb,OAAO,EAAC,aAAa;;AAEzB,8BAA8B;EAC1B,gBAAgB,EAXf,OAAO;;AAeJ,QAAC;EACG,OAAO,EAAE,GAAG;EACZ,KAAK,EAAE,IAAI;EACX,gBAAgB,EAlBvB,OAAO",
-"sources": ["../scss/harbor_details.scss"],
-"names": [],
-"file": "harbor_details.css"
-}
