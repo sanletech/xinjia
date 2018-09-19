@@ -225,6 +225,7 @@ class Order extends Base
         if($ship_id){ $this->view->assign('ship',$ship_id);  }
         $sea_pirce =new OrderM;
         $list = $sea_pirce ->price_port($member_code,$start_add,$end_add,$ship_id);
+//        var_dump($list);exit;
         //获取总页数
         $count =  Db::table($list.' A')->count(); 
         //获取每页显示的条数
@@ -248,12 +249,10 @@ class Order extends Base
     public function portBook(){
         $data =$this->request->param();
         $sea_id = $data['sea_id'];
-        $r_car_id = $data['r_car_id'];
-        $s_car_id = $data['s_car_id'];
         $container_size = $data['container_size'];
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code);
+        $list = $sea_pirce ->portBook($sea_id,$member_code,$container_size);
         $this->view->assign('list',$list);
         return $this->view->fetch('order/place_order_port');
     }

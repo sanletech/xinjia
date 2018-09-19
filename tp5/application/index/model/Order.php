@@ -242,40 +242,50 @@ class Order extends Model
         $price_list = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
                 ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
-                ->join('hl_car_line CLR','CLR.port_id =SB.sl_start') //装货路线
-                ->join('hl_car_line CLS','CLS.port_id =SB.sl_end') //送货路线
-                ->join('hl_carprice CPR',"CPR.cl_id = CLR.id and CPR.variable='r'") //拖车装货费
-                ->join('hl_carprice CPS',"CPS.cl_id = CLS.id and CPS.variable='s'")//拖车送货费
-                ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.type ='r' and CLR.port_id = PIR.port_code") //起运港口杂费
-                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.type ='s' and CLS.port_id = PIS.port_code") //目的港口杂费
-                ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ) //不同客户对应不同船公司的利润
+//                ->join('hl_car_line CLR','CLR.port_id =SB.sl_start') //装货路线
+//                ->join('hl_car_line CLS','CLS.port_id =SB.sl_end') //送货路线
+//                ->join('hl_carprice CPR',"CPR.cl_id = CLR.id and CPR.variable='r'") //拖车装货费
+//                ->join('hl_carprice CPS',"CPS.cl_id = CLS.id and CPS.variable='s'")//拖车送货费
+//                ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.type ='r' and CLR.port_id = PIR.port_code") //起运港口杂费
+//                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.type ='s' and CLS.port_id = PIS.port_code") //目的港口杂费
+//                ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ) //不同客户对应不同船公司的利润
                 ->join('hl_shipcompany SC','SC.id = SP.ship_id')
                 ->join('hl_boat BA','BA.boat_code =SP.boat_code')
                 ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
                 ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
-                ->field('SP.id sea_id,PIR.id pir_id,PIS.id pis_id,SP.route_id,SC.ship_short_name,SP.shipping_date,'
-                        . ' SP.cutoff_date,SP.boat_code,BA.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.generalize,SP.mtime,'
-                        . ' SP.ship_id,SB.sl_start,SB.sl_end,'
-                        . ' PR.port_name r_port_name,PS.port_name s_port_name,CLR.address_name r_add,CLS.address_name s_add,'
-                        . ' (select SP.price_20GP + PIR.20GP + PIS.20GP  + MP.money ) as price_20GP,'
-                        . ' (select SP.price_40HQ + PIR.40HQ + PIS.40HQ  + MP.money ) as price_40HQ')
-                ->where('MP.member_code',$member_code)
-                ->group('SP.id,CLR.id,CLS.id,CPR.id,CPS.id,PIR.id,PIS.id,MP.id,SC.id,PR.id,PS.id')
+                ->field('SP.*,SC.ship_short_name,BA.boat_name,PR.port_name r_port_name,PS.port_name s_port_name,SR.middle_id')
+                ->group('SP.id,PR.id,PS.id')
                 ->buildSql();
 //        var_dump($price_list);
 //        if($load_time){
 //            $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
 //        }
         if($start_add){
-            $price_list = Db::table($price_list.' F')->where('F.r_add','like',"%$start_add%")->buildSql();
+            $price_list = Db::table($price_list.' F')->where('F.r_port_name','like',"%$start_add%")->buildSql();
         }
         if($end_add){
-            $price_list = Db::table($price_list.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
+            $price_list = Db::table($price_list.' G')->where('G.s_port_name','like',"%$end_add%")->buildSql();
         }
         return $price_list;
         
         
     }
     
+    
+    public function portBook($sea_id,$member_code,$container_size){
+        if(!($container_size =='20GP'||$container_size =='40HQ')){
+            return '参数错误';
+        } 
+        $list= $this->price_port();
+        //航线信息
+        $res = Db::table($list.' A')
+            ->where('id',$sea_id)
+            ->field('A.*')->find();
+        // 将集装箱字的尺寸添加到数组中
+        $res['container_size']=$container_size;
+        //查询出客户对应的现款优惠
+        return $res;            
+        
+    }
     
 }
