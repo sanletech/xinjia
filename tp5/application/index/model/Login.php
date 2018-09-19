@@ -43,7 +43,7 @@ class Login extends Model
         $res = Db::name('sales_member')->insert($data);
          
         $this->memberProfit($member_code);
-      
+        $this->memberDiscount($member_code);
         if ($res){
             $status= true;
         } else {
@@ -63,6 +63,23 @@ class Login extends Model
             }
 //            $this->_v($data);exit;
             //同时默认设置客户的利润价格为200
+            $res = Db::name('member_profit')->insertAll($data);
+             //var_dump($res);exit;
+    }
+    
+    //设置客户的在线支付优惠
+    public function memberDiscount($member_code) {
+            $ship_name =Db::name('shipcompany')->column('id');
+            $data=[]; $mtime =date('y-m-d h:i:s');
+            foreach ($ship_name as $key=>$value) {
+                $data[$key]['member_code']=$member_code;
+                $data[$key]['ship_id']= $value;
+                $data[$key]['40HQ']= 200;
+                $data[$key]['20GP']= 100;
+                $data[$key]['mtime']= $mtime;
+            }
+//            $this->_v($data);exit;
+            //同时默认设置客户的初始在线支付优惠价格
             $res = Db::name('member_profit')->insertAll($data);
              //var_dump($res);exit;
     }
