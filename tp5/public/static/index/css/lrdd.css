@@ -195,7 +195,8 @@ body {
     margin-bottom: 20px;
     height: 100px;
     overflow: auto;
-    background: #fff; }
+    background: #fff;
+    padding: 15px; }
   .xxtx .tjiao {
     width: 30%;
     margin: 50px auto; }

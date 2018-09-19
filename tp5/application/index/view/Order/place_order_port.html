@@ -261,7 +261,7 @@
                   <span>*&nbsp;</span>结账方式：</div>
                 <div class="layui-col-xs6">
                   <div class="select">
-                    <select name='payment_method'>
+                    <select class='mony_fs'>
                       <option value='moy'>在线结付(优惠)</option>
                       <!-- <option value='cash'>到港付</option> -->
                       <option value='monthly'>月结付</option>
@@ -509,7 +509,7 @@
           </div>
 
           <div class="tjiao">
-            <a href="#" onclick="order_data()">提交</a>
+            <a href="<{:url('index/Order/harbor_details')}>">确认订单</a>
             <a class="shi" href="javascript:void(0);">取消</a>
           </div>
         </div>
@@ -653,7 +653,7 @@
 
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="linkman_btn()">立即提交</button>
+              <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="">确认下单</button>
               <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
           </div>

@@ -257,4 +257,8 @@ class Order extends Base
         $this->view->assign('list',$list);
         return $this->view->fetch('order/place_order_port');
     }
+    //港到港下单详情
+    public function harbor_details(){
+        return $this->view->fetch('order/harbor_details');
+    }
 }
