@@ -24,9 +24,9 @@
           </ul>
         </div>
         <!-- 订单信息 -->
-        <input type="hidden" name='sea_id' value="<{$list.sea_id}>">
-        <input type="hidden" name='rid' value="<{$list.rid}>">
-        <input type="hidden" name='sid' value="<{$list.sid}>">
+        <input type="hidden" name='sea_id' value="<{$list.id}>">
+        <input type="hidden" name='rid' value="<{$list.r_port_code}>">
+        <input type="hidden" name='sid' value="<{$list.s_port_code}>">
         <div class="xxtx_dd">
           <div class="xx">
             <strong>订单信息</strong>
@@ -44,7 +44,7 @@
                 <div class="layui-col-xs5">
                   
                   <h3>
-                    <{$list.s_port_name}>
+                    <{$list.r_port_name}>
                   </h3>
                   <span>
                     <{$list.shipping_date}>
@@ -67,7 +67,7 @@
                 <div class="layui-col-xs5">
                   
                   <h3>
-                    <{$list.e_port_name}>
+                    <{$list.s_port_name}>
                   </h3>
                   <span>
                     <{$list.ETA}>

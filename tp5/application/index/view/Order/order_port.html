@@ -117,7 +117,7 @@
                         <{$vo.cutoff_date}>
                       </li>
                       <li>
-                        <{$vo.s_port_name}>
+                        <{$vo.r_port_name}>
                           <div class="dian">
                             <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
                             <span class="hui">
@@ -137,7 +137,7 @@
                         </div>
                       </li>
                       <li>
-                        <{$vo.e_port_name}>
+                        <{$vo.s_port_name}>
                           <div class="dian">
                             <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
                             <span class="hui">
@@ -152,7 +152,7 @@
                         
                         <span class="hong"><k>￥</k><{$vo.price_20GP}></span>
                           <div class="dian">
-                            <a href="<{:url('index/Order/harbor_order')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=20GP"
+                            <a href="<{:url('index/Order/portBook')}>?sea_id=<{$vo.id}>&container_size=20GP"
                               class="gp">下单</a>
                           </div>
                       </li>
@@ -160,7 +160,7 @@
                         
                         <span class="hong"><k>￥</k><{$vo.price_40HQ}></span>
                           <div class="dian">
-                            <a href="<{:url('index/Order/harbor_order')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&container_size=40HQ"
+                            <a href="<{:url('index/Order/portBook')}>?sea_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
                           </div>
                       </li>
@@ -201,16 +201,17 @@
 
       <script>
         var addressURL = "<{:url('admin.php/address/town')}>";
-        var add = { start_id: '', start_name: '', end_id: '', end_name: '', load_time: '' };
+        var add = { start_id: '', start_name: '', end_id: '', end_name: '', ship_id: '' };
         //          起点ID        起点名称        终点ID        终点名称      船公司
       </script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
       <!-- <script src="__STATIC__/js/order_list.js"></script>  -->
       <script src="__STATIC__/../admin/js/port.js"></script>
+      <script src="__STATIC__/../admin/js/ship_boat.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
       <script>
         function toajax() {
-          add.load_time = $("#search_price select option:selected").val();
+          add.ship_id = $("#search_price select option:selected").val();
           $.ajax({
             type: 'GET',
             url: "<{:url('index/order/order_list')}>",
@@ -274,6 +275,11 @@
             }
           });
         })
+        
+       var shipData =JS_BOAT;
+       
+        
+        
       </script>
 
   </body>

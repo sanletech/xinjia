@@ -8,13 +8,13 @@
         </div>
         <ul> 
           <li class="hang">
-            <a href="javascript:;">首页</a>
+            <a href="javascript:;">港到港</a>
           </li>
           <li>
             <a href="javascript:;">公共查询</a>
           </li>
           <li>
-            <a href="javascript:;">海运运价</a>
+            <a href="javascript:;">门到门</a>
           </li>
           <li>
             <a href="javascript:;">集装箱出售</a>
@@ -36,7 +36,7 @@
     </header>
 
     <nav>
-      <iframe src="<{:url('index/Order/harbor')}>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
+      <iframe src="<{:url('index/Order/order_port')}>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
     </nav>
     <footer>
       <{include file='./public/foot' /}>
@@ -44,14 +44,13 @@
     <script type="text/javascript">
       $('#top li').click(function (event) {
         $(this).addClass('hang').siblings('li').removeClass('hang');
-        if($(this).index() == 0) { //首页
+        if($(this).index() == 0) { //港到港
           // $('nav iframe').attr('src','<{:url('index/Index/index_body')}>');
-          var url1= "<{:url('index/Order/harbor')}>";
-          var url2 ="<{:url('index/Cargotrack/query')}>"
-          $('nav iframe').attr('src',url1);
+
+          $('nav iframe').attr('src','<{:url('index/Order/order_port')}>');
         }else if($(this).index() == 1) {//公共查询
-          $('nav iframe').attr('src',url2);
-        }else if($(this).index() == 2) {//海运运价
+          $('nav iframe').attr('src','<{:url('index/Cargotrack/query')}>');
+        }else if($(this).index() == 2) {//门到门
           $('nav iframe').attr('src','<{:url('index/Order/order_list')}>');
         }else if($(this).index() == 3) {//集装箱出售
           $('nav iframe').attr('src','<{:url('index/Index/container')}>');

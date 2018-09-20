@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-18 19:20:39
+Date: 2018-09-19 19:21:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4308,6 +4308,60 @@ INSERT INTO `hl_container_type` VALUES ('6', '牲畜集装箱');
 INSERT INTO `hl_container_type` VALUES ('7', '兽皮集装箱');
 
 -- ----------------------------
+-- Table structure for `hl_discount_normal`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_discount_normal`;
+CREATE TABLE `hl_discount_normal` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `member_code` varchar(10) DEFAULT NULL,
+  `ship_id` int(10) DEFAULT NULL COMMENT '船公司',
+  `40HQ` int(10) DEFAULT NULL COMMENT '40HQ的正常优惠',
+  `20GP` int(10) DEFAULT NULL COMMENT '20GP正常优惠',
+  `mtime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_discount_normal
+-- ----------------------------
+INSERT INTO `hl_discount_normal` VALUES ('1', 'kehu001', '1', '1000', '1500', '2018-09-12 11:12:48');
+INSERT INTO `hl_discount_normal` VALUES ('2', 'kehu002', '1', '54564', '45646', '2018-09-12 11:12:48');
+INSERT INTO `hl_discount_normal` VALUES ('3', 'kehu001', '2', '555', '550', '2018-09-12 11:12:18');
+INSERT INTO `hl_discount_normal` VALUES ('4', 'kehu003', '2', '350', '300', '2018-09-12 11:12:18');
+INSERT INTO `hl_discount_normal` VALUES ('5', 'kehu001', '3', '400', '310', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('6', 'kehu001', '3', '450', '300', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('7', 'kehu001', '4', '400', '310', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('8', 'taobao4', '4', '480', '258', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('9', 'taobao5', '5', '440', '250', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('10', 'taobao6', '5', '400', '200', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('11', 'taobao6', '1', '2000', '1000', '2018-09-12 11:23:51');
+INSERT INTO `hl_discount_normal` VALUES ('12', 'taobao6', '1', '250', '100', '2018-09-12 11:23:51');
+INSERT INTO `hl_discount_normal` VALUES ('13', 'taobao6', '2', '100', '11521', '2018-09-14 11:44:08');
+INSERT INTO `hl_discount_normal` VALUES ('14', 'taobao6', '2', '15151', '5151', '2018-09-14 11:44:08');
+
+-- ----------------------------
+-- Table structure for `hl_discount_special`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_discount_special`;
+CREATE TABLE `hl_discount_special` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `ship_id` int(5) DEFAULT NULL COMMENT '船公司id',
+  `discount_start` datetime DEFAULT NULL COMMENT '优惠开始时间',
+  `discount_end` datetime DEFAULT NULL COMMENT '优惠结束时间',
+  `40HQ_discount` int(5) DEFAULT NULL COMMENT '40HQ的零时优惠',
+  `20GP_discount` int(5) DEFAULT NULL COMMENT '20GP的临时优惠',
+  `discount_title` varchar(10) DEFAULT NULL COMMENT '优惠活动名称',
+  `add_time` datetime DEFAULT NULL COMMENT '优惠发布时间',
+  `status` int(2) DEFAULT NULL COMMENT '0禁用1正常3过期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_discount_special
+-- ----------------------------
+INSERT INTO `hl_discount_special` VALUES ('1', '1', '2018-09-12 17:09:56', '2018-09-28 17:10:01', '500', '400', '国庆优惠', '2018-09-19 17:10:25', '1');
+
+-- ----------------------------
 -- Table structure for `hl_driver`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_driver`;
@@ -4632,13 +4686,13 @@ CREATE TABLE `hl_member_profit` (
 -- ----------------------------
 -- Records of hl_member_profit
 -- ----------------------------
-INSERT INTO `hl_member_profit` VALUES ('1', 'kehu001', '1', '201', '2018-09-06 03:09:56');
-INSERT INTO `hl_member_profit` VALUES ('2', 'kehu001', '2', '202', '2018-09-06 03:09:56');
-INSERT INTO `hl_member_profit` VALUES ('3', 'kehu001', '3', '203', '2018-09-06 03:09:56');
-INSERT INTO `hl_member_profit` VALUES ('4', 'kehu001', '4', '204', '2018-09-06 03:09:56');
-INSERT INTO `hl_member_profit` VALUES ('5', 'kehu001', '5', '205', '2018-09-06 03:09:56');
-INSERT INTO `hl_member_profit` VALUES ('6', 'kehu001', '6', '206', '2018-09-06 03:09:56');
-INSERT INTO `hl_member_profit` VALUES ('7', 'kehu001', '7', '207', '2018-09-06 03:09:56');
+INSERT INTO `hl_member_profit` VALUES ('1', 'kehu001', '1', '201', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('2', 'kehu001', '2', '202', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('3', 'kehu001', '3', '203', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('4', 'kehu001', '4', '204', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('5', 'kehu001', '5', '205', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('6', 'kehu001', '6', '206', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('7', 'kehu001', '7', '207', '2018-09-19 02:11:09');
 INSERT INTO `hl_member_profit` VALUES ('11', 'taobao6', '1', '200', '2018-08-26 10:41:45');
 INSERT INTO `hl_member_profit` VALUES ('12', 'taobao6', '2', '200', '2018-08-26 10:41:45');
 INSERT INTO `hl_member_profit` VALUES ('13', 'taobao6', '3', '200', '2018-08-26 10:41:45');
@@ -5680,7 +5734,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-18 09:41:17', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-19 12:00:20', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
