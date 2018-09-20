@@ -1,0 +1,92 @@
+<!-- 港全部订单 -->
+<{include file='./public/header' /}>
+
+  <body>
+    <div class="invalid">
+      <form class="" action="index.html" method="post">
+        <div class="layui-row">
+          <div class="layui-col-xs6">
+            <div class="grid-demo">
+              <div class="layui-form-item">
+                <label class="layui-form-label">订单号：</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+                </div>
+
+                <div class="layui-input-inline" style="float:right;">
+                  <button class="layui-btn btn_select" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- 表格 -->
+      <div class="biao">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+          <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show">
+              <table class="layui-table layui-table-item" id="te">
+                <thead>
+                  <tr>
+                    <th>客户账号</th>
+                    <th>客户名称</th>
+                    <th>订单号</th>
+                    
+                    <th>提交时间</th>
+                    <th>船公司</th>
+                    <th>船名航次</th>
+                    <th>起运港</th>
+                    <th>目的港</th>
+                    <th>总运费</th>
+                    
+                    <th>运单号</th>
+                    <th>订舱单</th>
+                    <th>补料</th>
+                    <th>水运单</th>
+                    <th>付款状态</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>13846876654</td>
+                    <td>广州三乐科技有限公司</td>
+                    <td>
+                      <a href="javascript:void(0);">1453810</a>
+                    </td>
+                    
+                    <td>2018-3</td>
+                    <td>中远</td>
+                    <td>仁建20-1837</td>
+                    <td>汕头</td>
+                    <td>天津</td>
+                    <td>4000</td>
+                    <td>TB23565864563</td>
+                    <td><a href="javascript:void(0);">放纸箱</a></td>
+                    <td>已提交</td>
+                    <td>
+                        <a href="javascript:void(0);">运单</a>
+                    </td>
+                    <td class="fukuan"><a href="javascript:void(0);">已付款</a></td>
+                   
+                    <td>
+                        <a title="编辑" href="<{:url('admin/orderPort/port_details')}>" target= "_blank">
+                            <i class="layui-icon">&#xe642;</i>
+                        </a>
+                        <a title="删除" onclick="" href="javascript:;">
+                            <i class="layui-icon">&#xe640;</i>
+                        </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  </html>
