@@ -53,8 +53,12 @@
             <th>客户</th>
             <th>客户帐号</th>
             <th>船公司</th>
-            <th>40HQ</th>
-            <th>20GP</th>
+            <th>40HQ到港付</th>
+            <th>20GP到港付</th>
+            <th>40HQ月结付</th>
+            <th>20GP月结付</th>
+            <th>40HQ在线付</th>
+            <th>20GP在线付</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -64,8 +68,12 @@
             <td><{$vo.member_name}></td>
             <td><{$vo.member_code}></td>
             <td><{$vo.ship_short_name}></td>
-            <td><{$vo.40HQ}></td>
-            <td><{$vo.20GP}></td>
+            <td><{$vo.40HQ_installment}></td>
+            <td><{$vo.20GP_installment}></td>
+            <td><{$vo.40HQ_month}></td>
+            <td><{$vo.20GP_month}></td>
+            <td><{$vo.40HQ_cash}></td>
+            <td><{$vo.20GP_cash}></td>
             <td class="td-manage">
                 <button class="xiu_bao layui-btn layui-btn-xs">修改</button>
             </td>

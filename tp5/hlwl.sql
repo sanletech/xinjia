@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : root
-Source Server Version : 50553
+Source Server         : localhost_3306
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-20 23:57:52
+Date: 2018-09-21 17:36:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4315,29 +4315,33 @@ CREATE TABLE `hl_discount_normal` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `member_code` varchar(10) DEFAULT NULL,
   `ship_id` int(10) DEFAULT NULL COMMENT '船公司',
-  `40HQ` int(10) DEFAULT NULL COMMENT '40HQ的正常优惠',
-  `20GP` int(10) DEFAULT NULL COMMENT '20GP正常优惠',
+  `40HQ_installment` int(10) DEFAULT NULL COMMENT '分期,到港付 40HQ',
+  `20GP_installment` int(10) DEFAULT NULL COMMENT '分期,到港付 20GP',
+  `40HQ_month` int(5) DEFAULT NULL COMMENT '月结40HQ',
+  `20GP_month` int(5) DEFAULT NULL COMMENT '月结20GP',
+  `40HQ_cash` int(5) DEFAULT NULL COMMENT '在线支付40HQ',
+  `20GP_cash` int(5) DEFAULT NULL COMMENT '在线支付20GP',
   `mtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_discount_normal
 -- ----------------------------
-INSERT INTO `hl_discount_normal` VALUES ('1', 'kehu001', '1', '1000', '1500', '2018-09-12 11:12:48');
-INSERT INTO `hl_discount_normal` VALUES ('2', 'kehu002', '1', '54564', '45646', '2018-09-12 11:12:48');
-INSERT INTO `hl_discount_normal` VALUES ('3', 'kehu001', '2', '555', '550', '2018-09-12 11:12:18');
-INSERT INTO `hl_discount_normal` VALUES ('4', 'kehu003', '2', '350', '300', '2018-09-12 11:12:18');
-INSERT INTO `hl_discount_normal` VALUES ('5', 'kehu001', '3', '400', '310', '2018-09-03 11:26:16');
-INSERT INTO `hl_discount_normal` VALUES ('6', 'kehu001', '3', '450', '300', '2018-09-03 11:26:16');
-INSERT INTO `hl_discount_normal` VALUES ('7', 'kehu001', '4', '400', '310', '2018-09-03 11:26:16');
-INSERT INTO `hl_discount_normal` VALUES ('8', 'taobao4', '4', '480', '258', '2018-09-03 11:26:16');
-INSERT INTO `hl_discount_normal` VALUES ('9', 'taobao5', '5', '440', '250', '2018-09-03 11:26:16');
-INSERT INTO `hl_discount_normal` VALUES ('10', 'taobao6', '5', '400', '200', '2018-09-03 11:26:16');
-INSERT INTO `hl_discount_normal` VALUES ('11', 'taobao6', '1', '2000', '1000', '2018-09-12 11:23:51');
-INSERT INTO `hl_discount_normal` VALUES ('12', 'taobao6', '1', '250', '100', '2018-09-12 11:23:51');
-INSERT INTO `hl_discount_normal` VALUES ('13', 'taobao6', '2', '100', '11521', '2018-09-14 11:44:08');
-INSERT INTO `hl_discount_normal` VALUES ('14', 'taobao6', '2', '15151', '5151', '2018-09-14 11:44:08');
+INSERT INTO `hl_discount_normal` VALUES ('1', 'kehu001', '1', '1000', '1500', '100', '200', '1100', '1212', '2018-09-12 11:12:48');
+INSERT INTO `hl_discount_normal` VALUES ('2', 'kehu002', '1', '54564', '45646', '213', '13213', '13213', '21132', '2018-09-12 11:12:48');
+INSERT INTO `hl_discount_normal` VALUES ('3', 'kehu001', '2', '555', '550', '121', '1213', '13213', '54', '2018-09-12 11:12:18');
+INSERT INTO `hl_discount_normal` VALUES ('4', 'kehu003', '2', '350', '300', '231', '3213', '21', '51', '2018-09-12 11:12:18');
+INSERT INTO `hl_discount_normal` VALUES ('5', 'kehu001', '3', '400', '310', '454', '5453', '21', '45', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('6', 'kehu001', '3', '450', '300', '4254', '231', '321', '13', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('7', 'kehu001', '4', '400', '310', '4132', '132', '132', '21', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('8', 'taobao4', '4', '480', '258', '12', '121', '31', '31', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('9', 'taobao5', '5', '440', '250', '1321', '1231', '321', '21', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('10', 'taobao6', '5', '400', '200', '43', '321', '31', '12', '2018-09-03 11:26:16');
+INSERT INTO `hl_discount_normal` VALUES ('11', 'taobao6', '1', '2000', '1000', '1231', '321', '313', '31', '2018-09-12 11:23:51');
+INSERT INTO `hl_discount_normal` VALUES ('12', 'taobao6', '1', '250', '100', '1321', '1231', '3153', '4135', '2018-09-12 11:23:51');
+INSERT INTO `hl_discount_normal` VALUES ('13', 'taobao6', '2', '100', '11521', '132', '131', '231', '13', '2018-09-14 11:44:08');
+INSERT INTO `hl_discount_normal` VALUES ('14', 'taobao6', '2', '15151', '5151', '21', '321', '31', '31', '2018-09-14 11:44:08');
 
 -- ----------------------------
 -- Table structure for `hl_discount_special`
@@ -4354,12 +4358,13 @@ CREATE TABLE `hl_discount_special` (
   `add_time` datetime DEFAULT NULL COMMENT '优惠发布时间',
   `status` int(2) DEFAULT NULL COMMENT '0禁用1正常3过期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_discount_special
 -- ----------------------------
-INSERT INTO `hl_discount_special` VALUES ('1', '1', '2018-09-12 17:09:56', '2018-09-28 17:10:01', '500', '400', '国庆优惠', '2018-09-19 17:10:25', '1');
+INSERT INTO `hl_discount_special` VALUES ('0', '1', '2018-09-12 17:09:56', '2018-09-28 17:10:01', '500', '400', '国庆优惠', '2018-09-19 17:10:25', '1');
+INSERT INTO `hl_discount_special` VALUES ('2', '2', '2018-09-20 16:51:56', '2018-09-28 16:52:05', '500', '550', '中秋优惠', '2018-09-21 16:52:25', '1');
 
 -- ----------------------------
 -- Table structure for `hl_driver`
@@ -5734,7 +5739,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-20 04:42:20', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-21 09:33:37', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

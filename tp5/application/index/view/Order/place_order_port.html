@@ -261,11 +261,16 @@
                   <span>*&nbsp;</span>结账方式：</div>
                 <div class="layui-col-xs6">
                   <div class="select">
-                    <select class='mony_fs'>
-                      <option value='moy'>在线结付(优惠)</option>
-                      <!-- <option value='cash'>到港付</option> -->
-                      <option value='monthly'>月结付</option>
-                      <!-- <option value='pledge'>压柜付</option> -->
+                    <select  name="payment_method" class='mony_fs'>
+                        <{foreach name="" }>
+                       <option value='installment'>到港付</option> 
+                       <option value='month'>月结付</option>
+                      <?php 
+                        if($list['discount']['special']){
+                            echo"<option value='cash' disabled='true' >在线结付(优惠)</option>";
+                            echo"<option value='special'>{$list['discount']['special']['discount_title']}</option>";
+                        }else{echo"<option value='cash' >在线结付(优惠)</option>";    }
+                      ?>  
                     </select>
                   </div>
                 </div>
@@ -370,12 +375,7 @@
                       <td>
                         <input type="r_num" value="1">
                       </td>
-                      <td>
-                          <select name='r_num_type' class="">
-                            <option value='container' selected>柜</option>
-                            <option value='packet'>票</option>
-                          </select>
-                      </td>
+                      <td>柜</td>
                       <td>
                         <input name="r_add" type="text" value="广州省天河区长福路口长信256">
                       </td>
@@ -432,20 +432,15 @@
                         <td>
                           <input type="text" value="1">
                         </td>
+                        <td>柜</td>
                         <td>
-                            <select name='' class="">
-                              <option value='1' selected>柜</option>
-                              <option value='2'>票</option>
-                            </select>
+                          <input name="s_add" type="text" value="广州省天河区长福路口长信256">
                         </td>
                         <td>
-                          <input type="text" value="广州省天河区长福路口长信256">
+                          <input name="s_car" type="text" value="人生就像是">
                         </td>
                         <td>
-                          <input type="text" value="人生就像是">
-                        </td>
-                        <td>
-                          <input type="text" value="贤心z四道口附近啊">
+                          <input type="s_comment" value="贤心z四道口附近啊">
                         </td>
                         <td class="dele">
                           <span></span>
@@ -464,7 +459,7 @@
             </div>
             <div class="feiyong">
               <div class="layui-col-xs12">
-                <span>海运费：</span>123元<span class="shuo">已包含：双边</span>
+                <span>海运费：</span><{$list.price}>元<span class="shuo">已包含：双边</span>
               </div>
               <div class="layui-col-xs12">
                 <span>保险费：</span>123元<span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>

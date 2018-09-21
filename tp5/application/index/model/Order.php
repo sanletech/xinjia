@@ -275,7 +275,7 @@ class Order extends Model
     }
     
     
-    public function portBook($sea_id,$container_size){
+    public function portBook($member_code,$sea_id,$container_size){
         if(!($container_size =='20GP'||$container_size =='40HQ')){
             return '参数错误';
         } 
@@ -293,9 +293,26 @@ class Order extends Model
             $res['price'] = $res['price_40HQ'];
             unset($res['price_20GP'],$res['price_40HQ']);
         } 
-//        //查询出客户对应的现款优惠
-//        $discount =Db::name('discount')
-      //  $this->_p($res);exit;
+        
+        //查询有没有活动优惠
+        $nowtime = date('y-m-d h:i:s');
+        $discount_special = Db::name('discount_special')->where([
+                        'discount_start'=>['ELT',$nowtime],
+                        'discount_end'=>['EGT',$nowtime],
+                        'status'=>['NEQ',0],
+                        'ship_id'=>$res['ship_id'],
+                       ])->field("{$container_size}_discount,discount_title")->find();
+                       
+        //查询出客户对应的月结,到港付,现款的优惠
+        $discount =Db::name('discount_normal')->where([
+                    'member_code'=>$member_code,
+                    'ship_id'=>$res['ship_id']
+                     ])
+                ->field("{$container_size}_installment,{$container_size}_month,{$container_size}_cash")
+                ->find();
+        $discount['special']=$discount_special;
+        $res['discount']=$discount;
+//        $this->_p($res);exit;
         return $res;            
         
     }
