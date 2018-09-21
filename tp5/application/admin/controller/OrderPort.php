@@ -31,4 +31,10 @@ class OrderPort extends Base
         return $this->view->fetch('orderPort/port_details');
     }
 
+    //已完成订单
+    public function port_end()
+    {
+        return $this->view->fetch('orderPort/port_end');
+    }
+
 }
