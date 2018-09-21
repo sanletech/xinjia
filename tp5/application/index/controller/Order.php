@@ -215,8 +215,8 @@ class Order extends Base
     }
     
     //港到港
-    public function order_port(){
-        $member_code =Session::get('member_code','think');
+    public function orderPort(){
+       
         $start_add =$this->request->param('start_id');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
         $end_add =$this->request->param('end_id');
@@ -224,7 +224,7 @@ class Order extends Base
         $ship_id =$this->request->param('ship_id');
         if($ship_id){ $this->view->assign('ship',$ship_id);  }
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->price_port($member_code,$start_add,$end_add,$ship_id);
+        $list = $sea_pirce ->price_port($start_add,$end_add,$ship_id);
 //        var_dump($list);exit;
         //获取总页数
         $count =  Db::table($list.' A')->count(); 
@@ -250,9 +250,9 @@ class Order extends Base
         $data =$this->request->param();
         $sea_id = $data['sea_id'];
         $container_size = $data['container_size'];
-        $member_code =Session::get('member_code','think');
+       // $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->portBook($sea_id,$member_code,$container_size);
+        $list = $sea_pirce ->portBook($sea_id,$container_size);
         $this->view->assign('list',$list);
         return $this->view->fetch('order/place_order_port');
     }

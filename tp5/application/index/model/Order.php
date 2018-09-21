@@ -235,7 +235,7 @@ class Order extends Model
          
     }
     
-    public function price_port($member_code,$start_add='',$end_add='',$load_time='') {
+    public function price_port($start_add='',$end_add='',$ship_id='') {
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         $nowtime= date('y-m-d h:i:s');//要设置船期
         
@@ -253,7 +253,10 @@ class Order extends Model
                 ->join('hl_boat BA','BA.boat_code =SP.boat_code')
                 ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
                 ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
-                ->field('SP.*,SC.ship_short_name,BA.boat_name,PR.port_name r_port_name,PS.port_name s_port_name,SR.middle_id')
+                ->field('SP.*,SC.ship_short_name,BA.boat_name,'
+                        . 'PR.port_name r_port_name,PS.port_name s_port_name,'
+                        . 'PR.port_code r_port_code,PS.port_code s_port_code,'
+                        . 'SR.middle_id')
                 ->group('SP.id,PR.id,PS.id')
                 ->buildSql();
 //        var_dump($price_list);
@@ -272,7 +275,7 @@ class Order extends Model
     }
     
     
-    public function portBook($sea_id,$member_code,$container_size){
+    public function portBook($sea_id,$container_size){
         if(!($container_size =='20GP'||$container_size =='40HQ')){
             return '参数错误';
         } 
@@ -283,7 +286,16 @@ class Order extends Model
             ->field('A.*')->find();
         // 将集装箱字的尺寸添加到数组中
         $res['container_size']=$container_size;
-        //查询出客户对应的现款优惠
+        if($container_size =='20GP'){
+           $res['price'] = $res['price_20GP'];
+           unset($res['price_20GP'],$res['price_40HQ']);
+        }  else {
+            $res['price'] = $res['price_40HQ'];
+            unset($res['price_20GP'],$res['price_40HQ']);
+        } 
+//        //查询出客户对应的现款优惠
+//        $discount =Db::name('discount')
+      //  $this->_p($res);exit;
         return $res;            
         
     }
