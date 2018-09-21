@@ -250,9 +250,9 @@ class Order extends Base
         $data =$this->request->param();
         $sea_id = $data['sea_id'];
         $container_size = $data['container_size'];
-       // $member_code =Session::get('member_code','think');
+        $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->portBook($sea_id,$container_size);
+        $list = $sea_pirce ->portBook($member_code,$sea_id,$container_size);
         $this->view->assign('list',$list);
         return $this->view->fetch('order/place_order_port');
     }
