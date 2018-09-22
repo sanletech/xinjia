@@ -259,6 +259,12 @@ class Order extends Base
         $this->view->assign('discount',$discount);
         return $this->view->fetch('order/place_order_port');
     }
+    //港到港订单的处理
+    public function port_data($param) {
+        $data =$this->request->param();
+        $this->_p($data);exit;
+    }
+    
     //港到港下单详情
     public function harbor_details(){
         
