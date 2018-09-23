@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50505
+Source Server         : root
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50505
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-09-21 17:36:00
+Date: 2018-09-23 19:12:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4352,19 +4352,19 @@ CREATE TABLE `hl_discount_special` (
   `ship_id` int(5) DEFAULT NULL COMMENT '船公司id',
   `discount_start` datetime DEFAULT NULL COMMENT '优惠开始时间',
   `discount_end` datetime DEFAULT NULL COMMENT '优惠结束时间',
-  `40HQ_discount` int(5) DEFAULT NULL COMMENT '40HQ的零时优惠',
-  `20GP_discount` int(5) DEFAULT NULL COMMENT '20GP的临时优惠',
-  `discount_title` varchar(10) DEFAULT NULL COMMENT '优惠活动名称',
+  `40HQ_promotion` int(5) DEFAULT NULL COMMENT '40HQ的零时优惠',
+  `20GP_promotion` int(5) DEFAULT NULL COMMENT '20GP的临时优惠',
+  `promotion_title` varchar(10) DEFAULT NULL COMMENT '优惠活动名称',
   `add_time` datetime DEFAULT NULL COMMENT '优惠发布时间',
   `status` int(2) DEFAULT NULL COMMENT '0禁用1正常3过期',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_discount_special
 -- ----------------------------
-INSERT INTO `hl_discount_special` VALUES ('0', '1', '2018-09-12 17:09:56', '2018-09-28 17:10:01', '500', '400', '国庆优惠', '2018-09-19 17:10:25', '1');
 INSERT INTO `hl_discount_special` VALUES ('2', '2', '2018-09-20 16:51:56', '2018-09-28 16:52:05', '500', '550', '中秋优惠', '2018-09-21 16:52:25', '1');
+INSERT INTO `hl_discount_special` VALUES ('3', '1', '2018-09-12 17:09:56', '2018-09-28 17:10:01', '500', '400', '国庆优惠', '2018-09-19 17:10:25', '1');
 
 -- ----------------------------
 -- Table structure for `hl_driver`
@@ -4832,6 +4832,7 @@ CREATE TABLE `hl_order_father` (
   `profit` int(2) DEFAULT NULL COMMENT '业务利润',
   `cost` int(4) DEFAULT NULL COMMENT '成本价格',
   `quoted_price` float(5,0) DEFAULT NULL COMMENT '报价,总的费用',
+  `type` varchar(5) DEFAULT 'door' COMMENT '订单门到门door 港到港是port',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -5739,7 +5740,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-21 09:33:37', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-22 10:37:44', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
