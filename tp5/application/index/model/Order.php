@@ -301,19 +301,22 @@ class Order extends Model
                         'discount_end'=>['EGT',$nowtime],
                         'status'=>['NEQ',0],
                         'ship_id'=>$res['ship_id'],
-                       ])->field("{$container_size}_discount,discount_title")->find();
+                       ])->field("{$container_size}_promotion promotion,"
+                       . "promotion_title")->find();
                        
         //查询出客户对应的月结,到港付,现款的优惠
         $discount =Db::name('discount_normal')->where([
                     'member_code'=>$member_code,
                     'ship_id'=>$res['ship_id']
                      ])
-                ->field("{$container_size}_installment,{$container_size}_month,{$container_size}_cash")
+                ->field("{$container_size}_installment installment,"
+                . "{$container_size}_month month,"
+                . "{$container_size}_cash cash")
                 ->find();
         $discount['special']=$discount_special;
-        $res['discount']=$discount;
+      
 //        $this->_p($res);exit;
-        return $res;            
+        return array($res,$discount);            
         
     }
     

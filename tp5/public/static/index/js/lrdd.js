@@ -172,7 +172,7 @@ function zeng_bge(){
   $('.bge').append('<tr>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><select><option value="1" selected>柜</option><option value="2">票</option></select></td>'+
+  '<td>柜</td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
@@ -190,7 +190,7 @@ function zeng_song(){
   $('.bge_song').append('<tr>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><select><option value="1" selected>柜</option><option value="2">票</option></select></td>'+
+  '<td>柜</td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+
   '<td><input type="text" value="" style="width: 100%"></td>'+

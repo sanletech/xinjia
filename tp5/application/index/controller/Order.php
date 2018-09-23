@@ -252,10 +252,19 @@ class Order extends Base
         $container_size = $data['container_size'];
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->portBook($member_code,$sea_id,$container_size);
+        $data = $sea_pirce ->portBook($member_code,$sea_id,$container_size);
+        $list =$data[0];$discount=$data[1];
+//$this->_p($data);exit;
         $this->view->assign('list',$list);
+        $this->view->assign('discount',$discount);
         return $this->view->fetch('order/place_order_port');
     }
+    //港到港订单的处理
+    public function port_data($param) {
+        $data =$this->request->param();
+        $this->_p($data);exit;
+    }
+    
     //港到港下单详情
     public function place_details(){
         return $this->view->fetch('order/place_details');

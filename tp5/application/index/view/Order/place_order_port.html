@@ -228,7 +228,11 @@
                     <select name='container_sum' class="guil" id='container_sum'>
                     </select>
                   </div>
+                   
                 </div>
+                   <div class="layui-col-xs6">
+                        <input  type="text" name="container_size" value="<{$list.container_size}>" readOnly="true">
+                    </div>
               </div>
 
             </div>
@@ -262,15 +266,14 @@
                 <div class="layui-col-xs6">
                   <div class="select">
                     <select  name="payment_method" class='mony_fs'>
-                        <{foreach name="" }>
-                       <option value='installment'>到港付</option> 
-                       <option value='month'>月结付</option>
-                      <?php 
-                        if($list['discount']['special']){
-                            echo"<option value='cash' disabled='true' >在线结付(优惠)</option>";
-                            echo"<option value='special'>{$list['discount']['special']['discount_title']}</option>";
-                        }else{echo"<option value='cash' >在线结付(优惠)</option>";    }
-                      ?>  
+                        <option title="<{$discount.installment}>" value='installment'>到港付</option> 
+                       <option  title="<{$discount.month}>" value='month'>月结付</option>
+                    <{empty name="$discount.special"}>
+                    <option title="<{$discount.month}>" value='cash' >在线结付(优惠)</option>"
+                    <{else /}>
+                    <option  title="<{$discount.month}>"  value='cash' disabled='true' >在线结付(优惠)</option>
+                    <option title="<{$discount['special']['promotion']}>" value='special'><{$discount['special']['promotion_title']}></option>
+                    <{/empty}>
                     </select>
                   </div>
                 </div>
@@ -370,32 +373,32 @@
                   <tbody class="bge">
                     <tr>
                       <td>
-                        <input name="r_car_price" type="text" value="100">
+                        <input name="r_car_price[]" type="text" value="100">
                       </td>
                       <td>
-                        <input type="r_num" value="1">
+                        <input type="r_num[]" value="">
                       </td>
                       <td>柜</td>
                       <td>
-                        <input name="r_add" type="text" value="广州省天河区长福路口长信256">
+                        <input name="r_add[]" type="text" value="">
                       </td>
                       <td>
-                        <input name="r_link_man" type="text" value="小王">
+                        <input name="r_link_man[]" type="text" value="">
                       </td>
                       <td>
-                        <input name="shipper" type="text" value="小四">
+                        <input name="shipper[]" type="text" value="">
                       </td>
                       <td>
-                        <input type="r_load_time" value="2016-11-29">
+                        <input type="r_load_time[]" value="">
                       </td>
                       <td>
-                        <input type="r_phone" value="148936543664">
+                        <input type="r_phone[]" value="">
                       </td>
                       <td>
-                        <input type="r_car" value="人生就像是">
+                        <input type="r_car[]" value="">
                       </td>
                       <td>
-                        <input type="r_comment" value="贤心z四道口附近啊">
+                        <input type="r_comment[]" value="">
                       </td>
                       <td class="dele">
                         <span></span>
@@ -427,20 +430,20 @@
                     <tbody class="bge_song">
                       <tr>
                         <td>
-                          <input name="s_car_price" type="text" value="100">
+                          <input name="s_car_price[]" type="text" value="100">
                         </td>
                         <td>
-                          <input type="text" value="1">
+                           <input type="s_num[]" value="">
                         </td>
                         <td>柜</td>
                         <td>
-                          <input name="s_add" type="text" value="广州省天河区长福路口长信256">
+                          <input name="s_add[]" type="text" value="">
                         </td>
                         <td>
-                          <input name="s_car" type="text" value="人生就像是">
+                          <input name="s_car[]" type="text" value="">
                         </td>
                         <td>
-                          <input type="s_comment" value="贤心z四道口附近啊">
+                          <input type="s_comment[]" value="">
                         </td>
                         <td class="dele">
                           <span></span>
@@ -665,7 +668,7 @@
       //发票的信息提交 
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交
-      var OrderUrl = "<{:url('index/order/order_data')}>";
+      var OrderUrl = "<{:url('index/order/port_data')}>";
       $('.in').css('border', '1px solid #e6e6e6');
       $('.in').removeAttr('readonly');
       input_null();
