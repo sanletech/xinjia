@@ -160,6 +160,9 @@ function order_data() {
         obj[v.name] = v.value;
     });
     obj['money'] = $('.money').html();//纯运费
+    obj['premium'] = $('#bxje1').html();//保险费
+    obj['portprice_r'] = $('#zhuang').html();//装货费用
+    obj['portprice_s'] = $('#song').html();//送货费用
     obj['price_sum'] = $('#price_sum').html();//总运费
     console.log(obj);
     toajax(OrderUrl, obj);
@@ -181,17 +184,18 @@ function toajax(url, data) {
     //return false;//只此一
 }
 //计算运费
-function zong_sum(shu) {
+function zong_sum(shu,zs) {
     var money = $('.money').text();//纯运费
     var sum = $("#container_sum option:selected").val();//柜量
-    var bxje = $('#bxje').val();//保险金额
+    var bxje = $('#bxje').val() * 6;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
-    var zong = money * sum + bxje * 6;//总价格
+    var zong = money * sum + bxje;//总价格
     if (shu == 1) {//发票6%
         zong = zong * 1.04;     
     }else if(shu == 2){//发票10%
         zong = zong * 1.07;
     }
+    zong += zs;//装货服务费
     zong = Math.round(zong*100)/100;//保留小数点后面两位
     $('#price_sum').html(zong); 
 }
@@ -199,7 +203,8 @@ $('#container_sum').change(function () {//监听柜量
     zong_sum(0);
 })
 $('#bxje').bind('input propertychange', function () {//监听保险金额
-    zong_sum(0);
+    zong_sum(0);   
+    $('#bxje1').html($('#bxje').val() * 6);
 });
 $('.fp01').change(function () {//发票柜量
     let fp = $(this).children('option:selected').val();
@@ -211,3 +216,45 @@ $('.fp01').change(function () {//发票柜量
         zong_sum(0);
     }
 });
+
+//计算装货费用
+var op = 0;//判断单价数量
+var zs_sum = 0;
+var zong_zhuang = 0;
+var zong_song = 0;
+function zhuanghuo(){
+    let dan = 0;
+    let shu = 0;
+    zong_zhuang = 0;
+    $('.bge input[name="r_car_price[]"],.bge input[name="r_num[]"]').each(function(){
+        op++;
+        if (op%2) {
+            dan = $(this).val();
+        }else{
+            shu = $(this).val();
+            zong_zhuang+=dan*shu;
+            $('#zhuang').html(zong_zhuang);
+        }   
+    })
+    zs_sum = zong_zhuang + zong_song;
+    zong_sum(0,zs_sum);
+}
+
+//计算送货费用
+function songhuo(){
+    let dan = 0;
+    let shu = 0;
+    zong_song = 0;
+    $('.bge_song input[name="s_car_price[]"],.bge_song input[name="s_num[]"]').each(function(){
+        op++;
+        if (op%2) {
+            dan = $(this).val();
+        }else{
+            shu = $(this).val();
+            zong_song+=dan*shu;
+            $('#song').html(zong_song);
+        }   
+    })
+    zs_sum = zong_zhuang + zong_song;
+    zong_sum(0,zs_sum);
+}

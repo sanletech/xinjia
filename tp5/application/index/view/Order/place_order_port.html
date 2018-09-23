@@ -1,4 +1,4 @@
-<{include file='./public/head' /}>
+  <{include file='./public/head' /}>
 
   <body>
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
@@ -81,9 +81,7 @@
                   <{$list.container_size}>
                 </span>
                 <p>￥
-                  <strong class="money">
-                    <{$list.price}>
-                  </strong>
+                  <strong class="money"><{$list.price}></strong>
                 </p>
               </div>
               <div class="you">价格说明：这是纯运费</div>
@@ -219,6 +217,15 @@
             <span>发票信息提醒：平台支持开具6%的服务费增值税专用发票，订单完成后联系客服沟通开发票</span>
           </div>
           <div class="dd_nei">
+              <div class="layui-col-xs4 er" style="display: none">
+                  <div class="grid-demo" style="margin-top: 0px;">
+                    <div class="layui-col-xs3">
+                      <span>*&nbsp;</span>柜型：</div>
+                    <div class="layui-col-xs6">
+                        <input  type="text" name="container_size" value="<{$list.container_size}>" readOnly="true">
+                    </div>
+                  </div>
+                </div>
             <div class="layui-col-xs4 er">
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
@@ -228,11 +235,7 @@
                     <select name='container_sum' class="guil" id='container_sum'>
                     </select>
                   </div>
-                   
                 </div>
-                   <div class="layui-col-xs6">
-                        <input  type="text" name="container_size" value="<{$list.container_size}>" readOnly="true">
-                    </div>
               </div>
 
             </div>
@@ -352,6 +355,7 @@
               <div class="layui-col-xs12 layui-form er">
                 <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
                 <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
+                <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
               </div>
               <div class="layui-col-xs12 er biaoge zhuanghuo">
                 <table class="layui-table" lay-size="sm">
@@ -373,10 +377,10 @@
                   <tbody class="bge">
                     <tr>
                       <td>
-                        <input name="r_car_price[]" type="text" value="100">
+                        <input name="r_car_price[]" type="text" value="">
                       </td>
                       <td>
-                        <input type="r_num[]" value="">
+                        <input name="r_num[]" type="text" value="">
                       </td>
                       <td>柜</td>
                       <td>
@@ -389,19 +393,19 @@
                         <input name="shipper[]" type="text" value="">
                       </td>
                       <td>
-                        <input type="r_load_time[]" value="">
+                        <input name="r_load_time[]" type="text" value="">
                       </td>
                       <td>
-                        <input type="r_phone[]" value="">
+                        <input name="r_phone[]" type="text" value="">
                       </td>
                       <td>
-                        <input type="r_car[]" value="">
+                        <input name="r_car[]" type="text" value="">
                       </td>
                       <td>
-                        <input type="r_comment[]" value="">
+                        <input name="r_comment[]" type="text" value="">
                       </td>
                       <td class="dele">
-                        <span></span>
+                        <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="zhuanghuo()">确定</a>
                       </td>
                     </tr>
                   </tbody>
@@ -413,6 +417,7 @@
                 <div class="layui-col-xs12 layui-form er">
                   <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
                   <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
+                  <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
                 </div>
                 <div class="layui-col-xs12 er biaoge songhuo">
                   <table class="layui-table" lay-size="sm">
@@ -430,10 +435,10 @@
                     <tbody class="bge_song">
                       <tr>
                         <td>
-                          <input name="s_car_price[]" type="text" value="100">
+                          <input name="s_car_price[]" type="text" value="">
                         </td>
                         <td>
-                           <input type="s_num[]" value="">
+                           <input name="s_num[]" type="text" value="">
                         </td>
                         <td>柜</td>
                         <td>
@@ -443,10 +448,10 @@
                           <input name="s_car[]" type="text" value="">
                         </td>
                         <td>
-                          <input type="s_comment[]" value="">
+                          <input name="s_comment[]" type="text" value="">
                         </td>
                         <td class="dele">
-                          <span></span>
+                            <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="songhuo()">确定</a>
                         </td>
                       </tr>
                     </tbody>
@@ -465,19 +470,19 @@
                 <span>海运费：</span><{$list.price}>元<span class="shuo">已包含：双边</span>
               </div>
               <div class="layui-col-xs12">
-                <span>保险费：</span>123元<span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+                <span>保险费：</span><qi id="bxje1">0</qi>元<span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
               </div>
               <div class="layui-col-xs12">
-                <span>装货费用：</span>123元
+                <span>装货费用：</span><pi id="zhuang">0</pi>元
               </div>
               <div class="layui-col-xs12">
-                <span>送货费用：</span>123元
+                <span>送货费用：</span><pi id="song">0</pi>元
               </div>
               <div class="layui-col-xs12">
-                <span>优惠：</span><strong>123</strong>元<span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+                <span>优惠：</span><strong>0</strong>元<span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
               </div>
               <div class="layui-col-xs12">
-                <span>总费用：</span><strong class="zongfei">123</strong>元
+                <span>总费用：</span><strong class="zongfei" id="price_sum">0</strong>元
               </div>
             </div>
           </div>
@@ -505,7 +510,7 @@
           </div>
 
           <div class="tjiao">
-            <a href="<{:url('index/Order/place_details')}>">确认订单</a>
+            <a href="javascript:;" onclick="order_data()">确认订单</a>
             <a class="shi" href="javascript:void(0);">取消</a>
           </div>
         </div>
@@ -656,22 +661,26 @@
           </from>
       </div>
     </div>
+    <script>
+        //详情页
+        var xiangqing  = "<{:url('index/Order/place_details')}>"
+        // 获取session 的客户的code
+        var member_code = '<{$Think.session.member_code}>';
+        //客户的收货人,发货人选择
+        var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
+        //收货/发货人的表单提交 
+        var linkmanUrl = "<{:url('index/order/linkman')}>";
+        // 发票的信息提交 
+        var invoiceUrl = "<{:url('index/order/invoice')}>";
+        //订单信息的提交
+        var OrderUrl = "<{:url('index/order/port_data')}>";
+      </script>
     <script src="__STATIC__/js/lrdd.js"></script>
     <script src="__STATIC__/js/place_order.js"></script>
     <script>
-      //获取session 的客户的code
-      var member_code = '<{$Think.session.member_code}>';
-      //客户的收货人,发货人选择
-      var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
-      //收货/发货人的表单提交 
-      var linkmanUrl = "<{:url('index/order/linkman')}>";
-      //发票的信息提交 
-      var invoiceUrl = "<{:url('index/order/invoice')}>";
-      //订单信息的提交
-      var OrderUrl = "<{:url('index/order/port_data')}>";
       $('.in').css('border', '1px solid #e6e6e6');
-      $('.in').removeAttr('readonly');
-      input_null();
+        $('.in').removeAttr('readonly');
+        input_null();
     </script>
   </body>
 

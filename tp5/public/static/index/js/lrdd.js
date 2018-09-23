@@ -170,16 +170,16 @@ function input_a(){
 //增加装货服务
 function zeng_bge(){
   $('.bge').append('<tr>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_car_price[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_num[]" type="text" value="" style="width: 100%"></td>'+
   '<td>柜</td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_add[]" type="r_num[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_link_man[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="shipper[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_load_time[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_phone[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_car[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_comment[]" type="text" value="" style="width: 100%"></td>'+
   '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>'+
 '</tr>');
 input_a();
@@ -188,12 +188,12 @@ input_a();
 //增加送货服务
 function zeng_song(){
   $('.bge_song').append('<tr>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_car_price[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_num[]" type="text" value="" style="width: 100%"></td>'+
   '<td>柜</td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
-  '<td><input type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_add[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_car[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_comment[]" type="text" value="" style="width: 100%"></td>'+
   '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>'+
 '</tr>');
 input_a();
