@@ -292,13 +292,21 @@ class Order extends Base
         //根据sea_id 查询出对应的船公司的Id
         $ship_id =Db::name('seaprice')->where('id',$sea_id)->value('ship_id');
         if($special){
-            $price =Db::name('discount_special')->where('ship_id'.$ship_id)
-                    ->where([
-                        'discount_start'=>['egt']
-                    ])->value()
-            
+            $mtime= date('y-m-d h:i:s');
+            $price =Db::name('discount_special')->where([
+                        'discount_start'=>['ELT',$mtime],
+                        'discount_end'=>['EGT',$mtime],
+                        'ship_id'=>$ship_id,
+                        'id'=>$special
+                    ])->value($container_size.'_promotion')
+        }else{
+            $price =Db::name('discount_normal')->where([
+                'member_code'=>$member_code,
+                'ship_id'=>$ship_id,
+            ])->value($container_size.'_'.$payment_method);
         }
         
+        return $price;
         
     }
 }
