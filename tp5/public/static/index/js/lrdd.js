@@ -176,8 +176,8 @@ function zeng_bge(){
   '<td><input name="r_add[]" type="r_num[]" type="text" value="" style="width: 100%"></td>'+
   '<td><input name="r_link_man[]" type="text" value="" style="width: 100%"></td>'+
   '<td><input name="shipper[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="r_load_time[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="r_phone[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_load_time[]" type="date" value="" style="width: 100%"></td>'+
+  '<td><input name="r_link_phone[]" type="text" value="" style="width: 100%"></td>'+
   '<td><input name="r_car[]" type="text" value="" style="width: 100%"></td>'+
   '<td><input name="r_comment[]" type="text" value="" style="width: 100%"></td>'+
   '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>'+

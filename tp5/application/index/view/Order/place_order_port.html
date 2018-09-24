@@ -275,7 +275,7 @@
                     <option title="<{$discount.month}>" value='cash' >在线结付(优惠)</option>"
                     <{else /}>
                     <option  title="<{$discount.month}>"  value='cash' disabled='true' >在线结付(优惠)</option>
-                    <option title="<{$discount['special']['promotion']}>" value='special'><{$discount['special']['promotion_title']}></option>
+                    <option title="<{$discount['special']['promotion']}>" value="<{$discount['special']['promotion_id']}>" ><{$discount['special']['promotion_title']}></option>
                     <{/empty}>
                     </select>
                   </div>
@@ -393,10 +393,10 @@
                         <input name="shipper[]" type="text" value="">
                       </td>
                       <td>
-                        <input name="r_load_time[]" type="text" value="">
+                        <input name="r_load_time[]" type="date" value="">
                       </td>
                       <td>
-                        <input name="r_phone[]" type="text" value="">
+                        <input name="r_link_phone[]" type="text" value="">
                       </td>
                       <td>
                         <input name="r_car[]" type="text" value="">

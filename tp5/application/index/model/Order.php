@@ -138,7 +138,7 @@ class Order extends Model
                  $carprice_r,$carprice_s,$seaprice,$premium,$profit,$cost,$quoted_price,$tax_rate) {
         //添加数据到hl_order_fahter表里
         $mtime =  date("Y-m-d H:i:s"); 
-        $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
+       // $add_id = 1; //前台页面 将收货人 发货人 的联系地址 用ajax处理
         //生成订单编号
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
@@ -302,7 +302,7 @@ class Order extends Model
                         'status'=>['NEQ',0],
                         'ship_id'=>$res['ship_id'],
                        ])->field("{$container_size}_promotion promotion,"
-                       . "promotion_title")->find();
+                       . "promotion_title,id promotion_id")->find();
                        
         //查询出客户对应的月结,到港付,现款的优惠
         $discount =Db::name('discount_normal')->where([

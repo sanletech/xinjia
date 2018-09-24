@@ -136,7 +136,7 @@ class Order extends Base
       public function order_data()
     {
         $data =$this->request->param();
-       $member_code =Session::get('member_code');
+        $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
         $seaprice_id =$data['sea_id'];  $carprice_rid=$data['rid']; $carprice_sid =$data['sid'];
         $pir_id=$data['pir_id']; $pis_id =$data['pis_id'];
@@ -260,13 +260,45 @@ class Order extends Base
         return $this->view->fetch('order/place_order_port');
     }
     //港到港订单的处理
-    public function port_data($param) {
+    public function port_data() {
         $data =$this->request->param();
-        $this->_p($data);exit;
+        $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+        $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
+        $mtime= date('y-m-d h:i:s');$member_code =Session::get('member_code','think');
+        //对支付方式做判断
+        $payment_method= $data['payment_method'];
+        if(intval($payment_method)){
+            $special= $payment_method;
+            $payment_method='special';
+        }
+        //计算优惠的总金额
+        $discount =
+        $shipper = implode(',',$data['r_name'],$data['r_company'],$data['r_phone']);
+        $consigner = implode(',',$data['s_name'],$data['s_company'],$data['s_phone']);
+        $fatherData= array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$data['container_size'],
+        'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
+        'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
+        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],'tax_rate'=>$data['tax_rate'],
+        'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium']    )
     }
     
     //港到港下单详情
     public function place_details(){
         return $this->view->fetch('order/place_details');
+    }
+    
+    //根据用户code 和sea_id海运价格id，柜子大小,付款方式 返回相应的单个柜子优惠价格
+    public function dicountPrice($member_code,$sea_id,$container_size,$payment_method,$special='') {
+        //根据sea_id 查询出对应的船公司的Id
+        $ship_id =Db::name('seaprice')->where('id',$sea_id)->value('ship_id');
+        if($special){
+            $price =Db::name('discount_special')->where('ship_id'.$ship_id)
+                    ->where([
+                        'discount_start'=>['egt']
+                    ])->value()
+            
+        }
+        
+        
     }
 }
