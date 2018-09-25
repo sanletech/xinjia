@@ -3,6 +3,12 @@
 
   <body>
     <link rel="stylesheet" href="__STATIC__/css/port.css">
+    <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
+    <style>
+      .fuk1 {
+        display: none;
+      }
+    </style>
     <div class="invalid">
       <form class="" action="index.html" method="post">
         <div class="layui-row">
@@ -33,14 +39,14 @@
                     <th>客户账号</th>
                     <th>客户名称</th>
                     <th>订单号</th>
-                    
+
                     <th>提交时间</th>
                     <th>船公司</th>
                     <th>船名航次</th>
                     <th>起运港</th>
                     <th>目的港</th>
                     <th>总运费</th>
-                    
+
                     <th>运单号</th>
                     <th>订舱单</th>
                     <th>补料</th>
@@ -56,7 +62,7 @@
                     <td>
                       <a href="javascript:void(0);">1453810</a>
                     </td>
-                    
+
                     <td>2018-3</td>
                     <td>中远</td>
                     <td>仁建20-1837</td>
@@ -64,20 +70,24 @@
                     <td>天津</td>
                     <td>4000</td>
                     <td>TB23565864563</td>
-                    <td><a href="javascript:void(0);">放纸箱</a></td>
+                    <td>
+                      <a id="dcd"  href="javascript:void(0);">放纸箱</a>
+                    </td>
                     <td>已提交</td>
                     <td>
-                        <a href="javascript:void(0);">运单</a>
+                      <a id="syd" href="javascript:void(0);">运单</a>
                     </td>
-                    <td class="fukuan"><a href="javascript:void(0);">已付款</a></td>
-                   
+                    <td class="fukuan">
+                      <a href="javascript:void(0);">已付款</a>
+                    </td>
+
                     <td>
-                        <a title="编辑" href="<{:url('admin/orderPort/port_details')}>" target= "_blank">
-                            <i class="layui-icon">&#xe642;</i>
-                        </a>
-                        <a title="删除" onclick="" href="javascript:;">
-                            <i class="layui-icon">&#xe640;</i>
-                        </a>
+                      <a title="编辑" href="<{:url('admin/orderPort/port_details')}>" target="_blank">
+                        <i class="layui-icon">&#xe642;</i>
+                      </a>
+                      <a title="删除" onclick="" href="javascript:;">
+                        <i class="layui-icon">&#xe640;</i>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
@@ -89,14 +99,40 @@
       </div>
     </div>
 
+    <!-- 付款窗口 -->
+    <div class="fuk1">
+      <form class="layui-form">
+        <div class="layui-form-item">
+          <label class="layui-form-label">付款状态</label>
+          <div class="layui-input-block">
+            <input name="sex" value="0" title="未付款" checked="" type="radio">
+            <input name="sex" value="1" title="已付款" type="radio">
+          </div>
+        </div>
+      </form>
+    </div>
     <script>
-    
-        // if($('.fukuan a').html() == '已付款'){
-        //     $('.fukuan a').css('color','green');
-        // }else{
-        //     $('.fukuan a').css('color','red');
-        // }
+      $('.fukuan').click(function () {
+        layer.open({
+          type: 1,
+          title: '是否付款',
+          area: '400px',
+          offset: 'auto',
+          shadeClose: 'true',
+          content: $('.fuk1'),
+          btn: ['确认'],
+          yes: function (index, layero) {
+            layer.close(index);
+            //ajax填写信息
+            // $.ajax        
+          },
+          end: function () {
+            $('.fuk1').hide();
+          }
+        })
+      });
     </script>
+    <script src="/static/admin/js/port_money.js" charset="utf-8"></script>
   </body>
 
   </html>
