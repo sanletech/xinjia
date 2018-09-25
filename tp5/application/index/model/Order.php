@@ -297,18 +297,15 @@ class Order extends Model
     }
     //处理装货费用和送货费用  订单号码和 装货 送货的信息
     public function truckage($order_num,$truckageData){
-        $truckageData = array(  'r'=>['car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
-                    'load_time'=>$data['r_load_time'],'phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
-                    's'=>['car_price'=>$data['s_car_price'],'num'=>$data['s_num'],'add'=>$data['s_add'],'car'=>$data['s_car'], 'comment'=>$data['s_comment']] );
-        $j=10;
         $container_code = time();   // 设置虚拟的柜号
         $insertR = $truckageData['r']; 
         $kr = array_keys($insertR);
-        
+//        $this->_p($insertR);$this->_p($kr);exit;
         $insertS = $truckageData['s'];
         $ks = array_keys($insertS);
+//           $this->_p($insertS);$this->_p($ks);exit;
         $response =[];
-        for($i=0;$i<count($insertR);$i++){
+        for($i=0;$i<count($insertR['num']);$i++){
             $tmp = array_combine($kr,array_column($insertR,$i));
             $tmp['order_num'] = $order_num;  $tmp['type']='r';
             for($k=0; $k<count($tmp['num']);$k++){
@@ -318,8 +315,8 @@ class Order extends Model
                 $res ? $response['success'][]=$tmp['container_code'].'添加成功':$response['fail'][]=$tmp['container_code'].'添加失败';
             }
         }
-        for($x=0;$x<count($insertR);$x++){
-            $temporary = array_combine($kr,array_column($insertS,$x));
+        for($x=0;$x<count($insertS['num']);$x++){
+            $temporary = array_combine($ks,array_column($insertS,$x));
             $temporary['order_num'] = $order_num;  $temporary['type']='s';
             ++$i;
             for($k=0; $k<count($temporary['num']);$k++){

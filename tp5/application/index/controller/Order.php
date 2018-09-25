@@ -241,7 +241,7 @@ class Order extends Base
     //港到港订单的处理
     public function port_data() {
         $data =$this->request->param(); 
-        $this->_p($data);
+//        $this->_p($data);exit;
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
         $mtime= date('y-m-d h:i:s');$member_code =Session::get('member_code','think');
@@ -259,8 +259,8 @@ class Order extends Base
         $discount = $Pirce->dicountPrice($member_code, $sea_id, $container_size, $payment_method, $special);
         //计算装货费用和送货费用
         $truckageData = array(  'r'=>['car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
-                    'load_time'=>$data['r_load_time'],'phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
-                    's'=>[$data['s_car_price'],$data['s_num'],$data['s_add'],$data['s_car'], $data['s_comment']] );
+                    'load_time'=>$data['r_load_time'],'link_phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
+                    's'=>['car_price'=>$data['s_car_price'],'num'=>$data['s_num'],'add'=>$data['s_add'],'car'=>$data['s_car'], 'comment'=>$data['s_comment']] );
         $truckagePrice = $Pirce->truckage($order_num, $truckageData);
         //计算出对应的海运费
         $seaPrice = Db::name('seaprice')->where('id',$data['sea_id'])->value('price_'.$container_size);
