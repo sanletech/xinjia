@@ -1,5 +1,8 @@
 {
     "require": {
-        "monolog/monolog": "^1.23"
+        "monolog/monolog": "1.2.*"
+    },
+    "config": {
+        "secure-http": false
     }
 }

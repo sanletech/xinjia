@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : root
-Source Server Version : 50553
+Source Server         : localhost_3306
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-23 19:12:42
+Date: 2018-09-25 18:32:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4841,6 +4841,49 @@ CREATE TABLE `hl_order_father` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `hl_order_port`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_order_port`;
+CREATE TABLE `hl_order_port` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `order_num` varchar(40) DEFAULT NULL COMMENT '订单号码',
+  `cargo` varchar(255) DEFAULT NULL COMMENT '货名',
+  `container_size` varchar(5) DEFAULT NULL COMMENT '集装箱子的规格20GP或者40HQ',
+  `container_sum` int(4) DEFAULT NULL COMMENT '一票柜子需要的集装箱数量',
+  `weight` int(11) DEFAULT NULL COMMENT '一票柜子的总重量',
+  `cargo_cost` int(11) DEFAULT NULL COMMENT '一柜货物保险金额',
+  `container_type_id` int(11) DEFAULT NULL COMMENT '装载各种类型货物的集装箱子',
+  `comment` varchar(250) DEFAULT NULL COMMENT '备注',
+  `mtime` datetime DEFAULT NULL COMMENT '修改时间',
+  `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
+  `belong_order` varchar(20) DEFAULT '0' COMMENT '从那里拆开的订单编码',
+  `state` int(5) DEFAULT NULL COMMENT '订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货',
+  `action` varchar(12) DEFAULT NULL COMMENT '状态说明',
+  `ctime` datetime DEFAULT NULL COMMENT '创建时间',
+  `payment_method` varchar(20) DEFAULT NULL COMMENT '收款方式,monthly月结pledge压柜cash现款 special特殊',
+  `special` int(11) DEFAULT NULL COMMENT '特别优惠的id',
+  `tax_rate` int(10) DEFAULT NULL COMMENT '税率种类选择1不需要,2为6%实际4% ,3为11%实际7%',
+  `invoice_id` varchar(10) DEFAULT NULL COMMENT '发票id',
+  `shipper_id` int(5) DEFAULT NULL COMMENT '发货人linkman_id',
+  `shipper` varchar(100) DEFAULT NULL COMMENT '订单的发货人资料,姓名,手机号,公司,地址',
+  `consigner_id` int(5) DEFAULT NULL COMMENT '收货人link_man联系id',
+  `consigner` varchar(100) DEFAULT NULL COMMENT '订单的收货人资料,姓名,手机号,公司,地址',
+  `seaprice_id` int(5) DEFAULT NULL COMMENT '海运价格表id',
+  `seaprice` int(4) DEFAULT NULL COMMENT '海运费',
+  `premium` int(4) DEFAULT NULL COMMENT '保险费',
+  `discount` int(2) DEFAULT NULL COMMENT '单个柜子的优惠金恩',
+  `carprice_r` int(5) DEFAULT NULL COMMENT '总的装货费',
+  `carprice_s` int(5) DEFAULT NULL COMMENT '送货总运费',
+  `quoted_price` float(5,0) DEFAULT NULL COMMENT '报价,总的费用',
+  `type` varchar(5) DEFAULT '' COMMENT '0删除1取消2待审核',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_order_port
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `hl_order_price`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_order_price`;
@@ -4964,6 +5007,35 @@ CREATE TABLE `hl_order_time` (
 
 -- ----------------------------
 -- Records of hl_order_time
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `hl_order_truckage`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_order_truckage`;
+CREATE TABLE `hl_order_truckage` (
+  `id` int(12) NOT NULL AUTO_INCREMENT COMMENT '订单号码',
+  `order_num` varchar(28) DEFAULT NULL COMMENT '订单号码',
+  `container_code` varchar(16) DEFAULT NULL COMMENT '一个运单号里的多个柜号再录入派车信息前为虚拟编码格式为运单号+月日+次序',
+  `state` int(12) DEFAULT NULL COMMENT '订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货',
+  `action` varchar(12) DEFAULT NULL COMMENT '状态说明',
+  `car_price` int(11) DEFAULT NULL COMMENT '装货车表的ID',
+  `num` varchar(12) DEFAULT NULL,
+  `add` int(10) DEFAULT NULL COMMENT '送货车表的ID',
+  `mtime` datetime DEFAULT NULL,
+  `link_man` varchar(12) DEFAULT NULL,
+  `shipper` varchar(12) DEFAULT NULL,
+  `load_time` datetime DEFAULT NULL,
+  `link_phone` varchar(12) DEFAULT NULL,
+  `car` varchar(12) DEFAULT NULL,
+  `comment` varchar(100) DEFAULT NULL,
+  `type` varchar(5) DEFAULT NULL COMMENT 'r装货s送货',
+  `seal` varchar(12) DEFAULT NULL COMMENT '封条号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_order_truckage
 -- ----------------------------
 
 -- ----------------------------
@@ -5740,7 +5812,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-22 10:37:44', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-25 05:07:50', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

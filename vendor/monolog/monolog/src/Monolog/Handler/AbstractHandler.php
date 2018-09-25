@@ -23,7 +23,7 @@ use Monolog\Formatter\LineFormatter;
 abstract class AbstractHandler implements HandlerInterface
 {
     protected $level = Logger::DEBUG;
-    protected $bubble = true;
+    protected $bubble = false;
 
     /**
      * @var FormatterInterface
@@ -32,12 +32,12 @@ abstract class AbstractHandler implements HandlerInterface
     protected $processors = array();
 
     /**
-     * @param int     $level  The minimum logging level at which this handler will be triggered
+     * @param integer $level  The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($level = Logger::DEBUG, $bubble = true)
     {
-        $this->setLevel($level);
+        $this->level = $level;
         $this->bubble = $bubble;
     }
 
@@ -77,8 +77,6 @@ abstract class AbstractHandler implements HandlerInterface
             throw new \InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
         }
         array_unshift($this->processors, $callback);
-
-        return $this;
     }
 
     /**
@@ -99,8 +97,6 @@ abstract class AbstractHandler implements HandlerInterface
     public function setFormatter(FormatterInterface $formatter)
     {
         $this->formatter = $formatter;
-
-        return $this;
     }
 
     /**
@@ -118,20 +114,17 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * Sets minimum logging level at which this handler will be triggered.
      *
-     * @param  int|string $level Level or level name
-     * @return self
+     * @param integer $level
      */
     public function setLevel($level)
     {
-        $this->level = Logger::toMonologLevel($level);
-
-        return $this;
+        $this->level = $level;
     }
 
     /**
      * Gets minimum logging level at which this handler will be triggered.
      *
-     * @return int
+     * @return integer
      */
     public function getLevel()
     {
@@ -141,22 +134,19 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * Sets the bubbling behavior.
      *
-     * @param  Boolean $bubble true means that this handler allows bubbling.
-     *                         false means that bubbling is not permitted.
-     * @return self
+     * @param Boolean $bubble True means that bubbling is not permitted.
+     *                        False means that this handler allows bubbling.
      */
     public function setBubble($bubble)
     {
         $this->bubble = $bubble;
-
-        return $this;
     }
 
     /**
      * Gets the bubbling behavior.
      *
-     * @return Boolean true means that this handler allows bubbling.
-     *                 false means that bubbling is not permitted.
+     * @return Boolean True means that bubbling is not permitted.
+     *                 False means that this handler allows bubbling.
      */
     public function getBubble()
     {
@@ -168,8 +158,6 @@ abstract class AbstractHandler implements HandlerInterface
         try {
             $this->close();
         } catch (\Exception $e) {
-            // do nothing
-        } catch (\Throwable $e) {
             // do nothing
         }
     }
