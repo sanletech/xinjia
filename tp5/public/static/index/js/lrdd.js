@@ -169,10 +169,8 @@ $('.bge_song input').each(function () {
 });
 input_a();
 function input_a() {
-  let i = 3; //默认循环三次
-  $('.biaoge input').bind('input propertychange', function () {
-    i--;
-    if (i == 0) {
+  var i = 0;
+  $('.biaoge input').bind('input propertychange', function () { 
       var $this = $(this);
       var text_length = $this.val().length;//获取当前文本框的长度
       var current_width = parseInt(text_length) * 11;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度
@@ -182,10 +180,9 @@ function input_a() {
       let container = $('#container_sum').find("option:selected").val();
       $('.bge .r_num').each(function () {
         shu += Number($(this).val());
-        console.log(shu);
         if (shu > container) {
+          i++;
           $(this).val('');
-          alert('当前数量大于柜量,请重新输入！');
           return false;
         }
       });
@@ -193,14 +190,17 @@ function input_a() {
       $('.bge_song .s_num').each(function () {
         fa += Number($(this).val());
         if (fa > container) {
-          alert('当前数量大于柜量,请重新输入！');
+          i++;
           $(this).val('');
           return false;
         }
       });
-      i = 3;
       st();//重新计算价格
-    }
+      if(i == 1 ){//避免重复跳出提示框
+        alert('当前数量大于柜量,请重新输入！');
+        i = 0;
+        return false;
+      }
   });
 }
 
