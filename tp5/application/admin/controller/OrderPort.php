@@ -43,6 +43,32 @@ class OrderPort extends Base
         }
     }
 
+            //审核订单
+    public function order_audit() 
+    {
+        $data = new OrderM;
+        $list = $data->order_audit();
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        return $this->view->fetch('orderPort/order_audit'); 
+    }
+    //审核订单 的通过
+    public function order_audit_pass() 
+    { 
+       if (request()->isAjax()){
+           $idArr =$this->request->param();
+           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>100,'action'=>'通过审核>待订舱']);
+           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+            foreach ($order_numArr as $order_num) {
+               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>100,'action'=>'通过审核>待订舱'], 'controller');
+            }
+           return json($res ? 1 : 0) ;
+       }
+    }
+    
     
     //港到港订单页
     public function portList()
