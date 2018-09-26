@@ -168,32 +168,36 @@ function input_a(){
 }
 
 //增加装货服务
+var p = 0;
 function zeng_bge(){
+  p++;
   $('.bge').append('<tr>'+
-  '<td><input name="r_car_price[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="r_num[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input class="r_price" name="r_car_price['+p+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input class="r_num" name="r_num['+p+']" type="text" value="" style="width: 100%"></td>'+
   '<td>柜</td>'+
-  '<td><input name="r_add[]" type="r_num[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="r_link_man[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="shipper[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="r_load_time[]" type="date" value="" style="width: 100%"></td>'+
-  '<td><input name="r_link_phone[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="r_car[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="r_comment[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_add['+p+']" type="r_num[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_link_man['+p+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="shipper['+p+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_load_time['+p+']" type="date" value="" style="width: 100%"></td>'+
+  '<td><input name="r_link_phone['+p+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_car['+p+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="r_comment['+p+']" type="text" value="" style="width: 100%"></td>'+
   '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>'+
 '</tr>');
 input_a();
 }
 
 //增加送货服务
+var o = 0;
 function zeng_song(){
+  o++;
   $('.bge_song').append('<tr>'+
-  '<td><input name="s_car_price[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="s_num[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input class="s_price" name="s_car_price['+o+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input class="s_num" name="s_num['+o+']" type="text" value="" style="width: 100%"></td>'+
   '<td>柜</td>'+
-  '<td><input name="s_add[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="s_car[]" type="text" value="" style="width: 100%"></td>'+
-  '<td><input name="s_comment[]" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_add['+o+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_car['+o+']" type="text" value="" style="width: 100%"></td>'+
+  '<td><input name="s_comment['+o+']" type="text" value="" style="width: 100%"></td>'+
   '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>'+
 '</tr>');
 input_a();

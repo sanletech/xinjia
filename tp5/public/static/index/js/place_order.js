@@ -243,7 +243,7 @@ function zhuanghuo(){
     let dan = 0;
     let shu = 0;
     zong_zhuang = 0;
-    $('.bge input[name="r_car_price[]"],.bge input[name="r_num[]"]').each(function(){
+    $('.bge .r_price,.bge .r_num').each(function(){
         op++;
         if (op%2) {
             dan = $(this).val();
@@ -262,7 +262,7 @@ function songhuo(){
     let dan = 0;
     let shu = 0;
     zong_song = 0;
-    $('.bge_song input[name="s_car_price[]"],.bge_song input[name="s_num[]"]').each(function(){
+    $('.bge_song .s_price,.bge_song .s_num').each(function(){
         op++;
         if (op%2) {
             dan = $(this).val();
