@@ -2,8 +2,7 @@
 <{include file='./public/header' /}>
 
   <body>
-    <link rel="stylesheet" href="__STATIC__/css/port.css">
-    <script src="/static/admin/lib/layui/layui.all.js" charset="utf-8"></script>
+    <script src="__STATIC__/lib/layui/layui.all.js" charset="utf-8"></script>
     <style>
       .fuk1 {
         display: none;
@@ -70,12 +69,12 @@
                     <td>天津</td>
                     <td>4000</td>
                     <td>TB23565864563</td>
-                    <td>
-                      <a id="dcd"  href="javascript:void(0);">放纸箱</a>
+                    <td class="layui-upload">
+                      <a class="dcd"  href="javascript:void(0);">放纸箱</a>
                     </td>
-                    <td>已提交</td>
-                    <td>
-                      <a id="syd" href="javascript:void(0);">运单</a>
+                    <td >已提交</td>
+                    <td class="layui-upload">
+                      <a class="syd" href="javascript:void(0);">运单</a>
                     </td>
                     <td class="fukuan">
                       <a href="javascript:void(0);">已付款</a>
@@ -132,7 +131,7 @@
         })
       });
     </script>
-    <script src="/static/admin/js/port_money.js" charset="utf-8"></script>
+    <script src="__STATIC__/js/port_money.js"></script>
   </body>
 
   </html>

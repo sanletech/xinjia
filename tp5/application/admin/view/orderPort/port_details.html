@@ -38,6 +38,14 @@
                                 <label class="layui-form-label">订舱单</label>
                                 <div class="layui-input-block">
                                     <a href="#">上传</a>
+
+                                    <div class="layui-upload">
+                                        <button type="button" class="layui-btn" id="test1">上传图片</button>
+                                        <div class="layui-upload-list">
+                                            <img class="layui-upload-img" id="demo1">
+                                            <p id="demoText"></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +87,7 @@
 
 
                         <div class="guix">
-                            <div class="wenzi">柜型-柜号：</div>
+                            <div class="wenzi">柜号-封号：</div>
                             <div class="ggh">
                                 <div class="layui-form-item">
                                     <div class="guinei">
@@ -376,10 +384,11 @@
                                                 <input type="text" value="1">
                                             </td>
                                             <td>
-                                                <select name='' class="">
-                                                    <option value='1' selected>柜</option>
+                                                    柜
+                                                <!-- <select name='' class="">
+                                                    <option value='1' selected></option>
                                                     <option value='2'>票</option>
-                                                </select>
+                                                </select> -->
                                             </td>
                                             <td>
                                                 <input type="text" value="广州省天河区长福路口长信256">
@@ -403,7 +412,7 @@
                                                 <input type="text" value="贤心z四道口附近啊">
                                             </td>
                                             <td class="dele">
-                                                <span></span>
+                                                <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -438,10 +447,11 @@
                                                 <input type="text" value="1">
                                             </td>
                                             <td>
-                                                <select>
-                                                    <option value='1' selected>柜</option>
+                                                    柜
+                                                <!-- <select>
+                                                    <option value='1' selected></option>
                                                     <option value='2'>票</option>
-                                                </select>
+                                                </select> -->
                                             </td>
                                             <td>
                                                 <input type="text" value="广州省天河区长福路口长信256">
@@ -453,7 +463,7 @@
                                                 <input type="text" value="贤心z四道口附近啊">
                                             </td>
                                             <td class="dele">
-                                                <span></span>
+                                                <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -588,9 +598,13 @@
         </div>
 
 
-
+        <script>
+            var loading = false;//装货状态
+            var delivery = false;//送货状态
+        </script>
         <script src="__STATIC__/../index/js/lrdd.js"></script>
         <script src="__STATIC__/../index/js/place_order.js"></script>
+        <script src="__STATIC__/js/port_money.js"></script>
         <script>
             $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();
             $('.in').css('border', '1px solid #e6e6e6');
