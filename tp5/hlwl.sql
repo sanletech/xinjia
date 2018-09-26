@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-25 18:32:54
+Date: 2018-09-26 17:42:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4861,7 +4861,7 @@ CREATE TABLE `hl_order_port` (
   `action` varchar(12) DEFAULT NULL COMMENT '状态说明',
   `ctime` datetime DEFAULT NULL COMMENT '创建时间',
   `payment_method` varchar(20) DEFAULT NULL COMMENT '收款方式,monthly月结pledge压柜cash现款 special特殊',
-  `special` int(11) DEFAULT NULL COMMENT '特别优惠的id',
+  `special_id` int(11) DEFAULT NULL COMMENT '特别优惠的id',
   `tax_rate` int(10) DEFAULT NULL COMMENT '税率种类选择1不需要,2为6%实际4% ,3为11%实际7%',
   `invoice_id` varchar(10) DEFAULT NULL COMMENT '发票id',
   `shipper_id` int(5) DEFAULT NULL COMMENT '发货人linkman_id',
@@ -4877,10 +4877,29 @@ CREATE TABLE `hl_order_port` (
   `quoted_price` float(5,0) DEFAULT NULL COMMENT '报价,总的费用',
   `type` varchar(5) DEFAULT '' COMMENT '0删除1取消2待审核',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
+-- ----------------------------
+INSERT INTO `hl_order_port` VALUES ('1', 'A926548346305370', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', null, null, '2018-09-26 05:40:34', 'installment', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', null, '6555', '3000', '555', '700', '800', '22500', '2');
+INSERT INTO `hl_order_port` VALUES ('2', 'A926548425805374', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', null, null, '2018-09-26 05:40:42', 'installment', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', null, '6555', '3000', '555', '800', '800', '22600', '2');
+INSERT INTO `hl_order_port` VALUES ('3', 'A926548516505376', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', null, null, '2018-09-26 05:40:51', 'installment', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', null, '6555', '3000', '555', '800', '500', '22300', '2');
+
+-- ----------------------------
+-- Table structure for `hl_order_port_status`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_order_port_status`;
+CREATE TABLE `hl_order_port_status` (
+  `id` int(5) DEFAULT NULL,
+  `order_num` varchar(15) DEFAULT NULL,
+  `status` int(5) DEFAULT NULL COMMENT '0删除1取消2待审核3录入运单号和上传文件4客户提交柜号5根据收款状态6上传水运单文件',
+  `title` varchar(15) DEFAULT NULL,
+  `mtime` datetime DEFAULT NULL COMMENT '状态变化的时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_order_port_status
 -- ----------------------------
 
 -- ----------------------------
@@ -5021,7 +5040,7 @@ CREATE TABLE `hl_order_truckage` (
   `action` varchar(12) DEFAULT NULL COMMENT '状态说明',
   `car_price` int(11) DEFAULT NULL COMMENT '装货车表的ID',
   `num` varchar(12) DEFAULT NULL,
-  `add` int(10) DEFAULT NULL COMMENT '送货车表的ID',
+  `add` varchar(22) DEFAULT NULL COMMENT '地址',
   `mtime` datetime DEFAULT NULL,
   `link_man` varchar(12) DEFAULT NULL,
   `shipper` varchar(12) DEFAULT NULL,
@@ -5032,11 +5051,29 @@ CREATE TABLE `hl_order_truckage` (
   `type` varchar(5) DEFAULT NULL COMMENT 'r装货s送货',
   `seal` varchar(12) DEFAULT NULL COMMENT '封条号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_truckage
 -- ----------------------------
+INSERT INTO `hl_order_truckage` VALUES ('1', 'A926548346305370', '153795483400', null, null, '100', '1', '搜索法', null, '司法所', '撒旦发射', '2018-09-26 00:00:00', '545431', '速读法', '撒旦发射', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('2', 'A926548346305370', '153795483410', null, null, '300', '2', '发顺丰', null, '撒旦发射', '始发', '2018-09-26 00:00:00', '5313213', '速读法', '啊是否打算', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('3', 'A926548346305370', '153795483411', null, null, '300', '2', '发顺丰', null, '撒旦发射', '始发', '2018-09-26 00:00:00', '5313213', '速读法', '啊是否打算', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('4', 'A926548346305370', '153795483420', null, null, '300', '2', '法撒旦法', null, null, null, null, null, '盛大发售', '是短发散发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('5', 'A926548346305370', '153795483421', null, null, '300', '2', '法撒旦法', null, null, null, null, null, '盛大发售', '是短发散发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('6', 'A926548346305370', '153795483430', null, null, '200', '1', '发撒旦法', null, null, null, null, null, '发生发生', ' 啊速读法啊岁', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('7', 'A926548425805374', '153795484200', null, null, '200', '1', '搜索法', null, '司法所', '撒旦发射', '2018-09-26 00:00:00', '545431', '速读法', '撒旦发射', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('8', 'A926548425805374', '153795484210', null, null, '300', '2', '发顺丰', null, '撒旦发射', '始发', '2018-09-26 00:00:00', '5313213', '速读法', '啊是否打算', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('9', 'A926548425805374', '153795484211', null, null, '300', '2', '发顺丰', null, '撒旦发射', '始发', '2018-09-26 00:00:00', '5313213', '速读法', '啊是否打算', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('10', 'A926548425805374', '153795484220', null, null, '300', '2', '法撒旦法', null, null, null, null, null, '盛大发售', '是短发散发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('11', 'A926548425805374', '153795484221', null, null, '300', '2', '法撒旦法', null, null, null, null, null, '盛大发售', '是短发散发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('12', 'A926548425805374', '153795484230', null, null, '200', '1', '发撒旦法', null, null, null, null, null, '发生发生', ' 啊速读法啊岁', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('13', 'A926548516505376', '153795485100', null, null, '200', '1', '搜索法', null, '司法所', '撒旦发射', '2018-09-26 00:00:00', '545431', '速读法', '撒旦发射', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('14', 'A926548516505376', '153795485110', null, null, '300', '2', '发顺丰', null, '撒旦发射', '始发', '2018-09-26 00:00:00', '5313213', '速读法', '啊是否打算', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('15', 'A926548516505376', '153795485111', null, null, '300', '2', '发顺丰', null, '撒旦发射', '始发', '2018-09-26 00:00:00', '5313213', '速读法', '啊是否打算', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('16', 'A926548516505376', '153795485120', null, null, '150', '2', '法撒旦法', null, null, null, null, null, '盛大发售', '是短发散发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('17', 'A926548516505376', '153795485121', null, null, '150', '2', '法撒旦法', null, null, null, null, null, '盛大发售', '是短发散发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('18', 'A926548516505376', '153795485130', null, null, '200', '1', '发撒旦法', null, null, null, null, null, '发生发生', ' 啊速读法啊岁', 's', null);
 
 -- ----------------------------
 -- Table structure for `hl_port`

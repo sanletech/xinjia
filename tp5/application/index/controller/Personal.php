@@ -49,6 +49,11 @@ class Personal extends Base
     //港到港订单
     public function place_order()
     {
+        $member_code =Session::get('member_code','think');
+        $data =Db::name('order_port')->alias('OP')
+                ->join('hl_order_port_status OPS','OP.order_num = OPS.order_num','left')
+                ->where('OP.member_code',$member_code)->field('OP.*,OPS.title,max(OPS.status),OPS.mtime')
+                ->group('OPS.id,OP.id')->find();
        return $this->view->fetch('personal/place_order_details');
     }
 
