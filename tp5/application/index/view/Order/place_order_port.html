@@ -1,4 +1,4 @@
-  <{include file='./public/head' /}>
+<{include file='./public/head' /}>
 
   <body>
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
@@ -35,14 +35,16 @@
             <div class="layui-col-xs3 dd">
               <div class="zhong">
                 <div>
-                  <h2><{$list.ship_short_name}></h2>
+                  <h2>
+                    <{$list.ship_short_name}>
+                  </h2>
                 </div>
               </div>
             </div>
             <div class="layui-col-xs6 dd">
               <div class="zhong">
                 <div class="layui-col-xs5">
-                  
+
                   <h3>
                     <{$list.r_port_name}>
                   </h3>
@@ -54,18 +56,19 @@
                 <div class="layui-col-xs2 jitian">
                   <!-- <i class="fa fa-ship fa-2x"></i> -->
                   <div class="hui">
-                      <span>3天</span>
-                    </div>
-                    <div class="jian">
-                      <div class="j"></div>
-                    </div>
-                    <div class="hui">
-                        <{$list.boat_name}>/<{$list.boat_code}>
-                    </div>
+                    <span>3天</span>
+                  </div>
+                  <div class="jian">
+                    <div class="j"></div>
+                  </div>
+                  <div class="hui">
+                    <{$list.boat_name}>/
+                      <{$list.boat_code}>
+                  </div>
                 </div>
 
                 <div class="layui-col-xs5">
-                  
+
                   <h3>
                     <{$list.s_port_name}>
                   </h3>
@@ -81,7 +84,9 @@
                   <{$list.container_size}>
                 </span>
                 <p>￥
-                  <strong class="money"><{$list.price}></strong>
+                  <strong class="money">
+                    <{$list.price}>
+                  </strong>
                 </p>
               </div>
               <div class="you">价格说明：这是纯运费</div>
@@ -217,15 +222,15 @@
             <span>发票信息提醒：平台支持开具6%的服务费增值税专用发票，订单完成后联系客服沟通开发票</span>
           </div>
           <div class="dd_nei">
-              <div class="layui-col-xs4 er" style="display: none">
-                  <div class="grid-demo" style="margin-top: 0px;">
-                    <div class="layui-col-xs3">
-                      <span>*&nbsp;</span>柜型：</div>
-                    <div class="layui-col-xs6">
-                        <input  type="text" name="container_size" value="<{$list.container_size}>" readOnly="true">
-                    </div>
-                  </div>
+            <div class="layui-col-xs4 er" style="display: none">
+              <div class="grid-demo" style="margin-top: 0px;">
+                <div class="layui-col-xs3">
+                  <span>*&nbsp;</span>柜型：</div>
+                <div class="layui-col-xs6">
+                  <input type="text" name="container_size" value="<{$list.container_size}>" readOnly="true">
                 </div>
+              </div>
+            </div>
             <div class="layui-col-xs4 er">
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
@@ -268,15 +273,17 @@
                   <span>*&nbsp;</span>结账方式：</div>
                 <div class="layui-col-xs6">
                   <div class="select">
-                    <select  name="payment_method" class='mony_fs'>
-                        <option title="<{$discount.installment}>" value='installment'>到港付</option> 
-                       <option  title="<{$discount.month}>" value='month'>月结付</option>
-                    <{empty name="$discount.special"}>
-                    <option title="<{$discount.month}>" value='cash' >在线结付(优惠)</option>"
-                    <{else /}>
-                    <option  title="<{$discount.month}>"  value='cash' disabled='true' >在线结付(优惠)</option>
-                    <option title="<{$discount['special']['promotion']}>" value="<{$discount['special']['promotion_id']}>" ><{$discount['special']['promotion_title']}></option>
-                    <{/empty}>
+                    <select name="payment_method" class='mony_fs'>
+                      <option title="<{$discount.installment}>" value='installment'>到港付</option>
+                      <option title="<{$discount.month}>" value='month'>月结付</option>
+                      <{empty name="$discount.special" }>
+                        <option title="<{$discount.month}>" value='cash'>在线结付(优惠)</option>"
+                        <{else /}>
+                          <option title="<{$discount.month}>" value='cash' disabled='true'>在线结付(优惠)</option>
+                          <option title="<{$discount['special']['promotion']}>" value="<{$discount['special']['promotion_id']}>">
+                            <{$discount[ 'special'][ 'promotion_title']}>
+                          </option>
+                          <{/empty}>
                     </select>
                   </div>
                 </div>
@@ -343,178 +350,192 @@
               <strong>￥
                 <span id="price_sum">0.00</span>元</strong>
             </span> -->
-          </div> 
-
-          <!-- 拖车服务 -->
-          <div class="xxtx_dd">
-            <div class="xx">
-              <strong>拖车服务</strong>
-            </div>
-
-            <div class="dd_nei">
-              <div class="layui-col-xs12 layui-form er">
-                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
-                <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
-                <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
-              </div>
-              <div class="layui-col-xs12 er biaoge zhuanghuo">
-                <table class="layui-table" lay-size="sm">
-                  <thead>
-                    <tr>
-                      <th>单价</th>
-                      <th>数量</th>
-                      <th>单位</th>
-                      <th>装货地址</th>
-                      <th>联系人姓名</th>
-                      <th>货主名称</th>
-                      <th>装货时间</th>
-                      <th>联系电话</th>
-                      <th>指定车队</th>
-                      <th>备注</th>
-                      <th>操作</th>
-                    </tr>
-                  </thead>
-                  <tbody class="bge">
-                    <tr>
-                      <td>
-                        <input name="r_car_price[]" type="text" value="">
-                      </td>
-                      <td>
-                        <input name="r_num[]" type="text" value="">
-                      </td>
-                      <td>柜</td>
-                      <td>
-                        <input name="r_add[]" type="text" value="">
-                      </td>
-                      <td>
-                        <input name="r_link_man[]" type="text" value="">
-                      </td>
-                      <td>
-                        <input name="shipper[]" type="text" value="">
-                      </td>
-                      <td>
-                        <input name="r_load_time[]" type="date" value="">
-                      </td>
-                      <td>
-                        <input name="r_link_phone[]" type="text" value="">
-                      </td>
-                      <td>
-                        <input name="r_car[]" type="text" value="">
-                      </td>
-                      <td>
-                        <input name="r_comment[]" type="text" value="">
-                      </td>
-                      <td class="dele">
-                        <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="zhuanghuo()">确定</a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div class="dd_nei">
-                <div class="layui-col-xs12 layui-form er">
-                  <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
-                  <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
-                  <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
-                </div>
-                <div class="layui-col-xs12 er biaoge songhuo">
-                  <table class="layui-table" lay-size="sm">
-                    <thead>
-                      <tr>
-                        <th>单价</th>
-                        <th>数量</th>
-                        <th>单位</th>
-                        <th>送货地址</th>
-                        <th>指定车队</th>
-                        <th>备注</th>
-                        <th>操作</th>
-                      </tr>
-                    </thead>
-                    <tbody class="bge_song">
-                      <tr>
-                        <td>
-                          <input name="s_car_price[]" type="text" value="">
-                        </td>
-                        <td>
-                           <input name="s_num[]" type="text" value="">
-                        </td>
-                        <td>柜</td>
-                        <td>
-                          <input name="s_add[]" type="text" value="">
-                        </td>
-                        <td>
-                          <input name="s_car[]" type="text" value="">
-                        </td>
-                        <td>
-                          <input name="s_comment[]" type="text" value="">
-                        </td>
-                        <td class="dele">
-                            <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="songhuo()">确定</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-          </div>
-
-          <!-- 详细费用 -->
-          <div class="xxtx_dd er">
-            <div class="xx">
-              <strong>详细费用</strong>
-            </div>
-            <div class="feiyong">
-              <div class="layui-col-xs12">
-                <span>海运费：</span><{$list.price}>元<span class="shuo">已包含：双边</span>
-              </div>
-              <div class="layui-col-xs12">
-                <span>保险费：</span><qi id="bxje1">0</qi>元<span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
-              </div>
-              <div class="layui-col-xs12">
-                <span>装货费用：</span><pi id="zhuang">0</pi>元
-              </div>
-              <div class="layui-col-xs12">
-                <span>送货费用：</span><pi id="song">0</pi>元
-              </div>
-              <div class="layui-col-xs12">
-                <span>优惠：</span><strong>0</strong>元<span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
-              </div>
-              <div class="layui-col-xs12">
-                <span>总费用：</span><strong class="zongfei" id="price_sum">0</strong>元
-              </div>
-            </div>
-          </div>
-
-          <!-- 条款声明 -->
-          <div class="xxtx_dd er">
-            <div class="xx">
-              <strong>条款声明</strong>
-            </div>
-            <!-- 条款内容 -->
-            <div class="hx">
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-              <p>sdfsdf</p>
-            </div>
-          </div>
-
-          <div class="tjiao">
-            <a href="javascript:;" onclick="order_data()">确认订单</a>
-            <a class="shi" href="javascript:void(0);">取消</a>
           </div>
         </div>
+      </div>
     </form>
+    <div class="xxtx">
+      <!-- 拖车服务 -->
+      <div class="xxtx_dd">
+        <div class="xx">
+          <strong>拖车服务</strong>
+        </div>
+
+        <div class="dd_nei">
+          <div class="layui-col-xs12 layui-form er">
+            <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
+            <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
+            <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
+          </div>
+          <div class="layui-col-xs12 er biaoge zhuanghuo">
+            <table class="layui-table" lay-size="sm">
+              <thead>
+                <tr>
+                  <th>单价</th>
+                  <th>数量</th>
+                  <th>单位</th>
+                  <th>装货地址</th>
+                  <th>联系人姓名</th>
+                  <th>货主名称</th>
+                  <th>装货时间</th>
+                  <th>联系电话</th>
+                  <th>指定车队</th>
+                  <th>备注</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody class="bge">
+                <tr>
+                  <td>
+                    <input name="r_car_price[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="r_num[]" type="text" value="">
+                  </td>
+                  <td>柜</td>
+                  <td>
+                    <input name="r_add[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="r_link_man[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="shipper[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="r_load_time[]" type="date" value="">
+                  </td>
+                  <td>
+                    <input name="r_link_phone[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="r_car[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="r_comment[]" type="text" value="">
+                  </td>
+                  <td class="dele">
+                    <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="zhuanghuo()">确定</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="dd_nei">
+          <div class="layui-col-xs12 layui-form er">
+            <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
+            <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
+            <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
+          </div>
+          <div class="layui-col-xs12 er biaoge songhuo">
+            <table class="layui-table" lay-size="sm">
+              <thead>
+                <tr>
+                  <th>单价</th>
+                  <th>数量</th>
+                  <th>单位</th>
+                  <th>送货地址</th>
+                  <th>指定车队</th>
+                  <th>备注</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody class="bge_song">
+                <tr>
+                  <td>
+                    <input name="s_car_price[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="s_num[]" type="text" value="">
+                  </td>
+                  <td>柜</td>
+                  <td>
+                    <input name="s_add[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="s_car[]" type="text" value="">
+                  </td>
+                  <td>
+                    <input name="s_comment[]" type="text" value="">
+                  </td>
+                  <td class="dele">
+                    <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="songhuo()">确定</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 详细费用 -->
+      <div class="xxtx_dd er">
+        <div class="xx">
+          <strong>详细费用</strong>
+        </div>
+        <div class="feiyong">
+          <div class="layui-col-xs12">
+            <span>海运费：</span>
+            <pi id="money"><{$list.price}></pi>元
+              <span class="shuo">已包含：双边</span>
+          </div>
+          <div class="layui-col-xs12">
+            <span>保险费：</span>
+            <pi id="bxje1">0</pi>元
+            <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+          </div>
+          <div class="layui-col-xs12">
+            <span>装货费用：</span>
+            <pi id="zhuang">0</pi>元
+          </div>
+          <div class="layui-col-xs12">
+            <span>送货费用：</span>
+            <pi id="song">0</pi>元
+          </div>
+          <div class="layui-col-xs12">
+            <span>优惠：</span>
+            <strong id="discount">0</strong>元
+            <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+          </div>
+          <div class="layui-col-xs12">
+            <span>总费用：</span>
+            <strong class="zongfei" id="price_sum">0</strong>元
+          </div>
+        </div>
+      </div>
+
+      <!-- 条款声明 -->
+      <div class="xxtx_dd er">
+        <div class="xx">
+          <strong>条款声明</strong>
+        </div>
+        <!-- 条款内容 -->
+        <div class="hx">
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+          <p>sdfsdf</p>
+        </div>
+      </div>
+
+      <div class="tjiao">
+        <a href="javascript:;" onclick="order_data()">确认订单</a>
+        <a class="shi" href="javascript:void(0);">取消</a>
+      </div>
+    </div>
+  
+
+
     <!-- 填写发票窗口 -->
     <div id="modal-default">
       <form class="layui-form" id='invoice_form'>
@@ -662,25 +683,25 @@
       </div>
     </div>
     <script>
-        //详情页
-        var xiangqing  = "<{:url('index/Order/place_details')}>"
-        // 获取session 的客户的code
-        var member_code = '<{$Think.session.member_code}>';
-        //客户的收货人,发货人选择
-        var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
-        //收货/发货人的表单提交 
-        var linkmanUrl = "<{:url('index/order/linkman')}>";
-        // 发票的信息提交 
-        var invoiceUrl = "<{:url('index/order/invoice')}>";
-        //订单信息的提交
-        var OrderUrl = "<{:url('index/order/port_data')}>";
-      </script>
+      //详情页
+      var xiangqing = "<{:url('index/Order/place_details')}>"
+      // 获取session 的客户的code
+      var member_code = '<{$Think.session.member_code}>';
+      //客户的收货人,发货人选择
+      var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
+      //收货/发货人的表单提交 
+      var linkmanUrl = "<{:url('index/order/linkman')}>";
+      // 发票的信息提交 
+      var invoiceUrl = "<{:url('index/order/invoice')}>";
+      //订单信息的提交
+      var OrderUrl = "<{:url('index/order/port_data')}>";
+    </script>
     <script src="__STATIC__/js/lrdd.js"></script>
     <script src="__STATIC__/js/place_order.js"></script>
     <script>
       $('.in').css('border', '1px solid #e6e6e6');
-        $('.in').removeAttr('readonly');
-        input_null();
+      $('.in').removeAttr('readonly');
+      input_null();
     </script>
   </body>
 
