@@ -252,7 +252,7 @@ class Order extends Base
             $special= $payment_method;
             $payment_method='special';
         }  else {
-            $special= '';
+            $special= 0;
         }
         $Pirce =new OrderM;
         //计算单个柜优惠的金额
@@ -266,23 +266,33 @@ class Order extends Base
         $seaPrice = Db::name('seaprice')->where('id',$data['sea_id'])->value('price_'.$container_size);
         //计算总共的成本 (海运费 -优惠)*柜子数量 + 保险金额*6 + 装货费 +送货费;
         $quoted_price= ($seaPrice-$discount)*$data['container_sum'] + ($data['cargo_cost']*6) +$truckagePrice['carprice_r']+$truckagePrice['carprice_s'];
-        if($quoted_price!== $data['price_sum'] ){
+//        var_dump($seaPrice,$discount,$truckagePrice['carprice_r'],$truckagePrice['carprice_s']);exit;
+     
+        if(!(abs($quoted_price- $data['price_sum'])<0.00001)){
             return array('status'=>0,'mssage'=>'报价错误');
         } 
-        $shipper = implode(',',$data['r_name'],$data['r_company'],$data['r_phone']);
-        $consigner = implode(',',$data['s_name'],$data['s_company'],$data['s_phone']);
+        if(!array_key_exists('invoice_if',$data)){
+            $data['invoice_if']=0;
+        }
+        
+        $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone']));
+        $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone']));
         $fatherData= array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
         'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
         'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
-        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],'tax_rate'=>$data['tax_rate'],
+        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'type'=>2);
-        //查询是否已经有了同样的订单了
-        $res = Db::name('order_port')->where(['member_code'=>$member_code,'quoted_price'=>$quoted_price])->find();
+        //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
+        $starttime=date("y-m-d h:i:s", strtotime("-90 seconds", time()));
+        $res = Db::name('order_port')->where(['member_code'=>$member_code,'quoted_price'=>$quoted_price])->where('ctime','between',[$starttime,$mtime])->find();
         if(empty($res)){
-          $res1 = Db::name('order_port')->insert($fatherData); 
-        } 
-        return $res1 ? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');
+            $res1 = Db::name('order_port')->insert($fatherData); 
+            return $res1 ? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');
+        } else {
+            return array('status'=>0,'mssage'=>'订单重复提交');
+        }
+        
                 
     }
     

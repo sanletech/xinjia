@@ -305,22 +305,20 @@ class Order extends Model
         $ks = array_keys($insertS);
 //           $this->_p($insertS);$this->_p($ks);exit;
         $response =[];
-        for($i=0;$i<count($insertR['num']);$i++){
+        foreach ($insertR['num'] as $i => $v) {
             $tmp = array_combine($kr,array_column($insertR,$i));
             $tmp['order_num'] = $order_num;  $tmp['type']='r';
-            for($k=0; $k<count($tmp['num']);$k++){
-                $tmp['num'] = $i;
+            for($k=0; $k<$tmp['num'];$k++){
                 $tmp['container_code']=$container_code.$i.$k;
                 $res =Db::name('order_truckage')->insert($tmp);
                 $res ? $response['success'][]=$tmp['container_code'].'添加成功':$response['fail'][]=$tmp['container_code'].'添加失败';
             }
         }
-        for($x=0;$x<count($insertS['num']);$x++){
+          foreach ($insertS['num'] as $x => $value) {
             $temporary = array_combine($ks,array_column($insertS,$x));
             $temporary['order_num'] = $order_num;  $temporary['type']='s';
             ++$i;
-            for($k=0; $k<count($temporary['num']);$k++){
-                $temporary['num'] = $x;
+            for($k=0; $k<$temporary['num'];$k++){
                 $temporary['container_code']=$container_code.$i.$k;
                 $res =Db::name('order_truckage')->insert($temporary);
                 $res ? $response['success'][]= $temporary['container_code'].'添加成功':$response['fail'][]= $temporary['container_code'].'添加失败';
