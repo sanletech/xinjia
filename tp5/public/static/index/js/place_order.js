@@ -159,10 +159,11 @@ function order_data() {
     $.each(data,function(i,v){
         obj[v.name] = v.value;
     });
-    obj['money'] = $('.money').html();//纯运费
+    obj['money'] = $('#money').html();//纯运费
     obj['premium'] = $('#bxje1').html();//保险费
     obj['portprice_r'] = $('#zhuang').html();//装货费用
     obj['portprice_s'] = $('#song').html();//送货费用
+    obj['discount'] = $('#discount').html();//优惠价格
     obj['price_sum'] = $('#price_sum').html();//总运费
     console.log(obj);
     toajax(OrderUrl, obj);
@@ -183,6 +184,7 @@ function toajax(url, data) {
     });
     //return false;//只此一
 }
+var mony_fs = 0;
 //计算运费
 function zong_sum(shu,zs) {
     var money = $('.money').text();//纯运费
@@ -196,24 +198,39 @@ function zong_sum(shu,zs) {
         zong = zong * 1.07;
     }
     zong += zs;//装货服务费
+    zong -= mony_fs;//减去优惠价格
     zong = Math.round(zong*100)/100;//保留小数点后面两位
     $('#price_sum').html(zong); 
 }
+
 $('#container_sum').change(function () {//监听柜量
-    zong_sum(0);
+    youhui();
 })
+
+$('.mony_fs').change(function(){ //监听结账方式
+    youhui();
+});
+youhui();
+function youhui(){ //优惠价格
+    let mony = $(".mony_fs").find("option:selected").attr('title');
+    let container = $('#container_sum').find("option:selected").val();
+    mony_fs = mony * container;
+    $('#discount').html(mony_fs);
+    zong_sum(0,0);
+}
+
 $('#bxje').bind('input propertychange', function () {//监听保险金额
-    zong_sum(0);   
+    zong_sum(0,0);   
     $('#bxje1').html($('#bxje').val() * 6);
 });
 $('.fp01').change(function () {//发票柜量
     let fp = $(this).children('option:selected').val();
     if (fp == 1) {//6%
-        zong_sum(fp);    
+        zong_sum(fp,0);    
     } else if (fp == 2) {//10%
-        zong_sum(fp);
+        zong_sum(fp,0);
     }else{//0%
-        zong_sum(0);
+        zong_sum(0,0);
     }
 });
 
@@ -226,7 +243,7 @@ function zhuanghuo(){
     let dan = 0;
     let shu = 0;
     zong_zhuang = 0;
-    $('.bge input[name="r_car_price[]"],.bge input[name="r_num[]"]').each(function(){
+    $('.bge .r_price,.bge .r_num').each(function(){
         op++;
         if (op%2) {
             dan = $(this).val();
@@ -245,7 +262,7 @@ function songhuo(){
     let dan = 0;
     let shu = 0;
     zong_song = 0;
-    $('.bge_song input[name="s_car_price[]"],.bge_song input[name="s_num[]"]').each(function(){
+    $('.bge_song .s_price,.bge_song .s_num').each(function(){
         op++;
         if (op%2) {
             dan = $(this).val();
