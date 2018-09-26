@@ -193,11 +193,11 @@ function zong_sum(shu,zs) {
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje;//总价格
     if (shu == 1) {//发票6%
-        zong = zong * 1.04;     
+        zong = zong * 1.04;
     }else if(shu == 2){//发票10%
         zong = zong * 1.07;
     }
-    zong += zs;//装货服务费
+    zong += zs;//装货服务费    
     zong -= mony_fs;//减去优惠价格
     zong = Math.round(zong*100)/100;//保留小数点后面两位
     $('#price_sum').html(zong); 
@@ -252,7 +252,11 @@ function zhuanghuo(){
             zong_zhuang+=dan*shu;
             $('#zhuang').html(zong_zhuang);
         }   
-    })
+    });    
+    if ($('.bge .r_price').length == 0) {
+        $('#zhuang').html(0);
+        zong_zhuang = 0;
+    }
     zs_sum = zong_zhuang + zong_song;
     zong_sum(0,zs_sum);
 }
@@ -271,7 +275,33 @@ function songhuo(){
             zong_song+=dan*shu;
             $('#song').html(zong_song);
         }   
-    })
+    });
+
+    if ($('.bge_song .s_price').length == 0) {
+        $('#song').html(0);
+        zong_song = 0;
+    }
     zs_sum = zong_zhuang + zong_song;
     zong_sum(0,zs_sum);
+}
+
+
+function st(){
+    if (loading) {//判断装货状态
+        zhuanghuo();
+    }else{
+        $('#zhuang').html(0);
+        zong_zhuang = 0;
+        zs_sum = zong_zhuang + zong_song;        
+        zong_sum(0,zs_sum);
+    }
+
+    if(delivery){//判断送货状态
+        songhuo();
+    }else{
+        $('#song').html(0);
+        zong_song = 0;
+        zs_sum = zong_zhuang + zong_song;
+        zong_sum(0,zs_sum);
+    }
 }

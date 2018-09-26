@@ -364,7 +364,6 @@
           <div class="layui-col-xs12 layui-form er">
             <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
             <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
-            <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
           </div>
           <div class="layui-col-xs12 er biaoge zhuanghuo">
             <table class="layui-table" lay-size="sm">
@@ -414,7 +413,7 @@
                     <input name="r_comment[0]" type="text" value="">
                   </td>
                   <td class="dele">
-                    <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="zhuanghuo()">确定</a>
+                    <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
                   </td>
                 </tr>
               </tbody>
@@ -426,7 +425,6 @@
           <div class="layui-col-xs12 layui-form er">
             <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
             <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
-            <span style="margin-left: 10px;">信息录入之后请按确认按钮计算价格,会显示在详情费用内,否则无此服务!</span>
           </div>
           <div class="layui-col-xs12 er biaoge songhuo">
             <table class="layui-table" lay-size="sm">
@@ -460,7 +458,7 @@
                     <input name="s_comment[0]" type="text" value="">
                   </td>
                   <td class="dele">
-                    <a href="javascript:void(0);" class="layui-btn layui-btn-xs" onclick="songhuo()">确定</a>
+                    <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
                   </td>
                 </tr>
               </tbody>
@@ -695,6 +693,8 @@
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交
       var OrderUrl = "<{:url('index/order/port_data')}>";
+      var loading = false;//装货状态
+      var delivery = false;//送货状态
     </script>
     <script src="__STATIC__/js/lrdd.js"></script>
     <script src="__STATIC__/js/place_order.js"></script>
