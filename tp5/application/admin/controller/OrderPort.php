@@ -118,7 +118,16 @@ class OrderPort extends Base
     }
     //详情
     public function port_details()
-    {
+    {   
+        $order_num =  $this->request->get('order_num');
+        $data = new OrderM;
+        $dataArr = $data->orderData($order_num);
+        
+        $this->assign([
+            'list'  => $dataArr[0],
+            'containerData' => $dataArr[1],
+            'carData'=> $dataArr[2]
+        ]);
         return $this->view->fetch('orderPort/port_details');
     }
 

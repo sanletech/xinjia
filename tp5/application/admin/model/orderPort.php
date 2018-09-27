@@ -46,7 +46,7 @@ class orderPort extends Model
         
     }
     //订单的详细信息
-    public function orderData($param) {
+    public function orderData($order_num) {
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -55,7 +55,28 @@ class orderPort extends Model
                 ->join('hl_shipcompany SC','SC.id=SP.ship_id','left')//船公司id                                                    //起始港终点港
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
-               ->field('OP.*,HM.company,SC.ship_short_name,');
+                ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船舶表  
+                ->field('OP.*,HM.company,SC.ship_short_name,')
+                ->where('OP.order_num',$order_num)
+                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
+                ->find();
+           
+        //根据订单号 查询对应柜子的 柜号和封条号码
+        $containerData =Db::name('order_truckage')->alias('OT')
+                ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
+                ->where('OP.status','in',[5,6])
+                ->where('OT.order_num',$order_num)
+                ->field('OT.container_code,OT.seal');
+        
+        //根据订单查询出拖车信息
+        $carData['r'] =Db::name('order_truckage')
+                ->where('order_num',$order_num)
+                ->where('type','r')->select();
+        $carData['s'] =Db::name('order_truckage')
+                ->where('order_num',$order_num)
+                ->where('type','s')->select();
+        
+        return array($list ,$containerData,$carData);
         
     }
     
