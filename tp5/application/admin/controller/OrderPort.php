@@ -48,7 +48,7 @@ class OrderPort extends Base
     public function order_audit() 
     {
         $data = new OrderM;
-        $list = $data->order_audit();
+        $list = $data->order_audit(5,2);
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count',$count);
@@ -74,23 +74,47 @@ class OrderPort extends Base
     
     //港到港订单页
     public function portList()
-    {
+    {   
+   
         return $this->view->fetch('orderPort/port_list');
     }
     //所有订单
     public function all_ordePport()
     {
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6));
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
         return $this->view->fetch('orderPort/all_ordePport');
     }
     //在线支付
     public function port_payment()
-    {
-        return $this->view->fetch('orderPort/port_payment');
+    {   
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6),'cash');
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        return $this->view->fetch('orderPort/all_ordePport');
     }
     //月结
     public function port_month()
-    {
-        return $this->view->fetch('orderPort/port_month');
+    {   
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6),'monthly');
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        return $this->view->fetch('orderPort/all_ordePport');
     }
     //详情
     public function port_details()

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-09-26 17:42:05
+Date: 2018-09-27 18:05:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4857,8 +4857,6 @@ CREATE TABLE `hl_order_port` (
   `mtime` datetime DEFAULT NULL COMMENT '修改时间',
   `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
   `belong_order` varchar(20) DEFAULT '0' COMMENT '从那里拆开的订单编码',
-  `state` int(5) DEFAULT NULL COMMENT '订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货',
-  `action` varchar(12) DEFAULT NULL COMMENT '状态说明',
   `ctime` datetime DEFAULT NULL COMMENT '创建时间',
   `payment_method` varchar(20) DEFAULT NULL COMMENT '收款方式,monthly月结pledge压柜cash现款 special特殊',
   `special_id` int(11) DEFAULT NULL COMMENT '特别优惠的id',
@@ -4875,32 +4873,43 @@ CREATE TABLE `hl_order_port` (
   `carprice_r` int(5) DEFAULT NULL COMMENT '总的装货费',
   `carprice_s` int(5) DEFAULT NULL COMMENT '送货总运费',
   `quoted_price` float(5,0) DEFAULT NULL COMMENT '报价,总的费用',
-  `type` varchar(5) DEFAULT '' COMMENT '0删除1取消2待审核',
+  `action` varchar(10) DEFAULT NULL COMMENT '状态更新说明',
+  `status` varchar(5) DEFAULT '' COMMENT '505删除404取消2待审核3录入运单号和上传文件4客户提交柜号5根据收款状态6上传水运单文件',
+  `track_num` varchar(19) DEFAULT NULL COMMENT '运单号',
+  `book_note` varchar(25) DEFAULT NULL COMMENT '订舱单文件的存贮地址',
+  `sea_waybill` varchar(10) DEFAULT NULL COMMENT '水运单文件的存贮的地址',
+  `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款',
+  `container_status` varchar(1) DEFAULT NULL COMMENT '客户是否提交柜号了0未提交1已经提交',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
-INSERT INTO `hl_order_port` VALUES ('1', 'A926548346305370', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', null, null, '2018-09-26 05:40:34', 'installment', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', null, '6555', '3000', '555', '700', '800', '22500', '2');
-INSERT INTO `hl_order_port` VALUES ('2', 'A926548425805374', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', null, null, '2018-09-26 05:40:42', 'installment', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', null, '6555', '3000', '555', '800', '800', '22600', '2');
-INSERT INTO `hl_order_port` VALUES ('3', 'A926548516505376', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', null, null, '2018-09-26 05:40:51', 'installment', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', null, '6555', '3000', '555', '800', '500', '22300', '2');
+INSERT INTO `hl_order_port` VALUES ('1', 'A926548346305370', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', '2018-09-26 05:40:34', 'cash', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', '1', '6555', '3000', '555', '700', '800', '22500', '通过审核>待录入运单', '3', null, null, null, null, null);
+INSERT INTO `hl_order_port` VALUES ('2', 'A926548425805374', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', '2018-09-26 05:40:42', 'monthly', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', '2', '6555', '3000', '555', '800', '800', '22600', null, '3', null, null, null, null, null);
+INSERT INTO `hl_order_port` VALUES ('3', 'A926548516505376', '猪肉', '40HQ', '3', '100', '500', '1', '斯蒂芬萨斯发送', null, 'kehu001', '0', '2018-09-26 05:40:51', 'monthly', '0', null, '0', null, '装货联系人,发货单位,45456454', null, '收货联系人,收货单位,5435436', '3', '6555', '3000', '555', '800', '500', '22300', null, '3', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_order_port_status`;
 CREATE TABLE `hl_order_port_status` (
-  `id` int(5) DEFAULT NULL,
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `order_num` varchar(15) DEFAULT NULL,
-  `status` int(5) DEFAULT NULL COMMENT '0删除1取消2待审核3录入运单号和上传文件4客户提交柜号5根据收款状态6上传水运单文件',
+  `status` int(5) DEFAULT NULL COMMENT '505删除404取消2待审核3录入运单号和上传文件4客户提交柜号5根据收款状态6上传水运单文件',
   `title` varchar(15) DEFAULT NULL,
-  `mtime` datetime DEFAULT NULL COMMENT '状态变化的时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `mtime` datetime DEFAULT NULL COMMENT '状态变化的时间',
+  `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
 -- ----------------------------
+INSERT INTO `hl_order_port_status` VALUES ('1', 'A92654834630537', '3', '通过审核', null, 'sales1');
+INSERT INTO `hl_order_port_status` VALUES ('2', 'A92654834630537', '3', '通过审核', null, 'sales1');
+INSERT INTO `hl_order_port_status` VALUES ('3', 'A92654834630537', '3', '通过审核', null, 'sales1');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -5849,7 +5858,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-25 05:07:50', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-09-27 02:54:40', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

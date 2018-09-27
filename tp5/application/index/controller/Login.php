@@ -30,12 +30,13 @@ class Login extends Controller
         //在member 表中进行查询
         $sql = "select password,member_code from hl_member where member_code ='$loginName' or phone ='$loginName'";
         $member = Db::query($sql);
+//        var_dump($member);exit;
         //将用户名与密码分开验证
         //如果没有查询到该用户
         if(is_null($member)){
             //设置返回信息
            $message = '用户名不正确';
-        }elseif($member['0']['password'] != $passWord){
+        }elseif($member[0]['password'] != $passWord){
             //设置密码提示信息
              $message = '密码不正确';
         }else {

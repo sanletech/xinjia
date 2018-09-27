@@ -1,7 +1,7 @@
 <?php
 namespace app\index\controller;
 use app\index\common\Base;
-use think\db;
+use think\Db;
 use think\Session;
 class Personal extends Base
 {

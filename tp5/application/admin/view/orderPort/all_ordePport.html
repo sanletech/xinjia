@@ -36,7 +36,7 @@
                 <thead>
                   <tr>
                     <th>客户账号</th>
-                    <th>客户名称</th>
+                    <th>客户单位</th>
                     <th>订单号</th>
 
                     <th>提交时间</th>
@@ -55,29 +55,30 @@
                   </tr>
                 </thead>
                 <tbody>
+                <{volist name="list" id ="vo"}>
                   <tr>
-                    <td>13846876654</td>
-                    <td>广州三乐科技有限公司</td>
-                    <td>
-                      <a href="javascript:void(0);">1453810</a>
-                    </td>
-
-                    <td>2018-3</td>
-                    <td>中远</td>
-                    <td>仁建20-1837</td>
-                    <td>汕头</td>
-                    <td>天津</td>
-                    <td>4000</td>
-                    <td>TB23565864563</td>
+                    <td><{$vo.member_code}></td>
+                    <td><{$vo.company}></td>
+                    <td><{$vo.order_num}></td>
+                    <td><{$vo.ctime}></td>
+                    <td><{$vo.ship_short_name}></td>
+                    <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
+                    <td><{$vo.s_port}></td>
+                    <td><{$vo.e_port}></td>
+                    <td><{$vo.quoted_price}></td>
+                    <td><{$vo.track_num}></td>
                     <td class="layui-upload">
-                      <a class="dcd"  href="javascript:void(0);">放纸箱</a>
+                        <?php if(empty($vo['book_note'])){echo"未上传订舱单"; }else{echo"已上传"; } ?>
+<!--                      <a class="dcd"  href="javascript:void(0);">放纸箱</a>-->
                     </td>
-                    <td >已提交</td>
+                    <td > <?php if(($vo['container_status'])==1){echo"已提交柜号"; }else{echo"未提交柜号"; } ?></td>
                     <td class="layui-upload">
-                      <a class="syd" href="javascript:void(0);">运单</a>
+                        <?php if(empty($vo['sea_waybill'])){echo"未提交"; }else{echo"已提交"; } ?>
+<!--                      <a class="syd" href="javascript:void(0);">运单</a>-->
                     </td>
                     <td class="fukuan">
-                      <a href="javascript:void(0);">已付款</a>
+                        <?php if($vo['money_status']==0){echo"未付款"; }else{echo"已付款"; } ?>
+                      <!--<a href="javascript:void(0);">已付款</a>-->
                     </td>
 
                     <td>
@@ -89,6 +90,7 @@
                       </a>
                     </td>
                   </tr>
+                  <{/volist}>
                 </tbody>
               </table>
             </div>
