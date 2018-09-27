@@ -15,6 +15,9 @@ function cabinet() {
     });
 }
 
-if($('.fukuan').html() == '未付款'){
-    $('.fukuan').html('');
+if($('.fukuan a').html() == '已付款'){
+    $('.fukuan a').css('background-color','#00DB00').attr('href','javascript:void(0);');
+
+}else{
+    $('.fukuan a').attr('href',xiangqing);
 }
