@@ -15,6 +15,6 @@ function cabinet() {
     });
 }
 
-if($('.fukuan').html() == '去付款'){
-    $('.fukuan').html('<a  target="_blank" href="'+xiangqing+'">去付款</a>');
+if($('.fukuan').html() == '未付款'){
+    $('.fukuan').html('');
 }
