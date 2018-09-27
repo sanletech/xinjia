@@ -49,6 +49,7 @@
                 <tbody>
                   <tr>
                     <td>
+                      <!-- 有改变css('background-color','#00DB00') -->
                       <a href="javascript:void(0);">1453810</a>
                     </td>
                     <td>TB23565864563</td>
@@ -59,19 +60,28 @@
                     <td>汕头</td>
                     <td>天津</td>
                     <td>4000</td>
-                    <td class="fukuan">去付款</td>
+                    <td class="fukuan">
+                      <a target="_blank" href="javascript:void(0);">未付款</a>
+                    </td>
                     <td>
+                      <!-- 有改变css('background-color','#00DB00') -->
                       <a href="javascript:void(0);">放纸箱</a>
                     </td>
                     <td>
+                      <!-- 有改变css('background-color','#00DB00') -->
                       <a href="javascript:void(0);" onclick="cabinet()">提交柜号</a>
                     </td>
                     <td>
+                      <!-- 有改变css('background-color','#00DB00') -->
                       <a href="javascript:void(0);">运单</a>
                     </td>
-                    <td>
-                      <a class="" lay-event="del">取消</a>
-                      <a class="" href="<{:url('index/Order/place_details')}>" lay-event="detail">查看订单</a>
+                    <td class="caozuo">
+                      <a title="查看订单" target="_blank" onclick="" href="<{:url('index/Order/place_details')}>">
+                        <i class="layui-icon">&#xe63c;</i>
+                      </a>
+                      <a title="删除" onclick="" href="javascript:;">
+                        <i class="layui-icon">&#xe640;</i>
+                      </a>
                     </td> 
                   </tr>
                 </tbody>

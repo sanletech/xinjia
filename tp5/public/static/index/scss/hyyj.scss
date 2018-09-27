@@ -178,11 +178,15 @@ button:hover{
                   margin:3px 0;
                   border-bottom:1px solid #cccccc;
                   .j{
-                    border-top: 8px dotted transparent;
-                    border-left:16px solid #cccccc;
+                    display:inline-block;
+                    // border-top: 8px dotted transparent;
+                    // border-left:16px solid #cccccc;
+                    border-width:0px 18px 8px 0px;   
+                    border-style:solid;   
+                    border-color:transparent transparent #cccccc;/*透明 透明  灰*/
                     position: absolute;
                     right: 0;
-                    top: 16px;
+                    top: 14px;
                   }
                 }
             }
