@@ -1,8 +1,8 @@
 <?php
 namespace app\index\controller;
-
 use app\index\common\Base;
 use think\db;
+use think\Session;
 class Personal extends Base
 {
     //个人中心
