@@ -2,6 +2,7 @@
 namespace app\admin\controller;
 use app\admin\common\Base;
 use think\Request;
+use app\admin\model\orderPort as OrderM;
 use think\Db;
 
 use think\config;
@@ -60,10 +61,11 @@ class OrderPort extends Base
     { 
        if (request()->isAjax()){
            $idArr =$this->request->param();
-           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>100,'action'=>'通过审核>待订舱']);
-           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+           $res =Db::name('order_port')->where('id','in',$idArr['id'])->update(['status'=>3,'action'=>'通过审核>待录入运单号和上传订舱单']);
+           $order_numArr = Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
+            $data = new OrderM;
             foreach ($order_numArr as $order_num) {
-               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>100,'action'=>'通过审核>待订舱'], 'controller');
+               $data->orderUpdate($order_num,3,'通过审核');
             }
            return json($res ? 1 : 0) ;
        }
