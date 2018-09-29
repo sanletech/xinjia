@@ -5,7 +5,7 @@ layui.use('upload', function () {
     //订舱单
     var uploadInst = upload.render({
         elem: '.dcd' //绑定元素
-        , url: '/upload/' //上传接口
+        , url: url //上传接口
         , accept: 'file' //普通文件
         , done: function (res) {
             //上传完毕回调
@@ -17,7 +17,7 @@ layui.use('upload', function () {
     //水运单
     var uploadInst = upload.render({
         elem: '.syd' //绑定元素
-        , url: '/upload/' //上传接口
+        , url: url //上传接口
         , accept: 'file' //普通文件
         , done: function (res) {
             //上传完毕回调

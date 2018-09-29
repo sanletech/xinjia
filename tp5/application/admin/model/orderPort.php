@@ -71,10 +71,15 @@ class orderPort extends Model
         //根据订单查询出拖车信息
         $carData['r'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
-                ->where('type','r')->select();
+                ->where('type','r')->group('num')
+                ->field('order_num,car_price,count(id) num ,add,mtime,link_man,shipper,load_time,link_phone,car,comment,seal')
+                ->select();
+        
         $carData['s'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
-                ->where('type','s')->select();
+                ->where('type','s')->group('num')
+                ->field('order_num,car_price,count(id) num ,add,mtime ,car,comment,seal')
+                ->select();
         
         return array($list ,$containerData,$carData);
         
