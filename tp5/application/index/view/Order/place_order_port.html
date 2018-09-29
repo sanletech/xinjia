@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
     <link rel="stylesheet" href="__STATIC__/css/xiala.css">
     <link rel="stylesheet" href="__STATIC__/css/all_order.css">
+    
     <div class="banner"></div>
     <form class="" id='order_data_form'>
       <div class="xxtx">
@@ -99,19 +100,19 @@
           <div class="xx" style="margin-bottom:0px;">
             <strong>委托信息</strong>
             <span>提醒：收货联系人需具备与船司办单资质，否则因此造成的一切后果将由客户承担</span>
-            <!-- <div class="er_anniu">
-              <input type="button" class="se wt1" onclick="selectlink('<{:url(" index/order/selectlinkman ")}>');" value="选择">
-              <input type="button" class="se wt2" onclick="javascript:void(0);" value="添加">
+            <div class="er_anniu">
+              <input type="button" class="se wt1" value="选择">
+              <!-- <input type="button" class="se wt2" onclick="javascript:void(0);" value="添加">
               <input type="button" class="se wt3" onclick="xiu();" value="修改">
-              <input type="button" class="se wt4" onclick="javascript:void(0);" value="设置为默认">
-            </div> -->
+              <input type="button" class="se wt4" onclick="javascript:void(0);" value="设置为默认"> -->
+            </div>
           </div>
           <div class="dd_nei">
             <div class="layui-row" style="padding-bottom: 10px;">
               <div class="layui-col-xs6 er_le">
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>发货单位：</div>
+                    <span>*&nbsp;</span>装货单位：</div>
                   <div class="layui-col-xs9">
                     <input type="text" name="r_company" value="" readonly='readonly' class="in">
                   </div>
@@ -242,6 +243,8 @@
                   </div>
                 </div>
               </div>
+
+
 
             </div>
             <div class="layui-col-xs4 er">
@@ -600,7 +603,6 @@
                   <div class="layui-input-inline">
                     <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
                   </div>
-
                   <div class="layui-input-inline" style="float:right;">
                     <button class="layui-btn btn_sou" lay-submit="" lay-filter="demo1">搜索</button>
                   </div>
@@ -612,6 +614,11 @@
 
         <!-- 表格 -->
         <div class="biao">
+            <a href="javascript:;" onclick="wtxx()" 	class="layui-btn layui-btn-sm">确定</a>
+            <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_zeng">增加</a>
+            <a href="javascript:;" 	class="layui-btn layui-btn-sm">修改</a>
+            <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_del">删除</a>
+            <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_default">设置默认</a>
           <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
               <li class="layui-this">收货人</li>
@@ -642,6 +649,14 @@
     <div id="wt2">
       <div class="layui-row">
         <form class="layui-form" id="linkman_form">
+
+          <div class="layui-form-item">
+            <label class="layui-form-label">公司名：</label>
+            <div class="layui-input-block">
+              <input type="text" name="company" lay-verify="title" value="" autocomplete="off" placeholder="请输入公司名" class="layui-input">
+            </div>
+          </div>
+
           <div class="layui-form-item">
             <label class="layui-form-label">姓名：</label>
             <div class="layui-input-block">
@@ -657,22 +672,8 @@
           </div>
 
           <div class="layui-form-item">
-            <label class="layui-form-label">公司名：</label>
             <div class="layui-input-block">
-              <input type="text" name="company" lay-verify="title" value="" autocomplete="off" placeholder="请输入公司名" class="layui-input">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <label class="layui-form-label">收/发货地址:</label>
-            <div class="layui-input-block">
-              <input type="text" name="add" lay-verify="title" value="" autocomplete="off" value="" placeholder="请输入地址" class="layui-input">
-            </div>
-          </div>
-
-          <div class="layui-form-item">
-            <div class="layui-input-block">
-              <button class="layui-btn" lay-submit="" lay-filter="demo1" onclick="">确认下单</button>
+              <a class="layui-btn" lay-submit="" lay-filter="demo1" onclick="zeng_wt()">确认添加</a>
               <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
           </div>

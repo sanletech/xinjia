@@ -99,46 +99,152 @@ layui.use('element', function () {
   };
 });
 
+//选择模态框调用数据
+var arr = [];
+function tiao() {
+  var member_code = 'kehu001';
+  var data = { 'member_code': member_code };
+  $.ajax({
+    type: 'POST',
+    url: selectlinkUrl,
+    data: data,
+    dataType: "json",
+    success: function (status) {
+      //接受数据 展示页面
+      weituo(status);
+      status = JSON.parse(status)
+      // console.log(status);
+    }
+  });
+
+  //展示委托信息
+  function weituo(data) {
+    var dataArray = eval(data);
+    arr = dataArray;
+    $('.xin').html('');
+    for (let i in dataArray) {
+      $('.xin').append('<li class="layui-col-xs6">'
+        + '<div class="nei" onclick="xzwt(this)">'
+        + ' <div class="le">'
+        + '<div class="tiao">公司名：</div>'
+        + '<div class="tiao">姓名：</div>'
+        + '<div class="tiao">手机号：</div>'
+        + '</div>'
+        + '<div class="rig">'
+        + '<div class="tiao_id" style="display: none;"> ' + dataArray[i].id + '</div>'
+        + '<div class="tiao">' + dataArray[i].company + '</div>'
+        + '<div class="tiao">' + dataArray[i].name + '</div>'
+        + '<div class="tiao">' + dataArray[i].phone + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</li>'
+      )
+    }
+  }
+
+}
+
+//选中委托信息
+var lei;//判断是送货还是收货
+var id;//点击当前的ID 
+function xzwt(zj){
+  $(zj).addClass('nei_a').parent().siblings().find('.nei').removeClass('nei_a');
+  id = $(zj).find('.tiao_id').html();//点击当前的ID  
+  lei = $(zj).parents('.xin')[0];//判断是送货还是收货
+}
+//委托信息放input上
+function wtxx() {
+  let input = $('.er .in');//获取委托信息的input
+  let nei;//当前选中的内容
+  for (let i in arr) {
+    if (arr[i].id == id) {
+      nei = arr[i];
+    }
+  }
+  if ($(lei).hasClass('song')) {
+    $(input[0]).val(nei.company);
+    $(input[1]).val(nei.name);
+    $(input[2]).val(nei.phone);
+  } else {
+    $(input[3]).val(nei.company);
+    $(input[4]).val(nei.name);
+    $(input[5]).val(nei.phone);
+  }
+  layer.close(layer.index);
+}
+
+
 //选择模态框
 $('.wt1').click(function () {
   layer.open({
     type: 1,
     title: '路线详情',
+    offset: 'auto',
     area: ['1000px', '500px'],
     content: $('#wt1'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
     skin: 'demo-class',
-    scrollbar: false,
-    fixed: false,
+    shadeClose: true,
     success: function () {
       // 模态框成功调用
-      gun();
+      tiao();//调用数据
     },
     //关闭窗口时
     cancel: function () {
-      $('html', window.parent.document).css('overflow-y', 'auto');
+
     }
   });
 })
+
 //添加模态框
-$('.wt2').click(function () {
+$('.wt_zeng').click(function () {
+  layer.closeAll();
   layer.open({
     type: 1,
-    title: '路线详情',
+    title: '增加信息',
     area: ['600px'],
     content: $('#wt2'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
     skin: 'demo-class',
-    scrollbar: false,
     fixed: false,
     success: function () {
       // 模态框成功调用
-      gun();
-    },
-    //关闭窗口时
-    cancel: function () {
-      $('html', window.parent.document).css('overflow-y', 'auto');
     }
   });
 })
+//增加委托信息
+function zeng_wt(){
+  //let data = $('#linkman_form').serialize();//增加委托信息表单数据
+  // $.ajax({
+  //   type: 'POST',
+  //   url: '',
+  //   data: data,
+  //   dataType: "json",
+  //   success: function (status) {
+  //     layer.close(layer.index);//关闭添加窗口
+  //     $('.wt1').click();//重新查询并打开窗口
+  //   }
+  // });  
+
+  //打开ajax删除下面两行
+  layer.close(layer.index);//关闭添加窗口
+  $('.wt1').click();//重新查询并打开窗口
+
+}
+
+//删除选中的委托信息
+$('.wt_del').click(function(){
+  console.log(id);//当前的选中的ID
+});
+
+//点击默认
+$('.wt_default').click(function(){
+  console.log(id);//当前的选中的ID
+  if ($(lei).hasClass('song')) {//判断是不是收货
+    console.log('选前选中是收货');
+  }else{//发货
+    console.log('选前选中是发货');
+  }
+})
+
 //发票模态框
 $('.trigger-default').click(function () {
   layer.open({
@@ -170,37 +276,37 @@ $('.bge_song input').each(function () {
 input_a();
 function input_a() {
   var i = 0;
-  $('.biaoge input').bind('input propertychange', function () { 
-      var $this = $(this);
-      var text_length = $this.val().length;//获取当前文本框的长度
-      var current_width = parseInt(text_length) * 11;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度
-      $this.css("width", current_width + "px");
-      let shu = 0;
-      let fa = 0;
-      let container = $('#container_sum').find("option:selected").val();
-      $('.bge .r_num').each(function () {
-        shu += Number($(this).val());
-        if (shu > container) {
-          i++;
-          $(this).val('');
-          return false;
-        }
-      });
-
-      $('.bge_song .s_num').each(function () {
-        fa += Number($(this).val());
-        if (fa > container) {
-          i++;
-          $(this).val('');
-          return false;
-        }
-      });
-      st();//重新计算价格
-      if(i == 1 ){//避免重复跳出提示框
-        alert('当前数量大于柜量,请重新输入！');
-        i = 0;
+  $('.biaoge input').bind('input propertychange', function () {
+    var $this = $(this);
+    var text_length = $this.val().length;//获取当前文本框的长度
+    var current_width = parseInt(text_length) * 11;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度
+    $this.css("width", current_width + "px");
+    let shu = 0;
+    let fa = 0;
+    let container = $('#container_sum').find("option:selected").val();
+    $('.bge .r_num').each(function () {
+      shu += Number($(this).val());
+      if (shu > container) {
+        i++;
+        $(this).val('');
         return false;
       }
+    });
+
+    $('.bge_song .s_num').each(function () {
+      fa += Number($(this).val());
+      if (fa > container) {
+        i++;
+        $(this).val('');
+        return false;
+      }
+    });
+    st();//重新计算价格
+    if (i == 1) {//避免重复跳出提示框
+      alert('当前数量大于柜量,请重新输入！');
+      i = 0;
+      return false;
+    }
   });
 }
 
@@ -244,8 +350,3 @@ function dele(zj) {//删除当前装货或者送货
   $(zj).parents('tr').remove();
   st();//重新计算价格 方法在plce_order.js
 }
-
-
-// $(".bge").on('input propertychange', '.r_num', function () {
-
-// });
