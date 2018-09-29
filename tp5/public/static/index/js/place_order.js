@@ -61,6 +61,12 @@ $('.fp01').change(function () {
 
 //柜量
 for (let i = 1; i < 31; i++) {
+    if ($('#gl').html()) {
+    if ($('#gl').html() == i) {
+        $('.guil').append("<option value='" + i + "' selected>" + i + "</option>");
+              continue;
+        }
+    }
     $('.guil').append("<option value='" + i + "'>" + i + "</option>");
 }
 

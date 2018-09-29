@@ -17,38 +17,24 @@ class OrderPort extends Base
     public function Upload()
     {
         $file = request()->file('file');
-        // 要上传图片的本地路径
+        // 要上传文件的本地路径
         $filePath = $file->getRealPath();
         $ext = pathinfo($file->getInfo('name'), PATHINFO_EXTENSION);  //后缀
         // 上传到七牛后保存的文件名
         $key =substr(md5($file->getRealPath()) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
-        require_once APP_PATH . '/../vendor/Qiniu/autoload.php';
-        // 需要填写你的 Access Key 和 Secret Key
-        $accessKey = Config::get('qiniu.accessKey');
-        $secretKey = Config::get('qiniu.secretKey');
-        // 构建鉴权对象
-        $auth = new Auth($accessKey, $secretKey);
-        // 要上传的空间
-        $bucket = Config::get('qiniu.bucket');
-        $domain = Config::get('qiniu.DOMAIN');
-        $token = $auth->uploadToken($bucket);
-        // 初始化 UploadManager 对象并进行文件的上传
-        $uploadMgr = new UploadManager();
-        // 调用 UploadManager 的 putFile 方法进行文件的上传
-        list($ret, $err) = $uploadMgr->putFile($token, $key, $filePath);
-        if ($err !== null) {
-            return ["err"=>1,"msg"=>$err,"data"=>""];
-        } else {
-            //返回图片的完整URL
-            return ["err"=>0,"msg"=>"上传完成","data"=>($domain .'/'. $ret['key'])];
-        }
+        $this->_p($file);
+        $this->_p($filePath);$this->_p($key);exit;
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+
+
     }
 
             //审核订单
     public function order_audit() 
     {
         $data = new OrderM;
-        $list = $data->order_audit();
+        $list = $data->order_audit(5,2);
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count',$count);
@@ -74,27 +60,89 @@ class OrderPort extends Base
     
     //港到港订单页
     public function portList()
-    {
+    {   
+   
         return $this->view->fetch('orderPort/port_list');
     }
     //所有订单
     public function all_ordePport()
     {
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6));
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
         return $this->view->fetch('orderPort/all_ordePport');
     }
     //在线支付
     public function port_payment()
-    {
-        return $this->view->fetch('orderPort/port_payment');
+    {   
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6),'cash');
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        return $this->view->fetch('orderPort/all_ordePport');
     }
     //月结
     public function port_month()
-    {
-        return $this->view->fetch('orderPort/port_month');
+    {   
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6),'monthly');
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        return $this->view->fetch('orderPort/all_ordePport');
     }
     //详情
     public function port_details()
-    {
+    {   
+        $order_num =  $this->request->get('order_num');
+        $data = new OrderM;
+        $dataArr = $data->orderData($order_num);
+//        $this->_p($dataArr);exit;
+        $list =$dataArr[0];
+        $shipperArr= explode(',',$list['shipper']); 
+        $consignerArr= explode(',',$list['consigner']);
+        //如果存在特殊优惠
+        $special_id = $list['special_id'];
+        $container_size =  $list['container_size'];
+        if($special_id!==0){
+            $special =Db::name('discount_special')->where('id',$special_id)
+                    ->field("promotion_title,id special_id ,".$container_size.'_promotion')
+                    ->find();
+        }  else {
+            $special='';
+        }
+        //查询其他的优惠信息
+        $member_code = $list['member_code'];
+        $seaprice_id = $list['seaprice_id'];
+
+        $discount =Db::name('discount_normal')->alias('DN')
+                ->join('hl_seaprice SP','SP.ship_id = DN.ship_id','left')
+                ->where(['SP.id'=>$seaprice_id,
+                          'DN.member_code'=>$member_code
+                        ])
+                ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
+                ->find();
+        $discount['special']= $special;
+//        $this->_p($dataArr[2]);exit;
+        $this->assign([
+            'list'  =>$list,
+            'containerData' => $dataArr[1],
+            'carData'=> $dataArr[2],
+            'shipperArr'=>$shipperArr,
+            'consignerArr'=>$consignerArr,
+            'discount'=>$discount
+        ]);
         return $this->view->fetch('orderPort/port_details');
     }
 

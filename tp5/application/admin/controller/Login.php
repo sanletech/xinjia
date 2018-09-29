@@ -29,7 +29,6 @@ class Login extends Controller
         $map = array('loginname'=> $loginName);
         $user = User::get($map);
         //将用户名与密码分开验证
-      
         //如果没有查询到该用户
         if(is_null($user)){
             //设置返回信息

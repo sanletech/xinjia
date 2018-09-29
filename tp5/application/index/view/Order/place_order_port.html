@@ -280,7 +280,7 @@
                       <option title="<{$discount.installment}>" value='installment'>到港付</option>
                       <option title="<{$discount.month}>" value='month'>月结付</option>
                       <{empty name="$discount.special" }>
-                        <option title="<{$discount.month}>" value='cash'>在线结付(优惠)</option>"
+                        <option title="<{$discount.cash}>" value='cash'>在线结付(优惠)</option>"
                         <{else /}>
                           <option title="<{$discount.month}>" value='cash' disabled='true'>在线结付(优惠)</option>
                           <option title="<{$discount['special']['promotion']}>" value="<{$discount['special']['promotion_id']}>">

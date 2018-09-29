@@ -310,6 +310,7 @@ class Order extends Model
             $tmp['order_num'] = $order_num;  $tmp['type']='r';
             for($k=0; $k<$tmp['num'];$k++){
                 $tmp['container_code']=$container_code.$i.$k;
+                $tmp['num']= $i;
                 $res =Db::name('order_truckage')->insert($tmp);
                 $res ? $response['success'][]=$tmp['container_code'].'添加成功':$response['fail'][]=$tmp['container_code'].'添加失败';
             }
@@ -320,6 +321,7 @@ class Order extends Model
             ++$i;
             for($k=0; $k<$temporary['num'];$k++){
                 $temporary['container_code']=$container_code.$i.$k;
+                $temporary['num']= $x;
                 $res =Db::name('order_truckage')->insert($temporary);
                 $res ? $response['success'][]= $temporary['container_code'].'添加成功':$response['fail'][]= $temporary['container_code'].'添加失败';
             }

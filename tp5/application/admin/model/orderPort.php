@@ -6,7 +6,7 @@ use think\session;
 class orderPort extends Model
 {
     
-    public function order_audit($pages=5,$state='0'){
+    public function order_audit($pages,$state){
         $list =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
             ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -18,13 +18,15 @@ class orderPort extends Model
             ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船舶表     
             ->field('OP.*,HM.company,HM.name,SC.ship_short_name,B.boat_code,B.boat_name,P1.port_name s_port_name ,P2.port_name e_port_name')
             ->group('HM.id,OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
+            ->where('OP.status','in',$state)
             ->paginate($pages); 
 //    $this->_p($list);exit; 
             return $list;
     } 
 
     //订单的状态
-    public function order_status($param) {
+    public function order_status($pages,$state,$payment_method= array('monthly','pledge','cash','special')) {
+//        var_dump($pages,$state,$payment_method);exit;
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -33,12 +35,18 @@ class orderPort extends Model
                 ->join('hl_shipcompany SC','SC.id=SP.ship_id','left')//船公司id                                                    //起始港终点港
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
-               ->field('OP.*,HM.company,SC.ship_short_name,');
-                
-                //还需要增加五个字段 订舱单 订舱单文件， 柜号，水运单文件 付款状态
+                ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船舶表   
+                ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port,P2.port_name e_port,B.boat_code,B.boat_name')
+                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
+                ->where('OP.status','in',$state)
+                ->where('OP.payment_method','in',$payment_method)
+                ->paginate($pages); 
+//        var_dump(Db::getLastSql());exit;     
+        return $list;
+        
     }
     //订单的详细信息
-    public function orderData($param) {
+    public function orderData($order_num) {
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -47,7 +55,33 @@ class orderPort extends Model
                 ->join('hl_shipcompany SC','SC.id=SP.ship_id','left')//船公司id                                                    //起始港终点港
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
-               ->field('OP.*,HM.company,SC.ship_short_name,');
+                ->join('hl_boat B','B.boat_code =SP.boat_code','left')//船舶表  
+                ->field('OP.*,HM.company,SC.ship_short_name')
+                ->where('OP.order_num',$order_num)
+                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
+                ->find();
+           
+        //根据订单号 查询对应柜子的 柜号和封条号码
+        $containerData =Db::name('order_truckage')->alias('OT')
+                ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
+                ->where('OP.status','in',[5,6])
+                ->where('OT.order_num',$order_num)
+                ->field('OT.container_code,OT.seal')->select();
+        
+        //根据订单查询出拖车信息
+        $carData['r'] =Db::name('order_truckage')
+                ->where('order_num',$order_num)
+                ->where('type','r')->group('num')
+                ->field('order_num,car_price,count(id) num ,add,mtime,link_man,shipper,load_time,link_phone,car,comment,seal')
+                ->select();
+        
+        $carData['s'] =Db::name('order_truckage')
+                ->where('order_num',$order_num)
+                ->where('type','s')->group('num')
+                ->field('order_num,car_price,count(id) num ,add,mtime ,car,comment,seal')
+                ->select();
+        
+        return array($list ,$containerData,$carData);
         
     }
     
