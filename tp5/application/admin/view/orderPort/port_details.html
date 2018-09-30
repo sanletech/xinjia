@@ -456,34 +456,38 @@
                     <!-- 详细费用 -->
                     <div class="xxtx_dd er">
                         <div class="xx">
-                            <strong>详细费用</strong>
+                          <strong>详细费用</strong>
                         </div>
                         <div class="feiyong">
-                            <div class="layui-col-xs12">
-                                <span>海运费：</span>123元
-                                <span class="shuo">已包含：双边</span>
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>保险费：</span>123元
-                                <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>装货费用：</span>123元
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>送货费用：</span>123元
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>优惠：</span>
-                                <strong>123</strong>元
-                                <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>总费用：</span>
-                                <strong class="zongfei">123</strong>元
-                            </div>
+                          <div class="layui-col-xs12">
+                            <span>海运费：</span>
+                            <pi id="money"><{$list.seaprice}></pi>元
+                              <span class="shuo">已包含：双边</span>
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>保险费：</span>
+                            <pi id="bxje1"><{$list.premium}></pi>元
+                            <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>装货费用：</span>
+                            <pi id="zhuang"><{$list.carprice_r}></pi>元
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>送货费用：</span>
+                            <pi id="song"><{$list.carprice_s}></pi>元
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>优惠：</span>
+                            <strong id="discount"></strong>元
+                            <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>总费用：</span>
+                            <strong class="zongfei" id="price_sum">0</strong>元
+                          </div>
                         </div>
-                    </div>
+                      </div>
 
                     <!-- 是否支付 -->
                     <div class="xxtx_dd er">
@@ -503,7 +507,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">订单号：</label>
                                     <div class="layui-input-block">
-                                        <input name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="<{$list.order_num}>">
+                                        <input name="order_num" lay-verify="title" autocomplete="off" readOnly class="layui-input" type="text" value="<{$list.order_num}>">
                                     </div>
                                 </div>
                             </div>
