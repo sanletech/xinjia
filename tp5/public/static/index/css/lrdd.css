@@ -334,6 +334,9 @@ body {
       float: left; }
       #wt1 .biao .xin li .nei .rig .wu {
         height: 50px; }
+  #wt1 .biao .xin li .nei_a {
+    border: 1px solid #ff9f19 !important;
+    background: #f5f5f5 !important; }
 
 .demo-class .layui-layer-title {
   background-color: #2e8de5;

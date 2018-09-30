@@ -71,6 +71,7 @@ for (let i = 1; i < 31; i++) {
 }
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 接受后台的联系人资料
 function selectlink() {
     var member_code = 'kehu001';
@@ -144,6 +145,7 @@ function nei(zj) {
     layer.close(layer.index);
     $('html',window.parent.document).css('overflow-y','auto');
 }
+
 
 //收货/发货人的表单提交 
 function linkman_btn() {
