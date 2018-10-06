@@ -85,7 +85,7 @@
                         <a title="编辑" href="<{:url('admin/orderPort/port_details')}>?order_num=<{$vo.order_num}>" target="_blank">
                         <i class="layui-icon">&#xe642;</i>
                       </a>
-                      <a title="删除" onclick="" href="javascript:;">
+                      <a title="删除" onclick="del(this,'<{$vo.id}>')" href="javascript:;">
                         <i class="layui-icon">&#xe640;</i>
                       </a>
                     </td>
@@ -132,6 +132,35 @@
           }
         })
       });
+      
+        function del(obj, did) {
+        layer.confirm('确认要删除吗？', function (index) {
+          //转成数组形式
+          var dataA = new Array()
+          dataA[0] = did;
+          var dataArray = { id: dataA }
+          toajax(dataArray);
+          $(obj).parents("tr").remove();
+          layer.msg('已删除!', { icon: 1, time: 1000 });
+        });
+      }
+      
+        function toajax(dataArray) {
+        $.ajax({
+          type: 'POST',
+          url: "<{:url('admin/orderPort/orderPortDel')}>",
+          data: dataArray,
+          dataType: "json",
+          success: function (data) {
+            if (data.status == 1) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        })
+      }
+      
     </script>
     <script src="__STATIC__/js/port_money.js"></script>
   </body>

@@ -16,19 +16,65 @@ class OrderPort extends Base
     
     public function Upload()
     {
+        // 获取表单上传文件,订单号，上传文件的类别 
+        // sea_waybill 水运单  book_note 订舱单
         $file = request()->file('file');
-        // 要上传文件的本地路径
-        $filePath = $file->getRealPath();
-        $ext = pathinfo($file->getInfo('name'), PATHINFO_EXTENSION);  //后缀
-        // 上传到七牛后保存的文件名
-        $key =substr(md5($file->getRealPath()) , 0, 5). date('YmdHis') . rand(0, 9999) . '.' . $ext;
-        $this->_p($file);
-        $this->_p($filePath);$this->_p($key);exit;
-        // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $order_num = $this->request->get('order_num');
+        $type = $this->request->get('type');
+        $rename = $order_num.'_'.$type;
+         // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->validate(['size'=>15678,'ext'=>'text,txt,word,pdf'])
+                 ->move(ROOT_PATH . 'public' . DS . 'uploads',$rename);
+        $response =[];
+        if($info){
+            $reFile = str_replace('.','_',$info->getSaveName());
+             // 将A926548346305370_book_note.pdf文档存进order_port表里
+            $res = Db::name('order_port')->where('order_num',$order_num)
+                    ->update([$type=>$reFile]);
+            $res ? $response=['status'>1,'mssage'=>'提交成功']:$response=['status'>0,'mssage'=>'提交失败'];
+            //文件上传成功后更新订单状态
+            if($res){
+                
+            }
+        }else{
+            // 上传失败获取错误信息
+            return['status'>0,'mssage'=>$file->getError()] ;
+        }
 
 
     }
+    
+    public function downs(){    
+            $order_name = $this->request->param('order_num');    //下载文件名  
+            $type = $this->request->param('type'); //文件类型
+            $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
+         //   var_dump($file);
+            //将后缀修改成.
+            $file_Extension= strstr(strrev($file),'_',true);
+            $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
+//              var_dump($file_name);exit;
+            $file_dir = ROOT_PATH . 'public' . DS . 'uploads';        //下载文件存放目录    
+            //检查文件是否存在    
+//            var_dump($file_dir .DS. $file_name);exit;
+            if (! file_exists ($file_dir .DS. $file_name)) {    
+                echo "文件找不到";    
+                exit ();    
+            } else {    
+                //打开文件    
+                $file = fopen ($file_dir .DS. $file_name, "r" );    
+                //输入文件标签     
+                Header ( "Content-type: application/octet-stream" );    
+                Header ( "Accept-Ranges: bytes" );    
+                Header ( "Accept-Length: " . filesize ($file_dir .DS. $file_name) );    
+                Header ( "Content-Disposition: attachment; filename=" . $file_name );    
+                //输出文件内容     
+                //读取文件内容并直接输出到浏览器    
+                echo fread ( $file, filesize ($file_dir .DS. $file_name) );    
+                fclose ( $file );    
+                exit ();    
+            }    
+
+        }
 
             //审核订单
     public function order_audit() 
@@ -46,9 +92,9 @@ class OrderPort extends Base
     public function order_audit_pass() 
     { 
        if (request()->isAjax()){
-           $idArr =$this->request->param();
-           $res =Db::name('order_port')->where('id','in',$idArr['id'])->update(['status'=>3,'action'=>'通过审核>待录入运单号和上传订舱单']);
-           $order_numArr = Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
+            $idArr =$this->request->param();
+            $res =Db::name('order_port')->where('id','in',$idArr['id'])->update(['status'=>3,'action'=>'通过审核>待录入运单号和上传订舱单']);
+            $order_numArr = Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
             $data = new OrderM;
             foreach ($order_numArr as $order_num) {
                $data->orderUpdate($order_num,3,'通过审核');
@@ -149,7 +195,52 @@ class OrderPort extends Base
     //已完成订单
     public function port_end()
     {
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6));
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
         return $this->view->fetch('orderPort/port_end');
+    }
+    
+    //订单删除
+    public function  orderPortDel(){
+        $idArr= $this->request->param();
+        $res =Db::name('order_port')->where('id','in',$idArr['id'])->update([
+            'status'=>505,'action'=>'订单删除']);
+        $respones =[];
+        $res ?$respones['success'][] ='订单删除成功':$respones['fail'][] ='订单删除失败';
+        $dataM =new OrderM;
+        $order_num =Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
+        $status = 505 ;$title = '订单删除';
+        if($res){
+        foreach ($order_num as  $value) {
+            $res1=$dataM->orderUpdate($value,$status,$title) ;
+            $res1 ?$respones['success'][] ='订单状态修改成功':$respones['fail'][] ='订单状态修改失败';
+        }
+        }
+        if(array_key_exists('fail', $respones)){
+            return array('status'>1,'mssage'>'删除成功');
+        }else{
+             return array('status'>0,'mssage'>'删除失败');
+        }
+    }
+    
+    //废弃订单
+    public function cancel() {
+        
+        $data = new OrderM;
+        $list = $data->order_status(5,array(3,4,5,6));
+//        $this->_p($list);exit;
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page)
+        
     }
 
 }

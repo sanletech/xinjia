@@ -37,8 +37,15 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订舱单</label>
                                 <div class="layui-input-block">
-                                    <span><?php  if(!$list['book_note']){echo"订舱单未上传";}?></span>
-                                    <a class="dcd" href="#">上传</a>
+                                    <?php  
+                                    if(!$list['book_note']){
+                                        echo'<span>订舱单未上传</span><a class="dcd" href="#">上传</a>';}
+                                    else{
+                                        $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
+                                        $str ='<a href="'.$url.'">下载</a>';
+                                        echo '<span>订舱单已上传</span>'.$str;
+                                        }
+                                    ?>               
                                 </div>
                             </div>
                         </div>
@@ -109,8 +116,16 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">水运单：</label>
                                 <div class="layui-input-block">
-                                    <span><?php  if(!$list['sea_waybill']){echo"水运单未上传";}?></span>
-                                    <a class="syd" href="#">上传</a>
+                                    <?php  
+                                    if(!$list['sea_waybill']){
+                                        echo'<span>水运单未上传</span><a class="syd" href="#">上传</a>';}
+                                    else{
+                                        $order_num= $list['order_num'];
+                                        $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
+                                        $str ='<a href="'.$url.'">下载</a>';
+                                        echo '<span>水运单已上传</span>'.$str;
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -596,6 +611,23 @@
             $('.in').css('border', '1px solid #e6e6e6');
             input_null();
         </script>
+        
+        <script type="text/javascript">
+//    function download_file(http://www.tp5.com/admin.php/order_port/downs/aa/111)
+//    {
+//        if (typeof (download_file.iframe) == "undefined")
+//        {
+//            var iframe = document.createElement("iframe");
+//            download_file.iframe = iframe;
+//            document.body.appendChild(download_file.iframe);
+//        }
+//        //alert(download_file.iframe);
+//        download_file.iframe.src = url;
+//        download_file.iframe.style.display = "none";
+//    }
+</script>
+
+
     </body>
 
     </html>

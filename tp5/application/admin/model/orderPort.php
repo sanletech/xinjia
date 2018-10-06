@@ -41,6 +41,7 @@ class orderPort extends Model
                 ->where('OP.status','in',$state)
                 ->where('OP.payment_method','in',$payment_method)
                 ->paginate($pages); 
+//        $this->_p($list);exit;
 //        var_dump(Db::getLastSql());exit;     
         return $list;
         

@@ -92,6 +92,7 @@
         </div>
         <!-- 查询内容 -->
         <{volist name='list' id='vo' }>
+       
           <div class="nei_nei">
             <{if condition="$vo['generalize']=1" }>
               <div class="tj">
@@ -214,7 +215,7 @@
           add.ship_id = $("#search_price select option:selected").val();
           $.ajax({
             type: 'GET',
-            url: "<{:url('index/order/order_list')}>",
+            url: "<{:url('index/order/orderPort')}>",
             data: add,
             dataType: "json",
             success: function (data) {
