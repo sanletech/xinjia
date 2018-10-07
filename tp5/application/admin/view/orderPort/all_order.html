@@ -9,14 +9,15 @@
       }
     </style>
     <div class="invalid">
-      <form class="" action="index.html" method="post">
+      <form class="" action="#" method="post" id="search_port">
         <div class="layui-row">
           <div class="layui-col-xs6">
+              <div class="grid-demo"></div>
             <div class="grid-demo">
               <div class="layui-form-item">
                 <label class="layui-form-label">订单号：</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="order_num" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+                    <input type="text" name="order_num" value="<?php echo $order_num?$order_num:''; ?>" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
                 </div>
 
                 <div class="layui-input-inline" style="float:right;">
@@ -85,7 +86,7 @@
                         <a title="编辑" href="<{:url('admin/orderPort/port_details')}>?order_num=<{$vo.order_num}>" target="_blank">
                         <i class="layui-icon">&#xe642;</i>
                       </a>
-                      <a title="删除" onclick="" href="javascript:;">
+                      <a title="删除" onclick="del(this,'<{$vo.id}>')" href="javascript:;">
                         <i class="layui-icon">&#xe640;</i>
                       </a>
                     </td>
@@ -132,6 +133,62 @@
           }
         })
       });
+      
+        function del(obj, did) {
+        layer.confirm('确认要删除吗？', function (index) {
+          //转成数组形式
+          var dataA = new Array()
+          dataA[0] = did;
+          var dataArray = { id: dataA }
+          toajax(dataArray);
+          $(obj).parents("tr").remove();
+          layer.msg('已删除!', { icon: 1, time: 1000 });
+        });
+      }
+      
+        function toajax(dataArray) {
+        $.ajax({
+          type: 'POST',
+          url: "<{:url('admin/orderPort/orderPortDel')}>",
+          data: dataArray,
+          dataType: "json",
+          success: function (data) {
+            if (data.status == 1) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        })
+      }
+      
+        layui.use('laypage', function () {          
+          var laypage = layui.laypage;
+          var $data = $("#search_port input");
+          var $order_num = $data[0];
+          var url ='<{url}>'
+          //执行一个laypage实例        
+          laypage.render({
+            elem: 'pages',
+            limit: "<{$limit}>",
+            limits: [5, 10, 15],
+            count: "<{$count}>",
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+            curr: "<{$page}>",
+            theme: '#c00',
+            jump: function (obj, first) {
+              //obj包含了当前分页的所有参数，比如：
+              //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+              //console.log(obj.limit); //得到每页显示的条数
+              //首次不执行
+              if (!first) {
+                //do something
+                window.location.href = url+'?page='+ obj.curr + '&limit=' + obj.limit + '&order_num='+order_num;
+              }
+            }
+          });
+        })  
+      
     </script>
     <script src="__STATIC__/js/port_money.js"></script>
   </body>

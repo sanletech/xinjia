@@ -1,4 +1,4 @@
-<!-- 海运运价 -->
+ 海运运价 
 <{include file='./public/head' /}>
 
   <body>
@@ -30,13 +30,13 @@
             </div>
             <div class="di_you">
               <button type="button" onclick="toajax()">查价</button>
-              <!-- <button class="layui-btn" lay-submit="" lay-filter="sreach">查价</button> -->
+               <button class="layui-btn" lay-submit="" lay-filter="sreach">查价</button> 
             </div>
           </div>
 
 
-          <!-- ====================================== -->
-          <!-- 省市区联动 -->
+           ====================================== 
+           省市区联动 
           <div id="address">
             <ul>
               <li>省份</li>
@@ -52,11 +52,11 @@
       </div>
     </div>
     <div class="head_hy">
-      <!-- 查询表单 -->
+       查询表单 
 
-      <!-- 查询内容 -->
+       查询内容 
       <div class="cen_nei">
-        <!-- 查询导航 -->
+         查询导航 
         <div class="nei_dao">
           <ul>
             <li>航公司</li>
@@ -76,7 +76,7 @@
             <li>操作</li>
           </ul>
         </div>
-        <!-- 查询内容 -->
+         查询内容 
         <{volist name='list' id='vo' }>
           <div class="nei_nei">
             <{if condition="$vo['generalize']=1" }>
@@ -155,7 +155,7 @@
 
                   <div class="nei_rig">
 
-                    <!-- <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> -->
+                     <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> 
                     <a onclick="mo()" href="javascript:;">航线详情</a>
 
                   </div>
@@ -170,7 +170,7 @@
             <div class="text-center" id="pages"></div>
       </div>
 
-      <!-- 模态窗口 -->
+       模态窗口 
       <div class="mo_cen">
         <div class="man">
           <div>
@@ -191,7 +191,7 @@
         //          起点ID        起点名称        终点ID        终点名称      装货时间
       </script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
-      <!-- <script src="__STATIC__/js/order_list.js"></script>  -->
+       <script src="__STATIC__/js/order_list.js"></script>  
       <script src="__STATIC__/../admin/js/port.js"></script>
       <script src="__STATIC__/js/order_list.js"></script>
       <script>
