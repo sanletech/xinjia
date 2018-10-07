@@ -69,14 +69,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-xs4">
+<!--                        <div class="layui-col-xs4">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">收货人：</label>
                                 <div class="layui-input-block">
                                     <input name="consigner" lay-verify="title" autocomplete="off" placeholder="请输入收货人信息" class="layui-input" type="text" value="<{$list.consigner}>">
                                     </div>
                             </div>
-                        </div>
+                        </div>-->
 
                          <{if condition ="!empty($containerData)" }>
                         <div class="guix">
@@ -503,7 +503,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">订单号：</label>
                                     <div class="layui-input-block">
-                                        <input name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="<{$list.order_num}>">
+                                        <input name="order_num" lay-verify="title" autocomplete="off" readOnly="true" class="layui-input" type="text" value="<{$list.order_num}>">
                                     </div>
                                 </div>
                             </div>
