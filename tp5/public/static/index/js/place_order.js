@@ -194,7 +194,7 @@ function toajax(url, data) {
 }
 var mony_fs = 0;
 //计算运费
-function zong_sum(shu,zs) {
+function zong_sum(shu,zs) {        
     var money = $('.money').text();//纯运费
     var sum = $("#container_sum option:selected").val();//柜量
     var bxje = $('#bxje').val() * 6;//保险金额
