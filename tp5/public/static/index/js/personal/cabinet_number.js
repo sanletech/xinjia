@@ -1,4 +1,20 @@
-function cabinet() {
+function cabinet(od_num) {    
+    $.get(track_data, { order_num: od_num },
+    function(data){
+        for (let i = 0; i < data.length; i++) {
+            $('.ggh').append('<div class="layui-form-item">'+
+            '<div class="guinei"><input name="container_num[]" type="hidden" value="'+data[i]+'">'+
+            '<input name="container_code[]" placeholder="" autocomplete="off" class="layui-input" type="text" value=""></div>'+
+            '<div class="layui-form-mid">-</div>'+
+            '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value=""></div>'+
+        '</div>');
+        }
+        order_num();
+    });
+}
+
+//弹出报柜号
+function order_num(){
     layer.open({
         type: 1,
         title: '报柜号',
@@ -8,9 +24,8 @@ function cabinet() {
         skin: 'demo-class',
         btn: ['确认'],
         yes: function(index, layero){
-            //按钮【按钮一】的回调
-            let list = $('#cabinet form').serialize();
-            console.log(list);
+            //按钮【按钮一】的回调            
+            $.post(track_num, $('#cabinet form').serialize());
         }
     });
 }

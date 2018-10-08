@@ -76,7 +76,7 @@
                     </td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
-                      <a href="" onclick="cabinet('<{$vo.order_num}>')">提交柜号</a>
+                      <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>')">提交柜号</a>
                     </td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
@@ -123,33 +123,7 @@
         <div class="guix">
             <div class="wenzi">柜号-封号:</div>
             <div class="ggh">
-                <div class="layui-form-item">
-                    <div class="guinei">
-                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="guinei">
-                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="guinei">
-                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="guinei">
-                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="guinei">
-                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="guinei">
-                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
-                    </div>
-                </div>
+
             </div>
         </div>
 <!--        <div class="layui-form-item">
@@ -174,6 +148,8 @@
     <script>
         
         var url="<{:url('index/Personal/place_order')}>";
+        var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号
+        var track_num = "<{:url('index/Personal/track_num')}>";//提交柜号
         var page =<{$page}>;
         var count=<{$count}>;
         var limit=<{$limit}>;

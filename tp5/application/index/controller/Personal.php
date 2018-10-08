@@ -93,21 +93,22 @@ class Personal extends Base
     //提交柜号资料
     public function track_data()
     { 
-       $order_num = $this->requst->param();
+       $order_num = $this->request->param('order_num');
        $data = Db::name('order_truckage') ->where('order_num',$order_num)->column('container_code');
-       $this->view->assign('$track_data',$data);        
-       return $this->view->fetch('personal/cabinet_number');
+       return json($data);
+    //    $this->view->assign('$track_data',$data);        
+    //    return $this->view->fetch('personal/cabinet_number');
     }
     //处理提交柜号
     public function track_num() {
         $member_code =Session::get('member_code','think');
-        $data = $this->requst->param(); 
+        $data = $this->request->param(); 
+        var_dump($data);exit;
         //根据订单号 添加柜号和封条号
         foreach ($data as $v){
             $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'container_code'=>$v['code']])
                     ->update([ 'container_code'=>$v['container_code'],'seal'=>$v['seal']]);
         }
-     
     }
 
 
