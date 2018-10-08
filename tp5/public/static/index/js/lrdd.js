@@ -347,14 +347,15 @@ function input_a() {
 }
 
 //增加装货服务
-var p = 0;
+var p = $('.bge tr').length - 1;
+
 function zeng_bge() {
   p++;
   $('.bge').append('<tr>' +
     '<td><input class="r_price" name="r_car_price[' + p + ']" type="text" value="" style="width: 100%"></td>' +
     '<td><input class="r_num" name="r_num[' + p + ']" type="text" value="" style="width: 100%"></td>' +
     '<td>柜</td>' +
-    '<td><input name="r_add[' + p + ']" type="r_num[]" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_add[' + p + ']" type="text" value="" style="width: 100%"></td>' +
     '<td><input name="r_link_man[' + p + ']" type="text" value="" style="width: 100%"></td>' +
     '<td><input name="shipper[' + p + ']" type="text" value="" style="width: 100%"></td>' +
     '<td><input name="r_load_time[' + p + ']" type="date" value="" style="width: 100%"></td>' +
@@ -367,7 +368,8 @@ function zeng_bge() {
 }
 
 //增加送货服务
-var o = 0;
+var o = $('.bge_song tr').length - 1;
+
 function zeng_song() {
   o++;
   $('.bge_song').append('<tr>' +

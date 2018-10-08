@@ -46,8 +46,8 @@ layui.use('upload', function () {
     });
 });
 
+//保存修改
 function xiu_order(zj){    
-    $(zj).attr("onclick",'return false');//禁用提交按钮   
     //提交后禁止 
     var data = $("#order_data_form").serializeArray();
     let obj = {};
@@ -73,13 +73,61 @@ function xiu_ajax(data) {
             if (data.status == 1) {
                 alert('提交表单成功');
             }
-        $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
         }
     });
     //return false;//只此一
 }
 
 
+//确认订单
+function que(order_num) {
+    layer.confirm('是否确定订单，确定之后将不能修改', { icon: 3, title: '提示' }, function (index) {
+        $.get(xiu_url, { 'order_num': order_num},
+        function(data){
+            
+        });
+        layer.close(index);//关闭提示框
+    });
+}
+
+
+//增加装货服务
+var p = $('.bge tr').length - 1;
+
+function admin_bge() {
+  p++;
+  $('.bge').append('<tr>' +
+    '<td><input class="r_price" name="car_price_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="r_num" name="num_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td>柜</td>' +
+    '<td><input name="add_r[' + p + ']"  type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="link_man_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="shipper_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="load_time_r[' + p + ']" type="date" value="" style="width: 100%"></td>' +
+    '<td><input name="link_phone_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="car_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="comment_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>' +
+    '</tr>');
+  input_a();
+}
+
+//增加送货服务
+var o = $('.bge_song tr').length - 1;
+
+function admin_song() {
+  o++;
+  $('.bge_song').append('<tr>' +
+    '<td><input class="s_price" name="car_price_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="s_num" name="num_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td>柜</td>' +
+    '<td><input name="add_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="car_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="comment_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>' +
+    '</tr>');
+  input_a();
+}
 
 if ($('.fukuan a').html() == '已付款') {
     $('.fukuan a').css('color','#00DB00');

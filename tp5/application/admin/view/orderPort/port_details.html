@@ -360,7 +360,7 @@
                         <div class="dd_nei">
                             <div class="layui-col-xs12 layui-form er">
                                 <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang">
-                                <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
+                                <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_bge()">增加</a>
                             </div>
                             <div class="layui-col-xs12 er biaoge zhuanghuo">
                                 <table class="layui-table" lay-size="sm">
@@ -380,35 +380,35 @@
                                         </tr>
                                     </thead>
                                     <tbody class="bge">
-                                       <{volist name="$carData.r" id="carR" }>
+                                       <{volist name="$carData.r" id="carR"}>
                                         <tr>
                                             <td>
-                                                <input class="r_price" type="text" name ="car_price_r[]" value="<{$carR.car_price}>">
+                                                <input class="r_price" type="text" name ="car_price_r[<{$i-1}>]" value="<{$carR.car_price}>">
                                             </td>
                                             <td>
-                                                <input class="r_num" type="text" name ="num_r[]" value="<{$carR.num}>">
+                                                <input class="r_num" type="text" name ="num_r[<{$i-1}>]" value="<{$carR.num}>">
                                             </td>
                                             <td>柜</td>
                                             <td>
-                                                <input type="text" name='add_r[]' value="<{$carR.add}>">
+                                                <input type="text" name='add_r[<{$i-1}>]' value="<{$carR.add}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="link_man_r[]"  value="<{$carR.link_man}>">
+                                                <input type="text" name="link_man_r[<{$i-1}>]"  value="<{$carR.link_man}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="shipper_r[]" value="<{$carR.shipper}>">
+                                                <input type="text" name="shipper_r[<{$i-1}>]" value="<{$carR.shipper}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="load_time_r[]"  value="<{$carR.load_time}>">
+                                                <input type="text" name="load_time_r[<{$i-1}>]"  value="<{$carR.load_time}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="link_phone_r[]" value="<{$carR.link_phone}>">
+                                                <input type="text" name="link_phone_r[<{$i-1}>]" value="<{$carR.link_phone}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="car_r[]" value="<{$carR.car}>">
+                                                <input type="text" name="car_r[<{$i-1}>]" value="<{$carR.car}>">
                                             </td>
                                             <td>
-                                                <input type="text" name ="comment_r[]" value="<{$carR.comment}>">
+                                                <input type="text" name ="comment_r[<{$i-1}>]" value="<{$carR.comment}>">
                                             </td>
                                             <td class="dele">
                                                 <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
@@ -423,7 +423,7 @@
                         <div class="dd_nei">
                             <div class="layui-col-xs12 layui-form er">
                                 <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
-                                <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
+                                <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_song()">增加</a>
                             </div>
                             <div class="layui-col-xs12 er biaoge songhuo">
                                 <table class="layui-table" lay-size="sm">
@@ -442,20 +442,20 @@
                                         <{volist name="$carData.s" id="carS" }>
                                         <tr>
                                             <td>
-                                                <input class="s_price" type="text" name="car_price_s[]"  value="<{$carS.car_price}>">
+                                                <input class="s_price" type="text" name="car_price_s[<{$i-1}>]"  value="<{$carS.car_price}>">
                                             </td>
                                             <td>
-                                                <input class="s_num" type="text" name="num_s[]"  value="<{$carS.num}>">
+                                                <input class="s_num" type="text" name="num_s[<{$i-1}>]"  value="<{$carS.num}>">
                                             </td>
                                             <td>柜</td>
                                             <td>
-                                                <input type="text" name="add_s[]" value="<{$carS.add}>">
+                                                <input type="text" name="add_s[<{$i-1}>]" value="<{$carS.add}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="car_s[]" value="<{$carS.car}>">
+                                                <input type="text" name="car_s[<{$i-1}>]" value="<{$carS.car}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="comment_s[]" value="<{$carS.comment}>">
+                                                <input type="text" name="comment_s[<{$i-1}>]" value="<{$carS.comment}>">
                                             </td>
                                             <td class="dele">
                                                 <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
@@ -539,7 +539,7 @@
 
                     <div class="tjiao">
                         <a href="javascript:;" onclick="xiu_order(this)">保存</a>
-                        <a class="shi" href="javascript:void(0);">完成订单</a>
+                        <a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
                     </div>
                 </div>
         </form>

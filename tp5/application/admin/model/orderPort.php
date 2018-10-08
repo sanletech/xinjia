@@ -5,7 +5,6 @@ use think\Db;
 use think\session;
 class orderPort extends Model
 {
-    
     public function order_audit($pages,$state){
         $list =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
