@@ -277,7 +277,7 @@ input_a();
 function input_a() {
   var i = 0;
   $('.biaoge input').bind('input propertychange', function () {
-    var $this = $(this);
+    var $this = $(this);    
     var text_length = $this.val().length;//获取当前文本框的长度
     var current_width = parseInt(text_length) * 11;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度
     $this.css("width", current_width + "px");

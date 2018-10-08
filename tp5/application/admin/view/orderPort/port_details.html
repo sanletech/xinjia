@@ -383,10 +383,10 @@
                                        <{volist name="$carData.r" id="carR" }>
                                         <tr>
                                             <td>
-                                                <input type="text" name ="car_price_r[]" value="<{$carR.car_price}>">
+                                                <input class="r_price" type="text" name ="car_price_r[]" value="<{$carR.car_price}>">
                                             </td>
                                             <td>
-                                                <input type="text" name ="num_r[]" value="<{$carR.num}>">
+                                                <input class="r_num" type="text" name ="num_r[]" value="<{$carR.num}>">
                                             </td>
                                             <td>柜</td>
                                             <td>
@@ -442,10 +442,10 @@
                                         <{volist name="$carData.s" id="carS" }>
                                         <tr>
                                             <td>
-                                                <input type="text" name="car_price_s[]"  value="<{$carS.car_price}>">
+                                                <input class="s_price" type="text" name="car_price_s[]"  value="<{$carS.car_price}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="num_s[]"  value="<{$carS.num}>">
+                                                <input class="s_num" type="text" name="num_s[]"  value="<{$carS.num}>">
                                             </td>
                                             <td>柜</td>
                                             <td>
@@ -599,8 +599,8 @@
 
 
         <script>
-            var loading = false;//装货状态
-            var delivery = false;//送货状态
+            var loading = true;//装货状态
+            var delivery = true;//送货状态
             var url = "<{:url('admin/orderPort/Upload')}>";
         </script>
         <script src="__STATIC__/../index/js/lrdd.js"></script>
