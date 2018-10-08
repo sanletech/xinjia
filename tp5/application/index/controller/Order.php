@@ -7,6 +7,9 @@ use think\Db;
 use think\Session;
 class Order extends Base 
 {
+
+
+
     //路线详情
     public function order_xq()
     {
@@ -236,7 +239,10 @@ class Order extends Base
         $sea_pirce =new OrderM;
         $data = $sea_pirce ->portBook($member_code,$sea_id,$container_size);
         $list =$data[0];$discount=$data[1];
-//$this->_p($data);exit;
+        //创建订单令牌
+        action('OrderToken/createToken','', 'controller');
+        
+        //$this->_p($data);exit;
         $this->view->assign('list',$list);
         $this->view->assign('discount',$discount);
         return $this->view->fetch('order/place_order_port');
@@ -244,7 +250,12 @@ class Order extends Base
     //港到港订单的处理
     public function port_data() {
         $data =$this->request->param(); 
-//        $this->_p($data);exit;
+        $post_token = $this->request->post('TOKEN');
+        //检查订单令牌是否重复
+     //   $checkToken=;
+        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+            return array('status'=>0,'mssage'=>'不要重复提交订单');
+        }
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
         $mtime= date('y-m-d h:i:s');$member_code =Session::get('member_code','think');

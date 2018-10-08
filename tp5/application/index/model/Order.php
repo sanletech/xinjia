@@ -298,6 +298,7 @@ class Order extends Model
     //处理装货费用和送货费用  订单号码和 装货 送货的信息
     public function truckage($order_num,$truckageData){
         $container_code = time();   // 设置虚拟的柜号
+//        $this->_p($truckageData);exit;
         $insertR = $truckageData['r']; 
         $kr = array_keys($insertR);
 //        $this->_p($insertR);$this->_p($kr);exit;
@@ -308,7 +309,8 @@ class Order extends Model
         foreach ($insertR['num'] as $i => $v) {
             $tmp = array_combine($kr,array_column($insertR,$i));
             $tmp['order_num'] = $order_num;  $tmp['type']='r';
-            for($k=0; $k<$tmp['num'];$k++){
+            $sumContanier = $insertR['num'][$i] ;
+            for($k=0; $k<$sumContanier;$k++){
                 $tmp['container_code']=$container_code.$i.$k;
                 $tmp['num']= $i;
                 $res =Db::name('order_truckage')->insert($tmp);
@@ -318,8 +320,8 @@ class Order extends Model
           foreach ($insertS['num'] as $x => $value) {
             $temporary = array_combine($ks,array_column($insertS,$x));
             $temporary['order_num'] = $order_num;  $temporary['type']='s';
-            ++$i;
-            for($k=0; $k<$temporary['num'];$k++){
+            ++$i;  $sumContanier = $insertS['num'][$x] ;
+            for($k=0; $k<$sumContanier;$k++){
                 $temporary['container_code']=$container_code.$i.$k;
                 $temporary['num']= $x;
                 $res =Db::name('order_truckage')->insert($temporary);

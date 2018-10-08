@@ -20,7 +20,7 @@ class Personal extends Base
     //作废订单
     public function invalid()
     {
-               //订单查询
+        //订单查询
         $order_num =  $this->request->param('order_num');
         $member_code =Session::get('member_code','think');
         //获取每页显示的条数
@@ -31,7 +31,7 @@ class Personal extends Base
         $tol=($page-1)*$limit;
         $dataM =new dataM;
        
-        $list = $dataM->place_order($member_code,$tol,$limit,$order_num);
+        $list = $dataM->place_order($member_code,$tol,$limit,array(404,505),$order_num);
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);
         $this->view->assign('page',$page); 
@@ -80,7 +80,8 @@ class Personal extends Base
         $tol=($page-1)*$limit;
         $dataM =new dataM;
        
-        $list = $dataM->place_order($member_code,$tol,$limit,$order_num);
+        $list = $dataM->place_order($member_code,$tol,$limit,array(2,3,4,5,6,7),$order_num);
+//        $this->_p($list);exit;
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);
         $this->view->assign('page',$page); 
@@ -93,22 +94,36 @@ class Personal extends Base
     //提交柜号资料
     public function track_data()
     { 
-       $order_num = $this->request->param('order_num');
-       $data = Db::name('order_truckage') ->where('order_num',$order_num)->column('container_code');
-       return json($data);
-    //    $this->view->assign('$track_data',$data);        
-    //    return $this->view->fetch('personal/cabinet_number');
+        $order_num = $this->request->param('order_num');
+        $data = Db::name('order_truckage') ->where('order_num',$order_num)->column('container_code');
+        return json($data);
     }
     //处理提交柜号
     public function track_num() {
-        $member_code =Session::get('member_code','think');
+       // $member_code =Session::get('member_code','think');
         $data = $this->request->param(); 
-        var_dump($data);exit;
-        //根据订单号 添加柜号和封条号
-        foreach ($data as $v){
-            $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'container_code'=>$v['code']])
-                    ->update([ 'container_code'=>$v['container_code'],'seal'=>$v['seal']]);
-        }
+       // $this->_p($data);exit;
+        $order_num =$data['order_num'];
+        $container_num  =$data['container_num'];
+        $container_code =$data['container_code'];
+        $seal =$data['seal'];
+        if((count($container_num)==count($container_code)) && (count($container_code)==count($seal))){
+           $response =[];
+            //根据订单号 添加柜号和封条号
+            for($i=0;$i<count($container_num);$i++){
+                $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'container_code'=>$container_num[$i]])
+                        ->update([ 'container_code'=>$container_code[$i],'seal'=>$seal[$i]]);
+                $res ? $response['success'][]= '提交柜号成功':$response['fail'][]= '提交柜号失败';
+            }
+            if(array_key_exists('fail', $response)){
+               $status = array('status'=>0,'message'=>'报柜号失败');
+            }  else {
+                $status = array('status'=>1,'message'=>'报柜号成功');    
+            }
+        }  else {
+                 $status = array('status'=>0,'message'=>'柜号数量不对');       
+            }
+        return $status;    
     }
 
 

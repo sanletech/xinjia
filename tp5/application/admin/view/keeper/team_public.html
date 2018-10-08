@@ -58,7 +58,7 @@
             data:{}, 
             success:function(data){ 
                 data =JSON.parse(data);
-              // console.log("data: "+data);
+               console.log(data);
                 var liStr= ""; 
                 // 遍历生成主菜单 
                 for( var i = 0; i <data.length; i++){ 
@@ -98,7 +98,7 @@
            } 
            subStr+="</dl></li></ul></dd>";
        }else{ 
-           subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\""+subMenu.url+"\">" +subMenu.title+'-'+subMenu.user_name+"</a></dd>"; 
+           subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\""+subMenu.url+"\">" +subMenu.title+'-+'+subMenu.user_name+"</a></dd>"; 
        } 
        return subStr;
    

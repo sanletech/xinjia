@@ -1,5 +1,7 @@
-function cabinet(od_num) {    
-    $.get(track_data, { order_num: od_num },
+function cabinet(od_num,gui) { 
+    $('#gui').val(gui);
+    $('#order_number').val(od_num);
+    $.get(track_data, { order_num: od_num },//获取柜量
     function(data){
         $('.ggh').html('');
         for (let i = 0; i < data.length; i++) {
@@ -9,7 +11,7 @@ function cabinet(od_num) {
             '<div class="layui-form-mid">-</div>'+
             '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value=""></div>'+
         '</div>');
-        }
+        };
         order_num();
     });
 }
