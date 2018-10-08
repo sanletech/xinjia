@@ -230,6 +230,42 @@ function zeng_wt(){
 
 }
 
+//修改委托信息
+$('.wt_xiu').click(function () {
+  layer.closeAll();
+  layer.open({
+    type: 1,
+    title: '增加信息',
+    area: ['600px'],
+    content: $('#wt3'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+    skin: 'demo-class',
+    fixed: false,
+    success: function () {
+      // 模态框成功调用
+    }
+  });
+})
+
+//修改委托信息
+function xiu_wt(){
+  //let data = $('#xiu_form').serialize();//增加委托信息表单数据
+  // $.ajax({
+  //   type: 'POST',
+  //   url: '',
+  //   data: data,
+  //   dataType: "json",
+  //   success: function (status) {
+  //     layer.close(layer.index);//关闭添加窗口
+  //     $('.wt1').click();//重新查询并打开窗口
+  //   }
+  // });  
+
+  //打开ajax删除下面两行
+  layer.close(layer.index);//关闭添加窗口
+  $('.wt1').click();//重新查询并打开窗口
+
+}
+
 //删除选中的委托信息
 $('.wt_del').click(function(){
   console.log(id);//当前的选中的ID

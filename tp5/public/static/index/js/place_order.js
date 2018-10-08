@@ -159,8 +159,13 @@ function invoice() {
     toajax(invoiceUrl, data);
 }
 
+
+
 //订单信息的提交
-function order_data() {
+function order_data(zj) {
+    
+    $(zj).attr("onclick",'return false');//禁用提交按钮
+    console.log(zj);
     //提交后禁止 
     var data = $("#order_data_form").serializeArray();
     let obj = {};
@@ -173,7 +178,6 @@ function order_data() {
     obj['portprice_s'] = $('#song').html();//送货费用
     obj['discount'] = $('#discount').html();//优惠价格
     obj['price_sum'] = $('#price_sum').html();//总运费
-    console.log(obj);
     toajax(OrderUrl, obj);
 }
 
@@ -186,7 +190,7 @@ function toajax(url, data) {
         success: function (status) {
             if (status == 1) {
                 alert('提交表单成功');
-             
+                
             }
         }
     });
@@ -207,9 +211,7 @@ function zong_sum(shu,zs) {
     }
     zong += zs;//装货服务费    
     zong -= mony_fs;//减去优惠价格
-    zong = Math.round(zong*100)/100;//保留小数点后面两位
-    console.log(zs);
-    
+    zong = Math.round(zong*100)/100;//保留小数点后面两位    
     $('#price_sum').html(zong); 
 }
 
@@ -249,9 +251,7 @@ var op = 0;//判断单价数量
 var zs_sum = 0;
 var zong_zhuang = 0;
 var zong_song = 0;
-function zhuanghuo(){
-    console.log('sadfsf');
-    
+function zhuanghuo(){    
     let dan = 0;
     let shu = 0;
     zong_zhuang = 0;
