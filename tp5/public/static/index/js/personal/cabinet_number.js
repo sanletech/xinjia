@@ -1,6 +1,7 @@
 function cabinet(od_num) {    
     $.get(track_data, { order_num: od_num },
     function(data){
+        $('.ggh').html('');
         for (let i = 0; i < data.length; i++) {
             $('.ggh').append('<div class="layui-form-item">'+
             '<div class="guinei"><input name="container_num[]" type="hidden" value="'+data[i]+'">'+
@@ -21,6 +22,7 @@ function order_num(){
         content: $('#cabinet'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
         offset: '0px',
         area: ['700px'],
+        shadeClose: true,
         skin: 'demo-class',
         btn: ['确认'],
         yes: function(index, layero){
