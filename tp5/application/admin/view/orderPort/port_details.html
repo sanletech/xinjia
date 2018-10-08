@@ -37,8 +37,15 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订舱单</label>
                                 <div class="layui-input-block">
-                                    <span><?php  if(!$list['book_note']){echo"订舱单未上传";}?></span>
-                                    <a class="dcd" href="#">上传</a>
+                                    <?php  
+                                    if(!$list['book_note']){
+                                        echo'<span>订舱单未上传</span><a class="dcd" href="#">上传</a>';}
+                                    else{
+                                        $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
+                                        $str ='<a href="'.$url.'">下载</a>';
+                                        echo '<span>订舱单已上传</span>'.$str;
+                                        }
+                                    ?>               
                                 </div>
                             </div>
                         </div>
@@ -69,14 +76,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-xs4">
+<!--                        <div class="layui-col-xs4">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">收货人：</label>
                                 <div class="layui-input-block">
                                     <input name="consigner" lay-verify="title" autocomplete="off" placeholder="请输入收货人信息" class="layui-input" type="text" value="<{$list.consigner}>">
                                     </div>
                             </div>
-                        </div>
+                        </div>-->
 
                          <{if condition ="!empty($containerData)" }>
                         <div class="guix">
@@ -109,8 +116,16 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">水运单：</label>
                                 <div class="layui-input-block">
-                                    <span><?php  if(!$list['sea_waybill']){echo"水运单未上传";}?></span>
-                                    <a class="syd" href="#">上传</a>
+                                    <?php  
+                                    if(!$list['sea_waybill']){
+                                        echo'<span>水运单未上传</span><a class="syd" href="#">上传</a>';}
+                                    else{
+                                        $order_num= $list['order_num'];
+                                        $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
+                                        $str ='<a href="'.$url.'">下载</a>';
+                                        echo '<span>水运单已上传</span>'.$str;
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -456,34 +471,38 @@
                     <!-- 详细费用 -->
                     <div class="xxtx_dd er">
                         <div class="xx">
-                            <strong>详细费用</strong>
+                          <strong>详细费用</strong>
                         </div>
                         <div class="feiyong">
-                            <div class="layui-col-xs12">
-                                <span>海运费：</span>123元
-                                <span class="shuo">已包含：双边</span>
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>保险费：</span>123元
-                                <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>装货费用：</span>123元
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>送货费用：</span>123元
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>优惠：</span>
-                                <strong>123</strong>元
-                                <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
-                            </div>
-                            <div class="layui-col-xs12">
-                                <span>总费用：</span>
-                                <strong class="zongfei">123</strong>元
-                            </div>
+                          <div class="layui-col-xs12">
+                            <span>海运费：</span>
+                            <pi id="money"><{$list.seaprice}></pi>元
+                              <span class="shuo">已包含：双边</span>
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>保险费：</span>
+                            <pi id="bxje1"><{$list.premium}></pi>元
+                            <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>装货费用：</span>
+                            <pi id="zhuang"><{$list.carprice_r}></pi>元
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>送货费用：</span>
+                            <pi id="song"><{$list.carprice_s}></pi>元
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>优惠：</span>
+                            <strong id="discount"></strong>元
+                            <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+                          </div>
+                          <div class="layui-col-xs12">
+                            <span>总费用：</span>
+                            <strong class="zongfei" id="price_sum">0</strong>元
+                          </div>
                         </div>
-                    </div>
+                      </div>
 
                     <!-- 是否支付 -->
                     <div class="xxtx_dd er">
@@ -503,7 +522,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">订单号：</label>
                                     <div class="layui-input-block">
-                                        <input name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="<{$list.order_num}>">
+                                        <input name="order_num" lay-verify="title" autocomplete="off" readOnly class="layui-input" type="text" value="<{$list.order_num}>">
                                     </div>
                                 </div>
                             </div>
@@ -592,6 +611,23 @@
             $('.in').css('border', '1px solid #e6e6e6');
             input_null();
         </script>
+        
+        <script type="text/javascript">
+//    function download_file(http://www.tp5.com/admin.php/order_port/downs/aa/111)
+//    {
+//        if (typeof (download_file.iframe) == "undefined")
+//        {
+//            var iframe = document.createElement("iframe");
+//            download_file.iframe = iframe;
+//            document.body.appendChild(download_file.iframe);
+//        }
+//        //alert(download_file.iframe);
+//        download_file.iframe.src = url;
+//        download_file.iframe.style.display = "none";
+//    }
+</script>
+
+
     </body>
 
     </html>

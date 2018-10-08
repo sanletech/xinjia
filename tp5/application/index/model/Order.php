@@ -217,10 +217,10 @@ class Order extends Model
 //            $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
 //        }
         if($start_add){
-            $price_list = Db::table($price_list.' F')->where('F.r_port_name','like',"%$start_add%")->buildSql();
+            $price_list = Db::table($price_list.' F')->where('F.r_port_code',$start_add)->buildSql();
         }
         if($end_add){
-            $price_list = Db::table($price_list.' G')->where('G.s_port_name','like',"%$end_add%")->buildSql();
+            $price_list = Db::table($price_list.' G')->where('G.s_port_code', $end_add)->buildSql();
         }
         return $price_list;
         

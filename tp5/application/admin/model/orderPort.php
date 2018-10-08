@@ -25,8 +25,12 @@ class orderPort extends Model
     } 
 
     //订单的状态
-    public function order_status($pages,$state,$payment_method= array('monthly','pledge','cash','special')) {
-//        var_dump($pages,$state,$payment_method);exit;
+    public function order_status($tol,$limit,$state,$order_num='',$payment_method= array('monthly','pledge','cash','special')) {
+        if(empty($order_num)){
+            $order_num = 'not NUll';
+        }else{
+            $order_num = trim($order_num);
+        }
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -39,8 +43,10 @@ class orderPort extends Model
                 ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port,P2.port_name e_port,B.boat_code,B.boat_name')
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
                 ->where('OP.status','in',$state)
+                ->where('OP.order_num',$order_num)
                 ->where('OP.payment_method','in',$payment_method)
-                ->paginate($pages); 
+                ->limit($tol,$limit)->select();
+//        $this->_p($list);exit;
 //        var_dump(Db::getLastSql());exit;     
         return $list;
         

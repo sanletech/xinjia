@@ -1,30 +1,37 @@
 
 layui.use('upload', function () {
     var upload = layui.upload;
-
+    var order_num = $(" input[ name='order_num' ] ").val();
+    
     //订舱单
     var uploadInst = upload.render({
         elem: '.dcd' //绑定元素
-        , url: url //上传接口
+        , url: url+'?order_num='+order_num+'&type=book_note' //上传接口
         , accept: 'file' //普通文件
         , done: function (res) {
             //上传完毕回调
+            if(res.status>0){
+                alert(res.mssage)
+            }else{
+                alert(res.mssage)
+            }
         }
-        , error: function () {
-            //请求异常回调
-        }
+       
     });
     //水运单
     var uploadInst = upload.render({
         elem: '.syd' //绑定元素
-        , url: url //上传接口
+        , url: url+'?order_num='+order_num+'&type=sea_waybill' //上传接口
         , accept: 'file' //普通文件
         , done: function (res) {
             //上传完毕回调
+             if(res.status>0){
+                alert(res.mssage)
+            }else{
+                alert(res.mssage)
+            }
         }
-        , error: function () {
-            //请求异常回调
-        }
+       
     });
 
 
