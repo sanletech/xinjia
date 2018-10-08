@@ -24,7 +24,7 @@
       </form>
       <!-- 表格 -->
       <div class="biao">
-        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="width:1400px;">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
           <div class="layui-tab-content" style="height: 100px;">
             <div class="layui-tab-item layui-show">
               <table class="layui-table layui-table-item" id="te">
@@ -76,7 +76,7 @@
                     </td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
-                      <a href="" onclick="cabinet('<{$vo.order_num}>')">提交柜号</a>
+                      <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>')">提交柜号</a>
                     </td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
@@ -112,44 +112,26 @@
 
     <div id="cabinet">
       <form class="layui-form" action="">
-        <div class="layui-form-item">
-          <label class="layui-form-label">柜型:</label>
-          <div class="layui-input-block">
-            <input name="title" lay-verify="title" autocomplete="off" placeholder="请输柜型" class="layui-input layui-disabled" type="text"
-              value="40GP" disabled>
+          <div class="guiding" style="margin: 10px 0;overflow: hidden;">
+              <div class="layui-col-xs6">
+                <label class="layui-form-label">柜型:</label>
+                <div class="layui-input-block">
+                    <input id="gui"  name="title" lay-verify="title" autocomplete="off"  class="layui-input layui-disabled" type="text" value="" disabled>
+                </div>
+              </div>
+          
+            <div class="layui-col-xs6">
+             <label class="layui-form-label">订单号:</label>
+             <div class="layui-input-block">
+                 <input id="order_number" name="order_num" lay-verify="title" autocomplete="off" class="layui-input layui-disabled" type="text" readonly="true">
+             </div>
+           </div>
           </div>
-        </div>
 
         <div class="guix">
             <div class="wenzi">柜号-封号:</div>
             <div class="ggh">
-                <div class="layui-form-item">
-                    <div class="guinei">
-                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="guinei">
-                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="guinei">
-                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="guinei">
-                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="guinei">
-                        <input name="price_min" placeholder="" autocomplete="off" class="layui-input" type="text" value="SFSAF555555">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="guinei">
-                        <input name="price_max" placeholder="" autocomplete="off" class="layui-input" type="text" value="44312315">
-                    </div>
-                </div>
+
             </div>
         </div>
 <!--        <div class="layui-form-item">
@@ -174,6 +156,8 @@
     <script>
         
         var url="<{:url('index/Personal/place_order')}>";
+        var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号
+        var track_num = "<{:url('index/Personal/track_num')}>";//提交柜号
         var page =<{$page}>;
         var count=<{$count}>;
         var limit=<{$limit}>;
