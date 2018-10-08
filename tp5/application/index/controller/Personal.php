@@ -20,7 +20,7 @@ class Personal extends Base
     //作废订单
     public function invalid()
     {
-               //订单查询
+        //订单查询
         $order_num =  $this->request->param('order_num');
         $member_code =Session::get('member_code','think');
         //获取每页显示的条数
@@ -31,7 +31,7 @@ class Personal extends Base
         $tol=($page-1)*$limit;
         $dataM =new dataM;
        
-        $list = $dataM->place_order($member_code,$tol,$limit,$order_num);
+        $list = $dataM->place_order($member_code,$tol,$limit,array(404,505),$order_num);
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);
         $this->view->assign('page',$page); 
@@ -80,7 +80,7 @@ class Personal extends Base
         $tol=($page-1)*$limit;
         $dataM =new dataM;
        
-        $list = $dataM->place_order($member_code,$tol,$limit,$order_num);
+        $list = $dataM->place_order($member_code,$tol,$limit,array(2,3,4,5,6,7),$order_num);
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);
         $this->view->assign('page',$page); 
@@ -93,15 +93,17 @@ class Personal extends Base
     //提交柜号资料
     public function track_data()
     { 
-       $order_num = $this->requst->param();
-       $data = Db::name('order_truckage') ->where('order_num',$order_num)->column('container_code');
-       $this->view->assign('$track_data',$data);        
-       return $this->view->fetch('personal/cabinet_number');
+        $order_num = $this->request->param('order_num');
+        $data = Db::name('order_truckage') ->where('order_num',$order_num)->column('container_code');
+        return json($data);
+//       var_dump($data);exit;
+//       $this->view->assign('$track_data',$data);        
+//       return $this->view->fetch('personal/cabinet_number');
     }
     //处理提交柜号
     public function track_num() {
         $member_code =Session::get('member_code','think');
-        $data = $this->requst->param(); 
+        $data = $this->request->param(); 
         //根据订单号 添加柜号和封条号
         foreach ($data as $v){
             $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'container_code'=>$v['code']])

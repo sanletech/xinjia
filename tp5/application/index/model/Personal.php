@@ -6,7 +6,7 @@ use think\Session;
 class Personal extends Model
 {
     
-    public function place_order($member_code,$tol,$limit,$order_num='') {
+    public function place_order($member_code,$tol,$limit,$status,$order_num='') {
         if(empty($order_num)){
             $order_num = 'not NUll';
         }else{
@@ -24,6 +24,7 @@ class Personal extends Model
                 ->join('hl_boat B','B.boat_code=SP.boat_code','left')
                 ->where('OP.member_code',$member_code)
                 ->where('OP.order_num',$order_num)
+                ->where('OP.status','in',$status)
                 ->field('OP.*,OPS.title, OPS.status change_status,OPS.mtime change_mtime,'
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,P1.port_name s_port,P2.port_name e_port')
                 ->order('OPS.status DESC')->buildSql();
