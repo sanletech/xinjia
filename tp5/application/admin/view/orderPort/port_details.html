@@ -538,7 +538,7 @@
                     </div>
 
                     <div class="tjiao">
-                        <a href="javascript:void(0);">保存</a>
+                        <a href="javascript:;" onclick="xiu_order(this)">保存</a>
                         <a class="shi" href="javascript:void(0);">完成订单</a>
                     </div>
                 </div>
@@ -602,6 +602,7 @@
             var loading = true;//装货状态
             var delivery = true;//送货状态
             var url = "<{:url('admin/orderPort/Upload')}>";
+            var xiu_url = "<{:url('admin/orderPort/aaa')}>";
         </script>
         <script src="__STATIC__/../index/js/lrdd.js"></script>
         <script src="__STATIC__/../index/js/place_order.js"></script>

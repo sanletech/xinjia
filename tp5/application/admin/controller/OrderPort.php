@@ -104,6 +104,10 @@ class OrderPort extends Base
        }
     }
     
+    public function aaa(){
+        $idArr =$this->request->param();
+        $this->_p($idArr);exit;
+    }
     
     //港到港订单页
     public function portList()
@@ -124,7 +128,7 @@ class OrderPort extends Base
         $tol=($page-1)*$limit;
         $data = new OrderM;
         $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num);
-//        $this->_p($list);exit;
+    //    $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);

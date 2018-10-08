@@ -25,7 +25,7 @@ class orderPort extends Model
     } 
 
     //订单的状态
-    public function order_status($tol,$limit,$state,$order_num='',$payment_method= array('monthly','pledge','cash','special')) {
+    public function order_status($tol,$limit,$state,$order_num='',$payment_method= array('month','pledge','cash','special')) {
         if(empty($order_num)){
             $order_num = 'not NUll';
         }else{

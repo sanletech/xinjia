@@ -312,13 +312,13 @@ $('.bge_song input').each(function () {
 input_a();
 function input_a() {
   var i = 0;
-  $('.biaoge input').bind('input propertychange', function () {
+  $('.biaoge input').bind('input propertychange', function () {//监听发货表格
     var $this = $(this);    
     var text_length = $this.val().length;//获取当前文本框的长度
     var current_width = parseInt(text_length) * 11;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度
     $this.css("width", current_width + "px");
-    let shu = 0;
-    let fa = 0;
+    let shu = 0;//装货数量
+    let fa = 0;//发货数量
     let container = $('#container_sum').find("option:selected").val();
     $('.bge .r_num').each(function () {
       shu += Number($(this).val());

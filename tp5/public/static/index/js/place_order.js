@@ -163,9 +163,7 @@ function invoice() {
 
 //订单信息的提交
 function order_data(zj) {
-    
-    $(zj).attr("onclick",'return false');//禁用提交按钮
-    console.log(zj);
+    $(zj).attr("onclick",'return false');//禁用提交按钮   
     //提交后禁止 
     var data = $("#order_data_form").serializeArray();
     let obj = {};
@@ -187,11 +185,11 @@ function toajax(url, data) {
         url: url,
         data: data,
         dataType: "json",
-        success: function (status) {
-            if (status == 1) {
+        success: function (data) {            
+            if (data.status == 1) {
                 alert('提交表单成功');
-                
             }
+        $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
         }
     });
     //return false;//只此一
@@ -216,6 +214,21 @@ function zong_sum(shu,zs) {
 }
 
 $('#container_sum').change(function () {//监听柜量
+    let shu = 0;//装货数量
+    let fa = 0;//发货数量
+    let container = $('#container_sum').find("option:selected").val();
+    $('.bge .r_num').each(function () {
+      shu += Number($(this).val());
+    });
+
+    $('.bge_song .s_num').each(function () {
+      fa += Number($(this).val());
+    });    
+    if (container < shu && container < fa) {
+        alert('当前柜量小于装送货服柜量');
+        $('#container_sum').val(shu);
+    }
+    
     youhui();
 })
 
