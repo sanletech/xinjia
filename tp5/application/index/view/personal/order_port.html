@@ -76,7 +76,11 @@
                     </td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
+                      <{if condition="($vo['status']>4) "}>
+                      已补料
+                      <{else /}>
                       <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>')">提交柜号</a>
+                      <{/if}>
                     </td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->

@@ -118,7 +118,9 @@ class Personal extends Base
             if(array_key_exists('fail', $response)){
                $status = array('status'=>0,'message'=>'报柜号失败');
             }  else {
-                $status = array('status'=>1,'message'=>'报柜号成功');    
+                $status = array('status'=>1,'message'=>'报柜号成功');   
+                //同时修改订单的状态
+                $res2 =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>5]);
             }
         }  else {
                  $status = array('status'=>0,'message'=>'柜号数量不对');       
