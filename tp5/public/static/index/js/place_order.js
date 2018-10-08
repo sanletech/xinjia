@@ -194,8 +194,8 @@ function toajax(url, data) {
 }
 var mony_fs = 0;
 //计算运费
-function zong_sum(shu,zs) {        
-    var money = $('.money').text();//纯运费
+function zong_sum(shu,zs) {     
+    var money = $('#money').html();//纯运费
     var sum = $("#container_sum option:selected").val();//柜量
     var bxje = $('#bxje').val() * 6;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
@@ -208,6 +208,8 @@ function zong_sum(shu,zs) {
     zong += zs;//装货服务费    
     zong -= mony_fs;//减去优惠价格
     zong = Math.round(zong*100)/100;//保留小数点后面两位
+    console.log(zs);
+    
     $('#price_sum').html(zong); 
 }
 
@@ -248,6 +250,8 @@ var zs_sum = 0;
 var zong_zhuang = 0;
 var zong_song = 0;
 function zhuanghuo(){
+    console.log('sadfsf');
+    
     let dan = 0;
     let shu = 0;
     zong_zhuang = 0;
@@ -294,7 +298,7 @@ function songhuo(){
 }
 
 
-function st(){
+function st(){    
     if (loading) {//判断装货状态
         zhuanghuo();
     }else{
