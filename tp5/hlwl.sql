@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-08 19:13:34
+Date: 2018-10-09 17:06:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4881,13 +4881,11 @@ CREATE TABLE `hl_order_port` (
   `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款',
   `container_status` varchar(1) DEFAULT NULL COMMENT '客户是否提交柜号了0未提交1已经提交',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
-INSERT INTO `hl_order_port` VALUES ('1', 'AA08864843500640', '辣条', '40HQ', '3', '100', '100', '1', '阿萨德发送到发送的', null, 'kehu001', '0', '2018-10-08 04:14:44', 'installment', '0', null, '0', null, '装货单位,装货单位,1000886', null, '收货单位,收货单位,100556', '1', '6555', '600', '555', '400', '500', '19500', '通过审核>待录入运单', '3', null, null, 'AA08864843500640_sea_waybill_txt', '0', null);
-INSERT INTO `hl_order_port` VALUES ('2', 'AA08866263766662', '火腿', '20GP', '2', '25', '50', '1', '发撒旦法发色', null, 'kehu001', '0', '2018-10-08 04:17:06', 'month', '0', null, '0', null, '法撒旦法,发生的,45454564', null, '发顺丰,法撒旦法,100524', '1', '2000', '300', '1213', '200', '200', '2274', '通过审核>待录入运单', '5', null, null, null, '0', null);
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
@@ -5048,7 +5046,7 @@ CREATE TABLE `hl_order_truckage` (
   `id` int(12) NOT NULL AUTO_INCREMENT COMMENT '订单号码',
   `order_num` varchar(28) DEFAULT NULL COMMENT '订单号码',
   `container_code` varchar(16) DEFAULT NULL COMMENT '一个运单号里的多个柜号再录入派车信息前为虚拟编码格式为运单号+月日+次序',
-  `state` int(12) DEFAULT NULL COMMENT '订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货',
+  `state` int(12) DEFAULT '0' COMMENT '0收费柜子 1客户自己装送 免费柜子',
   `action` varchar(12) DEFAULT NULL COMMENT '状态说明',
   `car_price` int(11) DEFAULT NULL COMMENT '装货车表的ID',
   `num` varchar(12) DEFAULT NULL,
@@ -5063,21 +5061,11 @@ CREATE TABLE `hl_order_truckage` (
   `type` varchar(5) DEFAULT NULL COMMENT 'r装货s送货',
   `seal` varchar(12) DEFAULT NULL COMMENT '封条号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_truckage
 -- ----------------------------
-INSERT INTO `hl_order_truckage` VALUES ('1', 'AA08864843500640', '153898648400', null, null, '200', '0', '阿斯蒂芬撒', null, '富士达', ' 阿斯蒂芬', '2018-10-16 00:00:00', '4154654', '发烧发', '撒旦发射', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('2', 'AA08864843500640', '153898648410', null, null, '100', '1', '阿斯飞洒', null, '盛大发售', '法撒旦法', '2018-10-08 00:00:00', '132131', '是短发散发', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('3', 'AA08864843500640', '153898648411', null, null, '100', '1', '阿斯飞洒', null, '盛大发售', '法撒旦法', '2018-10-08 00:00:00', '132131', '是短发散发', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('4', 'AA08864843500640', '153898648420', null, null, '200', '0', '司法所', null, null, null, null, null, '撒旦发射', '是点发发色', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('5', 'AA08864843500640', '153898648421', null, null, '200', '0', '司法所', null, null, null, null, null, '撒旦发射', '是点发发色', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('6', 'AA08864843500640', '153898648430', null, null, '100', '1', '撒旦发射', null, null, null, null, null, '速读法', '速读法', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('7', 'AA08866263766662', '654654', null, null, '100', '0', '撒旦发射', null, '速读法', '撒旦发射', '2018-10-08 00:00:00', '1000', '法撒旦法', '阿萨德发生', 'r', 'bbbbbb');
-INSERT INTO `hl_order_truckage` VALUES ('8', 'AA08866263766662', '65464', null, null, '100', '1', '撒旦发射', null, '撒旦发射', '撒旦发射', '2018-10-09 00:00:00', '351231', '司法大案', '撒旦发射', 'r', 'ccccc');
-INSERT INTO `hl_order_truckage` VALUES ('9', 'AA08866263766662', '456464', null, null, '100', '0', '速读法', null, null, null, null, null, '撒旦发射', '撒旦发射', 's', 'aaaaaa');
-INSERT INTO `hl_order_truckage` VALUES ('10', 'AA08866263766662', '46546', null, null, '100', '0', '速读法', null, null, null, null, null, '撒旦发射', '撒旦发射', 's', 'dddd');
 
 -- ----------------------------
 -- Table structure for `hl_port`
@@ -5853,7 +5841,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-08 04:22:48', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-09 02:52:49', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

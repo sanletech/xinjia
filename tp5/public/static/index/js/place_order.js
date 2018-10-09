@@ -163,7 +163,7 @@ function invoice() {
 
 //订单信息的提交
 function order_data(zj) {
-    $(zj).attr("onclick",'return false');//禁用提交按钮   
+//    $(zj).attr("onclick",'return false');//禁用提交按钮   
     //提交后禁止 
     var data = $("#order_data_form").serializeArray();
     let obj = {};
