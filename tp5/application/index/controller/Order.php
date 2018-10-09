@@ -6,19 +6,7 @@ use app\index\model\Order as OrderM;
 use think\Db;
 use think\Session;
 class Order extends Base 
-{
-
-
-
-    //路线详情
-    public function order_xq()
-    {
-        
-        
-        
-       return $this->view->fetch('order/order_xq');
-    }
-    
+{    
     //海运运价
     public function order_list()
     {   
@@ -67,7 +55,7 @@ class Order extends Base
         $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code,$pir_id,$pis_id);
         $this->view->assign('list',$list);
       
-        return $this->view->fetch('order/place_order');
+        return $this->view->fetch('order/order_book');
     }
     
     //添加收/发货人的信息
@@ -123,7 +111,7 @@ class Order extends Base
         $data =$this->request->param();
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
-        $seaprice_id =$data['sea_id'];  $carprice_rid=$data['rid']; $carprice_sid =$data['sid'];
+        $seaprice_id =$data['seaprice_id'];  $carprice_rid=$data['rid']; $carprice_sid =$data['sid'];
         $pir_id=$data['pir_id']; $pis_id =$data['pis_id'];
         //计算出车装货价格 送货价格 船运价格 保险费, 法税 ,利润 ,港口杂费
         $carprice_r= Db::name('carprice')->where('id',$carprice_rid)->value('price_'.$data['container']); //车装货费
@@ -227,17 +215,17 @@ class Order extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-        return $this->view->fetch('order/order_port');
+        return $this->view->fetch('order/order_port_list');
     }
     
     //港到港下单
     public function portBook(){
         $data =$this->request->param();
-        $sea_id = $data['sea_id'];
+        $seaprice_id= $data['seaprice_id'];
         $container_size = $data['container_size'];
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $data = $sea_pirce ->portBook($member_code,$sea_id,$container_size);
+        $data = $sea_pirce ->portBook($member_code,$seaprice_id,$container_size);
         $list =$data[0];$discount=$data[1];
         //创建订单令牌
         action('OrderToken/createToken','', 'controller');
@@ -245,21 +233,20 @@ class Order extends Base
         //$this->_p($data);exit;
         $this->view->assign('list',$list);
         $this->view->assign('discount',$discount);
-        return $this->view->fetch('order/place_order_port');
+        return $this->view->fetch('order/port_book');
     }
     //港到港订单的处理
     public function port_data() {
         $data =$this->request->param(); 
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复
-     //   $checkToken=;
         if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
             return array('status'=>0,'mssage'=>'不要重复提交订单');
         }
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
         $mtime= date('y-m-d h:i:s');$member_code =Session::get('member_code','think');
-        $sea_id = $data['sea_id'];$container_size=$data['container_size'];
+        $seaprice_id = $data['seaprice_id'];$container_size=$data['container_size'];
         //对支付方式做判断
         $payment_method= $data['payment_method'];
         if(intval($payment_method)){
@@ -270,14 +257,16 @@ class Order extends Base
         }
         $Pirce =new OrderM;
         //计算单个柜优惠的金额
-        $discount = $Pirce->dicountPrice($member_code, $sea_id, $container_size, $payment_method, $special);
+        $discount = $Pirce->dicountPrice($member_code, $seaprice_id, $container_size, $payment_method, $special);
         //计算装货费用和送货费用
         $truckageData = array(  'r'=>['car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
                     'load_time'=>$data['r_load_time'],'link_phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
                     's'=>['car_price'=>$data['s_car_price'],'num'=>$data['s_num'],'add'=>$data['s_add'],'car'=>$data['s_car'], 'comment'=>$data['s_comment']] );
-        $truckagePrice = $Pirce->truckage($order_num, $truckageData);
+        // 根据订单号, 下单的柜子总数, 和实际的装货送货数据 来生成order_trackage的信息
+        $truckagePrice = $Pirce->truckage($order_num,$data['container_sum'], $truckageData);
+        
         //计算出对应的海运费
-        $seaPrice = Db::name('seaprice')->where('id',$data['sea_id'])->value('price_'.$container_size);
+        $seaPrice = Db::name('seaprice')->where('id',$data['seaprice_id'])->value('price_'.$container_size);
         //计算总共的成本 (海运费 -优惠)*柜子数量 + 保险金额*6 + 装货费 +送货费;
         $quoted_price= ($seaPrice-$discount)*$data['container_sum'] + ($data['cargo_cost']*6) +$truckagePrice['carprice_r']+$truckagePrice['carprice_s'];
 //        var_dump($seaPrice,$discount,$truckagePrice['carprice_r'],$truckagePrice['carprice_s']);exit;
@@ -294,7 +283,7 @@ class Order extends Base
         $fatherData= array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
         'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
         'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
-        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['sea_id'],
+        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);
         //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
@@ -306,13 +295,13 @@ class Order extends Base
         } else {
             return array('status'=>0,'mssage'=>'订单重复提交');
         }
-        
                 
     }
     
-    //港到港下单详情
-    public function place_details(){
-        return $this->view->fetch('order/place_details');
+    //港到港订单详情页面
+    public function orderPortDetail() {
+        
+        return $this->view->fetch('order/order_port_detail');
     }
     
 

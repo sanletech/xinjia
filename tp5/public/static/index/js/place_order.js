@@ -163,7 +163,7 @@ function invoice() {
 
 //订单信息的提交
 function order_data(zj) {
-    $(zj).attr("onclick",'return false');//禁用提交按钮   
+//    $(zj).attr("onclick",'return false');//禁用提交按钮   
     //提交后禁止 
     var data = $("#order_data_form").serializeArray();
     let obj = {};
@@ -223,10 +223,15 @@ $('#container_sum').change(function () {//监听柜量
 
     $('.bge_song .s_num').each(function () {
       fa += Number($(this).val());
-    });    
-    if (container < shu && container < fa) {
+    });
+
+    if (container < shu || container < fa) {
         alert('当前柜量小于装送货服柜量');
-        $('#container_sum').val(shu);
+        if (shu >= fa) {
+            $('#container_sum').val(shu);
+        }else{
+            $('#container_sum').val(fa);
+        }
     }
     
     youhui();

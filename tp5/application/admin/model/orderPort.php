@@ -69,21 +69,22 @@ class orderPort extends Model
         //根据订单号 查询对应柜子的 柜号和封条号码
         $containerData =Db::name('order_truckage')->alias('OT')
                 ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
-                ->where('OP.status','in',[5,6])
                 ->where('OT.order_num',$order_num)
                 ->field('OT.container_code,OT.seal')->select();
         
         //根据订单查询出拖车信息
         $carData['r'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
-                ->where('type','r')->group('num')
-                ->field('order_num,car_price,count(id) num ,add,mtime,link_man,shipper,load_time,link_phone,car,comment,seal')
+                ->where('state',0) //收费柜子
+                ->where('type','r')->group('id')
+                ->field('order_num,car_price,container_code,count(id) num ,add,mtime,link_man,shipper,load_time,link_phone,car,comment,seal')
                 ->select();
         
         $carData['s'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
-                ->where('type','s')->group('num')
-                ->field('order_num,car_price,count(id) num ,add,mtime ,car,comment,seal')
+                ->where('state',0) //收费柜子
+                ->where('type','s')->group('id')
+                ->field('order_num,car_price,container_code,count(id) num ,add,mtime ,car,comment,seal')
                 ->select();
         
         return array($list ,$containerData,$carData);
@@ -96,6 +97,40 @@ class orderPort extends Model
         $mtime =  date('y-m-d h:i:s');
         $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'submitter'=>$submitter);
         $res =Db ::name('order_port_status')->insert($data);
+        
+    }
+    
+    //子订单的修改order_truckage 也是送货 装货服务的信息修改
+    public function truckage($order_num,$container_sum, $truckageData){
+        
+        function  insertdata($insertR,$order_num,$container_sum,$type){
+            $mtime= time();   // 设置虚拟的柜号  
+            $response =[];
+            if(!empty($insertR))
+            {   $kr = array_keys($insertR);
+                foreach ($insertR['num'] as $i => $v) {
+                    $tmp[$i] = array_combine($kr,array_column($insertR,$i));
+                    $tmp[$i]['order_num'] = $order_num;  $tmp[$i]['type']=$type;$tmp[$i]['mtime']=$mtime;
+                    $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'container_code'=>$tmp[$i]['container_code']])
+                    ->update($tmp[$i]);
+                    $res ? $response['success'][]= $tmp[$i]['container_code'].'修改成功':$response['fail'][]= $tmp[$i]['container_code'].'修改失败'; 
+                }
+            }
+            return $response;
+        }
+        
+        $insertR = $truckageData['r']; 
+        $resultR = insertdata($insertR, $order_num, $container_sum, 'r');
+        $insertS = $truckageData['s'];
+        $resultS = insertdata($insertS, $order_num, $container_sum, 's');
+    
+        if((array_key_exists('fail', $resultR))&&(array_key_exists('fail', $resultS))){
+            return FALSE;
+        }else{
+            $priceR =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'r'])->sum('car_price');
+            $priceS =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'S'])->sum('car_price');
+            return array('carprice_r'=>$priceR,'carprice_s'=>$priceS);
+        }
         
     }
 }

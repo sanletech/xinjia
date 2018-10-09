@@ -25,7 +25,7 @@
           </ul>
         </div>
         <!-- 订单信息 -->
-        <input type="hidden" name='sea_id' value="<{$list.id}>">
+        <input type="hidden" name='seaprice_id' value="<{$list.id}>">
         <input type="hidden" name='rid' value="<{$list.r_port_code}>">
         <input type="hidden" name='sid' value="<{$list.s_port_code}>">
         <input type="hidden" name="TOKEN" value="<{:session('TOKEN')}>" />
@@ -176,13 +176,6 @@
                   <span>*&nbsp;</span>货名：</div>
                 <div class="layui-col-xs6">
                   <input type="text" name="cargo" value="" placeholder="">
-                  <!--                <div class="select">
-                    <select name ='cargo'>
-                      <option value='0' selected>请选择</option>
-                      <option  value='1'>柜子</option>
-                      <option  value='2'>箱子</option>
-                    </select>
-                  </div>-->
                 </div>
               </div>
             </div>
