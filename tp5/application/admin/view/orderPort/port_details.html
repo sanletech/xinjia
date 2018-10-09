@@ -281,7 +281,7 @@
                                     <span>*&nbsp;</span>结账方式：</div>
                                 <div class="layui-col-xs6">
                                     <div class="select">
-                                        <select class='mony_fs'>
+                                        <select name="payment_method" class='mony_fs'>
                                             <option title="<{$discount.installment}>" <?php if($list['payment_method']=='installment'){echo"checked";}  ?>  value='installment'>到港付</option>
                                             <option title="<{$discount.month}>"  <?php if($list['payment_method']=='month'){echo"checked";}  ?> value='month'>月结付</option>
                                             <{empty name="$discount.special" }>
@@ -383,36 +383,33 @@
                                        <{volist name="$carData.r" id="carR"}>
                                         <tr>
                                             <td>
-<<<<<<< HEAD
-                                                <input class="r_price" type="text" name ="car_price_r[<{$i-1}>]" value="<{$carR.car_price}>">
-=======
-                                                <input class="r_price" type="text" name ="car_price_r[<{$key}>]" value="<{$carR.car_price}>">
->>>>>>> ca294dce079a3ca7afdbec406a574af9ee123b8f
+                                                <input class="r_price" type="text" name ="r_car_price[<{$i-1}>]" value="<{$carR.car_price}>">
+
                                             </td>
                                             <td>
-                                                <input class="r_num" type="text" name ="num_r[<{$i-1}>]" value="<{$carR.num}>">
+                                                <input class="r_num" type="text" name ="r_num[<{$i-1}>]" value="<{$carR.num}>">
                                             </td>
                                             <td>柜</td>
                                             <td>
-                                                <input type="text" name='add_r[<{$i-1}>]' value="<{$carR.add}>">
+                                                <input type="text" name='r_add[<{$i-1}>]' value="<{$carR.add}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="link_man_r[<{$i-1}>]"  value="<{$carR.link_man}>">
+                                                <input type="text" name="r_link_man[<{$i-1}>]"  value="<{$carR.link_man}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="shipper_r[<{$i-1}>]" value="<{$carR.shipper}>">
+                                                <input type="text" name="shipper[<{$i-1}>]" value="<{$carR.shipper}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="load_time_r[<{$i-1}>]"  value="<{$carR.load_time}>">
+                                                <input type="date" name="r_load_time[<{$i-1}>]"  value="<{$carR.load_time}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="link_phone_r[<{$i-1}>]" value="<{$carR.link_phone}>">
+                                                <input type="text" name="r_link_phone[<{$i-1}>]" value="<{$carR.link_phone}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="car_r[<{$i-1}>]" value="<{$carR.car}>">
+                                                <input type="text" name="r_car[<{$i-1}>]" value="<{$carR.car}>">
                                             </td>
                                             <td>
-                                                <input type="text" name ="comment_r[<{$i-1}>]" value="<{$carR.comment}>">
+                                                <input type="text" name ="r_comment[<{$i-1}>]" value="<{$carR.comment}>">
                                             </td>
                                             <td class="dele">
                                                 <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
@@ -446,20 +443,20 @@
                                         <{volist name="$carData.s" id="carS" }>
                                         <tr>
                                             <td>
-                                                <input class="s_price" type="text" name="car_price_s[<{$i-1}>]"  value="<{$carS.car_price}>">
+                                                <input class="s_price" type="text" name="s_car_price[<{$i-1}>]"  value="<{$carS.car_price}>">
                                             </td>
                                             <td>
-                                                <input class="s_num" type="text" name="num_s[<{$i-1}>]"  value="<{$carS.num}>">
+                                                <input class="s_num" type="text" name="s_num[<{$i-1}>]"  value="<{$carS.num}>">
                                             </td>
                                             <td>柜</td>
                                             <td>
-                                                <input type="text" name="add_s[<{$i-1}>]" value="<{$carS.add}>">
+                                                <input type="text" name="s_add[<{$i-1}>]" value="<{$carS.add}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="car_s[<{$i-1}>]" value="<{$carS.car}>">
+                                                <input type="text" name="s_car[<{$i-1}>]" value="<{$carS.car}>">
                                             </td>
                                             <td>
-                                                <input type="text" name="comment_s[<{$i-1}>]" value="<{$carS.comment}>">
+                                                <input type="text" name="s_comment[<{$i-1}>]" value="<{$carS.comment}>">
                                             </td>
                                             <td class="dele">
                                                 <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
@@ -606,7 +603,7 @@
             var loading = true;//装货状态
             var delivery = true;//送货状态
             var url = "<{:url('admin/orderPort/Upload')}>";
-            var xiu_url = "<{:url('admin/orderPort/aaa')}>";
+            var xiu_url = "<{:url('admin/orderPort/orderEdit')}>";
         </script>
         <script src="__STATIC__/../index/js/lrdd.js"></script>
         <script src="__STATIC__/../index/js/place_order.js"></script>
