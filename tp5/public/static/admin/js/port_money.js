@@ -63,7 +63,7 @@ function xiu_order(zj){
     xiu_ajax(obj);
 }
 
-function xiu_ajax(data) {   
+function xiu_ajax(data) {  
     $.ajax({
         type: 'POST',
         url: xiu_url,
@@ -97,16 +97,16 @@ var p = $('.bge tr').length - 1;
 function admin_bge() {
   p++;
   $('.bge').append('<tr>' +
-    '<td><input class="r_price" name="car_price_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input class="r_num" name="num_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_container_code[' + p + ']" type="hidden" ><input class="r_price" name="r_car_price[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="r_num" name="r_num[' + p + ']" type="text" value="" style="width: 100%"></td>' +
     '<td>柜</td>' +
-    '<td><input name="add_r[' + p + ']"  type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="link_man_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="shipper_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="load_time_r[' + p + ']" type="date" value="" style="width: 100%"></td>' +
-    '<td><input name="link_phone_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="car_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="comment_r[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_add[' + p + ']"  type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_link_man[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="shipper[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_load_time[' + p + ']" type="date" value="" style="width: 100%"></td>' +
+    '<td><input name="r_link_phone[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_car[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_comment[' + p + ']" type="text" value="" style="width: 100%"></td>' +
     '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>' +
     '</tr>');
   input_a();
@@ -118,12 +118,12 @@ var o = $('.bge_song tr').length - 1;
 function admin_song() {
   o++;
   $('.bge_song').append('<tr>' +
-    '<td><input class="s_price" name="car_price_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input class="s_num" name="num_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="s_container_code[' + p + ']" type="hidden" ><input class="s_price" name="s_car_price[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="s_num" name="s_num[' + o + ']" type="text" value="" style="width: 100%"></td>' +
     '<td>柜</td>' +
-    '<td><input name="add_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="car_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="comment_s[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="s_add[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="s_car[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="s_comment[' + o + ']" type="text" value="" style="width: 100%"></td>' +
     '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>' +
     '</tr>');
   input_a();

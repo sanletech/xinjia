@@ -43,7 +43,8 @@
                                     else{
                                         $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
                                         $str ='<a href="'.$url.'">下载</a>';
-                                        echo '<span>订舱单已上传</span>'.$str;
+                                        echo '<span>订舱单已上传</span>'.$str.'</br>';
+                                        echo'<span>重新上传</span><a class="dcd" href="#">上传</a>';
                                         }
                                     ?>               
                                 </div>
@@ -85,7 +86,7 @@
                             </div>
                         </div>-->
 
-                         <{if condition ="!empty($containerData)" }>
+                         <{if condition ="($list['status']>4)" }>
                         <div class="guix">
                             <div class="wenzi">柜号-封号：</div>
                             <div class="ggh">
@@ -123,7 +124,8 @@
                                         $order_num= $list['order_num'];
                                         $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
                                         $str ='<a href="'.$url.'">下载</a>';
-                                        echo '<span>水运单已上传</span>'.$str;
+                                        echo '<span>水运单已上传</span>'.$str.'</br>';
+                                        echo'<span>重新上传</span><a class="syd" href="#">上传</a>';
                                         }
                                     ?>
                                 </div>
@@ -255,7 +257,7 @@
                                     <span id="gl" style="display: none;"><{$list.container_sum}></span>
                                 <div class="layui-col-xs6">
                                     <div class="select">
-                                        <select name='container_sum'  value=""  class="guil" id='container_sum'>
+                                        <select name='container_sum'  value=""  class="guil" id='container_sum'  onfocus="this.si=this.selectedIndex;" onchange="this.selectedIndex=this.si;">
                                         </select>
                                     </div>
                                 </div>
@@ -383,6 +385,7 @@
                                        <{volist name="$carData.r" id="carR"}>
                                         <tr>
                                             <td>
+                                                <input  type="hidden" name ="r_container_code[<{$i-1}>]" value="<{$carR.container_code}>">
                                                 <input class="r_price" type="text" name ="r_car_price[<{$i-1}>]" value="<{$carR.car_price}>">
 
                                             </td>
@@ -443,6 +446,7 @@
                                         <{volist name="$carData.s" id="carS" }>
                                         <tr>
                                             <td>
+                                                <input  type="hidden" name ="s_container_code[<{$i-1}>]" value="<{$carS.container_code}>">
                                                 <input class="s_price" type="text" name="s_car_price[<{$i-1}>]"  value="<{$carS.car_price}>">
                                             </td>
                                             <td>

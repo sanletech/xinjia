@@ -274,9 +274,9 @@ class Order extends Model
     }
     
     //根据用户code 和sea_id海运价格id，柜子大小,付款方式 返回相应的单个柜子优惠价格
-    public function dicountPrice($member_code,$sea_id,$container_size,$payment_method,$special='') {
+    public function dicountPrice($member_code,$seaprice_id,$container_size,$payment_method,$special='') {
         //根据sea_id 查询出对应的船公司的Id
-        $ship_id =Db::name('seaprice')->where('id',$sea_id)->value('ship_id');
+        $ship_id =Db::name('seaprice')->where('id',$seaprice_id)->value('ship_id');
         if($special){
             $mtime= date('y-m-d h:i:s');
             $price =Db::name('discount_special')->where([
@@ -296,39 +296,45 @@ class Order extends Model
         
     }
     //处理装货费用和送货费用  订单号码和 装货 送货的信息
-    public function truckage($order_num,$truckageData){
-        $container_code = time();   // 设置虚拟的柜号
-//        $this->_p($truckageData);exit;
+    public function truckage($order_num,$container_sum,$truckageData){
+        
+        function  insertdata($insertR,$order_num,$container_sum,$type){
+            $container_code = time();   // 设置虚拟的柜号
+            if(!empty($insertR))
+            {   $kr = array_keys($insertR);
+                foreach ($insertR['num'] as $i => $v) {
+                    $tmp[$i] = array_combine($kr,array_column($insertR,$i));
+                    $tmp[$i]['order_num'] = $order_num;  $tmp[$i]['type']=$type;
+                }
+                //如果装货的柜子数量少于订单的总柜子数量 就存在有客户自己装货的
+                $receiveContainerSum= array_sum( $insertR['num']);
+                $freeContainerR = $container_sum- $receiveContainerSum;//客户自己处理的柜子数量
+                if($freeContainerR >0){
+                $tmp[]=array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$freeContainerR);
+                }
+            }  else {
+                $tmp =array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$container_sum);
+            }  
+            $response =[];
+            $tmp = array_values($tmp);//将键重新从零开始
+            for($i=0;$i<count($tmp);$i++){
+                $cycle = $tmp[$i]['num'];
+                for($j=0;$j<$cycle;$j++){
+                    $tmp[$i]['num']= $i;
+                    $tmp[$i]['container_code']=$container_code.$i.$j;
+                    $res =Db::name('order_truckage')->insert($tmp[$i]);
+                    $res ? $response['success'][]= $tmp[$i]['container_code'].'添加成功':$response['fail'][]= $tmp[$i]['container_code'].'添加失败'; 
+                }
+            }
+            return $response;
+        }
+        
         $insertR = $truckageData['r']; 
-        $kr = array_keys($insertR);
-//        $this->_p($insertR);$this->_p($kr);exit;
+        $resultR = insertdata($insertR, $order_num, $container_sum, 'r');
         $insertS = $truckageData['s'];
-        $ks = array_keys($insertS);
-//           $this->_p($insertS);$this->_p($ks);exit;
-        $response =[];
-        foreach ($insertR['num'] as $i => $v) {
-            $tmp = array_combine($kr,array_column($insertR,$i));
-            $tmp['order_num'] = $order_num;  $tmp['type']='r';
-            $sumContanier = $insertR['num'][$i] ;
-            for($k=0; $k<$sumContanier;$k++){
-                $tmp['container_code']=$container_code.$i.$k;
-                $tmp['num']= $i;
-                $res =Db::name('order_truckage')->insert($tmp);
-                $res ? $response['success'][]=$tmp['container_code'].'添加成功':$response['fail'][]=$tmp['container_code'].'添加失败';
-            }
-        }
-          foreach ($insertS['num'] as $x => $value) {
-            $temporary = array_combine($ks,array_column($insertS,$x));
-            $temporary['order_num'] = $order_num;  $temporary['type']='s';
-            ++$i;  $sumContanier = $insertS['num'][$x] ;
-            for($k=0; $k<$sumContanier;$k++){
-                $temporary['container_code']=$container_code.$i.$k;
-                $temporary['num']= $x;
-                $res =Db::name('order_truckage')->insert($temporary);
-                $res ? $response['success'][]= $temporary['container_code'].'添加成功':$response['fail'][]= $temporary['container_code'].'添加失败';
-            }
-        }
-        if(array_key_exists('fail', $response)){
+        $resultS = insertdata($insertS, $order_num, $container_sum, 's');
+    
+        if((array_key_exists('fail', $resultR))&&(array_key_exists('fail', $resultS))){
             return FALSE;
         }else{
             $priceR =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'r'])->sum('car_price');
