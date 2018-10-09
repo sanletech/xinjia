@@ -6,16 +6,7 @@ use app\index\model\Order as OrderM;
 use think\Db;
 use think\Session;
 class Order extends Base 
-{
-
-
-
-    //路线详情
-    public function order_xq()
-    {
-        return $this->view->fetch('order/order_xq');
-    }
-    
+{    
     //海运运价
     public function order_list()
     {   
@@ -64,7 +55,7 @@ class Order extends Base
         $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code,$pir_id,$pis_id);
         $this->view->assign('list',$list);
       
-        return $this->view->fetch('order/place_order');
+        return $this->view->fetch('order/order_book');
     }
     
     //添加收/发货人的信息
@@ -224,7 +215,7 @@ class Order extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-        return $this->view->fetch('order/order_port');
+        return $this->view->fetch('order/order_port_list');
     }
     
     //港到港下单
@@ -242,7 +233,7 @@ class Order extends Base
         //$this->_p($data);exit;
         $this->view->assign('list',$list);
         $this->view->assign('discount',$discount);
-        return $this->view->fetch('order/place_order_port');
+        return $this->view->fetch('order/port_book');
     }
     //港到港订单的处理
     public function port_data() {
@@ -303,13 +294,13 @@ class Order extends Base
         } else {
             return array('status'=>0,'mssage'=>'订单重复提交');
         }
-        
                 
     }
     
-    //港到港下单详情
-    public function place_details(){
-        return $this->view->fetch('order/place_details');
+    //港到港订单详情页面
+    public function orderPortDetail() {
+        
+        return $this->view->fetch('order/order_port_detail');
     }
     
 
