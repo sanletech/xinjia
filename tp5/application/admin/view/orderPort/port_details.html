@@ -43,7 +43,8 @@
                                     else{
                                         $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
                                         $str ='<a href="'.$url.'">下载</a>';
-                                        echo '<span>订舱单已上传</span>'.$str;
+                                        echo '<span>订舱单已上传</span>'.$str.'</br>';
+                                        echo'<span>重新上传</span><a class="dcd" href="#">上传</a>';
                                         }
                                     ?>               
                                 </div>
@@ -123,7 +124,8 @@
                                         $order_num= $list['order_num'];
                                         $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
                                         $str ='<a href="'.$url.'">下载</a>';
-                                        echo '<span>水运单已上传</span>'.$str;
+                                        echo '<span>水运单已上传</span>'.$str.'</br>';
+                                        echo'<span>重新上传</span><a class="syd" href="#">上传</a>';
                                         }
                                     ?>
                                 </div>
@@ -383,11 +385,8 @@
                                        <{volist name="$carData.r" id="carR"}>
                                         <tr>
                                             <td>
-<<<<<<< HEAD
                                                 <input class="r_price" type="text" name ="car_price_r[<{$i-1}>]" value="<{$carR.car_price}>">
-=======
-                                                <input class="r_price" type="text" name ="car_price_r[<{$key}>]" value="<{$carR.car_price}>">
->>>>>>> ca294dce079a3ca7afdbec406a574af9ee123b8f
+
                                             </td>
                                             <td>
                                                 <input class="r_num" type="text" name ="num_r[<{$i-1}>]" value="<{$carR.num}>">
@@ -606,7 +605,7 @@
             var loading = true;//装货状态
             var delivery = true;//送货状态
             var url = "<{:url('admin/orderPort/Upload')}>";
-            var xiu_url = "<{:url('admin/orderPort/aaa')}>";
+            var xiu_url = "<{:url('admin/orderPort/orderEdit')}>";
         </script>
         <script src="__STATIC__/../index/js/lrdd.js"></script>
         <script src="__STATIC__/../index/js/place_order.js"></script>
