@@ -27,11 +27,10 @@
             <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>" placeholder="请输入起始地" class="layui-col-xs12">
             <input type="text" name="end_add" id="end_add" value="<{$end_add ? $end_add : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
             <div class="layui-form-item" styel=" z-index:999;">
-                <select name="ship" lay-filter="ship" lay-search>
+                <select id="ship_company" name="ship" lay-filter="ship" lay-search >
                     <option value="" >请选择船公司</option>
-                    <option value="1" >中远</option>
-                    <option value="2" >谷歌</option>
-                </select>  
+
+                </select>
             </div>
             
           </div>
@@ -206,7 +205,7 @@
         //          起点ID        起点名称        终点ID        终点名称      船公司
       </script>
       <script type="text/javascript" src="__STATIC__/js/area.js"></script>
-      <!-- <script src="__STATIC__/js/order_list.js"></script>  -->
+      <script src="__STATIC__/../admin/js/ship_boat.js"></script> 
       <script src="__STATIC__/../admin/js/port.js"></script>
       <script src="__STATIC__/../admin/js/ship_boat.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
@@ -277,8 +276,11 @@
           });
         })
         
-       var shipData =JS_BOAT;
-       
+       var shipData =JS_BOAT;//船公司
+       console.log(shipData);
+       for (let i = 0; i < shipData.length; i++) {
+        $('#ship_company').append("<option value='" + shipData[i].ship_id + "' selected>" + shipData[i].ship_name + "</option>");
+       }
       </script>
 
   </body>
