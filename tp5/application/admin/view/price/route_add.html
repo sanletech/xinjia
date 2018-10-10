@@ -1,6 +1,24 @@
 <{include file='./public/header' /}>
 <body>
     <!--<link rel="stylesheet" href="__STATIC__/css/route_add.css">-->
+    <style>
+        #jg{
+            padding: 15px;
+            display: none;
+        }
+        #jg li{
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        #jg .in{
+            display: none;
+        }
+        .jg{
+            display: inline-block;
+            line-height: 38px;
+            color: blue;
+        }
+    </style>
      <form class="layui-form" id="routeaddform">
     <div class="route layui-row">
         <!-- 航务公司 -->
@@ -104,6 +122,15 @@
                 <input type="radio" name="generalize" value="0" title="否" checked="">
             </div>
         </div>
+
+        <!-- 价格说明 -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">价格说明</label>
+            <div class="layui-input-inline">
+                <input type="text" name="" lay-verify="title" autocomplete="off" placeholder="备注" class="layui-input beizhu"/>
+            </div>
+            <a href="javascript:;" class="jg">选择</a>
+        </div>
         <!-- 按钮 -->
         <div class="layui-form-item">
             <div class="layui-input-block an">
@@ -113,11 +140,65 @@
         </div>
       </div>
     </form>
+    <div id="jg">
+        <ul>
+            <li>
+                <span name="1">算了大家放假啊阿赛洛低价房</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>   
+            </li>
+            <li>
+                <span name="2">涉及多方了解啊顺利打开房间斯柯达附件</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>
+            </li>
+            <li>
+                <span name="3">啊世界的分厘卡教授弗兰克发动机</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>
+            </li>
+        </ul>
+        <div class="layui-input-inline in">
+            <input type="text" name="" lay-verify="title" autocomplete="off" placeholder="备注" class="layui-input"/>
+        </div>
+        <div class="qb">
+                <button class="layui-btn layui-btn-sm">确定</button>
+                <button class="layui-btn layui-btn-sm layui-btn-normal">添加</button> 
+        </div>
+    </div>
     <!--port_js  加载城市港口对应数据  ship_port 加载船公司下属的港口  ship_boat 船公司下属的船舶-->
 <script type="text/javascript" src="/static/admin/js/port.js"></script>
 <script type="text/javascript" src="/static/admin/js/ship_port.js"></script>
 <script type="text/javascript" src="/static/admin/js/ship_boat.js"></script>
 <script type="text/javascript">
+        $('.jg').click(function () {            
+            layer.open({
+                type: 1,
+                title: '常用信息',
+                content: $('#jg')
+            });
+        });
+        
+        $('#jg li span').click(function(){//选中
+            let zhi = $(this).html();//当前选中的值
+            $('.beizhu').val(zhi);//给input 赋值
+            layer.close(layer.index);//关闭窗口
+        })
+
+        function shan(zj){//删除
+            let id = $(zj).prev().attr('name');//删除当前ID
+            $(zj).parent('li').remove();//删除节点
+            $.get('url',{'id' : id});//删除ajax请求
+        }
+
+        $('.qb button').click(function(){//单机确定或者添加按钮时
+            if ($(this).index()) {//添加
+                $('.in').show();
+            }else{//确认
+                let d = $('.in input').val();//获取添加的值
+                $.get('url',{'data' : d},//添加ajax请求返回ID
+                function(data){//返回直接添加数据
+                    $('#jg ul').append('<li><span name="'+data.id+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
+                });
+                $('.in').hide();
+            }
+            
+        });
+
         //取消关闭模态框
         $('.cancel').click(function () {
           var index = parent.layer.getFrameIndex(window.name);
