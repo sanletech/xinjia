@@ -213,9 +213,9 @@ class Order extends Model
                 ->group('SP.id,PR.id,PS.id')
                 ->buildSql();
 //        var_dump($price_list);
-//        if($load_time){
-//            $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
-//        }
+        if($ship_id){
+            $price_list = Db::table($price_list.' E')->where('E.ship_id',$ship_id)->buildSql();
+        }
         if($start_add){
             $price_list = Db::table($price_list.' F')->where('F.r_port_code',$start_add)->buildSql();
         }
