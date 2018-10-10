@@ -127,7 +127,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">价格说明</label>
             <div class="layui-input-inline">
-                <input type="text" name="" lay-verify="title" autocomplete="off" placeholder="备注" class="layui-input beizhu"/>
+                <input type="text" name="price_description" lay-verify="title" autocomplete="off" placeholder="备注" class="layui-input beizhu"/>
             </div>
             <a href="javascript:;" class="jg">选择</a>
         </div>
@@ -142,9 +142,10 @@
     </form>
     <div id="jg">
         <ul>
-            <{volist name='message' id="vo" }>
+          
+            <{volist name="message" id="vo"}>   
                 <li>
-                    <span name="<{vo.id}>"><{vo.message}></span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>   
+                    <span name="<{$vo.id}>"><{$vo.message}></span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>   
                 </li>
             <{/volist}>
         </ul>
@@ -174,8 +175,8 @@
             $('.beizhu').val(zhi);//给input 赋值
             layer.close(layer.index);//关闭窗口
         })
-       var delurl='<{:url(Price/route_add)}>';
-       var addur ='<{:url(Price/route_add)}>'
+       var delurl= "<{:url('admin/Price/delMessage')}>";
+       var addurl ="<{:url('admin/Price/addMessage')}>";
         function shan(zj){//删除
             let id = $(zj).prev().attr('name');//删除当前ID
             $(zj).parent('li').remove();//删除节点

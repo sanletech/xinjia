@@ -315,11 +315,15 @@ class Price extends Base
     }
     
     public function addMessage() {
-        $list =Db::name('quick_message')->select();
-        return $list;
+        $data = $this->request->param('data');
+        if(empty($data)){
+            return false;
+        }
+        $id = Db::name('quick_message')->insertGetId(['message'=>$data]);
+        return $id;
     }
-        public function delMessage() {
-        $list =Db::name('quick_message')->select();
-        return $list;
+    public function delMessage() {
+        $id = $this->request->param('id');
+        $list =Db::name('quick_message')->where('id',$id)->delete();
     }
 }

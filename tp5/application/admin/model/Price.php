@@ -59,6 +59,8 @@ class Price extends Model
     //船运航价的添加
      public function  price_route_add($data)
     {        
+         
+        $pricedata['price_description']=$data['price_description'];
         $pricedata['ship_id'] = strstr($data['ship'],'_', true);
         $pricedata['price_20GP'] = $data['price_20GP'];
         $pricedata['price_40HQ'] = $data['price_40HQ'];
@@ -66,17 +68,22 @@ class Price extends Model
         $pricedata['cutoff_date'] = date('y-m-d h:i:s',strtotime($data['cutoff_date']));
         $pricedata['boat_code'] = $data['boat_code'];
         $pricedata['sea_limitation'] = $data['sea_limitation'];
-        $pricedata['ETA'] = date('y-m-d h:i:s',strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day'));
-        $pricedata['EDD'] = date('y-m-d h:i:s',strtotime("+3day",$pricedata['ETA']));
+        $pricedata['ETA'] = date('Y-m-d h:i:s',strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day'));
+        $pricedata['EDD'] = date('Y-m-d h:i:s',strtotime("+3day",strtotime($pricedata['ETA'])));
         $pricedata['generalize'] = $data['generalize'];
         $pricedata['mtime'] = date('y-m-d h:i:s');
         $sl_start = $data['port_code']['0'];
         $sl_end   = $data['port_code']['1'];
         $bothend = new \app\admin\model\Port;
         $bothend_id   =  $bothend->bothEndLine($sl_start,$sl_end);
+      
         $middle_id = $data['route'];
+
         $route_sql = Db::query("select id from hl_ship_route "
                 . "where bothend_id ='$bothend_id' and middle_id ='$middle_id'" );
+        if(empty($route_sql)){
+            return $response['fail'][] = '无此航线';
+        }  
         $pricedata['route_id'] =$route_sql['0']['id'];  
               
         $res3 = Db::name('seaprice')->insert($pricedata);

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-09 17:06:05
+Date: 2018-10-10 18:53:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4881,11 +4881,12 @@ CREATE TABLE `hl_order_port` (
   `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款',
   `container_status` varchar(1) DEFAULT NULL COMMENT '客户是否提交柜号了0未提交1已经提交',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
+INSERT INTO `hl_order_port` VALUES ('1', 'AA10373568520014', '鲜花', '20GP', '3', '100', '100', '1', '短发三大发射点发', null, 'kehu001', '0', '2018-10-10 10:09:16', 'installment', '0', null, '0', null, '装货单位,装货单位,10000', null, '收货单位,收货单位,200000', '1', '2000', '600', '550', '500', '900', '6350', null, '2', null, null, null, '0', null);
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
@@ -5061,11 +5062,17 @@ CREATE TABLE `hl_order_truckage` (
   `type` varchar(5) DEFAULT NULL COMMENT 'r装货s送货',
   `seal` varchar(12) DEFAULT NULL COMMENT '封条号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_truckage
 -- ----------------------------
+INSERT INTO `hl_order_truckage` VALUES ('1', 'AA10373568520014', '153913735600', '0', null, '100', '0', '暗室逢灯', null, '速读法', '啊是短发', '2018-10-17 00:00:00', '131635416', '啊是短发', '法撒旦法', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('2', 'AA10373568520014', '153913735610', '0', null, '200', '1', '啊是短发', null, '撒旦法', '阿斯蒂芬', '2018-10-10 00:00:00', '3132131', '阿斯短发散发', '啊是短发', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('3', 'AA10373568520014', '153913735611', '0', null, '200', '1', '啊是短发', null, '撒旦法', '阿斯蒂芬', '2018-10-10 00:00:00', '3132131', '阿斯短发散发', '啊是短发', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('4', 'AA10373568520014', '153913735700', '0', null, '300', '0', '啊是短发', null, null, null, null, null, '啊是短发', '阿斯打发打发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('5', 'AA10373568520014', '153913735701', '0', null, '300', '0', '啊是短发', null, null, null, null, null, '啊是短发', '阿斯打发打发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('6', 'AA10373568520014', '153913735702', '0', null, '300', '0', '啊是短发', null, null, null, null, null, '啊是短发', '阿斯打发打发', 's', null);
 
 -- ----------------------------
 -- Table structure for `hl_port`
@@ -5196,6 +5203,23 @@ INSERT INTO `hl_province` VALUES ('31', '650000', '新疆维吾尔自治区');
 INSERT INTO `hl_province` VALUES ('32', '710000', '台湾省');
 INSERT INTO `hl_province` VALUES ('33', '810000', '香港特别行政区');
 INSERT INTO `hl_province` VALUES ('34', '820000', '澳门特别行政区');
+
+-- ----------------------------
+-- Table structure for `hl_quick_message`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_quick_message`;
+CREATE TABLE `hl_quick_message` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `message` varchar(30) DEFAULT NULL COMMENT '内容',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_quick_message
+-- ----------------------------
+INSERT INTO `hl_quick_message` VALUES ('1', '不收费');
+INSERT INTO `hl_quick_message` VALUES ('2', '收费');
+INSERT INTO `hl_quick_message` VALUES ('6', '');
 
 -- ----------------------------
 -- Table structure for `hl_role`
@@ -5347,6 +5371,7 @@ CREATE TABLE `hl_seaprice` (
   `ETA` datetime DEFAULT NULL COMMENT '预计到港时间',
   `EDD` datetime DEFAULT NULL COMMENT 'Expected delivery date预计送货日期',
   `generalize` int(1) unsigned zerofill DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
+  `price_description` varchar(25) DEFAULT NULL COMMENT '价格说明',
   `mtime` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
@@ -5354,21 +5379,21 @@ CREATE TABLE `hl_seaprice` (
 -- ----------------------------
 -- Records of hl_seaprice
 -- ----------------------------
-INSERT INTO `hl_seaprice` VALUES ('1', '21', '2', '2000.00', '6555.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbb', '3', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_seaprice` VALUES ('2', '2', '2', '3500.00', '5500.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbc', '6', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_seaprice` VALUES ('3', '3', '1', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaab', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_seaprice` VALUES ('4', '4', '1', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaac', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '0', '2018-08-26 02:00:00');
-INSERT INTO `hl_seaprice` VALUES ('5', '5', '3', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaad', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_seaprice` VALUES ('6', '6', '4', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaae', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '0', '2018-08-26 02:00:00');
-INSERT INTO `hl_seaprice` VALUES ('7', '7', '4', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbe', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_seaprice` VALUES ('8', '8', '5', '10000.00', '555555.00', '2018-08-26 22:40:50', '2018-08-26 22:40:50', 'aaaf', '5', '2018-08-26 22:40:50', '2018-08-26 22:40:50', '0', '2018-08-26 22:40:50');
-INSERT INTO `hl_seaprice` VALUES ('9', '9', '6', '10000.00', '555555.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaag', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('10', '10', '7', '3000.00', '5000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaah', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('11', '11', '8', '3000.00', '5000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaai', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('15', '27', '2', '5000.00', '8000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbb_14', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', null);
-INSERT INTO `hl_seaprice` VALUES ('16', '26', '2', '1125.00', '11256.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbc', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('17', '19', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('18', '28', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('1', '21', '2', '2000.00', '6555.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbb', '3', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', null, '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('2', '2', '2', '3500.00', '5500.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbc', '6', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', null, '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('3', '3', '1', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaab', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', null, '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('4', '4', '1', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaac', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '0', null, '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('5', '5', '3', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaad', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', null, '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('6', '6', '4', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaae', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '0', null, '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('7', '7', '4', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbe', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', null, '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('8', '8', '5', '10000.00', '555555.00', '2018-08-26 22:40:50', '2018-08-26 22:40:50', 'aaaf', '5', '2018-08-26 22:40:50', '2018-08-26 22:40:50', '0', null, '2018-08-26 22:40:50');
+INSERT INTO `hl_seaprice` VALUES ('9', '9', '6', '10000.00', '555555.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaag', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', null, '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('10', '10', '7', '3000.00', '5000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaah', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', null, '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('11', '11', '8', '3000.00', '5000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaai', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', null, '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('15', '27', '2', '5000.00', '8000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbb_14', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', null, null);
+INSERT INTO `hl_seaprice` VALUES ('16', '26', '2', '1125.00', '11256.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbc', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', null, '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('17', '19', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', null, '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('18', '28', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', null, '2018-09-05 12:19:25');
 
 -- ----------------------------
 -- Table structure for `hl_seaprice-aa`
@@ -5403,7 +5428,7 @@ CREATE TABLE `hl_sea_bothend` (
   `sealine_id` int(11) DEFAULT NULL COMMENT '航线的编号',
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sea_bothend
@@ -5436,6 +5461,7 @@ INSERT INTO `hl_sea_bothend` VALUES ('25', '110100004', '120100009', '25', '2018
 INSERT INTO `hl_sea_bothend` VALUES ('26', '120100002', '440100006', '26', '2018-09-05 12:19:25');
 INSERT INTO `hl_sea_bothend` VALUES ('27', '440100003', '440100006', '27', '2018-09-05 12:19:25');
 INSERT INTO `hl_sea_bothend` VALUES ('28', '440100003', '440100002', '28', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('29', '110100002', '110100007', '29', '2018-10-10 06:41:23');
 
 -- ----------------------------
 -- Table structure for `hl_sea_middle`
@@ -5841,7 +5867,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-09 02:52:49', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-10 03:50:20', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
