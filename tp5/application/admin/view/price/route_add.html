@@ -142,15 +142,11 @@
     </form>
     <div id="jg">
         <ul>
-            <li>
-                <span name="1">算了大家放假啊阿赛洛低价房</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>   
-            </li>
-            <li>
-                <span name="2">涉及多方了解啊顺利打开房间斯柯达附件</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>
-            </li>
-            <li>
-                <span name="3">啊世界的分厘卡教授弗兰克发动机</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>
-            </li>
+            <{volist name='message' id="vo" }>
+                <li>
+                    <span name="<{vo.id}>"><{vo.message}></span><i class="layui-icon" onclick="shan(this)">&#x1006;</i>   
+                </li>
+            <{/volist}>
         </ul>
         <div class="layui-input-inline in">
             <input type="text" name="" lay-verify="title" autocomplete="off" placeholder="备注" class="layui-input"/>
@@ -178,11 +174,12 @@
             $('.beizhu').val(zhi);//给input 赋值
             layer.close(layer.index);//关闭窗口
         })
-
+       var delurl='<{:url(Price/route_add)}>';
+       var addur ='<{:url(Price/route_add)}>'
         function shan(zj){//删除
             let id = $(zj).prev().attr('name');//删除当前ID
             $(zj).parent('li').remove();//删除节点
-            $.get('url',{'id' : id});//删除ajax请求
+            $.get(delurl,{'id' : id});//删除ajax请求
         }
 
         $('.qb button').click(function(){//单机确定或者添加按钮时
@@ -190,7 +187,7 @@
                 $('.in').show();
             }else{//确认
                 let d = $('.in input').val();//获取添加的值
-                $.get('url',{'data' : d},//添加ajax请求返回ID
+                $.get(addurl,{'data' : d},//添加ajax请求返回ID
                 function(data){//返回直接添加数据
                     $('#jg ul').append('<li><span name="'+data.id+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
                 });

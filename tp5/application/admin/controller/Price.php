@@ -36,13 +36,14 @@ class Price extends Base
     }
     //航线详情添加展示页面
     public function route_add(){
-   
+        
 //        //传递船公司下面的船只
 //        $sql ="select * from hl_boat ";
 //        $boat_data = Db::query($sql);
 //        $js_boat=json_encode($boat_data);
 //        $this->view->assign('js_boat',$js_boat);
-        
+        $message =$this->quickMessage();
+        $this->view->assign('message',$message);
         return $this->view->fetch('price/route_add');
     }
     //传递根据前面选择的起点和终点的中间线路行情
@@ -306,5 +307,19 @@ class Price extends Base
             return $response=['status'=>0,'message'=>'已经存在此港口请先删除再做添加'];;
         }
       
+    }
+    // 航线运价 的订单的价格说明
+    public function quickMessage() {
+        $list =Db::name('quick_message')->select();
+        return $list;
+    }
+    
+    public function addMessage() {
+        $list =Db::name('quick_message')->select();
+        return $list;
+    }
+        public function delMessage() {
+        $list =Db::name('quick_message')->select();
+        return $list;
     }
 }
