@@ -14,6 +14,8 @@ class Base extends Controller
         //$user_id 为空则没有登录
         if(is_null($this->member_code)){
             $this->notlogin();
+        }  else {
+            $this->alreadylogin();
         }
       
         
