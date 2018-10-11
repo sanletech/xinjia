@@ -54,8 +54,7 @@
                 success:function(data){
                     if(data.status==1){
                         alert(data.message);
-                        // window.location.href="<{:url('index/OrderPort/orderPort')}>";
-                        window.location.href="<{:url('/')}>";
+                        window.location.href="<{:url('index/OrderPort/orderPort')}>";
                     }else{
                         alert(data.message);
                         window.location.href="<{:url('index/login/login')}>";
@@ -64,10 +63,6 @@
             })
         })
     })
-    
-    if(window.top!=window){
-        window.top.location.href=document.location.href;       
-    }
     
 </script>
   </body>

@@ -1,9 +1,6 @@
 <!-- 海运运价 -->
-<{include file='./public/head' /}>
+<{include file='./public/top' /}>
 
-  <body>
-    <script> 
-    </script>
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
     <style>
       #dizhi{
@@ -182,9 +179,10 @@
           </div>
           <{/volist}>
 
-            <div class="text-center" id="pages"></div>
-      </div>
-
+          <div class="text-center" id="pages"></div>
+      
+        </div>
+    </div>
       <!-- 模态窗口 -->
       <div class="mo_cen">
         <div class="man">
@@ -199,6 +197,8 @@
           </div>         
         </div>
       </div>
+
+<{include file='./public/foot' /}>
 
       <script>
         var addressURL = "<{:url('admin.php/address/town')}>";
@@ -291,8 +291,7 @@
        for (let i = 0; i < shipData.length; i++) {
         $('#ship_company').append("<option value='" + shipData[i].ship_id + "' selected>" + shipData[i].ship_name + "</option>");
        }
-      </script>
-
-  </body>
-
-  </html>       
+      </script>    
+      
+    </body>
+    </html>
