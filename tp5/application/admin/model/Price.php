@@ -56,6 +56,7 @@ class Price extends Model
         if($seaprice_id){
             $list = Db::table($list.' d')->where('d.id',"$seaprice_id")->buildSql();
         }
+   
         $lista =Db::table($list.' e')->order('id,ship_id,route_id')->paginate($pages,false,$pageParam);  
         return $lista;
     }

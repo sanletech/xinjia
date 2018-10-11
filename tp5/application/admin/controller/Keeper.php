@@ -23,6 +23,7 @@ class Keeper extends Base
         return $this->view->fetch('keeper/user_add');
         
     }
+    //处理员工添加
     public function userToAdd() {
         $data= $this->request->param();
         //$this->_p($data);exit;

@@ -19,7 +19,8 @@ class OrderPort extends Controller
         //如果登录常量为nll，表示没有登录
         if(is_null($this->member_code)){
             $this->error('未登录，无权访问','login/login');
-        }
+//            $this->redirect('Login/login');
+        }  
     }
 
     //港到港
