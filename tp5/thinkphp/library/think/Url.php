@@ -239,7 +239,7 @@ class Url
         $rootDomain = Config::get('url_domain_root');
         if (true === $domain) {
             // 自动判断域名
-            $domain = Config::get('app_host') ?: $request->host();
+            $domain = Config::get('app_host') ?: $request->host(true);
 
             $domains = Route::rules('domain');
             if ($domains) {
@@ -302,7 +302,7 @@ class Url
         foreach ($rule as $item) {
             list($url, $pattern, $domain, $suffix) = $item;
             if (empty($pattern)) {
-                return [$url, $domain, $suffix];
+                return [rtrim($url, '$'), $domain, $suffix];
             }
             $type = Config::get('url_common_param');
             foreach ($pattern as $key => $val) {
