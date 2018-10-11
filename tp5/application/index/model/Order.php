@@ -183,166 +183,163 @@ class Order extends Model
         return $data;
     }
     
-    public function confirm_order($price)
-    { 
-         
-    }
-    
-    public function price_port($start_add='',$end_add='',$ship_id='') {
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        $nowtime= date('y-m-d h:i:s');//要设置船期
-        
-        $price_list = Db::name('seaprice')->alias('SP')
-                ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
-                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
-//                ->join('hl_car_line CLR','CLR.port_id =SB.sl_start') //装货路线
-//                ->join('hl_car_line CLS','CLS.port_id =SB.sl_end') //送货路线
-//                ->join('hl_carprice CPR',"CPR.cl_id = CLR.id and CPR.variable='r'") //拖车装货费
-//                ->join('hl_carprice CPS',"CPS.cl_id = CLS.id and CPS.variable='s'")//拖车送货费
-//                ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.type ='r' and CLR.port_id = PIR.port_code") //起运港口杂费
-//                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.type ='s' and CLS.port_id = PIS.port_code") //目的港口杂费
-//                ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ) //不同客户对应不同船公司的利润
-                ->join('hl_shipcompany SC','SC.id = SP.ship_id')
-                ->join('hl_boat BA','BA.boat_code =SP.boat_code')
-                ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
-                ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
-                ->field('SP.*,SC.ship_short_name,BA.boat_name,'
-                        . 'PR.port_name r_port_name,PS.port_name s_port_name,'
-                        . 'PR.port_code r_port_code,PS.port_code s_port_code,'
-                        . 'SR.middle_id')
-                ->group('SP.id,PR.id,PS.id')
-                ->buildSql();
-//        var_dump($price_list);
-        if($ship_id){
-            $price_list = Db::table($price_list.' E')->where('E.ship_id',$ship_id)->buildSql();
-        }
-        if($start_add){
-            $price_list = Db::table($price_list.' F')->where('F.r_port_code',$start_add)->buildSql();
-        }
-        if($end_add){
-            $price_list = Db::table($price_list.' G')->where('G.s_port_code', $end_add)->buildSql();
-        }
-        return $price_list;
-        
-        
-    }
-    
-    
-    public function portBook($member_code,$sea_id,$container_size){
-        if(!($container_size =='20GP'||$container_size =='40HQ')){
-            return '参数错误';
-        } 
-        $list= $this->price_port();
-        //航线信息
-        $res = Db::table($list.' A')
-            ->where('id',$sea_id)
-            ->field('A.*')->find();
-        // 将集装箱字的尺寸添加到数组中
-        $res['container_size']=$container_size;
-        if($container_size =='20GP'){
-           $res['price'] = $res['price_20GP'];
-           unset($res['price_20GP'],$res['price_40HQ']);
-        }  else {
-            $res['price'] = $res['price_40HQ'];
-            unset($res['price_20GP'],$res['price_40HQ']);
-        } 
-        
-        //查询有没有活动优惠
-        $nowtime = date('y-m-d h:i:s');
-        $discount_special = Db::name('discount_special')->where([
-                        'discount_start'=>['ELT',$nowtime],
-                        'discount_end'=>['EGT',$nowtime],
-                        'status'=>['NEQ',0],
-                        'ship_id'=>$res['ship_id'],
-                       ])->field("{$container_size}_promotion promotion,"
-                       . "promotion_title,id promotion_id")->find();
-                       
-        //查询出客户对应的月结,到港付,现款的优惠
-        $discount =Db::name('discount_normal')->where([
-                    'member_code'=>$member_code,
-                    'ship_id'=>$res['ship_id']
-                     ])
-                ->field("{$container_size}_installment installment,"
-                . "{$container_size}_month month,"
-                . "{$container_size}_cash cash")
-                ->find();
-        $discount['special']=$discount_special;
-      
-//        $this->_p($res);exit;
-        return array($res,$discount);            
-        
-    }
-    
-    //根据用户code 和sea_id海运价格id，柜子大小,付款方式 返回相应的单个柜子优惠价格
-    public function dicountPrice($member_code,$seaprice_id,$container_size,$payment_method,$special='') {
-        //根据sea_id 查询出对应的船公司的Id
-        $ship_id =Db::name('seaprice')->where('id',$seaprice_id)->value('ship_id');
-        if($special){
-            $mtime= date('y-m-d h:i:s');
-            $price =Db::name('discount_special')->where([
-                        'discount_start'=>['ELT',$mtime],
-                        'discount_end'=>['EGT',$mtime],
-                        'ship_id'=>$ship_id,
-                        'id'=>$special
-                    ])->value($container_size.'_promotion');
-        }else{
-            $price =Db::name('discount_normal')->where([
-                'member_code'=>$member_code,
-                'ship_id'=>$ship_id,
-            ])->value($container_size.'_'.$payment_method);
-        }
-        
-        return $price;
-        
-    }
-    //处理装货费用和送货费用  订单号码和 装货 送货的信息
-    public function truckage($order_num,$container_sum,$truckageData){
-        
-        function  insertdata($insertR,$order_num,$container_sum,$type){
-            $container_code = time();   // 设置虚拟的柜号
-            if(!empty($insertR))
-            {   $kr = array_keys($insertR);
-                foreach ($insertR['num'] as $i => $v) {
-                    $tmp[$i] = array_combine($kr,array_column($insertR,$i));
-                    $tmp[$i]['order_num'] = $order_num;  $tmp[$i]['type']=$type;
-                }
-                //如果装货的柜子数量少于订单的总柜子数量 就存在有客户自己装货的
-                $receiveContainerSum= array_sum( $insertR['num']);
-                $freeContainerR = $container_sum- $receiveContainerSum;//客户自己处理的柜子数量
-                if($freeContainerR >0){
-                $tmp[]=array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$freeContainerR);
-                }
-            }  else {
-                $tmp =array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$container_sum);
-            }  
-            $response =[];
-            $tmp = array_values($tmp);//将键重新从零开始
-            for($i=0;$i<count($tmp);$i++){
-                $cycle = $tmp[$i]['num'];
-                for($j=0;$j<$cycle;$j++){
-                    $tmp[$i]['num']= $i;
-                    $tmp[$i]['container_code']=$container_code.$i.$j;
-                    $res =Db::name('order_truckage')->insert($tmp[$i]);
-                    $res ? $response['success'][]= $tmp[$i]['container_code'].'添加成功':$response['fail'][]= $tmp[$i]['container_code'].'添加失败'; 
-                }
-            }
-            return $response;
-        }
-        
-        $insertR = $truckageData['r']; 
-        $resultR = insertdata($insertR, $order_num, $container_sum, 'r');
-        $insertS = $truckageData['s'];
-        $resultS = insertdata($insertS, $order_num, $container_sum, 's');
-    
-        if((array_key_exists('fail', $resultR))&&(array_key_exists('fail', $resultS))){
-            return FALSE;
-        }else{
-            $priceR =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'r'])->sum('car_price');
-            $priceS =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'S'])->sum('car_price');
-            return array('carprice_r'=>$priceR,'carprice_s'=>$priceS);
-        }
-    }
-    
+
+//    
+//    public function price_port($start_add='',$end_add='',$ship_id='') {
+//        $pageParam  = ['query' =>[]]; //设置分页查询参数
+//        $nowtime= date('y-m-d h:i:s');//要设置船期
+//        
+//        $price_list = Db::name('seaprice')->alias('SP')
+//                ->join('hl_ship_route SR','SR.id =SP.route_id')//路线表
+//                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
+////                ->join('hl_car_line CLR','CLR.port_id =SB.sl_start') //装货路线
+////                ->join('hl_car_line CLS','CLS.port_id =SB.sl_end') //送货路线
+////                ->join('hl_carprice CPR',"CPR.cl_id = CLR.id and CPR.variable='r'") //拖车装货费
+////                ->join('hl_carprice CPS',"CPS.cl_id = CLS.id and CPS.variable='s'")//拖车送货费
+////                ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.type ='r' and CLR.port_id = PIR.port_code") //起运港口杂费
+////                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.type ='s' and CLS.port_id = PIS.port_code") //目的港口杂费
+////                ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ) //不同客户对应不同船公司的利润
+//                ->join('hl_shipcompany SC','SC.id = SP.ship_id')//船公司表
+//                ->join('hl_boat BA','BA.boat_code =SP.boat_code')//
+//                ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
+//                ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
+//                ->field('SP.*,SC.ship_short_name,BA.boat_name,'
+//                        . 'PR.port_name r_port_name,PS.port_name s_port_name,'
+//                        . 'PR.port_code r_port_code,PS.port_code s_port_code,'
+//                        . 'SR.middle_id')
+//                ->group('SP.id,PR.id,PS.id')
+//                ->buildSql();
+////        var_dump($price_list);
+//        if($ship_id){
+//            $price_list = Db::table($price_list.' E')->where('E.ship_id',$ship_id)->buildSql();
+//        }
+//        if($start_add){
+//            $price_list = Db::table($price_list.' F')->where('F.r_port_code',$start_add)->buildSql();
+//        }
+//        if($end_add){
+//            $price_list = Db::table($price_list.' G')->where('G.s_port_code', $end_add)->buildSql();
+//        }
+//        return $price_list;
+//        
+//        
+//    }
+//    
+//    
+//    public function portBook($member_code,$sea_id,$container_size){
+//        if(!($container_size =='20GP'||$container_size =='40HQ')){
+//            return '参数错误';
+//        } 
+//        $list= $this->price_port();
+//        //航线信息
+//        $res = Db::table($list.' A')
+//            ->where('id',$sea_id)
+//            ->field('A.*')->find();
+//        // 将集装箱字的尺寸添加到数组中
+//        $res['container_size']=$container_size;
+//        if($container_size =='20GP'){
+//           $res['price'] = $res['price_20GP'];
+//           unset($res['price_20GP'],$res['price_40HQ']);
+//        }  else {
+//            $res['price'] = $res['price_40HQ'];
+//            unset($res['price_20GP'],$res['price_40HQ']);
+//        } 
+//        
+//        //查询有没有活动优惠
+//        $nowtime = date('y-m-d h:i:s');
+//        $discount_special = Db::name('discount_special')->where([
+//                        'discount_start'=>['ELT',$nowtime],
+//                        'discount_end'=>['EGT',$nowtime],
+//                        'status'=>['NEQ',0],
+//                        'ship_id'=>$res['ship_id'],
+//                       ])->field("{$container_size}_promotion promotion,"
+//                       . "promotion_title,id promotion_id")->find();
+//                       
+//        //查询出客户对应的月结,到港付,现款的优惠
+//        $discount =Db::name('discount_normal')->where([
+//                    'member_code'=>$member_code,
+//                    'ship_id'=>$res['ship_id']
+//                     ])
+//                ->field("{$container_size}_installment installment,"
+//                . "{$container_size}_month month,"
+//                . "{$container_size}_cash cash")
+//                ->find();
+//        $discount['special']=$discount_special;
+//      
+////        $this->_p($res);exit;
+//        return array($res,$discount);            
+//        
+//    }
+//    
+//    //根据用户code 和sea_id海运价格id，柜子大小,付款方式 返回相应的单个柜子优惠价格
+//    public function dicountPrice($member_code,$seaprice_id,$container_size,$payment_method,$special='') {
+//        //根据sea_id 查询出对应的船公司的Id
+//        $ship_id =Db::name('seaprice')->where('id',$seaprice_id)->value('ship_id');
+//        if($special){
+//            $mtime= date('y-m-d h:i:s');
+//            $price =Db::name('discount_special')->where([
+//                        'discount_start'=>['ELT',$mtime],
+//                        'discount_end'=>['EGT',$mtime],
+//                        'ship_id'=>$ship_id,
+//                        'id'=>$special
+//                    ])->value($container_size.'_promotion');
+//        }else{
+//            $price =Db::name('discount_normal')->where([
+//                'member_code'=>$member_code,
+//                'ship_id'=>$ship_id,
+//            ])->value($container_size.'_'.$payment_method);
+//        }
+//        
+//        return $price;
+//        
+//    }
+//    //处理装货费用和送货费用  订单号码和 装货 送货的信息
+//    public function truckage($order_num,$container_sum,$truckageData){
+//        
+//        function  insertdata($insertR,$order_num,$container_sum,$type){
+//            $container_code = time();   // 设置虚拟的柜号
+//            if(!empty($insertR))
+//            {   $kr = array_keys($insertR);
+//                foreach ($insertR['num'] as $i => $v) {
+//                    $tmp[$i] = array_combine($kr,array_column($insertR,$i));
+//                    $tmp[$i]['order_num'] = $order_num;  $tmp[$i]['type']=$type;
+//                }
+//                //如果装货的柜子数量少于订单的总柜子数量 就存在有客户自己装货的
+//                $receiveContainerSum= array_sum( $insertR['num']);
+//                $freeContainerR = $container_sum- $receiveContainerSum;//客户自己处理的柜子数量
+//                if($freeContainerR >0){
+//                $tmp[]=array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$freeContainerR);
+//                }
+//            }  else {
+//                $tmp =array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$container_sum);
+//            }  
+//            $response =[];
+//            $tmp = array_values($tmp);//将键重新从零开始
+//            for($i=0;$i<count($tmp);$i++){
+//                $cycle = $tmp[$i]['num'];
+//                for($j=0;$j<$cycle;$j++){
+//                    $tmp[$i]['num']= $i;
+//                    $tmp[$i]['container_code']=$container_code.$i.$j;
+//                    $res =Db::name('order_truckage')->insert($tmp[$i]);
+//                    $res ? $response['success'][]= $tmp[$i]['container_code'].'添加成功':$response['fail'][]= $tmp[$i]['container_code'].'添加失败'; 
+//                }
+//            }
+//            return $response;
+//        }
+//        
+//        $insertR = $truckageData['r']; 
+//        $resultR = insertdata($insertR, $order_num, $container_sum, 'r');
+//        $insertS = $truckageData['s'];
+//        $resultS = insertdata($insertS, $order_num, $container_sum, 's');
+//    
+//        if((array_key_exists('fail', $resultR))&&(array_key_exists('fail', $resultS))){
+//            return FALSE;
+//        }else{
+//            $priceR =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'r'])->sum('car_price');
+//            $priceS =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'S'])->sum('car_price');
+//            return array('carprice_r'=>$priceR,'carprice_s'=>$priceS);
+//        }
+//    }
+//    
     
     
 }

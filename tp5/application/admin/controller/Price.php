@@ -18,16 +18,15 @@ class Price extends Base
      //航线运价
     public function price_route() 
     {   
+        $ship_name =  input('get.ship_name');
         $port_start = input('get.port_start');
         $port_over = input('get.port_over');
-        if($port_start){
-            $this->assign('port_start',$port_start); 
-        }
-        if($port_over){
-            $this->assign('port_over',$port_over); 
-        }
+        $port_start? $this->assign('port_start',$port_start):''; 
+        $ship_name ? $this->assign('ship_name',$ship_name):''; 
+        $port_over ? $this->assign('port_over',$port_over):''; 
+        
         $route = new PriceM;
-        $list = $route->price_route_list($port_start,$port_over ,5);
+        $list = $route->price_route_list($ship_name,$port_start,$port_over ,5);
         //$this->_p($list);exit;
         $page = $list->render();
         $this->assign('list',$list);

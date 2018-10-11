@@ -7,31 +7,22 @@ use think\Session;
 class OrderPort extends Model
 {
     
-    public function price_port($start_add='',$end_add='',$ship_id='') {
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        $nowtime= date('y-m-d h:i:s');//要设置船期
+    public function price_port($tol,$limit,$start_add='',$end_add='',$ship_id='',$seaprice_id='') {
         
+        $nowtime= date('y-m-d h:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
-                ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
+                ->join('hl_ship_route SR','SR.id =SP.route_id')//海运路线表
                 ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
-//                ->join('hl_car_line CLR','CLR.port_id =SB.sl_start') //装货路线
-//                ->join('hl_car_line CLS','CLS.port_id =SB.sl_end') //送货路线
-//                ->join('hl_carprice CPR',"CPR.cl_id = CLR.id and CPR.variable='r'") //拖车装货费
-//                ->join('hl_carprice CPS',"CPS.cl_id = CLS.id and CPS.variable='s'")//拖车送货费
-//                ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.type ='r' and CLR.port_id = PIR.port_code") //起运港口杂费
-//                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.type ='s' and CLS.port_id = PIS.port_code") //目的港口杂费
-//                ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ) //不同客户对应不同船公司的利润
-                ->join('hl_shipcompany SC','SC.id = SP.ship_id')
-                ->join('hl_boat BA','BA.boat_code =SP.boat_code')
+                ->join('hl_shipcompany SC','SC.id = SP.ship_id')//船公司表
+                ->join('hl_boat BA','BA.boat_code =SP.boat_code')//船舶表
                 ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
                 ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
                 ->field('SP.*,SC.ship_short_name,BA.boat_name,'
                         . 'PR.port_name r_port_name,PS.port_name s_port_name,'
                         . 'PR.port_code r_port_code,PS.port_code s_port_code,'
                         . 'SR.middle_id')
-                ->group('SP.id,PR.id,PS.id')
+                ->group('SP.id,SP.id')
                 ->buildSql();
-//        var_dump($price_list);
         if($ship_id){
             $price_list = Db::table($price_list.' E')->where('E.ship_id',$ship_id)->buildSql();
         }
@@ -41,20 +32,20 @@ class OrderPort extends Model
         if($end_add){
             $price_list = Db::table($price_list.' G')->where('G.s_port_code', $end_add)->buildSql();
         }
-        return $price_list;
-        
-        
+        if($seaprice_id){
+            $price_list = Db::table($price_list.' H')->where('H.id', $seaprice_id)->buildSql();
+        }
+        $list =Db::table($price_list.' J')->order('J.mtime ASC')->limit($tol,$limit)->select();
+        return $list;
     }
     
-    public function portBook($member_code,$sea_id,$container_size){
+    public function portBook($member_code,$seaprice_id,$container_size){
         if(!($container_size =='20GP'||$container_size =='40HQ')){
             return '参数错误';
         } 
-        $list= $this->price_port();
         //航线信息
-        $res = Db::table($list.' A')
-            ->where('id',$sea_id)
-            ->field('A.*')->find();
+        $res = $this->price_port(0,100,0,0,0,$seaprice_id);
+        $res=$res[0];
         // 将集装箱字的尺寸添加到数组中
         $res['container_size']=$container_size;
         if($container_size =='20GP'){
@@ -86,7 +77,7 @@ class OrderPort extends Model
                 ->find();
         $discount['special']=$discount_special;
       
-//        $this->_p($res);exit;
+//        $this->_p($res); $this->_p($discount);exit;
         return array($res,$discount);            
         
     }

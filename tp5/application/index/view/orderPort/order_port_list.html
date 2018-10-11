@@ -91,7 +91,8 @@
         </div>
         <!-- 查询内容 -->
         <{volist name='list' id='vo' }>
-       
+        
+      
           <div class="nei_nei">
             <{if condition="$vo['generalize']=1" }>
               <div class="tj">
@@ -218,6 +219,7 @@
             data: add,
             dataType: "json",
             success: function (data) {
+                console.log(data);
               if (data.status == 1) {
                 console.log(data);
                 return 1;
@@ -251,11 +253,12 @@
         }
 
         layui.use('laypage', function () {          
-          var laypage = layui.laypage;
-          var $data = $("#search_price input");
-          var start_add = $data[0].value;
-          var end_add = $data[1].value;
-          
+            var laypage = layui.laypage;
+            var $data = $("#search_price input");
+            var start_add = $data[0].value;
+            var start_name = $data[0].title;
+            var end_add = $data[1].value;
+            var end_name = $data[1].title;
           var load_time = $("#search_price select option:selected").val();
           //执行一个laypage实例        
           laypage.render({
@@ -273,13 +276,18 @@
               //首次不执行
               if (!first) {
                 //do something
-                window.location.href = "<{:url('index/OrderPort/order_list')}>?page=" + obj.curr + '&limit=' + obj.limit + '&start_add=' + start_add + '&end_add=' + end_add + '&load_time=' + load_time;
+                window.location.href = "<{:url('index/OrderPort/orderPort')}>?page=" +
+                        obj.curr + '&limit=' + obj.limit 
+                        + '&start_add=' + start_add +  '&start_name='+ start_name 
+                        +'&end_add=' +end_add + '&end_name=' + end_name;
+                       
               }
             }
           });
         })
         
        var shipData =JS_BOAT;//船公司
+//       console.log(shipData);
        for (let i = 0; i < shipData.length; i++) {
         $('#ship_company').append("<option value='" + shipData[i].ship_id + "' selected>" + shipData[i].ship_name + "</option>");
        }

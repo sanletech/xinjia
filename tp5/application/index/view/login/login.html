@@ -52,10 +52,10 @@
                 data:$("#loginform").serialize(),
                 dataType:"json",
                 success:function(data){
-            
                     if(data.status==1){
                         alert(data.message);
-                        window.location.href="<{:url('index/Order/orderPort')}>";
+                        // window.location.href="<{:url('index/Order/order_port')}>";
+                        window.location.href="<{:url('/')}>";
                     }else{
                         alert(data.message);
                         window.location.href="<{:url('index/login/login')}>";
@@ -64,6 +64,10 @@
             })
         })
     })
+    
+    if(window.top!=window){
+        window.top.location.href=document.location.href;       
+    }
     
 </script>
   </body>
