@@ -18,9 +18,9 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" id="searchform">
-            <input type="text" name="port_start" value="" placeholder="请输入航务公司" autocomplete="off" class="layui-input">
-          <input type="text" name="port_start" value="<{$port_start ? $port_start : '';}>" placeholder="请输入始发港口" autocomplete="off" class="layui-input">
-          <input type="text" name="port_over"  value="<{$port_over  ? $port_over : '';}>" placeholder="请输入目的港口" autocomplete="off" class="layui-input">
+            <input type="text" name="ship_name" value="<{$ship_name? $ship_name: '';}>" placeholder="请输入航务公司" autocomplete="off" class="layui-input">
+          <input type="text" name="s_port_name" value="<{$s_port_name ? $s_port_name : '';}>" placeholder="请输入始发港口" autocomplete="off" class="layui-input">
+          <input type="text" name="e_port_name"  value="<{$e_port_name  ? $port_over : '';}>" placeholder="请输入目的港口" autocomplete="off" class="layui-input">
           <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="search()">
             <i class="layui-icon">&#xe615;</i>
           </button>

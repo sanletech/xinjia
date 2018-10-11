@@ -91,6 +91,8 @@
         </div>
         <!-- 查询内容 -->
         <{volist name='list' id='vo' }>
+        
+      
           <div class="nei_nei">
             <{if condition="$vo['generalize']=1" }>
               <div class="tj">
@@ -218,6 +220,7 @@
             data: add,
             dataType: "json",
             success: function (data) {
+                console.log(data);
               if (data.status == 1) {
                 return 1;
               } else {

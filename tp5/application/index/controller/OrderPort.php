@@ -9,7 +9,7 @@ class OrderPort extends Controller
 {    
     
     protected $beforeActionList = [
-        'login'=> ['except'=>'orderPort'],
+        'login'=> ['except'=>'orderport'],
     ];
     protected $member_code='';
     
@@ -46,10 +46,12 @@ class OrderPort extends Controller
         $list = $sea_pirce ->price_port($tol,$limit,$start_add,$end_add,$ship_id);
         //获取总页数
         $count = count($list); 
-
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
+//        $this->_p($list);exit;
+        $this->view->assign([
+            'page'=>$page,
+            'count'=>$count,
+            'limit'=>$limit
+        ]); 
         $this->view->assign('list',$list);
         return $this->view->fetch('orderPort/order_port_list');
     }
