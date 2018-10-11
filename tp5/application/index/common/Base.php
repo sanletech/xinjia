@@ -13,10 +13,10 @@ class Base extends Controller
         $this->member_code=  Session::get('member_code');
         //$user_id 为空则没有登录
         if(is_null($this->member_code)){
-            $this->notlogin();
-        }  else {
-            $this->alreadylogin();
-        }
+        $this->notlogin();}
+//        }  else {
+//            $this->alreadylogin();
+//        }
       
         
     }
@@ -31,14 +31,17 @@ class Base extends Controller
           
       }   
     }
-      protected function alreadylogin()
-    {
-        //如果登录常量为非nll，表示已经登录
-      if(!is_null($this->member_code)){
-          $this->error('请不要重复登录','login/login');
-          
-      }   
-    }
+//      protected function alreadylogin()
+//    {
+//          
+//          var_dump($_SESSION);
+//        var_dump($this->member_code);exit;   
+//        //如果登录常量为非nll，表示已经登录
+//      if(!is_null($this->member_code)){
+//          $this->error('请不要重复登录','login/login');
+//          
+//      }   
+//    }
     
    
       protected function limit()
