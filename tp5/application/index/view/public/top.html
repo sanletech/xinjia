@@ -8,7 +8,7 @@
         </div>
         <ul> 
           <li class="hang">
-            <a href="javascript:;">订舱平台</a>
+            <a href="<{:url('index/OrderPort/orderPort')}>">订舱平台</a>
           </li>
 <!--          <li>
             <a href="javascript:;">公共查询</a>
@@ -29,13 +29,13 @@
             <a href="javascript:;">帮助与公告</a>
           </li>-->
           <li>
-            <a href="javascript:;">个人中心</a>
+            <a href="<{:url('index/Index/personal')}>">个人中心</a>
           </li>
         </ul>
       </div>
     </header>
 
-    <nav>
+    <!-- <nav>
       <iframe src="<{:url('index/OrderPort/orderPort')}>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
     </nav>
     <footer>
@@ -68,19 +68,19 @@
         }
       });
 
-      function reinitIframe() {
-        var iframe = document.getElementById("ifram");
-        try {
-          iframe.width = document.body.clientWidth;
-          var bHeight = iframe.contentWindow.document.body.scrollHeight;
-          var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-          var height = Math.max(bHeight, dHeight);
-          iframe.height = height;
-        } catch (ex) { }
-      }
-      window.setInterval("reinitIframe()", 200);
+      // function reinitIframe() {
+      //   var iframe = document.getElementById("ifram");
+      //   try {
+      //     iframe.width = document.body.clientWidth;
+      //     var bHeight = iframe.contentWindow.document.body.scrollHeight;
+      //     var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+      //     var height = Math.max(bHeight, dHeight);
+      //     iframe.height = height;
+      //   } catch (ex) { }
+      // }
+      // window.setInterval("reinitIframe()", 200);
 
     </script>
   </body>
 
-  </html>
+  </html> -->

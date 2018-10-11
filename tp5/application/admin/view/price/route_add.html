@@ -188,10 +188,14 @@
                 $('.in').show();
             }else{//确认
                 let d = $('.in input').val();//获取添加的值
-                $.get(addurl,{'data' : d},//添加ajax请求返回ID
-                function(data){//返回直接添加数据
-                    $('#jg ul').append('<li><span name="'+data.id+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
-                });
+                if (d) {
+                    $.get(addurl,{'data' : d},//添加ajax请求返回ID
+                    function(data){//返回直接添加数据
+                        $('#jg ul').append('<li><span name="'+data.id+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
+                    });
+                }else{
+                    alert('您输入的是空值');
+                }
                 $('.in').hide();
             }
             

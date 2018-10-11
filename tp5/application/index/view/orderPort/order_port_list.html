@@ -1,9 +1,6 @@
 <!-- 海运运价 -->
-<{include file='./public/head' /}>
+<{include file='./public/top' /}>
 
-  <body>
-    <script> 
-    </script>
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
     <style>
       #dizhi{
@@ -91,7 +88,8 @@
         </div>
         <!-- 查询内容 -->
         <{volist name='list' id='vo' }>
-       
+        
+      
           <div class="nei_nei">
             <{if condition="$vo['generalize']=1" }>
               <div class="tj">
@@ -181,9 +179,10 @@
           </div>
           <{/volist}>
 
-            <div class="text-center" id="pages"></div>
-      </div>
-
+          <div class="text-center" id="pages"></div>
+      
+        </div>
+    </div>
       <!-- 模态窗口 -->
       <div class="mo_cen">
         <div class="man">
@@ -199,6 +198,8 @@
         </div>
       </div>
 
+<{include file='./public/foot' /}>
+
       <script>
         var addressURL = "<{:url('admin.php/address/town')}>";
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', ship_id: '' };
@@ -210,7 +211,7 @@
       <script src="__STATIC__/../admin/js/ship_boat.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
       <script>
-        function toajax() {
+        function toajax() {          
           add.ship_id = $("#search_price select option:selected").val();
           $.ajax({
             type: 'GET',
@@ -218,7 +219,9 @@
             data: add,
             dataType: "json",
             success: function (data) {
+                console.log(data);
               if (data.status == 1) {
+                console.log(data);
                 return 1;
               } else {
                 return 0;
@@ -227,6 +230,7 @@
           })
         }
 
+        //路线详情
         function mo(){
             layer.open({
             type: 1,
@@ -249,12 +253,12 @@
         }
 
         layui.use('laypage', function () {          
-          var laypage = layui.laypage;
-          var $data = $("#search_price input");
-          console.log($data);
-          var start_add = $data[0].value;
-          var end_add = $data[1].value;
-          
+            var laypage = layui.laypage;
+            var $data = $("#search_price input");
+            var start_add = $data[0].value;
+            var start_name = $data[0].title;
+            var end_add = $data[1].value;
+            var end_name = $data[1].title;
           var load_time = $("#search_price select option:selected").val();
           //执行一个laypage实例        
           laypage.render({
@@ -267,24 +271,27 @@
             theme: '#c00',
             jump: function (obj, first) {
               //obj包含了当前分页的所有参数，比如：
-              //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-              //console.log(obj.limit); //得到每页显示的条数
+              // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+              // console.log(obj.limit); //得到每页显示的条数              
               //首次不执行
               if (!first) {
                 //do something
-                window.location.href = "<{:url('index/OrderPort/order_list')}>?page=" + obj.curr + '&limit=' + obj.limit + '&start_add=' + start_add + '&end_add=' + end_add + '&load_time=' + load_time;
+                window.location.href = "<{:url('index/OrderPort/orderPort')}>?page=" +
+                        obj.curr + '&limit=' + obj.limit 
+                        + '&start_add=' + start_add +  '&start_name='+ start_name 
+                        +'&end_add=' +end_add + '&end_name=' + end_name;
+                       
               }
             }
           });
         })
         
        var shipData =JS_BOAT;//船公司
-       console.log(shipData);
+//       console.log(shipData);
        for (let i = 0; i < shipData.length; i++) {
         $('#ship_company').append("<option value='" + shipData[i].ship_id + "' selected>" + shipData[i].ship_name + "</option>");
        }
-      </script>
-
-  </body>
-
-  </html>       
+      </script>    
+      
+    </body>
+    </html>

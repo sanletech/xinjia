@@ -1,5 +1,5 @@
  海运运价 
-<{include file='./public/head' /}>
+<{include file='./public/top' /}>
 
   <body>
     <script> 
@@ -184,7 +184,7 @@
           </div>         
         </div>
       </div>
-
+      <{include file='./public/foot' /}>
       <script>
         var addressURL = "<{:url('admin.php/address/town')}>";
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', load_time: '' };

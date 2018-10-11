@@ -226,4 +226,16 @@ class Controller
 
         return true;
     }
+    
+    public function _v($param) {
+        echo '<pre>';
+        var_dump($param);
+        echo'</pre>';
+    }
+    
+    public function _p($param) {
+        echo '<pre>';
+        print_r($param);
+        echo'</pre>';
+    }
 }

@@ -1,16 +1,30 @@
 <?php
 
 namespace app\index\controller;
-use app\index\common\Base;
-use app\index\model\Order as OrderM;
+use think\Controller;
+use app\index\model\OrderPort as OrderM;
 use think\Db;
 use think\Session;
-class OrderPort extends Base 
+class OrderPort extends Controller 
 {    
-//
+    
+    protected $beforeActionList = [
+        'login'=> ['except'=>'orderport'],
+    ];
+    protected $member_code='';
+    
+    //判断登录
+    public function login(){
+        $this->member_code=  Session::get('member_code');
+        //如果登录常量为nll，表示没有登录
+        if(is_null($this->member_code)){
+            $this->error('未登录，无权访问','login/login');
+//            $this->redirect('Login/login');
+        }  
+    }
+
     //港到港
     public function orderPort(){
-       
         $start_add =$this->request->param('start_id');
         $start_name =$this->request->param('start_name');
         $end_name =$this->request->param('end_name');
@@ -19,25 +33,25 @@ class OrderPort extends Base
         if($end_add){ $this->view->assign(['end_add'=>$end_add,'end_name'=>$end_name]);  }
         $ship_id =$this->request->param('ship_id');
         if($ship_id){ $this->view->assign('ship',$ship_id);  }
-        $sea_pirce =new OrderM;
-//        var_dump($start_add,$end_add,$ship_id);exit;
-        $list = $sea_pirce ->price_port($start_add,$end_add,$ship_id);
-//        var_dump($list);exit;
-        //获取总页数
-        $count =  Db::table($list.' A')->count(); 
+
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数
         $page= $this->request->param('page',1,'intval');  
         //计算出从那条开始查询
-        // $tol=($page-1)*$limit+1;
+        $tol=($page-1)*$limit;
+        
+        $sea_pirce =new OrderM;
         // 查询出当前页数显示的数据
-        $list = Db::table($list.' A')->limit(($page-1)*$limit,$limit)->select();
+        $list = $sea_pirce ->price_port($tol,$limit,$start_add,$end_add,$ship_id);
+        //获取总页数
+        $count = count($list); 
 //        $this->_p($list);exit;
-       // $page= $list->render();
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
+        $this->view->assign([
+            'page'=>$page,
+            'count'=>$count,
+            'limit'=>$limit
+        ]); 
         $this->view->assign('list',$list);
         return $this->view->fetch('orderPort/order_port_list');
     }

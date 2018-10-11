@@ -52,10 +52,9 @@
                 data:$("#loginform").serialize(),
                 dataType:"json",
                 success:function(data){
-            
                     if(data.status==1){
                         alert(data.message);
-                        window.location.href="<{:url('index/Order/orderPort')}>";
+                        window.location.href="<{:url('index/OrderPort/orderPort')}>";
                     }else{
                         alert(data.message);
                         window.location.href="<{:url('index/login/login')}>";

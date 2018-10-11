@@ -11,7 +11,7 @@ class Price extends Model
     protected $EDD = 'EDD';
   
      //船运航价的展示
-    public function  price_route_list($port_start,$port_over,$pages=5,$seaprice_id=0)
+    public function  price_route_list($ship_name,$port_start,$port_over,$pages=5,$seaprice_id=0)
     {   
         $middleSql =Db::name('sea_middle')->alias('SM')
             ->join('hl_port P','P.port_code =SM.sl_middle','left')
@@ -49,10 +49,15 @@ class Price extends Model
             $list = Db::table($list.' b')->where('b.e_port_name', 'like', "%{$port_over}%")->buildSql();
             $pageParam['query']['e_port_name'] = $port_over;
         }
+        if($ship_name){
+            $list = Db::table($list.' c')->where('c.ship_name', 'like', "%{$ship_name}%")->buildSql();
+            $pageParam['query']['ship_name'] = $ship_name;
+        }
         if($seaprice_id){
             $list = Db::table($list.' d')->where('d.id',"$seaprice_id")->buildSql();
         }
-        $lista =Db::table($list.' c')->order('id,ship_id,route_id')->paginate($pages,false,$pageParam);  
+   
+        $lista =Db::table($list.' e')->order('id,ship_id,route_id')->paginate($pages,false,$pageParam);  
         return $lista;
     }
     

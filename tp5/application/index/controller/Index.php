@@ -7,7 +7,8 @@ class Index extends Controller
    // 展示起始页导航
      public function index()
     {
-       return $this->view->fetch('public/top');
+       \think\Loader::action('OrderPort/orderPort'); 
+    //   return $this->view->fetch('OrderPort/orderPort');
     }
     //展示index首页
     public function index_body()
