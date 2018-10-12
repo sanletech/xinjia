@@ -7,10 +7,10 @@
           <img src="__STATIC__/image/logo.jpg" alt="">
         </div>
         <ul> 
-          <li class="hang">
+          <li>
             <a href="<{:url('index/OrderPort/orderPort')}>">订舱平台</a>
           </li>
-<!--          <li>
+<!--      <li>
             <a href="javascript:;">公共查询</a>
           </li>
           <li>
@@ -34,17 +34,16 @@
         </ul>
       </div>
     </header>
-
     <!-- <nav>
-      <iframe src="<{:url('index/OrderPort/orderPort')}>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
-    </nav>
-    <footer>
-      <{include file='./public/foot' /}>
-    </footer>
-    <script type="text/javascript">
-      $('#top li').click(function (event) {
-        $(this).addClass('hang').siblings('li').removeClass('hang');
-        if($(this).index() == 0) { //港到港
+    //   <iframe src="<{:url('index/OrderPort/orderPort')}>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
+    // </nav>
+    // <footer>
+    //   <{include file='./public/foot' /}>
+    // </footer>
+    // <script type="text/javascript">
+    //   $('#top li').click(function (event) {
+    //     $(this).addClass('hang').siblings('li').removeClass('hang');
+    //     if($(this).index() == 0) { //港到港
 //           $('nav iframe').attr('src','<{:url('index/Index/index_body')}>');
 
           $('nav iframe').attr('src','<{:url('index/OrderPort/orderPort')}>');

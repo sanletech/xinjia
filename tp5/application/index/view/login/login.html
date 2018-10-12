@@ -63,6 +63,10 @@
             })
         })
     })
+
+    if (window.top != window) {
+        window.top.location.href = window.location.href;
+    }
     
 </script>
   </body>

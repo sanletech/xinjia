@@ -36,7 +36,10 @@ function order_num(){
 
 if($('.fukuan a').html() == '已付款'){
     $('.fukuan a').css('background-color','#00DB00').attr('href','javascript:void(0);');
-
 }else{
     $('.fukuan a').attr('href',xiangqing);
+}
+
+if ($('.ddh a').html()) {
+    $('.ddh a').css('background-color','#00DB00');
 }

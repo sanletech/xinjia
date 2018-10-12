@@ -1,5 +1,4 @@
 <{include file='./public/top'/}>
-<body>
     <link rel="stylesheet" href="__STATIC__/css/xadmin.css">
     <script type="text/javascript" src="__STATIC__/js/xadmin.js"></script>
     <!-- 顶部开始 -->
@@ -144,6 +143,6 @@
         <div class="copyright">Copyright ©2017 x-admin v2.3 All Rights Reserved</div>  
     </div>
     <!-- 底部结束 -->
-    
-</body>
-</html>
+    <script>
+            $('#top ul li').eq(1).addClass('hang').siblings('li').removeClass('hang');
+    </script>

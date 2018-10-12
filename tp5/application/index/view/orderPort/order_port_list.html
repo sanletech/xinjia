@@ -201,6 +201,7 @@
 <{include file='./public/foot' /}>
 
       <script>
+        $('#top ul li').eq(0).addClass('hang').siblings('li').removeClass('hang');
         var addressURL = "<{:url('admin.php/address/town')}>";
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', ship_id: '' };
         //          起点ID        起点名称        终点ID        终点名称      船公司

@@ -49,7 +49,7 @@
                 <tbody>
                 <{volist name="list" id="vo"}>
                   <tr>
-                    <td>
+                    <td class="ddh">
                       <!-- 有改变css('background-color','#00DB00') -->
                       <a href="javascript:void(0);"><{$vo.order_num}></a>
                     </td>
@@ -158,6 +158,7 @@
     <script src="__STATIC__/js/personal/page.js"></script>
     <script src="__STATIC__/js/personal/cabinet_number.js"></script>
     <script>
+
         
         var url="<{:url('index/Personal/place_order')}>";
         var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号
