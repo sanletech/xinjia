@@ -14,8 +14,8 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input type="text" name="username" placeholder="账号名" autocomplete="off" class="layui-input">
+          <form class="layui-form layui-col-md12 x-so" action="<{:url('admin/keeper/arealist')}>">
+              <input type="text" name="user_code"  value="<?php if(isset($user_code)){echo $user_code;} ?>"placeholder="账号名" autocomplete="off" class="layui-input">
           <button class="layui-btn" lay-submit="" lay-filter="sreach">
             <i class="layui-icon">&#xe615;</i>
           </button>
