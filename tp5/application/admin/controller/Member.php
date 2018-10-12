@@ -70,9 +70,11 @@ class Member extends Base
                 ->where('status','1')->where('type','sales')
                 ->select();
       
-//$this->_p($list);  var_dump($salesArr);exit;
+        $this->_p($list);  var_dump($salesArr);exit;
         //船公司的集合
-        $ship_nameArr = $list[0]['ship_name'];
+        if(!(array_key_exists(0, $list))&&(array_key_exists ('ship_name', $list[0]))){
+            $list[0]['ship_name']= array_fill(0, 5, '未录入船公司');
+        }
         $this->view->assign('list',$list);
         $this->view->assign('salesArr',$salesArr);
         $this->view->assign('ship_nameArr',$ship_nameArr);
@@ -136,12 +138,12 @@ class Member extends Base
     }
     //活动优惠
     public function discountSpecial() {
-         $type = input('get.type'); //船公司ship_name 用户customer
+        $type = input('get.type'); //船公司ship_name //活动名称promotion_title
         $account = input('get.account');  //帐号搜索
         if($account){
-             $this->view->assign('account',$account); 
+            $this->view->assign('account',$account); 
         }
-        $type ?$type:'customer';
+        $type?$type:'ship_name';
         $this->view->assign('type',$type); 
         $user = new MemberM ;
         $list = $user->discountSpecial($type,$account,5);

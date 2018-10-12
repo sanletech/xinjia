@@ -64,13 +64,21 @@ class Keeper extends Base
     //划分区域列表
     public function areaList() 
     {  
+        $user_code =  $this->request->param('user_code');
+        if($user_code){
+            $this->view->assign('user_code',$user_code);
+        }else{
+            $user_code = 'not null';
+        } 
+        
         $list =Db::name('user')->alias('U')
                 ->join('hl_user_team UT','UT.uid=U.id','left')
                 ->join('hl_team T','T.id=UT.team_id','left')
                 ->join('hl_auth_group_access AA','AA.uid=U.id','left')
                 ->field('U.id,U.user_code,U.user_name,U.type,U.status,T.title')
+                ->where('U.user_code',$user_code)
                 ->group('U.id')->select();
-        
+                
         $areaList =Db::name('user_area')->alias('UA')
                 ->join('hl_port P','P.port_code=UA.area_code','left')
                 ->field('UA.user_id,P.port_code,P.port_name')->group('P.port_code')
@@ -84,10 +92,34 @@ class Keeper extends Base
             }
         }
 //      $this->_p($list);exit;
+        $this->view->engine->layout('Keeper/team_public');
+        $this->view->assign('arealist',$list);
+        return $this->view->fetch('keeper/area_list'); 
+    }
+    
+    //员工信息
+    public function userData() {
+        $uid = $this->request->param('uid');
+        if($uid){
+           $uid = $uid?$uid:'not null';
+        }
+        $list =Db::name('user')->alias('U')
+            ->join('hl_user_team UT','UT.uid=U.id','left')
+            ->join('hl_team T','T.id=UT.team_id','left')
+            ->join('hl_auth_group_access AA','AA.uid=U.id','left')
+            ->field('U.id,U.user_code,U.user_name,U.type,U.status,T.title')
+            ->where('U.id',$uid)->group('U.id')->select();
+        
+        $areaList =Db::name('user_area')->alias('UA')
+            ->join('hl_port P','P.port_code=UA.area_code','left')
+            ->field('P.port_code,P.port_name')->group('P.port_code')
+            ->where('UA.user_id',$uid)->select();
+        $list[0]['area_list']=$areaList;
         
         $this->view->engine->layout('Keeper/team_public');
         $this->view->assign('arealist',$list);
         return $this->view->fetch('keeper/area_list'); 
+
     }
     
     //职位调调

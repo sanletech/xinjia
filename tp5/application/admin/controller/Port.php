@@ -27,7 +27,7 @@ class Port extends Base
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
-        return $this->view->fetch('port\port_list'); 
+        return $this->view->fetch('port/port_list'); 
     }
     
     //添加港口页面
@@ -51,19 +51,6 @@ class Port extends Base
         json_encode($status);   
         return $status;   
     }
-    
- 
- 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     //删除港口
@@ -89,7 +76,7 @@ class Port extends Base
         $data = $editPort->port_edit($id);
         $this->assign('data',$data );
        // $this->_v($data);exit;
-        return $this->view->fetch('port\port_edit'); 
+        return $this->view->fetch('port/port_edit'); 
     }
         //修改港口执行
     public function port_toedit() 

@@ -19,9 +19,9 @@ class Login extends Model
             $type ='person';
         }        
         $sql= "insert into hl_member (name,company,password,create_time,"
-                . "phone,member_code,type) values"
+                . "phone,member_code,type,status) values"
                 . "('$member_name','$company','$password','$create_time',"
-                . "'$phone','$member_code','$type')";
+                . "'$phone','$member_code','$type',1)";
        // var_dump($sql);exit;
         $res =Db::execute($sql);
         //同时将推荐人和业务员绑定

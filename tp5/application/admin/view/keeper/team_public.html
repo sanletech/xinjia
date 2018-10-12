@@ -71,7 +71,7 @@
                                 "</a>\n"+ "<dl class=\"layui-nav-child\">\n"; 
                         // 遍历获取子菜单 
                         for( var k = 0; k <data[i].childMenus.length; k++){ 
-                            liStr+=getChildMenu(data[i].childMenus[k],0); 
+                            liStr+=getChildMenu(data[i].childMenus[k],2); 
                         } 
                         liStr+="</dl></li>"; 
                     }else{
@@ -98,7 +98,7 @@
            } 
            subStr+="</dl></li></ul></dd>";
        }else{ 
-           subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\""+subMenu.url+"\">" +subMenu.title+'-'+subMenu.user_name+"</a></dd>"; 
+           subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"<{:url('keeper/userData')}>?uid="+subMenu.uid+"\">" +subMenu.title+'-'+subMenu.user_name+"</a></dd>"; 
        } 
        return subStr;
    

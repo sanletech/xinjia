@@ -23,6 +23,7 @@ class Member extends Model
                 ->where('status',$status)
                 ->field('a.id,a.name,a.create_time,a.logintime,a.phone,a.email,a.status,a.company,a.member_code,b.sales_name')
                 ->buildSql();
+//        var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($account){
           
@@ -126,16 +127,17 @@ class Member extends Model
                 ->where('b.ship_short_name','like',"%{$account}%")
                 ->buildSql(); 
         } 
-        if($type=='discount_title'&&!empty($account)){
+        if($type=='promotion_title'&&!empty($account)){
             $list =Db::table($list.' c')
-                ->where('c.discount_title','like',"%{$account}%")
+                ->where('c.promotion_title','like',"%{$account}%")
                 ->buildSql(); 
         }
             $pageParam['query']['account'] = $account;
             $pageParam['query']['type'] = $type;
+            
         $list =Db::table($list.' d')->order('d.id')->paginate($pages,false,$pageParam);  
+       
         return $list;
-        
     }
  }
 ?>
