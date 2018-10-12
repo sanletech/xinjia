@@ -3,8 +3,9 @@
   padding: 0; }
 
 #top {
-  margin: 30px 0 102px;
-  overflow: hidden; }
+  padding: 30px 0 80px;
+  overflow: hidden;
+  background: #fff; }
   #top .logo {
     width: 246px;
     height: 68px;

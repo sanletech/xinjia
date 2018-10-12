@@ -214,15 +214,15 @@
       <script>
         function toajax() {          
           add.ship_id = $("#search_price select option:selected").val();
+          console.log(add);
+          
           $.ajax({
             type: 'GET',
             url: "<{:url('index/orderPort/orderPort')}>",
             data: add,
             dataType: "json",
             success: function (data) {
-                console.log(data);
               if (data.status == 1) {
-                console.log(data);
                 return 1;
               } else {
                 return 0;
@@ -270,7 +270,7 @@
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             curr: "<{$page}>",
             theme: '#c00',
-            jump: function (obj, first) {
+            jump: function (obj, first) {              
               //obj包含了当前分页的所有参数，比如：
               // console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
               // console.log(obj.limit); //得到每页显示的条数              
