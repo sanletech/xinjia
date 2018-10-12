@@ -20,9 +20,8 @@ class OrderPort extends Controller
         if(is_null($this->member_code)){
             $this->error('未登录，无权访问','login/login');
 //            $this->redirect('Login/login');
-        }  
+        } 
     }
-
     //港到港
     public function orderPort(){
 //        var_dump(111);exit;

@@ -65,6 +65,12 @@ class Personal extends Base
     {
        return $this->view->fetch('personal/common_info');
     }
+
+    //港到港账单生成
+    public function port_bill(){
+        return $this->view->fetch('personal/port_bill');
+    }
+    
     
     //港到港订单
     public function place_order()
