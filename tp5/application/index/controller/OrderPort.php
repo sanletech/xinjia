@@ -51,9 +51,10 @@ class OrderPort extends Controller
         $this->view->assign([
             'page'=>$page,
             'count'=>$count,
-            'limit'=>$limit
+            'limit'=>$limit,
+            'list'=>$list
         ]); 
-        $this->view->assign('list',$list);
+//        $this->view->assign();
         return $this->view->fetch('orderPort/order_port_list');
     }
     

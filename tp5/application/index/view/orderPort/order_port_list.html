@@ -19,7 +19,7 @@
     <div class="banner">
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
-        <form class="layui-form layui-col-md12 x-so" id="search_price">
+        <form class="layui-form layui-col-md12 x-so" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
           <div class="gnhy_nei layui-row">
             <input type="text" name="start_add" id="start_add" title="<{$start_add ? $start_add : '';}>"  value="<{$start_name ? $start_name: '';}>" placeholder="请输入起始地" class="layui-col-xs12">
             <input type="text" name="end_add" id="end_add" title="<{$end_add ? $end_add : '';}>"  value="<{$end_name ? $end_name : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
@@ -40,8 +40,8 @@
                 <i class="fa fa-warning fa-lg c"></i>&nbsp;国家禁运品声明</a>
             </div>
             <div class="di_you">
-              <button type="button" onclick="toajax()">查价</button>
-              <!-- <button class="layui-btn" lay-submit="" lay-filter="sreach">查价</button> -->
+              <!--<button type="button" onclick="toajax()">查价</button>-->
+               <button class="layui-btn"  lay-submit="" lay-filter="sreach">查价</button> 
             </div>
           </div>
 
@@ -212,24 +212,24 @@
       <script src="__STATIC__/../admin/js/ship_boat.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
       <script>
-        function toajax() {          
-          add.ship_id = $("#search_price select option:selected").val();
-          $.ajax({
-            type: 'GET',
-            url: "<{:url('index/orderPort/orderPort')}>",
-            data: add,
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-              if (data.status == 1) {
-                console.log(data);
-                return 1;
-              } else {
-                return 0;
-              }
-            }
-          })
-        }
+//        function toajax() {          
+//          add.ship_id = $("#search_price select option:selected").val();
+//          $.ajax({
+//            type: 'GET',
+//            url: "<{:url('index/orderPort/orderPort')}>",
+//            data: add,
+//            dataType: "json",
+//            success: function (data) {
+//                console.log(data);
+//              if (data.status == 1) {
+//                console.log(data);
+//                return 1;
+//              } else {
+//                return 0;
+//              }
+//            }
+//          })
+//        }
 
         //路线详情
         function mo(){
@@ -266,7 +266,7 @@
             elem: 'pages',
             limit: "<{$limit}>",
             limits: [5, 10, 15],
-            count: "<{$count}>",
+            count: "11",
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             curr: "<{$page}>",
             theme: '#c00',

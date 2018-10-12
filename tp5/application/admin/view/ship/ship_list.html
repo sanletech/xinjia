@@ -16,7 +16,6 @@
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
             <input type="text" name="ship_name"  value="<{$searchship  ? $searchship : '';}>"  placeholder="请输入船公司名字" autocomplete="off" class="layui-input">
-          <input type="text" name="port_name"    value="<{$searchport ? $searchport : '';}>"   placeholder="请输入港口名字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -32,28 +31,29 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>船公司名</th>
-            <th>业务港口</th>
+            <th>船公司简称</th>
+            <th>船公司全称</th>
+            <th>添加/修改时间</th>
             <th>操作</th></tr>
         </thead>
     <tbody >
         <{volist name="shiplist" id="vo" }>  
          <tr >
             <td>
-             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="<{$vo.ship_id.'_'.$vo.port_id}>"><i class="layui-icon">&#xe605;</i></div>
+             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id="<{$vo.id}>"><i class="layui-icon">&#xe605;</i></div>
             </td>
-            <td class="tdata" ><{$vo.ship_id}></td>
+            <td class="tdata" ><{$vo.id}></td>
+            <td><{$vo.ship_short_name}></td>
             <td><{$vo.ship_name}></td>
-            <td style="display: none;"><{$vo.port_id}></td>
-            <td><{$vo.port_name}></td>
+            <td><{$vo.mtime}></td>
             <td class="td-manage">
-                <a title="查看"  onclick="x_admin_show('查看信息','<{:url('Ship/ship_info')}>?ship_id=<{$vo.ship_id}>&port_id=<{$vo.port_id}>',750,350)" href="javascript:;">
+                <a title="查看"  onclick="x_admin_show('查看信息','<{:url('Ship/ship_info')}>?ship_id=<{$vo.id}>',750,350)" href="javascript:;">
                     <i class="layui-icon">&#xe649;   </i>
                 </a>
-                 <a title="编辑"  onclick="x_admin_show('编辑信息','<{:url('Ship/ship_edit')}>?ship_id=<{$vo.ship_id}>&port_id=<{$vo.port_id}>',800,350)" href="javascript:;">
+                 <a title="编辑"  onclick="x_admin_show('编辑信息','<{:url('Ship/ship_edit')}>?ship_id=<{$vo.id}>',800,350)" href="javascript:;">
                     <i class="layui-icon">&#xe642;   </i>
                 </a>
-                <a title="删除" onclick="member_del(this,'<{$vo.ship_id.'_'.$vo.port_id}>')" href="javascript:;">
+                <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
                     <i class="layui-icon">  &#xe640;</i>
                 </a>
             </td>

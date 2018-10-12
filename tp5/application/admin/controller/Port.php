@@ -33,7 +33,7 @@ class Port extends Base
     //添加港口页面
     public function port_add() 
     {
-      return $this->view->fetch('port\port_add'); 
+      return $this->view->fetch('port/port_add'); 
     }
       //添加港口执行
     public function port_toadd() 

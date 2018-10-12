@@ -33,7 +33,7 @@ class OrderProcess extends Base
             'container_code'=>$container_code,
             'track_num'=>$track_num    
         ]);
-        return $this->view->fetch('OrderProcess\orderprocess_list'); 
+        return $this->view->fetch('OrderProcess/orderprocess_list'); 
     } 
     //拆订单
     public function orderSplit() {
@@ -46,7 +46,7 @@ class OrderProcess extends Base
         $tmpArr =['order_num'=>$order_num ,'track_num'=>$track_num,'container_code'=>$container_code];
       //  var_dump($tmpArr);exit;
         $this->view->assign('list',$tmpArr);
-        return $this->view->fetch('OrderProcess\orderprocess_split'); 
+        return $this->view->fetch('OrderProcess/orderprocess_split'); 
     }
     
     //处理拆分订单
@@ -100,7 +100,7 @@ class OrderProcess extends Base
             'track_num'=>$track_num    
         ]);
         
-        return $this->view->fetch('OrderProcess\orderprocess_edit'); 
+        return $this->view->fetch('OrderProcess/orderprocess_edit'); 
     }
     
     //记录订单修改的状态和时间操作人
