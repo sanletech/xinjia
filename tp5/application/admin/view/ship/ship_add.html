@@ -145,7 +145,7 @@
             } ) 
         
         }
-        }
+      
         
         
         function  selectPortShip(port_id,port_name,mark){
@@ -191,8 +191,8 @@
                     url:url,
                     data:$("#shipeditform").serialize(),
                     dataType:"json",
-                    success:function(status){
-                        if(status>0){
+                    success:function(data){
+                        if(data.status>0){
                             post_adduser = false;
                             layer.close(loading);
                             layer.msg("添加成功", { icon: 6, time: 1000 }, function () {

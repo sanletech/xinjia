@@ -29,7 +29,7 @@
                 </div>
             </div>-->
             
-        <div class="layui-form-item">
+<!--        <div class="layui-form-item">
             <label class="layui-form-label">
             <span class="x-red">*</span>所属港口
             </label>
@@ -48,7 +48,7 @@
                     <option value="">请选择港口</option>
                 </select>
             </div>
-        </div>
+        </div>-->
         <!--  <button id="btn_tag" class="layui-btn layui-btn-normal"  style="display: none;"  onclick="del(this) ;return false">
                <input id ="input_tag" type="hidden"  name="name" value="id"><i id ="i_tag" class="layui-icon">&#xe640;</i> </button>-->
             <div class="layui-form-item" id ="search_port">
@@ -60,16 +60,16 @@
             </div>
         </form>
     </div>
-<script type="text/javascript" src="/static/admin/js/area.js"></script>
-<script type="text/javascript" src="/static/admin/js/port.js"></script>
+<!--<script type="text/javascript" src="/static/admin/js/area.js"></script>
+<script type="text/javascript" src="/static/admin/js/port.js"></script>-->
  <script>
       
     //加载 原有的港口名字和相应的code
-        var port= '<{$port}>';
-       var port_arr = JSON.parse(port); 
+//        var port= '<$port}>';
+//       var port_arr = JSON.parse(port); 
       
         //加载 所有的港口名字和相应的code
-        var js_port = JS_PORT;
+      //  var js_port = JS_PORT;
          //console.log(js_port); 
 //           // js_port= JSON.parse(js_port);    
 //        console.log(js_port); 
@@ -85,8 +85,8 @@
             $ = layui.jquery;
             form = layui.form;
             $form = $('form');
-            loadProvince();  //选择港口
-            oldshipPort();//原有船公司的港口和城市
+//            loadProvince();  //选择港口
+//            oldshipPort();//原有船公司的港口和城市
             
         });   
         

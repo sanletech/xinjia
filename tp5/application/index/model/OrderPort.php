@@ -35,6 +35,7 @@ class OrderPort extends Model
         if($seaprice_id){
             $price_list = Db::table($price_list.' H')->where('H.id', $seaprice_id)->buildSql();
         }
+        var_dump($price_list);exit;
         $list =Db::table($price_list.' J')->order('J.mtime ASC')->limit($tol,$limit)->select();
         return $list;
     }

@@ -70,10 +70,10 @@ class Member extends Base
                 ->where('status','1')->where('type','sales')
                 ->select();
       
-        $this->_p($list);  var_dump($salesArr);exit;
+//        $this->_p($list);  var_dump($salesArr);exit;
         //船公司的集合
         if(!(array_key_exists(0, $list))&&(array_key_exists ('ship_name', $list[0]))){
-            $list[0]['ship_name']= array_fill(0, 5, '未录入船公司');
+            $ship_nameArr = array_fill(0, 5, '未录入船公司');
         }
         $this->view->assign('list',$list);
         $this->view->assign('salesArr',$salesArr);
