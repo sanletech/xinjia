@@ -24,7 +24,7 @@
             <input type="text" name="start_add" id="start_add" title="<{$start_add ? $start_add : '';}>"  value="<{$start_name ? $start_name: '';}>" placeholder="请输入起始地" class="layui-col-xs12">
             <input type="text" name="end_add" id="end_add" title="<{$end_add ? $end_add : '';}>"  value="<{$end_name ? $end_name : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
             <div class="layui-form-item" styel=" z-index:999;">
-                <select id="ship_company" name="ship_id" lay-filter="ship" lay-search >
+                <select id="ship_company" name="ship" lay-filter="ship" lay-search >
                     <option value="" >请选择船公司</option>
 
                 </select>
@@ -217,9 +217,9 @@
           console.log(add);
           
           $.ajax({
-            type: 'post',
+            type: 'GET',
             url: "<{:url('index/orderPort/orderPort')}>",
-            data: {'ship_id':5},
+            data: add,
             dataType: "json",
             success: function (data) {
               if (data.status == 1) {

@@ -8,7 +8,7 @@ class OrderPort extends Model
 {
     
     public function price_port($tol,$limit,$start_add='',$end_add='',$ship_id='',$seaprice_id='') {
-        
+//        var_dump($tol,$limit,$start_add,$end_add,$ship_id,$seaprice_id);exit;
         $nowtime= date('y-m-d h:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id')//海运路线表
@@ -35,8 +35,9 @@ class OrderPort extends Model
         if($seaprice_id){
             $price_list = Db::table($price_list.' H')->where('H.id', $seaprice_id)->buildSql();
         }
-        var_dump($price_list);exit;
+//        var_dump($price_list);exit;
         $list =Db::table($price_list.' J')->order('J.mtime ASC')->limit($tol,$limit)->select();
+//        $this->_p($list);exit;
         return $list;
     }
     

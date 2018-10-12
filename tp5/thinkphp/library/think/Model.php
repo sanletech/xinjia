@@ -2330,5 +2330,16 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     {
         self::event('after_delete', $callback, $override);
     }
+    
+    public function _p($param) {
+        echo '<pre>';
+        print_r($param);
+        echo '</pre>';
+    }
 
+    public function _v($param) {
+        echo '<pre>';
+        var_dump($param);
+        echo '</pre>';
+    }
 }
