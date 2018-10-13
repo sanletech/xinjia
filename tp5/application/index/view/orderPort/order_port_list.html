@@ -2,6 +2,7 @@
 <{include file='./public/top' /}>
 
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
     <style>
       #dizhi{
         cursor: pointer;
@@ -15,18 +16,26 @@
       #hxxq{
         margin-left: -20px !important;
       }
+      .yinc{
+        display: none;
+      }
     </style>
     <div class="banner">
       <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
-        <form class="layui-form layui-col-md12 x-so" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
+        <!-- action="<{:url('index/OrderPort/orderPort')}>" -->
+        <form class="layui-form layui-col-md12 x-so" method="post" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
           <div class="gnhy_nei layui-row">
-            <input type="text" name="start_add" id="start_add" title="<{$start_add ? $start_add : '';}>"  value="<{$start_name ? $start_name: '';}>" placeholder="请输入起始地" class="layui-col-xs12">
-            <input type="text" name="end_add" id="end_add" title="<{$end_add ? $end_add : '';}>"  value="<{$end_name ? $end_name : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
+            <div class="yinc">
+              <input type="text" name="start_add" value="<{$start_add ? $start_add: '';}>">
+              <input type="text" name="end_add" value="<{$end_add ? $end_add: '';}>">
+              <div class="ship_id"><{$ship_id ? $ship_id: '';}></div>
+            </div>
+            <input autocomplete="off" type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" placeholder="请输入起始地" class="layui-col-xs12">
+            <input autocomplete="off" type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
             <div class="layui-form-item" styel=" z-index:999;">
                 <select id="ship_company" name="ship_id" lay-filter="ship" lay-search >
                     <option value="" >请选择船公司</option>
-
                 </select>
             </div>
             
@@ -40,8 +49,8 @@
                 <i class="fa fa-warning fa-lg c"></i>&nbsp;国家禁运品声明</a>
             </div>
             <div class="di_you">
-              <!--<button type="button" onclick="toajax()">查价</button>-->
-               <button class="layui-btn"  lay-submit="" lay-filter="sreach">查价</button> 
+              <button type="button" onclick="toajax()">查价</button>
+               <!-- <button class="layui-btn"  lay-submit="" lay-filter="sreach">查价</button>  -->
             </div>
           </div>
 
@@ -212,23 +221,20 @@
       <script src="__STATIC__/../admin/js/ship_boat.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
       <script>
-        function toajax() {          
+        function toajax() {
           add.ship_id = $("#search_price select option:selected").val();
-          console.log(add);
-          
-          $.ajax({
-            type: 'post',
-            url: "<{:url('index/orderPort/orderPort')}>",
-            data: {'ship_id':5},
-            dataType: "json",
-            success: function (data) {
-              if (data.status == 1) {
-                return 1;
-              } else {
-                return 0;
-              }
-            }
-          })
+          $('.yinc input').eq(0).val(add.start_id);
+          $('.yinc input').eq(1).val(add.end_id);
+          $("#search_price").submit();
+          // $.ajax({
+          //   type: 'POST',
+          //   url: "<{:url('index/OrderPort/orderPort')}>",
+          //   data: add,
+          //   dataType: "json",
+          //   success: function (data) {
+              
+          //   }
+          // })
         }
 
         //路线详情
@@ -253,14 +259,8 @@
           });
         }
 
-        layui.use('laypage', function () {          
-            var laypage = layui.laypage;
-            var $data = $("#search_price input");
-            var start_add = $data[0].value;
-            var start_name = $data[0].title;
-            var end_add = $data[1].value;
-            var end_name = $data[1].title;
-          var load_time = $("#search_price select option:selected").val();
+        layui.use('laypage', function () {                   
+          var laypage = layui.laypage;
           //执行一个laypage实例        
           laypage.render({
             elem: 'pages',
@@ -276,21 +276,26 @@
               // console.log(obj.limit); //得到每页显示的条数              
               //首次不执行
               if (!first) {
-                //do something
+                //do something 
+                console.log(add);
+                           
                 window.location.href = "<{:url('index/OrderPort/orderPort')}>?page=" +
-                        obj.curr + '&limit=' + obj.limit 
-                        + '&start_add=' + start_add +  '&start_name='+ start_name 
-                        +'&end_add=' +end_add + '&end_name=' + end_name;
-                       
+                        obj.curr + '&limit=' + obj.limit
+                        + '&start_add=' + $('.yinc input').eq(0).val() +  '&start_name='+ $('#start_add').val()
+                        +'&end_add=' +$('.yinc input').eq(1).val() + '&end_name=' + $('#end_add').val() + '&ship_id=' + ship_id;
               }
             }
           });
         })
         
        var shipData =JS_BOAT;//船公司
-//       console.log(shipData);
+       var ship_id = $('.ship_id').html();//船公司ID   
        for (let i = 0; i < shipData.length; i++) {
-        $('#ship_company').append("<option value='" + shipData[i].ship_id + "' selected>" + shipData[i].ship_name + "</option>");
+        if(i+1 == ship_id){
+          $('#ship_company').append("<option value='" + shipData[i].ship_id + "' selected>" + shipData[i].ship_name + "</option>");
+        }else{
+          $('#ship_company').append("<option value='" + shipData[i].ship_id + "'>" + shipData[i].ship_name + "</option>");
+        }
        }
       </script>    
       
