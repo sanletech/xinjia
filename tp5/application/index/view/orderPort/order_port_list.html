@@ -183,7 +183,7 @@
                   <div class="nei_rig">
 
                     <!-- <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> -->
-                    <a id="hxxq" onclick="mo()" href="javascript:;">航线详情</a>
+                    <a id="hxxq" onclick="mo(this)" href="javascript:;">航线详情</a>
 
                   </div>
 
@@ -237,6 +237,8 @@
         //路线详情
         function mo(){
             let seapr_id = $('.seapr_id').html();
+            console.log(seapr_id);
+            
             layer.open({
             type: 1,
             title:'航线详情',
@@ -248,9 +250,9 @@
             success: function(){
               //监听滚动条
               $('html',window.parent.document).css('overflow-y','hidden');
-              $(".demo-class").css('top',$(parent.window).scrollTop()*2-100);
-              $.get("<{:url('order/route_detail')}>",{seaprice_id:seapr_id},function(data){
-                console.log(data);
+              $(".demo-class").css('top',$(parent.window).scrollTop());
+              $.get("<{:url('order/routedetail')}>",{seaprice_id:seapr_id},function(data){
+                // console.log(data);
               })
             },
             //关闭窗口时

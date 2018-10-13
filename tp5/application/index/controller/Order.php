@@ -180,7 +180,9 @@ class Order extends Base
     //中间航线详情
      public function routeDetail()
     {  
+        
         $data =$this->request->param('seaprice_id');
+        echo $data;exit;
          $sea_pirce =new OrderM;
         $route_line= $sea_pirce ->route_detail($data);
         return json($route_line);
