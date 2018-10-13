@@ -24,7 +24,7 @@ class OrderPort extends Controller
     }
     //港到港
     public function orderPort(){
-//        var_dump(111);exit;
+        // var_dump($this->request->param());exit;
         $start_add =$this->request->param('start_add');
         $start_name =$this->request->param('start_name');
         if($start_add){ $this->view->assign(['start_add'=>$start_add,'start_name'=>$start_name]);   }
@@ -33,7 +33,7 @@ class OrderPort extends Controller
         $end_add =$this->request->param('end_add');
         if($end_add){ $this->view->assign(['end_add'=>$end_add,'end_name'=>$end_name]);  }
         $ship_id =$this->request->param('ship_id');
-        if($ship_id){ $this->view->assign('ship',$ship_id);  }
+        if($ship_id){ $this->view->assign('ship_id',$ship_id);  }
 
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
@@ -44,6 +44,7 @@ class OrderPort extends Controller
         
         $sea_pirce =new OrderM;
         // 查询出当前页数显示的数据
+        // var_dump($tol,$limit,$start_add,$end_add,$ship_id);exit; 
         $list = $sea_pirce ->price_port($tol,$limit,$start_add,$end_add,$ship_id);
         //获取总页数
 //        $count = count($list);
