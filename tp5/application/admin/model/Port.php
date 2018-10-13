@@ -12,15 +12,14 @@ class Port extends Model
                 ->field('P.id ,P.port_code , P.port_name ,P.city_id ,C.city ,P.mtime')
                 ->order('P.id ,C.id ')
                 ->buildSql();
-               
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($port_name){
             $list = Db::table($list.' a')->where('a.port_name', 'like', "%{$port_name}%")->buildSql();
             $pageParam['query']['port_name'] = $port_name;
         }
-        $lista =Db::table($list.' a')->paginate($pages,false,$pageParam);   
         
-        return $lista;
+        $list =Db::table($list.' a')->order('a.mtime DESC')->paginate($pages,false,$pageParam);  
+        return $list;
     }
     
     //港口删除
@@ -64,9 +63,10 @@ class Port extends Model
         $res2 =Db::name('port')->where('city_id',$city_id)->where('port_name','in',$port_array)->column('port_name');
         if($res2){
             $port_name_list=  implode(',', $res2);
-             return $response['fail'][] = '添加port表存在港口'.$port_name_list;
+            $response['fail'][] = '添加port表存在港口'.$port_name_list;
+            return $response;
         }
-        $mtime = date('y-m-d h:i:s');
+        $mtime = date('Y-m-d h:i:s');
         $port_code = Db::name('port')->where('city_id',"'$city_id'")->max('port_code');
         if($port_code < $city_id * 1000){
             $port_code = $city_id * 1000+1;
@@ -84,8 +84,9 @@ class Port extends Model
         $sql = $sql.$str;
 //        var_dump($sql);exit;
         $res = Db::execute($sql);
-        $res ?  $response['success'][] = '添加port表':$response['fail'][] = '添加port表';
+        $res ?  $response['success'][] = '添加港口成功':$response['fail'][] = '添加港口失败';
         $this->port_js();
+        
         return $response ;
     }
     

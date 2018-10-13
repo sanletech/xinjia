@@ -10,17 +10,12 @@ class Ship extends Model
          $list = Db::name('shipcompany')
                 ->field('id,ship_short_name,ship_name,mtime')
                 ->buildSql();
-        
         $pageParam  = ['query' =>[]]; //设置分页查询参数
-//        if($port_name){
-//            $list = Db::table($list.' a')->where('a.port_name', 'like', "%{$port_name}%")->buildSql();
-//            $pageParam['query']['port_name'] = $port_name;
-//        }
         if($ship_name){
             $list = Db::table($list.' b')->where('b.ship_short_name', 'like', "%{$ship_name}%")->buildSql();
             $pageParam['query']['ship_name'] = $ship_name;
         }
-        $list =Db::table($list.' c')->order('C.mtime DESC')->paginate($pages,false,$pageParam);   
+        $list =Db::table($list.' C')->order('C.mtime DESC')->paginate($pages,false,$pageParam);   
         
         return $list;
     } 
@@ -41,14 +36,7 @@ class Ship extends Model
     }
     
     
-    public function to_add($ship_name ,$ship_short_name) {
-        $mtime =  date('Y-m-d h:i:s');
-        $sql = "insert into hl_shipcompany(ship_name, ship_short_name,mtime) "
-                . "values('$ship_name','$ship_short_name') ";
-        $res = Db::execute($sql);
-        $res ? $response['success'][] = '添加shipcompany表': $response['fail'][] = '添加shipcompany表';
-        return $response;
-    }
+
     
         //展示原有的信息
     public function ship_edit($ship_id){ 

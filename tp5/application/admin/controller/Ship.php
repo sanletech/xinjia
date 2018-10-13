@@ -52,18 +52,7 @@ class Ship extends Base
    
    //展示添加页面
     public function  ship_add(){
-       
-//        //传递所有的港口给前台页面
-//        $sql3="select *  from  hl_port ";
-//        $port_data =Db::query($sql3);
-//       
-//         //转成json格式传给js
-//        $js_port=json_encode($port_data);
-//        
-//        $this->view->assign('js_port', $js_port);
-        
         return $this->view->fetch('ship/ship_add'); 
-       
    }
    
    public function to_add() {
@@ -79,12 +68,10 @@ class Ship extends Base
         }  else {
             $response=['status'=>0,'message'=>'船公司重名'];
         }
-     
+        $this->ship_js();
         return $response;   
        
    }
-   
-   
    
    //船公司编辑展示页面
     public function ship_edit() {
@@ -102,8 +89,31 @@ class Ship extends Base
         $data['id'] =$data['ship_id']; unset($data['ship_id']);
         $res =Db::name('shipcompany')->where('id',$data['id'])->update($data);
         $response =[] ;
+        $res ? $response=['status'=>1,'message'=>'修改船公司成功'] :$response=['status'=>0,'message'=>'修改船公司失败'];
+        $this->ship_js();
+        return $res;
+    }
+    
+    //执行船公司删除
+    public function to_del() {
+        $data = $this->request->param();
+        $res =Db::name('shipcompany')->where('id','in',$data['id'])->delete();
+        $response =[] ;
         $res ? $response=['status'=>1,'message'=>'删除船公司成功'] :$response=['status'=>0,'message'=>'删除船公司失败'];
+        $this->ship_js();
         return $res;
     }
    
+    public function ship_js() {
+  
+        $data = Db::name('shipcompany')->field('ship_name,mtime',true)->select();
+        $js_ship = json_encode($data);
+        $js_ship = 'var JS_SHIP ='.$js_ship;
+        $filename ="./static/admin/js/ship.js"; 
+        if(file_exists($filename)){
+            $handle = fopen($filename, "w");//写入文件
+            fwrite($handle, $js_ship);
+            fclose($handle);
+        }  
+    }
 }

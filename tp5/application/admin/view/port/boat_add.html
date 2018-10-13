@@ -6,7 +6,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">船公司名</label>
                     <div class="layui-input-inline">
-                        <select name="ship" lay-filter="ship">
+                        <select name="ship_id" lay-filter="ship">
                             <option value="">请选择船公司</option>
                         </select>
                     </div>
@@ -33,18 +33,16 @@
                 </div>
             </form>
         </div>
-
-    <script type="text/javascript" src="/static/admin/js/ship_port.js"></script>       
+    <script type="text/javascript" src="/static/admin/js/ship.js"></script>       
     <script>
-       var port_list= SHIP_PORT; 
-     // console.log(port_list);
-         //  port_list=JSON.parse(port_list); 
+       var ship_list= JS_SHIP; 
+//      console.log(ship_list);
+      
         //ajax url生成
-        
        var url="<{:url('admin/Port/boat_toadd')}>";
        //初始数据
-        var areaData = port_list;
-       // console.log(areaData);
+        var areaData = ship_list;
+//        console.log(areaData);
         var $form;
         var form;
         var $;
@@ -60,25 +58,25 @@
         function loadShip() {
             var shipHtml = '';
             for (var i = 0; i < areaData.length; i++) {
-                shipHtml += '<option value="' + areaData[i].ship_id + '_'+ areaData[i].citylist.length + '_' + i + '">' + areaData[i].ship_name + '</option>';
+                shipHtml += '<option value="' + areaData[i].id + '">' + areaData[i].ship_short_name + '</option>';
             }
             //初始化船公司的数据
-            $form.find('select[name=ship]').append(shipHtml).parent();
+            $form.find('select[name=ship_id]').append(shipHtml).parent();
             form.render();
             form.on('select(ship)', function(data) {
                // $form.find('select[name=port]').html('<option value="">请选择港口</option>').parent().hide();
-                var value = data.value;
-                var d = value.split('_');
-                var ship_id = d[0];
-                var count = d[1];
-                var index = d[2];
-                if (count > 0) {
-                    
-                } else {
-                    $form.find('select[name=ship]').parent().hide();
-                }
-            });
-        }
+//                var value = data.value;
+//                var d = value.split('_');
+//                var ship_id = d[0];
+//                var count = d[1];
+//                var index = d[2];
+//                if (count > 0) {
+//                } else { $form.find('select[name=ship]').parent().hide();
+                })
+                
+                
+            } 
+    
    
         
 
