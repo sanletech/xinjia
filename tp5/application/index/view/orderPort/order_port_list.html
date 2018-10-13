@@ -169,6 +169,7 @@
                           <div class="dian">
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
+                          <div class="seapr_id"><{$vo.id}></div>
                           </div>
                       </li>
                     </ul>
@@ -239,9 +240,10 @@
 
         //路线详情
         function mo(){
+            let seapr_id = $('.seapr_id').html();
             layer.open({
             type: 1,
-            title:'路线详情',
+            title:'航线详情',
             area:['900px'],
             content: $('.mo_cen'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
             skin: 'demo-class',
@@ -250,7 +252,10 @@
             success: function(){
               //监听滚动条
               $('html',window.parent.document).css('overflow-y','hidden');
-              $(".demo-class").css('top',$(parent.window).scrollTop());
+              $(".demo-class").css('top',$(parent.window).scrollTop()*2-100);
+              $.get("<{:url('order/route_detail')}>",{seaprice_id:seapr_id},function(data){
+                console.log(data);
+              })
             },
             //关闭窗口时
             cancel:function(){

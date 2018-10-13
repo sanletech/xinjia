@@ -179,7 +179,8 @@ function order_data(zj) {
     toajax(OrderUrl, obj);
 }
 
-function toajax(url, data) {   
+function toajax(url, data) {
+    // window.location.href = xiangqing;
     $.ajax({
         type: 'POST',
         url: url,
