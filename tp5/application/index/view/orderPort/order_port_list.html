@@ -79,7 +79,7 @@
         <div class="nei_dao">
           <ul>
             <li>航公司</li>
-            <li>截单时间</li>
+            <li>船期</li>
             <li>起始港</li>
             <li>航线</li>
             <li>目的港</li>
@@ -109,8 +109,9 @@
                 <div class="hang_nei">
                   <div class="nei_le">
                     <ul>
+                        
                       <li>
-                        <span class="lan"><?php echo $vo['ship_short_name'];?><{$vo.ship_short_name}></span>
+                        <span class="lan"><{$vo.ship_short_name}></span>
                           <div class="dian">
                             <i class="icon iconfont icon-chuan se"></i>&nbsp;
                             <{if condition="$vo['middle_id']=0" }>
@@ -120,21 +121,23 @@
                                 <{/if}>
                           </div>
                       </li>
+                      
                       <li>
-                        <{$vo.cutoff_date}>
+                        <{$vo.shipping_date|substr=0,-9}>
                       </li>
                       <li>
                         <{$vo.r_port_name}>
                           <div class="dian">
                             <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
-                            <span class="hui">
+<!--                            <span class="hui">
                               <{$vo.shipping_date}>
-                            </span>
+                            </span>-->
                           </div>
                       </li>
+                      
                       <li class="zhi">
                         <div class="hui">
-                          <span class="lan">3天</span>
+                          <span class="lan"><{$vo.sea_limitation}>天</span>
                         </div>
                         <div>
                           <div class="j"></div>
@@ -143,34 +146,36 @@
                             <{$vo.boat_name}>/<{$vo.boat_code}>
                         </div>
                       </li>
+                      
                       <li>
                         <{$vo.s_port_name}>
                           <div class="dian">
                             <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
-                            <span class="hui">
+<!--                            <span class="hui">
                               <{$vo.ETA}>
-                            </span>
+                            </span>-->
                           </div>
                       </li>
+                      
                       <!-- <li>
                         <{$vo.EDD}>
                       </li> -->
                       <li>
-                        
                         <span class="hong"><k>￥</k><{$vo.price_20GP}></span>
                           <div class="dian">
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=20GP"
                               class="gp">下单</a>
                           </div>
                       </li>
+                      
                       <li>
-                        
                         <span class="hong"><k>￥</k><{$vo.price_40HQ}></span>
                           <div class="dian">
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
                           </div>
                       </li>
+                      
                     </ul>
                   </div>
 
@@ -182,7 +187,7 @@
                   </div>
 
                   <div class="sm">
-                    截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp; 说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp; 价格说明：已含们到门所有费用，不含开票。
+                  价格说明：<{$vo.price_description}>
                   </div>
                 </div>
           </div>
@@ -226,15 +231,6 @@
           $('.yinc input').eq(0).val(add.start_id);
           $('.yinc input').eq(1).val(add.end_id);
           $("#search_price").submit();
-          // $.ajax({
-          //   type: 'POST',
-          //   url: "<{:url('index/OrderPort/orderPort')}>",
-          //   data: add,
-          //   dataType: "json",
-          //   success: function (data) {
-              
-          //   }
-          // })
         }
 
         //路线详情
@@ -266,7 +262,7 @@
             elem: 'pages',
             limit: "<{$limit}>",
             limits: [5, 10, 15],
-            count: "11",
+            count: "<{$count}>",
             layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
             curr: "<{$page}>",
             theme: '#c00',

@@ -173,14 +173,18 @@ class Order extends Model
         $res ? $response['success'][]='添加invoice表':$response['fail'][]='添加invoice表';
         return $response;
     }
-    public function route_detail($sealine_id)
+    public function route_detail($seaprice_id)
     { 
-        $sql = "select P.port_name from hl_sea_middle SM "
-            . "left join hl_port P on SM.sl_middle = P.port_code"
-            . " where SM.sealine_id = '$sealine_id' order by SM.sequence";    
-        $res =Db::query($sql);
-        $data = array_column($res, 'port_name');
-        return $data;
+        $str =Db::name('hl_seaprice')->alias('SP')
+                ->join('hl_ship_route SR','SP.route_id=SR.id','left')
+                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+                ->join('hl_sea_middle SM','SM.sealine_id=SR.middle_id','left')
+                ->join('hl_port P1','P1.port_code= SB.sl_start','left')
+                ->join('hl_port P2','P2.port_code= SB.sl_end','left')
+                ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+                ->field('P1.port_name s_port,P2.port_name e_port group_concate(DISTINCT P3.port_name order by SM.sequence ) m_port')
+               ->group('P1,P2,P3')->find();
+        return $str;
     }
     
 
