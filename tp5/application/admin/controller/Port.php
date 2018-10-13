@@ -41,15 +41,18 @@ class Port extends Base
         $data = $this->request->param();
         $city_id = strstr($data['city'], '_',true);
         //使用正则分割页面提交过的字符串分隔符号为,，空格 换行
-        $port_array = preg_split('/[;,，\r\n]+/s', $data['port_name']); 
-//        $this->_v($port_array);exit;
+        $port_str = $data['port_name'];
+        $port_str = str_replace(array(',','，',), '', $port_str);  //中英文逗号逗号
+        $port_array = preg_split("/[\s,]+/",$port_str,20,PREG_SPLIT_NO_EMPTY);
         $portadd = new PortM;
         $res = $portadd->port_add($city_id ,$port_array);
         if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status;   
+            $response = array('status'=>1,'message'=>'添加港口成功');
+        }else {
+            $response = array('status'=>0,'message'=>'添加港口失败');
+        } 
+        
+        return $response;   
     }
     
     
@@ -127,7 +130,7 @@ class Port extends Base
     }
     //添加船名
     public function boat_add(){
-        
+    
         return $this->view->fetch('port/boat_add');
     }
     //执行添加船名
@@ -135,7 +138,7 @@ class Port extends Base
         $data = $this->request->param();
         $boat_code = $data['boat_code'];
         $boat_name = $data['boat_name'];
-        $ship_id =  substr($data['ship'],0,strpos($data['ship'], '_'));
+        $ship_id =  $data['ship_id'];
         $boatadd = new PortM;
         $res =$boatadd->boat_add($ship_id, $boat_code,$boat_name);
         if(!array_key_exists('fail', $res)){

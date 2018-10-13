@@ -36,9 +36,10 @@ class OrderPort extends Model
             $price_list = Db::table($price_list.' H')->where('H.id', $seaprice_id)->buildSql();
         }
 //        var_dump($price_list);exit;
+        $count = Db::table($price_list.' K')->count();
         $list =Db::table($price_list.' J')->order('J.mtime ASC')->limit($tol,$limit)->select();
 //        $this->_p($list);exit;
-        return $list;
+        return array($list,$count);
     }
     
     public function portBook($member_code,$seaprice_id,$container_size){

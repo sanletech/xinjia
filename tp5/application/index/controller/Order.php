@@ -178,13 +178,12 @@ class Order extends Base
     }
     
     //中间航线详情
-     public function route_detail()
-    { 
-        $data =$this->request->param();
-        $this->_P($data);exit;
+     public function routeDetail()
+    {  
+        $data =$this->request->param('seaprice_id');
          $sea_pirce =new OrderM;
         $route_line= $sea_pirce ->route_detail($data);
-        return json_encode($route_line);
+        return json($route_line);
     }
 //    
 //    //港到港
