@@ -7,6 +7,7 @@ class Index extends Controller
    // 展示起始页导航
      public function index()
     {
+         var_dump(11111);exit;
 //      $this->redirect('OrderPort/orderPort');
     }
     //展示index首页
