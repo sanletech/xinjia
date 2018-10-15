@@ -173,7 +173,6 @@
                           <div class="dian">
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
-                          <div class="seapr_id"><{$vo.id}></div>
                           </div>
                       </li>
                       
@@ -184,7 +183,7 @@
 
                     <!-- <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> -->
                     <a id="hxxq" onclick="mo(this)" href="javascript:;">航线详情</a>
-
+                    <div class="seapr_id"><{$vo.id}></div>
                   </div>
 
                   <div class="sm">
@@ -202,14 +201,15 @@
       <div class="mo_cen">
         <div class="man">
           <div>
-            <span>广州</span>
-            <p>2018-2-12</p>
+            <span class="qi_name"></span>
+            <p class="qi_time"></p>
           </div>
           <div class="xian"><div></div></div>
+          
           <div>
-            <span>天津</span>
-            <p>2018-3-12</p>
-          </div>         
+            <span class="end_name"></span>
+            <p class="end_time"></p>
+          </div>     
         </div>
       </div>
 
@@ -235,22 +235,33 @@
         }
 
         //路线详情
-        function mo(){
-            let seapr_id = $('.seapr_id').html();
+        function mo(zj){
+            let seapr_id = $(zj).next().html();
+            console.log(seapr_id);
+            
             layer.open({
             type: 1,
             title:'航线详情',
-            area:['900px'],
+            area:['900px','200px'],
             content: $('.mo_cen'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
             skin: 'demo-class',
             scrollbar: false,
+            shadeClose:true,
             fixed : false,
             success: function(){
               //监听滚动条
               $('html',window.parent.document).css('overflow-y','hidden');
-              $(".demo-class").css('top',$(parent.window).scrollTop());
-              $.get("<{:url('order_port/orderPortDetail')}>",{seaprice_id:seapr_id},function(data){
-                console.log(data);
+              $(".demo-class").css('top',$(parent.window).scrollTop()+300);
+              $.get("<{:url('orderPort/routedetail')}>",{seaprice_id:seapr_id},function(data){
+                $('.qi_name').html(data.s_port);
+                $('.qi_time').html(data.shipping_date.substring(0,10));
+                $('.end_name').html(data.e_port);
+                $('.end_time').html(data.ETA.substring(0,10));
+                let arr=data.m_port.split(",");
+                console.log(arr);
+                for (let i = 0; i < arr.length; i++) {
+                  $('.xian').after('<div style="margin-top:10px;"><span>'+arr[i]+'</span><p></p></div><div class="xian"><div></div></div>');
+                }                
               })
             },
             //关闭窗口时

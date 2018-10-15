@@ -9,7 +9,7 @@ class OrderPort extends Controller
 {    
     
     protected $beforeActionList = [
-        'login'=> ['except'=>'orderport'],
+        'login'=> ['except'=>'orderport,routedetail'],
     ];
     protected $member_code='';
     
@@ -146,7 +146,15 @@ class OrderPort extends Controller
         return $this->view->fetch('orderPort/order_port_detail');
     }
     
-    
+        //中间航线详情
+     public function routeDetail()
+    {  
+        
+        $data =$this->request->param('seaprice_id');
+         $sea_pirce =new OrderM;
+        $route_line= $sea_pirce ->route_detail($data);
+        return json($route_line);
+    }
     
     
     

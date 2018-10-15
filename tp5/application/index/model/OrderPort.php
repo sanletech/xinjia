@@ -48,7 +48,11 @@ class OrderPort extends Model
         } 
         //航线信息
         $res = $this->price_port(0,100,0,0,0,$seaprice_id);
+        if(empty($res)){
+            return '参数错误';
+        }
         $res=$res[0][0];
+//        $this->_p($res);exit;
         // 将集装箱字的尺寸添加到数组中
         $res['container_size']=$container_size;
         if($container_size =='20GP'){
@@ -156,7 +160,23 @@ class OrderPort extends Model
         }
     }
     
-    
+    public function route_detail($seaprice_id)
+    { 
+        $str =Db::name('seaprice')->alias('SP')
+                ->join('hl_ship_route SR','SR.id=SP.route_id','left')
+                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+                ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
+                ->join('hl_port P1','P1.port_code= SB.sl_start','left')
+                ->join('hl_port P2','P2.port_code= SB.sl_end','left')
+                ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+                ->field("SP.id,P1.port_name s_port,P2.port_name e_port,"
+                . " group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port,"
+                . "SP.shipping_date,SP.ETA")
+                ->where('SP.id',$seaprice_id) ->group('SP.id')->find();
+//var_dump($str);
+//var_dump(Db::getLastSql());exit;
+        return $str;
+    }
     
     
     //    //前台页面展示门到门的价格表

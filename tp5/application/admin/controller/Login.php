@@ -42,7 +42,7 @@ class Login extends Controller
             $message = '验证通过请点击确定进入后台';
             // 更新表中登录的次数与最后登录时间
      
-           $user ->save(['logintime'=>  date('y-m-d h:i:s')]);
+           $user ->save(['logintime'=>date('Y-m-d H:i:s')]);
             
             //将用户登录的信息保存到session中,供其他控制器使用
             Session::set('user_id',$user['id']);

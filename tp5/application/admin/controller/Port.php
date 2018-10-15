@@ -18,11 +18,17 @@ class Port extends Base
     public function port_list() 
     {
         $port_name = input('get.port_name');
+        $city_name = input('get.city_name');
         if($port_name){
+            $port_name =  trim($port_name);
             $this->assign('port_name',$port_name); 
         }
+        if($city_name){
+            $city_name =  trim($city_name);
+            $this->assign('city_name',$city_name); 
+        }
         $port_list = new PortM;
-        $list = $port_list->port_list($port_name ,5);
+        $list = $port_list->port_list($city_name,$port_name ,5);
    //  $this->_p($list);exit;
         $page = $list->render();
         $this->assign('list',$list);
@@ -169,9 +175,11 @@ class Port extends Base
         $sl_start = input('get.sl_start');
         $sl_end = input('get.sl_end');
         if($sl_start){
+            $sl_start =  trim($sl_start);
             $this->assign('sl_start',$sl_start); 
         }
         if($sl_end){
+            $sl_end =  trim($sl_end);
             $this->assign('sl_end',$sl_end); 
         }
         $shiproute =new PortM;
@@ -194,10 +202,11 @@ class Port extends Base
         $route =new PortM;
         $res = $route->shiproute_add($port_arr);
         if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status;   
+            $response =['status'=>'1','message'=>$res['success']];
+        }else {
+            $response =['status'=>'0','message'=>$res['fail']];
+        } 
+        return $response;   
     }
     //删除航线详情
     public function shiproute_del(){
@@ -207,11 +216,12 @@ class Port extends Base
 //        var_dump($boat_id);exit;
         $shiproutedel = new PortM;
         $res = $shiproutedel->shiproute_del($shiproute);
-         if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status;   
+        if(!array_key_exists('fail', $res)){
+            $response =['status'=>'1','message'=>$res['success']];
+        }else {
+            $response =['status'=>'0','message'=>$res['fail']];
+        } 
+        return $response;   
     }
     
     

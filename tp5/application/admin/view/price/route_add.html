@@ -169,12 +169,18 @@
                 content: $('#jg')
             });
         });
-        
-        $('#jg li span').click(function(){//选中
+        $('#jg').on('click','span',function(){
             let zhi = $(this).html();//当前选中的值
+            console.log(zhi);
+            
             $('.beizhu').val(zhi);//给input 赋值
             layer.close(layer.index);//关闭窗口
         })
+        // $('#jg li span').click(function(){//选中
+        //     let zhi = $(this).html();//当前选中的值
+        //     $('.beizhu').val(zhi);//给input 赋值
+        //     layer.close(layer.index);//关闭窗口
+        // })
        var delurl= "<{:url('admin/Price/delMessage')}>";
        var addurl ="<{:url('admin/Price/addMessage')}>";
         function shan(zj){//删除
@@ -190,15 +196,15 @@
                 let d = $('.in input').val();//获取添加的值
                 if (d) {
                     $.get(addurl,{'data' : d},//添加ajax请求返回ID
-                    function(data){//返回直接添加数据
-                        $('#jg ul').append('<li><span name="'+data.id+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
+                    function(data){//返回直接添加数据                    
+                        $('#jg ul').append('<li><span name="'+data+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
                     });
                 }else{
                     alert('您输入的是空值');
                 }
                 $('.in').hide();
             }
-            
+            $('.in input').val('');
         });
 
         //取消关闭模态框
