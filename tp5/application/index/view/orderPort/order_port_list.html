@@ -251,7 +251,7 @@
               //监听滚动条
               $('html',window.parent.document).css('overflow-y','hidden');
               $(".demo-class").css('top',$(parent.window).scrollTop());
-              $.get("<{:url('order/routedetail')}>",{seaprice_id:seapr_id},function(data){
+              $.get("<{:url('orderPort/routedetail')}>",{seaprice_id:seapr_id},function(data){
                 // console.log(data);
               })
             },
