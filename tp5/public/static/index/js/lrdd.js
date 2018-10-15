@@ -147,15 +147,20 @@ function tiao() {
 //选中委托信息
 var lei;//判断是送货还是收货
 var id;//点击当前的ID 
+var nei;//当前选中的内容
 function xzwt(zj){
   $(zj).addClass('nei_a').parent().siblings().find('.nei').removeClass('nei_a');
   id = $(zj).find('.tiao_id').html();//点击当前的ID  
   lei = $(zj).parents('.xin')[0];//判断是送货还是收货
+  for (let i in arr) {
+    if (arr[i].id == id) {
+      nei = arr[i];
+    }
+  }
 }
 //委托信息放input上
 function wtxx() {
   let input = $('.er .in');//获取委托信息的input
-  let nei;//当前选中的内容
   for (let i in arr) {
     if (arr[i].id == id) {
       nei = arr[i];
@@ -198,7 +203,7 @@ $('.wt1').click(function () {
 
 //添加模态框
 $('.wt_zeng').click(function () {
-  layer.closeAll();
+  layer.close(layer.index);
   layer.open({
     type: 1,
     title: '增加信息',
@@ -213,68 +218,67 @@ $('.wt_zeng').click(function () {
 })
 //增加委托信息
 function zeng_wt(){
-  //let data = $('#linkman_form').serialize();//增加委托信息表单数据
-  // $.ajax({
-  //   type: 'POST',
-  //   url: '',
-  //   data: data,
-  //   dataType: "json",
-  //   success: function (status) {
-  //     layer.close(layer.index);//关闭添加窗口
-  //     $('.wt1').click();//重新查询并打开窗口
-  //   }
-  // });  
-
-  //打开ajax删除下面两行
-  layer.close(layer.index);//关闭添加窗口
-  $('.wt1').click();//重新查询并打开窗口
+  let data = $('#linkman_form').serialize();//增加委托信息表单数据  
+  $.ajax({
+    type: 'POST',
+    url: linkmanAddURL,
+    data: data,
+    dataType: "json",
+    success: function (status) {
+      layer.close(layer.index);//关闭添加窗口
+      $('.wt1').click();//重新查询并打开窗口
+    }
+  });
 
 }
 
 //修改委托信息
 $('.wt_xiu').click(function () {
-  layer.closeAll();
+  layer.close(layer.index);
   layer.open({
     type: 1,
-    title: '增加信息',
+    title: '修改信息',
     area: ['600px'],
     content: $('#wt3'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
     skin: 'demo-class',
     fixed: false,
-    success: function () {
-      // 模态框成功调用
+    success: function (data) {
+      // 模态框成功调用            
+      $('#wt3 input').eq(0).val(nei.id);      
+      $('#wt3 input').eq(1).val(nei.company);
+      $('#wt3 input').eq(2).val(nei.name);
+      $('#wt3 input').eq(3).val(nei.phone);
     }
   });
-})
+});
 
 //修改委托信息
 function xiu_wt(){
-  //let data = $('#xiu_form').serialize();//增加委托信息表单数据
-  // $.ajax({
-  //   type: 'POST',
-  //   url: '',
-  //   data: data,
-  //   dataType: "json",
-  //   success: function (status) {
-  //     layer.close(layer.index);//关闭添加窗口
-  //     $('.wt1').click();//重新查询并打开窗口
-  //   }
-  // });  
-
-  //打开ajax删除下面两行
-  layer.close(layer.index);//关闭添加窗口
-  $('.wt1').click();//重新查询并打开窗口
+  let data = {};//增加委托信息表单数据
+  data.id = $('#wt3 input').eq(0).val();
+  data.company = $('#wt3 input').eq(1).val();
+  data.link_name = $('#wt3 input').eq(2).val();
+  data.phone = $('#wt3 input').eq(3).val();
+  $.ajax({
+    type: 'POST',
+    url: linkmanUpdateURL,
+    data: data,
+    dataType: "json",
+    success: function (status) {
+      layer.close(layer.index);//关闭添加窗口
+      $('.wt1').click();//重新查询并打开窗口
+    }
+  });  
 
 }
 
 //删除选中的委托信息
 $('.wt_del').click(function(){
-  console.log(id);//当前的选中的ID
+  $.get(linkmanDelURL,{id:id});
 });
 
 //点击默认
 $('.wt_default').click(function(){
-  console.log(id);//当前的选中的ID
   if ($(lei).hasClass('song')) {//判断是不是收货
     console.log('选前选中是收货');
   }else{//发货
@@ -389,3 +393,28 @@ function dele(zj) {//删除当前装货或者送货
   $(zj).parents('tr').remove();
   st();//重新计算价格 方法在plce_order.js
 }
+
+//第一次 下单
+$('.tjiao').eq(0).find('.shi').click(function(){
+  $('.tjiao').eq(0).hide();
+  $('.lc,.wt1,.fp1,.dd_nei .layui-form').hide();
+  $('.tjiao').eq(1).show();
+  $('.lche,.fuwu').show();
+  $('input').css('border','0').attr('readonly',true);
+  $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
+  $("html,body").animate({scrollTop:700}, 500);
+})
+
+//返回修改
+$('.tjiao').eq(1).find('.qu').click(function(){
+  $('.tjiao').eq(1).hide();
+  $('.lc,.wt1,.fp1,.dd_nei .layui-form').show();
+  $('.tjiao').eq(0).show();
+  $('.lche,.fuwu').hide();
+  $('input').css('border','1px solid #e5e5e5').attr('readonly',false);
+  $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
+  $('.er .layui-form-checkbox[lay-skin=primary] i').show();
+  $("html,body").animate({scrollTop:700}, 500);
+})
+
+

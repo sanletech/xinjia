@@ -83,6 +83,64 @@ body{
       }
     }
   }
+  .lche{
+    display: none;
+    width: 100%;
+    height: 28px;
+    background-color: #fff;
+    padding: 10px 0;
+    ul{
+      width: 100%;
+      padding-left: 10%;
+      li{
+        float: left;
+        width: 15%;
+        height: 15px;
+        line-height: 15px;
+        background-color: $lan;
+        padding: 5px 0;
+        color:#fff;
+        margin-left: 5px;
+        text-align: center;
+        font-size: 12px;
+        span{
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          line-height: 15px;
+          color: $lan;
+          
+          background-color: #fff;
+          border-radius: 50%;
+        }
+      }
+      li:nth-child(5){
+        width: 20%;
+        height: 20px;
+        line-height: 20px;
+        margin-top: -2.5px;
+        font-size: 18px;
+        span{
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+        }
+      }
+      li:nth-child(7){
+        background: #aaa;
+        span{
+          color: #aaa;
+        }
+      }
+      .jt{
+        width: 5%;
+        background: #fff;
+        color: #000;
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
   // 订单信息
   .xxtx_dd{
     // border: 1px solid #808080;
@@ -280,6 +338,15 @@ body{
         float: right;
       }
     }
+    &:nth-child(1){
+      
+    }
+  }
+  .tj{
+    display: none;
+    .shi{
+      background-color: red;
+    }
   }
 }
 //开发票
@@ -404,10 +471,11 @@ body{
     }
   }
 }
-#wt1,#wt2,#modal-default{
+#wt1,#wt2,#wt3,#modal-default,#wt3 input[name=id]{
   padding: 10px;
   display: none;
 }
+
 
 #wt1 .biao .xin{
   li{
@@ -455,6 +523,10 @@ body{
   color: #fff;
 }
 
+//拖车服务
+.fuwu{//装送文件
+  display: none;
+}
 .bge,.bge_song{
   tr{
     input{

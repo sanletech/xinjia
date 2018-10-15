@@ -180,13 +180,12 @@ function order_data(zj) {
 }
 
 function toajax(url, data) {
-    // window.location.href = xiangqing;
     $.ajax({
         type: 'POST',
         url: url,
         data: data,
         dataType: "json",
-        success: function (data) {            
+        success: function (data) {          
             if (data.status == 1) {
                 alert('提交表单成功');
             }

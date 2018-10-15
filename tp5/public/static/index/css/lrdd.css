@@ -69,6 +69,54 @@ body {
         color: #000;
         font-size: 18px;
         font-weight: 500; }
+  .xxtx .lche {
+    display: none;
+    width: 100%;
+    height: 28px;
+    background-color: #fff;
+    padding: 10px 0; }
+    .xxtx .lche ul {
+      width: 100%;
+      padding-left: 10%; }
+      .xxtx .lche ul li {
+        float: left;
+        width: 15%;
+        height: 15px;
+        line-height: 15px;
+        background-color: #2e8de5;
+        padding: 5px 0;
+        color: #fff;
+        margin-left: 5px;
+        text-align: center;
+        font-size: 12px; }
+        .xxtx .lche ul li span {
+          display: inline-block;
+          width: 15px;
+          height: 15px;
+          line-height: 15px;
+          color: #2e8de5;
+          background-color: #fff;
+          border-radius: 50%; }
+      .xxtx .lche ul li:nth-child(5) {
+        width: 20%;
+        height: 20px;
+        line-height: 20px;
+        margin-top: -2.5px;
+        font-size: 18px; }
+        .xxtx .lche ul li:nth-child(5) span {
+          width: 20px;
+          height: 20px;
+          line-height: 20px; }
+      .xxtx .lche ul li:nth-child(7) {
+        background: #aaa; }
+        .xxtx .lche ul li:nth-child(7) span {
+          color: #aaa; }
+      .xxtx .lche ul .jt {
+        width: 5%;
+        background: #fff;
+        color: #000;
+        font-size: 18px;
+        font-weight: 500; }
   .xxtx .xxtx_dd {
     overflow: hidden;
     margin: 30px 0; }
@@ -212,6 +260,10 @@ body {
       cursor: pointer; }
       .xxtx .tjiao a:nth-child(2) {
         float: right; }
+  .xxtx .tj {
+    display: none; }
+    .xxtx .tj .shi {
+      background-color: red; }
 
 .kpf {
   padding: 15px 10px;
@@ -306,7 +358,7 @@ body {
       background-color: #2e8de5;
       border-radius: 10px; }
 
-#wt1, #wt2, #modal-default {
+#wt1, #wt2, #wt3, #modal-default, #wt3 input[name=id] {
   padding: 10px;
   display: none; }
 
@@ -341,6 +393,9 @@ body {
 .demo-class .layui-layer-title {
   background-color: #2e8de5;
   color: #fff; }
+
+.fuwu {
+  display: none; }
 
 .bge tr input, .bge_song tr input {
   border: 0;

@@ -24,6 +24,22 @@
               <span>4</span> 完成</li>
           </ul>
         </div>
+
+        <div class="lche">
+          <ul>
+            <li>
+              <span>1</span> 运单查询</li>
+            <li class="jt">></li>
+            <li>
+              <span>2</span> 完善订单</li>
+            <li class="jt">></li>
+            <li>
+              <span>3</span> 确认并支付</li>
+            <li class="jt">></li>
+            <li>
+              <span>4</span> 完成</li>
+          </ul>
+        </div>
         <!-- 订单信息 -->
         <input type="hidden" name='seaprice_id' value="<{$list.id}>">
         <input type="hidden" name='rid' value="<{$list.r_port_code}>">
@@ -301,6 +317,7 @@
             </div>
             <div class="fp layui-col-xs12">
               <!-- 是否开取发票 -->
+              <div class="fp1 fuwu layui-col-xs2">开取发票信息</div>
               <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
                 <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1">
               </div>
@@ -357,8 +374,9 @@
         </div>
 
         <div class="dd_nei">
+          <div class="fuwu">装货服务</div>
           <div class="layui-col-xs12 layui-form er">
-            <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
+            <input class="xua" type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
             <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
           </div>
           <div class="layui-col-xs12 er biaoge zhuanghuo">
@@ -418,8 +436,9 @@
         </div>
 
         <div class="dd_nei">
+          <div class="fuwu">送货服务</div>
           <div class="layui-col-xs12 layui-form er">
-            <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
+            <input class="xua" type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
             <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
           </div>
           <div class="layui-col-xs12 er biaoge songhuo">
@@ -522,9 +541,16 @@
       </div>
 
       <div class="tjiao">
-        <a href="javascript:;" onclick="order_data(this)">确认订单</a>
-        <a class="shi" href="javascript:void(0);">取消</a>
+        <a class="shi" href="javascript:;">确认订单</a>
+        <a class="qu" href="<{:url('index/order_port/orderport')}>">取消</a>
       </div>
+
+      <div class="tjiao tj">
+        <a class="qu" href="javascript:;" >返回修改</a>
+        <a class="shi" href="javascript:;" onclick="order_data(this)">确认订单</a>
+      </div>
+
+
     </div>
     </form>
   
@@ -676,38 +702,36 @@
     </div>
 
     <!-- 修改模态框 -->
-    <div id="wt3" style="display: none;">
+    <div id="wt3" >
       <div class="layui-row">
-        <form class="layui-form" id="xiu_form">
-
+          <input type="text" name="id" lay-verify="title" value="" class="layui-input">
           <div class="layui-form-item">
             <label class="layui-form-label">公司名：</label>
             <div class="layui-input-block">
-              <input type="text" name="company" lay-verify="title" value="132" autocomplete="off" placeholder="请输入公司名" class="layui-input">
+              <input type="text" name="company" lay-verify="title" value="" autocomplete="off" placeholder="请输入公司名" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
             <label class="layui-form-label">姓名：</label>
             <div class="layui-input-block">
-              <input type="text" name="link_name" lay-verify="title" value="465" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+              <input type="text" name="link_name" lay-verify="title" value="" autocomplete="off" placeholder="请输入姓名" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
             <label class="layui-form-label">手机号码：</label>
             <div class="layui-input-block">
-              <input type="text" name="phone" lay-verify="title" value="569" autocomplete="off" placeholder="请输入手机" class="layui-input">
+              <input type="text" name="phone" lay-verify="title" value="" autocomplete="off" placeholder="请输入手机" class="layui-input">
             </div>
           </div>
 
           <div class="layui-form-item">
             <div class="layui-input-block">
-              <a class="layui-btn" lay-submit="" lay-filter="demo1" onclick="xiu_wt()">确认修改</a>
+              <a class="layui-btn"  onclick="xiu_wt()">确认修改</a>
               <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
           </div>
-          </from>
       </div>
     </div>
     <{include file='./public/foot' /}>
