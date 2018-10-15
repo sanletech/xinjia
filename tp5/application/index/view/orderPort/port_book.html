@@ -718,8 +718,12 @@
       var member_code = '<{$Think.session.member_code}>';
       //客户的收货人,发货人选择
       var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
-      //收货/发货人的表单提交 
-      var linkmanUrl = "<{:url('index/order/linkman')}>";
+      //收货/发货人的添加 
+      var linkmanAddURL = "<{:url('index/order/linkmanAdd')}>";
+        //收货/发货人的删除
+      var linkmanDelURL = "<{:url('index/order/linkmanDel')}>";
+        //收货/发货人的修改 
+      var linkmanUpdateURL = "<{:url('index/order/linkmanUpdate')}>";
       // 发票的信息提交 
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交

@@ -100,7 +100,7 @@ class Member extends Base
         $res =Db::name('sales_member')->where('member_code',$member_code)->update($sales);
         $status[] =$res ? true :false;
         unset($arr['sales_name'],$arr['sales_code'],$arr['member_code'],$arr['member_name'],$arr['customer_id']);
-        $mtime =date('y-m-d h:i:s');
+        $mtime =date('Y-m-d H:i:s');
         foreach ($money_ship as $shipSql =>$moneySql){
             $res1 =Db::name('member_profit')->where('member_code',$member_code)
                     ->where('ship_id',$shipSql)

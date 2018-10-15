@@ -48,7 +48,11 @@ class OrderPort extends Model
         } 
         //航线信息
         $res = $this->price_port(0,100,0,0,0,$seaprice_id);
-        $res=$res[0];
+        if(empty($res)){
+            return '参数错误';
+        }
+        $res=$res[0][0];
+//        $this->_p($res);exit;
         // 将集装箱字的尺寸添加到数组中
         $res['container_size']=$container_size;
         if($container_size =='20GP'){

@@ -90,7 +90,6 @@
       
         //加载 所有的港口名字和相应的code
         var url='<{:url('admin/Port/shiproute_toadd')}>';
-       
         //初始数据
         var areaData = JS_PORT;
         var $form;
@@ -205,15 +204,13 @@
          }
          
         function toajax (){
-                var loading = layer.load(1);
-                post_adduser = true;    
                 $.ajax({
                     type:'POST',
                     url:url,
                     data:$("#routeaddform").serialize(),
                     dataType:"json",
-                    success:function(status){
-                     if(status==1){
+                    success:function(data){
+                     if(data.status==1){
                          alert('添加成功')
                      }else{
                          alert('添加失败')

@@ -310,7 +310,7 @@ class OrderPort extends Base
         $order_num =$data['order_num'];  
 //        //根据订单号查询
         $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('member_code,seaprice_id,container_size')->find();
-        $mtime= date('y-m-d h:i:s');
+        $mtime= date('Y-m-d H:i:S');
         //对支付方式做判断
         $payment_method= $data['payment_method'];
         if(intval($payment_method)){

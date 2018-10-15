@@ -48,7 +48,7 @@ class Keeper extends Base
         }
         $userdata['user_code'] = $jobName.$user_max_id;
         $userdata['loginname'] = $userdata['user_code'];
-        $userdata['create_time'] = date('y-m-d h:i:s');
+        $userdata['create_time'] = date('Y-m-d H:i:s');
        
         $res =Db::name('user')->insert($userdata);
         $userId = Db::name('user')->getLastInsID();

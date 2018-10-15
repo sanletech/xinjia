@@ -59,11 +59,11 @@ class Order extends Base
     }
     
     //添加收/发货人的信息
-    public function linkman()
+    public function linkmanAdd()
     {
         $data =$this->request->param();
         $sea_pirce =new OrderM;
-        $response = $sea_pirce ->linkman($data);
+        $response = $sea_pirce ->linkmanAdd($data);
        if(!array_key_exists('fail', $response)){
             $status =1; 
         }else {
@@ -72,6 +72,22 @@ class Order extends Base
         json_encode($status);   
         return $status ;
     }
+      //收/发货人的信息的删除
+    public function linkmanDel() {
+        $id=$this->request->param();
+        $res =Db::name('linkman')->where('id',$id)->delete();
+        $res ? $response=['status'=>1,'message'=>'删除联系人成功']: $response=['status'=>0,'message'=>'删除联系人失败'];
+        return $response;
+    }
+    //收/发货人的信息的修改
+    public function linkmanUpdate() {
+        $data=$this->request->param();
+        $id= $data['id'];
+        $res =Db::name('linkman')->where('id',$id)->update($data);
+        $res ? $response=['status'=>1,'message'=>'修改联系人成功']: $response=['status'=>0,'message'=>'修改联系人失败'];
+        return $response;
+    }
+    
     
     //传给前台客户对应的发票信息
     public function selectInvoice() {

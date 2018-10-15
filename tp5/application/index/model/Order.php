@@ -70,7 +70,7 @@ class Order extends Model
         return $res;            
     }
     //添加收/发货人的信息
-    public function linkman($data)
+    public function linkmanAdd($data)
     {
         $link_name = $data['link_name'];
         $phone = $data['phone'];
