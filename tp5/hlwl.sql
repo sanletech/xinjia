@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-13 18:23:13
+Date: 2018-10-15 19:11:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3352,7 +3352,6 @@ CREATE TABLE `hl_boat` (
 -- ----------------------------
 -- Records of hl_boat
 -- ----------------------------
-INSERT INTO `hl_boat` VALUES ('1', '1', 'aaab', '捉住', '0000-00-00 00:00:00');
 INSERT INTO `hl_boat` VALUES ('2', '2', 'aaac', '抓住', '0000-00-00 00:00:00');
 INSERT INTO `hl_boat` VALUES ('3', '3', 'aaad', '擒获', '0000-00-00 00:00:00');
 INSERT INTO `hl_boat` VALUES ('4', '4', 'aaae', '相拥', '0000-00-00 00:00:00');
@@ -3360,9 +3359,7 @@ INSERT INTO `hl_boat` VALUES ('5', '5', 'aaaf', '拥抱', null);
 INSERT INTO `hl_boat` VALUES ('6', '6', 'aaag', '搂抱', null);
 INSERT INTO `hl_boat` VALUES ('7', '7', 'aaah', '搀扶', null);
 INSERT INTO `hl_boat` VALUES ('8', '8', 'aaai', '推拉', null);
-INSERT INTO `hl_boat` VALUES ('9', '9', 'aaaj', '捶打', null);
 INSERT INTO `hl_boat` VALUES ('12', '12', 'aaak', '撕咬', null);
-INSERT INTO `hl_boat` VALUES ('13', '13', 'bbba', '撕扯', null);
 INSERT INTO `hl_boat` VALUES ('14', '2', 'bbbb', '阿飞岁的', '0000-00-00 00:00:00');
 INSERT INTO `hl_boat` VALUES ('15', '2', 'bbbc', '艾弗森', '0000-00-00 00:00:00');
 INSERT INTO `hl_boat` VALUES ('16', '2', 'bbbd', '艾弗森', '0000-00-00 00:00:00');
@@ -5089,7 +5086,7 @@ CREATE TABLE `hl_port` (
   `mtime` datetime DEFAULT NULL COMMENT '创建或修改时间',
   `city_id` int(11) DEFAULT NULL COMMENT '市级id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_port
@@ -5098,27 +5095,35 @@ INSERT INTO `hl_port` VALUES ('18', '110100002', '擎天柱', '2018-09-01 14:25:
 INSERT INTO `hl_port` VALUES ('19', '110100003', '空城计', '2018-10-01 14:25:14', '110100');
 INSERT INTO `hl_port` VALUES ('20', '110100004', '救世主', '2018-10-02 14:25:01', '110100');
 INSERT INTO `hl_port` VALUES ('21', '110100005', '丑八怪', '2018-10-03 14:25:14', '110100');
-INSERT INTO `hl_port` VALUES ('22', '110100006', '美人计', '2018-10-04 14:25:14', '110100');
-INSERT INTO `hl_port` VALUES ('23', '110100007', '里程碑', '2018-10-05 14:25:14', '110100');
-INSERT INTO `hl_port` VALUES ('24', '110100008', '功德坊', '2018-10-06 14:25:01', '110100');
-INSERT INTO `hl_port` VALUES ('25', '110100009', '败家子', '2018-10-07 14:25:14', '110100');
-INSERT INTO `hl_port` VALUES ('26', '110100010', '打擂台', '2018-10-08 14:25:14', '110100');
-INSERT INTO `hl_port` VALUES ('27', '120100002', '清一色', '2018-09-02 14:28:45', '120100');
-INSERT INTO `hl_port` VALUES ('28', '120100003', '守财奴', '2018-09-02 14:28:45', '120100');
-INSERT INTO `hl_port` VALUES ('29', '120100004', '破天荒', '2018-09-05 14:25:14', '120100');
-INSERT INTO `hl_port` VALUES ('30', '120100005', '莫须有', '2017-06-13 14:25:14', '120100');
-INSERT INTO `hl_port` VALUES ('31', '120100006', '急先锋', '2016-10-01 14:25:14', '120100');
-INSERT INTO `hl_port` VALUES ('32', '120100007', '吝啬鬼', '2015-10-01 14:25:14', '120100');
-INSERT INTO `hl_port` VALUES ('33', '120100008', '口头禅', '2014-10-01 14:25:14', '120100');
-INSERT INTO `hl_port` VALUES ('34', '120100009', '太上皇', '2013-10-01 14:25:14', '120100');
-INSERT INTO `hl_port` VALUES ('35', '110100002', '阿斯蒂芬', '2011-10-01 14:25:01', '110100');
-INSERT INTO `hl_port` VALUES ('36', '110100003', '阿斯蒂芬', '2010-10-01 14:25:14', '110100');
-INSERT INTO `hl_port` VALUES ('37', '110100004', '速读法', '2018-10-01 14:25:14', '110100');
-INSERT INTO `hl_port` VALUES ('38', '440400002', '发生的', '2018-10-01 14:25:14', '440400');
-INSERT INTO `hl_port` VALUES ('39', '440400003', '速读法', '2018-10-01 14:25:14', '440400');
-INSERT INTO `hl_port` VALUES ('40', '440400004', '撒旦发射', '2018-10-01 14:25:14', '440400');
-INSERT INTO `hl_port` VALUES ('41', '440400005', '速读法速', '2018-10-01 14:25:14', '440400');
-INSERT INTO `hl_port` VALUES ('42', '210200002', '大连港', '2018-09-09 05:35:52', '210200');
+INSERT INTO `hl_port` VALUES ('22', '440100002', '黄埔老港', '2018-10-13 04:46:23', '440100');
+INSERT INTO `hl_port` VALUES ('23', '440100003', '南沙港', '2018-10-13 04:46:23', '440100');
+INSERT INTO `hl_port` VALUES ('24', '440100004', '广浚码头', '2018-10-13 04:46:23', '440100');
+INSERT INTO `hl_port` VALUES ('25', '440100005', '巴江码头', '2018-10-13 04:46:23', '440100');
+INSERT INTO `hl_port` VALUES ('26', '440100006', '炭步码头', '2018-10-13 04:46:23', '440100');
+INSERT INTO `hl_port` VALUES ('27', '440100007', '鸦岗码头', '2018-10-13 04:46:23', '440100');
+INSERT INTO `hl_port` VALUES ('28', '440100000', '鱼珠码头', '2018-10-13 04:46:43', '440100');
+INSERT INTO `hl_port` VALUES ('29', '440100001', '东江仓码头', '2018-10-15 11:38:25', '440100');
+INSERT INTO `hl_port` VALUES ('30', '441800002', '清远港', '2018-10-13 04:47:25', '441800');
+INSERT INTO `hl_port` VALUES ('31', '440600002', '南庄码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('32', '440600003', '南拓码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('33', '440600004', '南利码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('34', '440600005', '南港码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('35', '440600006', '乐平码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('36', '440600007', '和乐码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('37', '440600008', '顺德新港', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('38', '440600009', '高明码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('39', '440600010', '南鲲码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('40', '440600011', '沙头码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('41', '440600012', '战备码头', '2018-10-13 04:53:18', '440600');
+INSERT INTO `hl_port` VALUES ('42', '120100002', '天津港', '2018-10-13 04:58:22', '120100');
+INSERT INTO `hl_port` VALUES ('43', '130900002', '黄骅港', '2018-10-13 04:59:23', '130900');
+INSERT INTO `hl_port` VALUES ('45', '210200002', '大连港', '2018-10-13 05:00:18', '210200');
+INSERT INTO `hl_port` VALUES ('46', '210700002', '锦州港', '2018-10-13 05:00:47', '210700');
+INSERT INTO `hl_port` VALUES ('47', '370200002', '黄岛港', '2018-10-13 05:01:25', '370200');
+INSERT INTO `hl_port` VALUES ('48', '370200002', '青岛港', '2018-10-13 05:01:43', '370200');
+INSERT INTO `hl_port` VALUES ('50', '320700002', '连云港', '2018-10-13 05:02:44', '320700');
+INSERT INTO `hl_port` VALUES ('51', '310100002', '上海港', '2018-10-13 05:04:33', '310100');
+INSERT INTO `hl_port` VALUES ('52', '330200002', '宁波港', '2018-10-13 05:04:59', '330200');
 
 -- ----------------------------
 -- Table structure for `hl_price_incidental`
@@ -5381,7 +5386,7 @@ CREATE TABLE `hl_seaprice` (
 -- ----------------------------
 -- Records of hl_seaprice
 -- ----------------------------
-INSERT INTO `hl_seaprice` VALUES ('1', '21', '2', '2000.00', '6555.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbb', '3', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '双边', '2018-08-26 02:00:00');
+INSERT INTO `hl_seaprice` VALUES ('1', '1', '2', '2000.00', '6555.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbb', '3', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '双边', '2018-08-26 02:00:00');
 INSERT INTO `hl_seaprice` VALUES ('2', '2', '2', '3500.00', '5500.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'bbbc', '6', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '单边', '2018-08-26 02:00:00');
 INSERT INTO `hl_seaprice` VALUES ('3', '3', '1', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaab', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '1', '双边', '2018-08-26 02:00:00');
 INSERT INTO `hl_seaprice` VALUES ('4', '4', '1', '1000.00', '5000.00', '2018-08-26 02:00:00', '2018-08-26 02:00:00', 'aaac', '4', '2018-08-26 02:00:00', '2018-08-26 02:00:00', '0', '双边', '2018-08-26 02:00:00');
@@ -5392,10 +5397,10 @@ INSERT INTO `hl_seaprice` VALUES ('8', '8', '5', '10000.00', '555555.00', '2018-
 INSERT INTO `hl_seaprice` VALUES ('9', '9', '6', '10000.00', '555555.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaag', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '双边', '2018-09-05 12:19:25');
 INSERT INTO `hl_seaprice` VALUES ('10', '10', '7', '3000.00', '5000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaah', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '双边', '2018-09-05 12:19:25');
 INSERT INTO `hl_seaprice` VALUES ('11', '11', '8', '3000.00', '5000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaai', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '双边', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('15', '27', '2', '5000.00', '8000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbb_14', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', '双边', null);
-INSERT INTO `hl_seaprice` VALUES ('16', '26', '2', '1125.00', '11256.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbc', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', '双边', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('17', '19', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '双边', '2018-09-05 12:19:25');
-INSERT INTO `hl_seaprice` VALUES ('18', '28', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '双边', '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('15', '12', '2', '5000.00', '8000.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbb_14', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', '双边', null);
+INSERT INTO `hl_seaprice` VALUES ('16', '13', '2', '1125.00', '11256.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'bbbc', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '0', '双边', '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('17', '14', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '双边', '2018-09-05 12:19:25');
+INSERT INTO `hl_seaprice` VALUES ('18', '15', '1', '400.00', '400.00', '2018-09-05 12:19:25', '2018-09-05 12:19:25', 'aaab_1', '5', '2018-09-05 12:19:25', '2018-09-05 12:19:25', '1', '双边', '2018-09-05 12:19:25');
 
 -- ----------------------------
 -- Table structure for `hl_seaprice-aa`
@@ -5430,40 +5435,96 @@ CREATE TABLE `hl_sea_bothend` (
   `sealine_id` int(11) DEFAULT NULL COMMENT '航线的编号',
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sea_bothend
 -- ----------------------------
-INSERT INTO `hl_sea_bothend` VALUES ('1', '110100002', '440400005', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_bothend` VALUES ('2', '110100003', '110100002', '2', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_bothend` VALUES ('3', '110100004', '110100003', '3', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_bothend` VALUES ('4', '110100005', '110100004', '4', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_bothend` VALUES ('5', '110100006', '110100005', '5', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_bothend` VALUES ('6', '110100007', '110100006', '6', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_bothend` VALUES ('7', '110100008', '110100007', '7', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_bothend` VALUES ('8', '110100009', '110100008', '8', '2018-08-26 22:40:50');
-INSERT INTO `hl_sea_bothend` VALUES ('9', '110100010', '110100009', '9', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('10', '120100002', '110100010', '10', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('11', '120100003', '120100002', '11', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('12', '120100004', '120100003', '12', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('13', '120100005', '120100004', '13', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('14', '120100006', '120100005', '14', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('15', '120100007', '120100006', '15', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('16', '120100008', '120100007', '16', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('17', '120100009', '120100008', '17', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('18', '110100002', '120100009', '18', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('19', '110100003', '110100002', '19', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('20', '110100004', '110100003', '20', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('21', '440400002', '110100004', '21', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('22', '440400003', '440400002', '22', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('23', '440400004', '440400003', '23', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('24', '440400005', '440400004', '24', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('25', '110100004', '120100009', '25', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('26', '120100002', '440100006', '26', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('27', '440100003', '440100006', '27', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('28', '440100003', '440100002', '28', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_bothend` VALUES ('29', '110100002', '110100007', '29', '2018-10-10 06:41:23');
+INSERT INTO `hl_sea_bothend` VALUES ('1', '110100002', '441800002', '1', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend` VALUES ('2', '110100003', '440600012', '2', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend` VALUES ('3', '110100004', '440600011', '3', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend` VALUES ('4', '110100005', '440600010', '4', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend` VALUES ('5', '120100002', '440600009', '5', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend` VALUES ('6', '130900002', '440600008', '6', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend` VALUES ('7', '210200002', '440600007', '7', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend` VALUES ('8', '210700002', '440600006', '8', '2018-08-26 22:40:50');
+INSERT INTO `hl_sea_bothend` VALUES ('9', '310100002', '440600005', '9', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('10', '320700002', '440600004', '10', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('11', '330200002', '440600003', '11', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('12', '370200002', '440600002', '12', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('13', '370200002', '440100007', '13', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('14', '440100001', '440100006', '14', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('15', '440100002', '440100005', '15', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('16', '440100000', '440100004', '16', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('17', '440100003', '440100003', '17', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('18', '440100004', '440100002', '18', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('19', '440100005', '440100001', '19', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('20', '440100006', '440100000', '20', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('21', '440100007', '370200002', '21', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('22', '440600002', '370200002', '22', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('23', '440600003', '330200002', '23', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('24', '440600004', '320700002', '24', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('25', '440600005', '310100002', '25', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('26', '440600006', '210700002', '26', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('27', '440600007', '210200002', '27', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('28', '440600008', '130900002', '28', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend` VALUES ('29', '440600009', '120100002', '29', '2018-10-10 06:41:23');
+INSERT INTO `hl_sea_bothend` VALUES ('30', '440600010', '110100005', '30', '2018-10-15 10:46:58');
+INSERT INTO `hl_sea_bothend` VALUES ('31', '440600011', '110100004', '31', '2018-10-15 02:15:16');
+INSERT INTO `hl_sea_bothend` VALUES ('32', '440600012', '110100003', '32', null);
+INSERT INTO `hl_sea_bothend` VALUES ('33', '441800002', '110100002', '33', null);
+INSERT INTO `hl_sea_bothend` VALUES ('34', '210200002', '330200002', '34', '2018-10-15 03:44:06');
+INSERT INTO `hl_sea_bothend` VALUES ('35', '120100002', '320700002', '35', '2018-10-15 04:17:31');
+INSERT INTO `hl_sea_bothend` VALUES ('36', '110100002', '110100004', '36', '2018-10-15 18:23:14');
+
+-- ----------------------------
+-- Table structure for `hl_sea_bothend_copy1`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_sea_bothend_copy1`;
+CREATE TABLE `hl_sea_bothend_copy1` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `port` varchar(20) DEFAULT NULL COMMENT '起点港口或者终点港口',
+  `type` varchar(1) DEFAULT NULL COMMENT 's：起运港口 e: 目的港口',
+  `sealine_id` int(11) DEFAULT NULL COMMENT '航线的编号',
+  `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_sea_bothend_copy1
+-- ----------------------------
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('1', '110100002', 'r', '1', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('2', '110100003', 's', '1', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('3', '110100004', 'r', '2', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('4', '110100005', 's', '2', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('5', '440100002', 'r', '3', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('6', '440100003', 's', '3', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('7', '440100004', 'r', '4', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('8', '440100005', 's', '4', '2018-08-26 22:40:50');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('9', '440100006', 'r', '5', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('10', '440100007', 's', '5', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('11', '440100002', 'r', '6', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('12', '440100001', 's', '6', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('13', '441800002', 'r', '7', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('14', '440600002', 's', '7', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('15', '440600003', 'r', '8', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('16', '440600004', 's', '8', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('17', '440600005', 'r', '9', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('18', '440600006', 's', '9', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('19', '440600007', 'r', '10', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('20', '440600008', 's', '10', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('21', '440600009', 'r', '11', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('22', '440600010', 's', '11', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('23', '440600011', 'r', '12', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('24', '440600012', 's', '12', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('25', '120100002', 'r', '13', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('26', '130900002', 's', '13', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('27', '210200002', 'r', '14', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('28', '210700002', 's', '14', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('29', '370200002', 'r', '15', '2018-10-10 06:41:23');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('30', '370200002', 's', '15', '2018-10-15 10:46:58');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('35', '320700002', 'r', '16', '2018-10-15 10:46:58');
+INSERT INTO `hl_sea_bothend_copy1` VALUES ('36', '310100002', 's', '16', '2018-10-15 10:46:58');
 
 -- ----------------------------
 -- Table structure for `hl_sea_middle`
@@ -5476,59 +5537,67 @@ CREATE TABLE `hl_sea_middle` (
   `sequence` int(11) DEFAULT NULL COMMENT '中间港口的顺序',
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sea_middle
 -- ----------------------------
 INSERT INTO `hl_sea_middle` VALUES ('1', '1', '110100002', '1', '2018-08-26 02:00:00');
 INSERT INTO `hl_sea_middle` VALUES ('2', '1', '110100003', '2', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('3', '1', '110100004', '3', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('4', '2', '110100005', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('5', '2', '110100006', '2', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('6', '2', '110100007', '3', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('7', '3', '110100008', '1', '2018-08-26 02:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('8', '3', '110100009', '2', '2018-08-26 22:40:50');
-INSERT INTO `hl_sea_middle` VALUES ('9', '4', '110100010', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('10', '4', '120100002', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('11', '5', '120100003', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('12', '5', '120100004', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('13', '6', '120100005', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('14', '6', '120100006', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('15', '7', '120100007', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('16', '7', '120100008', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('17', '7', '120100009', '3', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('18', '8', '110100002', '3', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('19', '8', '110100003', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('20', '8', '110100004', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('21', '9', '440400002', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('22', '9', '440400003', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('23', '9', '440400004', '3', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('24', '9', '440400005', '4', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('26', '10', '110100009', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('27', '11', '110100010', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('28', '12', '120100002', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('29', '13', '120100003', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('30', '14', '120100004', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('31', '14', '120100005', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('32', '14', '110100009', '3', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('33', '15', '110100010', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('34', '16', '120100002', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('35', '17', '120100003', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('36', '17', '120100004', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('37', '18', '110100005', '1', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('38', '18', '110100006', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('39', '18', '110100004', '3', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('40', '19', '110100005', '1', '2018-09-27 11:00:52');
-INSERT INTO `hl_sea_middle` VALUES ('41', '19', '110100006', '2', '2018-09-05 12:19:25');
-INSERT INTO `hl_sea_middle` VALUES ('42', '19', '110100004', '3', '0000-00-00 00:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('43', '20', '110100006', '1', '0000-00-00 00:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('44', '21', '440100003', '0', '0000-00-00 00:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('45', '22', '440100004', '0', '0000-00-00 00:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('3', '1', '130900002', '3', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('4', '2', '210700002', '1', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('5', '2', '440600005', '2', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('6', '2', '440600010', '3', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('7', '3', '441800002', '1', '2018-08-26 02:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('8', '3', '440100005', '2', '2018-08-26 22:40:50');
+INSERT INTO `hl_sea_middle` VALUES ('9', '4', '440100006', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('10', '4', '440100007', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('11', '5', '440600007', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('12', '5', '440600004', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('13', '6', '441800002', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('14', '6', '440600002', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('15', '7', '440600003', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('16', '7', '440600004', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('17', '7', '440600005', '3', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('18', '8', '440600006', '3', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('19', '8', '440600007', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('20', '8', '440600008', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('21', '9', '440600009', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('22', '9', '440600010', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('23', '9', '440600011', '3', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('24', '9', '440600012', '4', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('26', '10', '370200002', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('27', '11', '440100000', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('28', '12', '440100003', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('29', '13', '440100004', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('30', '14', '440600003', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('31', '14', '440600002', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('32', '14', '440100006', '3', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('33', '15', '440100005', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('34', '16', '440100007', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('35', '17', '440100001', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('36', '17', '440100002', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('37', '18', '310100002', '1', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('38', '18', '320700002', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('39', '18', '110100005', '3', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('40', '19', '210200002', '1', '2018-09-27 11:00:52');
+INSERT INTO `hl_sea_middle` VALUES ('41', '19', '370200002', '2', '2018-09-05 12:19:25');
+INSERT INTO `hl_sea_middle` VALUES ('42', '19', '120100002', '3', '0000-00-00 00:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('43', '20', '330200002', '1', '0000-00-00 00:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('44', '21', '440600009', '0', '0000-00-00 00:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('45', '22', '440600012', '0', '0000-00-00 00:00:00');
 INSERT INTO `hl_sea_middle` VALUES ('46', '23', '440100005', '0', '0000-00-00 00:00:00');
 INSERT INTO `hl_sea_middle` VALUES ('47', '23', '440100007', '1', '0000-00-00 00:00:00');
-INSERT INTO `hl_sea_middle` VALUES ('48', '24', '440100002', '0', '0000-00-00 00:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('48', '24', '440600006', '0', '0000-00-00 00:00:00');
 INSERT INTO `hl_sea_middle` VALUES ('49', '24', '440100005', '1', '0000-00-00 00:00:00');
+INSERT INTO `hl_sea_middle` VALUES ('50', '25', '440600011', '0', '2018-10-15 10:46:58');
+INSERT INTO `hl_sea_middle` VALUES ('51', '25', '110100004', '1', '2018-10-15 10:46:58');
+INSERT INTO `hl_sea_middle` VALUES ('52', '26', '440600008', '0', '2018-10-15 02:15:16');
+INSERT INTO `hl_sea_middle` VALUES ('53', '26', '440100005', '1', '2018-10-15 02:15:16');
+INSERT INTO `hl_sea_middle` VALUES ('54', '27', '320700002', '0', '2018-10-15 03:44:07');
+INSERT INTO `hl_sea_middle` VALUES ('55', '28', '210700002', '0', '2018-10-15 04:17:31');
+INSERT INTO `hl_sea_middle` VALUES ('56', '29', '110100003', '0', '2018-10-15 18:23:14');
+INSERT INTO `hl_sea_middle` VALUES ('57', '29', '110100005', '1', '2018-10-15 18:23:14');
 
 -- ----------------------------
 -- Table structure for `hl_sequence`
@@ -5665,7 +5734,6 @@ INSERT INTO `hl_shipcompany` VALUES ('5', '宁波远洋运输有限公司', '宁
 INSERT INTO `hl_shipcompany` VALUES ('6', '洋浦中良海运有限公司', '中良', '洋浦经济开发区', '2018-10-16 18:08:30');
 INSERT INTO `hl_shipcompany` VALUES ('7', '河北远洋运输集团有限公司', ' 河北远洋', '河北远洋', '2018-10-09 18:08:26');
 INSERT INTO `hl_shipcompany` VALUES ('8', '海运船务有限公司', '海运', null, '2018-10-08 18:08:22');
-INSERT INTO `hl_shipcompany` VALUES ('9', '老板船务有限公司', '老板船务', null, '2018-10-12 06:06:05');
 INSERT INTO `hl_shipcompany` VALUES ('10', '阿斯短发散发', '大事发生地', null, '2018-10-13 06:06:40');
 INSERT INTO `hl_shipcompany` VALUES ('12', '发大水船务', '发大水', null, '2018-10-13 11:49:23');
 
@@ -5786,7 +5854,7 @@ CREATE TABLE `hl_ship_route` (
   `middle_id` int(11) DEFAULT NULL COMMENT '中间港口的路线id',
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_ship_route
@@ -5802,24 +5870,29 @@ INSERT INTO `hl_ship_route` VALUES ('8', '7', '5', '0000-00-00 00:00:00');
 INSERT INTO `hl_ship_route` VALUES ('9', '8', '7', '0000-00-00 00:00:00');
 INSERT INTO `hl_ship_route` VALUES ('10', '9', '8', '0000-00-00 00:00:00');
 INSERT INTO `hl_ship_route` VALUES ('11', '10', '3', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('12', '9', '4', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('13', '8', '5', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('14', '7', '6', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('15', '6', '8', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('16', '5', '9', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('17', '4', '10', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('18', '3', '11', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('12', '11', '4', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('13', '12', '5', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('14', '13', '6', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('15', '14', '8', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('16', '15', '9', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('17', '16', '10', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('18', '1', '11', '0000-00-00 00:00:00');
 INSERT INTO `hl_ship_route` VALUES ('19', '2', '1', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('20', '1', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('21', '2', '0', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('22', '4', '4', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('23', '5', '5', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('24', '6', '6', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('25', '7', '7', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('26', '25', '0', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('27', '25', '20', '0000-00-00 00:00:00');
-INSERT INTO `hl_ship_route` VALUES ('28', '12', '0', null);
-INSERT INTO `hl_ship_route` VALUES ('32', '27', '24', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('20', '3', '2', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('21', '4', '0', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('22', '5', '4', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('23', '6', '5', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('24', '7', '6', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('25', '8', '7', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('26', '9', '0', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('27', '10', '20', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('28', '11', '0', null);
+INSERT INTO `hl_ship_route` VALUES ('32', '12', '24', '0000-00-00 00:00:00');
+INSERT INTO `hl_ship_route` VALUES ('33', '13', '25', '2018-10-15 10:46:58');
+INSERT INTO `hl_ship_route` VALUES ('34', '14', '26', '2018-10-15 02:15:16');
+INSERT INTO `hl_ship_route` VALUES ('35', '35', '28', '2018-10-15 04:17:31');
+INSERT INTO `hl_ship_route` VALUES ('36', '36', '29', '2018-10-15 18:23:14');
+INSERT INTO `hl_ship_route` VALUES ('37', null, '0', '2018-10-15 19:10:11');
 
 -- ----------------------------
 -- Table structure for `hl_team`
@@ -5872,7 +5945,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-13 03:14:48', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-15 10:46:07', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '0', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

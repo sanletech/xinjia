@@ -92,7 +92,7 @@ class Car extends Model
         //修改car_data表
         $car_data['id']=$car_data['car_id'];
         unset($car_data['car_id']);
-        $car_data['mtime']=  date('y-m-d h:i:s');
+        $car_data['mtime']=  date('Y-m-d H:i:s');
         $res1=Db::name('cardata')->update($car_data);
         if($res1>0){$response['success'][]='修改car_data表';}else{$response['fail'][]='修改car_data表';}
         
@@ -138,7 +138,7 @@ class Car extends Model
         $response = array();
         //添加car_data表
         unset($car_data['car_id']);
-        $car_data['mtime']=  date('y-m-d h:i:s');
+        $car_data['mtime']=  date('Y-m-d H:i:s');
         $res1=Db::name('cardata')->insert($car_data);
         $car_data['id'] = Db::name('cardata')->getLastInsID();
         if($res1>0){

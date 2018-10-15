@@ -99,11 +99,7 @@ class OrderPort extends Base
        }
     }
     
-    public function aaa(){
-        $idArr =$this->request->param();
-        $this->_p($idArr);exit;
-    }
-    
+
     //港到港订单页
     public function portList()
     {   
@@ -310,7 +306,7 @@ class OrderPort extends Base
         $order_num =$data['order_num'];  
 //        //根据订单号查询
         $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('member_code,seaprice_id,container_size')->find();
-        $mtime= date('Y-m-d H:i:S');
+        $mtime= date('Y-m-d H:i:s');
         //对支付方式做判断
         $payment_method= $data['payment_method'];
         if(intval($payment_method)){
@@ -351,7 +347,7 @@ class OrderPort extends Base
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price);
         //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
-        $starttime=date("y-m-d h:i:s", strtotime("-90 seconds", time()));
+        $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
         $res = Db::name('order_port')->where('order_num',$order_num)->where('mtime','between',[$starttime,$mtime])->find();
         if(empty($res)){
             $res1 = Db::name('order_port')->where('order_num',$order_num)->update($fatherData); 

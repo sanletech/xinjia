@@ -110,7 +110,7 @@ class OrderProcess extends Base
         if(empty($res)){
             $submit_man_code =  Session::get('user_info','think');
             $data =['order_num'=>$order_num,'status'=>$status,
-                'change_time'=>date('y-m-d h:i:s'),'action'=>$action,
+                'change_time'=>date('Y-m-d H:i:s'),'action'=>$action,
                 'submit_man_code'=>$submit_man_code,
                 'track_num'=>$track_num];
             $res =Db::name('order_status')->insert($data);

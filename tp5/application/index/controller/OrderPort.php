@@ -129,7 +129,7 @@ class OrderPort extends Controller
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);
         //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
-        $starttime=date("y-m-d h:i:s", strtotime("-90 seconds", time()));
+        $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
         $res = Db::name('order_port')->where(['member_code'=>$member_code,'quoted_price'=>$quoted_price])->where('ctime','between',[$starttime,$mtime])->find();
         if(empty($res)){
             $res1 = Db::name('order_port')->insert($fatherData); 

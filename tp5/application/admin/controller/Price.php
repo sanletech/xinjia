@@ -52,8 +52,9 @@ class Price extends Base
         $sl_start =$data['sl_start'];
         $sl_end =$data['sl_end'];
         //使用PortM 里的行情list方法查询对应的中间港口
-        $ship_route = new PortM;
-        $res =$ship_route->shiproute_list('','',100,$sl_start,$sl_end);
+        $ship_route = new PriceM;
+        $res =$ship_route->shiproute_list($sl_start,$sl_end,100);
+        $this->_p($res);exit;
         $middle_route =$res->column('port_name','m_id');
         return json($middle_route);    
     }
@@ -265,7 +266,7 @@ class Price extends Base
         $start_20GP_fee =$data['start_20GP_fee'];
         $end_40HQ_fee = $data['end_40HQ_fee'];
         $end_20GP_fee = $data['end_20GP_fee'];
-        $mtime =  date('y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         $res =Db::name('price_incidental')
                 ->where(array('ship_id'=>$ship_id,'port_code'=>$port_code,'type'=>'r'))
                 ->update(array('40HQ'=>$start_40HQ_fee,'20GP'=>$start_20GP_fee,'mtime'=>$mtime));
@@ -292,7 +293,7 @@ class Price extends Base
     }
     public function incidentalToAdd(){
         $data =  $this->request->only(['ship','port_code','end_20GP_fee','end_40HQ_fee','start_20GP_fee','start_40HQ_fee'],'post');
-        $mtime = date('y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         $port_code=$data['port_code'][0]; $ship_id=$data['ship'];
         $response =[];
         //先查询是否已经存在港口了

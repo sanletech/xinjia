@@ -60,7 +60,7 @@ class Ship extends Base
 //        $this->_p($data);exit;
         $ship_short_name = trim($data['ship_short_name']);
         $ship_name =  trim($data['ship_name']);
-        $mtime = date('Y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         $res2 = Db::name('shipcompany')->where('ship_short_name',$ship_short_name)->whereOr('ship_name',$ship_name)->find();
         if(empty($res2)){
             $res = Db::name('shipcompany')->insert(['ship_name'=>$ship_name,'ship_short_name'=>$ship_short_name,'mtime'=>$mtime]);
