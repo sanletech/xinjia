@@ -94,7 +94,7 @@ class orderPort extends Model
     //记录订单的更新状态和时间
     public function orderUpdate($order_num,$status,$title) {
         $submitter= Session::get('user_info','think');
-        $mtime =  date('y-m-d h:i:s');
+         $mtime =  date('Y-m-d H:i:s');
         $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'submitter'=>$submitter);
         $res =Db ::name('order_port_status')->insert($data);
         

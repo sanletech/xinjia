@@ -69,14 +69,14 @@ class Price extends Model
         $pricedata['ship_id'] = strstr($data['ship'],'_', true);
         $pricedata['price_20GP'] = $data['price_20GP'];
         $pricedata['price_40HQ'] = $data['price_40HQ'];
-        $pricedata['shipping_date'] = date('y-m-d h:i:s',strtotime($data['shipping_date']));
-        $pricedata['cutoff_date'] = date('y-m-d h:i:s',strtotime($data['cutoff_date']));
+        $pricedata['shipping_date'] = date('Y-m-d H:i:s',strtotime($data['shipping_date']));
+        $pricedata['cutoff_date'] = date('Y-m-d H:i:s',strtotime($data['cutoff_date']));
         $pricedata['boat_code'] = $data['boat_code'];
         $pricedata['sea_limitation'] = $data['sea_limitation'];
-        $pricedata['ETA'] = date('Y-m-d h:i:s',strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day'));
-        $pricedata['EDD'] = date('Y-m-d h:i:s',strtotime("+3day",strtotime($pricedata['ETA'])));
+        $pricedata['ETA'] = date('Y-m-d H:i:s',strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day'));
+        $pricedata['EDD'] = date('Y-m-d H:i:s',strtotime("+3day",strtotime($pricedata['ETA'])));
         $pricedata['generalize'] = $data['generalize'];
-        $pricedata['mtime'] = date('y-m-d h:i:s');
+        $pricedata['mtime'] = date('Y-m-d H:i:s');
         $sl_start = $data['port_code']['0'];
         $sl_end   = $data['port_code']['1'];
         $bothend = new \app\admin\model\Port;
@@ -96,6 +96,57 @@ class Price extends Model
         $res3 ? $response['success'][] = '添加seaprice表':$response['fail'][] = '添加seaprice表';
         return  $response;
     }
+    
+          //航线详情list
+    public function  shiproute_list($sl_start,$sl_end)
+    {      
+        $list =Db::name('ship_route')->alias('SR')
+             ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+             ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
+             ->join('hl_port P1','P1.port_code= SB.sl_start','left')
+             ->join('hl_port P2','P2.port_code= SB.sl_end','left')
+             ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+             ->field("SR.id,SR.middle_id,SR.bothend_id,"
+                     . "P1.port_name s_port,P1.port_code s_port_code,"
+                     . "P2.port_name e_port,P2.port_code e_port_code, "
+                     . "group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port")
+             ->group('SR.id')->where(['P1.port_code'=>$sl_start,'P2.port_code'=>$sl_end])->select();  
+
+        return $list;
+    }
+    
+    
+              //航线详情list
+//    public function  shiproute_list($sl_start,$sl_end)
+//    {      
+//        $list =Db::name('ship_route')->alias('SR')
+//             ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+//             ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
+//             ->join('hl_port P1','P1.port_code= SB.sl_start','left')
+//             ->join('hl_port P2','P2.port_code= SB.sl_end','left')
+//             ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+//             ->field("SR.id,SR.mtime,"
+//                     . "P1.port_name s_port,P1.port_code s_port_code,"
+//                     . "P2.port_name e_port,P2.port_code e_port_code, "
+//                     . "group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port,"
+//                     . "group_concat(distinct P3.port_code order by SM.sequence separator ',') m_port_code")
+//             ->group('SR.id')->buildSql();  
+////        var_dump($list);exit;
+//        $pageParam  = ['query' =>[]]; //设置分页查询参数
+//        if(!empty($sl_start) && isset($sl_start)){
+//            $list = Db::table($list.' a')->where('a.s_port_code',$sl_start)->buildSql();
+//            $pageParam['query']['sl_start'] = $sl_start;
+//        }
+//        if(!empty($sl_end) && isset($sl_end)){
+//            $list = Db::table($list.' b')->where('b.e_port_code',$sl_end)->buildSql();
+//            $pageParam['query']['sl_end'] = $sl_end;
+//        }
+//        $list =Db::table($list.' C')->order('C.mtime ASC')->paginate($pages,false,$pageParam);   
+//     
+////        var_dump($list);exit;
+//        return $list;
+//    }
+    
     
 //    //航运价格的修改页面的原始数据
 //      public function  price_route_edit($seaprice_id,$route_id) 
@@ -130,7 +181,7 @@ class Price extends Model
         $pricedata['ETA'] = strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day');
         $pricedata['EDD'] = strtotime("+3day",$pricedata['ETA']);
         $pricedata['generalize'] = $data['generalize'];
-        $pricedata['mtime'] = date('y-m-d h:i:s');
+        $pricedata['mtime'] = date('Y-m-d H:i:s');
         if(!isset($data['route_id'])){
         $sl_start = $data['port_code']['0'];
         $sl_end   = $data['port_code']['1'];
@@ -214,7 +265,7 @@ class Price extends Model
     //车队运价的添加
     public function price_trailer_toadd($port_id, $address_data, $load, $send){
         $cl_id = $this->lineCar($port_id,$address_data);
-        $mtime =  date('y-m-d h:i:s');
+        $mtime =  date('Y-m-d H:i:s');
        // var_dump($load);exit;
         $load_car =$load['car'];
         $load_price_20GP = $load['price_20GP'];
@@ -262,7 +313,7 @@ class Price extends Model
           
             $cl_id = $this->lineCar($port_id,$address_data);
         }
-        $mtime =  date('y-m-d h:i:s'); //修改时间
+         $mtime =  date('Y-m-d H:i:s'); //修改时间
         
        //装货和送货车队的id ,价格
         $load_car = strstr($data['car_load'],'_',true); 

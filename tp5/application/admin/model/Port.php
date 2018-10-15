@@ -17,9 +17,9 @@ class Port extends Model
             $list = Db::table($list.' a')->where('a.port_name', 'like', "%{$port_name}%")->buildSql();
             $pageParam['query']['port_name'] = $port_name;
         }
-        if($port_name){
-            $list = Db::table($list.' a')->where('a.port_name', 'like', "%{$port_name}%")->buildSql();
-            $pageParam['query']['port_name'] = $port_name;
+        if($city_name){
+            $list = Db::table($list.' a')->where('a.city', 'like', "%{$city_name}%")->buildSql();
+            $pageParam['query']['city_name'] = $city_name;
         }
         $list =Db::table($list.' a')->order('a.mtime DESC')->paginate($pages,false,$pageParam);  
         return $list;
@@ -47,7 +47,7 @@ class Port extends Model
       //港口执行修改
     public function  port_toedit($id,$city,$port_code,$port_name)
     {  
-        $mtime = date('y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         $sql ="update hl_port set port_code ='$port_code',port_name ='$port_name',"
                 . "city_id ='$city' ,mtime ='$mtime' where id ='$id'";
 //        var_dump($sql);exit;
@@ -148,65 +148,7 @@ class Port extends Model
         }  
     }
     
-    
-    //港口js文件管理 ,其他的方法进行港口的增删改,都需要执行这个函数
-    public function port_jszzz() {
-        $sql = "select P.port_code , P.port_name ,P.city_id ,C.city  from hl_port P "
-                . "left join hl_city C on C.city_id = P.city_id"
-                . "left join hl_province P on C.father=P.province_id "
-                . "where P.id > 0 group by P.id";
-        $data = Db::query($sql);
-        $result =   array();
-        //依照ship_id 分组对应的port_id
-        foreach($data as $k=>$v){
-            $result[$v['city_id']][] = array('id'=>$v['port_code'],'port_name'=>$v['port_name']);
-        } 
-//        //测试的时候使用查看城市是否对应的上
-//        foreach($data as $k=>$v){
-//            $result[$v['city_id']][] = $v;
-//        } 
-//        $this->_p($result);
-        
-        $js_port = json_encode($result);
-        $js_port = 'var JS_PORT ='.$js_port;
-        $filename ="./static/admin/js/port.js"; 
-        if(file_exists($filename)){
-            $handle = fopen($filename, "w");//写入文件
-            fwrite($handle, $js_port);
-            fclose($handle);
-        }  
-    }
-    
- 
-    
-    
-    
-      //航线详情list
-       public function  shiproute_list($sl_start,$sl_end ,$pages=5)
-    {      
-        $list =Db::name('ship_route')->alias('SR')
-             ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
-             ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
-             ->join('hl_port P1','P1.port_code= SB.sl_start','left')
-             ->join('hl_port P2','P2.port_code= SB.sl_end','left')
-             ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
-             ->field("SR.id,SR.mtime,P1.port_name s_port,P2.port_name e_port, group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port")
-             ->group('SR.id')->buildSql();  
-//        var_dump($list);exit;
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        if(!empty($sl_start) && isset($sl_start)){
-            $list = Db::table($list.' a')->where('a.s_port', 'like', "%{$sl_start}%")->buildSql();
-            $pageParam['query']['sl_start'] = $sl_start;
-        }
-        if(!empty($sl_end) && isset($sl_end)){
-            $list = Db::table($list.' b')->where('b.e_port', 'like', "%{$sl_end}%")->buildSql();
-            $pageParam['query']['sl_end'] = $sl_end;
-        }
-//        var_dump($list);exit;
-        $list =Db::table($list.' C')->order('C.mtime ASC')->paginate($pages,false,$pageParam);   
-//        echo  Db::getLastSql(); exit;
-        return $list;
-    }
+
     
     //航线详情删除
     public function  shiproute_del($shiproute)
@@ -230,7 +172,7 @@ class Port extends Model
         } else {
             $middle_id = 0;
         }
-        $mtime = date('y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         
         $res = Db::name('ship_route')->where(['bothend_id'=>$bothend_id,'middle_id'=>$middle_id])->value('id');
         if(empty($res)){
@@ -246,7 +188,7 @@ class Port extends Model
         //查询航线是否存在 参数分别为 起始港口id, 目的港口id, 
     public function  bothEndLine($sl_start,$sl_end){
         $res =Db::name('sea_bothend')->where(['sl_start'=>$sl_start,'sl_end'=>$sl_end])->value('sealine_id');
-        $mtime =  date('y-m-d h:i:s');
+        $mtime =  date('Y-m-d H:i:s');
         if(empty($res)){
             $sealine_id = Db::name('sea_bothend')->max('sealine_id')+1;
             $data = ['sl_start'=>$sl_start,'sl_end'=>$sl_end,'sealine_id'=>$sealine_id,'mtime'=>$mtime];
@@ -268,7 +210,7 @@ class Port extends Model
         if(empty($res)){
             $sealine_id = Db::name('sea_middle')->max('sealine_id')+1;
             $str = '';
-            $mtime = date('y-m-d h:i:s');
+            $mtime = date('Y-m-d H:i:s');
             for($i=0;$i<count($sl_middle);$i++){
                 $str .="  ('$sealine_id', '$sl_middle[$i]', '$i', '$mtime')  ,";
             }
@@ -348,7 +290,7 @@ class Port extends Model
        //船名添加
     public function boat_add($ship_id, $boat_code,$boat_name)
     {   
-        $mtime = date('y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         $sql = "insert into hl_boat(ship_id ,boat_code,boat_name ,mtime) "
                 . "values('$ship_id','$boat_code','$boat_name','$mtime')";
         $res = Db::execute($sql);

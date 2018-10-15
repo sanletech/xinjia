@@ -127,7 +127,7 @@ class Order extends Model
         $arr =[];$arr1 =[]; $arr2=[];
  //     $this->_p($data);exit;
         $arr= array_keys($data);
-        $mtime = date('y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         $response=[];
         // 启动事务
         Db::startTrans();
@@ -268,7 +268,7 @@ class Order extends Model
         // 取值（当前作用域）
         $loginname= Session::get('user_info','think');
        // var_dump($loginname);exit;
-        $change_time = date('y-m-d h:i:s');  
+        $change_time = date('Y-m-d H:i:s');
         $response=[];
     
         //先查询提交的柜子是不是对订单的全部柜子,不是则提示需要拆掉或者重新确认
@@ -303,7 +303,7 @@ class Order extends Model
              // 启动事务
         Db::startTrans();
         try{
-        $mtime = date('y-m-d h:i:s');
+        $mtime = date('Y-m-d H:i:s');
         $res  = Db::name('order_son')->where('container_code','in',$container_code)->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action,'mtime'=>$mtime]);
         //$res2 = Db::name('order_father')->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action,'mtime'=>$mtime]);
         
@@ -371,7 +371,7 @@ class Order extends Model
         $dataArr = array_keys($data); 
         $dataArr[]='mtime';
         $num =count($data['ship_name']);// 几行记录
-        $mtime =  $mtime = date('Y-m-d h:i:s'); //修改时间
+        $mtime =  $mtime = date('Y-m-d H:i:s'); //修改时间
         $orderStatus=[]; //贮存状态
         for($i=0;$i<$num;$i++){
             $tmpArr =  array_column($data, $i);
