@@ -218,15 +218,19 @@ $('.wt_zeng').click(function () {
 })
 //增加委托信息
 function zeng_wt(){
-  let data = $('#linkman_form').serialize();//增加委托信息表单数据  
+  let data = $('#linkman_form').serialize();//增加委托信息表单数据    
   $.ajax({
     type: 'POST',
     url: linkmanAddURL,
     data: data,
     dataType: "json",
-    success: function (status) {
-      layer.close(layer.index);//关闭添加窗口
-      $('.wt1').click();//重新查询并打开窗口
+    success: function (data) {
+      if(data.status){
+        layer.close(layer.index);//关闭添加窗口
+        $('.wt1').click();//重新查询并打开窗口
+      }else{
+        alert('修改联系人失败');
+      }      
     }
   });
 
@@ -264,9 +268,13 @@ function xiu_wt(){
     url: linkmanUpdateURL,
     data: data,
     dataType: "json",
-    success: function (status) {
-      layer.close(layer.index);//关闭添加窗口
-      $('.wt1').click();//重新查询并打开窗口
+    success: function (data) {
+      if(data.status){
+        layer.close(layer.index);//关闭添加窗口
+        $('.wt1').click();//重新查询并打开窗口
+      }else{
+        alert('修改联系人失败');
+      }   
     }
   });  
 
@@ -274,7 +282,14 @@ function xiu_wt(){
 
 //删除选中的委托信息
 $('.wt_del').click(function(){
-  $.get(linkmanDelURL,{id:id});
+  $.get(linkmanDelURL,{'id':id},function(data){
+    if(data.status){
+      $('.nei_a').parent().remove();//删除当前选中的节点
+      alert('成功删除联系人');
+    }else{
+      alert('删除联系人失败');
+    }   
+  });
 });
 
 //点击默认

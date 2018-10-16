@@ -180,10 +180,8 @@
                   </div>
 
                   <div class="nei_rig">
-
-                    <!-- <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> -->
                     <a id="hxxq" onclick="mo(this)" href="javascript:;">航线详情</a>
-                    <div class="seapr_id"><{$vo.id}></div>
+                    <div class="seapr_id" style="display: none;"><{$vo.id}></div>
                   </div>
 
                   <div class="sm">
@@ -200,16 +198,7 @@
       <!-- 模态窗口 -->
       <div class="mo_cen">
         <div class="man">
-          <div>
-            <span class="qi_name"></span>
-            <p class="qi_time"></p>
-          </div>
-          <div class="xian"><div></div></div>
-          
-          <div>
-            <span class="end_name"></span>
-            <p class="end_time"></p>
-          </div>     
+   
         </div>
       </div>
 
@@ -236,10 +225,9 @@
 
         //路线详情
         function mo(zj){
-            let seapr_id = $(zj).next().html();
-            console.log(seapr_id);
-            
-            layer.open({
+            let seapr_id = $(zj).next().html();//获取当前ID
+            $('.man').html('');//清空航线详情内容
+            layer.open({//打开航线详情窗口
             type: 1,
             title:'航线详情',
             area:['900px','200px'],
@@ -253,15 +241,15 @@
               $('html',window.parent.document).css('overflow-y','hidden');
               $(".demo-class").css('top',$(parent.window).scrollTop()+300);
               $.get("<{:url('orderPort/routedetail')}>",{seaprice_id:seapr_id},function(data){
-                $('.qi_name').html(data.s_port);
-                $('.qi_time').html(data.shipping_date.substring(0,10));
-                $('.end_name').html(data.e_port);
-                $('.end_time').html(data.ETA.substring(0,10));
-                let arr=data.m_port.split(",");
-                console.log(arr);
+                let arr=data.m_port.split(",");//截取航线中间内容
+                //航线详情起点
+                $('.man').append('<div><span class="qi_name">'+data.s_port+'</span><p class="qi_time">'+data.shipping_date.substring(0,10)+'</p></div><div class="xian"><div></div></div>');
+                //循环航线详情中间站
                 for (let i = 0; i < arr.length; i++) {
-                  $('.xian').after('<div style="margin-top:10px;"><span>'+arr[i]+'</span><p></p></div><div class="xian"><div></div></div>');
-                }                
+                  $('.man').append('<div style="margin-top:10px;"><span>'+arr[i]+'</span><p></p></div><div class="xian"><div></div></div>');
+                }
+                //航线详情终点
+                $('.man').append('<div><span class="end_name">'+data.e_port+'</span><p class="end_time">'+data.ETA.substring(0,10)+'</p></div>');         
               })
             },
             //关闭窗口时

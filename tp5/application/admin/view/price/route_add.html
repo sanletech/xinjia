@@ -170,9 +170,7 @@
             });
         });
         $('#jg').on('click','span',function(){
-            let zhi = $(this).html();//当前选中的值
-            console.log(zhi);
-            
+            let zhi = $(this).html();//当前选中的值            
             $('.beizhu').val(zhi);//给input 赋值
             layer.close(layer.index);//关闭窗口
         })
@@ -277,7 +275,6 @@
         }
         //加载船公司对应boat
         function loadBoat(boat){
-            console.log(boat);
             var areaHtml = '';
             if(typeof(boat) !== 'undefined' && boat!=0){
                 var boat_length =boat.length;
@@ -342,8 +339,7 @@
         }
     
         //加载对应城市的港口，
-        function loadPort(ports){
-            //console.log(ports);
+        function loadPort(ports){            
             var areaHtml = '';
             for(var i=0;i<ports.length;i++){
                 areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
@@ -364,14 +360,12 @@
         }
         
              //加载对应城市的港口，并显示已经选中了
-        function loadShipRoute(route_arr){
-            //console.log(route_arr);
+        function loadShipRoute(route_arr){            
             var areaHtml = '';
             if(route_arr.length!=0){
                 var j=0;
                 for(var i in route_arr){
                     j++;
-                    console.log(route_arr[i]['id']);
                     if(route_arr[i]['m_port']==null){
                         areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+'直航'+'</option>';
                     }else{
@@ -383,13 +377,11 @@
             }
             $form.find('select[name=route]').html(areaHtml).parent().show();
             form.render();
-            
-            form.on('select(port)', function(data) {
-            } ) 
-        
+            loadProvince();  //选择港口
         }
+
         var gangkou = 2;//只能有两个港口
-        function  selectPortShip(port_id,port_name,mark){
+        function  selectPortShip(port_id,port_name,mark){                      
             var btn =document.createElement('button');
                 btn.className="layui-btn layui-btn-normal";
                 btn.style="display: inline\;" ;
@@ -431,16 +423,16 @@
         function routeSelect(){
             var sl_start = $("input[name='port_code[]']:eq(0)").val();
             var sl_end  = $("input[name='port_code[]']:eq(1)").val();
-             var data ={'sl_start':sl_start,'sl_end':sl_end};
-                    $.ajax({
-                    type:'POST',
-                    url:"<{:url('admin/Price/route_select')}>",route_select_url
-                    data: data,
-                    dataType:"json",
-                    success:function(data){
-                        loadShipRoute(data); 
-                    }
-                });
+            var data ={'sl_start':sl_start,'sl_end':sl_end};
+            $.ajax({
+                type:'POST',
+                url:"<{:url('admin/Price/route_select')}>",
+                data: data,
+                dataType:"json",
+                success:function(data){                    
+                    loadShipRoute(data); 
+                }
+            });
        
         }
          

@@ -75,11 +75,11 @@ class Order extends Model
         $link_name = $data['link_name'];
         $phone = $data['phone'];
         $company = $data['company'];
-        $add = $data['add'];
+        // $add = $data['add'];
         $member_code =Session::get('member_code');
         $time = date("Y-m-d H:i:s"); 
-        $sql= "insert into hl_linkman(name ,phone ,company ,address,mtime,member_code) "
-         . " values('$link_name','$phone','$company','$add','$time','$member_code')";
+        $sql= "insert into hl_linkman(name ,phone ,company ,mtime,member_code) "
+         . " values('$link_name','$phone','$company','$time','$member_code')";
         $res =  Db::execute($sql);
         $res ?  $response['success'][]='添加linkman表': $response['fail'][]='添加linkman表';
         return  $response;    

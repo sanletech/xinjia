@@ -62,19 +62,21 @@ class Order extends Base
     public function linkmanAdd()
     {
         $data =$this->request->param();
+
         $sea_pirce =new OrderM;
         $response = $sea_pirce ->linkmanAdd($data);
+        // var_dump($data); exit;
        if(!array_key_exists('fail', $response)){
-            $status =1; 
+            $response=['status'=>1,'message'=>'添加联系人成功'];
         }else {
-            $status =0;  
-              }
-        json_encode($status);   
-        return $status ;
+            $response=['status'=>0,'message'=>'添加联系人失败'];
+        }
+        
+        return $response ;
     }
       //收/发货人的信息的删除
     public function linkmanDel() {
-        $id=$this->request->param();
+        $id=$this->request->param('id');
         $res =Db::name('linkman')->where('id',$id)->delete();
         $res ? $response=['status'=>1,'message'=>'删除联系人成功']: $response=['status'=>0,'message'=>'删除联系人失败'];
         return $response;
@@ -83,7 +85,10 @@ class Order extends Base
     public function linkmanUpdate() {
         $data=$this->request->param();
         $id= $data['id'];
-        $res =Db::name('linkman')->where('id',$id)->update($data);
+        $tem['name'] = $data['link_name'];
+        $tem['phone'] = $data['phone'];
+        $tem['company'] = $data['company'];
+        $res =Db::name('linkman')->where('id',$id)->update($tem);
         $res ? $response=['status'=>1,'message'=>'修改联系人成功']: $response=['status'=>0,'message'=>'修改联系人失败'];
         return $response;
     }
