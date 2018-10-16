@@ -434,7 +434,7 @@
              var data ={'sl_start':sl_start,'sl_end':sl_end};
                     $.ajax({
                     type:'POST',
-                    url:"<{:url('admin/Price/route_select')}>",route_select_url
+                    url:"<{:url('admin/Price/route_select')}>",
                     data: data,
                     dataType:"json",
                     success:function(data){

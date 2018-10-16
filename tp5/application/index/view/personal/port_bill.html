@@ -18,18 +18,19 @@
   <button class="layui-btn" data-type="isAll">验证是否全选</button>
 </div>
  
-<table class="layui-table" lay-data="{width: 100%, height:100%, url:'/demo/table/user/', page:true, id:'idTest'}" lay-filter="demo">
+<table class="layui-table" lay-data="{width: 99%, height:100%, url:"+<{:url('index/Bill/billList')}>+", page:true, id:'idTest'}" lay-filter="demo">
   <thead>
     <tr>
       <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
       <th lay-data="{field:'id', sort: true, fixed: true}">ID</th>
-      <th lay-data="{field:'username'}">对账单号</th>
-      <th lay-data="{field:'sex', sort: true}">订单号</th>
-      <th lay-data="{field:'city'}">箱量</th>
-      <th lay-data="{field:'sign'}">总价(元)</th>
-      <th lay-data="{field:'experience', sort: true}">账单生成时间</th>
-      <th lay-data="{field:'classify'}">账单状态</th>
-      <th lay-data="{field:'wealth'}">备注</th>
+      <th lay-data="{field:'bill_num'}">对账单号</th>
+      <th lay-data="{field:'order_num'}">订单号</th>
+      <th lay-data="{field:'container_size'}">柜型</th>
+      <th lay-data="{field:'container_sum'}">箱量</th>
+      <th lay-data="{field:'quoted_price'}">总价(元)</th>
+      <th lay-data="{field:'ctime', sort: true}">账单生成时间</th>
+      <th lay-data="{field:'status'}">账单状态</th>
+      <th lay-data="{field:'comment'}">备注</th>
     </tr>
   </thead>
 </table>
