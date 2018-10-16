@@ -24,11 +24,11 @@ class Order extends Model
                 ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.type ='s' and CLS.port_id = PIS.port_code") //目的港口杂费
                 ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ) //不同客户对应不同船公司的利润
                 ->join('hl_shipcompany SC','SC.id = SP.ship_id')
-                ->join('hl_boat BA','BA.boat_code =SP.boat_code')
+                ->join('hl_boat BA','BA.id =SP.boat_id')
                 ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
                 ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
                 ->field('SP.id sea_id, CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,SP.route_id,SC.ship_short_name,SP.shipping_date,'
-                        . ' SP.cutoff_date,SP.boat_code,BA.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.generalize,SP.mtime,'
+                        . ' SP.cutoff_date,BA.boat_code,BA.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.generalize,SP.mtime,'
                         . ' SP.ship_id,SB.sl_start,SB.sl_end,'
                         . ' PR.port_name r_port_name,PS.port_name s_port_name,CLR.address_name r_add,CLS.address_name s_add,'
                         . ' (select SP.price_20GP + PIR.20GP + CPR.price_20GP + PIS.20GP + CPS.price_20GP + MP.money ) as price_20GP,'

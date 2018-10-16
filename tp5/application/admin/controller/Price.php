@@ -53,10 +53,10 @@ class Price extends Base
         $sl_end =$data['sl_end'];
         //使用PortM 里的行情list方法查询对应的中间港口
         $ship_route = new PriceM;
-        $res =$ship_route->shiproute_list($sl_start,$sl_end,100);
-        $this->_p($res);exit;
-        $middle_route =$res->column('port_name','m_id');
-        return json($middle_route);    
+        $list =$ship_route->route_select($sl_start,$sl_end);
+       // $this->_p($res);exit;
+        //$middle_route =$res->column('port_name','m_id');
+        return json($list);    
     }
     //航线添加
     public function route_toadd(){
@@ -65,18 +65,19 @@ class Price extends Base
         $seaprice = new PriceM;
         $res = $seaprice->price_route_add($data); 
         if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status; 
+            $response=['status'=>1,  'message'=>'添加成功'];
+        }else {
+            $response=['status'=>0,  'message'=>$res['fail']];
+        } 
+      
+        return $response; 
     }
     
     //航线修改页面
     public function route_edit(){
         $seaprice_id = input('get.seaprice_id');
-        $route_id= input('get.route_id');
         $seaprice = new PriceM;
-        $res = $seaprice-> price_route_list('','',1,$seaprice_id);
+        $res = $seaprice-> price_route_list('','','',100,$seaprice_id);
 //        $this->_p($res['0']);exit;
         $this->assign('data',$res['0']);
         return $this->view->fetch("price/route_edit");

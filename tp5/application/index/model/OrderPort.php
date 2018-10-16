@@ -14,14 +14,14 @@ class OrderPort extends Model
                 ->join('hl_ship_route SR','SR.id =SP.route_id')//海运路线表
                 ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
                 ->join('hl_shipcompany SC','SC.id = SP.ship_id')//船公司表
-                ->join('hl_boat BA','BA.boat_code =SP.boat_code')//船舶表
+                ->join('hl_boat BA','BA.id =SP.boat_id')//船舶表
                 ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
                 ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
-                ->field('SP.*,SC.ship_short_name,BA.boat_name,'
+                ->field('SP.*,SC.ship_short_name,BA.boat_name,BA.boat_code,'
                         . 'PR.port_name r_port_name,PS.port_name s_port_name,'
                         . 'PR.port_code r_port_code,PS.port_code s_port_code,'
                         . 'SR.middle_id')
-                ->group('SP.id,SP.id')
+                ->group('SP.id,SR.id')
                 ->buildSql();
         if($ship_id){
             $price_list = Db::table($price_list.' E')->where('E.ship_id',$ship_id)->buildSql();
@@ -170,13 +170,8 @@ class OrderPort extends Model
                 ->join('hl_port P2','P2.port_code= SB.sl_end','left')
                 ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
                 ->field("SP.id,P1.port_name s_port,P2.port_name e_port,"
-<<<<<<< HEAD
                 . " group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port,"
                 . "SP.shipping_date,SP.ETA")
-=======
-                        . " group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port,"
-                        . "SP.shipping_date,SP.ETA")
->>>>>>> 9f0c006910c7045a936770ef806a5f1fcf92ebb8
                 ->where('SP.id',$seaprice_id) ->group('SP.id')->find();
 //var_dump($str);
 //var_dump(Db::getLastSql());exit;

@@ -13,92 +13,107 @@ class Price extends Model
      //船运航价的展示
     public function  price_route_list($ship_name,$port_start,$port_over,$pages=5,$seaprice_id=0)
     {   
-        $middleSql =Db::name('sea_middle')->alias('SM')
-            ->join('hl_port P','P.port_code =SM.sl_middle','left')
-            ->field('SM.sealine_id,group_concat(SM.sl_middle order by SM.sequence) middle_port ,'
-                    . 'group_concat(P.port_name order by SM.sequence) port_name')
-            ->group('SM.sealine_id')->order('SM.sealine_id')->buildSql();
+        $list =Db::name('seaprice')->alias('SP')
+               ->join('hl_ship_route SR','SR.id=SP.route_id','left')
+               ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+               ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
+               ->join('hl_port P1','P1.port_code= SB.sl_start','left')
+               ->join('hl_port P2','P2.port_code= SB.sl_end','left')
+               ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+               ->join('hl_shipcompany SC','SC.id=SP.ship_id','left')
+               ->join('hl_boat B','B.id=SP.boat_id','left')
+               ->field("SP.id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
+               . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
+               . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,"
+               . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id")
+                ->order('SP.mtime DESC')->group('SP.id,SC.id,B.id,SR.id')->buildSql();
+                
         
-        $bothendSql =Db::name('sea_bothend')->alias('SB')
-                    ->join('hl_port P1','P1.port_code = SB.sl_start','left')
-                    ->join('hl_port P2','P2.port_code = SB.sl_end','left')
-                    ->field('SB.sealine_id,SB.sl_start,P1.port_name s_port_name,SB.sl_end ,P2.port_name e_port_name')
-                    ->group('SB.sealine_id')->order('SB.sealine_id')->buildSql();
-        
-        $routeSql = Db::name('ship_route')->alias('SR')
-                    ->join("$bothendSql T1",'SR.bothend_id =T1.sealine_id','left')
-                    ->join("$middleSql T2",'SR.middle_id =T2.sealine_id','left')
-                    ->field('SR.*, T1.sealine_id s_id ,T1.sl_start ,T1.s_port_name, T1.sl_end ,T1.e_port_name ,'
-                            . 'T2.sealine_id m_id,T2.middle_port,T2.port_name')
-                    ->order('SR.id')->buildSql();
-        
-        $list = Db::name('seaprice')->alias('SP')
-                ->join('hl_shipcompany S', 'S.id = SP.ship_id', 'left')
-                ->join("$routeSql T3",'T3.id = SP.route_id', 'left')
-                ->join("hl_boat B",'B.boat_code = SP.boat_code', 'left')
-                ->field('SP.*, S.ship_short_name ship_name,B.boat_name ,'
-                        . 'T3.s_port_name, T3.e_port_name, T3.port_name')
-                ->order('SP.id,SP.ship_id,SP.route_id')->buildSql();
+//        
+//        $middleSql =Db::name('sea_middle')->alias('SM')
+//            ->join('hl_port P','P.port_code =SM.sl_middle','left')
+//            ->field('SM.sealine_id,group_concat(SM.sl_middle order by SM.sequence) middle_port ,'
+//                    . 'group_concat(P.port_name order by SM.sequence) port_name')
+//            ->group('SM.sealine_id')->order('SM.sealine_id')->buildSql();
+//        
+//        $bothendSql =Db::name('sea_bothend')->alias('SB')
+//                    ->join('hl_port P1','P1.port_code = SB.sl_start','left')
+//                    ->join('hl_port P2','P2.port_code = SB.sl_end','left')
+//                    ->field('SB.sealine_id,SB.sl_start,P1.port_name s_port_name,SB.sl_end ,P2.port_name e_port_name')
+//                    ->group('SB.sealine_id')->order('SB.sealine_id')->buildSql();
+//        
+//        $routeSql = Db::name('ship_route')->alias('SR')
+//                    ->join("$bothendSql T1",'SR.bothend_id =T1.sealine_id','left')
+//                    ->join("$middleSql T2",'SR.middle_id =T2.sealine_id','left')
+//                    ->field('SR.*, T1.sealine_id s_id ,T1.sl_start ,T1.s_port_name, T1.sl_end ,T1.e_port_name ,'
+//                            . 'T2.sealine_id m_id,T2.middle_port,T2.port_name')
+//                    ->order('SR.id')->buildSql();
+//        
+//        $list = Db::name('seaprice')->alias('SP')
+//                ->join('hl_shipcompany S', 'S.id = SP.ship_id', 'left')
+//                ->join("$routeSql T3",'T3.id = SP.route_id', 'left')
+//                ->join("hl_boat B",'B.boat_code = SP.boat_code', 'left')
+//                ->field('SP.*, S.ship_short_name ship_name,B.boat_name ,'
+//                        . 'T3.s_port_name, T3.e_port_name, T3.port_name')
+//                ->order('SP.id,SP.ship_id,SP.route_id')->buildSql();
         //var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($port_start){
-            $list = Db::table($list.' a')->where('a.s_port_name', 'like', "%{$port_start}%")->buildSql();
+            $list = Db::table($list.' a')->where('a.s_port', 'like', "%{$port_start}%")->buildSql();
             $pageParam['query']['s_port_name'] = $port_start;
         }
         if($port_over){
-            $list = Db::table($list.' b')->where('b.e_port_name', 'like', "%{$port_over}%")->buildSql();
+            $list = Db::table($list.' b')->where('b.e_port', 'like', "%{$port_over}%")->buildSql();
             $pageParam['query']['e_port_name'] = $port_over;
         }
         if($ship_name){
-            $list = Db::table($list.' c')->where('c.ship_name', 'like', "%{$ship_name}%")->buildSql();
+            $list = Db::table($list.' c')->where('c.ship_short_name', 'like', "%{$ship_name}%")->buildSql();
             $pageParam['query']['ship_name'] = $ship_name;
         }
         if($seaprice_id){
             $list = Db::table($list.' d')->where('d.id',"$seaprice_id")->buildSql();
         }
    
-        $lista =Db::table($list.' e')->order('id,ship_id,route_id')->paginate($pages,false,$pageParam);  
-        return $lista;
+        $list =Db::table($list.' e')->paginate($pages,false,$pageParam);  
+//        $this->_p($list);exit;
+        return $list;
     }
     
     //船运航价的添加
      public function  price_route_add($data)
     {        
-         
+//         $this->_p($data);exit;             
         $pricedata['price_description']=$data['price_description'];
         $pricedata['ship_id'] = strstr($data['ship'],'_', true);
         $pricedata['price_20GP'] = $data['price_20GP'];
         $pricedata['price_40HQ'] = $data['price_40HQ'];
         $pricedata['shipping_date'] = date('Y-m-d H:i:s',strtotime($data['shipping_date']));
         $pricedata['cutoff_date'] = date('Y-m-d H:i:s',strtotime($data['cutoff_date']));
-        $pricedata['boat_code'] = $data['boat_code'];
+        $pricedata['boat_id'] = $data['boat'];
         $pricedata['sea_limitation'] = $data['sea_limitation'];
         $pricedata['ETA'] = date('Y-m-d H:i:s',strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day'));
         $pricedata['EDD'] = date('Y-m-d H:i:s',strtotime("+3day",strtotime($pricedata['ETA'])));
         $pricedata['generalize'] = $data['generalize'];
         $pricedata['mtime'] = date('Y-m-d H:i:s');
-        $sl_start = $data['port_code']['0'];
-        $sl_end   = $data['port_code']['1'];
-        $bothend = new \app\admin\model\Port;
-        $bothend_id   =  $bothend->bothEndLine($sl_start,$sl_end);
-      
-        $middle_id = $data['route'];
-
-        $route_sql = Db::query("select id from hl_ship_route "
-                . "where bothend_id ='$bothend_id' and middle_id ='$middle_id'" );
-        if(empty($route_sql)){
-            return $response['fail'][] = '无此航线';
-        }  
-        $pricedata['route_id'] =$route_sql['0']['id'];  
-              
+        $pricedata['route_id'] =$data['route'];  
+        //判断是否存在同一个船公司 船舶id  航线  船期同样的 
+        $res =Db::name('seaprice')->where([
+            'ship_id'=>$pricedata['ship_id'],
+            'boat_id'=>$pricedata['boat_id'],
+            'route_id'=>$pricedata['route_id'],
+            'shipping_date'=> $pricedata['shipping_date']
+            ])->find();
+        if($res){
+            $response['fail'] = '航线运价重复';
+            return  $response;
+        }
         $res3 = Db::name('seaprice')->insert($pricedata);
-         // echo Db::getLastSql();exit;
-        $res3 ? $response['success'][] = '添加seaprice表':$response['fail'][] = '添加seaprice表';
+        $res3 ? $response['success'] = '添加数据成功':$response['fail'] = '添加数据失败';
         return  $response;
     }
     
           //航线详情list
-    public function  shiproute_list($sl_start,$sl_end)
+    public function  route_select($sl_start,$sl_end)
     {      
         $list =Db::name('ship_route')->alias('SR')
              ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
@@ -106,10 +121,10 @@ class Price extends Model
              ->join('hl_port P1','P1.port_code= SB.sl_start','left')
              ->join('hl_port P2','P2.port_code= SB.sl_end','left')
              ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
-             ->field("SR.id,SR.middle_id,SR.bothend_id,"
+             ->field("SR.id,SR.bothend_id,SR.middle_id,"
                      . "P1.port_name s_port,P1.port_code s_port_code,"
                      . "P2.port_name e_port,P2.port_code e_port_code, "
-                     . "group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port")
+                     . "group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port")
              ->group('SR.id')->where(['P1.port_code'=>$sl_start,'P2.port_code'=>$sl_end])->select();  
 
         return $list;
@@ -176,27 +191,16 @@ class Price extends Model
         $pricedata['price_40HQ'] = $data['price_40HQ'];
         $pricedata['shipping_date'] = strtotime($data['shipping_date']);
         $pricedata['cutoff_date'] = strtotime($data['cutoff_date']);
-        $pricedata['boat_code'] = strstr($data['boat_code'],'_', true);
+        $pricedata['boat_id'] = $data['boat'];
         $pricedata['sea_limitation'] = $data['sea_limitation'];
         $pricedata['ETA'] = strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day');
         $pricedata['EDD'] = strtotime("+3day",$pricedata['ETA']);
         $pricedata['generalize'] = $data['generalize'];
         $pricedata['mtime'] = date('Y-m-d H:i:s');
-        if(!isset($data['route_id'])){
-        $sl_start = $data['port_code']['0'];
-        $sl_end   = $data['port_code']['1'];
-        $bothend = new \app\admin\model\Port;
-        $bothend_id   =  $bothend->bothEndLine($sl_start,$sl_end);
-        $middle_id = $data['route'];
-        $route_sql = Db::query("select id from hl_ship_route "
-                . "where bothend_id ='$bothend_id' and middle_id ='$middle_id'" );
-        $pricedata['route_id'] =$route_sql['0']['id'];  
-        }  else {
-            $pricedata['route_id'] =$data['route_id'];  
-        }
+        $pricedata['route_id'] =$data['route_id'];  
         $res3 = Db::name('seaprice')->update($pricedata);
       // echo Db::getLastSql();exit;
-        $res3 ? $response['success'][] = '修改seaprice表':$response['fail'][] = '修改seaprice表';
+        $res3 ? $response['success'] = '修改seaprice表':$response['fail'] = '修改seaprice表';
         return  $response;
     }
     
