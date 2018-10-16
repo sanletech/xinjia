@@ -149,6 +149,36 @@ class Port extends Model
     }
     
 
+                  //航线详情list
+    public function  shiproute_list($sl_start,$sl_end,$pages)
+    {      
+        $list =Db::name('ship_route')->alias('SR')
+             ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+             ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
+             ->join('hl_port P1','P1.port_code= SB.sl_start','left')
+             ->join('hl_port P2','P2.port_code= SB.sl_end','left')
+             ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+             ->field("SR.id,SR.mtime,"
+                     . "P1.port_name s_port,P1.port_code s_port_code,"
+                     . "P2.port_name e_port,P2.port_code e_port_code, "
+                     . "group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port,"
+                     . "group_concat(distinct P3.port_code order by SM.sequence separator ',') m_port_code")
+             ->group('SR.id')->order('SR.mtime desc')->buildSql();  
+//        var_dump($list);exit;
+        $pageParam  = ['query' =>[]]; //设置分页查询参数
+        if(!empty($sl_start) && isset($sl_start)){
+            $list = Db::table($list.' a')->where('a.s_port','like',"%$sl_start%")->buildSql();
+            $pageParam['query']['sl_start'] = $sl_start;
+        }
+        if(!empty($sl_end) && isset($sl_end)){
+            $list = Db::table($list.' b')->where('b.e_port','like',"%$sl_end%")->buildSql();
+            $pageParam['query']['sl_end'] = $sl_end;
+        }
+        $list =Db::table($list.' C')->paginate($pages,false,$pageParam);   
+        return $list;
+    }
+    
+    
     
     //航线详情删除
     public function  shiproute_del($shiproute)

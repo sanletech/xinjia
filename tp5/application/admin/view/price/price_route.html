@@ -61,8 +61,8 @@
                 <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.ship_name}></td> 
-            <td><{$vo.s_port_name}> >>>  <{$vo.port_name}> >>> <{$vo.e_port_name}></td>
+            <td><{$vo.ship_short_name}></td> 
+            <td><{$vo.s_port}> >>>  <{$vo.m_port}> >>> <{$vo.e_port}></td>
             <td>￥<{$vo.price_20GP}></td>
             <td>￥<{$vo.price_40HQ}></td> 
             <td><{$vo.shipping_date}></td>
@@ -72,7 +72,7 @@
             <td><{$vo.ETA}></td>
             <td><{$vo.EDD}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>?seaprice_id=<{$vo.id}>&route_id=<{$vo.route_id}>',700,500)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>?seaprice_id=<{$vo.id}>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">

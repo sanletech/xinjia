@@ -34,7 +34,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">船名</label>
             <div class="layui-input-inline">
-                <select name="boat_code" lay-filter="boat" lay-search>
+                <select name="boat" lay-filter="boat" lay-search>
                     <option value="" >请选择船名</option>
                 </select>  
             </div>
@@ -91,7 +91,7 @@
                     </select>
                 </div>
                 <div class="layui-input-inline" style="display: none;">
-                    <select name="area"  lay-filter="area">
+                    <select name="port"  lay-filter="port">
                         <option value="">请选择起点/终点港口</option>
                     </select>
                 </div>
@@ -276,24 +276,23 @@
             });
         }
         //加载船公司对应boat
-        function loadBoat(ship){
-            console.log(ship);
+        function loadBoat(boat){
+            console.log(boat);
             var areaHtml = '';
-            if(typeof(ship) !== 'undefined' && ship!=0){
-                var ship_length =ship.length;
-                for(var i=0;i<ship_length;i++){
-                    areaHtml += '<option  value="' + ship[i].boat_code +'_'+ ship[i].id+ '">' + ship[i].boat_name + '</option>';  
+            if(typeof(boat) !== 'undefined' && boat!=0){
+                var boat_length =boat.length;
+                for(var i=0;i<boat_length;i++){
+                    areaHtml += '<option  value="' + boat[i].id+ '">' + boat[i].boat_name + '</option>';  
                 }
             }else{
                     areaHtml = '<option  value="">此船公司无对应船舶</option>'; 
             }
-            $form.find('select[name=boat_code]').html(areaHtml).parent().show();
+            $form.find('select[name=boat]').html(areaHtml).parent().show();
             form.render();
             
             form.on('select(area)', function(data) {
             } ) 
         }
-    
         
     //加载省数据
         function loadProvince() {
@@ -305,31 +304,7 @@
             $form.find('select[name=province]').append(proHtml);
             form.render();
             form.on('select(province)', function(data) {
-                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
-                var value = data.value;
-                var d = value.split('_');
-                var code = d[0];
-                var count = d[1];
-                var index = d[2];
-                if (count > 0) {
-                    loadCity(areaData[index].mallCityList);
-                } else {
-                    $form.find('select[name=city]').parent().hide();
-                }
-            });
-        }
-        
-    //加载省数据
-        function loadProvince() {
-            var proHtml = '';
-            for (var i = 0; i < areaData.length; i++) {
-                proHtml += '<option  style="width: 40px"  value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
-            }
-            //初始化省数据
-            $form.find('select[name=province]').append(proHtml);
-            form.render();
-            form.on('select(province)', function(data) {
-                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                $form.find('select[name=port]').html('<option value="">请选择县/区</option>').parent().hide();
                 var value = data.value;
                 var d = value.split('_');
                 var code = d[0];
@@ -373,9 +348,9 @@
             for(var i=0;i<ports.length;i++){
                 areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
             }
-            $form.find('select[name=area]').html(areaHtml).parent().show();
+            $form.find('select[name=port]').html(areaHtml).parent().show();
             form.render();
-            form.on('select(area)', function(data) {
+            form.on('select(port)', function(data) {
                  var port =data.value.split('_');
                  var port_id =port['0'];
                  var port_name=port['1'];
@@ -390,16 +365,17 @@
         
              //加载对应城市的港口，并显示已经选中了
         function loadShipRoute(route_arr){
-            console.log(route_arr);
+            //console.log(route_arr);
             var areaHtml = '';
             if(route_arr.length!=0){
                 var j=0;
                 for(var i in route_arr){
                     j++;
-                    if(route_arr[i]==null){
-                        areaHtml += '<option  value="' +i+'">路线'+j+'\-'+'直航'+'</option>';
+                    console.log(route_arr[i]['id']);
+                    if(route_arr[i]['m_port']==null){
+                        areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+'直航'+'</option>';
                     }else{
-                        areaHtml += '<option  value="' +i+'">路线'+j+'\-'+ route_arr[i]+ '</option>';   
+                        areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+ route_arr[i]['m_port']+ '</option>';   
                     }
                 }
             }else{
@@ -458,7 +434,7 @@
              var data ={'sl_start':sl_start,'sl_end':sl_end};
                     $.ajax({
                     type:'POST',
-                    url:"<{:url('admin/Price/route_select')}>",
+                    url:"<{:url('admin/Price/route_select')}>",route_select_url
                     data: data,
                     dataType:"json",
                     success:function(data){
@@ -477,8 +453,8 @@
                     url:url,
                     data:$("#routeaddform").serialize(),
                     dataType:"json",
-                    success:function(status){
-                        if(status>0){
+                    success:function(data){
+                        if(data.status>0){
                             post_adduser = false;
                             layer.close(loading);
                             layer.msg("修改成功", { icon: 6, time: 1000 }, function () {

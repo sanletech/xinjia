@@ -21,7 +21,7 @@ class Personal extends Model
                 ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')
-                ->join('hl_boat B','B.boat_code=SP.boat_code','left')
+                ->join('hl_boat B','B.id=SP.boat_id','left')
                 ->where('OP.member_code',$member_code)
                 ->where('OP.order_num',$order_num)
                 ->where('OP.status','in',$status)
