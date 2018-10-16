@@ -68,6 +68,10 @@ class Personal extends Base
 
     //港到港账单生成
     public function port_bill(){
+//        $Bill = controller('Bill');
+//        $list =$Bill->billList();
+////        $this->_p($list);exit;
+//        $this->view->assign('list', $list);
         return $this->view->fetch('personal/port_bill');
     }
     

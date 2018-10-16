@@ -72,7 +72,7 @@ class OrderPort extends Controller
         //创建订单令牌
         action('OrderToken/createToken','', 'controller');
         
-        //$this->_p($data);exit;
+        // $this->_p($data);exit;
         $this->view->assign('list',$list);
         $this->view->assign('discount',$discount);
         return $this->view->fetch('orderPort/port_book');
@@ -87,7 +87,7 @@ class OrderPort extends Controller
         }
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
-        $mtime= date('y-m-d h:i:s');$member_code =Session::get('member_code','think');
+        $mtime= date('Y-m-d H:i:s');$member_code =Session::get('member_code','think');
         $seaprice_id = $data['seaprice_id'];$container_size=$data['container_size'];
         //对支付方式做判断
         $payment_method= $data['payment_method'];

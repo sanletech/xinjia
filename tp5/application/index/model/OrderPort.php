@@ -82,9 +82,13 @@ class OrderPort extends Model
                 . "{$container_size}_month month,"
                 . "{$container_size}_cash cash")
                 ->find();
-        $discount['special']=$discount_special;
+        $discount ? $discount :$discount=[];
+        array_key_exists('installment', $discount)?$discount : $discount['installment']=0;
+        array_key_exists('month', $discount)?$discount : $discount['month']=0;
+        array_key_exists('cash', $discount)?$discount : $discount['cash']=0;
+        $discount_special?$discount['special']=$discount_special:$discount['special']=0;
       
-//        $this->_p($res); $this->_p($discount);exit;
+      //  $this->_p($res); $this->_p($discount);exit;
         return array($res,$discount);            
         
     }
