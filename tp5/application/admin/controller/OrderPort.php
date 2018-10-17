@@ -212,7 +212,12 @@ class OrderPort extends Base
                         ])
                 ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
                 ->find();
+        $discount ?$discount:$discount=[];
+        array_key_exists('installment', $discount) ? $discount :$discount['installment']=0;
+        array_key_exists('month', $discount) ? $discount :$discount['month']=0;
+        array_key_exists('cash', $discount) ? $discount :$discount['cash']=0;
         $discount['special']= $special;
+        
 //        $this->_p($dataArr[2]);exit;
         $this->assign([
             'list'  =>$list,

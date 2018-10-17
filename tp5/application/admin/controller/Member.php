@@ -69,11 +69,14 @@ class Member extends Base
         $salesArr =Db::name('user')->field('user_code,user_name')
                 ->where('status','1')->where('type','sales')
                 ->select();
-      
 //        $this->_p($list);  var_dump($salesArr);exit;
         //船公司的集合
-        if(!(array_key_exists(0, $list))&&(array_key_exists ('ship_name', $list[0]))){
-            $ship_nameArr = array_fill(0, 5, '未录入船公司');
+        if(!array_key_exists(0, $list)){
+            if(!array_key_exists ('ship_name', $list[0])){
+                $ship_nameArr = array_fill(0, 5, '未录入船公司');
+            }
+        }else{
+            $ship_nameArr =$list[0]['ship_name'];
         }
         $this->view->assign('list',$list);
         $this->view->assign('salesArr',$salesArr);

@@ -10,11 +10,43 @@
 </ul>
 <table class="layui-hide" id="test" lay-filter="test"></table>
  
+<<<<<<< HEAD
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
   </div>
 </script>               
+=======
+<div class="layui-btn-group demoTable">
+  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+  <button class="layui-btn" data-type="isAll">验证是否全选</button>
+</div>
+
+<table class="layui-table" lay-data="{width: 99%, height:100%, url:'<{$billUrl}>', page:true, id:'idTest'}" lay-filter="demo">
+  <thead>
+    <tr>
+      <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+      <th lay-data="{field:'id', sort: true, fixed: true}">ID</th>
+      <th lay-data="{field:'bill_num'}">对账单号</th>
+      <th lay-data="{field:'order_num'}">订单号</th>
+      <th lay-data="{field:'container_size'}">柜型</th>
+      <th lay-data="{field:'container_sum'}">箱量</th>
+      <th lay-data="{field:'quoted_price'}">总价(元)</th>
+      <th lay-data="{field:'ctime', sort: true}">账单生成时间</th>
+      <th lay-data="{field:'status'}">账单状态</th>
+      <th lay-data="{field:'comment'}">备注</th>
+    </tr>
+  </thead>
+</table>
+ 
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+               
+>>>>>>> 90ec1a667141a25e4a2f93b5d486651854d534c7
           
 <script src="__STATIC__/layui/layui.js"></script>   
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->

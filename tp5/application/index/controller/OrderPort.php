@@ -133,6 +133,8 @@ class OrderPort extends Controller
         $res = Db::name('order_port')->where(['member_code'=>$member_code,'quoted_price'=>$quoted_price])->where('ctime','between',[$starttime,$mtime])->find();
         if(empty($res)){
             $res1 = Db::name('order_port')->insert($fatherData); 
+            $Bill = controller('Bill');
+            $list =$Bill->billCreate($order_num);
             return $res1 ? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');
         } else {
             return array('status'=>0,'mssage'=>'订单重复提交');

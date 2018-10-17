@@ -33,6 +33,10 @@ class Bill extends Base
         $list =Db::name('order_bill')->where('member_code',$member_code)
                 ->field('member_code',TRUE)->select();
         $count = count($list);
+<<<<<<< HEAD
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
+=======
+        return array('list'=>$list,'count'=>$count);
+>>>>>>> 90ec1a667141a25e4a2f93b5d486651854d534c7
     }
 }

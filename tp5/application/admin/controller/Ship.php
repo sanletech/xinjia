@@ -96,8 +96,8 @@ class Ship extends Base
     
     //执行船公司删除
     public function to_del() {
-        $data = $this->request->param();
-        $res =Db::name('shipcompany')->where('id','in',$data['id'])->delete();
+        $data = $this->request->param(); 
+        $res =Db::name('shipcompany')->where('id','in',$data['id'])->update(['status'=>0]);
         $response =[] ;
         $res ? $response=['status'=>1,'message'=>'删除船公司成功'] :$response=['status'=>0,'message'=>'删除船公司失败'];
         $this->ship_js();
