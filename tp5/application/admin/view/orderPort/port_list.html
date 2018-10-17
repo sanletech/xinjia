@@ -24,7 +24,7 @@
         </ul>
         <div class="layui-tab-content">
             <!-- 所有订单 -->
-            <div id='b1' class="layui-tab-item " >
+            <div id='b1' class="layui-tab-item" >
             </div>
             <!-- 在线支付 -->
             <div id='b2'class="layui-tab-item " >
@@ -57,8 +57,9 @@
         yemian('a2','b2' , "<{:url('admin/orderPort/port_payment')}>");//在线支付
         yemian('a3','b3' , "<{:url('admin/orderPort/port_month')}>");//月结
     });
-	
-    function yemian(id1,id2,url){   
+
+    function yemian(id1,id2,url){
+       
         $("#"+id1).click(function(){
                 var parames={
                 "type1":"paramer1","type2":"paramer2"};
@@ -74,13 +75,8 @@
                         $("#"+id2).html(data);
                 }
                 }); 
-
         });  
-    } 
-      
-
-     
-
+    }
     </script>
 
 </body>

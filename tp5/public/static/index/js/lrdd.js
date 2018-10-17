@@ -295,9 +295,17 @@ $('.wt_del').click(function(){
 //点击默认
 $('.wt_default').click(function(){
   if ($(lei).hasClass('song')) {//判断是不是收货
-    console.log('选前选中是收货');
+    $.get(linkman_default,{'id':id,type:'r'},function(data){
+      if(data.status){
+        alert('成功设置默认信息')
+      }
+    });
   }else{//发货
-    console.log('选前选中是发货');
+    $.get(linkman_default,{'id':id,type:'s'},function(data){
+      if(data.status){
+        alert('成功设置默认信息')
+      }
+    });
   }
 })
 

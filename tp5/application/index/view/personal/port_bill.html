@@ -4,225 +4,62 @@
         padding: 8px;
     }
 </style>
-<div class="demoTable">
-        搜索ID：
-        <div class="layui-inline">
-          <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-        </div>
-        <button class="layui-btn" data-type="reload">搜索</button>
-      </div>
+<ul class="layui-tab-title">
+    <li class="layui-this">所有账单</li>
+    <li><a href="<{:url('personal/port_bill_money')}>">未付款账单</a></li>
+</ul>
+<table class="layui-hide" id="test" lay-filter="test"></table>
  
-<div class="layui-btn-group demoTable">
-  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
-  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
-  <button class="layui-btn" data-type="isAll">验证是否全选</button>
-</div>
- 
-<table class="layui-table" lay-data="{width: 99%, height:100%, url:"+<{:url('index/Bill/billList')}>+", page:true, id:'idTest'}" lay-filter="demo">
-  <thead>
-    <tr>
-      <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-      <th lay-data="{field:'id', sort: true, fixed: true}">ID</th>
-      <th lay-data="{field:'bill_num'}">对账单号</th>
-      <th lay-data="{field:'order_num'}">订单号</th>
-      <th lay-data="{field:'container_size'}">柜型</th>
-      <th lay-data="{field:'container_sum'}">箱量</th>
-      <th lay-data="{field:'quoted_price'}">总价(元)</th>
-      <th lay-data="{field:'ctime', sort: true}">账单生成时间</th>
-      <th lay-data="{field:'status'}">账单状态</th>
-      <th lay-data="{field:'comment'}">备注</th>
-    </tr>
-  </thead>
-</table>
- 
-<script type="text/html" id="barDemo">
-  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</script>
-               
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+  </div>
+</script>               
           
 <script src="__STATIC__/layui/layui.js"></script>   
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-layui.use('table', function(){
-  var table = layui.table;
-  //监听表格复选框选择
-  table.on('checkbox(demo)', function(obj){
-    console.log(obj)
-  });
-  //监听工具条
-  table.on('tool(demo)', function(obj){
-    var data = obj.data;
-    if(obj.event === 'detail'){
-      layer.msg('ID：'+ data.id + ' 的查看操作');
-    } else if(obj.event === 'del'){
-      layer.confirm('真的删除行么', function(index){
-        obj.del();
-        layer.close(index);
-      });
-    } else if(obj.event === 'edit'){
-      layer.alert('编辑行：<br>'+ JSON.stringify(data))
-    }
-  });
+layui.use(['jquery', 'layer','table'], function(){ 
+  var $ = layui.$ //重点处
+  ,layer = layui.layer
+  ,table = layui.table;
   
-  var $ = layui.$, active = {
-    getCheckData: function(){ //获取选中数据
-      var checkStatus = table.checkStatus('idTest')
-      ,data = checkStatus.data;
-      layer.alert(JSON.stringify(data));
-    }
-    ,getCheckLength: function(){ //获取选中数目
-      var checkStatus = table.checkStatus('idTest')
-      ,data = checkStatus.data;
-      layer.msg('选中了：'+ data.length + ' 个');
-    }
-    ,isAll: function(){ //验证是否全选
-      var checkStatus = table.checkStatus('idTest');
-      layer.msg(checkStatus.isAll ? '全选': '未全选')
-    }
-  };
-  
-  $('.demoTable .layui-btn').on('click', function(){
-    var type = $(this).data('type');
-    active[type] ? active[type].call(this) : '';
+  table.render({
+    elem: '#test'
+    ,url: "<{:url('index/Bill/billList')}>?type=done"
+    ,toolbar: '#toolbarDemo'
+    ,title: '用户数据表'
+    ,width:'99%'
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', fixed: 'left', unresize: true, sort: true}
+      ,{field:'bill_num', title:'对账单号', edit: 'text' ,width:150}
+      ,{field:'order_num', title:'订单号', edit: 'text', width:200}
+      ,{field:'container_size', title:'柜型',  edit: 'text' ,width:100}
+      ,{field:'container_sum', title:'箱量' ,width:100}
+      ,{field:'quoted_price', title:'总价(元)',width:100}
+      ,{field:'ctime', title:'账单生成时间', sort: true,width:200}
+      ,{field:'status', title:'账单状态',width:100}
+      ,{field:'comment', title:'备注',sort: true}
+    ]]
+    ,page: true
+  //   , done: function(res, curr, count){
+  //   //如果是异步请求数据方式，res即为你接口返回的信息。
+  //   //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+  //   console.log(res);
+  //   //得到当前页码
+  //   console.log(curr); 
+    
+  //   //得到数据总量
+  //   console.log(count);
+  // }
   });
+
+  //选中的数据
+  $('button').click(function(){
+    var checkStatus = table.checkStatus('test');
+    console.log(checkStatus.data);
+  })
+
 });
 </script>
-
-<!-- <script>
- layui.use('table', function(){
-  var table = layui.table;
-  
-  //展示已知数据
-  table.render({
-    elem: '#demo'
-    ,cols: [[ //标题栏
-    {type:'checkbox'}
-      ,{field: 'id', title: 'ID', width: 80, sort: true}
-      ,{field: 'username', title: '对账单号'}
-      ,{field: 'email', title: '订单号'}
-      ,{field: 'sign', title: '对账月份'}
-      ,{field: 'sex', title: '箱量'}
-      ,{field: 'city', title: '总价(元)'}
-      ,{field: 'experience', title: '账单生成时间'}
-      ,{field: 'experience', title: '账单状态'}
-      ,{field: 'experience', title: '备注'}
-    ]]
-    ,data: [{
-      "id": "10001"
-      ,"username": "杜甫"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "116"
-      ,"ip": "192.168.0.8"
-      ,"logins": "108"
-      ,"joinTime": "2016-10-14"
-    }, {
-      "id": "10002"
-      ,"username": "李白"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "12"
-      ,"ip": "192.168.0.8"
-      ,"logins": "106"
-      ,"joinTime": "2016-10-14"
-      ,"LAY_CHECKED": true
-    }, {
-      "id": "10003"
-      ,"username": "王勃"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "65"
-      ,"ip": "192.168.0.8"
-      ,"logins": "106"
-      ,"joinTime": "2016-10-14"
-    }, {
-      "id": "10004"
-      ,"username": "贤心"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "666"
-      ,"ip": "192.168.0.8"
-      ,"logins": "106"
-      ,"joinTime": "2016-10-14"
-    }, {
-      "id": "10005"
-      ,"username": "贤心"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "86"
-      ,"ip": "192.168.0.8"
-      ,"logins": "106"
-      ,"joinTime": "2016-10-14"
-    }, {
-      "id": "10006"
-      ,"username": "贤心"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "12"
-      ,"ip": "192.168.0.8"
-      ,"logins": "106"
-      ,"joinTime": "2016-10-14"
-    }, {
-      "id": "10007"
-      ,"username": "贤心"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "16"
-      ,"ip": "192.168.0.8"
-      ,"logins": "106"
-      ,"joinTime": "2016-10-14"
-    }, {
-      "id": "10008"
-      ,"username": "贤心"
-      ,"email": "xianxin@layui.com"
-      ,"sex": "男"
-      ,"city": "浙江杭州"
-      ,"sign": "人生恰似一场修行"
-      ,"experience": "106"
-      ,"ip": "192.168.0.8"
-      ,"logins": "106"
-      ,"joinTime": "2016-10-14"
-    }]
-    // ,skin: 'line' //表格风格
-    ,even: true
-    ,page: true //是否显示分页
-    ,limits: [5, 7, 10]
-    ,limit: 5 //每页默认显示的数量
-  });
-
-  //监听表格复选框选择
-table.on('checkbox(demo)', function(obj){
-    console.log(obj)
-  });
-
-var $ = layui.$, active = {
-    getCheckData: function(){ //获取选中数据
-      var checkStatus = table.checkStatus('idTest')
-      ,data = checkStatus.data;
-      layer.alert(JSON.stringify(data));
-    }
-  };
-
-  $('.demoTable .layui-btn').on('click', function(){
-    var type = $(this).data('type');
-    active[type] ? active[type].call(this) : '';
-  });
-});
-
-</script> -->
