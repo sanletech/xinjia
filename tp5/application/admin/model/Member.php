@@ -43,24 +43,24 @@ class Member extends Model
                ->join('hl_sales_member SM','MP.member_code = SM.member_code','left')
                 ->join('hl_shipcompany SC','SC.id = MP.ship_id','left')
                ->field('MP.id,MP.member_code,SM.member_name,SM.sales_name,SM.sales_code,'
-                       . "group_concat(MP.ship_id order by MP.ship_id separator ',') ship_id,"
-                       . "group_concat(SC.ship_short_name order by MP.ship_id separator ',') ship_name,"
-                       . "group_concat(MP.money order by MP.ship_id separator ',') money")
-               ->group('MP.member_code')->order('SM.id')->buildSql();    
+                       . "group_concat(distinct MP.ship_id order by MP.ship_id separator ',') ship_id,"
+                       . "group_concat(distinct SC.ship_short_name order by MP.ship_id separator ',') ship_name,"
+                       . "group_concat(distinct MP.money order by MP.ship_id separator ',') money")
+               ->group('MP.member_code')->where('SC.status',1)->order('SM.id')->buildSql();    
 //var_dump($list);exit;
 
         $pageParam  = ['query' =>[]]; //设置分页查询参数  
         if($type=='sales'&&!empty($account)){
             $list =Db::table($list.' b')
                 ->where('b.sales_name','like',"%{$account}%")
-                ->whereOr('b.sales_code','like',"%{$account}%")
+                ->whereOr('b.sales_code',$account)
                 ->buildSql(); 
         } 
     
         if($type=='customer'&&!empty($account)){
             $list =Db::table($list.' c')
                 ->where('c.member_name','like',"%{$account}%")
-                ->whereOr('c.member_code','like',"%{$account}%")   
+                ->whereOr('c.member_code',$account)   
                 ->buildSql(); 
         }
             $pageParam['query']['account'] = $account;

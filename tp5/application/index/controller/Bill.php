@@ -32,7 +32,8 @@ class Bill extends Base
         $member_code =Session::get('member_code','think');
         $list =Db::name('order_bill')->where('member_code',$member_code)
                 ->field('member_code',TRUE)->select();
-        return $list;
+        $count = count($list);
+        return array('list'=>$list,'count'=>$count);
     }
 
 }

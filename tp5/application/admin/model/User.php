@@ -9,17 +9,6 @@ class User extends Model
         $status = [1=>'已启用',0=>'禁用'];
         return $status[$data['status']];
     }
-//    
-//     public function getLogintimeAttr($value) {
-//         return date("Y-m-d",$value);
-//        
-//    }
-//    
-    
-//      public function profile()
-//    {
-//      //  return $this->hasOne('Profile');
-//    }
 
     
     

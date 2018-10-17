@@ -71,7 +71,7 @@ class Personal extends Base
 //        $Bill = controller('Bill');
 //        $list =$Bill->billList();
 ////        $this->_p($list);exit;
-//        $this->view->assign('list', $list);
+        $this->view->assign('billUrl', url("index/Bill?billList"));
         return $this->view->fetch('personal/port_bill');
     }
     

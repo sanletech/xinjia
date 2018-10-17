@@ -65,7 +65,7 @@ class orderPort extends Model
                 ->where('OP.order_num',$order_num)
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
                 ->find();
-           
+        
         //根据订单号 查询对应柜子的 柜号和封条号码
         $containerData =Db::name('order_truckage')->alias('OT')
                 ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
@@ -77,14 +77,14 @@ class orderPort extends Model
                 ->where('order_num',$order_num)
                 ->where('state',0) //收费柜子
                 ->where('type','r')->group('id')
-                ->field('order_num,car_price,container_code,count(id) num ,add,mtime,link_man,shipper,load_time,link_phone,car,comment,seal')
+                ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime,link_man,shipper,load_time,link_phone,car,`comment`,seal')
                 ->select();
-        
+       
         $carData['s'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
                 ->where('state',0) //收费柜子
                 ->where('type','s')->group('id')
-                ->field('order_num,car_price,container_code,count(id) num ,add,mtime ,car,comment,seal')
+                ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
         
         return array($list ,$containerData,$carData);

@@ -11,10 +11,7 @@ use think\Db;
 
 class Price extends Base
 {   
-//    public function __construct(Request $request = null) {
-//        parent::__construct($request);
-//        $this->request= $request;
-//    }
+
      //航线运价
     public function price_route() 
     {   
@@ -35,12 +32,6 @@ class Price extends Base
     }
     //航线详情添加展示页面
     public function route_add(){
-        
-//        //传递船公司下面的船只
-//        $sql ="select * from hl_boat ";
-//        $boat_data = Db::query($sql);
-//        $js_boat=json_encode($boat_data);
-//        $this->view->assign('js_boat',$js_boat);
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
         return $this->view->fetch('price/route_add');
@@ -54,8 +45,6 @@ class Price extends Base
         //使用PortM 里的行情list方法查询对应的中间港口
         $ship_route = new PriceM;
         $list =$ship_route->route_select($sl_start,$sl_end);
-       // $this->_p($res);exit;
-        //$middle_route =$res->column('port_name','m_id');
         return json($list);    
     }
     //航线添加
@@ -72,6 +61,19 @@ class Price extends Base
       
         return $response; 
     }
+    //航线运价重新发布
+    public function route_again() {
+        $seaprice_id = input('get.seaprice_id');
+        $seaprice = new PriceM;
+        $res = $seaprice-> price_route_list('','','',100,$seaprice_id);
+//        $this->_p($res['0']);exit;
+        $message =$this->quickMessage();
+        $this->view->assign('message',$message);
+        $this->assign('data',$res['0']);
+        $this->assign('readOnly','true');//是否禁用
+        $this->assign('toURL',url('admin/Price/route_toedit','type=again'));
+        return $this->view->fetch("price/route_edit");
+    }
     
     //航线修改页面
     public function route_edit(){
@@ -82,6 +84,8 @@ class Price extends Base
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
         $this->assign('data',$res['0']);
+        $this->assign('readOnly','fales'); //是否禁用
+        $this->assign('toURL',url('admin/Price/route_toedit','type=edit'));
         return $this->view->fetch("price/route_edit");
     }
     //航线执行修改
@@ -89,12 +93,20 @@ class Price extends Base
         $data = $this->request->param();
 //      $this->_p($data);exit;
         $seaprice = new PriceM;
-        $res = $seaprice->price_route_toedit($data);          
+        $type = $data['type'];  //修改还是重新发布
+        unset($data['type']);
+        if($type=='edit'){
+            $res = $seaprice->price_route_toedit($data);    
+        }elseif ($type=='again') {
+            $res = $seaprice->price_route_add($data); 
+        }
+             
         if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);  
-         return $status; 
+            $response =['status'=>1,'message'=>$res['success']]; 
+        }else {
+            $response =['status'=>0,'message'=>$res['fail']]; 
+        } 
+        return $response; 
     }
     //航线运价删除
     public function route_del(){
