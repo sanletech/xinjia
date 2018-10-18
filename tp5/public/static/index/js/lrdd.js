@@ -9,11 +9,11 @@ layui.use(['form', 'layedit', 'laydate', 'element'], function () {
     if (data.elem.checked) {
       $('#zeng,.zhuanghuo').show();
       loading = true;
-      $('.bge input').attr('disabled', false);
+      $('.bge input').attr('readOnly', false);
     } else {
       $('#zeng,.zhuanghuo').hide();
       loading = false;
-      $('.bge input').attr('disabled', true);
+      $('.bge input').attr('readOnly', true);
     }
     st();
   })
@@ -22,11 +22,11 @@ layui.use(['form', 'layedit', 'laydate', 'element'], function () {
     if (data.elem.checked) {
       $('#zeng_song,.songhuo').show();
       delivery = true;
-      $('.bge_song input').attr('disabled', false);
+      $('.bge_song input').attr('readOnly', false);
     } else {
       $('#zeng_song,.songhuo').hide();
       delivery = false;
-      $('.bge_song input').attr('disabled', true);
+      $('.bge_song input').attr('readOnly', true);
     }
     st();
   })

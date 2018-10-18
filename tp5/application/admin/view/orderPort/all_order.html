@@ -36,11 +36,14 @@
               <table class="layui-table layui-table-item" id="te">
                 <thead>
                   <tr>
+                    <th>订单号</th>
+                    <th>提交时间</th>
                     <th>客户账号</th>
                     <th>客户单位</th>
-                    <th>订单号</th>
-
-                    <th>提交时间</th>
+                    
+                    <td>运单号</td>
+                    <td>柜量/柜型</td>
+                    
                     <th>船公司</th>
                     <th>船名航次</th>
                     <th>起运港</th>
@@ -59,10 +62,13 @@
                 <tbody>
                 <{volist name="list" id ="vo"}>
                   <tr>
-                    <td><{$vo.member_code}></td>
-                    <td><{$vo.company}></td>
                     <td><{$vo.order_num}></td>
                     <td><{$vo.ctime}></td>
+                    <td><{$vo.member_code}></td>
+                    <td><{$vo.company}></td>
+                    <td><{$vo.track_num}></td>
+                    <td>2/20GP</td>
+                    
                     <td><{$vo.ship_short_name}></td>
                     <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
                     <td><{$vo.s_port}></td>
@@ -77,7 +83,7 @@
                         <?php if(empty($vo['sea_waybill'])){echo"未提交"; }else{echo"已提交"; } ?>
 <!--                      <a class="syd" href="javascript:void(0);">运单</a>-->
                     </td>
-                    <!-- <td><{$vo.track_num}></td> -->
+          
                     <td>扣货/放货/申请放货</td>
                     <td class="fukuan">
                         <?php if($vo['money_status']==0){echo"未付款"; }else{echo"已付款"; } ?>

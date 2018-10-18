@@ -70,7 +70,6 @@ for (let i = 1; i < 31; i++) {
     $('.guil').append("<option value='" + i + "'>" + i + "</option>");
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // 接受后台的联系人资料
 function selectlink() {
@@ -165,17 +164,25 @@ function invoice() {
 function order_data(zj) {
 //    $(zj).attr("onclick",'return false');//禁用提交按钮   
     //提交后禁止 
+    if (!loading) {//装货是否禁用
+        $('.bge input').val('');
+    }
+    if (!delivery) {
+        $('.bge_song input').val('');
+    }
     var data = $("#order_data_form").serializeArray();
     let obj = {};
     $.each(data,function(i,v){
         obj[v.name] = v.value;
     });
-    obj['money'] = $('#money').html();//纯运费
+    obj['carriage'] = $('.carriage').html();//单柜纯运费
+    obj['carriage_sum'] = $('#money').html();//总纯运费
     obj['premium'] = $('#bxje1').html();//保险费
     obj['portprice_r'] = $('#zhuang').html();//装货费用
     obj['portprice_s'] = $('#song').html();//送货费用
     obj['discount'] = $('#discount').html();//优惠价格
     obj['price_sum'] = $('#price_sum').html();//总运费
+
     toajax(OrderUrl, obj);
 }
 
@@ -188,6 +195,7 @@ function toajax(url, data) {
         success: function (data) {          
             if (data.status == 1) {
                 alert('提交表单成功');
+                window.location.replace(index_url);
             }
         $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
         }
@@ -197,11 +205,13 @@ function toajax(url, data) {
 var mony_fs = 0;
 //计算运费
 function zong_sum(shu,zs) {     
-    var money = $('#money').html();//纯运费
+    var money = $('.carriage').html();//纯运费
     var sum = $("#container_sum option:selected").val();//柜量
-    var bxje = $('#bxje').val() * 6 * sum;//保险金额
+    var bxje = $('#bxje').val() * sum;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje;//总价格
+    console.log(zong,money,sum,$('#bxje').val());
+    
     if (shu == 1) {//发票6%
         zong = zong * 1.04;
     }else if(shu == 2){//发票10%
@@ -246,14 +256,35 @@ function youhui(){ //优惠价格
     let container = $('#container_sum').find("option:selected").val();
     mony_fs = mony * container;
     $('#discount').html(mony_fs);
+    $('#bxje1').html($('#bxje').val() * container);    
+    $('#money').html($('.carriage').html() * container);
     zong_sum(0,0);
 }
 
 $('#bxje').bind('input propertychange', function () {//监听保险金额
-    zong_sum(0,0);
     let container = $('#container_sum').find("option:selected").val();
-    $('#bxje1').html($('#bxje').val() * 6 * container);
+    $('#bxje1').html($('#bxje').val() * container);
+    zong_sum(0,0);
 });
+
+//监听货值
+$('#cargo_value').bind('input propertychange', function () {
+    let container = $('#container_sum').find("option:selected").val();
+    let baoxian = $(this).val() * 40;
+    $('#bxje').val(baoxian);
+    $('#bxje1').html(baoxian * container);
+    zong_sum(0,0);
+});
+
+
+//监听重量
+$('#weight').bind('input propertychange', function () {
+    if ($(this).val() > 34 || $(this).val() < 1) {
+        $(this).val($(this).val().substr($(this).val().length - 1,1));
+        alert('不能小于1大于34');
+    }    
+});
+
 $('.fp01').change(function () {//发票柜量
     let fp = $(this).children('option:selected').val();
     if (fp == 1) {//6%
