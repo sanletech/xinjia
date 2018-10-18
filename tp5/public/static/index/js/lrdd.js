@@ -420,7 +420,7 @@ function dele(zj) {//删除当前装货或者送货
 //第一次 下单
 $('.tjiao').eq(0).find('.shi').click(function(){
   $('.tjiao').eq(0).hide();
-  $('.lc,.wt1,.fp1,.dd_nei .layui-form').hide();
+  $('.lc,.wt1,.dd_nei .layui-form').hide();
   $('.tjiao').eq(1).show();
   $('.lche,.fuwu').show();
   $('input').css('border','0').attr('readonly',true);
@@ -431,7 +431,7 @@ $('.tjiao').eq(0).find('.shi').click(function(){
 //返回修改
 $('.tjiao').eq(1).find('.qu').click(function(){
   $('.tjiao').eq(1).hide();
-  $('.lc,.wt1,.fp1,.dd_nei .layui-form').show();
+  $('.lc,.wt1,.dd_nei .layui-form').show();
   $('.tjiao').eq(0).show();
   $('.lche,.fuwu').hide();
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);

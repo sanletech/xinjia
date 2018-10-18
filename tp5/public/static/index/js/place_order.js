@@ -199,7 +199,7 @@ var mony_fs = 0;
 function zong_sum(shu,zs) {     
     var money = $('#money').html();//纯运费
     var sum = $("#container_sum option:selected").val();//柜量
-    var bxje = $('#bxje').val() * 6;//保险金额
+    var bxje = $('#bxje').val() * 6 * sum;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje;//总价格
     if (shu == 1) {//发票6%
@@ -250,8 +250,9 @@ function youhui(){ //优惠价格
 }
 
 $('#bxje').bind('input propertychange', function () {//监听保险金额
-    zong_sum(0,0);   
-    $('#bxje1').html($('#bxje').val() * 6);
+    zong_sum(0,0);
+    let container = $('#container_sum').find("option:selected").val();
+    $('#bxje1').html($('#bxje').val() * 6 * container);
 });
 $('.fp01').change(function () {//发票柜量
     let fp = $(this).children('option:selected').val();

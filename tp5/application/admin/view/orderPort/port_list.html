@@ -56,27 +56,18 @@
         yemian('a1','b1' , "<{:url('admin/orderPort/all_order')}>");//所有订单
         yemian('a2','b2' , "<{:url('admin/orderPort/port_payment')}>");//在线支付
         yemian('a3','b3' , "<{:url('admin/orderPort/port_month')}>");//月结
+        $.get("<{:url('admin/orderPort/all_order')}>",function(data){      
+          $("#b1").html(data).addClass('layui-show');
+        });
     });
 
     function yemian(id1,id2,url){
-       
-        $("#"+id1).click(function(){
-                var parames={
-                "type1":"paramer1","type2":"paramer2"};
-                $.ajax({
-                url:url,
-                type:'post',
-                dataType:'html',
-                data:parames,
-                error: function(){alert('error');},
-                success:function(data){
-                        // console.log(data);
-                        data = JSON.parse( data );
-                        $("#"+id2).html(data);
-                }
-                }); 
-        });  
-    }
+      $("#"+id1).click(function(){
+        $.get(url,function(data){
+          $("#"+id2).html(data);
+        })
+      });  
+    }    
     </script>
 
 </body>
