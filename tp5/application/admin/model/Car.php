@@ -44,7 +44,7 @@ class Car extends Model
         $sqlstr=Db::name('car_port')->alias('CP')
                 ->join('hl_car_city CC' , 'CC.car_id = CP.car_id' , 'left')
                 ->join('hl_car_ship CS' , 'CS.car_id = CP.car_id' , 'left')
-                ->join('hl_shipcompany SC' , 'SC.id =  CS.ship_id' , 'left')
+                ->join('hl_shipcompany SC' ,"SC.id =  CS.ship_id and SC.status='1'" , 'left')
                 ->join('hl_port P' , 'P.id = CP.port_id' , 'left')
                 ->join('hl_cardata CD' , 'CD.id = CP.car_id','left')
                 ->field('CP.id , CP.port_id, P.port_name,CP.car_id ,  CD.car_name, CD.address, CD.symbiosis, CD.status  ,'

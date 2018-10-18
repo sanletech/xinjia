@@ -8,6 +8,7 @@ class Ship extends Model
     public function shiplist($ship_name,$pages=5){
         
          $list = Db::name('shipcompany')
+                ->where('status',1)
                 ->field('id,ship_short_name,ship_name,mtime')
                 ->buildSql();
         $pageParam  = ['query' =>[]]; //设置分页查询参数

@@ -80,6 +80,7 @@ class OrderPort extends Controller
     //港到港订单的处理
     public function port_data() {
         $data =$this->request->param(); 
+//        $this->_p($data);exit;
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复
         if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
@@ -104,6 +105,7 @@ class OrderPort extends Controller
         $truckageData = array(  'r'=>['car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
                     'load_time'=>$data['r_load_time'],'link_phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
                     's'=>['car_price'=>$data['s_car_price'],'num'=>$data['s_num'],'add'=>$data['s_add'],'car'=>$data['s_car'], 'comment'=>$data['s_comment']] );
+ 
         // 根据订单号, 下单的柜子总数, 和实际的装货送货数据 来生成order_trackage的信息
         $truckagePrice = $Pirce->truckage($order_num,$data['container_sum'], $truckageData);
         

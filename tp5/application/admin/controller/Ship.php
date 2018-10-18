@@ -9,10 +9,7 @@ use think\Request;
 use think\Db;
 class Ship extends Base
 {   
-    public function __construct(Request $request = null) {
-        parent::__construct($request);
-        $this->request= $request;
-    }
+
     //分页展示船公司的列表信息
     public function ship_list() 
     {   
@@ -106,7 +103,7 @@ class Ship extends Base
    
     public function ship_js() {
   
-        $data = Db::name('shipcompany')->field('ship_name,mtime',true)->select();
+        $data = Db::name('shipcompany')->where('status',1)->field('ship_name,mtime',true)->select();
         $js_ship = json_encode($data);
         $js_ship = 'var JS_SHIP ='.$js_ship;
         $filename ="./static/admin/js/ship.js"; 

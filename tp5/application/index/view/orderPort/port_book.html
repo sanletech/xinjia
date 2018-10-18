@@ -129,21 +129,21 @@
               <div class="layui-col-xs6 er_le">
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>装货单位：</div>
+                    <span>*&nbsp;</span>发货单位：</div>
                   <div class="layui-col-xs9">
                     <input type="text" name="r_company" value="" readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>装货联系人：</div>
+                    <span>*&nbsp;</span>发货联系人：</div>
                   <div class="layui-col-xs9">
                     <input type="text" name="r_name" value="" readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
-                    <span>*&nbsp;</span>装货联系人电话：</div>
+                    <span>*&nbsp;</span>发货联系人电话：</div>
                   <div class="layui-col-xs9">
                     <input type="text" name="r_phone" value="" readonly='readonly' class="in">
                   </div>
@@ -182,7 +182,7 @@
         <!-- 货物 -->
         <div class="xxtx_dd">
           <div class="xx">
-            <strong>货物</strong>
+            <strong>货物信息</strong>
             <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span>
           </div>
           <div class="dd_nei">
@@ -214,7 +214,7 @@
             <div class="layui-col-xs4 er">
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>重量：</div>
+                  <span>*&nbsp;</span>没柜重量：</div>
                 <div class="layui-col-xs6">
                   <input type="text" name="weight" value="" placeholder="">
                 </div>
@@ -260,7 +260,7 @@
             <div class="layui-col-xs4 er">
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>保险金额：</div>
+                  <span>*&nbsp;</span>每柜保额：</div>
                 <div class="layui-col-xs6">
                   <input id="bxje" type="text" name="cargo_cost" value="" placeholder="">
                 </div>
@@ -317,10 +317,10 @@
             </div>
             <div class="fp layui-col-xs12">
               <!-- 是否开取发票 -->
-              <div class="fp1 fuwu layui-col-xs2">开取发票信息</div>
-              <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
+              <div class="fp1 layui-col-xs2">开取发票信息</div>
+              <!-- <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
                 <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1">
-              </div>
+              </div> -->
               <div class="layui-col-xs1">&nbsp;</div>
               <!-- 选择发票 -->
               <div class="layui-col-xs3">
@@ -641,8 +641,8 @@
             <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_default">设置默认</a>
           <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
-              <li class="layui-this">收货人</li>
-              <li>发货人</li>
+              <li class="layui-this">发货人信息</li>
+              <li>收货人信息</li>
             </ul>
             <div class="layui-tab-content" style="height: 100px;">
               <div class="layui-tab-item layui-show">

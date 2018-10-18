@@ -1,0 +1,199 @@
+<!-- 港到港订单 -->
+<{include file='./public/head' /}>
+
+  <body>
+    <link rel="stylesheet" href="__STATIC__/css/place_details.css">
+    <div class="invalid">
+      <form class="" action="" method="post">
+        <div class="layui-row">
+          <div class="layui-col-xs6">
+            <div class="grid-demo">
+              <div class="layui-form-item">
+                <label class="layui-form-label">订单号：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="order_num" value='<{$order_num}>' placeholder="" autocomplete="off" class="layui-input">
+                </div>
+
+                <div class="layui-input-inline" style="float:right;">
+                  <button class="layui-btn btn_select" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- 表格 -->
+      <div class="biao">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+          <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show">
+              <table class="layui-table layui-table-item" id="te">
+                <thead>
+                  <tr>
+                    <th>订单号</th>
+                    <th>运单号</th>
+                    <th>提交时间</th>
+                    <th>船公司</th>
+<!--                    <th>驳船</th>-->
+                    <th>船名航次</th>
+                    <th>起运港-目的港</th>
+                    <th>柜型*柜量</th>
+                    <th>总运费</th>
+                    <th>付款状态</th>
+                    <th>订舱单</th>
+                    <th>补料</th>
+                    <th>水运单</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <{volist name="list" id="vo"}>
+                  <tr>
+                    <td class="ddh">
+                      <!-- 有改变css('background-color','#00DB00') -->
+                      <a href="javascript:void(0);"><{$vo.order_num}></a>
+                    </td>
+                    <td><{$vo.track_num}></td>
+                    <td><{$vo.ctime}></td>
+                    <td><{$vo.ship_short_name}></td>
+                    <!--<td>否</td>-->
+                    <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
+                    <td><{$vo.s_port}>-<{$vo.e_port}></td>
+                    <td><{$vo.container_size}>*<{$vo.container_sum}></td>
+                    <td><{$vo.quoted_price}></td>
+                    <td class="fukuan">
+                      <a target="_blank" href="javascript:void(0);">
+                          <?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></a>
+                    </td>
+                    <td>
+                      <!-- 有改变css('background-color','#00DB00') -->
+                    <?php                                    
+                    $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'book_note']);
+                    if($vo['book_note']){
+                        echo '<a href="'.$url.'">放纸箱</a>';
+                    }
+                    ?>
+                    </td>
+                    <td>
+                      <!-- 有改变css('background-color','#00DB00') -->
+                      <{if condition="($vo['status']>4&&$vo['container_status']==1) "}>
+                      已补料
+                      <{else /}>
+                      <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>');">提交柜号</a>
+                      <{/if}>
+                    </td>
+                    <td>
+                      <!-- 有改变css('background-color','#00DB00') -->
+                    <?php                                    
+                    $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'sea_waybill']);
+                    if($vo['sea_waybill']){
+                        echo '<a href="'.$url.'">运单</a>';
+                    }
+                    ?>
+                      <!--<a href="javascript:void(0);">运单</a>-->
+                    </td>
+                    <td class="caozuo">
+                      <a title="查看订单" target="_blank" onclick="" href="<{:url('index/OrderPort/orderPortDetail')}>">
+                        <i class="layui-icon">&#xe63c;</i>
+                      </a>
+                    <{if condition="$vo['status'] lt 3"}>
+                    <a title="删除" onclick="del(this,'<{$vo.id}>')" href="javascript:;">
+                        <i class="layui-icon">&#xe640;</i>
+                    </a>'
+                    <{/if}>
+                    </td> 
+                  </tr>
+                  <{/volist}>
+                </tbody>
+              </table>
+               <div class="text-center" id="pages"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="cabinet">
+      <form class="layui-form" action="">
+          <div class="guiding" style="margin: 10px 0;overflow: hidden;">
+              <div class="layui-col-xs6">
+                <label class="layui-form-label">柜型:</label>
+                <div class="layui-input-block">
+                    <input id="gui"  name="title" lay-verify="title" autocomplete="off"  class="layui-input layui-disabled" type="text" value="" disabled>
+                </div>
+              </div>
+          
+            <div class="layui-col-xs6">
+             <label class="layui-form-label">订单号:</label>
+             <div class="layui-input-block">
+                 <input id="order_number" name="order_num" lay-verify="title" autocomplete="off" class="layui-input layui-disabled" type="text" readonly="true">
+             </div>
+           </div>
+          </div>
+
+        <div class="guix">
+            <div class="wenzi">柜号-封号:</div>
+            <div class="ggh">
+
+            </div>
+        </div>
+<!--        <div class="layui-form-item">
+          <label class="layui-form-label">货名:</label>
+          <div class="layui-input-block">
+            <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入货名" class="layui-input" type="text" value="黄金">
+          </div>
+        </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">收货人:</label>
+          <div class="layui-input-block">
+            <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入收货人" class="layui-input" type="text" value="海运兴佳">
+          </div>
+        </div>-->
+      </form>
+    </div>
+    <script>
+      var xiangqing = "<{:url('index/Order/place_details')}>";
+    </script>
+    <script src="__STATIC__/js/personal/page.js"></script>
+    <script src="__STATIC__/js/personal/cabinet_number.js"></script>
+    <script>
+
+        
+        var url="<{:url('index/Personal/place_order')}>";
+        var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号
+        var track_num = "<{:url('index/Personal/track_num')}>";//提交柜号
+        var page =<{$page}>;
+        var count=<{$count}>;
+        var limit=<{$limit}>;
+        function del(obj, did) {
+        layer.confirm('确认要删除吗？', function (index) {
+          //转成数组形式
+          var dataA = new Array()
+          dataA[0] = did;
+          var dataArray = { id: dataA }
+          toajax(dataArray);
+          $(obj).parents("tr").remove();
+          layer.msg('已删除!', { icon: 1, time: 1000 });
+        });
+      }
+      
+        function toajax(dataArray) {
+        $.ajax({
+          type: 'POST',
+          url: "<{:url('admin/orderPort/orderPortDel')}>",
+          data: dataArray,
+          dataType: "json",
+          success: function (data) {
+            if (data.status == 1) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }
+        })
+      }
+    </script>
+  </body>
+
+  </html>

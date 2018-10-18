@@ -19,6 +19,40 @@
         </style>
         <form class="" id='order_data_form'>
             <div class="xxtx">
+                <!-- 是否支付 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>订单状态</strong>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs12">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">支付状态：</label>
+                                <div class="layui-input-block">
+                                    已付款/月结(未付款)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">订单号：</label>
+                                <div class="layui-input-block">
+                                    <input name="order_num" lay-verify="title" autocomplete="off" readOnly class="layui-input" type="text" value="<{$list.order_num}>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs9">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下单时间：</label>
+                                <div class="layui-input-block">
+                                    <span>
+                                        <{$list.ctime}>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- 动态一 -->
                 <div class="xxtx_dd er">
                     <div class="xx">
@@ -506,9 +540,9 @@
                             <strong class="zongfei" id="price_sum">0</strong>元
                           </div>
                         </div>
-                      </div>
+                    </div>
 
-                    <!-- 是否支付 -->
+                    <!-- 是否支付
                     <div class="xxtx_dd er">
                         <div class="xx">
                             <strong>订单状态</strong>
@@ -539,7 +573,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="tjiao">
                         <a href="javascript:;" onclick="xiu_order(this)">保存</a>

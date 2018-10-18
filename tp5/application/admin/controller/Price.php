@@ -261,7 +261,7 @@ class Price extends Base
                 join('hl_price_incidental S',"R.port_code=S.port_code " 
                         . "and R.ship_id =S.ship_id and R.type='R' and  S.type='S' and S.id <> R.id",'left')
                 ->join('hl_port P','P.port_code=R.port_code','left')
-                ->join('hl_shipcompany SC','SC.id=R.ship_id','left')
+                ->join('hl_shipcompany SC',"SC.id=R.ship_id and SC.status='1'",'left')
                 ->where('S.id',$data['sid'])->where('R.id',$data['rid'])
                 ->field('R.id rid,S.id sid,R.port_code,P.port_name,R.40HQ r40HQ,'
                         . 'R.20GP r20GP,S.40HQ s40HQ,S.20GP s20GP ,R.ship_id ,SC.ship_short_name')

@@ -46,6 +46,8 @@ class OrderPort extends Base
 //            var_dump($file);
             //将后缀修改成.
             $file_Extension= strstr(strrev($file),'_',true);
+            $file_Extension= strrev($file_Extension);
+        
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
 //              var_dump($file_name);exit;
             $file_dir = ROOT_PATH . 'public' . DS . 'uploads';        //下载文件存放目录    
@@ -272,7 +274,7 @@ class OrderPort extends Base
             $res1 ?$respones['success'][] ='订单状态修改成功':$respones['fail'][] ='订单状态修改失败';
         }
         }
-        if(array_key_exists('fail', $respones)){
+        if(!array_key_exists('fail', $respones)){
             return array('status'>1,'mssage'>'删除成功');
         }else{
              return array('status'>0,'mssage'>'删除失败');
