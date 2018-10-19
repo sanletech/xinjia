@@ -4,7 +4,11 @@
     <link rel="stylesheet" href="__STATIC__/css/lrdd.css">
     <link rel="stylesheet" href="__STATIC__/css/xiala.css">
     <link rel="stylesheet" href="__STATIC__/css/all_order.css">
-    
+    <style>
+      .er a{
+        color: blue;
+      }
+    </style>
     <div class="banner"></div>
     <form class="" id='order_data_form'>
       <div class="xxtx">
@@ -216,7 +220,7 @@
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>每柜重量：</div>
                 <div class="layui-col-xs6">
-                  <input type="text" name="weight" id="weight" value="" placeholder="">
+                  <input type="text" name="weight" id="weight" value="0" placeholder="">
                 </div>
                 <div class="layui-col-xs2" style="text-align: left;margin-left: 8px; ">
                   <span>吨(T)</span>
@@ -260,9 +264,9 @@
             <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>货值(柜)</div>
+                  <span>*&nbsp;</span><a href="javascript:;">货值(柜)</a></div>
                 <div class="layui-col-xs6">
-                  <input id="cargo_value" type="text" name="cargo_value" value="" placeholder="">
+                  <input id="cargo_value" type="text" name="cargo_value" value="0" placeholder="">
                 </div>
 
                 <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
@@ -274,7 +278,7 @@
             <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>保险(柜)</div>
+                  <span>*&nbsp;</span><a href="javascript:;" title="平台将根据货值购买保险">保险(柜)</a></div>
                 <div class="layui-col-xs6">
                   <input id="bxje" type="text" name="cargo_cost" value="0" placeholder="" readonly>
                 </div>

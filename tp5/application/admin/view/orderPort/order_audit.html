@@ -54,11 +54,9 @@
             <td><{$vo.ship_short_name}>--<{$vo.boat_name}>/<{$vo.boat_code}></td>
             <td><{$vo.ctime}></td>
             <td class="td-manage">
-                <a title="确认"  onclick="member_pass(this,'<{$vo.id}>')" href="javascript:;">
-                    <i class="layui-icon">&#xe618;</i>
-                </a>
-                <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
-                    <i class="layui-icon">&#xe640;</i>
+                <!-- <a title="确认"  onclick="member_pass(this,'<{$vo.id}>')" href="javascript:;"> -->
+                <a href="<{:url('admin/orderPort/port_details')}>">
+                    <i class="layui-icon">&#xe63c;</i>
                 </a>
             </td>
           </tr>
