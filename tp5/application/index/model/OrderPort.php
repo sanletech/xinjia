@@ -131,26 +131,28 @@ class OrderPort extends Model
                 $receiveContainerSum= array_sum( $insertR['num']);
                 $freeContainerR = $container_sum- $receiveContainerSum;//客户自己处理的柜子数量
                 if($freeContainerR >0){
-                $tmp[]=array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$freeContainerR);
+                    $tmp[]=array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$freeContainerR);
                 }
             }  else {
-                $tmp =array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$container_sum);
+                $tmp[] =array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$container_sum);
             }  
             $response =[];
             $tmp = array_values($tmp);//将键重新从零开始
             for($i=0;$i<count($tmp);$i++){
                 $cycle = $tmp[$i]['num'];
                 for($j=0;$j<$cycle;$j++){
-                    $tmp[$i]['num']= $i;
-                    $tmp[$i]['container_code']=$container_code.$i.$j;
+                    $tmp[$i]['sequence']= $i;
+                    //$tmp[$i]['container_code']=$container_code.$i.$j;
+                    unset($tmp[$i]['num']);
                     $res =Db::name('order_truckage')->insert($tmp[$i]);
-                    $res ? $response['success'][]= $tmp[$i]['container_code'].'添加成功':$response['fail'][]= $tmp[$i]['container_code'].'添加失败'; 
+                    $res ? $response['success'][]= $i.$j.'添加成功':$response['fail'][]= $i.$j.'添加失败'; 
                 }
             }
             return $response;
         }
         
         $insertR = $truckageData['r']; 
+//        $this->_p($insertR);exit;
         $resultR = insertdata($insertR, $order_num, $container_sum, 'r');
         $insertS = $truckageData['s'];
         $resultS = insertdata($insertS, $order_num, $container_sum, 's');

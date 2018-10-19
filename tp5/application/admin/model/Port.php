@@ -124,7 +124,7 @@ class Port extends Model
             $groupC ="P.city_id";
             $province[$k]['mallCityList']=  query($strC,$groupC,$mapC);
         } 
-        $this->_p($province);exit;
+        
         foreach ($province as $key=> $value) {
                //依照cityCode 分组对应的port
             foreach ($value['mallCityList'] as $kk =>$vv){
@@ -287,7 +287,7 @@ class Port extends Model
        public function  boat_list($ship_name , $boat_name, $pages=5)
     {   
         $list = Db::name('boat')->alias('B')
-                ->join('hl_shipcompany SC','SC.id = B.ship_id','left')
+                ->join('hl_shipcompany SC',"SC.id = B.ship_id and SC.status='1'",'left')
                 ->field('B.id ,B.ship_id ,SC.ship_short_name AS ship_name,'
                         . 'B.boat_code ,B.boat_name ,B.mtime')
                 ->order('B.id ,B.ship_id ')
@@ -332,7 +332,7 @@ class Port extends Model
     
         public function boat_js() {
         $sql = "select B.id,B.ship_id, B.boat_code, B.boat_name  "
-                . " from hl_boat B  left join hl_shipcompany  SC on SC.id = B.ship_id ";
+                . " from hl_boat B  left join hl_shipcompany  SC on SC.id = B.ship_id and SC.status='1'";
         $data = Db::query($sql);
        
         //依照ship_id 分组对应的port_id

@@ -19,7 +19,7 @@ class Order extends Model
                 ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
                 ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
                 ->join('hl_port P2','P2.port_code = SB.sl_end','left')   //船运目的港口
-                ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
+                ->join('hl_shipcompany SC',"SC.id =SP.ship_id and SC.status='1'",'left')//船公司
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
                 ->join('hl_user U',"U.user_code= SM.sales_code and U.type='sales'",'left')  //业务表
@@ -44,7 +44,7 @@ class Order extends Model
                 ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
                 ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
                 ->join('hl_port P2','P2.port_code = SB.sl_end','left')   //船运目的港口
-                ->join('hl_shipcompany SC','SC.id =SP.ship_id','left')//船公司
+                ->join('hl_shipcompany SC',"SC.id =SP.ship_id and SC.status='1'",'left')//船公司
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
                 ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
                 ->join('hl_user U',"U.user_code= SM.sales_code and U.type='sales'",'left')  //业务表

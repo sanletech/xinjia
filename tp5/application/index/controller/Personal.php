@@ -81,7 +81,7 @@ class Personal extends Base
     
     
     //港到港订单
-    public function place_order()
+    public function place_order_port()
     {   
         //订单查询
         $order_num =  $this->request->param('order_num');
@@ -102,43 +102,51 @@ class Personal extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-       return $this->view->fetch('personal/order_port');
+       return $this->view->fetch('personal/place_order_port');
     }
 
     //提交柜号资料
     public function track_data()
     { 
         $order_num = $this->request->param('order_num');
-        $data = Db::name('order_truckage') ->where('order_num',$order_num)->column('container_code');
+        $data = Db::name('order_truckage') ->where(['order_num'=>$order_num,'type'=>'s'])->field('id,container_code,seal')->select();
         return json($data);
     }
     //处理提交柜号
     public function track_num() {
        // $member_code =Session::get('member_code','think');
         $data = $this->request->param(); 
-       // $this->_p($data);exit;
+//        $this->_p($data);exit;
         $order_num =$data['order_num'];
-        $container_num  =$data['container_num'];
-        $container_code =$data['container_code'];
+        $id  =$data['id'];
+        $container_code =$data['container_code'];//
         $seal =$data['seal'];
-        if((count($container_num)==count($container_code)) && (count($container_code)==count($seal))){
+        if(count($seal)==count($container_code)){
            $response =[];
-            //根据订单号 添加柜号和封条号
+            //根据订单号 添加 修改柜号和封条号
             for($i=0;$i<count($container_num);$i++){
-                $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'container_code'=>$container_num[$i]])
+                //如果为空就跳过此次循环
+                if(empty($container_code[$i])){
+                    continue;
+                }
+                $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'id'=>$id[$i]])
                         ->update([ 'container_code'=>$container_code[$i],'seal'=>$seal[$i]]);
                 $res ? $response['success'][]= '提交柜号成功':$response['fail'][]= '提交柜号失败';
             }
             if(array_key_exists('fail', $response)){
                $status = array('status'=>0,'message'=>'报柜号失败');
             }  else {
-                $status = array('status'=>1,'message'=>'报柜号成功');   
-                //同时修改订单的状态
-                $res2 =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>5]);
+                $status = array('status'=>1,'message'=>'报柜号成功'); 
+                    //提交的柜号和封条号和id对应的上，订单就修改报柜号完毕
+                    if(count($seal) == count($id)){
+                        $res3 =Db::name('order_port')->where('order_num',$order_num)->update(['statu'=>5,'container_status'=>1]);
+                        $res3 ? $status = array('status'=>1,'message'=>'柜号封条号全部录完不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
+                    }
             }
         }  else {
-                 $status = array('status'=>0,'message'=>'柜号数量不对');       
-            }
+                $status = array('status'=>0,'message'=>'柜号和封条号数量不对');       
+                }
+
         return $status;    
     }
 
@@ -148,10 +156,16 @@ class Personal extends Base
     public function downs(){    
         $order_name = $this->request->param('order_num');    //下载文件名  
         $type = $this->request->param('type'); //文件类型
-        $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
+        $member_code = Session::get('member_code','think');
+        $data = Db::name('order_port')->where('order_num',$order_name)->field($type.',member_code')->find();
+        if($data['member_code']!==$member_code){
+            echo"无权限下载";exit;
+        }
+        $file =$data[$type];
      //   var_dump($file);
         //将后缀修改成.
         $file_Extension= strstr(strrev($file),'_',true);
+        $file_Extension =  strrev($file_Extension);
         $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
 //              var_dump($file_name);exit;
         $file_dir = ROOT_PATH . 'public' . DS . 'uploads';        //下载文件存放目录    

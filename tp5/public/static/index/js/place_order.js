@@ -210,7 +210,7 @@ function zong_sum(shu,zs) {
     var bxje = $('#bxje').val() * sum;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje;//总价格
-    console.log(zong,money,sum,$('#bxje').val());
+   console.log(zong,money,sum,$('#bxje').val());
     
     if (shu == 1) {//发票6%
         zong = zong * 1.04;
@@ -270,7 +270,7 @@ $('#bxje').bind('input propertychange', function () {//监听保险金额
 //监听货值
 $('#cargo_value').bind('input propertychange', function () {
     let container = $('#container_sum').find("option:selected").val();
-    let baoxian = $(this).val() * 40;
+    let baoxian = $(this).val() * 4;
     $('#bxje').val(baoxian);
     $('#bxje1').html(baoxian * container);
     zong_sum(0,0);

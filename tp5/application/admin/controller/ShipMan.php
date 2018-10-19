@@ -41,7 +41,7 @@ class ShipMan extends Base {
         function  arrsql( $str ='SP.port_id,P.port_name,P.city_id ,C.city ,SP.ship_id ,SC.ship_short_name ship_name',$map){ 
             $arr  = Db::name('ship_port')->alias('SP')
                         ->join('hl_port P','P.port_code = SP.port_id','left')
-                        ->join('hl_shipcompany SC','SC.id = SP.ship_id','left')
+                        ->join('hl_shipcompany SC',"SC.id = SP.ship_id and SC.status='1'",'left')
                         ->join('hl_city C','C.city_id = P.city_id','left')
                         ->order('SP.ship_id ,P.city_id,SP.seq')
                         ->group($map)->field($str)->select();

@@ -46,6 +46,8 @@ class OrderPort extends Base
 //            var_dump($file);
             //将后缀修改成.
             $file_Extension= strstr(strrev($file),'_',true);
+            $file_Extension= strrev($file_Extension);
+        
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
 //              var_dump($file_name);exit;
             $file_dir = ROOT_PATH . 'public' . DS . 'uploads';        //下载文件存放目录    
@@ -119,7 +121,7 @@ class OrderPort extends Base
         $tol=($page-1)*$limit;
         $data = new OrderM;
         $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num);
-    //    $this->_p($list);exit;
+//        $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
@@ -272,7 +274,7 @@ class OrderPort extends Base
             $res1 ?$respones['success'][] ='订单状态修改成功':$respones['fail'][] ='订单状态修改失败';
         }
         }
-        if(array_key_exists('fail', $respones)){
+        if(!array_key_exists('fail', $respones)){
             return array('status'>1,'mssage'>'删除成功');
         }else{
              return array('status'>0,'mssage'>'删除失败');
@@ -351,6 +353,7 @@ class OrderPort extends Base
         'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price);
+        
         //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
         $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
         $res = Db::name('order_port')->where('order_num',$order_num)->where('mtime','between',[$starttime,$mtime])->find();

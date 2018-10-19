@@ -57,7 +57,7 @@ class Port extends Base
         }else {
             $response = array('status'=>0,'message'=>'添加港口失败');
         } 
-        
+        var_dump($response);exit;
         return $response;   
     }
     

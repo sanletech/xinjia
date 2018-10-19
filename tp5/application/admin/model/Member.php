@@ -39,15 +39,16 @@ class Member extends Model
      //业务对应客户的提成管理
         public function  pushMoneyList($type,$account,$pages='10') {
             
-           $list = Db::name('member_profit')->alias('MP')
-               ->join('hl_sales_member SM','MP.member_code = SM.member_code','left')
-                ->join('hl_shipcompany SC','SC.id = MP.ship_id','left')
-               ->field('MP.id,MP.member_code,SM.member_name,SM.sales_name,SM.sales_code,'
-                       . "group_concat(distinct MP.ship_id order by MP.ship_id separator ',') ship_id,"
-                       . "group_concat(distinct SC.ship_short_name order by MP.ship_id separator ',') ship_name,"
-                       . "group_concat(distinct MP.money order by MP.ship_id separator ',') money")
-               ->group('MP.member_code')->where('SC.status',1)->order('SM.id')->buildSql();    
-//var_dump($list);exit;
+           $list = Db::name('member')->alias('M')
+                ->join('hl_member_profit MP','MP.member_code=M.member_code','left')
+                ->join('hl_sales_member SM','M.member_code = SM.member_code','left')
+                ->join('hl_shipcompany SC',"SC.id = MP.ship_id and SC.status='1'",'right')
+                ->field('MP.id,M.member_code,M.member_name,SM.sales_name,SM.sales_code,'
+                       . "group_concat(distinct MP.ship_id order by SC.id separator ',') ship_id,"
+                       . "group_concat(distinct SC.ship_short_name order by SC.id separator ',') ship_name,"
+                       . "group_concat(distinct MP.money order by SC.id separator ',') money")
+               ->group('M.member_code')->order('MP.id')->buildSql();    
+var_dump($list);exit;
 
         $pageParam  = ['query' =>[]]; //设置分页查询参数  
         if($type=='sales'&&!empty($account)){
@@ -92,7 +93,7 @@ class Member extends Model
                     
            $list = Db::name('discount_normal')->alias('DN')
                 ->join('hl_member M','M.member_code=DN.member_code','left')
-                ->join('hl_shipcompany SC','SC.id = DN.ship_id','left')
+                ->join('hl_shipcompany SC',"SC.id = DN.ship_id and SC.status='1'",'left')
                 ->field('DN.*,M.name member_name,SC.ship_short_name')
                ->group('DN.member_code')->order('DN.id')->buildSql();    
 
@@ -117,7 +118,7 @@ class Member extends Model
     public function  discountSpecial($type,$account,$pages='10'){
                             
         $list = Db::name('discount_special')->alias('DS')
-                ->join('hl_shipcompany SC','SC.id = DS.ship_id','left')
+                ->join('hl_shipcompany SC',"SC.id = DS.ship_id and SC.status='1'",'left')
                 ->field('DS.*,SC.ship_short_name')
                 ->group('DS.id')->order('DS.id')->buildSql();    
 

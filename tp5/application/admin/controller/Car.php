@@ -62,7 +62,7 @@ class Car extends Base
                ."  from hl_car_port CP  "
                ."  left join  hl_car_city CC on CC.car_id = CP.car_id   "
                ."  left join  hl_car_ship CS on CS.car_id = CP.car_id   "
-               ."  left join  hl_shipcompany SC on SC.id =  CS.ship_id  "     //查询船公司名字
+               ."  left join  hl_shipcompany SC on SC.id =  CS.ship_id and SC.status='1'  "     //查询船公司名字
                ."  left join  hl_port P on P.id = CP.port_id            "    //查询对应的港口名字
                ."  left join  hl_cardata CD on CD.id = CP.car_id        "
                ."  where CP.id = '$id'  group by CP.id  "  ;
@@ -88,7 +88,7 @@ class Car extends Base
         $js_port=json_encode($port_data);
         
         //传递所有的船公司给前台页面选择
-        $sql4="select id , ship_short_name  from  hl_shipcompany ";
+        $sql4="select id , ship_short_name  from  hl_shipcompany  ";
         $ship_data =Db::query($sql4);
        //转成json格式传给js
         $js_ship=json_encode($ship_data);       

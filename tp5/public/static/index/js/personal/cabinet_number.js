@@ -5,11 +5,13 @@ function cabinet(od_num,gui) {
     function(data){
         $('.ggh').html('');
         for (let i = 0; i < data.length; i++) {
+            data[i].container_code =data[i].container_code ? data[i].container_code:'';
+            data[i].seal = data[i].seal ? data[i].seal : '';
             $('.ggh').append('<div class="layui-form-item">'+
-            '<div class="guinei"><input name="container_num[]" type="hidden" value="'+data[i]+'">'+
-            '<input name="container_code[]" placeholder="" autocomplete="off" class="layui-input" type="text" value=""></div>'+
+            '<div class="guinei"><input name="container_num[]" type="hidden" value="'+data[i].id+'">'+
+            '<input name="container_code[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="'+data[i].container_code+'"></div>'+
             '<div class="layui-form-mid">-</div>'+
-            '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value=""></div>'+
+            '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="'+data[i].seal+'"></div>'+
         '</div>');
         };
         order_num();

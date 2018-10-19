@@ -8,7 +8,6 @@ class Bill extends Base
 {    
     //海运运价
     public function billCreate($order_num){
-        
         $data =Db::name('order_port')
                 ->field('order_num,container_size,container_sum,comment,status,'
                         . 'quoted_price')

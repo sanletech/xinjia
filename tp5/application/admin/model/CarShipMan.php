@@ -11,7 +11,7 @@ class CarShipMan extends Model
     public function ship_list($searchdata = array(),$page = 5) { 
          $list = Db::name('shipman')->alias('SM')
                  ->join('hl_port P','P.port_code = SM.port_id ')
-                 ->join('hl_shipcompany SC','SC.id = SM.ship_id')
+                 ->join('hl_shipcompany SC',"SC.id = SM.ship_id and SC.status='1'")
                  ->field('SM.id ,P.port_name ,SC.ship_short_name,SM.* ');
       
         $pageParam  = ['query' =>[]]; //设置分页查询参数

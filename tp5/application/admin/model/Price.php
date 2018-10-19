@@ -20,7 +20,7 @@ class Price extends Model
                ->join('hl_port P1','P1.port_code= SB.sl_start','left')
                ->join('hl_port P2','P2.port_code= SB.sl_end','left')
                ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
-               ->join('hl_shipcompany SC','SC.id=SP.ship_id','left')
+               ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')
                ->join('hl_boat B','B.id=SP.boat_id','left')
                ->field("SP.id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
                . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
@@ -305,7 +305,7 @@ class Price extends Model
 //        var_dump($param);exit;
         $listSql =Db::name('price_incidental')->alias('PI')
                 ->join('hl_port P','P.port_code=PI.port_code','left')
-                ->join('hl_shipcompany SC','SC.id=PI.ship_id','left')
+                ->join('hl_shipcompany SC',"SC.id=PI.ship_id and SC.status='1'",'left')
                 ->field('PI.*,P.port_name,SC.ship_short_name')
                 ->where($param)->group('PI.id')->buildSql();
         
