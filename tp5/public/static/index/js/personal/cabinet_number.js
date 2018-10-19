@@ -37,9 +37,35 @@ function order_num(){
 if($('.fukuan a').html() == '已付款'){
     $('.fukuan a').css('background-color','#00DB00').attr('href','javascript:void(0);');
 }else{
-    $('.fukuan a').attr('href',xiangqing);
+    // $('.fukuan a').attr('href',xiangqing);
 }
 
 if ($('.ddh a').html()) {
     $('.ddh a').css('background-color','#00DB00');
+}
+
+$('.goods a').click(function(){
+    let order_num = $(this).parent().siblings('.ddh').find('a').html();;
+    if ($(this).html() == '扣货') {
+        layer.open({
+            type:1
+            ,title: '货物状态'
+            ,shadeClose :true
+            ,btn:['申请放货','取消']
+            ,content: $('#state_goods')
+            ,yes:function (index, layero) {
+                $.get(appley_cargo_url,{'order_num':order_num},function(data){
+                    layer.close(index);
+                    alert('申请成功');
+                });
+                
+            },function (index, layero) {
+                layer.close(index);
+            }
+        });     
+    } 
+});
+
+if ($('.goods a').html() == '放货') {
+    $('.goods a').css('background-color','#00DB00');
 }

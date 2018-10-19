@@ -167,13 +167,15 @@ function wtxx() {
     }
   }
   if ($(lei).hasClass('song')) {
-    $(input[0]).val(nei.company);
-    $(input[1]).val(nei.name);
-    $(input[2]).val(nei.phone);
+    $(input[0]).val(nei.id);
+    $(input[1]).val(nei.company);
+    $(input[2]).val(nei.name);
+    $(input[3]).val(nei.phone);
   } else {
-    $(input[3]).val(nei.company);
-    $(input[4]).val(nei.name);
-    $(input[5]).val(nei.phone);
+    $(input[4]).val(nei.id);
+    $(input[5]).val(nei.company);
+    $(input[6]).val(nei.name);
+    $(input[7]).val(nei.phone);
   }
   layer.close(layer.index);
 }

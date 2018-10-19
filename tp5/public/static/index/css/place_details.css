@@ -22,6 +22,11 @@
     #cabinet .guix .layui-form-item .layui-form-mid {
       margin: 0 10px; }
 
+#state_goods {
+  display: none;
+  text-align: center;
+  padding: 10px 0; }
+
 .demo-class .layui-layer-title {
   background-color: #2e8de5; }
 
