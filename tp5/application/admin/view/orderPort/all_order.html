@@ -62,7 +62,7 @@
                 <tbody>
                 <{volist name="list" id ="vo"}>
                   <tr>
-                    <td><{$vo.order_num}></td>
+                    <td class="ddh"><{$vo.order_num}></td>
                     <td><{$vo.ctime}></td>
                     <td><{$vo.member_code}></td>
                     <td><{$vo.company}></td>
@@ -84,7 +84,7 @@
 <!--                      <a class="syd" href="javascript:void(0);">运单</a>-->
                     </td>
           
-                    <td class="goods">扣货/放货/申请放货</td>
+                    <td class="goods"><{$vo.container_buckle}></td>
                     <td class="fukuan">
                         <?php if($vo['money_status']==0){echo"未付款"; }else{echo"已付款"; } ?>
                       <!--<a href="javascript:void(0);">已付款</a>-->
@@ -123,8 +123,18 @@
     </div>
     <script>
       var url = "<{:url('admin/orderPort/Upload')}>";
+      var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
       //单击货物状态
+    if($('.goods').html() == 'lock'){
+        $('.goods').html('扣货');
+    }else if($('.goods').html() == 'unlock'){
+        $('.goods').html('放货');
+    }else if($('.goods').html() == 'apply'){
+        $('.goods').html('申请放货');
+    }
+      
       $('.goods').click(function(){
+        let order_num = $(this).siblings('.ddh').html()
         if($(this).html() == '申请放货'){
           layer.open({
             type:1
@@ -133,13 +143,25 @@
             ,btn:['申请放货','驳回']
             ,content: "<div style='text-align: center'>是否申请发货</div>"
             ,yes:function (index, layero) {
-                $.get(appley_cargo_url,{'order_num':order_num},function(data){
-                    layer.close(index);
-                    alert('放货成功');
+                $.get(appley_cargo_url,{'order_num':order_num,determine:'yes'},function(data){
+                    if(data.status){
+                        layer.close(index);
+                        alert('申请成功');
+                        location.reload();
+                    }else{
+                        alert('申请失败');
+                    }
                 });
-                
             },function (index, layero) {
-                layer.close(index);
+                $.get(appley_cargo_url,{'order_num':order_num,determine:'no'},function(data){
+                    if(data.status){
+                        layer.close(index);
+                        alert('驳回成功');
+                        location.reload();
+                    }else{
+                        alert('驳回失败');
+                    }
+                });
             }
         }); 
         }

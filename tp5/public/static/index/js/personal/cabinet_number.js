@@ -8,7 +8,7 @@ function cabinet(od_num,gui) {
             data[i].container_code =data[i].container_code ? data[i].container_code:'';
             data[i].seal = data[i].seal ? data[i].seal : '';
             $('.ggh').append('<div class="layui-form-item">'+
-            '<div class="guinei"><input name="container_num[]" type="hidden" value="'+data[i].id+'">'+
+            '<div class="guinei"><input name="id[]" type="hidden" value="'+data[i].id+'">'+
             '<input name="container_code[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="'+data[i].container_code+'"></div>'+
             '<div class="layui-form-mid">-</div>'+
             '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="'+data[i].seal+'"></div>'+
@@ -30,7 +30,7 @@ function order_num(){
         skin: 'demo-class',
         btn: ['确认'],
         yes: function(index, layero){
-            //按钮【按钮一】的回调            
+            //按钮【按钮一】的回调
             $.post(track_num, $('#cabinet form').serialize());
         }
     });
@@ -45,7 +45,13 @@ if($('.fukuan a').html() == '已付款'){
 if ($('.ddh a').html()) {
     $('.ddh a').css('background-color','#00DB00');
 }
-
+if($('.goods a').html() == 'lock'){
+    $('.goods a').html('扣货');
+}else if($('.goods a').html() == 'unlock'){
+    $('.goods a').html('放货');
+}else if($('.goods a').html() == 'apply'){
+    $('.goods a').html('申请放货');
+}
 $('.goods a').click(function(){
     let order_num = $(this).parent().siblings('.ddh').find('a').html();;
     if ($(this).html() == '扣货') {
@@ -56,9 +62,15 @@ $('.goods a').click(function(){
             ,btn:['申请放货','取消']
             ,content: $('#state_goods')
             ,yes:function (index, layero) {
-                $.get(appley_cargo_url,{'order_num':order_num},function(data){
-                    layer.close(index);
-                    alert('申请成功');
+                $.get(apply_cargo_url,{'order_num':order_num},function(data){
+                    if(data.status){
+                        layer.close(index);
+                        alert('申请成功');
+                        location.reload();
+                    }else{
+                        alert('申请失败');
+                    }
+                    
                 });
                 
             },function (index, layero) {

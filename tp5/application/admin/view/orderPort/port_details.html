@@ -29,7 +29,20 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">支付状态：</label>
                                 <div class="layui-input-block">
-                                    已付款/月结(未付款)
+                                    <?php if($list['payment_method']=='month'){
+                                           echo'月结'; 
+                                        }elseif($list['payment_method']=='installment'){
+                                           echo'到港付';
+                                        }else{
+                                            echo'在线支付';
+                                        }
+                                    ?>
+                                    <?php if($list['money_status']){
+                                        echo'已付款';
+                                    }else{
+                                        echo'未付款';
+                                    }
+                                    ?>
                                 </div>
                             </div>
                         </div>

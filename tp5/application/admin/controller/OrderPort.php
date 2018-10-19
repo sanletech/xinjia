@@ -310,7 +310,16 @@ class OrderPort extends Base
     //港到港的订单修改
     public function  orderEdit() {
         $data = $this->request->param();
-//        $this->_p($data);exit;
+        $order_num =$data['order_num'];  
+        $track_num =$data['track_num'];
+        $res = Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]); 
+        return $res?array('status'=>1,'mssage'=>'修改成功'):array('status'=>0,'mssage'=>'修改失败');
+        
+    }
+    
+        public function  orderEdit111() {
+        $data = $this->request->param();
+        $this->_p($data);exit;
         $order_num =$data['order_num'];  
 //        //根据订单号查询
         $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('member_code,seaprice_id,container_size')->find();
