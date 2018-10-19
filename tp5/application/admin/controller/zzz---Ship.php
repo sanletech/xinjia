@@ -52,7 +52,7 @@ class Ship extends Base
         return $this->view->fetch('ship/ship_add'); 
    }
    
-   public function to_add() {
+   public function shipto_add() {
         $data = $this->request->param();
 //        $this->_p($data);exit;
         $ship_short_name = trim($data['ship_short_name']);
@@ -74,9 +74,8 @@ class Ship extends Base
     public function ship_edit() {
         $ship_id= $this->request->get('ship_id');
         $ship= new ShipM;
-        $ship_arr =$ship->ship_edit($ship_id);
-//        $this->_p($ship_arr);exit;
-        $this->assign('ship', $ship_arr);
+        $data = Db::name('shipcompany')->where('id',$ship_id)->find();
+        $this->assign('ship', $data);
         return $this->view->fetch('ship/ship_edit'); 
     }
     
@@ -103,7 +102,7 @@ class Ship extends Base
    
     public function ship_js() {
   
-        $data = Db::name('shipcompany')->where('status',1)->field('ship_name,mtime',true)->select();
+        $data = Db::name('shipcompany')->where('status',1)->field('ship_short_name ship_name,mtime',true)->select();
         $js_ship = json_encode($data);
         $js_ship = 'var JS_SHIP ='.$js_ship;
         $filename ="./static/admin/js/ship.js"; 

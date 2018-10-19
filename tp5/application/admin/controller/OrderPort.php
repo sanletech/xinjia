@@ -80,6 +80,7 @@ class OrderPort extends Base
         $data = new OrderM;
         $list = $data->order_audit(5,2);
         $page =$list->render();
+//        $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
@@ -170,7 +171,7 @@ class OrderPort extends Base
         //计算出从那条开始查询
         $tol=($page-1)*$limit;
         $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'monthly');
+        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'month');
 //        $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);

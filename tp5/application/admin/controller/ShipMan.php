@@ -37,52 +37,52 @@ class ShipMan extends Base {
 
     //把船公司及下面的港口传到页面上选择
     public function man_add() {
-
-        function  arrsql( $str ='SP.port_id,P.port_name,P.city_id ,C.city ,SP.ship_id ,SC.ship_short_name ship_name',$map){ 
-            $arr  = Db::name('ship_port')->alias('SP')
-                        ->join('hl_port P','P.port_code = SP.port_id','left')
-                        ->join('hl_shipcompany SC',"SC.id = SP.ship_id and SC.status='1'",'left')
-                        ->join('hl_city C','C.city_id = P.city_id','left')
-                        ->order('SP.ship_id ,P.city_id,SP.seq')
-                        ->group($map)->field($str)->select();
-            return $arr;
-        }
-        
-        $port_arr= arrsql('SP.ship_id ,P.city_id ,SP.port_id,P.port_name','SP.ship_id ,P.city_id ,SP.port_id');
-        $city_arr =arrsql('SP.ship_id ,P.city_id,C.city','C.city_id,SP.ship_id');
-        $ship_arr = arrsql('SP.ship_id ,SC.ship_short_name ship_name','SP.ship_id');
-//        $this->_p( $port_arr); echo '</br>';
-//        $this->_p($city_arr); echo '</br>';
-//        $this->_p($ship_arr); echo '</br>'; exit;
-        
-        $ship_arr_count =count($ship_arr);
-        $city_arr_count =count($city_arr);
-        $port_arr_count =count($port_arr);
-        
-        for($k=0;$k<$ship_arr_count;$k++){
-            for($j=0;$j<$city_arr_count;$j++){
-                for($i=0;$i<$port_arr_count;$i++){
-                    if( $city_arr[$j]['ship_id']==$port_arr[$i]['ship_id']  &&
-                        $city_arr[$j]['city_id']==$port_arr[$i]['city_id'] ){
-                        $city_arr[$j]['portlist'][$i]=array('port_id'=>$port_arr[$i]['port_id'],'port_name'=>$port_arr[$i]['port_name']);
-                    }
-                }
-                if($ship_arr[$k]['ship_id'] ==$city_arr[$j]['ship_id']){
-                    $ship_arr[$k]['citylist'][$j]=array('city_id'=>$city_arr[$j]['city_id'],'city'=>$city_arr[$j]['city'],'portlist'=>  array_values($city_arr[$j]['portlist']));
-                }
-            }
-            $ship_arr[$k]['citylist'] =  array_values( $ship_arr[$k]['citylist']);
-        }
-        $this->_p($ship_arr);exit;
-       
-        $js_port = json_encode($ship_arr);
-        $js_port = 'var SHIP_PORT ='.$js_port;
-        $filename ="./static/admin/js/ship_port.js"; 
-        if(file_exists($filename)){
-            $handle = fopen($filename, "w");//写入文件
-            fwrite($handle, $js_port);
-            fclose($handle);
-        }  
+//
+//        function  arrsql( $str ='SP.port_id,P.port_name,P.city_id ,C.city ,SP.ship_id ,SC.ship_short_name ship_name',$map){ 
+//            $arr  = Db::name('ship_port')->alias('SP')
+//                        ->join('hl_port P','P.port_code = SP.port_id','left')
+//                        ->join('hl_shipcompany SC',"SC.id = SP.ship_id and SC.status='1'",'left')
+//                        ->join('hl_city C','C.city_id = P.city_id','left')
+//                        ->order('SP.ship_id ,P.city_id,SP.seq')
+//                        ->group($map)->field($str)->select();
+//            return $arr;
+//        }
+//        
+//        $port_arr= arrsql('SP.ship_id ,P.city_id ,SP.port_id,P.port_name','SP.ship_id ,P.city_id ,SP.port_id');
+//        $city_arr =arrsql('SP.ship_id ,P.city_id,C.city','C.city_id,SP.ship_id');
+//        $ship_arr = arrsql('SP.ship_id ,SC.ship_short_name ship_name','SP.ship_id');
+////        $this->_p( $port_arr); echo '</br>';
+////        $this->_p($city_arr); echo '</br>';
+////        $this->_p($ship_arr); echo '</br>'; exit;
+//        
+//        $ship_arr_count =count($ship_arr);
+//        $city_arr_count =count($city_arr);
+//        $port_arr_count =count($port_arr);
+//        
+//        for($k=0;$k<$ship_arr_count;$k++){
+//            for($j=0;$j<$city_arr_count;$j++){
+//                for($i=0;$i<$port_arr_count;$i++){
+//                    if( $city_arr[$j]['ship_id']==$port_arr[$i]['ship_id']  &&
+//                        $city_arr[$j]['city_id']==$port_arr[$i]['city_id'] ){
+//                        $city_arr[$j]['portlist'][$i]=array('port_id'=>$port_arr[$i]['port_id'],'port_name'=>$port_arr[$i]['port_name']);
+//                    }
+//                }
+//                if($ship_arr[$k]['ship_id'] ==$city_arr[$j]['ship_id']){
+//                    $ship_arr[$k]['citylist'][$j]=array('city_id'=>$city_arr[$j]['city_id'],'city'=>$city_arr[$j]['city'],'portlist'=>  array_values($city_arr[$j]['portlist']));
+//                }
+//            }
+//            $ship_arr[$k]['citylist'] =  array_values( $ship_arr[$k]['citylist']);
+//        }
+//        $this->_p($ship_arr);exit;
+//       
+//        $js_port = json_encode($ship_arr);
+//        $js_port = 'var SHIP_PORT ='.$js_port;
+//        $filename ="./static/admin/js/ship_port.js"; 
+//        if(file_exists($filename)){
+//            $handle = fopen($filename, "w");//写入文件
+//            fwrite($handle, $js_port);
+//            fclose($handle);
+//        }  
         return $this->view->fetch('carshipman/shipman_add');
     }
    
