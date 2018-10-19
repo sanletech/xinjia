@@ -9,11 +9,11 @@ layui.use(['form', 'layedit', 'laydate', 'element'], function () {
     if (data.elem.checked) {
       $('#zeng,.zhuanghuo').show();
       loading = true;
-      $('.bge input').attr('disabled', false);
+      $('.bge input').attr('readOnly', false);
     } else {
       $('#zeng,.zhuanghuo').hide();
       loading = false;
-      $('.bge input').attr('disabled', true);
+      $('.bge input').attr('readOnly', true);
     }
     st();
   })
@@ -22,11 +22,11 @@ layui.use(['form', 'layedit', 'laydate', 'element'], function () {
     if (data.elem.checked) {
       $('#zeng_song,.songhuo').show();
       delivery = true;
-      $('.bge_song input').attr('disabled', false);
+      $('.bge_song input').attr('readOnly', false);
     } else {
       $('#zeng_song,.songhuo').hide();
       delivery = false;
-      $('.bge_song input').attr('disabled', true);
+      $('.bge_song input').attr('readOnly', true);
     }
     st();
   })
@@ -295,9 +295,17 @@ $('.wt_del').click(function(){
 //点击默认
 $('.wt_default').click(function(){
   if ($(lei).hasClass('song')) {//判断是不是收货
-    console.log('选前选中是收货');
+    $.get(linkman_default,{'id':id,type:'r'},function(data){
+      if(data.status){
+        alert('成功设置默认信息')
+      }
+    });
   }else{//发货
-    console.log('选前选中是发货');
+    $.get(linkman_default,{'id':id,type:'s'},function(data){
+      if(data.status){
+        alert('成功设置默认信息')
+      }
+    });
   }
 })
 
@@ -412,7 +420,7 @@ function dele(zj) {//删除当前装货或者送货
 //第一次 下单
 $('.tjiao').eq(0).find('.shi').click(function(){
   $('.tjiao').eq(0).hide();
-  $('.lc,.wt1,.fp1,.dd_nei .layui-form').hide();
+  $('.lc,.wt1,.dd_nei .layui-form').hide();
   $('.tjiao').eq(1).show();
   $('.lche,.fuwu').show();
   $('input').css('border','0').attr('readonly',true);
@@ -423,7 +431,7 @@ $('.tjiao').eq(0).find('.shi').click(function(){
 //返回修改
 $('.tjiao').eq(1).find('.qu').click(function(){
   $('.tjiao').eq(1).hide();
-  $('.lc,.wt1,.fp1,.dd_nei .layui-form').show();
+  $('.lc,.wt1,.dd_nei .layui-form').show();
   $('.tjiao').eq(0).show();
   $('.lche,.fuwu').hide();
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);

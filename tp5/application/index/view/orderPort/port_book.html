@@ -102,9 +102,7 @@
                   <{$list.container_size}>
                 </span>
                 <p>￥
-                  <strong class="money">
-                    <{$list.price}>
-                  </strong>
+                  <strong class="sea_price"><{$list.price}></strong>
                 </p>
               </div>
               <div class="you">价格说明：这是纯运费</div>
@@ -214,9 +212,9 @@
             <div class="layui-col-xs4 er">
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>没柜重量：</div>
+                  <span>*&nbsp;</span>每柜重量：</div>
                 <div class="layui-col-xs6">
-                  <input type="text" name="weight" value="" placeholder="">
+                  <input type="text" name="weight" id="weight" value="" placeholder="">
                 </div>
                 <div class="layui-col-xs2" style="text-align: left;margin-left: 8px; ">
                   <span>吨(T)</span>
@@ -242,7 +240,7 @@
                 </div>
               </div>
             </div>
-            <div class="layui-col-xs4 er">
+            <div class="layui-col-xs3 er">
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>柜量：</div>
@@ -257,12 +255,12 @@
 
 
             </div>
-            <div class="layui-col-xs4 er">
+            <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>每柜保额：</div>
+                  <span>*&nbsp;</span>货值(柜)</div>
                 <div class="layui-col-xs6">
-                  <input id="bxje" type="text" name="cargo_cost" value="" placeholder="">
+                  <input id="cargo_value" type="text" name="cargo_value" value="" placeholder="">
                 </div>
 
                 <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
@@ -270,17 +268,22 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="layui-col-xs4 er">
+            <!-- <{$list.container_size}> -->
+            <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
-                <div class="layui-col-xs4">
-                  <span>*&nbsp;</span>集装箱规格：</div>
+                <div class="layui-col-xs3">
+                  <span>*&nbsp;</span>保险(柜)：</div>
                 <div class="layui-col-xs6">
-                  <input type="text" name="container" value="<{$list.container_size}>" readonly="readonly">
+                  <input id="bxje" type="text" name="cargo_cost" value="0" placeholder="" readonly style="border:0;">
+                </div>
+
+                <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
+                  <span>元</span>
                 </div>
               </div>
-            </div> -->
+            </div>
 
-            <div class="layui-col-xs4 er">
+            <div class="layui-col-xs3 er">
               <div class="grid-demo nei">
                 <div class="layui-col-xs3">
                   <span>*&nbsp;</span>结账方式：</div>
@@ -736,6 +739,8 @@
     </div>
     <{include file='./public/foot' /}>
     <script>
+      //首页
+      var index_url = "<{:url('index/order_port/orderport')}>";
       //详情页
       var xiangqing = "<{:url('index/order_port/orderportdetail')}>"
       // 获取session 的客户的code

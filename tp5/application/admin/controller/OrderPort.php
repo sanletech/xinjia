@@ -121,7 +121,7 @@ class OrderPort extends Base
         $tol=($page-1)*$limit;
         $data = new OrderM;
         $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num);
-    //    $this->_p($list);exit;
+//        $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
@@ -353,6 +353,7 @@ class OrderPort extends Base
         'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price);
+        
         //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
         $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
         $res = Db::name('order_port')->where('order_num',$order_num)->where('mtime','between',[$starttime,$mtime])->find();

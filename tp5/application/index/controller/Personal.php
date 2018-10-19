@@ -95,7 +95,7 @@ class Personal extends Base
         $dataM =new dataM;
        
         $list = $dataM->place_order($member_code,$tol,$limit,array(2,3,4,5,6,7),$order_num);
-        $this->_p($list);exit;
+//        $this->_p($list);exit;
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);
         $this->view->assign('page',$page); 
