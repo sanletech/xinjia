@@ -5,11 +5,13 @@ function cabinet(od_num,gui) {
     function(data){
         $('.ggh').html('');
         for (let i = 0; i < data.length; i++) {
+            data[i].container_code =data[i].container_code ? data[i].container_code:'';
+            data[i].seal = data[i].seal ? data[i].seal : '';
             $('.ggh').append('<div class="layui-form-item">'+
-            '<div class="guinei"><input name="container_num[]" type="hidden" value="'+data[i]+'">'+
-            '<input name="container_code[]" placeholder="" autocomplete="off" class="layui-input" type="text" value=""></div>'+
+            '<div class="guinei"><input name="container_num[]" type="hidden" value="'+data[i].id+'">'+
+            '<input name="container_code[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="'+data[i].container_code+'"></div>'+
             '<div class="layui-form-mid">-</div>'+
-            '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value=""></div>'+
+            '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="'+data[i].seal+'"></div>'+
         '</div>');
         };
         order_num();
@@ -37,9 +39,35 @@ function order_num(){
 if($('.fukuan a').html() == '已付款'){
     $('.fukuan a').css('background-color','#00DB00').attr('href','javascript:void(0);');
 }else{
-    $('.fukuan a').attr('href',xiangqing);
+    // $('.fukuan a').attr('href',xiangqing);
 }
 
 if ($('.ddh a').html()) {
     $('.ddh a').css('background-color','#00DB00');
+}
+
+$('.goods a').click(function(){
+    let order_num = $(this).parent().siblings('.ddh').find('a').html();;
+    if ($(this).html() == '扣货') {
+        layer.open({
+            type:1
+            ,title: '货物状态'
+            ,shadeClose :true
+            ,btn:['申请放货','取消']
+            ,content: $('#state_goods')
+            ,yes:function (index, layero) {
+                $.get(appley_cargo_url,{'order_num':order_num},function(data){
+                    layer.close(index);
+                    alert('申请成功');
+                });
+                
+            },function (index, layero) {
+                layer.close(index);
+            }
+        });     
+    } 
+});
+
+if ($('.goods a').html() == '放货') {
+    $('.goods a').css('background-color','#00DB00');
 }

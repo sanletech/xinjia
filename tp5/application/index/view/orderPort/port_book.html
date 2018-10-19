@@ -102,7 +102,7 @@
                   <{$list.container_size}>
                 </span>
                 <p>￥
-                  <strong class="sea_price"><{$list.price}></strong>
+                  <strong class="carriage"><{$list.price}></strong>
                 </p>
               </div>
               <div class="you">价格说明：这是纯运费</div>
@@ -125,6 +125,7 @@
           <div class="dd_nei">
             <div class="layui-row" style="padding-bottom: 10px;">
               <div class="layui-col-xs6 er_le">
+                <div style="display: none;"><input type="text" name="r_id" value="" readonly='readonly' class="in"></div>
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>发货单位：</div>
@@ -150,6 +151,7 @@
               </div>
 
               <div class="layui-col-xs6 er_rig">
+                  <div style="display: none;"><input type="text" name="s_id" value="" readonly='readonly' class="in"></div>
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>收货单位：</div>
@@ -272,9 +274,9 @@
             <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>保险(柜)：</div>
+                  <span>*&nbsp;</span>保险(柜)</div>
                 <div class="layui-col-xs6">
-                  <input id="bxje" type="text" name="cargo_cost" value="0" placeholder="" readonly style="border:0;">
+                  <input id="bxje" type="text" name="cargo_cost" value="0" placeholder="" readonly>
                 </div>
 
                 <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">

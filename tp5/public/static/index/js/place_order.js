@@ -175,8 +175,8 @@ function order_data(zj) {
     $.each(data,function(i,v){
         obj[v.name] = v.value;
     });
-    obj['sea_price'] = $('.sea_price').html();//单柜纯运费
-    obj['sea_price_sum'] = $('#money').html();//总纯运费
+    obj['carriage'] = $('.carriage').html();//单柜纯运费
+    obj['carriage_sum'] = $('#money').html();//总纯运费
     obj['premium'] = $('#bxje1').html();//保险费
     obj['portprice_r'] = $('#zhuang').html();//装货费用
     obj['portprice_s'] = $('#song').html();//送货费用
@@ -205,12 +205,12 @@ function toajax(url, data) {
 var mony_fs = 0;
 //计算运费
 function zong_sum(shu,zs) {     
-    var money = $('.sea_price').html();//纯运费
+    var money = $('.carriage').html();//纯运费
     var sum = $("#container_sum option:selected").val();//柜量
     var bxje = $('#bxje').val() * sum;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje;//总价格
-//    console.log(zong,money,sum,$('#bxje').val());
+   console.log(zong,money,sum,$('#bxje').val());
     
     if (shu == 1) {//发票6%
         zong = zong * 1.04;
@@ -257,7 +257,7 @@ function youhui(){ //优惠价格
     mony_fs = mony * container;
     $('#discount').html(mony_fs);
     $('#bxje1').html($('#bxje').val() * container);    
-    $('#money').html($('.sea_price').html() * container);
+    $('#money').html($('.carriage').html() * container);
     zong_sum(0,0);
 }
 

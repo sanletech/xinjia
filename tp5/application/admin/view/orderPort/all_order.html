@@ -46,7 +46,8 @@
                     
                     <th>船公司</th>
                     <th>船名航次</th>
-                    <th>起运港-目的港</th>
+                    <th>起运港</th>
+                    <th>目的港</th>
                     <th>总运费</th>
 
                     
@@ -66,11 +67,12 @@
                     <td><{$vo.member_code}></td>
                     <td><{$vo.company}></td>
                     <td><{$vo.track_num}></td>
-                    <td><{$vo.container_sum}>-<{$vo.container_size}></td>
+                    <td>2/20GP</td>
                     
                     <td><{$vo.ship_short_name}></td>
                     <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
-                    <td><{$vo.s_port}>-<{$vo.e_port}></td>
+                    <td><{$vo.s_port}></td>
+                    <td><{$vo.e_port}></td>
                     <td><{$vo.quoted_price}></td>
                     <td class="layui-upload">
                         <?php if(empty($vo['book_note'])){echo"未上传订舱单"; }else{echo"已上传"; } ?>
@@ -82,7 +84,7 @@
 <!--                      <a class="syd" href="javascript:void(0);">运单</a>-->
                     </td>
           
-                    <td>扣货/放货/申请放货</td>
+                    <td class="goods">扣货/放货/申请放货</td>
                     <td class="fukuan">
                         <?php if($vo['money_status']==0){echo"未付款"; }else{echo"已付款"; } ?>
                       <!--<a href="javascript:void(0);">已付款</a>-->
@@ -121,6 +123,28 @@
     </div>
     <script>
       var url = "<{:url('admin/orderPort/Upload')}>";
+      //单击货物状态
+      $('.goods').click(function(){
+        if($(this).html() == '申请放货'){
+          layer.open({
+            type:1
+            ,title: '货物状态'
+            ,shadeClose :true
+            ,btn:['申请放货','驳回']
+            ,content: "<div style='text-align: center'>是否申请发货</div>"
+            ,yes:function (index, layero) {
+                $.get(appley_cargo_url,{'order_num':order_num},function(data){
+                    layer.close(index);
+                    alert('放货成功');
+                });
+                
+            },function (index, layero) {
+                layer.close(index);
+            }
+        }); 
+        }
+      })
+      //单击付款状态
       $('.fukuan').click(function () {
         layer.open({
           type: 1,
