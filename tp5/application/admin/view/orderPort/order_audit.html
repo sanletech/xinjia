@@ -54,11 +54,9 @@
             <td><{$vo.ship_short_name}>--<{$vo.boat_name}>/<{$vo.boat_code}></td>
             <td><{$vo.ctime}></td>
             <td class="td-manage">
-                <a title="确认"  onclick="member_pass(this,'<{$vo.id}>')" href="javascript:;">
-                    <i class="layui-icon">&#xe618;</i>
-                </a>
-                <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
-                    <i class="layui-icon">&#xe640;</i>
+                <!-- <a title="确认"  onclick="member_pass(this,'<{$vo.id}>')" href="javascript:;"> -->
+                <a href="javascript:;">
+                    <i class="layui-icon">&#xe63c;</i>
                 </a>
             </td>
           </tr>
@@ -73,6 +71,20 @@
 
     </div>
     <script>
+      console.log(111);
+      
+    //查看
+    $('.td-manage a').click(function(){
+      var order_num = $(this).parent().siblings('.tdata').html();
+      layer.open({
+        type: 2, 
+        content: "<{:url('admin/orderPort/audit_page')}>?order_num="+order_num, //这里content是一个iframe,
+        title :'详情信息',
+        offset: 't',
+        area :['80%','100%'],
+        shadeClose :true
+      });
+    })
     /* 订单确认*/    
     function member_pass(obj,did){
         layer.confirm('确认通过吗？',function(index){
@@ -85,7 +97,6 @@
             $(obj).parents("tr").remove();
             layer.msg('已通过!',{icon:1,time:1000});
          });
-        
     }
     
      function passAll (argument) {

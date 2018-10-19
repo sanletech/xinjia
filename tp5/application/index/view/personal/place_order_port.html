@@ -168,9 +168,9 @@
         var url="<{:url('index/Personal/place_order')}>";
         var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号
         var track_num = "<{:url('index/Personal/track_num')}>";//提交柜号
-        var page =<{$page}>;
-        var count=<{$count}>;
-        var limit=<{$limit}>;
+        var page ='<{$page}>';
+        var count='<{$count}>';
+        var limit='<{$limit}>';
         function del(obj, did) {
         layer.confirm('确认要删除吗？', function (index) {
           //转成数组形式

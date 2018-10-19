@@ -1,0 +1,454 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <link rel="stylesheet" href="__STATIC__/../index/css/lrdd.css">
+        <link rel="stylesheet" href="__STATIC__/../index/css/all_order.css">
+        <style>
+            .layui-input-block {
+                line-height: 35px;
+            }
+
+            .layui-input-block a {
+                color: #2e8de5;
+            }
+
+            .no {
+                background-color: red !important;
+            }
+
+            .xxtx {
+                width: 90%;
+            }
+        </style>
+        <form class="" id='order_data_form'>
+            <div class="xxtx">
+
+                <!-- 是否支付 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>订单状态</strong>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">支付状态：</label>
+                                <div class="layui-input-block">
+                                    已付款/月结(未付款)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下单时间：</label>
+                                <div class="layui-input-block">
+                                    <span>
+                                        <{$list.ctime}>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 委托信息 -->
+                <div class="xxtx_dd er">
+                    <div class="xx" style="margin-bottom:0px;">
+                        <strong>委托信息</strong>
+                        <span>提醒：收货联系人需具备与船司办单资质，否则因此造成的一切后果将由客户承担</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-row" style="padding-bottom: 10px;">
+                            <div class="layui-col-xs6 er_le">
+
+                                <div class="grid-demo" style="margin-top: 10px;">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>发货单位：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <{$shipperArr[0]}>
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>装货联系人：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <{$shipperArr[1]}>
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>装货电话：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <{$shipperArr[2]}>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="layui-col-xs6 er_rig">
+                                <div class="grid-demo" style="margin-top: 10px;">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货单位：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <{$consignerArr[0]}>
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货联系人：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <{$consignerArr[1]}>
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货电话：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <{$consignerArr[2]}>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 货物 -->
+                <div class="xxtx_dd">
+                    <div class="xx">
+                        <strong>货物</strong>
+                        <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>货名：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    <{$list.cargo}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>包装：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    <div <?php if($list[ 'container_type_id']==1) ?>>杂货集装箱</div>
+                                    <div <?php if($list[ 'container_type_id']==2) ?>>杂货集装箱</div>
+                                    <div <?php if($list[ 'container_type_id']==3) ?>>杂货集装箱</div>
+                                    <!-- <div class="select">
+                                        <select name='container_type'>
+                                            <option value='1'  <?php if($list['container_type_id']==1){echo "selected='true'";} ?> >杂货集装箱</option>
+                                            <option value='2'  <?php if($list['container_type_id']==2){echo "selected='true'";} ?>>散货集装箱</option>
+                                            <option value='3'  <?php if($list['container_type_id']==3){echo "selected='true'";} ?>>液体货集装箱</option>
+                                        </select>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>重量：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    <{$list.weight}>
+                                </div>
+                                <div class="layui-col-xs2" style="text-align: left;">
+                                    <span>吨(T)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 费用 -->
+                <div class="xxtx_dd" style="margin-bottom: 0px;">
+                    <div class="xx">
+                        <strong>费用</strong>
+                        <span>发票信息提醒：平台支持开具6%的服务费增值税专用发票，订单完成后联系客服沟通开发票</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>柜量：</div>
+                                <div class="layui-col-xs6" style="text-align: left;">
+                                    <{$list.container_sum}>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo" style="margin-top: 0px;">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>保险金额：</div>
+                                <div class="layui-col-xs6" style="text-align: left;">
+                                    <{$list.cargo_cost}>
+                                </div>
+
+                                <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
+                                    <span>万</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>结账方式：</div>
+                                <div class="layui-col-xs6" style="text-align: left;">
+                                    <div <?php if($list[ 'payment_method']=='installment' )?>>到港付</div>
+                                    <div <?php if($list[ 'payment_method']=='month' )?>>月结付</div>
+                                    <div <?php if($list[ 'payment_method']=='cash' )?>>在线结付(优惠)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 发票 -->
+                    <div class="kpf">
+                        <div class="layui-col-xs12 bei">
+                            <div class="grid-demo">
+                                <div class="layui-col-xs1 you">
+                                    备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
+                                </div>
+                                <div class="layui-col-xs10 inp">
+                                    <{$list.comment}>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="fp layui-col-xs12">
+                     
+                            <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
+                                <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1">
+                            </div>
+                            <div class="layui-col-xs1">&nbsp;</div>
+                            
+                            <div class="layui-col-xs3">
+                                <div class="ze">
+                                    <div class="layui-col-xs3 zep">
+                                        发票：
+                                    </div>
+                                    <div class="layui-col-xs6">
+                                        <div class="select">
+                                            <select name='tax_rate' disabled="ture" class="layui-disabled fp01">
+                                                <option value='0' selected>不需要</option>
+                                                <option value='1'>6%</option>
+                                                <option value='2'>10%</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-xs3 tx">
+                                <a class="trigger-default">填写发票信息</a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- 总运费 -->
+                    <!-- <div class="sun">
+                        <div class="fapiao layui-form-item layui-form">
+                            <div class="fp_tt">
+                                <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- 拖车服务 -->
+                    <div class="xxtx_dd">
+                        <div class="xx">
+                            <strong>拖车服务</strong>
+                        </div>
+
+                        <div class="dd_nei">
+                            <div class="layui-col-xs12 layui-form er">
+                                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang">
+                                <!-- <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_bge()">增加</a> -->
+                            </div>
+                            <div class="layui-col-xs12 er biaoge zhuanghuo">
+                                <table class="layui-table" lay-size="sm">
+                                    <thead>
+                                        <tr>
+                                            <th>单价</th>
+                                            <th>数量</th>
+                                            <th>单位</th>
+                                            <th>装货地址</th>
+                                            <th>联系人姓名</th>
+                                            <th>货主名称</th>
+                                            <th>装货时间</th>
+                                            <th>联系电话</th>
+                                            <th>指定车队</th>
+                                            <th>备注</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bge">
+                                        <{volist name="$carData.r" id="carR" }>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="r_container_code[<{$i-1}>]" value="<{$carR.container_code}>">
+                                                    <{$carR.car_price}>
+                                                </td>
+                                                <td>
+                                                    <{$carR.num}>
+                                                </td>
+                                                <td>柜</td>
+                                                <td>
+                                                    <{$carR.add}>
+                                                </td>
+                                                <td>
+                                                    <{$carR.link_man}>
+                                                </td>
+                                                <td>
+                                                    <{$carR.shipper}>
+                                                </td>
+                                                <td>
+                                                    <{$carR.load_time}>
+                                                </td>
+                                                <td>
+                                                    <{$carR.link_phone}>
+                                                </td>
+                                                <td>
+                                                    <{$carR.car}>
+                                                </td>
+                                                <td>
+                                                    <{$carR.comment}>
+                                                </td>
+                                            </tr>
+                                            <{/volist}>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="dd_nei">
+                            <div class="layui-col-xs12 layui-form er">
+                                <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
+                                <!-- <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_song()">增加</a> -->
+                            </div>
+                            <div class="layui-col-xs12 er biaoge songhuo">
+                                <table class="layui-table" lay-size="sm">
+                                    <thead>
+                                        <tr>
+                                            <th>单价</th>
+                                            <th>数量</th>
+                                            <th>单位</th>
+                                            <th>送货地址</th>
+                                            <th>指定车队</th>
+                                            <th>备注</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bge_song">
+                                        <{volist name="$carData.s" id="carS" }>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="s_container_code[<{$i-1}>]" value="<{$carS.container_code}>">
+                                                    <{$carS.car_price}>
+                                                </td>
+                                                <td>
+                                                    <{$carS.num}>
+                                                </td>
+                                                <td>柜</td>
+                                                <td>
+                                                    <{$carS.add}>
+                                                </td>
+                                                <td>
+                                                    <{$carS.car}>
+                                                </td>
+                                                <td>
+                                                    <{$carS.comment}>
+                                                </td>
+                                            </tr>
+                                            <{/volist}>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 详细费用 -->
+                    <div class="xxtx_dd er">
+                        <div class="xx">
+                            <strong>详细费用</strong>
+                        </div>
+                        <div class="feiyong">
+                            <div class="layui-col-xs12">
+                                <span>海运费：</span>
+                                <pi id="money">
+                                    <{$list.seaprice}>
+                                </pi>元
+                                <span class="shuo">已包含：双边</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>保险费：</span>
+                                <pi id="bxje1">
+                                    <{$list.premium}>
+                                </pi>元
+                                <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>装货费用：</span>
+                                <pi id="zhuang">
+                                    <{$list.carprice_r}>
+                                </pi>元
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>送货费用：</span>
+                                <pi id="song">
+                                    <{$list.carprice_s}>
+                                </pi>元
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>优惠：</span>
+                                <strong id="discount">0</strong>元
+                                <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>总费用：</span>
+                                <strong class="zongfei" id="price_sum">0</strong>元
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="tjiao">
+                        <a class="yes" href="javascript:;">通过申请</a>
+                        <a class="no" href="javascript:void(0);">驳回</a>
+                    </div>
+                </div>
+        </form>
+        <script>
+            var url = "<{:url('OrderPort/???')}>";//申请
+            var order_num = '<{$list.order_num}>';
+            $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();
+            $('.tjiao .yes').click(function () {
+                $.get("<{:url('admin/orderPort/order_audit_pass')}>", { 'order_num': order_num }, function (data) {
+                    if (data.status) {
+                    //当你在iframe页面关闭自身时
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                        parent.location.reload();//父窗口刷新
+                        alert('申请成功');
+                    } else {
+                        alert('申请失败');
+                    }
+                });
+            });
+
+            $('.tjiao .no').click(function () {
+                $.get("<{:url('admin/orderPort/orderPortDel')}>", { 'order_num': order_num }, function (data) {
+                    if (data.status) {
+                        //当你在iframe页面关闭自身时
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                        parent.location.reload();//父窗口刷新
+                        alert('驳回成功');
+                    } else {
+                        alert('驳回失败');
+                    }
+                });
+            })
+        </script>
+
+
+    </body>
+
+    </html>
