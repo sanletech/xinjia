@@ -157,6 +157,11 @@ class OrderPort extends Controller
         }
                 
     }
+    public function apply_cargo() {
+        $order_num =  $this->request->param('order_num');
+        $res = Db::name('order_port')->where('order_num',$order_num)->update(['container_buckle'=>'apply']);
+        return $res ? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');       
+    }
 
     
     //港到港订单详情页面

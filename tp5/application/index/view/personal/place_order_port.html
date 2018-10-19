@@ -62,7 +62,7 @@
                     <td><{$vo.s_port}></td>
                     <td><{$vo.e_port}></td>
                     <td><{$vo.quoted_price}></td>
-                    <td class="goods"><a href="javascript:void(0);">扣货</a></td>
+                    <td class="goods"><a href="javascript:void(0);"><{$vo.container_buckle}></a></td>
                     <td class="fukuan">
                       <a target="_blank" href="javascript:void(0);">
                           <?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></a>
@@ -158,7 +158,7 @@
     <div id="state_goods">是否申请放货</div>
     <script>
       var xiangqing = "<{:url('index/Order/place_details')}>";
-      var appley_cargo_url = "";//申请发货URL
+      var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
     </script>
     <script src="__STATIC__/js/personal/page.js"></script>
     <script src="__STATIC__/js/personal/cabinet_number.js"></script>

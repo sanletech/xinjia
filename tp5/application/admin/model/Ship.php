@@ -39,13 +39,6 @@ class Ship extends Model
     
 
     
-        //展示原有的信息
-    public function ship_edit($ship_id){ 
-
-        $res = Db::name('shipcompany')->where('id',$ship_id)->find();
-        return $res;
-    }
-    
 
   
     

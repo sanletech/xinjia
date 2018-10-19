@@ -25,15 +25,6 @@ class Port extends Model
         return $list;
     }
     
-    //港口删除
-    public function  port_del($port_id)
-    {   
-        $res = Db::name('port')->where('id','in',$port_id )->delete();
-        $res ?  $response['success'][] = '删除port表':$response['fail'][] = '删除port表';
-        $this->port_js();
-        return $response ;
-  
-    }
         
     //港口修改页面获许原数据
     public function  port_edit($port_id)
@@ -52,7 +43,7 @@ class Port extends Model
                 . "city_id ='$city' ,mtime ='$mtime' where id ='$id'";
 //        var_dump($sql);exit;
         $res = Db::execute($sql);
-        $res ?  $response['success'][] = '修改port表':$response['fail'][] = '修改port表';
+        $res ?  $response['success']= '修改port表':$response['fail']= '修改port表';
         $this->port_js();
         return $response ;
         
@@ -66,7 +57,7 @@ class Port extends Model
         $res2 =Db::name('port')->where('city_id',$city_id)->where('port_name','in',$port_array)->column('port_name');
         if($res2){
             $port_name_list=  implode(',', $res2);
-            $response['fail'][] = '添加port表存在港口'.$port_name_list;
+            $response['fail']= '添加port表存在港口'.$port_name_list;
             return $response;
         }
         $mtime = date('Y-m-d H:i:s');
@@ -76,20 +67,15 @@ class Port extends Model
         }else { 
             $port_code = $port_code + 1; 
         }
-        $sql = "insert into hl_port(port_code, port_name, city_id, mtime)  values";
         
-        $str ='';
-        foreach ($port_array as $k=>$v){
-            $str .= "('$port_code','$v','$city_id','$mtime'),";
+        foreach ($port_array as $port_name){
+            $data[] =['port_code'=>$port_code,'port_name'=>$port_name,'city_id'=>$city_id,'mtime'=>$mtime];
             ++$port_code;
         }
-        $str= trim($str,',');
-        $sql = $sql.$str;
-//        var_dump($sql);exit;
-        $res = Db::execute($sql);
-        $res ?  $response['success'][] = '添加港口成功':$response['fail'][] = '添加港口失败';
+
+        $res = Db::name('port')->insertAll($data);
+        $res ?  $response['success'] = '添加港口成功':$response['fail'] = '添加港口失败';
         $this->port_js();
-        
         return $response ;
     }
     
@@ -178,17 +164,6 @@ class Port extends Model
         return $list;
     }
     
-    
-    
-    //航线详情删除
-    public function  shiproute_del($shiproute)
-    {   
-        $res = Db::name('ship_route')->where('id','in',$shiproute)->delete();
-        $response =  [];
-        $res ?  $response['success'] = '删除ship_route表':$response['fail'] = '删除ship_route表';
-        return  $response ;
-    }
-        
     //航线详情添加
     public function  shiproute_add($port_arr)
     {   
@@ -253,33 +228,7 @@ class Port extends Model
         return $sealine_id ;
     }
     
-//       //将航情写入js文件
-//        public function ship_rote_js() {
-//        $sql = "select s "
-//                . " from hl_boat B  left join hl_shipcompany  SC on SC.id = B.ship_id ";
-//        $data = Db::query($sql);
-//       
-//        //依照ship_id 分组对应的port_id
-//        $sql2= "select B.ship_id ,SC.ship_short_name ship_name from hl_boat B "
-//                . " left join hl_shipcompany SC on SC.id = B.ship_id  group by B.ship_id";
-//        $ship_arr = Db::query($sql2);
-//        $result=[];
-//        for($i=0;$i<count($data);$i++){
-//            for($j=0;$j<count($ship_arr);$j++){
-//                if($data[$i]['ship_id'] ==$ship_arr[$j]['ship_id']){
-//                    $ship_arr[$j]['boat_list'][]=array('id'=>$data[$i]['id'],'boat_code'=>$data[$i]['boat_code'],'boat_name'=>$data[$i]['boat_name']);
-//                }    
-//                
-//            }
-//        }
-//        $js_boat = json_encode($ship_arr);
-//        $js_boat = 'var JS_BOAT ='.$js_boat;
-//        $filename ="./static/admin/js/ship_boat.js"; 
-//        if(file_exists($filename)){
-//            $handle = fopen($filename, "w");//写入文件
-//            fwrite($handle, $js_boat);
-//            fclose($handle);
-//        } 
+
     
     
        
@@ -290,7 +239,7 @@ class Port extends Model
                 ->join('hl_shipcompany SC',"SC.id = B.ship_id and SC.status='1'",'left')
                 ->field('B.id ,B.ship_id ,SC.ship_short_name AS ship_name,'
                         . 'B.boat_code ,B.boat_name ,B.mtime')
-                ->order('B.id ,B.ship_id ')
+                ->order('B.mtime desc')
                 ->buildSql();
             $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($boat_name){
@@ -307,15 +256,7 @@ class Port extends Model
         return $lista;
     }
     
-    //船名删除
-    public function  boat_del($boat_id)
-    {   
-        $res = Db::name('boat')->where('id','in',$boat_id )->delete();
-        $res ?  $response['success'][] = '删除boat表':$response['fail'][] = '删除boat表';
-        $this->boat_js();
-        return $response ;
-  
-    }
+ 
         
        //船名添加
     public function boat_add($ship_id, $boat_code,$boat_name)
@@ -324,32 +265,54 @@ class Port extends Model
         $sql = "insert into hl_boat(ship_id ,boat_code,boat_name ,mtime) "
                 . "values('$ship_id','$boat_code','$boat_name','$mtime')";
         $res = Db::execute($sql);
-        $res ?  $response['success'][] = '添加boat表':$response['fail'][] = '添加boat表';
+        $res ?  $response['success']= '添加boat表':$response['fail'] = '添加boat表';
         $this->boat_js();
         return $response ;
     }
     
+       //航线路线，船名,港口删除
+    public function shiproute_boat_port_del($id,$type)
+    {   
+        if($type=='boat'){
+            $res = Db::name('boat')->where('id','in',$id )->update(['status'=>0]);
+            $res ?  $response['success'] = '删除boat表':$response['fail'] = '删除boat表';
+            $this->boat_js();
+        }elseif ($type=='shiproute') {
+            $res = Db::name('ship_route')->where('id','in',$id)->update(['status'=>0]);
+            $res ?  $response['success'] = '删除ship_route表':$response['fail'] = '删除ship_route表';
+        }elseif ($type=='port') {
+            $res = Db::name('port')->where('id','in',$id )->update(['status'=>0]);
+            $res ?  $response['success'] = '删除port表':$response['fail'] = '删除port表';
+            $this->port_js();
+        }elseif($type =='ship'){
+            $res =Db::name('shipcompany')->where('id','in',$id)->update(['status'=>0]);
+            $res ? $response['success']='删除船公司成功' :$response['fail']='删除船公司失败';
+            $this->boat_js();
+        }
+        return $response ;
+    }
     
-        public function boat_js() {
-        $sql = "select B.id,B.ship_id, B.boat_code, B.boat_name  "
-                . " from hl_boat B  left join hl_shipcompany  SC on SC.id = B.ship_id and SC.status='1'";
-        $data = Db::query($sql);
-       
-        //依照ship_id 分组对应的port_id
-        $sql2= "select B.ship_id ,SC.ship_short_name ship_name from hl_boat B "
-                . " left join hl_shipcompany SC on SC.id = B.ship_id  group by B.ship_id";
-        $ship_arr = Db::query($sql2);
+    
+    public function boat_js() {
+
+        //查询所有的船舶
+        $boat_arr = Db::name('boat')->where('status',1)->field('id ,ship_id,boat_code,boat_name')->select();
+        
+        //依照ship_id 分组对应的船公司
+        $ship_arr = Db::name('shipcompany')->where('status',1)->field('id ship_id,ship_short_name ship_name')->select();
         $result=[];
-        for($i=0;$i<count($data);$i++){
-            for($j=0;$j<count($ship_arr);$j++){
-                if($data[$i]['ship_id'] ==$ship_arr[$j]['ship_id']){
-                    $ship_arr[$j]['boat_list'][]=array('id'=>$data[$i]['id'],'boat_code'=>$data[$i]['boat_code'],'boat_name'=>$data[$i]['boat_name']);
-                }    
-                
+        for($j=0;$j<count($ship_arr);$j++){
+            for($i=0;$i<count($boat_arr);$i++){
+                if($ship_arr[$j]['ship_id'] ==$boat_arr[$i]['ship_id']){
+                $ship_arr[$j]['boat_list'][]=array('id'=>$boat_arr[$i]['id'],'boat_code'=>$boat_arr[$i]['boat_code'],'boat_name'=>$boat_arr[$i]['boat_name']);
+                }  else {
+                    $ship_arr[$j]['boat_list']='';
+                }
             }
         }
+        
         $js_boat = json_encode($ship_arr);
-        $js_boat = 'var JS_BOAT ='.$js_boat;
+        $js_boat = 'var JS_SHIP_BOAT ='.$js_boat;
         $filename ="./static/admin/js/ship_boat.js"; 
         if(file_exists($filename)){
             $handle = fopen($filename, "w");//写入文件
@@ -357,6 +320,62 @@ class Port extends Model
             fclose($handle);
         }  
     }
+    
+    public function shiplist($ship_name,$pages=5){
+
+        $list = Db::name('shipcompany')
+               ->where('status',1)
+               ->field('id,ship_short_name,ship_name,mtime')
+               ->buildSql();
+       $pageParam  = ['query' =>[]]; //设置分页查询参数
+       if($ship_name){
+           $list = Db::table($list.' b')->where('b.ship_short_name', 'like', "%{$ship_name}%")->buildSql();
+           $pageParam['query']['ship_name'] = $ship_name;
+       }
+       $list =Db::table($list.' C')->order('C.mtime DESC')->paginate($pages,false,$pageParam);   
+
+       return $list;
+   } 
+
+    //船公司对应港口的人员资料
+    public function ship_info($ship_id ,$port_id){
+        $sql="select S.name, S.position, S.duty_line, S.sn_tel, S.sn_mobile, S.sn_qq, S.sn_fax,   "
+                . "P.port_name, SC.ship_short_name "
+                . " from hl_shipman S"
+                . " left join hl_port P on P.port_code = S.port_id "
+                . " left join hl_shipcompany SC on SC.id = S.ship_id  "
+                . " where S.ship_id = '$ship_id' and S.port_id = '$port_id'"
+                . " order by S.position_level";
+        // var_dump($sql);exit;
+        $res = Db::query($sql);
+        return $res;
+        
+    }
+    
+    public function ship_toadd($ship_short_name,$ship_name){
+        $mtime = date('Y-m-d H:i:s');
+        $res2 = Db::name('shipcompany')->where('ship_short_name',$ship_short_name)->whereOr('ship_name',$ship_name)->find();
+        if(empty($res2)){
+            $res = Db::name('shipcompany')->insert(['ship_name'=>$ship_name,'ship_short_name'=>$ship_short_name,'mtime'=>$mtime]);
+            $res ? $response['success']='添加船公司成功' :$response['fail']='添加船公司失败';
+            $this->boat_js();
+        }  else {
+            $response['fail']='船公司重名';
+        }
+        return $response;
+    }
+
+    
+   public function  ship_toedit($id,$data){
+//       var_dump($id,$data);exit;
+        $res =Db::name('shipcompany')->where('id',$id)->update($data);
+        $response =[] ;
+        $res ? $response['success']='修改船公司成功' :$response['fail']='修改船公司失败';
+        $this->boat_js();
+        return $response;
+       
+   }
+
     
 }
 ?>

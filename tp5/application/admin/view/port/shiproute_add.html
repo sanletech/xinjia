@@ -24,7 +24,7 @@
                             </select>
                         </div>
                         <div class="layui-input-inline" style="display: none;">
-                            <select name="area"  lay-filter="area">
+                            <select name="port"  lay-filter="port">
                                 <option value="">请选择港口</option>
                             </select>
                         </div>
@@ -155,9 +155,9 @@
             for(var i=0;i<ports.length;i++){
                 areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
             }
-            $form.find('select[name=area]').html(areaHtml).parent().show();
+            $form.find('select[name=port]').html(areaHtml).parent().show();
             form.render();
-            form.on('select(area)', function(data) {
+            form.on('select(port)', function(data) {
                  var port =data.value.split('_');
                  var port_id =port['0'];
                  var port_name=port['1'];

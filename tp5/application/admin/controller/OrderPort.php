@@ -80,6 +80,7 @@ class OrderPort extends Base
         $data = new OrderM;
         $list = $data->order_audit(5,2);
         $page =$list->render();
+//        $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
@@ -170,7 +171,7 @@ class OrderPort extends Base
         //计算出从那条开始查询
         $tol=($page-1)*$limit;
         $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'monthly');
+        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'month');
 //        $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
@@ -309,7 +310,16 @@ class OrderPort extends Base
     //港到港的订单修改
     public function  orderEdit() {
         $data = $this->request->param();
-//        $this->_p($data);exit;
+        $order_num =$data['order_num'];  
+        $track_num =$data['track_num'];
+        $res = Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]); 
+        return $res?array('status'=>1,'mssage'=>'修改成功'):array('status'=>0,'mssage'=>'修改失败');
+        
+    }
+    
+        public function  orderEdit111() {
+        $data = $this->request->param();
+        $this->_p($data);exit;
         $order_num =$data['order_num'];  
 //        //根据订单号查询
         $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('member_code,seaprice_id,container_size')->find();

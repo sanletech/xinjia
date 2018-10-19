@@ -33,10 +33,10 @@
                 </div>
             </form>
         </div>
-    <script type="text/javascript" src="/static/admin/js/ship.js"></script>       
+    <script type="text/javascript" src="/static/admin/js/ship_boat.js"></script>       
     <script>
-       var ship_list= JS_SHIP; 
-//      console.log(ship_list);
+       var ship_list= JS_SHIP_BOAT; 
+      console.log(ship_list);
       
         //ajax url生成
        var url="<{:url('admin/Port/boat_toadd')}>";
@@ -58,7 +58,7 @@
         function loadShip() {
             var shipHtml = '';
             for (var i = 0; i < areaData.length; i++) {
-                shipHtml += '<option value="' + areaData[i].id + '">' + areaData[i].ship_short_name + '</option>';
+                shipHtml += '<option value="' + areaData[i].ship_id + '">' + areaData[i].ship_name + '</option>';
             }
             //初始化船公司的数据
             $form.find('select[name=ship_id]').append(shipHtml).parent();
