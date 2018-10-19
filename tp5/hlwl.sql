@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-19 16:58:39
+Date: 2018-10-19 20:27:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4617,13 +4617,15 @@ CREATE TABLE `hl_order_bill` (
   `status` varchar(10) DEFAULT NULL COMMENT '账单状态',
   `comment` varchar(100) DEFAULT NULL COMMENT '订单的备注',
   `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
+  `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款 1付款',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_bill
 -- ----------------------------
-INSERT INTO `hl_order_bill` VALUES ('1', 'AA19203424450415', 'ZD-A-001', '23155', '3', '40HQ', '2018-10-19 11:39:02', null, '2', '', null);
+INSERT INTO `hl_order_bill` VALUES ('1', 'AA19466880844019', 'ZD-A-001', '23075', '3', '40HQ', '2018-10-19 18:58:08', null, '2', '发射点发司法所', 'kehu001', '0');
+INSERT INTO `hl_order_bill` VALUES ('2', 'AA19508158986320', 'ZD-A-002', '23125', '3', '40HQ', '2018-10-19 20:06:56', null, '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', 'kehu001', '0');
 
 -- ----------------------------
 -- Table structure for `hl_order_comment`
@@ -4746,16 +4748,18 @@ CREATE TABLE `hl_order_port` (
   `track_num` varchar(19) DEFAULT NULL COMMENT '运单号',
   `book_note` varchar(38) DEFAULT NULL COMMENT '订舱单文件的存贮地址',
   `sea_waybill` varchar(38) DEFAULT NULL COMMENT '水运单文件的存贮的地址',
-  `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款',
+  `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款 1付款',
   `container_status` varchar(1) DEFAULT '0' COMMENT '客户是否提交柜号了0未提交1已经提交',
   `container_buckle` varchar(6) DEFAULT 'lock' COMMENT 'lock扣柜unlock放货apply申请放货',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
-INSERT INTO `hl_order_port` VALUES ('1', 'AA19203424450415', '鸡肉', '40HQ', '3', '10', '40', '1', '', null, 'kehu001', '0', '2018-10-19 11:39:02', 'month', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', '120', '555', '400', '300', '23155', '通过审核>待录入运单', '3', null, null, null, '0', '0', 'apply');
+INSERT INTO `hl_order_port` VALUES ('1', 'AA19466880844019', '鸡肉', '40HQ', '3', '10', '80', '1', '发射点发司法所', null, 'kehu001', '0', '2018-10-19 18:58:08', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'FFF,收货F公司,100085556', '15', '8000', '240', '555', '100', '400', '23075', null, '2', null, null, null, '0', '0', 'lock');
+INSERT INTO `hl_order_port` VALUES ('2', 'AA19506804684341', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu001', '0', '2018-10-19 20:04:40', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', '240', '555', '150', '400', '23125', null, '2', null, null, null, '0', '0', 'lock');
+INSERT INTO `hl_order_port` VALUES ('3', 'AA19508158986320', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu001', '0', '2018-10-19 20:06:55', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', '240', '555', '150', '400', '23125', null, '2', null, null, null, '0', '0', 'lock');
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
@@ -4769,7 +4773,7 @@ CREATE TABLE `hl_order_port_status` (
   `mtime` datetime DEFAULT NULL COMMENT '状态变化的时间',
   `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
@@ -4789,6 +4793,7 @@ INSERT INTO `hl_order_port_status` VALUES ('12', 'AA18458871422209', '3', '通�
 INSERT INTO `hl_order_port_status` VALUES ('13', 'AA18466255572245', '3', '通过审核', null, 'sales1');
 INSERT INTO `hl_order_port_status` VALUES ('14', 'AA18561145544804', '3', '通过审核', null, 'sales1');
 INSERT INTO `hl_order_port_status` VALUES ('15', 'AA19203424450415', '3', '通过审核', null, 'sales1');
+INSERT INTO `hl_order_port_status` VALUES ('16', 'AA19203424450415', '505', '订单删除', null, 'sales1');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -4939,113 +4944,29 @@ CREATE TABLE `hl_order_truckage` (
   `type` varchar(5) DEFAULT NULL COMMENT 'r装货s送货',
   `seal` varchar(12) DEFAULT NULL COMMENT '封条号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_truckage
 -- ----------------------------
-INSERT INTO `hl_order_truckage` VALUES ('1', 'AA19167195792235', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('2', 'AA19167195792235', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('3', 'AA19167195792235', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('4', 'AA19167195792235', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('5', 'AA19167195792235', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('6', 'AA19167195792235', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('7', 'AA19179213628305', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('8', 'AA19179213628305', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('9', 'AA19179213628305', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('10', 'AA19179213628305', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('11', 'AA19179213628305', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('12', 'AA19179213628305', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('13', 'AA19181138044346', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('14', 'AA19181138044346', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('15', 'AA19181138044346', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('16', 'AA19181138044346', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('17', 'AA19181138044346', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('18', 'AA19181138044346', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('19', 'AA19183030822327', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('20', 'AA19183030822327', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('21', 'AA19183030822327', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('22', 'AA19183030822327', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('23', 'AA19183030822327', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('24', 'AA19183030822327', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('25', 'AA19183565554329', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('26', 'AA19183565554329', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('27', 'AA19183565554329', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('28', 'AA19183565554329', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('29', 'AA19183565554329', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('30', 'AA19183565554329', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('31', 'AA19188926826304', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('32', 'AA19188926826304', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('33', 'AA19188926826304', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('34', 'AA19188926826304', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('35', 'AA19188926826304', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('36', 'AA19188926826304', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('37', 'AA19190246118329', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('38', 'AA19190246118329', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('39', 'AA19190246118329', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('40', 'AA19190246118329', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('41', 'AA19190246118329', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('42', 'AA19190246118329', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('43', 'AA19190725818330', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('44', 'AA19190725818330', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('45', 'AA19190725818330', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('46', 'AA19190725818330', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('47', 'AA19190725818330', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('48', 'AA19190725818330', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('49', 'AA19191011464363', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('50', 'AA19191011464363', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('51', 'AA19191011464363', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('52', 'AA19191011464363', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('53', 'AA19191011464363', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('54', 'AA19191011464363', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('55', 'AA19194863840438', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('56', 'AA19194863840438', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('57', 'AA19194863840438', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('58', 'AA19194863840438', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('59', 'AA19194863840438', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('60', 'AA19194863840438', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('61', 'AA19195349468493', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('62', 'AA19195349468493', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('63', 'AA19195349468493', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('64', 'AA19195349468493', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('65', 'AA19195349468493', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('66', 'AA19195349468493', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('67', 'AA19195968164468', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('68', 'AA19195968164468', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('69', 'AA19195968164468', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('70', 'AA19195968164468', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('71', 'AA19195968164468', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('72', 'AA19195968164468', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('73', 'AA19196031188407', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('74', 'AA19196031188407', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('75', 'AA19196031188407', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('76', 'AA19196031188407', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('77', 'AA19196031188407', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('78', 'AA19196031188407', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('79', 'AA19196391246444', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('80', 'AA19196391246444', null, '0', null, '100', '0', '撒旦法', null, '速读法', '速读法', '0000-00-00 00:00:00', '131321', '发送', '法撒旦法撒分', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('81', 'AA19196391246444', null, '0', null, '200', '1', '速读法', null, '速读法', '啊是短发', '0000-00-00 00:00:00', '143213', '大撒旦发射', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('82', 'AA19196391246444', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('83', 'AA19196391246444', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('84', 'AA19196391246444', null, '0', null, '200', '0', '速读法', null, null, null, null, null, '阿斯蒂芬', '阿桑福德斯蒂芬', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('85', 'AA19203243948464', null, '0', null, '100', '0', ' 速读法', null, ' 撒旦法', '撒旦法', '0000-00-00 00:00:00', '56456', '大法师', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('86', 'AA19203243948464', null, '0', null, '100', '0', ' 速读法', null, ' 撒旦法', '撒旦法', '0000-00-00 00:00:00', '56456', '大法师', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('87', 'AA19203243948464', null, '0', null, '200', '1', '法撒旦法', null, '发撒法撒旦', '法撒旦法撒', '0000-00-00 00:00:00', '45654654', '法撒旦法', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('88', 'AA19203243948464', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('89', 'AA19203243948464', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('90', 'AA19203243948464', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('91', 'AA19203286390443', null, '0', null, '100', '0', ' 速读法', null, ' 撒旦法', '撒旦法', '0000-00-00 00:00:00', '56456', '大法师', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('92', 'AA19203286390443', null, '0', null, '100', '0', ' 速读法', null, ' 撒旦法', '撒旦法', '0000-00-00 00:00:00', '56456', '大法师', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('93', 'AA19203286390443', null, '0', null, '200', '1', '法撒旦法', null, '发撒法撒旦', '法撒旦法撒', '0000-00-00 00:00:00', '45654654', '法撒旦法', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('94', 'AA19203286390443', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('95', 'AA19203286390443', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('96', 'AA19203286390443', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('97', 'AA19203424450415', null, '0', null, '100', '0', ' 速读法', null, ' 撒旦法', '撒旦法', '0000-00-00 00:00:00', '56456', '大法师', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('98', 'AA19203424450415', null, '0', null, '100', '0', ' 速读法', null, ' 撒旦法', '撒旦法', '0000-00-00 00:00:00', '56456', '大法师', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('99', 'AA19203424450415', null, '0', null, '200', '1', '法撒旦法', null, '发撒法撒旦', '法撒旦法撒', '0000-00-00 00:00:00', '45654654', '法撒旦法', '法撒旦法', 'r', null);
-INSERT INTO `hl_order_truckage` VALUES ('100', 'AA19203424450415', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('101', 'AA19203424450415', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
-INSERT INTO `hl_order_truckage` VALUES ('102', 'AA19203424450415', null, '0', null, '100', '0', '发生的', null, null, null, null, null, '法撒旦法', '啊是短发', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('1', 'AA19466880844019', null, '0', null, '100', '0', '法撒旦法', null, ' 阿斯蒂芬', '啊是短发', '2018-10-19 00:00:00', '132132', '撒旦发射点发', '撒旦法', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('2', 'AA19466880844019', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('3', 'AA19466880844019', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('4', 'AA19466880844019', null, '0', null, '200', '0', '撒旦发射', null, null, null, null, null, '法撒旦法', '阿萨德发放', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('5', 'AA19466880844019', null, '0', null, '200', '0', '撒旦发射', null, null, null, null, null, '法撒旦法', '阿萨德发放', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('6', 'AA19466880844019', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('7', 'AA19506804684341', null, '0', null, '150', '0', '炸鸡', null, '炸鸡', '炸鸡', '2018-10-09 00:00:00', '125151', '炸鸡', '炸鸡', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('8', 'AA19506804684341', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('9', 'AA19506804684341', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('10', 'AA19506804684341', null, '0', null, '200', '0', '炸鸡', null, null, null, null, null, '炸鸡', '炸鸡', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('11', 'AA19506804684341', null, '0', null, '200', '0', '炸鸡', null, null, null, null, null, '炸鸡', '炸鸡', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('12', 'AA19506804684341', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('13', 'AA19508158986320', null, '0', null, '150', '0', '炸鸡', null, '炸鸡', '炸鸡', '2018-10-09 00:00:00', '125151', '炸鸡', '炸鸡', 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('14', 'AA19508158986320', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('15', 'AA19508158986320', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('16', 'AA19508158986320', null, '0', null, '200', '0', '炸鸡', null, null, null, null, null, '炸鸡', '炸鸡', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('17', 'AA19508158986320', null, '0', null, '200', '0', '炸鸡', null, null, null, null, null, '炸鸡', '炸鸡', 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('18', 'AA19508158986320', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 's', null);
 
 -- ----------------------------
 -- Table structure for `hl_port`
