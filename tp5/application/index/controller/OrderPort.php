@@ -167,6 +167,8 @@ class OrderPort extends Controller
     //港到港订单详情页面
     public function orderPortDetail() {
         
+        
+        
         return $this->view->fetch('orderPort/order_port_detail');
     }
     

@@ -72,13 +72,13 @@
               </select>
             </td>
             <td>
-              <div name="member_name" class="layui-col-md6 inpu"><{$value.member_name}></div>
+              <div name="member_name" class="layui-col-md6 inpu"><{$value.name}></div>
               <div name="member_code" class="layui-col-md6 inpu"><{$value.member_code}></div>
             </td>
-            <{volist name="$value['money']" id ="v" key='k'}>
+            <{volist name="$value['money']" id ="v" }>
             <td><input type="text" name="money" value="<{$v}>"></td>
             <{/volist}>
-            <{volist name="$value['ship_id']" id ="v1"   key='k1'}>
+            <{volist name="$value['ship_id']" id ="v1"}>
             <td style="display:none"><input type="hidden" name="ship_id" value="<{$v1}>"></td>
             <{/volist}>
          
@@ -94,7 +94,7 @@
       </table>
         <div class="page">
             <div>
-         
+             <{$page}>
             </div>
         </div>
 
@@ -160,13 +160,14 @@
 
 
        function toajax (data){
+           console.log(data);
             var dataArray =JSON.stringify(data);
             $.ajax({
                 type:'POST',
                 url:"<{:url('admin/member/pushMoneyEdit')}>",    
-                data:dataArray,
+                data:'{data:'+dataArray+'}',
                 dataType:"JSON",
-                contentType: "application/json",
+               // contentType: "application/json",
                 success:function(data){
                     if(data==1){
                         alert('修改成功');
@@ -190,6 +191,7 @@
         inp.attr('readonly','readonly');//input只读
         $(this).parents('td').siblings('.yw').find('.layui-unselect').hide();//隐藏下拉框
         let shuju = huo_input($(this),inp);//调用huo_input方法获取数据
+       // console.log(shuju);
         toajax(shuju);//获取到的数据
         
       }else{

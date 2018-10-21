@@ -37,19 +37,17 @@ class Member extends Model
     }
     
      //业务对应客户的提成管理
-        public function  pushMoneyList($type,$account,$pages='10') {
-            
-           $list = Db::name('member')->alias('M')
-                ->join('hl_member_profit MP','MP.member_code=M.member_code','left')
-                ->join('hl_sales_member SM','M.member_code = SM.member_code','left')
-                ->join('hl_shipcompany SC',"SC.id = MP.ship_id and SC.status='1'",'right')
-                ->field('MP.id,M.member_code,M.member_name,SM.sales_name,SM.sales_code,'
-                       . "group_concat(distinct MP.ship_id order by SC.id separator ',') ship_id,"
-                       . "group_concat(distinct SC.ship_short_name order by SC.id separator ',') ship_name,"
-                       . "group_concat(distinct MP.money order by SC.id separator ',') money")
-               ->group('M.member_code')->order('MP.id')->buildSql();    
-var_dump($list);exit;
+    public function  pushMoneyList($type,$account,$pages='10') {
+        $sql = " (SELECT M.id,M.member_code,M.name,SC.status ,SC.id AS ship_id"
+                . " FROM hl_member M CROSS JOIN hl_shipcompany SC "
+                . " WHERE SC.status = '1' and M.status='1' order by M.id,SC.id)";
 
+        $list = Db::table($sql.' A')
+            ->join('hl_member_profit MP','MP.member_code=A.member_code and A.ship_id=MP.ship_id','left')
+            ->join('hl_sales_member SM','SM.member_code = A.member_code','left')
+            ->field('A.*,MP.money,SM.sales_name,SM.sales_code')
+            ->group('A.member_code,A.ship_id')->order('A.id,A.ship_id')->buildSql();  
+//var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数  
         if($type=='sales'&&!empty($account)){
             $list =Db::table($list.' b')
@@ -60,24 +58,33 @@ var_dump($list);exit;
     
         if($type=='customer'&&!empty($account)){
             $list =Db::table($list.' c')
-                ->where('c.member_name','like',"%{$account}%")
+                ->where('c.name','like',"%{$account}%")
                 ->whereOr('c.member_code',$account)   
                 ->buildSql(); 
         }
-            $pageParam['query']['account'] = $account;
-            $pageParam['query']['type'] = $type;
-            //var_dump($list);exit; //->paginate(20,false,$pageParam)
-        $list =Db::table($list.' d')->order('d.id')->select();  
-        $listArr=[];
-        foreach ($list as $key=> $value) {
-//            var_dump($value);exit;
-               $list[$key]['ship_id'] = explode(',', $value['ship_id']);
-               $list[$key]['ship_name'] = explode(',', $value['ship_name']);
-               $list[$key]['money'] = explode(',', $value['money']);
-             
+        $pageParam['query']['account'] = $account;
+        $pageParam['query']['type'] = $type;
+        //var_dump($list);exit; //->paginate(20,false,$pageParam)
+        $pages = (Db::name('shipcompany')->where('status',1)->count())*$pages;
+//        var_dump($list);exit; var_dump($pages);exit;
+
+        $list =Db::table($list.' d')->paginate($pages,false,$pageParam);
+        $page = $list->render();
+        $tem =[]; 
+        foreach ($list as  $row) {
+           $key= $row['member_code'];
+        $tem[$key]['id'] = $row['id'];
+        $tem[$key]['member_code'] = $row['member_code'];  
+        $tem[$key]['name'] = $row['name'];
+        $tem[$key]['status'] = $row['status'];
+        $tem[$key]['sales_name'] = $row['sales_name'];
+        $tem[$key]['sales_code'] = $row['sales_code'];
+        $tem[$key]['money'][] = $row['money'];
+        $tem[$key]['ship_id'][] = $row['ship_id'];
+       
         }
-  //  $this->_p($list);exit;
-        return $list;       
+        $tem = array_values($tem);
+        return array($tem,$page);       
     }
 
     
