@@ -19,6 +19,13 @@
             .xxtx {
                 width: 90%;
             }
+            #bo{
+                display: none;
+                padding: 10px;
+            }
+            #bo input{
+                height: 30px;
+            }
         </style>
         <form class="" id='order_data_form'>
             <div class="xxtx">
@@ -415,6 +422,7 @@
                     </div>
                 </div>
         </form>
+        <div id="bo"><input type="text"></div>
         <script>
             var url = "<{:url('OrderPort/???')}>";//申请
             var order_num = '<{$list.order_num}>';
@@ -434,18 +442,30 @@
             });
 
             $('.tjiao .no').click(function () {
-                $.get("<{:url('admin/orderPort/orderPortDel')}>", { 'order_num': order_num }, function (data) {
-                    if (data.status) {
-                        //当你在iframe页面关闭自身时
-                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                        parent.location.reload();//父窗口刷新
-                        alert('驳回成功');
-                    } else {
-                        alert('驳回失败');
+                layer.open({
+                    type: 1
+                    ,title: '驳回理由'
+                    ,content: $('#bo')
+                    ,btn:['确定','取消']
+                    ,yes:function(index, layero){
+                        let bo = $('#bo input').val();//驳回理由
+                        $.get("<{:url('admin/orderPort/orderPortDel')}>", { 'order_num': order_num ,'reject':bo}, function (data) {
+                            if (data.status) {
+                                //当你在iframe页面关闭自身时
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                parent.layer.close(index); //再执行关闭
+                                parent.location.reload();//父窗口刷新
+                                alert('驳回成功');
+                            } else {
+                                alert('驳回失败');
+                            }
+                        });
+                    },function(index){
+                        layer.close(index);
                     }
-                });
-            })
+                }); 
+            });
+
         </script>
 
 

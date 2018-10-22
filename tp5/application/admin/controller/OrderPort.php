@@ -363,5 +363,55 @@ class OrderPort extends Base
         }
         
     }
+
+    //审核详情页
+    public function audit_page()
+    {   
+        $order_num =  $this->request->get('order_num');
+        $data = new OrderM;
+        $dataArr = $data->orderData($order_num);
+//        $this->_p($dataArr);exit;
+        $list =$dataArr[0];
+        $shipperArr= explode(',',$list['shipper']); 
+        $consignerArr= explode(',',$list['consigner']);
+        //如果存在特殊优惠
+        $special_id = $list['special_id'];
+        $container_size =  $list['container_size'];
+        if($special_id!==0){
+            $special =Db::name('discount_special')->where('id',$special_id)
+                    ->field("promotion_title,id special_id ,".$container_size.'_promotion')
+                    ->find();
+        }  else {
+            $special='';
+        }
+        //查询其他的优惠信息
+        $member_code = $list['member_code'];
+        $seaprice_id = $list['seaprice_id'];
+
+        $discount =Db::name('discount_normal')->alias('DN')
+                ->join('hl_seaprice SP','SP.ship_id = DN.ship_id','left')
+                ->where(['SP.id'=>$seaprice_id,
+                          'DN.member_code'=>$member_code
+                        ])
+                ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
+                ->find();
+        $discount ?$discount:$discount=[];
+        array_key_exists('installment', $discount) ? $discount :$discount['installment']=0;
+        array_key_exists('month', $discount) ? $discount :$discount['month']=0;
+        array_key_exists('cash', $discount) ? $discount :$discount['cash']=0;
+        $discount['special']= $special;
+        
+//        $this->_p($dataArr[2]);exit;
+        $this->assign([
+            'list'  =>$list,
+            'containerData' => $dataArr[1],
+            'carData'=> $dataArr[2],
+            'shipperArr'=>$shipperArr,
+            'consignerArr'=>$consignerArr,
+            'discount'=>$discount
+        ]);
+        return $this->view->fetch('orderPort/audit_page');
+    }
+
     
 }
