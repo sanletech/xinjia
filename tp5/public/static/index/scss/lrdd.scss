@@ -476,6 +476,19 @@ body{
   display: none;
 }
 
+#wt1 .biao{
+  .biao_an{
+    text-align: right;
+  }
+  .layui-tab-title li:nth-child(1){
+    margin-right: 38%;
+    margin-left: 25px;
+  }
+  .layui-tab-title .layui-this{
+    background: #009688;
+    color: #fff;
+  }
+}
 
 #wt1 .biao .xin{
   li{

@@ -150,7 +150,7 @@ var id;//点击当前的ID
 var nei;//当前选中的内容
 function xzwt(zj){
   $(zj).addClass('nei_a').parent().siblings().find('.nei').removeClass('nei_a');
-  id = $(zj).find('.tiao_id').html();//点击当前的ID  
+  id = $(zj).find('.tiao_id').html();//点击当前的ID
   lei = $(zj).parents('.xin')[0];//判断是送货还是收货
   for (let i in arr) {
     if (arr[i].id == id) {
@@ -158,6 +158,12 @@ function xzwt(zj){
     }
   }
 }
+
+//双击确认
+$('.biao .xin').on('dblclick','li',function(){
+  wtxx();
+})
+
 //委托信息放input上
 function wtxx() {
   let input = $('.er .in');//获取委托信息的input
@@ -185,7 +191,7 @@ function wtxx() {
 $('.wt1').click(function () {
   layer.open({
     type: 1,
-    title: '航线详情',
+    title: '通讯录',
     offset: 'auto',
     area: ['1000px', '500px'],
     content: $('#wt1'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
@@ -217,7 +223,8 @@ $('.wt_zeng').click(function () {
       // 模态框成功调用
     }
   });
-})
+});
+
 //增加委托信息
 function zeng_wt(){
   let data = $('#linkman_form').serialize();//增加委托信息表单数据    

@@ -362,6 +362,15 @@ body {
   padding: 10px;
   display: none; }
 
+#wt1 .biao .biao_an {
+  text-align: right; }
+#wt1 .biao .layui-tab-title li:nth-child(1) {
+  margin-right: 38%;
+  margin-left: 25px; }
+#wt1 .biao .layui-tab-title .layui-this {
+  background: #009688;
+  color: #fff; }
+
 #wt1 .biao .xin li {
   padding: 10px 15px;
   font-size: 16px;
