@@ -1,0 +1,67 @@
+<link rel="stylesheet" href="__STATIC__/layui/css/layui.css" media="all">
+<style>
+    .laytable-cell-checkbox, .laytable-cell-numbers, .laytable-cell-space{
+        padding: 8px;
+    }
+</style>
+<ul class="layui-tab-title">
+    <li class="layui-this">所有账单</li>
+<!--    <li >未付款账单</li>
+    <li >付款账单</li>-->
+    <li><a href="<{:url('personal/port_bill_money')}>">未付款账单</a></li>
+</ul>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+ 
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+  </div>
+</script>               
+          
+<script src="__STATIC__/layui/layui.js"></script>   
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['jquery', 'layer','table'], function(){ 
+  var $ = layui.$ //重点处
+  ,layer = layui.layer
+  ,table = layui.table;
+  
+  table.render({
+    elem: '#test'
+    ,url: "<{:url('index/Bill/billList')}>?type=done"
+    ,toolbar: '#toolbarDemo'
+    ,title: '用户数据表'
+    ,width:'99%'
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', fixed: 'left', unresize: true, sort: true}
+      ,{field:'bill_num', title:'对账单号', edit: 'text' ,width:150}
+      ,{field:'order_num', title:'订单号', edit: 'text', width:200}
+      ,{field:'container_size', title:'柜型',  edit: 'text' ,width:100}
+      ,{field:'container_sum', title:'箱量' ,width:100}
+      ,{field:'quoted_price', title:'总价(元)',width:100}
+      ,{field:'ctime', title:'账单生成时间', sort: true,width:200}
+      ,{field:'status', title:'账单状态',width:100}
+      ,{field:'comment', title:'备注',sort: true}
+    ]]
+    ,page: true
+  //   , done: function(res, curr, count){
+  //   //如果是异步请求数据方式，res即为你接口返回的信息。
+  //   //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+  //   console.log(res);
+  //   //得到当前页码
+  //   console.log(curr); 
+    
+  //   //得到数据总量
+  //   console.log(count);
+  // }
+  });
+
+  //选中的数据
+  $('button').click(function(){
+    var checkStatus = table.checkStatus('test');
+    console.log(checkStatus.data);
+  })
+
+});
+</script>

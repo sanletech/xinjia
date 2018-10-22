@@ -29,11 +29,12 @@ class OrderPort extends Base
             $res ? $response=['status'>1,'mssage'=>'提交成功']:$response=['status'>0,'mssage'=>'提交失败'];
             //文件上传成功后更新订单状态
             if($res){
-                
+                  // 上传成功
+                 return['status'=>1,'mssage'=>'上传成功'] ;
             }
         }else{
             // 上传失败获取错误信息
-            return['status'>0,'mssage'=>$file->getError()] ;
+            return['status'=>0,'mssage'=>$file->getError()] ;
         }
 
 
@@ -43,11 +44,9 @@ class OrderPort extends Base
             $order_name = $this->request->param('order_num');    //下载文件名  
             $type = $this->request->param('type'); //文件类型
             $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
-//            var_dump($file);
+            var_dump($file);
             //将后缀修改成.
             $file_Extension= strstr(strrev($file),'_',true);
-            $file_Extension= strrev($file_Extension);
-        
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
 //              var_dump($file_name);exit;
             $file_dir = ROOT_PATH . 'public' . DS . 'uploads';        //下载文件存放目录    
@@ -80,13 +79,27 @@ class OrderPort extends Base
         $data = new OrderM;
         $list = $data->order_audit(5,2);
         $page =$list->render();
-    //    $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
         return $this->view->fetch('orderPort/order_audit'); 
-    }    
+    }
+    //审核订单 的通过
+    public function order_audit_pass() 
+    { 
+       if (request()->isAjax()){
+            $idArr =$this->request->param();
+            $res =Db::name('order_port')->where('id','in',$idArr['id'])->update(['status'=>3,'action'=>'通过审核>待录入运单号和上传订舱单']);
+            $order_numArr = Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
+            $data = new OrderM;
+            foreach ($order_numArr as $order_num) {
+               $data->orderUpdate($order_num,3,'通过审核');
+            }
+           return json($res ? 1 : 0) ;
+       }
+    }
+    
 
     //港到港订单页
     public function portList()
@@ -107,7 +120,7 @@ class OrderPort extends Base
         $tol=($page-1)*$limit;
         $data = new OrderM;
         $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num);
-//        $this->_p($list);exit;
+    //    $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
@@ -156,7 +169,7 @@ class OrderPort extends Base
         //计算出从那条开始查询
         $tol=($page-1)*$limit;
         $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'month');
+        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'monthly');
 //        $this->_p($list);exit;
         $count =  count($list);
         $this->view->assign('count',$count);
@@ -175,19 +188,17 @@ class OrderPort extends Base
         $order_num =  $this->request->get('order_num');
         $data = new OrderM;
         $dataArr = $data->orderData($order_num);
-    //    $this->_p($dataArr);exit;
+//        $this->_p($dataArr);exit;
         $list =$dataArr[0];
         $shipperArr= explode(',',$list['shipper']); 
         $consignerArr= explode(',',$list['consigner']);
         //如果存在特殊优惠
         $special_id = $list['special_id'];
         $container_size =  $list['container_size'];
-       
         if($special_id!==0){
             $special =Db::name('discount_special')->where('id',$special_id)
                     ->field("promotion_title,id special_id ,".$container_size.'_promotion')
                     ->find();
-            var_dump($special);exit;
         }  else {
             $special='';
         }
@@ -245,31 +256,16 @@ class OrderPort extends Base
         $this->view->assign('url',url('admin/OrderPort/port_end')); 
         return $this->view->fetch('orderPort/all_order');
     }
-
-
-    //审核订单 的通过
-    public function order_audit_pass() 
-    { 
-        if (request()->isAjax()){
-            $order_num =$this->request->param('order_num');
-            
-            $res =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>3,'action'=>'通过审核>待录入运单号和上传订舱单']);
-            $data = new OrderM;
-            $data->orderUpdate($order_num,3,'通过审核');
-            
-            return $res ? array('status'=>1,'message'=>'审核通过') : array('status'=>0,'message'=>'审核未通过') ;
-        }
-    }
     
     //订单删除
     public function  orderPortDel(){
-        $order_num= $this->request->param('order_num');
-        $res =Db::name('order_port')->where('order_num',$order_num)->update([
+        $idArr= $this->request->param();
+        $res =Db::name('order_port')->where('id','in',$idArr['id'])->update([
             'status'=>505,'action'=>'订单删除']);
         $respones =[];
         $res ?$respones['success'][] ='订单删除成功':$respones['fail'][] ='订单删除失败';
         $dataM =new OrderM;
-        $order_num =Db::name('order_port')->where('order_num',$order_num)->column('order_num');
+        $order_num =Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
         $status = 505 ;$title = '订单删除';
         if($res){
         foreach ($order_num as  $value) {
@@ -277,7 +273,7 @@ class OrderPort extends Base
             $res1 ?$respones['success'][] ='订单状态修改成功':$respones['fail'][] ='订单状态修改失败';
         }
         }
-        if(!array_key_exists('fail', $respones)){
+        if(array_key_exists('fail', $respones)){
             return array('status'>1,'mssage'>'删除成功');
         }else{
              return array('status'>0,'mssage'>'删除失败');
@@ -312,16 +308,7 @@ class OrderPort extends Base
     //港到港的订单修改
     public function  orderEdit() {
         $data = $this->request->param();
-        $order_num =$data['order_num'];  
-        $track_num =$data['track_num'];
-        $res = Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]); 
-        return $res?array('status'=>1,'mssage'=>'修改成功'):array('status'=>0,'mssage'=>'修改失败');
-        
-    }
-    
-        public function  orderEdit111() {
-        $data = $this->request->param();
-        $this->_p($data);exit;
+//        $this->_p($data);exit;
         $order_num =$data['order_num'];  
 //        //根据订单号查询
         $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('member_code,seaprice_id,container_size')->find();
@@ -365,7 +352,6 @@ class OrderPort extends Base
         'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price);
-        
         //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
         $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
         $res = Db::name('order_port')->where('order_num',$order_num)->where('mtime','between',[$starttime,$mtime])->find();
@@ -374,58 +360,8 @@ class OrderPort extends Base
             return $res1 ? array('status'=>1,'mssage'=>'修改成功'):array('status'=>0,'mssage'=>'修改失败');
         } else {
             return array('status'=>0,'mssage'=>'订单重复修改');
-        }  
+        }
+        
     }
-
-               //审核详情页
-               public function audit_page()
-               {   
-                   $order_num =  $this->request->get('order_num');
-                   $data = new OrderM;
-                   $dataArr = $data->orderData($order_num);
-               //    $this->_p($dataArr);exit;
-                   $list =$dataArr[0];
-                   $shipperArr= explode(',',$list['shipper']); 
-                   $consignerArr= explode(',',$list['consigner']);
-                   //如果存在特殊优惠
-                   $special_id = $list['special_id'];
-                   $container_size =  $list['container_size'];
-                  
-                   if($special_id!==0){
-                       $special =Db::name('discount_special')->where('id',$special_id)
-                               ->field("promotion_title,id special_id ,".$container_size.'_promotion')
-                               ->find();
-                       var_dump($special);exit;
-                   }  else {
-                       $special='';
-                   }
-                   //查询其他的优惠信息
-                   $member_code = $list['member_code'];
-                   $seaprice_id = $list['seaprice_id'];
-           
-                   $discount =Db::name('discount_normal')->alias('DN')
-                           ->join('hl_seaprice SP','SP.ship_id = DN.ship_id','left')
-                           ->where(['SP.id'=>$seaprice_id,
-                                     'DN.member_code'=>$member_code
-                                   ])
-                           ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
-                           ->find();
-                   $discount ?$discount:$discount=[];
-                   array_key_exists('installment', $discount) ? $discount :$discount['installment']=0;
-                   array_key_exists('month', $discount) ? $discount :$discount['month']=0;
-                   array_key_exists('cash', $discount) ? $discount :$discount['cash']=0;
-                   $discount['special']= $special;
-                   
-           //        $this->_p($dataArr[2]);exit;
-                   $this->assign([
-                       'list'  =>$list,
-                       'containerData' => $dataArr[1],
-                       'carData'=> $dataArr[2],
-                       'shipperArr'=>$shipperArr,
-                       'consignerArr'=>$consignerArr,
-                       'discount'=>$discount
-                   ]);
-                   return $this->view->fetch('orderPort/audit_page');
-               }
     
 }

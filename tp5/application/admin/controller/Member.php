@@ -59,34 +59,38 @@ class Member extends Base
         $type = input('get.type'); //业务sales 用户customer
         $account = input('get.account');  //帐号搜索
         if($account){
-             $this->view->assign('account',$account); 
+            $account =  trim($account);
+            $this->view->assign('account',$account); 
         }
         $type ?$type:'sales';
         $this->view->assign('type',$type); 
         $user = new MemberM ;
+        //船公司的集合
+        $ship_nameArr =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name');
+        if(empty($ship_nameArr)){
+            $this->error('船公司未添加,请先添加船公司的数据','admin/port/ship_list');
+        }  else {
+            $this->view->assign('ship_nameArr',$ship_nameArr);
+        }
+        
         $list = $user->pushMoneyList($type,$account,5);
+       
         //所有业务的集合
         $salesArr =Db::name('user')->field('user_code,user_name')
                 ->where('status','1')->where('type','sales')
                 ->select();
 //        $this->_p($list);  var_dump($salesArr);exit;
-        //船公司的集合
-        if(!array_key_exists(0, $list)){
-            if(!array_key_exists ('ship_name', $list[0])){
-                $ship_nameArr = array_fill(0, 5, '未录入船公司');
-            }
-        }else{
-            $ship_nameArr =$list[0]['ship_name'];
-        }
-        $this->view->assign('list',$list);
+          
+        $this->view->assign('list',$list[0]);
+        $this->assign('page', $list[1]);
         $this->view->assign('salesArr',$salesArr);
-        $this->view->assign('ship_nameArr',$ship_nameArr);
         return $this->view->fetch('member/pushMoney_List'); 
     }
     
     //业务对应客户的提成管理的修改
     public function  pushMoneyEdit(){
         $data = $this->request->param();
+        $this->_p($data);exit;
         $arr= [];
         $dataArr = array_splice($data, -5);
         foreach ($dataArr as $key => $value) {

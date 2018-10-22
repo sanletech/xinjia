@@ -9,8 +9,8 @@ class Bill extends Base
     //海运运价
     public function billCreate($order_num){
         $data =Db::name('order_port')
-                ->field('order_num,container_size,container_sum,comment,status,'
-                        . 'quoted_price')
+                ->field('order_num,container_size,container_sum,comment,status,money_status,'
+                       . 'quoted_price,member_code')
                 ->where('order_num',$order_num)->find();
         $data['ctime']=  date('Y-m-d H:i:s');
         //插入订单的数据
@@ -28,10 +28,26 @@ class Bill extends Base
     }
     //账单展示
     public function billList() {
+        //所用的账单 done 未完成 undone
+        $type = $this->request->param('type');
+        if($type=='done'){
+            $money_status ='not null';
+        }elseif($type=='undone'){
+            $money_status = 0;
+        }
+      
+        $page =$this->request->param('page',1,'intval');
+        $limit =$this->request->param('limit',10,'intval');
+        $tol = ($page-1)*$limit;
         $member_code =Session::get('member_code','think');
         $list =Db::name('order_bill')->where('member_code',$member_code)
-                ->field('member_code',TRUE)->select();
-        $count = count($list);
+                ->field('member_code',TRUE)->where('money_status',$money_status)
+                ->order('ctime desc,mtime desc')->buildSql();
+        $lista = Db::table($list.' a')->select();
+  
+        $count = count($lista);
+        $list = Db::table($list.' a')->limit($tol,$limit)->select();
+        
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
     }
 }

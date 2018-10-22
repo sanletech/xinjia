@@ -66,7 +66,7 @@ class Personal extends Base
        return $this->view->fetch('personal/common_info');
     }
 
-    //港到港账单生成  所有
+    //港到港账单生成  所有 和未付款
     public function port_bill(){
 //        $Bill = controller('Bill');
 //        $list =$Bill->billList();
@@ -74,10 +74,13 @@ class Personal extends Base
         $this->view->assign('billUrl', url("index/Bill?billList"));
         return $this->view->fetch('personal/port_bill');
     }
-    //港到港账单未付款
-    public function port_bill_money(){
+    
+        public function port_bill_money(){
+
+        $this->view->assign('billUrl', url("index/Bill?billList"));
         return $this->view->fetch('personal/port_bill_money');
     }
+
     
     
     //港到港订单
