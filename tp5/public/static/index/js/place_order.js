@@ -209,7 +209,6 @@ function zong_sum(shu,zs) {
     var bxje = $('#bxje').val() * sum;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje;//总价格
-   console.log(zong,money,sum,$('#bxje').val());
     
     if (shu == 1) {//发票6%
         zong = zong * 1.04;
