@@ -95,7 +95,7 @@
                       <!--<a href="javascript:void(0);">运单</a>-->
                     </td>
                     <td class="caozuo">
-                      <a title="查看订单" target="_blank" onclick="" href="<{:url('index/OrderPort/orderPortDetail')}>">
+                        <a title="查看订单" target="_blank" onclick="" href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>">
                         <i class="layui-icon">&#xe63c;</i>
                       </a>
                     <{if condition="$vo['status'] lt 3"}>

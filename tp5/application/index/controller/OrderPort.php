@@ -80,7 +80,7 @@ class OrderPort extends Controller
     //港到港订单的处理
     public function port_data() {
         $data =$this->request->param(); 
-//         $this->_p($data);exit;
+         $this->_p($data);exit;
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复
 //        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
@@ -141,6 +141,7 @@ class OrderPort extends Controller
         'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
         'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
         'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
+        'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],  
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);
          //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
@@ -167,10 +168,57 @@ class OrderPort extends Controller
     //港到港订单详情页面
     public function orderPortDetail() {
         
+        $order_num =  $this->request->get('order_num');
+        $data = new \app\admin\model\orderPort();
+        $dataArr = $data->orderData($order_num);
+//        $this->_p($dataArr);exit;
+        $list =$dataArr[0];
+        $shipperArr= explode(',',$list['shipper']); 
+        $consignerArr= explode(',',$list['consigner']);
+        //如果存在特殊优惠
+        $special_id = $list['special_id'];
+        $container_size =  $list['container_size'];
+        if($special_id!==0){
+            $special =Db::name('discount_special')->where('id',$special_id)
+                    ->field("promotion_title,id special_id ,".$container_size.'_promotion')
+                    ->find();
+        }  else {
+            $special='';
+        }
+        //查询其他的优惠信息
+        $member_code = $list['member_code'];
+        $seaprice_id = $list['seaprice_id'];
+
+        $discount =Db::name('discount_normal')->alias('DN')
+                ->join('hl_seaprice SP','SP.ship_id = DN.ship_id','left')
+                ->where(['SP.id'=>$seaprice_id,
+                          'DN.member_code'=>$member_code
+                        ])
+                ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
+                ->find();
+        $discount ?$discount:$discount=[];
+        array_key_exists('installment', $discount) ? $discount :$discount['installment']=0;
+        array_key_exists('month', $discount) ? $discount :$discount['month']=0;
+        array_key_exists('cash', $discount) ? $discount :$discount['cash']=0;
+        $discount['special']= $special;
+        
+//        $this->_p($dataArr[2]);exit;
+        $this->assign([
+            'list'  =>$list,
+            'containerData' => $dataArr[1],
+            'carData'=> $dataArr[2],
+            'shipperArr'=>$shipperArr,
+            'consignerArr'=>$consignerArr,
+            'discount'=>$discount
+        ]);
         
         
         return $this->view->fetch('orderPort/order_port_detail');
     }
+    
+    
+    
+    
     
         //中间航线详情
      public function routeDetail()

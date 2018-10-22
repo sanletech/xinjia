@@ -28,7 +28,7 @@ class Login extends Controller
         //在user 表中进行查询
         $map = array('loginname'=> $loginName);
         $user = User::get($map);
-      
+//        var_dump($user);exit
         //将用户名与密码分开验证
         //如果没有查询到该用户
         if(is_null($user)){

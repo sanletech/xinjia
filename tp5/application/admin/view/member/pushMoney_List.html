@@ -101,75 +101,17 @@
     </div>
     <script>
         
-       
         
-        
-        
-        
-      layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
-        });
-
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
-      });
-    function stop(id){
-        $.ajax({
-                type:'GET',
-                url:"<{:url('admin/member/memberStop')}>?id="+id,    
-                success:function(data){
-                    if(data==true){
-                      $('#'+id).parent("tr").hide();
-                    }else{
-                        alert('失败') ;
-                  }
-                }
-            })
-    }
-    
-  
-      /*用户-删除*/
-    function member_del(obj,did){
-        layer.confirm('确认要删除吗？',function(index){
-            //转成数组形式
-            var dataA=new Array()
-            dataA[0]=did ;
-            var dataArray={id:dataA}
-            toajax(dataArray);
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
-         });
-      }
-
-   function delAll (argument) {
-        var data = tableCheck.getData();
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            var dataArray={id:data};
-            toajax(dataArray);
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
-
-
        function toajax (data){
-           console.log(data);
-            var dataArray =JSON.stringify(data);
+//          var dataArray =JSON.stringify(data);
             $.ajax({
                 type:'POST',
                 url:"<{:url('admin/member/pushMoneyEdit')}>",    
-                data:'{data:'+dataArray+'}',
+                data: {"dataArray":data},
                 dataType:"JSON",
-               // contentType: "application/json",
+//                contentType: "application/json",
                 success:function(data){
-                    if(data==1){
+                    if(data.status==1){
                         alert('修改成功');
                         location.assign(location);
                     }else{
