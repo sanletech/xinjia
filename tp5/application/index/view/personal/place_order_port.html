@@ -39,12 +39,14 @@
                     <th>起运港</th>
                     <th>目的港</th>
                     <th>总运费</th>
-                    <td>货物状态</td>
-                    <th>付款状态</th>
+                    
+                    
                     <th>订舱单</th>
                     <th>补料</th>
+                    <td>货物状态</td>
                     <th>水运单</th>
-                    <th>操作</th>
+                    <th>付款状态</th>
+                    <th>状态说明</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,7 +54,7 @@
                   <tr>
                     <td class="ddh">
                       <!-- 有改变css('background-color','#00DB00') -->
-                      <a href="javascript:void(0);"><{$vo.order_num}></a>
+                      <a href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>" target="_blank" ><{$vo.order_num}></a>
                     </td>
                     <td><{$vo.track_num}></td>
                     <td><{$vo.ctime}></td>
@@ -62,11 +64,6 @@
                     <td><{$vo.s_port}></td>
                     <td><{$vo.e_port}></td>
                     <td><{$vo.quoted_price}></td>
-                    <td class="goods"><a href="javascript:void(0);"><{$vo.container_buckle}></a></td>
-                    <td class="fukuan">
-                      <a target="_blank" href="javascript:void(0);">
-                          <?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></a>
-                    </td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
                     <?php                                    
@@ -76,6 +73,7 @@
                     }
                     ?>
                     </td>
+                    
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
                       <{if condition="($vo['status']>4) "}>
@@ -84,6 +82,7 @@
                       <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>')">提交柜号</a>
                       <{/if}>
                     </td>
+                    <td class="goods"><a href="javascript:void(0);"><{$vo.container_buckle}></a></td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
                     <?php                                    
@@ -94,10 +93,12 @@
                     ?>
                       <!--<a href="javascript:void(0);">运单</a>-->
                     </td>
+                    <td class="fukuan">
+                        <a target="_blank" href="javascript:void(0);">
+                            <?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></a>
+                      </td>
                     <td class="caozuo">
-                        <a title="查看订单" target="_blank" onclick="" href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>">
-                        <i class="layui-icon">&#xe63c;</i>
-                      </a>
+                      状态说明
                     </td> 
                   </tr>
                   <{/volist}>

@@ -191,7 +191,7 @@ function wtxx() {
 $('.wt1').click(function () {
   layer.open({
     type: 1,
-    title: '航线详情',
+    title: '通讯录',
     offset: 'auto',
     area: ['1000px', '500px'],
     content: $('#wt1'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
