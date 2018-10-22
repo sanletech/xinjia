@@ -197,7 +197,7 @@ function toajax(url, data) {
                 alert('提交表单成功');
                 window.location.replace(index_url);
             }
-        $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
+        // $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
         }
     });
     //return false;//只此一
