@@ -36,14 +36,14 @@
                     <th>船公司</th>
 <!--                    <th>驳船</th>-->
                     <th>船名航次</th>
-                    <th>起运港</th>
-                    <th>目的港</th>
+                    <th>起运港-目的港</th>
                     <th>总运费</th>
                     <td>货物状态</td>
                     <th>付款状态</th>
                     <th>订舱单</th>
                     <th>补料</th>
                     <th>水运单</th>
+                    <th>订单状态</th>
                     <th>操作</th>
                   </tr>
                 </thead>
@@ -59,8 +59,7 @@
                     <td><{$vo.ship_short_name}></td>
                     <!--<td>否</td>-->
                     <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
-                    <td><{$vo.s_port}></td>
-                    <td><{$vo.e_port}></td>
+                    <td><{$vo.s_port}>-<{$vo.e_port}></td>
                     <td><{$vo.quoted_price}></td>
                     <td class="goods"><a href="javascript:void(0);"><{$vo.container_buckle}></a></td>
                     <td class="fukuan">

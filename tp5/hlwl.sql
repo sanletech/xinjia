@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-19 20:27:15
+Date: 2018-10-22 16:24:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4505,7 +4505,7 @@ INSERT INTO `hl_member` VALUES ('16', '王达成', 'e10adc3949ba59abbe56e057f20f
 INSERT INTO `hl_member` VALUES ('17', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao4', 'company');
 INSERT INTO `hl_member` VALUES ('18', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao5', 'company');
 INSERT INTO `hl_member` VALUES ('19', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company');
-INSERT INTO `hl_member` VALUES ('25', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-19 16:39:20', '18575280024', 'ssssi@qq.com', '1', '', '0000-00-00', '2', '外包公司', 'kehu001', 'person');
+INSERT INTO `hl_member` VALUES ('25', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-22 16:09:54', '18575280024', 'ssssi@qq.com', '1', '', '0000-00-00', '2', '外包公司', 'kehu001', 'person');
 
 -- ----------------------------
 -- Table structure for `hl_member_add`
@@ -4561,7 +4561,7 @@ CREATE TABLE `hl_member_profit` (
   `money` int(10) DEFAULT '200' COMMENT '提成点',
   `mtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_member_profit
@@ -4580,6 +4580,16 @@ INSERT INTO `hl_member_profit` VALUES ('14', 'taobao6', '4', '200', '2018-08-26 
 INSERT INTO `hl_member_profit` VALUES ('15', 'taobao6', '5', '200', '2018-08-26 10:41:45');
 INSERT INTO `hl_member_profit` VALUES ('16', 'taobao6', '6', '200', '2018-08-26 10:41:45');
 INSERT INTO `hl_member_profit` VALUES ('17', 'taobao6', '7', '200', '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('18', 'kehu002', '2', '11', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('19', 'kehu002', '3', '222', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('20', 'kehu002', '4', '33', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('21', 'kehu002', '5', '444', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('22', 'kehu002', '6', '55', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('23', 'kehu002', '7', '66', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('24', 'kehu002', '8', '77', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('25', 'kehu002', '10', '88', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('26', 'kehu002', '12', '99', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('27', 'kehu002', '13', '100', '2018-10-22 12:01:48');
 
 -- ----------------------------
 -- Table structure for `hl_node`
@@ -4619,13 +4629,15 @@ CREATE TABLE `hl_order_bill` (
   `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
   `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款 1付款',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_bill
 -- ----------------------------
 INSERT INTO `hl_order_bill` VALUES ('1', 'AA19466880844019', 'ZD-A-001', '23075', '3', '40HQ', '2018-10-19 18:58:08', null, '2', '发射点发司法所', 'kehu001', '0');
 INSERT INTO `hl_order_bill` VALUES ('2', 'AA19508158986320', 'ZD-A-002', '23125', '3', '40HQ', '2018-10-19 20:06:56', null, '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', 'kehu001', '0');
+INSERT INTO `hl_order_bill` VALUES ('3', 'AA22922801626294', 'ZD-A-003', '2950', '1', '20GP', '2018-10-22 15:11:20', null, '2', '', 'kehu001', '0');
+INSERT INTO `hl_order_bill` VALUES ('4', 'AA22924899118261', 'ZD-A-004', '4640', '1', '40HQ', '2018-10-22 15:14:50', null, '2', '', 'kehu001', '0');
 
 -- ----------------------------
 -- Table structure for `hl_order_comment`
@@ -4738,6 +4750,7 @@ CREATE TABLE `hl_order_port` (
   `consigner` varchar(100) DEFAULT NULL COMMENT '订单的收货人资料,姓名,手机号,公司,地址',
   `seaprice_id` int(5) DEFAULT NULL COMMENT '海运价格表id',
   `seaprice` int(4) DEFAULT NULL COMMENT '海运费',
+  `price_description` varchar(25) DEFAULT NULL COMMENT '海运费的价格说明',
   `premium` int(4) DEFAULT NULL COMMENT '总共的保险费',
   `discount` int(2) DEFAULT NULL COMMENT '单个柜子的优惠金恩',
   `carprice_r` int(5) DEFAULT NULL COMMENT '总的装货费',
@@ -4752,14 +4765,16 @@ CREATE TABLE `hl_order_port` (
   `container_status` varchar(1) DEFAULT '0' COMMENT '客户是否提交柜号了0未提交1已经提交',
   `container_buckle` varchar(6) DEFAULT 'lock' COMMENT 'lock扣柜unlock放货apply申请放货',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
-INSERT INTO `hl_order_port` VALUES ('1', 'AA19466880844019', '鸡肉', '40HQ', '3', '10', '80', '1', '发射点发司法所', null, 'kehu001', '0', '2018-10-19 18:58:08', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'FFF,收货F公司,100085556', '15', '8000', '240', '555', '100', '400', '23075', null, '2', null, null, null, '0', '0', 'lock');
-INSERT INTO `hl_order_port` VALUES ('2', 'AA19506804684341', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu001', '0', '2018-10-19 20:04:40', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', '240', '555', '150', '400', '23125', null, '2', null, null, null, '0', '0', 'lock');
-INSERT INTO `hl_order_port` VALUES ('3', 'AA19508158986320', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu001', '0', '2018-10-19 20:06:55', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', '240', '555', '150', '400', '23125', null, '2', null, null, null, '0', '0', 'lock');
+INSERT INTO `hl_order_port` VALUES ('1', 'AA19466880844019', '鸡肉', '40HQ', '3', '10', '80', '1', '发射点发司法所', null, 'kehu001', '0', '2018-10-19 18:58:08', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'FFF,收货F公司,100085556', '15', '8000', null, '240', '555', '100', '400', '23075', null, '2', null, null, null, '0', '0', 'lock');
+INSERT INTO `hl_order_port` VALUES ('2', 'AA19506804684341', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu001', '0', '2018-10-19 20:04:40', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', null, '2', null, null, null, '0', '0', 'lock');
+INSERT INTO `hl_order_port` VALUES ('3', 'AA19508158986320', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu001', '0', '2018-10-19 20:06:55', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', null, '2', null, null, null, '0', '0', 'lock');
+INSERT INTO `hl_order_port` VALUES ('4', 'AA22922801626294', '', '20GP', '1', '0', '0', '1', '', null, 'kehu001', '0', '2018-10-22 15:11:20', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '2', '3500', null, '0', '550', '0', '0', '2950', null, '2', null, null, null, '0', '0', 'lock');
+INSERT INTO `hl_order_port` VALUES ('5', 'AA22924899118261', 'asdfa', '40HQ', '1', '10', '40', '1', '', null, 'kehu001', '0', '2018-10-22 15:14:49', 'installment', '0', null, '0', '1', 'FFF,收货F公司,100085556', '6', 'AA,送货A公司,55555', '6', '5000', null, '40', '400', '0', '0', '4640', null, '2', null, null, null, '0', '0', 'lock');
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
@@ -4944,7 +4959,7 @@ CREATE TABLE `hl_order_truckage` (
   `type` varchar(5) DEFAULT NULL COMMENT 'r装货s送货',
   `seal` varchar(12) DEFAULT NULL COMMENT '封条号',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_truckage
@@ -4967,6 +4982,10 @@ INSERT INTO `hl_order_truckage` VALUES ('15', 'AA19508158986320', null, '1', nul
 INSERT INTO `hl_order_truckage` VALUES ('16', 'AA19508158986320', null, '0', null, '200', '0', '炸鸡', null, null, null, null, null, '炸鸡', '炸鸡', 's', null);
 INSERT INTO `hl_order_truckage` VALUES ('17', 'AA19508158986320', null, '0', null, '200', '0', '炸鸡', null, null, null, null, null, '炸鸡', '炸鸡', 's', null);
 INSERT INTO `hl_order_truckage` VALUES ('18', 'AA19508158986320', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('19', 'AA22922801626294', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('20', 'AA22922801626294', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 's', null);
+INSERT INTO `hl_order_truckage` VALUES ('21', 'AA22924899118261', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 'r', null);
+INSERT INTO `hl_order_truckage` VALUES ('22', 'AA22924899118261', null, '1', null, null, '1', null, null, null, null, null, null, null, null, 's', null);
 
 -- ----------------------------
 -- Table structure for `hl_port`
@@ -5245,7 +5264,7 @@ INSERT INTO `hl_sales_member` VALUES ('2', 'yw007', 'cshengle1', null, null, '�
 INSERT INTO `hl_sales_member` VALUES ('3', 'yw003', 'customer00', null, null, '法撒旦法', '客户王五');
 INSERT INTO `hl_sales_member` VALUES ('4', 'yw004', 'kehu001', null, null, '发生的', '客户钱六');
 INSERT INTO `hl_sales_member` VALUES ('5', 'yw005', 'kehu0010', null, null, '发生的', '客户李七');
-INSERT INTO `hl_sales_member` VALUES ('6', 'yw006', 'kehu002', null, null, '速读法', '客户老八');
+INSERT INTO `hl_sales_member` VALUES ('6', 'yw002', 'kehu002', null, null, '李四', '客户老八');
 INSERT INTO `hl_sales_member` VALUES ('7', 'yw007', 'kehu003', null, null, '富士达', '客户哥哥个');
 INSERT INTO `hl_sales_member` VALUES ('8', 'yw008', 'kehu004', null, null, '爱的色放', '速读法');
 INSERT INTO `hl_sales_member` VALUES ('9', 'yw001', 'kehu005', null, '', '爱的色放', '速读法');
@@ -5801,8 +5820,8 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-19 16:43:57', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
-INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '0', '', '2147483647', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-22 14:17:57', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('5', 'service1', 'yw005', '马九', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'service', null, null);
@@ -5812,7 +5831,7 @@ INSERT INTO `hl_user` VALUES ('8', 'service3', 'yw007', '哥哥个', 'e10adc3949
 INSERT INTO `hl_user` VALUES ('9', 'yw00008', 'yw00008', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-09-04 11:39:08', '0000-00-00 00:00:00', '', '', '1', null, null, 'saleManage', null, null);
 INSERT INTO `hl_user` VALUES ('15', 'yw00009', 'yw00009', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-09-05 03:33:10', '0000-00-00 00:00:00', '10086', '4545465@qq.com', '1', null, null, 'saleManage', null, null);
 INSERT INTO `hl_user` VALUES ('16', 'kf00015', 'kf00015', '阿迪沙发', 'e10adc3949ba59abbe56e057f20f883e', '2018-09-05 03:33:51', '0000-00-00 00:00:00', '2113213', '5465464', '1', null, null, 'serviceMan', null, null);
-INSERT INTO `hl_user` VALUES ('17', 'yw00016', 'yw00016', 'aaaa', 'e10adc3949ba59abbe56e057f20f883e', '2018-09-05 03:48:23', '0000-00-00 00:00:00', 'aaa', 'aa', '1', null, null, 'sale', null, null);
+INSERT INTO `hl_user` VALUES ('17', 'yw00016', 'yw00016', 'aaaa', 'e10adc3949ba59abbe56e057f20f883e', '2018-09-05 03:48:23', '0000-00-00 00:00:00', 'aaa', 'aa', '1', null, null, 'sales', null, null);
 
 -- ----------------------------
 -- Table structure for `hl_user_area`
