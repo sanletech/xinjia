@@ -182,10 +182,9 @@ function order_data(zj) {
     obj['portprice_s'] = $('#song').html();//送货费用
     obj['discount'] = $('#discount').html();//优惠价格
     obj['price_sum'] = $('#price_sum').html();//总运费
-
+    obj['price_description'] = $('.you span').html();//价格说明
     toajax(OrderUrl, obj);
 }
-
 function toajax(url, data) {
     $.ajax({
         type: 'POST',

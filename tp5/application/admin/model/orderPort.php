@@ -76,14 +76,14 @@ class orderPort extends Model
         $carData['r'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
                 ->where('state',0) //收费柜子
-                ->where('type','r')->group('sequence')
+                ->where('type','r')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime,link_man,shipper,load_time,link_phone,car,`comment`,seal')
                 ->select();
        
         $carData['s'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
                 ->where('state',0) //收费柜子
-                ->where('type','s')->group('sequence')
+                ->where('type','s')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
         
