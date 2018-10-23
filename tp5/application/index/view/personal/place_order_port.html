@@ -3,6 +3,29 @@
 
   <body>
     <link rel="stylesheet" href="__STATIC__/css/place_details.css">
+    <style>
+      #te .ddh a{
+        background-color:transparent;
+        color: blue;
+      }
+      #te .ddh a:hover{
+        text-decoration:underline;
+      }
+      #te .ddh a:visited{
+        color: red;
+      }
+      .goods a{
+        display: inline-block;
+        width: 45px;
+        text-align: center;
+      }
+    </style>
+    <div class="x-nav">
+        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+          title="刷新">
+          <i class="layui-icon" style="line-height:30px">ဂ</i>
+        </a>
+    </div>
     <div class="invalid">
       <form class="" action="" method="post">
         <div class="layui-row">
@@ -52,7 +75,6 @@
                 <{volist name="list" id="vo"}>
                   <tr>
                     <td class="ddh">
-                      <!-- 有改变css('background-color','#00DB00') -->
                       <a href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>" target="_blank" ><{$vo.order_num}></a>
                     </td>
                     <td><{$vo.track_num}></td>
@@ -91,10 +113,7 @@
                     ?>
                       <!--<a href="javascript:void(0);">运单</a>-->
                     </td>
-                    <td class="fukuan">
-                        <a target="_blank" href="javascript:void(0);">
-                            <?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></a>
-                      </td>
+                    <td class="fukuan"><?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></td>
                     <td class="caozuo">
                       状态说明
                     </td> 
