@@ -135,21 +135,27 @@ class Member extends Base
     }
     
     //在线支付优惠 和临时在线优惠
-    public function discountSpecial() {
+    public function discount() {
         $type = input('get.type'); //船公司ship_name //活动名称promotion_title
-        $account = input('get.account');  //帐号搜索
+        $account = input('get.account');  //帐号搜索条件
+        $status = input('get.status');//优惠状态   
         if($account){
-            $this->view->assign('account',$account); 
+            $this->view->assign('account',$account);
         }
-        $type?$type:'ship_name';
+        $type?$type:$type='ship_name';
+        $status?$status:$status=1;         
         $this->view->assign('type',$type); 
+        $this->view->assign('status',$status); 
+        
         $user = new MemberM ;
-        $list = $user->discountSpecial($type,$account,5);
+        $list = $user->discount($type,$account,$status,5);
 //        $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
-        return $this->view->fetch('discount/discount_list_special'); 
+      
+        
+        return $this->view->fetch('discount/discount_list'); 
         
     }
     

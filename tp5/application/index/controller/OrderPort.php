@@ -146,7 +146,7 @@ class OrderPort extends Controller
         $fatherData= array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
         'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
         'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
-        'payment_method'=>$payment_method,'cash_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
+        'payment_method'=>$payment_method,'cash_id'=>$cash_id,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
         'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],'money_status'=>$money_status,
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);

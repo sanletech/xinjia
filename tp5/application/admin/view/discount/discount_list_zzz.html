@@ -41,38 +41,41 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-            <input type="radio"  name="type" value="ship_name"  title="船公司" <?php if(!isset($type)){echo 'checked';}elseif($type!=='ship_name'){echo 'checked';}?> >
-            <input type="radio"  name="type" value="title"  title="活动名称"  <?php if(isset($type)&&($type=='title')){echo 'checked';}?> >
-            <input type="radio"  name="status" value="1"  title="正常" <?php if(!isset($type)){echo 'checked';}elseif($type!=='ship_name'){echo 'checked';}?> >
-            <input type="radio"  name="status" value="title"  title="过期"  <?php if(isset($type)&&($type=='title')){echo 'checked';}?> >
-            <input type="radio"  name="status" value="title"  title="禁用"  <?php if(isset($type)&&($type=='title')){echo 'checked';}?> >
+            <input type="radio"  name="type" value="ship_name"  title="船公司" <?php if(!isset($type)){echo 'checked';}elseif($type!=='customer'){echo 'checked';}?> >
+            <input type="radio"  name="type" value="customer"  title="客户"  <?php if(isset($type)&&($type=='customer')){echo 'checked';}?> >
             <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入搜索条件" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
-      <table class="layui-table layui-row layui-form">
+      <table class="layui-table layui-row">
         <thead>
           <tr>
+            <th>客户</th>
+            <th>客户帐号</th>
             <th>船公司</th>
-            <th>活动名称</th>
-            <th>开始时间</th>
-            <th>截止时间</th>
-            <th>40HQ</th>
-            <th>20GP</th>
-            <th>状态</th>
+            <th>40HQ到港付</th>
+            <th>20GP到港付</th>
+            <th>40HQ月结付</th>
+            <th>20GP月结付</th>
+            <th>40HQ在线付</th>
+            <th>20GP在线付</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody >
           <{volist name="list" id ="vo"}>
           <tr>
+            <td><{$vo.member_name}></td>
+            <td><{$vo.member_code}></td>
+            <td style="display:none;"><input type="text" name="ship_id" value="<{$vo.ship_id}>">
+            <input type="text" name="member_code" value="<{$vo.member_code}>"></td>
             <td><{$vo.ship_short_name}></td>
-            <td><{$vo.promotion_title}></td>
-            <td><{$vo.discount_start}></td>
-            <td><{$vo.discount_end}></td>
-            <td><{$vo.40HQ_promotion}></td>
-            <td><{$vo.20GP_promotion}></td>
-            <td><{$vo.status}></td>
+            <td><input type="text" name="40HQ_installment" value="<{$vo.40HQ_installment}>"></td>
+            <td><input type="text" name="20GP_installment" value="<{$vo.20GP_installment}>"></td>
+            <td><input type="text" name="40HQ_month" value="<{$vo.40HQ_month}>"></td>
+            <td><input type="text" name="20GP_month" value="<{$vo.20GP_month}>"></td>
+            <td><input type="text" name="40HQ_cash" value="<{$vo.40HQ_cash}>"></td>
+            <td><input type="text" name="20GP_cash" value="<{$vo.20GP_cash}>"></td>
             <td class="td-manage">
                 <button class="xiu_bao layui-btn layui-btn-xs">修改</button>
             </td>
@@ -87,76 +90,20 @@
         </div>
 
     </div>
+           
+      
     <script>
-        
-       
-        
-        
-        
-        
-      layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
-        });
-
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
-      });
-    function stop(id){
-        $.ajax({
-                type:'GET',
-                url:"<{:url('admin/member/memberStop')}>?id="+id,    
-                success:function(data){
-                    if(data==true){
-                      $('#'+id).parent("tr").hide();
-                    }else{
-                        alert('失败') ;
-                  }
-                }
-            })
-    }
-    
-  
-      /*用户-删除*/
-    function member_del(obj,did){
-        layer.confirm('确认要删除吗？',function(index){
-            //转成数组形式
-            var dataA=new Array()
-            dataA[0]=did ;
-            var dataArray={id:dataA}
-            toajax(dataArray);
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
-         });
-      }
-
-   function delAll (argument) {
-        var data = tableCheck.getData();
-        layer.confirm('确认要删除吗？'+data,function(index){
-            //捉到所有被选中的，发异步进行删除
-            var dataArray={id:data};
-            toajax(dataArray);
-            layer.msg('删除成功', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        });
-      }
-
 
        function toajax (data){
-            var dataArray =JSON.stringify(data);
+//            var dataArray =JSON.stringify(data);
             $.ajax({
                 type:'POST',
-                url:"<{:url('admin/member/pushMoneyEdit')}>",    
-                data:dataArray,
+                url:"<{:url('admin/member/discountEdit')}>",    
+                data:{'dataArray':data},
                 dataType:"JSON",
-                contentType: "application/json",
+//                contentType: "application/json",
                 success:function(data){
-                    if(data==1){
+                    if(data.status==1){
                         alert('修改成功');
                         location.assign(location);
                     }else{
@@ -191,19 +138,9 @@
 
     function huo_input(wo,inp){//数据处理
       let huoqu = [];
-      let xuan= wo.parents('td').siblings('.yw').find('.layui-anim .layui-this');//获取下拉值
-      let sales_id = wo.parents('td').siblings('.yw').find('#customer_id').html();//获取ID
-      let member = wo.parents('td').siblings('td').find('.inpu');
       inp.each(function(){
         huoqu.push({[$(this).attr('name')]:$(this).val()});
       });
-      member.each(function(){
-        huoqu.push({[$(this).attr('name')]:$(this).html()});
-      });
-      huoqu.splice(0,1);
-      huoqu.push({'sales_name':xuan.html()});
-      huoqu.push({'sales_code':xuan.attr('lay-value')});
-      huoqu.push({'customer_id':sales_id});
       return huoqu;
     }
 
