@@ -139,17 +139,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>包装：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                    <div <?php if($list[ 'container_type_id']==1) ?>>杂货集装箱</div>
-                                    <div <?php if($list[ 'container_type_id']==2) ?>>杂货集装箱</div>
-                                    <div <?php if($list[ 'container_type_id']==3) ?>>杂货集装箱</div>
-                                    <!-- <div class="select">
-                                        <select name='container_type'>
-                                            <option value='1'  <?php if($list['container_type_id']==1){echo "selected='true'";} ?> >杂货集装箱</option>
-                                            <option value='2'  <?php if($list['container_type_id']==2){echo "selected='true'";} ?>>散货集装箱</option>
-                                            <option value='3'  <?php if($list['container_type_id']==3){echo "selected='true'";} ?>>液体货集装箱</option>
-                                        </select>
-                                    </div> -->
-
+                                    <div><{$list.container_type}></div>
                                 </div>
                             </div>
                         </div>
@@ -203,9 +193,20 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>结账方式：</div>
                                 <div class="layui-col-xs6" style="text-align: left;">
-                                    <div <?php if($list[ 'payment_method']=='installment' )?>>到港付</div>
-                                    <div <?php if($list[ 'payment_method']=='month' )?>>月结付</div>
-                                    <div <?php if($list[ 'payment_method']=='cash' )?>>在线结付(优惠)</div>
+                                <div> <?php 
+                                    $payment_method=  $list['payment_method'];
+                                    if($payment_method=='installment'){
+                                         echo'到港付';
+                                    }elseif($payment_method=='month'){
+                                        echo'月结';
+                                    }elseif($payment_method=='cash'){
+                                        foreach($discount as $rows){
+                                            if($rows['id']== $list['cash_id']){
+                                                echo $rows['title'];
+                                            }
+                                        }
+                                    }
+                                ?></div>
                                 </div>
                             </div>
                         </div>
@@ -404,12 +405,12 @@
                             </div>
                             <div class="layui-col-xs12">
                                 <span>优惠：</span>
-                                <strong id="discount">0</strong>元
+                                <strong id="discount"><{$list.discount*$list.container_sum}></strong>元
                                 <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
                             </div>
                             <div class="layui-col-xs12">
                                 <span>总费用：</span>
-                                <strong class="zongfei" id="price_sum">0</strong>元
+                                <strong class="zongfei" id="price_sum"><{$list.quoted_price}></strong>元
                             </div>
                         </div>
                     </div>
@@ -424,13 +425,13 @@
         </form>
         <div id="bo"><input type="text"></div>
         <script>
-            var url = "<{:url('OrderPort/???')}>";//申请
+            var url = "<{:url('OrderPort/order_judgment')}>";//申请
             var order_num = '<{$list.order_num}>';
             $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();
             $('.tjiao .yes').click(function () {
-                $.get("<{:url('admin/orderPort/order_audit_pass')}>", { 'order_num': order_num }, function (data) {
+                $.get(url, { 'order_num': order_num,'type':'pass'}, function (data) {
                     if (data.status) {
-                    //当你在iframe页面关闭自身时
+                    //当你在iframe页面关闭自身时  
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭
                         parent.location.reload();//父窗口刷新
@@ -445,11 +446,11 @@
                 layer.open({
                     type: 1
                     ,title: '驳回理由'
-                    ,content: $('#bo')
+                    ,content: $('#bo')  
                     ,btn:['确定','取消']
                     ,yes:function(index, layero){
                         let bo = $('#bo input').val();//驳回理由
-                        $.get("<{:url('admin/orderPort/orderPortDel')}>", { 'order_num': order_num ,'reject':bo}, function (data) {
+                        $.get(url, { 'order_num': order_num ,'reject':bo,'type':'fail'}, function (data) {
                             if (data.status) {
                                 //当你在iframe页面关闭自身时
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

@@ -51,9 +51,11 @@ class OrderPort extends Model
         if(empty($res)){
             return '参数错误';
         }
+        //根据航线信息的船公司 来查询在线支付的优惠
         $res=$res[0][0];
 //        $this->_p($res);exit;
-        // 将集装箱字的尺寸添加到数组中
+        $ship_id =$res['ship_id'];
+        // 将集装箱字的尺寸添加到数组中 删除不符合的尺寸价格
         $res['container_size']=$container_size;
         if($container_size =='20GP'){
            $res['price'] = $res['price_20GP'];
@@ -65,56 +67,43 @@ class OrderPort extends Model
         
         //查询有没有活动优惠
         $nowtime = date('y-m-d h:i:s');
-        $discount_special = Db::name('discount_special')->where([
-                        'discount_start'=>['ELT',$nowtime],
-                        'discount_end'=>['EGT',$nowtime],
-                        'status'=>['NEQ',0],
-                        'ship_id'=>$res['ship_id'],
-                       ])->field("{$container_size}_promotion promotion,"
-                       . "promotion_title,id promotion_id")->find();
-                       
-        //查询出客户对应的月结,到港付,现款的优惠
-        $discount =Db::name('discount_normal')->where([
-                    'member_code'=>$member_code,
-                    'ship_id'=>$res['ship_id']
-                     ])
-                ->field("{$container_size}_installment installment,"
-                . "{$container_size}_month month,"
-                . "{$container_size}_cash cash")
-                ->find();
-        $discount ? $discount :$discount=[];
-        array_key_exists('installment', $discount)?$discount : $discount['installment']=0;
-        array_key_exists('month', $discount)?$discount : $discount['month']=0;
-        array_key_exists('cash', $discount)?$discount : $discount['cash']=0;
-        $discount_special?$discount['special']=$discount_special:$discount['special']=0;
-      
-      //  $this->_p($res); $this->_p($discount);exit;
+        $discount = Db::name('discount')->where([
+                        'discount_start'=>['<= time',$nowtime],
+                        'discount_end'=>['>= time',$nowtime],
+                        'status'=>1,
+                        'ship_id'=>$ship_id,
+                       ])->field("id,title,type,".$container_size. ' money')->select();
+//               var_dump($discount);exit;
+//        if(empty($discount)){
+//            $discount=array('id'=>0,'title'=>'没有添加此船公司的优惠','type'=>'','money'=>0);
+//        } 
+//        $this->_p($res); $this->_p($discount);exit;
         return array($res,$discount);            
         
     }
     
-    //根据用户code 和sea_id海运价格id，柜子大小,付款方式 返回相应的单个柜子优惠价格
-    public function dicountPrice($member_code,$seaprice_id,$container_size,$payment_method,$special='') {
-        //根据sea_id 查询出对应的船公司的Id
-        $ship_id =Db::name('seaprice')->where('id',$seaprice_id)->value('ship_id');
-        if($special){
-            $mtime= date('y-m-d h:i:s');
-            $price =Db::name('discount_special')->where([
-                        'discount_start'=>['ELT',$mtime],
-                        'discount_end'=>['EGT',$mtime],
-                        'ship_id'=>$ship_id,
-                        'id'=>$special
-                    ])->value($container_size.'_promotion');
-        }else{
-            $price =Db::name('discount_normal')->where([
-                'member_code'=>$member_code,
-                'ship_id'=>$ship_id,
-            ])->value($container_size.'_'.$payment_method);
-        }
-        
-        return $price;
-        
-    }
+//    //根据用户code 和sea_id海运价格id，柜子大小,付款方式 返回相应的单个柜子优惠价格
+//    public function dicountPrice($member_code,$cash_id,$container_size,$payment_method,$special='') {
+//        //根据sea_id 查询出对应的船公司的Id
+//        $ship_id =Db::name('seaprice')->where('id',$cash_id)->value('ship_id');
+//        if($special){
+//            $mtime= date('y-m-d h:i:s');
+//            $price =Db::name('discount_special')->where([
+//                        'discount_start'=>['ELT',$mtime],
+//                        'discount_end'=>['EGT',$mtime],
+//                        'ship_id'=>$ship_id,
+//                        'id'=>$special
+//                    ])->value($container_size.'_promotion');
+//        }else{
+//            $price =Db::name('discount_normal')->where([
+//                'member_code'=>$member_code,
+//                'ship_id'=>$ship_id,
+//            ])->value($container_size.'_'.$payment_method);
+//        }
+//        
+//        return $price;
+//        
+  //  }
     
     //处理装货费用和送货费用  订单号码和 装货 送货的信息
     public function truckage($order_num,$container_sum,$truckageData){

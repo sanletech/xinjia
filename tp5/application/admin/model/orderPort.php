@@ -50,6 +50,7 @@ class orderPort extends Model
         return $list;
         
     }
+    
     //订单的详细信息
     public function orderData($order_num) {
         $list =Db::name('order_port')->alias('OP')
@@ -61,11 +62,12 @@ class orderPort extends Model
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
-                ->field('OP.*,HM.company,SC.ship_short_name')
+                ->join('hl_container_type CT','CT.id=OP.container_type_id','left')//集装箱子的型号
+                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name,CT.container_type')
                 ->where('OP.order_num',$order_num)
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
                 ->find();
-        
+//        $this->_p($list);exit;
         //根据订单号 查询对应柜子的 柜号和封条号码
         $containerData =Db::name('order_truckage')->alias('OT')
                 ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
@@ -86,8 +88,19 @@ class orderPort extends Model
                 ->where('type','s')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
+        //查询对应现金优惠金额 和临时优惠
+        $nowtime = date('y-m-d h:i:s');
+        $discount = Db::name('discount')->where([
+                        'discount_start'=>['<= time',$nowtime],
+                        'discount_end'=>['>= time',$nowtime],
+                        'status'=>1,
+                        'ship_id'=>$list['ship_id'],
+                       ])->field("id,title,type,".$list['container_size']. ' money')->select();
         
-        return array($list ,$containerData,$carData);
+        $shipperArr= explode(',',$list['shipper']); 
+        $consignerArr= explode(',',$list['consigner']);
+        
+        return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'discount'=>$discount,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
         
     }
     

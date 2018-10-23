@@ -64,6 +64,17 @@
                                 </div>
                             </div>
                         </div>
+                        
+                                    <!--海运费-->
+                        <div class="layui-col-xs3 dd" style="display:none;">
+                          <div class="zhong">
+                            <span>
+                              <{$list.container_size}>
+                            </span>
+                            <p>￥<strong class="carriage"><{$list.seaprice}></strong></p>
+                          </div>
+                          <div class="you">价格说明:<span><{$list.price_description}></span></div>
+                        </div>
                     </div>
                 </div>
                 <!-- 动态一 -->
@@ -331,16 +342,11 @@
                                 <div class="layui-col-xs6">
                                     <div class="select">
                                         <select name="payment_method" class='mony_fs'>
-                                            <option title="<{$discount.installment}>" <?php if($list['payment_method']=='installment'){echo"checked";}  ?>  value='installment'>到港付</option>
-                                            <option title="<{$discount.month}>"  <?php if($list['payment_method']=='month'){echo"checked";}  ?> value='month'>月结付</option>
-                                            <{empty name="$discount.special" }>
-                                            <option title="<{$discount.cash}>" <?php if($list['payment_method']=='cash'){echo"checked";}  ?>  value='cash'>在线结付(优惠)</option>"
-                                            <{else /}>
-                                            <option title="<{$discount.month}>" value='cash' disabled='true'>在线结付(优惠)</option>
-                                            <option title="<{$discount['special']['promotion']}>"<?php if($list['payment_method']=='special'){echo"checked";}  ?> value="<{$discount['special']['promotion_id']}>">
-                                              <{$discount[ 'special'][ 'promotion_title']}>
-                                            </option>
-                                            <{/empty}>
+                                            <option  <?php if($list['payment_method']=='installment'){echo"checked";}  ?>  value='installment'>到港付</option>
+                                            <option  <?php if($list['payment_method']=='month'){echo"checked";}  ?> value='month'>月结付</option>
+                                            <{volist name="discount" id="rows"}>
+                                            <option title="<{$rows.money}>" value='<{$rows.id}>'   <?php if($list['cash_id']==$rows['id']){echo"checked";}  ?> ><{$rows.title}></option>"
+                                            <{/volist}>
                                         </select>
                                     </div>
                                 </div>

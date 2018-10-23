@@ -134,34 +134,7 @@ class Member extends Base
   
     }
     
-    //客户对不同柜子不同船公司的优惠的list
-    public function  discountList() {
-        $type = input('get.type'); //船公司ship_name 用户customer
-        $account = input('get.account');  //帐号搜索
-        if($account){
-             $this->view->assign('account',$account); 
-        }
-        $type ?$type:'customer';
-        $this->view->assign('type',$type); 
-        $user = new MemberM ;
-        $list = $user->discountList($type,$account,5);
-//        $this->_p($list);exit;
-        $page = $list->render();
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        return $this->view->fetch('discount/discount_list'); 
-    }
-    
-    //客户对不同柜子不同船公司的优惠 的修改
-    public function discountEdit() {
-        $data = $this->request->param();
-        $this->_p($data);exit;
-       
-    }
-    
-    
-    
-    //活动优惠
+    //在线支付优惠 和临时在线优惠
     public function discountSpecial() {
         $type = input('get.type'); //船公司ship_name //活动名称promotion_title
         $account = input('get.account');  //帐号搜索
@@ -220,7 +193,30 @@ class Member extends Base
         return $this->view->fetch('member/disable_list'); 
     }
 
-
+    //    //客户对不同柜子不同船公司的优惠的list
+    //    public function  discountList() {
+    //        $type = input('get.type'); //船公司ship_name 用户customer
+    //        $account = input('get.account');  //帐号搜索
+    //        if($account){
+    //             $this->view->assign('account',$account); 
+    //        }
+    //        $type ?$type:'customer';
+    //        $this->view->assign('type',$type); 
+    //        $user = new MemberM ;
+    //        $list = $user->discountList($type,$account,5);
+    ////        $this->_p($list);exit;
+    //        $page = $list->render();
+    //        $this->view->assign('list',$list);
+    //        $this->view->assign('page',$page);
+    //        return $this->view->fetch('discount/discount_list'); 
+    //    }
+    //    
+    //    //客户对不同柜子不同船公司的优惠 的修改
+    //    public function discountEdit() {
+    //        $data = $this->request->param();
+    //        $this->_p($data);exit;
+    //       
+    //    }
     
     
 

@@ -251,6 +251,9 @@ $('.mony_fs').change(function(){ //监听结账方式
 youhui();
 function youhui(){ //优惠价格
     let mony = $(".mony_fs").find("option:selected").attr('title');
+    if(!mony){
+        mony = 0;
+    }
     let container = $('#container_sum').find("option:selected").val();
     mony_fs = mony * container;
     $('#discount').html(mony_fs);
