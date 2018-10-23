@@ -36,22 +36,24 @@ function order_num(){
     });
 }
 
-if($('.fukuan a').html() == '已付款'){
-    $('.fukuan a').css('background-color','#00DB00').attr('href','javascript:void(0);');
+if ($('.fukuan').html() == '未付款') {
+    $('.fukuan').css('color','red');
 }else{
-    // $('.fukuan a').attr('href',xiangqing);
+    $('.fukuan').css('color','#00DB00');
+}
+let huo = $('.goods a');
+for (let i = 0; i < huo.length; i++) {
+    if(huo.eq(i).html() == 'lock'){
+        huo.eq(i).html('扣货');
+    }else if(huo.eq(i).html() == 'unlock'){
+        huo.eq(i).html('放货');
+        huo.eq(i).css('background-color','#00DB00');
+    }else if(huo.eq(i).html() == 'apply'){
+        huo.eq(i).html('申请中');
+        huo.eq(i).css('background-color','#C9C9C9');
+    }     
 }
 
-if ($('.ddh a').html()) {
-    $('.ddh a').css('background-color','#00DB00');
-}
-if($('.goods a').html() == 'lock'){
-    $('.goods a').html('扣货');
-}else if($('.goods a').html() == 'unlock'){
-    $('.goods a').html('放货');
-}else if($('.goods a').html() == 'apply'){
-    $('.goods a').html('申请放货');
-}
 $('.goods a').click(function(){
     let order_num = $(this).parent().siblings('.ddh').find('a').html();;
     if ($(this).html() == '扣货') {
@@ -79,7 +81,3 @@ $('.goods a').click(function(){
         });     
     } 
 });
-
-if ($('.goods a').html() == '放货') {
-    $('.goods a').css('background-color','#00DB00');
-}

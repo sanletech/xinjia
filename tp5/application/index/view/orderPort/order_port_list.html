@@ -229,24 +229,24 @@
                       <li>
                         <span class="hong"><k>￥</k><{$vo.price_20GP}></span>
                           <div class="dian">
-                            <{empty name="$vo.price_20GP"}>
+                            <{if condition="$vo['price_20GP']==0"}>
                             <!-- <a href="javascript:;" class="gp">下单</a> -->
                             <{else /}>
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=20GP"
                               class="gp">下单</a>
-                              <{/empty}>
+                              <{/if}>
                           </div>
                       </li>
                       
                       <li>
                         <span class="hong"><k>￥</k><{$vo.price_40HQ}></span>
                           <div class="dian">
-                            <{empty name="$vo.price_20GP"}>
+                            <{if condition="$vo['price_40HQ']==0"}>
                             <!-- <a href="javascript:;" class="gp">下单</a> -->
                             <{else /}>
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
-                            <{/empty}>
+                            <{/if}>
                           </div>
                       </li>
                       
@@ -348,9 +348,7 @@
               // console.log(obj.limit); //得到每页显示的条数              
               //首次不执行
               if (!first) {
-                //do something 
-                console.log(add);
-                           
+                //do something                            
                 window.location.href = "<{:url('index/OrderPort/orderPort')}>?page=" +
                         obj.curr + '&limit=' + obj.limit
                         + '&start_add=' + $('.yinc input').eq(0).val() +  '&start_name='+ $('#start_add').val()

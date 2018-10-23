@@ -434,7 +434,7 @@ $('.tjiao').eq(0).find('.shi').click(function(){
   $('.lche,.fuwu').show();
   $('input').css('border','0').attr('readonly',true);
   $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
-  $("html,body").animate({scrollTop:700}, 500);
+  $("html,body").animate({scrollTop:100}, 500);
 })
 
 //返回修改
@@ -446,7 +446,7 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();
-  $("html,body").animate({scrollTop:700}, 500);
+  $("html,body").animate({scrollTop:100}, 500);
 })
 
 

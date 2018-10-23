@@ -5,7 +5,17 @@
     .laytable-cell-space {
         padding: 8px;
     }
+    .x-nav{
+        position: relative;
+        z-index: 1;
+    }
 </style>
+<div class="x-nav">
+    <a class="layui-btn" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+        title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i>
+    </a>
+</div>
 <ul class="layui-tab-title">
     <li>
         <a href="<{:url('personal/port_bill')}>">所有账单</a>
