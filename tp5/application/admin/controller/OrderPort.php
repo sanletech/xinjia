@@ -73,7 +73,7 @@ class OrderPort extends Base
 
         }
 
-            //审核订单
+    //审核订单的列表页面
     public function order_audit() 
     {
         $data = new OrderM;
@@ -85,18 +85,42 @@ class OrderPort extends Base
         $this->view->assign('page',$page);
         return $this->view->fetch('orderPort/order_audit'); 
     }
-    //审核订单 的通过
-    public function order_audit_pass() 
+        //审核详情页
+    public function audit_page()
+    {   
+        $order_num =  $this->request->get('order_num');
+        $data = new OrderM;
+        $dataArr = $data->orderData($order_num);
+//        $this->_p($dataArr);exit;
+
+        $this->assign([
+            'list'  =>$dataArr['list'],
+            'containerData' => $dataArr['containerData'],
+            'carData'=> $dataArr['carData'],
+            'shipperArr'=>$dataArr['shipperArr'],
+            'consignerArr'=>$dataArr['consignerArr'],
+            'discount'=>$dataArr['discount']
+        ]);;
+        return $this->view->fetch('orderPort/audit_page');
+    }
+    
+    //订单的通过和 驳回(需要填写原因)
+    public function order_judgment() 
     { 
        if (request()->isAjax()){
-            $idArr =$this->request->param();
-            $res =Db::name('order_port')->where('id','in',$idArr['id'])->update(['status'=>3,'action'=>'通过审核>待录入运单号和上传订舱单']);
-            $order_numArr = Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
-            $data = new OrderM;
-            foreach ($order_numArr as $order_num) {
-               $data->orderUpdate($order_num,3,'通过审核');
+            $data =$this->request->param();
+            $type =$data['type'];
+            $order_num =$data['order_num'];
+            if($type=='fail'){
+                $reject = $data['reject'];
+                $status=404;$action=$reject;
+            }elseif($type=='pass') {
+                $status=3;$action='通过审核>待录入运单号和上传订舱单';
             }
-           return json($res ? 1 : 0) ;
+            $res =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$status,'action'=>$action]);
+            $data = new OrderM;
+            $data->orderUpdate($order_num,$status,$action);
+            return  $res?array('status'=>1,'message'=>'操作成功'):array('status'=>0,'message'=>'操作失败');
        }
     }
     
@@ -188,45 +212,14 @@ class OrderPort extends Base
         $order_num =  $this->request->get('order_num');
         $data = new OrderM;
         $dataArr = $data->orderData($order_num);
-//        $this->_p($dataArr);exit;
-        $list =$dataArr[0];
-        $shipperArr= explode(',',$list['shipper']); 
-        $consignerArr= explode(',',$list['consigner']);
-        //如果存在特殊优惠
-        $special_id = $list['special_id'];
-        $container_size =  $list['container_size'];
-        if($special_id!==0){
-            $special =Db::name('discount_special')->where('id',$special_id)
-                    ->field("promotion_title,id special_id ,".$container_size.'_promotion')
-                    ->find();
-        }  else {
-            $special='';
-        }
-        //查询其他的优惠信息
-        $member_code = $list['member_code'];
-        $seaprice_id = $list['seaprice_id'];
-
-        $discount =Db::name('discount_normal')->alias('DN')
-                ->join('hl_seaprice SP','SP.ship_id = DN.ship_id','left')
-                ->where(['SP.id'=>$seaprice_id,
-                          'DN.member_code'=>$member_code
-                        ])
-                ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
-                ->find();
-        $discount ?$discount:$discount=[];
-        array_key_exists('installment', $discount) ? $discount :$discount['installment']=0;
-        array_key_exists('month', $discount) ? $discount :$discount['month']=0;
-        array_key_exists('cash', $discount) ? $discount :$discount['cash']=0;
-        $discount['special']= $special;
-        
-//        $this->_p($dataArr[2]);exit;
+//        $this->_p($dataArr['list']);exit;
         $this->assign([
-            'list'  =>$list,
-            'containerData' => $dataArr[1],
-            'carData'=> $dataArr[2],
-            'shipperArr'=>$shipperArr,
-            'consignerArr'=>$consignerArr,
-            'discount'=>$discount
+            'list'  =>$dataArr['list'],
+            'containerData' => $dataArr['containerData'],
+            'carData'=> $dataArr['carData'],
+            'shipperArr'=>$dataArr['shipperArr'],
+            'consignerArr'=>$dataArr['consignerArr'],
+            'discount'=>$dataArr['discount']
         ]);
         return $this->view->fetch('orderPort/port_details');
     }
@@ -364,54 +357,7 @@ class OrderPort extends Base
         
     }
 
-    //审核详情页
-    public function audit_page()
-    {   
-        $order_num =  $this->request->get('order_num');
-        $data = new OrderM;
-        $dataArr = $data->orderData($order_num);
-//        $this->_p($dataArr);exit;
-        $list =$dataArr[0];
-        $shipperArr= explode(',',$list['shipper']); 
-        $consignerArr= explode(',',$list['consigner']);
-        //如果存在特殊优惠
-        $special_id = $list['special_id'];
-        $container_size =  $list['container_size'];
-        if($special_id!==0){
-            $special =Db::name('discount_special')->where('id',$special_id)
-                    ->field("promotion_title,id special_id ,".$container_size.'_promotion')
-                    ->find();
-        }  else {
-            $special='';
-        }
-        //查询其他的优惠信息
-        $member_code = $list['member_code'];
-        $seaprice_id = $list['seaprice_id'];
 
-        $discount =Db::name('discount_normal')->alias('DN')
-                ->join('hl_seaprice SP','SP.ship_id = DN.ship_id','left')
-                ->where(['SP.id'=>$seaprice_id,
-                          'DN.member_code'=>$member_code
-                        ])
-                ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
-                ->find();
-        $discount ?$discount:$discount=[];
-        array_key_exists('installment', $discount) ? $discount :$discount['installment']=0;
-        array_key_exists('month', $discount) ? $discount :$discount['month']=0;
-        array_key_exists('cash', $discount) ? $discount :$discount['cash']=0;
-        $discount['special']= $special;
-        
-//        $this->_p($dataArr[2]);exit;
-        $this->assign([
-            'list'  =>$list,
-            'containerData' => $dataArr[1],
-            'carData'=> $dataArr[2],
-            'shipperArr'=>$shipperArr,
-            'consignerArr'=>$consignerArr,
-            'discount'=>$discount
-        ]);
-        return $this->view->fetch('orderPort/audit_page');
-    }
 
     
 }

@@ -13,8 +13,9 @@ class Personal extends Model
             $order_num = trim($order_num);
         }
 //        var_dump($order_num);echo'</br>';
+        $statusSql =DB::name('order_port_status')->order('status')->buildSql();
         $data =Db::name('order_port')->alias('OP')
-                ->join('hl_order_port_status OPS','OP.order_num = OPS.order_num','left')
+                ->join($statusSql.' OPS','OP.order_num = OPS.order_num','left')
                 ->join('hl_seaprice SP','SP.id=seaprice_id','left')
                 ->join('hl_shipcompany SC','SC.id= SP.ship_id','left')
                 ->join('hl_ship_route SR','SR.id=SP.route_id','left')
@@ -27,8 +28,8 @@ class Personal extends Model
                 ->where('OP.status','in',$status)
                 ->field('OP.*,OPS.title, OPS.status change_status,OPS.mtime change_mtime,'
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,P1.port_name s_port,P2.port_name e_port')
-                ->order('OPS.status DESC')->buildSql();
-
+                ->order('OP.ctime desc')->buildSql();
+     
         $list=Db::table($data.' A')->group('A.id')->limit($tol,$limit)->select();
 //        var_dump($list);
         return  $list;

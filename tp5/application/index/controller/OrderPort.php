@@ -63,7 +63,7 @@ class OrderPort extends Controller
     //港到港下单
     public function portBook(){
         $data =$this->request->param();
-        $seaprice_id= $data['seaprice_id'];
+        $seaprice_id= $data['seaprice_id'];//海运价格id
         $container_size = $data['container_size'];
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
@@ -80,7 +80,7 @@ class OrderPort extends Controller
     //港到港订单的处理
     public function port_data() {
         $data =$this->request->param(); 
-         $this->_p($data);exit;
+//         $this->_p($data);exit;
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复
 //        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
@@ -95,15 +95,20 @@ class OrderPort extends Controller
         $container_sum =$data['container_sum'];//柜量
         //对支付方式做判断
         $payment_method= $data['payment_method'];
+         //如果是数字就说明是在线支付了
         if(intval($payment_method)){
-            $special= $payment_method;
-            $payment_method='special';
+            $cash_id = $payment_method;
+            $payment_method='cash';
+            //  //计算单个柜优惠的现金优惠金额
+            $discount = Db::name('discount')->where('id',$cash_id)->value('$container_size');
         }  else {
-            $special= 0;
+            $cash_id=0;
+            $discount=0;
         }
+        
         $Pirce =new OrderM;
-        //计算单个柜优惠的金额
-        $discount = $Pirce->dicountPrice($member_code, $seaprice_id, $container_size, $payment_method, $special);
+      
+   
         //计算装货费用和送货费用
         $truckageData = array('r'=>['car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
                     'load_time'=>$data['r_load_time'],'link_phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
@@ -140,7 +145,7 @@ class OrderPort extends Controller
         $fatherData= array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
         'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
         'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
-        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
+        'payment_method'=>$payment_method,'cash_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
         'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],  
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);
@@ -148,7 +153,6 @@ class OrderPort extends Controller
         $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
         $res = Db::name('order_port')->where(['member_code'=>$member_code,'quoted_price'=>$quoted_price])->where('ctime','between',[$starttime,$mtime])->find();
         if(empty($res)){
-            
             $res1 = Db::name('order_port')->insert($fatherData); 
             $Bill = controller('Bill');
             $list =$Bill->billCreate($order_num);
@@ -169,50 +173,18 @@ class OrderPort extends Controller
     public function orderPortDetail() {
         
         $order_num =  $this->request->get('order_num');
+        //访问后台的 model\orderPort\orderData 方法
         $data = new \app\admin\model\orderPort();
         $dataArr = $data->orderData($order_num);
-//        $this->_p($dataArr);exit;
-        $list =$dataArr[0];
-        $shipperArr= explode(',',$list['shipper']); 
-        $consignerArr= explode(',',$list['consigner']);
-        //如果存在特殊优惠
-        $special_id = $list['special_id'];
-        $container_size =  $list['container_size'];
-        if($special_id!==0){
-            $special =Db::name('discount_special')->where('id',$special_id)
-                    ->field("promotion_title,id special_id ,".$container_size.'_promotion')
-                    ->find();
-        }  else {
-            $special='';
-        }
-        //查询其他的优惠信息
-        $member_code = $list['member_code'];
-        $seaprice_id = $list['seaprice_id'];
-
-        $discount =Db::name('discount_normal')->alias('DN')
-                ->join('hl_seaprice SP','SP.ship_id = DN.ship_id','left')
-                ->where(['SP.id'=>$seaprice_id,
-                          'DN.member_code'=>$member_code
-                        ])
-                ->field('DN.'.$container_size.'_installment installment ,'.'DN.'.$container_size.'_month month,'.'DN.'.$container_size.'_cash cash')
-                ->find();
-        $discount ?$discount:$discount=[];
-        array_key_exists('installment', $discount) ? $discount :$discount['installment']=0;
-        array_key_exists('month', $discount) ? $discount :$discount['month']=0;
-        array_key_exists('cash', $discount) ? $discount :$discount['cash']=0;
-        $discount['special']= $special;
-        
-//        $this->_p($dataArr[2]);exit;
         $this->assign([
-            'list'  =>$list,
-            'containerData' => $dataArr[1],
-            'carData'=> $dataArr[2],
-            'shipperArr'=>$shipperArr,
-            'consignerArr'=>$consignerArr,
-            'discount'=>$discount
+                'list'  =>$dataArr['list'],
+                'containerData' => $dataArr['containerData'],
+                'carData'=> $dataArr['carData'],
+                'shipperArr'=>$dataArr['shipperArr'],
+                'consignerArr'=>$dataArr['consignerArr'],
+                'discount'=>$dataArr['discount']
         ]);
-        
-        
+        //渲染后台的详情页面
         return $this->view->fetch('orderPort/order_port_detail');
     }
     

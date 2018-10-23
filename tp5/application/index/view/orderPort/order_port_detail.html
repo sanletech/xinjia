@@ -71,7 +71,7 @@
               <span>订舱单：
                 <?php  
                 if(!$list['book_note']){
-                    echo'<span>订舱单未上传</span><a class="dcd" href="#">上传</a>';}
+                    echo'<span>订舱单未上传</span>';}
                 else{
                     $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
                     $str ='<a href="'.$url.'">下载</a>';
@@ -118,13 +118,12 @@
               <span>水运单：
                 <?php  
                 if(!$list['sea_waybill']){
-                    echo'<span>水运单未上传</span><a class="syd" href="#">上传</a>';}
+                    echo'<span>水运单未上传</span>';}
                 else{
                     $order_num= $list['order_num'];
                     $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
                     $str ='<a href="'.$url.'">下载</a>';
                     echo '<span>水运单已上传</span>'.$str.'</br>';
-                    echo'<span>重新上传</span><a class="syd" href="#">上传</a>';
                     }
                 ?>
               </span>
@@ -433,7 +432,7 @@
             <div class="feiyong">
               <div class="layui-col-xs12">
                 <span>海运费：</span><{$list.seaprice}>元
-                <span class="shuo"><$list.price_description></span>
+                <span class="shuo"><{$list.price_description}></span>
               </div>
               <div class="layui-col-xs12">
                 <span>保险费：</span><{$list.premium}>元
