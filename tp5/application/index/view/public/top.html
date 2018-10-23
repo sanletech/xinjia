@@ -28,58 +28,19 @@
           <li>
             <a href="javascript:;">帮助与公告</a>
           </li>-->
-          <li>
+          <{notempty name="$Think.session.member_code"}>
+          <li class="log">
             <a href="<{:url('index/Index/personal')}>">个人中心</a>
           </li>
+          <{else /}>
+          <li class="log" style="background-color:#2e8de5;">
+            <a href="<{:url('index/login/login')}>" style="color: #fff;">企业登陆</a>
+          </li>
+          <li class="log">
+            <a href="<{:url('index/login/register')}>">企业入驻</a>
+          </li>
+          <{/notempty}>
         </ul>
       </div>
     </header>
-    <!-- <nav>
-    //   <iframe src="<{:url('index/OrderPort/orderPort')}>" frameborder="0" scrolling="no" id="ifram" onload="this.height=100" style="min-height:600px;"></iframe>
-    // </nav>
-    // <footer>
-    //   <{include file='./public/foot' /}>
-    // </footer>
-    // <script type="text/javascript">
-    //   $('#top li').click(function (event) {
-    //     $(this).addClass('hang').siblings('li').removeClass('hang');
-    //     if($(this).index() == 0) { //港到港
-//           $('nav iframe').attr('src','<{:url('index/Index/index_body')}>');
-
-          $('nav iframe').attr('src','<{:url('index/OrderPort/orderPort')}>');
-//        }else if($(this).index() == 1) {//公共查询
-//          $('nav iframe').attr('src','<{:url('index/Cargotrack/query')}>');
-//        }else if($(this).index() == 2) {//门到门
-//          $('nav iframe').attr('src','<{:url('index/Order/order_list')}>');
-//        }else if($(this).index() == 3) {//集装箱出售
-//          $('nav iframe').attr('src','<{:url('index/Index/container')}>');
-//        }else if($(this).index() == 4) {//新闻中心
-//          $('nav iframe').attr('src','<{:url('index/Index/news')}>');
-//        }else if($(this).index() == 5) {//合伙人加盟
-//          $('nav iframe').attr('src','<{:url('index/Index/join')}>');
-//        }else if($(this).index() == 6) {//帮助与公告
-//          $('nav iframe').attr('src','<{:url('index/Index/help')}>');
-//        }else if($(this).index() == 7) {//个人中心
-          }else if($(this).index() == 1) {//个人中心
-          $('nav iframe').attr('src','<{:url('index/Index/personal')}>');
-        }else if($(this).index() == 8) {
-          $('nav iframe').attr('src','<{:url('index/Index/index')}>');
-        }
-      });
-
-      // function reinitIframe() {
-      //   var iframe = document.getElementById("ifram");
-      //   try {
-      //     iframe.width = document.body.clientWidth;
-      //     var bHeight = iframe.contentWindow.document.body.scrollHeight;
-      //     var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
-      //     var height = Math.max(bHeight, dHeight);
-      //     iframe.height = height;
-      //   } catch (ex) { }
-      // }
-      // window.setInterval("reinitIframe()", 200);
-
-    </script>
-  </body>
-
-  </html> -->
+   
