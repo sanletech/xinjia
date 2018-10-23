@@ -99,16 +99,17 @@ class OrderPort extends Controller
         if(intval($payment_method)){
             $cash_id = $payment_method;
             $payment_method='cash';
-            //  //计算单个柜优惠的现金优惠金额
+            //计算单个柜优惠的现金优惠金额
             $discount = Db::name('discount')->where('id',$cash_id)->value('$container_size');
+            //在线支付付款状态就改为已付款
+            $money_status =1;
         }  else {
             $cash_id=0;
             $discount=0;
+            $money_status =0;
         }
         
         $Pirce =new OrderM;
-      
-   
         //计算装货费用和送货费用
         $truckageData = array('r'=>['car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
                     'load_time'=>$data['r_load_time'],'link_phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
@@ -146,7 +147,7 @@ class OrderPort extends Controller
         'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
         'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
         'payment_method'=>$payment_method,'cash_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
-        'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],  
+        'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],'money_status'=>$money_status,
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);
          //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
