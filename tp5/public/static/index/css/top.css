@@ -3,7 +3,7 @@
   padding: 0; }
 
 #top {
-  padding: 30px 0 80px;
+  padding: 30px 0 20px;
   overflow: hidden;
   background: #fff; }
   #top .logo {
@@ -18,7 +18,8 @@
     line-height: 40px;
     text-align: center;
     margin: 0 auto;
-    float: right; }
+    float: right;
+    padding-right: 60px; }
     #top ul li {
       float: left;
       width: 100px;
@@ -34,6 +35,8 @@
         background: #2e8de5; }
         #top ul li:hover a {
           color: #fff; }
+    #top ul .log {
+      float: right; }
     #top ul .hang {
       background: #2e8de5; }
       #top ul .hang a {

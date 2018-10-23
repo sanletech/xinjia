@@ -4,8 +4,9 @@
   <body>
     <script src="__STATIC__/lib/layui/layui.all.js" charset="utf-8"></script>
     <style>
-      .fuk1 {
+      .fuk1,#shenqi{
         display: none;
+        padding: 10px;
       }
     </style>
     <div class="invalid">
@@ -121,6 +122,14 @@
         </div>
       </form>
     </div>
+
+    <!-- 是否申请发货 -->
+    <div id="shenqi">
+        <div style="color: red;margin: 5px 0;">申请放货不需要填写只有驳回需要</div>        
+        <div class="layui-col-sx12">
+          <input type="text" name="title" lay-verify="title" placeholder="驳回理由" class="layui-input">
+        </div>
+    </div>
     <script>
       var url = "<{:url('admin/orderPort/Upload')}>";
       var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
@@ -141,9 +150,9 @@
             ,title: '货物状态'
             ,shadeClose :true
             ,btn:['申请放货','驳回']
-            ,content: "<div style='text-align: center'>是否申请发货</div>"
+            ,content: $('#shenqi')
             ,yes:function (index, layero) {
-                $.get(appley_cargo_url,{'order_num':order_num,determine:'yes'},function(data){
+                $.get(appley_cargo_url,{'order_num':order_num,'type':'pass'},function(data){
                     if(data.status){
                         layer.close(index);
                         alert('申请成功');
@@ -152,8 +161,9 @@
                         alert('申请失败');
                     }
                 });
-            },function (index, layero) {
-                $.get(appley_cargo_url,{'order_num':order_num,determine:'no'},function(data){
+            },btn2:function (index) {
+              let bo = $('#shenqi input').val();
+                $.get(appley_cargo_url,{'order_num':order_num,'reject':bo,'type':'fail'},function(data){
                     if(data.status){
                         layer.close(index);
                         alert('驳回成功');
@@ -162,6 +172,7 @@
                         alert('驳回失败');
                     }
                 });
+              return false;
             }
         }); 
         }

@@ -16,14 +16,50 @@
       #hxxq{
         margin-left: -20px !important;
       }
+      .diz{
+        padding-right: 2%;
+      }
+      .diz input{
+        height: 50px;
+        border-radius: 15px;
+      }
+      #search_price{
+        position: relative;
+      }
+      .butt{
+        text-align: center;
+      }
+      .butt button{
+        color: #fff;
+        background-color: #3385FF;
+        height: 50px;
+        width: 130px;
+        font-size: 20px;
+
+      }
+      .butt button:hover{
+        color: #fff;
+      }
       .yinc{
         display: none;
       }
+      #address{
+        top: 55px;
+        z-index: 2;
+        border-radius: 15px;
+      }
+      .x-so{
+        width: 80%;
+        margin: 0 auto;
+      }
+      .layui-form-select dl{
+        top:55px;
+        border-radius: 15px;  
+      }
     </style>
     <div class="banner">
-      <div class="gnhy">
+      <!-- <div class="gnhy">
         <div class="gnhy_top">国内海运</div>
-        <!-- action="<{:url('index/OrderPort/orderPort')}>" -->
         <form class="layui-form layui-col-md12 x-so" method="post" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
           <div class="gnhy_nei layui-row">
             <div class="yinc">
@@ -33,7 +69,7 @@
             </div>
             <input autocomplete="off" type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" placeholder="请输入起始地" class="layui-col-xs12">
             <input autocomplete="off" type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
-            <div class="layui-form-item" styel=" z-index:999;">
+            <div class="layui-form-item">
                 <select id="ship_company" name="ship_id" lay-filter="ship" lay-search >
                     <option value="" >请选择船公司</option>
                 </select>
@@ -50,13 +86,9 @@
             </div>
             <div class="di_you">
               <button type="button" onclick="toajax()">查价</button>
-               <!-- <button class="layui-btn"  lay-submit="" lay-filter="sreach">查价</button>  -->
             </div>
           </div>
 
-
-          <!-- ====================================== -->
-          <!-- 省市区联动 -->
           <div id="address">
             <ul>
               <li>省份</li>
@@ -68,9 +100,43 @@
             </div>
           </div>
         </form>
-      </div>
+      </div> -->
     </div>
     <div class="head_hy">
+        <form class="layui-form x-so" method="post" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
+          <div class="gnhy_nei layui-row">
+              <div class="yinc">
+                  <input type="text" name="start_add" value="<{$start_add ? $start_add: '';}>">
+                  <input type="text" name="end_add" value="<{$end_add ? $end_add: '';}>">
+                  <div class="ship_id"><{$ship_id ? $ship_id: '';}></div>
+                </div>
+              <div class="layui-col-xs3 diz">
+                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input" readonly>
+              </div>
+              <div class="layui-col-xs3 diz">
+                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input" readonly>
+              </div>
+
+              <div class="layui-col-xs3 diz">
+                  <select id="ship_company" name="ship_id" lay-filter="ship" lay-search >
+                      <option value="" >请选择船公司</option>
+                  </select>
+              </div>
+
+              <div class="layui-col-xs3 butt"><button type="button" class="layui-btn layui-btn-radius" onclick="toajax()">搜&nbsp;索</button></div>
+          </div>
+
+          <div id="address">
+              <ul>
+                <li>省份</li>
+                <li>城市</li>
+                <li>港口</li>
+              </ul>
+              <div id="dizhi">
+  
+              </div>
+          </div>
+        </form>
       <!-- 查询表单 -->
 
       <!-- 查询内容 -->
@@ -164,7 +230,7 @@
                         <span class="hong"><k>￥</k><{$vo.price_20GP}></span>
                           <div class="dian">
                             <{empty name="$vo.price_20GP"}>
-                            <a href="javascript:;" class="gp">下单</a>
+                            <!-- <a href="javascript:;" class="gp">下单</a> -->
                             <{else /}>
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=20GP"
                               class="gp">下单</a>
@@ -176,7 +242,7 @@
                         <span class="hong"><k>￥</k><{$vo.price_40HQ}></span>
                           <div class="dian">
                             <{empty name="$vo.price_20GP"}>
-                            <a href="javascript:;" class="gp">下单</a>
+                            <!-- <a href="javascript:;" class="gp">下单</a> -->
                             <{else /}>
                             <a href="<{:url('index/OrderPort/portBook')}>?seaprice_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
