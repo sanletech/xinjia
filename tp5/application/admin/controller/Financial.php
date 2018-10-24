@@ -47,4 +47,35 @@ class Financial extends Base
     {
       return $this->view->fetch('financial/company_edit'); 
     }
+    //放货对账付款状态更改
+    public function OrderPortCenter(){
+        //    //所用的账单 done 未完成 undone
+        $type = $this->request->param('type');
+        if($type=='done'){
+            $money_status ='not null';
+        }elseif($type=='undone'){
+            $money_status = 0;
+        }
+      
+        $page =$this->request->param('page',1,'intval');
+        $limit =$this->request->param('limit',10,'intval');
+        $tol = ($page-1)*$limit;
+      
+        $list =Db::name('order_bill')
+                ->field('member_code',TRUE)->where('money_status',$money_status)
+                ->order('ctime desc,mtime desc')->buildSql();
+        $lista = Db::table($list.' a')->select();
+  
+        $count = count($lista);
+        $list = Db::table($list.' a')->limit($tol,$limit)->select();
+        
+        return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
+        
+
+    }
+
+    public function aaa(){
+        return $this->view->fetch('financial/OrderPortCenter'); 
+    }
 } 
+
