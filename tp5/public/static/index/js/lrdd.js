@@ -286,7 +286,6 @@ function xiu_wt(){
       }   
     }
   });  
-
 }
 
 //删除选中的委托信息
@@ -462,5 +461,3 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();
 })
-
-

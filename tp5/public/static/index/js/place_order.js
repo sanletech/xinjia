@@ -193,8 +193,12 @@ function toajax(url, data) {
         dataType: "json",
         success: function (data) {          
             if (data.status == 1) {
-                alert('提交表单成功');
-                window.location.replace(index_url);
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.alert('订单提交成功', {icon: 1},function(){
+                      window.location.replace(index_url);//跳转个人中心 
+                    });
+                });   
             }
         // $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
         }
@@ -270,6 +274,10 @@ $('#bxje').bind('input propertychange', function () {//监听保险金额
 
 //监听货值
 $('#cargo_value').bind('input propertychange', function () {
+    if ($(this).val() < 0) {
+        $(this).val(0);
+        alert('输入的值必须大于0');
+    }
     let container = $('#container_sum').find("option:selected").val();
     let baoxian = $(this).val() * 4;
     $('#bxje').val(baoxian);
