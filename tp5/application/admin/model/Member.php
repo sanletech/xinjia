@@ -122,12 +122,13 @@ class Member extends Model
         return $list; 
     }
 
-    public function  discountSpecial($type,$account,$pages='10'){
+    public function  discount($type,$account,$status,$pages='10'){
                             
-        $list = Db::name('discount_special')->alias('DS')
+        $list = Db::name('discount')->alias('DS')
                 ->join('hl_shipcompany SC',"SC.id = DS.ship_id and SC.status='1'",'left')
                 ->field('DS.*,SC.ship_short_name')
-                ->group('DS.id')->order('DS.id')->buildSql();    
+                ->where('DS.status',$status)
+                ->group('DS.id')->order('DS.add_time')->buildSql();    
 
         $pageParam  = ['query' =>[]]; //设置分页查询参数  
         if($type=='ship_name'&&!empty($account)){
@@ -135,14 +136,14 @@ class Member extends Model
                 ->where('b.ship_short_name','like',"%{$account}%")
                 ->buildSql(); 
         } 
-        if($type=='promotion_title'&&!empty($account)){
+        if($type=='title'&&!empty($account)){
             $list =Db::table($list.' c')
-                ->where('c.promotion_title','like',"%{$account}%")
+                ->where('c.title','like',"%{$account}%")
                 ->buildSql(); 
         }
-            $pageParam['query']['account'] = $account;
-            $pageParam['query']['type'] = $type;
-            
+        $pageParam['query']['account'] = $account;
+        $pageParam['query']['type'] = $type;
+        $pageParam['query']['status'] = $status;
         $list =Db::table($list.' d')->order('d.id')->paginate($pages,false,$pageParam);  
        
         return $list;
