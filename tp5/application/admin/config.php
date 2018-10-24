@@ -7,4 +7,5 @@ return [
         '__STATIC__'=>'/static/admin',
     
     ],
+
 ];
