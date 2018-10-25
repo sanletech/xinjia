@@ -2,7 +2,7 @@
 namespace app\admin\model;
 use think\Model;
 use think\Db;
-use think\session;
+use think\Session;
 class orderPort extends Model
 {
     public function order_audit($pages,$state){

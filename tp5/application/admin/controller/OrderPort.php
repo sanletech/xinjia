@@ -114,27 +114,7 @@ class OrderPort extends Base
         return $this->view->fetch('orderPort/audit_page');
     }
     
-    //订单的通过和 驳回(需要填写原因)
-    public function order_judgment() 
-    { 
-       if (request()->isAjax()){
-            $data =$this->request->param();
-            $type =$data['type'];
-            $order_num =$data['order_num'];
-            if($type=='fail'){
-                $reject = $data['reject'];
-                $status = $this->order_status['cancel'];
-                $action = $reject;
-            }elseif($type=='pass') {
-                $status =$this->order_status['booking_note'];
-                $action ='通过审核>待录入运单号和上传订舱单';
-            }
-            $res =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$status,'action'=>$action]);
-            $data = new OrderM;
-            $data->orderUpdate($order_num,$status,$action);
-            return  $res?array('status'=>1,'message'=>'操作成功'):array('status'=>0,'message'=>'操作失败');
-       }
-    }
+  
     //上传订舱单文件,运单号和 水运单文件
     //参数 type= booking_note或者sea_waybill
     //订单号码
