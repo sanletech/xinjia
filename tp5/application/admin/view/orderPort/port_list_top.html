@@ -1,0 +1,214 @@
+<link rel="stylesheet" href="__STATIC__/../index/layui/css/layui.css">
+<style>
+    .laytable-cell-checkbox, .laytable-cell-numbers, .laytable-cell-space{
+        padding: 8px;
+    }
+    .layui-datatable-switch {margin-top: 0px;width: 56px;}
+    .x-nav{
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+    #bz{
+      display: none;
+      padding: 10px;
+    }
+    .beizhu{
+      margin: 10px 0;
+    }
+</style>
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+      title="刷新">
+      <i class="layui-icon" style="line-height:30px">ဂ</i>
+    </a>
+</div>
+
+  <div class="layui-form" id="cont">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label"></label>
+          <div class="layui-input-inline">
+            <input type="text" name="member" placeholder="客户单位" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+              <input type="text" name="order_num" placeholder="订单号"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">`
+            <div class="layui-input-inline">
+                <input type="text" name="order_num" placeholder="运单号"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <button class="layui-btn cha">搜索</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-inline">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中" checked="">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货">
+        </div>
+
+        <div style="margin-right: 130px; display: inline-block;"></div>
+        <div class="layui-inline">
+            <input type="radio" lay-filter="money_status" name="money_status" value="2" title="所有订单" checked="">
+            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="在线付">
+            <input type="radio" lay-filter="money_status" name="money_status" value="0" title="月结">
+            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="上传订舱/运单">
+            <input type="radio" lay-filter="money_status" name="money_status" value="0" title="客户提交柜号">
+            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="收款状态">
+            <input type="radio" lay-filter="money_status" name="money_status" value="0" title="上传水运单">
+            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="已经完成订单">
+        </div>
+    </div>
+    
+    <table class="layui-hide" id="test1" lay-filter="test1"></table>
+  </div>
+
+
+
+   <!-- 添加备注窗口 -->
+   <div id="bz">
+      <div class="beizhu"></div>
+      <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入备注信息" class="layui-input">
+  </div>
+  
+<script type="text/html" id="toolbarDemo1">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+  </div>
+</script> 
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">备注</a>
+</script>
+
+<!-- <script src="__STATIC__/js/jquery-3.2.1.min.js"></script>  -->
+<script src="__STATIC__/../index/layui/layui.js"></script>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['jquery', 'layer','table','laydate','form'], function(){ 
+  var layer = layui.layer
+  ,table = layui.table
+  ,form = layui.form
+  ,$ = layui.jquery
+  ,laydate = layui.laydate;
+
+
+  var container_buckle = 'apply';//货物状态
+  var money_status = '2';//付款状态
+  form.on('radio(container_buckle)', function(data){
+    container_buckle = data.value;
+    $('.cha').click();
+  }); 
+  form.on('radio(money_status)', function(data){
+    money_status = data.value;
+    $('.cha').click();
+  });
+  
+  var biao = table.render({
+    elem: '#test1'
+    ,url: "<{:url('admin/financial/OrderPortdata')}>"
+    ,toolbar: '#toolbarDemo1'
+    ,title: '用户数据表'
+    ,width:'99%'
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', unresize: true,width:60}
+      ,{field:'name', title:'订单号' ,width:150}
+      ,{field:'bill_num', title:'提交时间' ,width:150}
+      ,{field:'check_date', title:'客户账号',sort: true ,width:200}
+      ,{field:'order_num', title:'客户单位', width:200}
+      ,{field:'container_size', title:'运单号' ,width:100}
+      ,{field:'container_sum', title:'柜量/柜型' ,width:100}
+      ,{field:'quoted_price', title:'船公司',width:100}
+      ,{field:'ctime', title:'船名航次', sort: true,width:200}
+      ,{field:'container_buckle', title:'起运港-目的港',width:100,templet:function(res){
+        return '<div class="">'+ res.container_buckle +'-'+res.container_buckle+'</div>'
+      }}
+      ,{field:'money_status', title:'总运费',width:100}
+      ,{field:'status', title:'订舱单',width:100}
+      ,{field:'extra_info', title:'补料',width:200}
+      ,{field:'comment', title:'水运单',width:200}
+      ,{field:'comment', title:'货物状态',width:200}
+      ,{field:'comment', title:'付款状态',width:200}
+      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:80}
+    ]]
+    ,page: true
+    , done: function(res, curr, count){//数据调用之后
+    //如果是异步请求数据方式，res即为你接口返回的信息。
+    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+    // console.log(res);
+    //得到当前页码
+    // console.log(curr); 
+    
+    //得到数据总量
+    // console.log(count);
+  }
+  });
+
+//搜索
+$('.cha').click(function(){
+  let member = $("input[name='member']").val();//用户名
+  let order_num = $("input[name='order_num']").val();;//订单号
+  let date_start = $("input[name='date_start']").val();;//起始日期
+  let date_end = $("input[name='date_end']").val();;//结束日期
+  biao.reload({
+    where:{
+      member:member,
+      order_num:order_num,
+      date_start:date_start,
+      date_end:date_end,
+      container_buckle:container_buckle,
+      money_status:money_status
+    },
+    page:{curr:1}
+  })
+});
+
+//监听行工具事件
+table.on('tool()', function(obj){
+    var data = obj.data;
+    if(obj.event === 'edit'){
+      layer.open({
+        type:1
+        ,title: '添加备注'
+        ,content: $('#bz')
+        ,shadeClose :true
+        ,btn:['确认']
+        ,yes:function(index){
+          let beizhu = $('#bz input').val();
+          $.get(url,{data:beizhu},function(data){
+            if(data.status){
+                layer.close(index);
+                alert('添加成功');
+            }else{
+                alert('申请失败');
+            }
+          })
+        }
+      });   
+    } 
+  });
+
+  //选中的数据
+  $('button').click(function(){
+    var checkStatus = table.checkStatus('test1');
+  })
+
+});
+
+
+
+</script>
