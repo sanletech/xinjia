@@ -59,9 +59,9 @@ class Financial extends Base
         if($money_status == 2){
             $money_status = 'not null';
         }
-        $page =$this->request->param('page',1,'intval');
-        $limit =$this->request->param('limit',10,'intval');
-        $tol = ($page-1)*$limit;
+//        $page =$this->request->param('page',1,'intval');
+//        $limit =$this->request->param('limit',10,'intval');
+//        $tol = ($page-1)*$limit;->limit($tol,$limit)
         
         $list =Db::name('order_bill')->alias('OB')
                 ->join('hl_member M','M.member_code=OB.member_code','left')
@@ -76,12 +76,17 @@ class Financial extends Base
         $lista = Db::table($list.' a')->select();
   
         $count = count($lista);
-        $list = Db::table($list.' a')->limit($tol,$limit)->select();
-        
-        return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
-        
-
-    }
+        $list = Db::table($list.' a')->select();
+        $this->_p(array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list,
+            'member'=>$member,'order_num'=>$order_num,'date_start'=>$date_start,
+            'date_end'=>$date_end,'container_buckle'=>$container_buckle,
+            'money_status'=>$money_status)
+         );exit;
+        return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list,
+            'member'=>$member,'order_num'=>$order_num,'date_start'=>$date_start,
+            'date_end'=>$date_end,'container_buckle'=>$container_buckle,
+            'money_status'=>$money_status); 
+    }       
 
     public function OrderPortCenter(){
         return $this->view->fetch('financial/OrderPortCenter'); 
