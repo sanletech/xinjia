@@ -182,10 +182,9 @@ function order_data(zj) {
     obj['portprice_s'] = $('#song').html();//送货费用
     obj['discount'] = $('#discount').html();//优惠价格
     obj['price_sum'] = $('#price_sum').html();//总运费
-
+    obj['price_description'] = $('.you span').html();//价格说明
     toajax(OrderUrl, obj);
 }
-
 function toajax(url, data) {
     $.ajax({
         type: 'POST',
@@ -194,10 +193,14 @@ function toajax(url, data) {
         dataType: "json",
         success: function (data) {          
             if (data.status == 1) {
-                alert('提交表单成功');
-                window.location.replace(index_url);
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.alert('订单提交成功', {icon: 1},function(){
+                      window.location.replace(index_url);//跳转个人中心 
+                    });
+                });   
             }
-        $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
+        // $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
         }
     });
     //return false;//只此一
@@ -210,7 +213,6 @@ function zong_sum(shu,zs) {
     var bxje = $('#bxje').val() * sum;//保险金额
     var fp = $(".fp01 option:selected").val();//发票
     var zong = money * sum + bxje;//总价格
-   console.log(zong,money,sum,$('#bxje').val());
     
     if (shu == 1) {//发票6%
         zong = zong * 1.04;
@@ -253,6 +255,9 @@ $('.mony_fs').change(function(){ //监听结账方式
 youhui();
 function youhui(){ //优惠价格
     let mony = $(".mony_fs").find("option:selected").attr('title');
+    if(!mony){
+        mony = 0;
+    }
     let container = $('#container_sum').find("option:selected").val();
     mony_fs = mony * container;
     $('#discount').html(mony_fs);
@@ -269,6 +274,10 @@ $('#bxje').bind('input propertychange', function () {//监听保险金额
 
 //监听货值
 $('#cargo_value').bind('input propertychange', function () {
+    if ($(this).val() < 0) {
+        $(this).val(0);
+        alert('输入的值必须大于0');
+    }
     let container = $('#container_sum').find("option:selected").val();
     let baoxian = $(this).val() * 4;
     $('#bxje').val(baoxian);

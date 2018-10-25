@@ -63,7 +63,7 @@ class OrderPort extends Controller
     //港到港下单
     public function portBook(){
         $data =$this->request->param();
-        $seaprice_id= $data['seaprice_id'];
+        $seaprice_id= $data['seaprice_id'];//海运价格id
         $container_size = $data['container_size'];
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
@@ -95,15 +95,21 @@ class OrderPort extends Controller
         $container_sum =$data['container_sum'];//柜量
         //对支付方式做判断
         $payment_method= $data['payment_method'];
+         //如果是数字就说明是在线支付了
         if(intval($payment_method)){
-            $special= $payment_method;
-            $payment_method='special';
+            $cash_id = $payment_method;
+            $payment_method='cash';
+            //计算单个柜优惠的现金优惠金额
+            $discount = Db::name('discount')->where('id',$cash_id)->value('$container_size');
+            //在线支付付款状态就改为已付款
+            $money_status =1;
         }  else {
-            $special= 0;
+            $cash_id=0;
+            $discount=0;
+            $money_status =0;
         }
+        
         $Pirce =new OrderM;
-        //计算单个柜优惠的金额
-        $discount = $Pirce->dicountPrice($member_code, $seaprice_id, $container_size, $payment_method, $special);
         //计算装货费用和送货费用
         $truckageData = array('r'=>['car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
                     'load_time'=>$data['r_load_time'],'link_phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
@@ -140,14 +146,14 @@ class OrderPort extends Controller
         $fatherData= array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
         'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
         'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
-        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
+        'payment_method'=>$payment_method,'cash_id'=>$cash_id,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
+        'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],'money_status'=>$money_status,
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);
          //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
         $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
         $res = Db::name('order_port')->where(['member_code'=>$member_code,'quoted_price'=>$quoted_price])->where('ctime','between',[$starttime,$mtime])->find();
         if(empty($res)){
-            
             $res1 = Db::name('order_port')->insert($fatherData); 
             $Bill = controller('Bill');
             $list =$Bill->billCreate($order_num);
@@ -167,10 +173,25 @@ class OrderPort extends Controller
     //港到港订单详情页面
     public function orderPortDetail() {
         
-        
-        
+        $order_num =  $this->request->get('order_num');
+        //访问后台的 model\orderPort\orderData 方法
+        $data = new \app\admin\model\orderPort();
+        $dataArr = $data->orderData($order_num);
+        $this->assign([
+                'list'  =>$dataArr['list'],
+                'containerData' => $dataArr['containerData'],
+                'carData'=> $dataArr['carData'],
+                'shipperArr'=>$dataArr['shipperArr'],
+                'consignerArr'=>$dataArr['consignerArr'],
+                'discount'=>$dataArr['discount']
+        ]);
+        //渲染后台的详情页面
         return $this->view->fetch('orderPort/order_port_detail');
     }
+    
+    
+    
+    
     
         //中间航线详情
      public function routeDetail()

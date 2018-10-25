@@ -65,11 +65,19 @@
           </div>
           <div class="dd_nei bian">
             <div class="layui-col-xs3">
-              <span>运单号：SDG96254666</span>
+              <span>运单号：<{$list.track_num}></span>
             </div>
             <div class="layui-col-xs9">
               <span>订舱单：
-                <a href="#">下载</a>
+                <?php  
+                if(!$list['book_note']){
+                    echo'<span>订舱单未上传</span>';}
+                else{
+                    $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
+                    $str ='<a href="'.$url.'">下载</a>';
+                    echo '<span>订舱单已上传</span>'.$str.'</br>';
+                    }
+                ?>  
               </span>
             </div>
           </div>
@@ -82,20 +90,21 @@
           </div>
           <div class="dd_nei bian">
             <div class="layui-col-xs4">
-              <span>柜型：40GP</span>
+              <span>柜型：<{$list.container_size}></span>
             </div>
             <div class="layui-col-xs4">
-              <span>柜号：SFSAF555555</span>
+              <span>柜量：<{$list.container_sum}></span>
             </div>
             <div class="layui-col-xs4">
-              <span>封号：44312315</span>
+              <span>货名：<{$list.cargo}></span>
             </div>
             <div class="layui-col-xs4">
-              <span>货名：黄金</span>
+              <span>发货人信息：<{$list.shipper}></span>
             </div>
             <div class="layui-col-xs4">
-              <span>收货人：海运兴佳</span>
+              <span>收货人信息：<{$list.consigner}></span>
             </div>
+              
           </div>
         </div>
 
@@ -107,7 +116,16 @@
           <div class="dd_nei bian">
             <div class="layui-col-xs12">
               <span>水运单：
-                <a href="#">下载</a>
+                <?php  
+                if(!$list['sea_waybill']){
+                    echo'<span>水运单未上传</span>';}
+                else{
+                    $order_num= $list['order_num'];
+                    $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
+                    $str ='<a href="'.$url.'">下载</a>';
+                    echo '<span>水运单已上传</span>'.$str.'</br>';
+                    }
+                ?>
               </span>
             </div>
           </div>
@@ -122,19 +140,19 @@
           <div class="dd_nei">
             <div class="layui-col-xs12 zhifu">
               <h2>支付状态：
-                <span>已付款/未付款/月结</span>
+                <span><?php if($list['money_status']==0){echo'未付款';}else{echo'已付款';} ?></span>
               </h2>
             </div>
             <div class="layui-col-xs3">
-              <span>订单号：Tas665444555</span>
+              <span>订单号：<{$list.order_num}></span>
             </div>
             <div class="layui-col-xs9">
-              <span>下单时间：2018-9-19 12:02:09</span>
+              <span>下单时间：<{$list.ctime}></span>
             </div>
           </div>
         </div>
-
-        <!-- 委托信息 -->
+<!--
+         委托信息 
         <div class="xxtx_dd er">
           <div class="xx" style="margin-bottom:0px;">
             <strong>委托信息</strong>
@@ -195,7 +213,7 @@
           </div>
         </div>
 
-        <!-- 货物 -->
+         货物 
         <div class="xxtx_dd">
           <div class="xx">
             <strong>货物</strong>
@@ -234,9 +252,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
 
-        <!-- 费用 -->
+<!--         费用 
         <div class="xxtx_dd" style="margin-bottom: 0px;">
           <div class="xx">
             <strong>费用</strong>
@@ -275,12 +293,12 @@
                 <div class="layui-col-xs6" style="text-align: left;">
                   填写信息
                 </div>
-              </div>
+              </div>-->
 
-
+<!--
             </div>
           </div>
-          <!-- 发票 -->
+           发票 
           <div class="kpf">
             <div class="layui-col-xs12 bei">
               <div class="grid-demo">
@@ -293,12 +311,12 @@
               </div>
             </div>
             <div class="fp layui-col-xs12">
-              <!-- 是否开取发票 -->
+               是否开取发票 
               <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
                 <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1" disabled>
               </div>
               <div class="layui-col-xs1">&nbsp;</div>
-              <!-- 选择发票 -->
+               选择发票 
               <div class="layui-col-xs3">
                 <div class="ze">
                   <div class="layui-col-xs3 zep">
@@ -313,19 +331,19 @@
                 <a class="trigger-default">填写发票信息</a>
               </div>
             </div>
-          </div>
-          <!-- 总运费 -->
+          </div>-->
+<!--           总运费 
           <div class="sun">
             <div class="fapiao layui-form-item layui-form">
               <div class="fp_tt">
                 <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
               </div>
             </div>
-            <!-- <span>总运费:
+             <span>总运费:
               <strong>￥
                 <span id="price_sum">0.00</span>元</strong>
-            </span> -->
-          </div>
+            </span> 
+          </div>-->
 
           <!-- 拖车服务 -->
           <div class="xxtx_dd">
@@ -341,9 +359,9 @@
                 <table class="layui-table" lay-size="sm">
                   <thead>
                     <tr>
+                      <th>柜号</th>
                       <th>单价</th>
                       <th>数量</th>
-                      <th>单位</th>
                       <th>装货地址</th>
                       <th>联系人姓名</th>
                       <th>货主名称</th>
@@ -354,38 +372,20 @@
                     </tr>
                   </thead>
                   <tbody class="bge">
+                      <{volist name="$carData.r" id="carR"}>
                     <tr>
-                      <td>
-                        100
-                      </td>
-                      <td>
-                        1
-                      </td>
-                      <td>
-                        柜
-                      </td>
-                      <td>
-                        广州省天河区长福路口长信256
-                      </td>
-                      <td>
-                        小王
-                      </td>
-                      <td>
-                        小四
-                      </td>
-                      <td>
-                        2016-11-29
-                      </td>
-                      <td>
-                        148936543664
-                      </td>
-                      <td>
-                        人生就像是
-                      </td>
-                      <td>
-                        贤心z四道口附近啊
-                      </td>
+                        <td><{$carR.container_code}></td>
+                        <td><{$carR.car_price}></td>
+                        <td><{$carR.num}>柜</td>
+                        <td><{$carR.add}></td>
+                        <td><{$carR.link_man}></td>
+                        <td><{$carR.shipper}></td>
+                        <td><{$carR.load_time}></td>
+                        <td><{$carR.link_phone}></td>
+                        <td><{$carR.car}></td>
+                        <td><{$carR.comment}></td>
                     </tr>
+                    <{/volist}>
                   </tbody>
                 </table>
               </div>
@@ -399,35 +399,25 @@
                 <table class="layui-table" lay-size="sm">
                   <thead>
                     <tr>
-                      <th>单价</th>
-                      <th>数量</th>
-                      <th>单位</th>
-                      <th>送货地址</th>
-                      <th>指定车队</th>
-                      <th>备注</th>
+                        <th>柜号</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>送货地址</th>
+                        <th>指定车队</th>
+                        <th>备注</th>
                     </tr>
                   </thead>
                   <tbody class="bge_song">
+                    <{volist name="$carData.s" id="carS" }>
                     <tr>
-                      <td>
-                        100
-                      </td>
-                      <td>
-                        1
-                      </td>
-                      <td>
-                        柜
-                      </td>
-                      <td>
-                        广州省天河区长福路口长信256
-                      </td>
-                      <td>
-                        人生就像是
-                      </td>
-                      <td>
-                        贤心z四道口附近啊
-                      </td>
+                        <td> <{$carS.container_code}></td>
+                        <td> <{$carS.car_price}></td>
+                        <td> <{$carS.num}>柜</td>
+                        <td> <{$carS.add}></td>
+                        <td> <{$carS.car}></td>
+                        <td> <{$carS.comment}></td>
                     </tr>
+                    <{/volist}>
                   </tbody>
                 </table>
               </div>
@@ -441,86 +431,33 @@
             </div>
             <div class="feiyong">
               <div class="layui-col-xs12">
-                <span>海运费：</span>123元
-                <span class="shuo">已包含：双边</span>
+                <span>海运费：</span><{$list.seaprice}>元
+                <span class="shuo"><{$list.price_description}></span>
               </div>
               <div class="layui-col-xs12">
-                <span>保险费：</span>123元
+                <span>保险费：</span><{$list.premium}>元
                 <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
               </div>
               <div class="layui-col-xs12">
-                <span>装货费用：</span>123元
+                <span>装货费用：</span><{$list.carprice_r}>元
               </div>
               <div class="layui-col-xs12">
-                <span>送货费用：</span>123元
+                <span>送货费用：</span><{$list.carprice_s}>元
               </div>
               <div class="layui-col-xs12">
                 <span>优惠：</span>
-                <strong>123</strong>元
+                <strong><{$list['discount']*$list['container_sum']}></strong>元
                 <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
               </div>
               <div class="layui-col-xs12">
                 <span>总费用：</span>
-                <strong class="zongfei">123</strong>元
+                <strong class="zongfei"><{$list.quoted_price}></strong>元
               </div>
             </div>
           </div>
 
-        </div>
-    </form>
-    <!-- 填写发票窗口 -->
-    <div id="modal-default">
-      <form class="layui-form" id='invoice_form'>
-        <input type="hidden" name='member_code' value="<{$Think.session.member_code}>">
-        <!--需要贮存客户session_id-->
-        <div class="layui-form-item">
-          <label class="layui-form-label">发票抬头</label>
-          <div class="layui-input-block">
-            <input type="text" name="invoice_title" lay-verify="invoice_title" autocomplete="off" placeholder="发票抬头" class="layui-input">
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <label class="layui-form-label">纳税人识别号</label>
-          <div class="layui-input-block">
-            <input type="text" name="taxpayer_id" lay-verify="title" autocomplete="off" placeholder="纳税人识别号" class="layui-input">
-          </div>
-        </div>
 
-        <div class="layui-form-item">
-          <label class="layui-form-label">注册地址</label>
-          <div class="layui-input-block">
-            <input type="text" name="registered_address" lay-verify="title" autocomplete="off" placeholder="注册地址" class="layui-input">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">注册电话</label>
-          <div class="layui-input-block">
-            <input type="text" name="registered_phone" lay-verify="title" autocomplete="off" placeholder="注册电话" class="layui-input">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">开户银行</label>
-          <div class="layui-input-block">
-            <input type="text" name="deposit_bank" lay-verify="title" autocomplete="off" placeholder="开户银行" class="layui-input">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">银行账户</label>
-          <div class="layui-input-block">
-            <input type="text" name="bank_account" lay-verify="title" autocomplete="off" placeholder="银行账户" class="layui-input">
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" onclick='invoice()' lay-filter="demo1">立即保存</button>
-          </div>
-        </div>
-      </form>
-    </div>
+  
 
     <{include file='./public/foot' /}>
 

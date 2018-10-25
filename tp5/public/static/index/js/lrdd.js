@@ -150,7 +150,7 @@ var id;//点击当前的ID
 var nei;//当前选中的内容
 function xzwt(zj){
   $(zj).addClass('nei_a').parent().siblings().find('.nei').removeClass('nei_a');
-  id = $(zj).find('.tiao_id').html();//点击当前的ID  
+  id = $(zj).find('.tiao_id').html();//点击当前的ID
   lei = $(zj).parents('.xin')[0];//判断是送货还是收货
   for (let i in arr) {
     if (arr[i].id == id) {
@@ -158,6 +158,12 @@ function xzwt(zj){
     }
   }
 }
+
+//双击确认
+$('.biao .xin').on('dblclick','li',function(){
+  wtxx();
+})
+
 //委托信息放input上
 function wtxx() {
   let input = $('.er .in');//获取委托信息的input
@@ -185,7 +191,7 @@ function wtxx() {
 $('.wt1').click(function () {
   layer.open({
     type: 1,
-    title: '航线详情',
+    title: '通讯录',
     offset: 'auto',
     area: ['1000px', '500px'],
     content: $('#wt1'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
@@ -217,7 +223,8 @@ $('.wt_zeng').click(function () {
       // 模态框成功调用
     }
   });
-})
+});
+
 //增加委托信息
 function zeng_wt(){
   let data = $('#linkman_form').serialize();//增加委托信息表单数据    
@@ -279,7 +286,6 @@ function xiu_wt(){
       }   
     }
   });  
-
 }
 
 //删除选中的委托信息
@@ -427,11 +433,26 @@ $('.tjiao').eq(0).find('.shi').click(function(){
   $('.lche,.fuwu').show();
   $('input').css('border','0').attr('readonly',true);
   $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
-  $("html,body").animate({scrollTop:700}, 500);
+  // $("html,body").animate({scrollTop:100}, 500);
+  console.log(window.location.port);
+  layer.open({
+    type:1
+    ,title: '确认信息'
+    ,content: $('#order_data_form')
+    ,offset: 't'
+    ,area:['80%','100%']
+    ,shadeClose:true
+    ,cancel: function(index, layero){
+      layer.close(index);
+      $('.tjiao').eq(1).find('.qu').click();
+    }
+  });
+  
 })
 
 //返回修改
 $('.tjiao').eq(1).find('.qu').click(function(){
+  layer.close(layer.index);
   $('.tjiao').eq(1).hide();
   $('.lc,.wt1,.dd_nei .layui-form').show();
   $('.tjiao').eq(0).show();
@@ -439,7 +460,4 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();
-  $("html,body").animate({scrollTop:700}, 500);
 })
-
-

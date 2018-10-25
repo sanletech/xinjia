@@ -1,0 +1,152 @@
+<{include file='./public/header'/}>
+  <style>
+    .layui-table td{
+      text-align: center;
+      position: relative;
+    }
+    .layui-table td input,.yw>.layui-unselect{
+      position: absolute;
+      width: 100%;
+      height: 98%;
+      top: 0;
+      left: 0;
+    }
+    .yw>.layui-unselect{
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+    .xiu_bao{
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+    }
+    #customer_id{
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+  </style>
+  <body>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite></a>
+      </span>
+      <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="x-body">
+      <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so">
+            <input type="radio"  name="type" value="ship_name"  title="船公司" <?php if(!isset($type)){echo 'checked';}elseif($type!=='customer'){echo 'checked';}?> >
+            <input type="radio"  name="type" value="customer"  title="客户"  <?php if(isset($type)&&($type=='customer')){echo 'checked';}?> >
+            <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入搜索条件" autocomplete="off" class="layui-input">
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+      </div>
+      <table class="layui-table layui-row">
+        <thead>
+          <tr>
+            <th>客户</th>
+            <th>客户帐号</th>
+            <th>船公司</th>
+            <th>40HQ到港付</th>
+            <th>20GP到港付</th>
+            <th>40HQ月结付</th>
+            <th>20GP月结付</th>
+            <th>40HQ在线付</th>
+            <th>20GP在线付</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody >
+          <{volist name="list" id ="vo"}>
+          <tr>
+            <td><{$vo.member_name}></td>
+            <td><{$vo.member_code}></td>
+            <td style="display:none;"><input type="text" name="ship_id" value="<{$vo.ship_id}>">
+            <input type="text" name="member_code" value="<{$vo.member_code}>"></td>
+            <td><{$vo.ship_short_name}></td>
+            <td><input type="text" name="40HQ_installment" value="<{$vo.40HQ_installment}>"></td>
+            <td><input type="text" name="20GP_installment" value="<{$vo.20GP_installment}>"></td>
+            <td><input type="text" name="40HQ_month" value="<{$vo.40HQ_month}>"></td>
+            <td><input type="text" name="20GP_month" value="<{$vo.20GP_month}>"></td>
+            <td><input type="text" name="40HQ_cash" value="<{$vo.40HQ_cash}>"></td>
+            <td><input type="text" name="20GP_cash" value="<{$vo.20GP_cash}>"></td>
+            <td class="td-manage">
+                <button class="xiu_bao layui-btn layui-btn-xs">修改</button>
+            </td>
+          </tr>
+         <{/volist}>
+        </tbody>
+      </table>
+        <div class="page">
+            <div>
+            <{$page}>
+            </div>
+        </div>
+
+    </div>
+           
+      
+    <script>
+
+       function toajax (data){
+//            var dataArray =JSON.stringify(data);
+            $.ajax({
+                type:'POST',
+                url:"<{:url('admin/member/discountEdit')}>",    
+                data:{'dataArray':data},
+                dataType:"JSON",
+//                contentType: "application/json",
+                success:function(data){
+                    if(data.status==1){
+                        alert('修改成功');
+                        location.assign(location);
+                    }else{
+                        alert('修改失败');
+                        location.assign(location);
+                  }
+                }
+            })
+        };
+
+    $('tbody td input').css('border','0');//默认input无边框
+    $('tbody td input').attr('readonly','readonly');//默认input只读
+    $('.xiu_bao').click(function(){
+      let inp = $(this).parents('td').siblings('td').find('input');//点击当前ID的数据
+      if ($(this).html() == '保存') {
+        $(this).html('修改');
+        $(this).removeClass('layui-btn-warm');//改变按钮颜色
+        inp.css('border','0');//input去掉边框
+        inp.attr('readonly','readonly');//input只读
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').hide();//隐藏下拉框
+        let shuju = huo_input($(this),inp);//调用huo_input方法获取数据
+        toajax(shuju);//获取到的数据
+        
+      }else{
+        $(this).html('保存');
+        $(this).addClass('layui-btn-warm');//改变按钮颜色
+        inp.css('border','1px solid #e6e6e6');//input增加边框
+        inp.removeAttr('readonly');//input可写
+        $(this).parents('td').siblings('.yw').find('.layui-unselect').show();//显示下拉框
+      }
+    });
+
+    function huo_input(wo,inp){//数据处理
+      let huoqu = [];
+      inp.each(function(){
+        huoqu.push({[$(this).attr('name')]:$(this).val()});
+      });
+      return huoqu;
+    }
+
+    
+    </script>
+    
+  </body>
+
+</html>

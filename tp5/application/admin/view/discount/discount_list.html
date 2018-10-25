@@ -41,8 +41,11 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-            <input type="radio"  name="type" value="ship_name"  title="船公司" <?php if(!isset($type)){echo 'checked';}elseif($type!=='customer'){echo 'checked';}?> >
-            <input type="radio"  name="type" value="customer"  title="客户"  <?php if(isset($type)&&($type=='customer')){echo 'checked';}?> >
+            <input type="radio"  name="type" value="ship_name"  title="船公司" <?php if(!isset($type)){echo 'checked';}elseif($type=='ship_name'){echo 'checked';}?> >
+            <input type="radio"  name="type" value="title"  title="活动名称"  <?php if(isset($type)&&($type=='title')){echo 'checked';}?> >
+            <input type="radio"  name="status" value="1"  title="正常" <?php if(!isset($status)){echo 'checked';}elseif($status==1){echo 'checked';}?> >
+            <input type="radio"  name="status" value="3"  title="过期"  <?php if(isset($status)&&($status==3)){echo 'checked';}?> >
+            <input type="radio"  name="status" value="2"  title="禁用"  <?php if(isset($status)&&($status==2)){echo 'checked';}?> >
             <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入搜索条件" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -50,30 +53,31 @@
       <table class="layui-table layui-row layui-form">
         <thead>
           <tr>
-            <th>客户</th>
-            <th>客户帐号</th>
             <th>船公司</th>
-            <th>40HQ到港付</th>
-            <th>20GP到港付</th>
-            <th>40HQ月结付</th>
-            <th>20GP月结付</th>
-            <th>40HQ在线付</th>
-            <th>20GP在线付</th>
+            <th>活动名称</th>
+            <th>开始时间</th>
+            <th>截止时间</th>
+            <th>40HQ</th>
+            <th>20GP</th>
+            <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody >
           <{volist name="list" id ="vo"}>
           <tr>
-            <td><{$vo.member_name}></td>
-            <td><{$vo.member_code}></td>
             <td><{$vo.ship_short_name}></td>
-            <td><{$vo.40HQ_installment}></td>
-            <td><{$vo.20GP_installment}></td>
-            <td><{$vo.40HQ_month}></td>
-            <td><{$vo.20GP_month}></td>
-            <td><{$vo.40HQ_cash}></td>
-            <td><{$vo.20GP_cash}></td>
+            <td><{$vo.title}></td>
+            <td><{$vo.discount_start}></td>
+            <td><{$vo.discount_end}></td>
+            <td><{$vo.40HQ}></td>
+            <td><{$vo.20GP}></td>
+            <td><{switch name=$vo.status }>
+                <{case value='1'}>正常<{/case}>
+                <{case value='2'}>禁用<{/case}>
+                <{case value='3'}>过期<{/case}>
+                <{/switch}>
+            </td>
             <td class="td-manage">
                 <button class="xiu_bao layui-btn layui-btn-xs">修改</button>
             </td>

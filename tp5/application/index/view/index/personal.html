@@ -98,25 +98,22 @@
 
             <ul id="nav">
                 <li>
-                    <a href="javascript:;">
-                        <i class="iconfont">&#xe723;</i>
-                        <cite>订单中心</cite>
-                        <i class="iconfont nav_right">&#xe697;</i>
+                    <a _href="<{:url('personal/place_order_port')}>">
+                        <i class="iconfont">&#xe6a7;</i>
+                        <cite>港到港订单</cite>
                     </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a _href="<{:url('personal/place_order_port')}>">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>港到港订单</cite>
-                            </a>
-                        </li>
-                        <li>
-                            <a _href="<{:url('personal/port_bill')}>">
-                                <i class="iconfont">&#xe6a7;</i>
-                                <cite>我的账单</cite>
-                            </a>
-                        </li>
-                    </ul>
+                </li>
+                <li>
+                    <a _href="<{:url('personal/port_bill')}>">
+                        <i class="iconfont">&#xe6a7;</i>
+                        <cite>我的账单</cite>
+                    </a>
+                </li>
+                <li>
+                    <a _href="<{:url('personal/place_order_port')}>">
+                        <i class="iconfont">&#xe6a7;</i>
+                        <cite>个人中心</cite>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -132,11 +129,11 @@
     <div class="page-content">
         <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
           <ul class="layui-tab-title">
-            <li>我的桌面</li>
+            <li>订单中心</li>
           </ul>
           <div class="layui-tab-content" style="padding: 10px 0 0 10px;">
             <div class="layui-tab-item layui-show">
-                <iframe src="<{:url('personal/steward')}>" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+                <iframe src="<{:url('personal/place_order_port')}>" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
             </div>
           </div>
         </div>

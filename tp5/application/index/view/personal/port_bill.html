@@ -3,7 +3,17 @@
     .laytable-cell-checkbox, .laytable-cell-numbers, .laytable-cell-space{
         padding: 8px;
     }
+    .x-nav{
+        position: relative;
+        z-index: 1;
+    }
 </style>
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+      title="刷新">
+      <i class="layui-icon" style="line-height:30px">ဂ</i>
+    </a>
+</div>
 <ul class="layui-tab-title">
     <li class="layui-this">所有账单</li>
     <li><a href="<{:url('personal/port_bill_money')}>">未付款账单</a></li>
@@ -33,12 +43,13 @@ layui.use(['jquery', 'layer','table'], function(){
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', fixed: 'left', unresize: true, sort: true}
-      ,{field:'bill_num', title:'对账单号', edit: 'text' ,width:150}
-      ,{field:'order_num', title:'订单号', edit: 'text', width:200}
-      ,{field:'container_size', title:'柜型',  edit: 'text' ,width:100}
+      ,{field:'bill_num', title:'对账单号' ,width:150}
+      ,{field:'order_num', title:'订单号', width:200}
+      ,{field:'container_size', title:'柜型' ,width:100}
       ,{field:'container_sum', title:'箱量' ,width:100}
       ,{field:'quoted_price', title:'总价(元)',width:100}
       ,{field:'ctime', title:'账单生成时间', sort: true,width:200}
+      ,{field:'', title:'付款状态',width:100}
       ,{field:'status', title:'账单状态',width:100}
       ,{field:'comment', title:'备注',sort: true}
     ]]

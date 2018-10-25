@@ -89,76 +89,73 @@ class Member extends Base
     
     //业务对应客户的提成管理的修改
     public function  pushMoneyEdit(){
+     
         $data = $this->request->param();
-        $this->_p($data);exit;
+        $data = $data['dataArray'];
+//        $this->_p($data);exit;
         $arr= [];
         $dataArr = array_splice($data, -5);
         foreach ($dataArr as $key => $value) {
             $arr += $value;
         }
+       
         $moneyArr = array_splice($data, 0,(count($data)/2));
         //形成以ship_id为键,money 为值的数组
-       // $this->_p($data);$this->_p($moneyArr);exit;
+//        $this->_p($data);$this->_p($moneyArr);exit;
         $money_ship = array_combine(array_column($data,'ship_id'),array_column($moneyArr,'money'));
-       
-        //sales_code
-        $sales['sales_name'] = $arr['sales_name'];$sales['sales_code']= $arr['sales_code'];
-        $member_code= $arr['member_code'];$id = $arr['customer_id'];
+        
+        $sales['sales_name'] = $arr['sales_name'];
+        $sales['sales_code']= $arr['sales_code'];
+        $member_code= $arr['member_code'];
+        //更新业务表客户对应的业务员
         $res =Db::name('sales_member')->where('member_code',$member_code)->update($sales);
         $status[] =$res ? true :false;
         unset($arr['sales_name'],$arr['sales_code'],$arr['member_code'],$arr['member_name'],$arr['customer_id']);
         $mtime =date('Y-m-d H:i:s');
         foreach ($money_ship as $shipSql =>$moneySql){
-            $res1 =Db::name('member_profit')->where('member_code',$member_code)
+            //如果客户对应的船公司如果存在就更新 否则就添加
+            $res2 =Db::name('member_profit')->where('member_code',$member_code)
+                    ->where('ship_id',$shipSql)->find();
+            if(empty($res2)){
+                $res1 =Db::name('member_profit')
+                    ->insert(['member_code'=>$member_code,'ship_id'=>$shipSql,'money'=>$moneySql,'mtime'=>$mtime]);
+            }else{
+                $res1 =Db::name('member_profit')->where('member_code',$member_code)
                     ->where('ship_id',$shipSql)
                     ->update(['money'=>$moneySql,'mtime'=>$mtime]);
+            }            
             $status[] =$res1 ? true :false;
         }
         if(array_key_exists('false', $status)){
-            return 0;
+            return array('status'=>0,'message'=>'客户提成修改失败');
+        }else{
+            return array('status'=>1,'message'=>'客户提成修改成功');
         }
-        return 1;
+  
     }
     
-    //客户对不同柜子不同船公司的优惠的list
-    public function  discountList() {
-        $type = input('get.type'); //船公司ship_name 用户customer
-        $account = input('get.account');  //帐号搜索
-        if($account){
-             $this->view->assign('account',$account); 
-        }
-        $type ?$type:'customer';
-        $this->view->assign('type',$type); 
-        $user = new MemberM ;
-        $list = $user->discountList($type,$account,5);
-//        $this->_p($list);exit;
-        $page = $list->render();
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        return $this->view->fetch('discount/discount_list'); 
-    }
-    
-    //客户对不同柜子不同船公司的优惠 的修改
-    public function discountEdit() {
-        
-        return $this->view->fetch('discount/discount_edit'); 
-    }
-    //活动优惠
-    public function discountSpecial() {
+    //在线支付优惠 和临时在线优惠
+    public function discount() {
         $type = input('get.type'); //船公司ship_name //活动名称promotion_title
-        $account = input('get.account');  //帐号搜索
+        $account = input('get.account');  //帐号搜索条件
+        $status = input('get.status');//优惠状态   
         if($account){
-            $this->view->assign('account',$account); 
+            $this->view->assign('account',$account);
         }
-        $type?$type:'ship_name';
+        $type?$type:$type='ship_name';
+        $status?$status:$status=1;         
         $this->view->assign('type',$type); 
+        $this->view->assign('status',$status); 
+        
         $user = new MemberM ;
-        $list = $user->discountSpecial($type,$account,5);
+        $list = $user->discount($type,$account,$status,5);
 //        $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
-        return $this->view->fetch('discount/discount_list_special'); 
+      
+        
+        return $this->view->fetch('discount/discount_list'); 
         
     }
     
@@ -202,7 +199,30 @@ class Member extends Base
         return $this->view->fetch('member/disable_list'); 
     }
 
-
+    //    //客户对不同柜子不同船公司的优惠的list
+    //    public function  discountList() {
+    //        $type = input('get.type'); //船公司ship_name 用户customer
+    //        $account = input('get.account');  //帐号搜索
+    //        if($account){
+    //             $this->view->assign('account',$account); 
+    //        }
+    //        $type ?$type:'customer';
+    //        $this->view->assign('type',$type); 
+    //        $user = new MemberM ;
+    //        $list = $user->discountList($type,$account,5);
+    ////        $this->_p($list);exit;
+    //        $page = $list->render();
+    //        $this->view->assign('list',$list);
+    //        $this->view->assign('page',$page);
+    //        return $this->view->fetch('discount/discount_list'); 
+    //    }
+    //    
+    //    //客户对不同柜子不同船公司的优惠 的修改
+    //    public function discountEdit() {
+    //        $data = $this->request->param();
+    //        $this->_p($data);exit;
+    //       
+    //    }
     
     
 

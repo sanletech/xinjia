@@ -1,249 +1,165 @@
-<!-- 港全部订单 -->
-<{include file='./public/header' /}>
-
-  <body>
-    <script src="__STATIC__/lib/layui/layui.all.js" charset="utf-8"></script>
-    <style>
-      .fuk1 {
-        display: none;
-      }
-    </style>
-    <div class="invalid">
-      <form class="" action="#" method="post" id="search_port">
-        <div class="layui-row">
-          <div class="layui-col-xs6">
-              <div class="grid-demo"></div>
-            <div class="grid-demo">
-              <div class="layui-form-item">
-                <label class="layui-form-label">订单号：</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="order_num" value="<?php echo $order_num?$order_num:''; ?>" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-
-                <div class="layui-input-inline" style="float:right;">
-                  <button class="layui-btn btn_select" lay-submit="" lay-filter="demo1">查询</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-      <!-- 表格 -->
-      <div class="biao">
-        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-          <div class="layui-tab-content" style="height: 100px;">
-            <div class="layui-tab-item layui-show">
-              <table class="layui-table layui-table-item" id="te">
-                <thead>
-                  <tr>
-                    <th>订单号</th>
-                    <th>提交时间</th>
-                    <th>客户账号</th>
-                    <th>客户单位</th>
-                    
-                    <td>运单号</td>
-                    <td>柜量/柜型</td>
-                    
-                    <th>船公司</th>
-                    <th>船名航次</th>
-                    <th>起运港</th>
-                    <th>目的港</th>
-                    <th>总运费</th>
-
-                    
-                    <th>订舱单</th>
-                    <th>补料</th>
-                    <th>水运单</th>
-                    <th>货物状态</th>
-                    <th>付款状态</th>
-                    <th>操作</th>
-                  </tr>
-                </thead>
-                <tbody>
-                <{volist name="list" id ="vo"}>
-                  <tr>
-                    <td class="ddh"><{$vo.order_num}></td>
-                    <td><{$vo.ctime}></td>
-                    <td><{$vo.member_code}></td>
-                    <td><{$vo.company}></td>
-                    <td><{$vo.track_num}></td>
-                    <td>2/20GP</td>
-                    
-                    <td><{$vo.ship_short_name}></td>
-                    <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
-                    <td><{$vo.s_port}></td>
-                    <td><{$vo.e_port}></td>
-                    <td><{$vo.quoted_price}></td>
-                    <td class="layui-upload">
-                        <?php if(empty($vo['book_note'])){echo"未上传订舱单"; }else{echo"已上传"; } ?>
-<!--                      <a class="dcd"  href="javascript:void(0);">放纸箱</a>-->
-                    </td>
-                    <td > <?php if(($vo['container_status'])==1){echo"已提交柜号"; }else{echo"未提交柜号"; } ?></td>
-                    <td class="layui-upload">
-                        <?php if(empty($vo['sea_waybill'])){echo"未提交"; }else{echo"已提交"; } ?>
-<!--                      <a class="syd" href="javascript:void(0);">运单</a>-->
-                    </td>
-          
-                    <td class="goods"><{$vo.container_buckle}></td>
-                    <td class="fukuan">
-                        <?php if($vo['money_status']==0){echo"未付款"; }else{echo"已付款"; } ?>
-                      <!--<a href="javascript:void(0);">已付款</a>-->
-                    </td>
-
-                    <td>
-                        <a title="编辑" href="<{:url('admin/orderPort/port_details')}>?order_num=<{$vo.order_num}>" target="_blank">
-                        <i class="layui-icon">&#xe642;</i>
-                      </a>
-                      <a title="删除" onclick="del(this,'<{$vo.id}>')" href="javascript:;">
-                        <i class="layui-icon">&#xe640;</i>
-                      </a>
-                    </td>
-                  </tr>
-                  <{/volist}>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 付款窗口 -->
-    <div class="fuk1">
-      <form class="layui-form">
-        <div class="layui-form-item">
-          <label class="layui-form-label">付款状态</label>
-          <div class="layui-input-block">
-            <input name="sex" value="0" title="未付款" checked="" type="radio">
-            <input name="sex" value="1" title="已付款" type="radio">
-          </div>
-        </div>
-      </form>
-    </div>
-    <script>
-      var url = "<{:url('admin/orderPort/Upload')}>";
-      var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
-      //单击货物状态
-    if($('.goods').html() == 'lock'){
-        $('.goods').html('扣货');
-    }else if($('.goods').html() == 'unlock'){
-        $('.goods').html('放货');
-    }else if($('.goods').html() == 'apply'){
-        $('.goods').html('申请放货');
+<link rel="stylesheet" href="__STATIC__/../index/layui/css/layui.css">
+<style>
+    .laytable-cell-checkbox, .laytable-cell-numbers, .laytable-cell-space{
+        padding: 8px;
     }
-      
-      $('.goods').click(function(){
-        let order_num = $(this).siblings('.ddh').html()
-        if($(this).html() == '申请放货'){
-          layer.open({
-            type:1
-            ,title: '货物状态'
-            ,shadeClose :true
-            ,btn:['申请放货','驳回']
-            ,content: "<div style='text-align: center'>是否申请发货</div>"
-            ,yes:function (index, layero) {
-                $.get(appley_cargo_url,{'order_num':order_num,determine:'yes'},function(data){
-                    if(data.status){
-                        layer.close(index);
-                        alert('申请成功');
-                        location.reload();
-                    }else{
-                        alert('申请失败');
-                    }
-                });
-            },function (index, layero) {
-                $.get(appley_cargo_url,{'order_num':order_num,determine:'no'},function(data){
-                    if(data.status){
-                        layer.close(index);
-                        alert('驳回成功');
-                        location.reload();
-                    }else{
-                        alert('驳回失败');
-                    }
-                });
-            }
-        }); 
-        }
-      })
-      //单击付款状态
-      $('.fukuan').click(function () {
-        layer.open({
-          type: 1,
-          title: '是否付款',
-          area: '400px',
-          offset: 'auto',
-          shadeClose: 'true',
-          content: $('.fuk1'),
-          btn: ['确认'],
-          yes: function (index, layero) {
-            layer.close(index);
-            //ajax填写信息
-            // $.ajax        
-          },
-          end: function () {
-            $('.fuk1').hide();
-          }
-        })
-      });
-      
-        function del(obj, did) {
-        layer.confirm('确认要删除吗？', function (index) {
-          //转成数组形式
-          var dataA = new Array()
-          dataA[0] = did;
-          var dataArray = { id: dataA }
-          toajax(dataArray);
-          $(obj).parents("tr").remove();
-          layer.msg('已删除!', { icon: 1, time: 1000 });
-        });
+    .layui-datatable-switch {margin-top: 0px;width: 56px;}
+    .x-nav{
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+    }
+    #bz{
+        display: none;
+        padding: 10px;
       }
-      
-        function toajax(dataArray) {
-        $.ajax({
-          type: 'POST',
-          url: "<{:url('admin/orderPort/orderPortDel')}>",
-          data: dataArray,
-          dataType: "json",
-          success: function (data) {
-            if (data.status == 1) {
-              return 1;
-            } else {
-              return 0;
-            }
-          }
-        })
+      .beizhu{
+        margin: 10px 0;
       }
-      
-        layui.use('laypage', function () {          
-          var laypage = layui.laypage;
-          var $data = $("#search_port input");
-          var $order_num = $data[0];
-          var url ="<{:url('admin/orderPort/all_order')}>";
-          //执行一个laypage实例        
-          laypage.render({
-            elem: 'pages',
-            limit: "<{$limit}>",
-            limits: [5, 10, 15],
-            count: "<{$count}>",
-            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
-            curr: "<{$page}>",
-            theme: '#c00',
-            jump: function (obj, first) {
-              //obj包含了当前分页的所有参数，比如：
-              //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
-              //console.log(obj.limit); //得到每页显示的条数
-              //首次不执行
-              if (!first) {
-                //do something
-                window.location.href = url+'?page='+ obj.curr + '&limit=' + obj.limit + '&order_num='+order_num;
-              }
-            }
-          });
-        }); 
-      
-    </script>
-    <script src="__STATIC__/js/port_money.js"></script>
-  </body>
+</style>
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+      title="刷新">
+      <i class="layui-icon" style="line-height:30px">ဂ</i>
+    </a>
+</div>
 
-  </html>
+  <div class="layui-form" id="cont">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label"></label>
+          <div class="layui-input-inline">
+            <input type="text" name="member" placeholder="用户名" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+              <input type="text" name="order_num" placeholder="订单号"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">`
+            <div class="layui-input-inline">
+              <input type="text" name="date_start" id="date" lay-verify="date" placeholder="起始日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+              <input type="text" name="date_end" id="date1" lay-verify="date" placeholder="结束日期" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <button class="layui-btn cha">搜索</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-inline">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中" checked="">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货">
+        </div>
+
+        <div style="margin-right: 130px; display: inline-block;"></div>
+        <div class="layui-inline">
+            <input type="radio" lay-filter="money_status" name="money_status" value="2" title="所有订单" checked="">
+            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="已付款">
+            <input type="radio" lay-filter="money_status" name="money_status" value="0" title="未付款">
+        </div>
+    </div>
+    
+    <table class="layui-hide" id="test1" lay-filter="test1"></table>
+  </div>
+
+
+
+    <!-- 添加备注窗口 -->
+    <div id="bz">
+        <div class="beizhu"></div>
+        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入备注信息" class="layui-input">
+    </div>
+<script type="text/html" id="toolbarDemo1">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+  </div>
+</script>               
+
+<!-- <script src="__STATIC__/js/jquery-3.2.1.min.js"></script>  -->
+<script src="__STATIC__/../index/layui/layui.js"></script>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['jquery', 'layer','table','laydate','form'], function(){ 
+  var layer = layui.layer
+  ,table = layui.table
+  ,form = layui.form
+  ,$ = layui.jquery
+  ,laydate = layui.laydate;
+  
+  var d = new Date()//当前时间
+  d.setMonth(d.getMonth()-3);//减去三个月
+  //日期
+  laydate.render({
+    elem: '#date',
+    format:'yyyy-MM-dd HH:mm:ss',
+    value:d
+  });
+  laydate.render({
+    elem: '#date1',
+    format:'yyyy-MM-dd HH:mm:ss',
+    value: new Date()
+  });
+
+  
+  var biao = table.render({
+    elem: '#test1'
+    ,url: "<{:url('admin/financial/OrderPortdata')}>"
+    ,toolbar: '#toolbarDemo1'
+    ,title: '用户数据表'
+    ,width:'99%'
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', unresize: true,width:60}
+      ,{field:'name', title:'订单号' ,width:150}
+      ,{field:'bill_num', title:'提交时间' ,width:150}
+      ,{field:'check_date', title:'客户账号',sort: true ,width:200}
+      ,{field:'order_num', title:'客户单位', width:200}
+      ,{field:'container_size', title:'运单号' ,width:100}
+      ,{field:'container_sum', title:'柜量/柜型' ,width:100}
+      ,{field:'quoted_price', title:'船公司',width:100}
+      ,{field:'ctime', title:'船名航次', sort: true,width:200}
+      ,{field:'container_buckle', title:'起运港-目的港',width:100,templet:function(res){
+        return '<div class="">'+ res.container_buckle +'-'+res.container_buckle+'</div>'
+      }}
+      ,{field:'money_status', title:'总运费',width:100}
+      ,{field:'status', title:'订舱单',width:100}
+      ,{field:'extra_info', title:'补料',width:200}
+      ,{field:'comment', title:'水运单',width:200}
+      ,{field:'comment', title:'货物状态',width:200}
+      ,{field:'comment', title:'付款状态',width:200}
+    ]]
+    ,page: true
+    , done: function(res, curr, count){//数据调用之后
+    //如果是异步请求数据方式，res即为你接口返回的信息。
+    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+    // console.log(res);
+    //得到当前页码
+    // console.log(curr); 
+    
+    //得到数据总量
+    // console.log(count);
+  }
+  });
+
+
+  //选中的数据
+  $('button').click(function(){
+    var checkStatus = table.checkStatus('test1');
+  })
+
+});

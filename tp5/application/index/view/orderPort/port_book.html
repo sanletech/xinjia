@@ -8,8 +8,14 @@
       .er a{
         color: blue;
       }
+      .xxtx{
+        margin-top: 50px;
+      }
+      .xxtx .lc{
+        padding: 22px 0;
+      }
     </style>
-    <div class="banner"></div>
+    <!-- <div class="banner"></div> -->
     <form class="" id='order_data_form'>
       <div class="xxtx">
         <!-- 流程 -->
@@ -105,11 +111,9 @@
                 <span>
                   <{$list.container_size}>
                 </span>
-                <p>￥
-                  <strong class="carriage"><{$list.price}></strong>
-                </p>
+                <p>￥<strong class="carriage"><{$list.price}></strong></p>
               </div>
-              <div class="you">价格说明：这是纯运费</div>
+              <div class="you">价格说明:<span><{$list.price_description}></span></div>
             </div>
           </div>
         </div>
@@ -296,16 +300,11 @@
                 <div class="layui-col-xs6">
                   <div class="select">
                     <select name="payment_method" class='mony_fs'>
-                      <option title="<{$discount.installment}>" value='installment'>到港付</option>
-                      <option title="<{$discount.month}>" value='month'>月结付</option>
-                      <{empty name="$discount.special" }>
-                        <option title="<{$discount.cash}>" value='cash'>在线结付(优惠)</option>"
-                        <{else /}>
-                          <option title="<{$discount.month}>" value='cash' disabled='true'>在线结付(优惠)</option>
-                          <option title="<{$discount['special']['promotion']}>" value="<{$discount['special']['promotion_id']}>">
-                            <{$discount[ 'special'][ 'promotion_title']}>
-                          </option>
-                          <{/empty}>
+                        <option value='installment'>到港付</option>
+                        <option value='month'>月结付</option>
+                        <{volist name="discount" id="rows"}>
+                        <option title="<{$rows.money}>" value='<{$rows.id}>' ><{$rows.title}></option>"
+                        <{/volist}>
                     </select>
                   </div>
                 </div>
@@ -368,10 +367,6 @@
                 <i class="layui-icon shanchu">&#x1006;</i>
               </div>
             </div>
-            <!-- <span>总运费:
-              <strong>￥
-                <span id="price_sum">0.00</span>元</strong>
-            </span> -->
           </div>
         </div>
       
@@ -643,11 +638,13 @@
 
         <!-- 表格 -->
         <div class="biao">
-            <a href="javascript:;" onclick="wtxx()" 	class="layui-btn layui-btn-sm">确定</a>
-            <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_zeng">增加</a>
-            <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_xiu">修改</a>
-            <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_del">删除</a>
-            <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_default">设置默认</a>
+            <div class="biao_an">
+              <!-- <a href="javascript:;" onclick="wtxx()" 	class="layui-btn layui-btn-sm">确定</a>  -->
+              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_zeng">增加</a>
+              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_xiu">修改</a>
+              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_del">删除</a>
+              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_default">设置默认</a>
+            </div>
           <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
               <li class="layui-this">发货人信息</li>
@@ -746,7 +743,7 @@
     <{include file='./public/foot' /}>
     <script>
       //首页
-      var index_url = "<{:url('index/order_port/orderport')}>";
+      var index_url = "<{:url('index/index/personal')}>";
       //详情页
       var xiangqing = "<{:url('index/order_port/orderportdetail')}>"
       // 获取session 的客户的code
