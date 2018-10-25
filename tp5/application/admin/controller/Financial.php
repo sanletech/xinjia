@@ -51,6 +51,7 @@ class Financial extends Base
     public function OrderPortCenter(){
         //    //所用的账单 done 未完成 undone
         $type = $this->request->param('type');
+        // var_dump($type);exit;
         if($type=='done'){
             $money_status ='not null';
         }elseif($type=='undone'){

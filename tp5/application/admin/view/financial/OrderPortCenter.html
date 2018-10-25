@@ -21,35 +21,35 @@
     </a>
 </div>
 
-<form class="layui-form" action="">
+<form class="layui-form" id="cont" action="">
     <div class="layui-form-item">
         <div class="layui-inline">
           <label class="layui-form-label"></label>
           <div class="layui-input-inline">
-            <input type="tel" name="phone" placeholder="用户名" autocomplete="off" class="layui-input">
+            <input type="tel" name="member" placeholder="用户名" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-inline">
             <div class="layui-input-inline">
-              <input type="text" name="email" placeholder="订单号"  autocomplete="off" class="layui-input">
+              <input type="text" name="order_num" placeholder="订单号"  autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-inline">
             <div class="layui-input-inline">
-              <input type="text" name="date" id="date" lay-verify="date" placeholder="起始日期" autocomplete="off" class="layui-input">
+              <input type="text" name="date_start" id="date" lay-verify="date" placeholder="起始日期" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-inline">
             <div class="layui-input-inline">
-              <input type="text" name="date" id="date1" lay-verify="date" placeholder="结束日期" autocomplete="off" class="layui-input">
+              <input type="text" name="date_end" id="date1" lay-verify="date" placeholder="结束日期" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-inline">
             <div class="layui-input-inline">
-                <button class="layui-btn">搜索</button>
+                <button class="layui-btn cha">搜索</button>
             </div>
         </div>
     </div>
@@ -57,16 +57,16 @@
     <div class="layui-form-item">
         <label class="layui-form-label"></label>
         <div class="layui-inline">
-        <input type="radio" name="container_buckle" value="apply" title="审核中" checked="">
-        <input type="radio" name="container_buckle" value="lock" title="扣货">
-        <input type="radio" name="container_buckle" value="unlock" title="已放货">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中" checked="">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货">
         </div>
 
         <div style="margin-right: 130px; display: inline-block;"></div>
         <div class="layui-inline">
-            <input type="radio" name="money_status" value="all" title="所有订单" checked="">
-            <input type="radio" name="money_status" value="1" title="已付款">
-            <input type="radio" name="money_status" value="0" title="未付款">
+            <input type="radio" lay-filter="money_status" name="money_status" value="all" title="所有订单" checked="">
+            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="已付款">
+            <input type="radio" lay-filter="money_status" name="money_status" value="0" title="未付款">
         </div>
     </div>
 </form>
@@ -104,9 +104,10 @@
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-layui.use(['jquery', 'layer','table','laydate'], function(){ 
+layui.use(['jquery', 'layer','table','laydate','form'], function(){ 
   var layer = layui.layer
   ,table = layui.table
+  ,form = layui.form
   ,laydate = layui.laydate;
   
   //日期
@@ -116,13 +117,18 @@ layui.use(['jquery', 'layer','table','laydate'], function(){
   laydate.render({
     elem: '#date1'
   });
+
+  form.on('radio()', function(data){
+    $('.cha').click();
+  });
   
-  table.render({
+  var biao = table.render({
     elem: '#test1'
     ,url: "<{:url('admin/financial/OrderPortCenter')}>?type=done"
     ,toolbar: '#toolbarDemo1'
     ,title: '用户数据表'
     ,width:'99%'
+    // ,method:'post'
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', unresize: true,width:60}
@@ -159,10 +165,19 @@ layui.use(['jquery', 'layer','table','laydate'], function(){
   }
   });
 
+//搜索
+$('.cha').click(function(){
+  let data_josn = $('#cont').serialize();  
+  biao.reload({
+    where:{data:data_josn},
+    page:{curr:1},
+    height:300
+  })
+});
+
   //选中的数据
   $('button').click(function(){
     var checkStatus = table.checkStatus('test1');
-    console.log(checkStatus.data);
   })
 
 });
@@ -231,10 +246,4 @@ function pand(){
           })
         });
 }
-
-//搜索
-table.reload('test1', {
-  url: '/api/table/search'
-  ,where: {} //设定异步数据接口的额外参数
-});
 </script>
