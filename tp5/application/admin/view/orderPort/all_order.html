@@ -108,26 +108,6 @@
       </div>
     </div>
 
-    <!-- 付款窗口 -->
-    <div class="fuk1">
-      <form class="layui-form">
-        <div class="layui-form-item">
-          <label class="layui-form-label">付款状态</label>
-          <div class="layui-input-block">
-            <input name="sex" value="0" title="未付款" checked="" type="radio">
-            <input name="sex" value="1" title="已付款" type="radio">
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <!-- 是否申请发货 -->
-    <div id="shenqi">
-        <div style="color: red;margin: 5px 0;">申请放货不需要填写只有驳回需要</div>        
-        <div class="layui-col-sx12">
-          <input type="text" name="title" lay-verify="title" placeholder="驳回理由" class="layui-input">
-        </div>
-    </div>
     <script>
       var url = "<{:url('admin/orderPort/Upload')}>";
       var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
@@ -139,63 +119,7 @@
     }else if($('.goods').html() == 'apply'){
         $('.goods').html('申请放货');
     }
-      
-      $('.goods').click(function(){
-        let order_num = $(this).siblings('.ddh').html()
-        if($(this).html() == '申请放货'){
-          layer.open({
-            type:1
-            ,title: '货物状态'
-            ,shadeClose :true
-            ,btn:['申请放货','驳回']
-            ,content: $('#shenqi')
-            ,yes:function (index, layero) {
-                $.get(appley_cargo_url,{'order_num':order_num,'type':'pass'},function(data){
-                    if(data.status){
-                        layer.close(index);
-                        alert('申请成功');
-                        location.reload();
-                    }else{
-                        alert('申请失败');
-                    }
-                });
-            },btn2:function (index) {
-              let bo = $('#shenqi input').val();
-                $.get(appley_cargo_url,{'order_num':order_num,'reject':bo,'type':'fail'},function(data){
-                    if(data.status){
-                        layer.close(index);
-                        alert('驳回成功');
-                        location.reload();
-                    }else{
-                        alert('驳回失败');
-                    }
-                });
-              return false;
-            }
-        }); 
-        }
-      });
-      //单击付款状态
-      $('.fukuan').click(function () {
-        layer.open({
-          type: 1,
-          title: '是否付款',
-          area: '400px',
-          offset: 'auto',
-          shadeClose: 'true',
-          content: $('.fuk1'),
-          btn: ['确认'],
-          yes: function (index, layero) {
-            layer.close(index);
-            //ajax填写信息
-            // $.ajax        
-          },
-          end: function () {
-            $('.fuk1').hide();
-          }
-        })
-      });
-      
+            
         function del(obj, did) {
         layer.confirm('确认要删除吗？', function (index) {
           //转成数组形式
