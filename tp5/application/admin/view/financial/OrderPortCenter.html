@@ -250,7 +250,8 @@ function pand($){
         })
         //单击付款状态
         $('.fukuan').click(function () {
-         if( $(this).html() == '未付款'){
+          let thi = $(this);
+         if($(this).html() == '未付款'){
           let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').html();   
           let money = $('input:radio[name="money"]:checked').val()
           layer.open({
@@ -259,23 +260,21 @@ function pand($){
             area: '400px',
             offset: 'auto',
             shadeClose: 'true',
-            content: '<div >请确认是否收到货款</div>',
+            content: '<div>请确认是否收到货款</div>',
             btn: ['YES','NO'],
             yes: function (index, layero) {
-//              layer.close(index);
-              //ajax填写信息
              $.post(money_status_changeURL,{'order_num':order_num},function(data){
                   if(data.status){
+                    thi.html('已付款');
                     layer.close(index);
                     alert('提交成功');
-                    location.reload();
                   }else{
                      alert('提交失败');
                   }
              })       
             }
-          })
-           }
+          });
+          }
         });  
 }
 </script>
