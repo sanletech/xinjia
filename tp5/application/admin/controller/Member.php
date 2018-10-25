@@ -150,12 +150,6 @@ class Member extends Base
         $user = new MemberM ;
         $list = $user->discount($type,$account,$status,5);
 //        $this->_p($list);exit;
-        foreach ($list as $key => $value) {
-            if($value['type']=='long'){
-                $list[$key]['discount_start']='';
-                $list[$key]['discount_end']='';
-            }
-        }
         $page = $list->render();
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
