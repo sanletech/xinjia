@@ -1,15 +1,15 @@
 <?php
 /*
- *  车队通讯录控制器
+ *  通讯录控制器
  */
 namespace app\admin\controller;
 use app\admin\common\Base;
-use app\admin\model\Car as CarM ;
+use app\admin\model\AddressBook as AddressBookM ;
 use think\Request;
 use think\Db;
-class Car extends Base
+class AddressBook  extends Base
 {   
-
+    //车队列表
     public function car_list()
     {   
         $data= array_filter($this->request->param());
@@ -102,7 +102,7 @@ class Car extends Base
     }
     
     //执行车队的修改
-    public function  toEdit(){
+    public function  car_toedit(){
         $data= array_filter($this->request->param());
         //修改car_data信息表
         $car_data=$data['0'];
@@ -142,7 +142,7 @@ class Car extends Base
     }
     
     //执行车队的添加
-    public function toAdd() {
+    public function car_toAdd() {
         $data= array_filter($this->request->param());
         //$this->_p($data);
         //需要添加的car_data信息表
@@ -162,19 +162,8 @@ class Car extends Base
         return $status;  
     }
     
-    // 查看车队各个人员的信息
-    public function car_info() {
-        //获取需要查看车队的ID   
-        $id= $this->request->get('car_id');
-        $carinfo = new CarM;
-        $data = $carinfo->carinfo($id);
-        
-        $this->view->assign('data',$data);
-        return $this->view->fetch('car/car_info'); 
-    }
-    
     //执行车队信息的删除
-    public function toDel(){
+    public function car_Del(){
         $data= array_filter($this->request->param());
         $del=new CarM;
         $response  = $del->todel($data['id']);

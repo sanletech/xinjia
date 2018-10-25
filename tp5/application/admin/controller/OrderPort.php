@@ -9,6 +9,16 @@ use app\index\model\Order as IndexOrderM;
 class OrderPort extends Base
 {   
     
+    private $order_status;
+    private $page=5;
+
+    public function _initialize()
+    {  
+        $this->order_status=config('config.order_status');
+  
+    }
+
+
     public function Upload()
     {
         // 获取表单上传文件,订单号，上传文件的类别 
@@ -77,7 +87,7 @@ class OrderPort extends Base
     public function order_audit() 
     {
         $data = new OrderM;
-        $list = $data->order_audit(5,2);
+        $list = $data->order_audit($this->page,$this->status['order_audit']);
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count',$count);
@@ -113,9 +123,11 @@ class OrderPort extends Base
             $order_num =$data['order_num'];
             if($type=='fail'){
                 $reject = $data['reject'];
-                $status=404;$action=$reject;
+                $status = $this->order_status['cancel'];
+                $action = $reject;
             }elseif($type=='pass') {
-                $status=3;$action='通过审核>待录入运单号和上传订舱单';
+                $status =$this->order_status['booking_note'];
+                $action ='通过审核>待录入运单号和上传订舱单';
             }
             $res =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$status,'action'=>$action]);
             $data = new OrderM;
@@ -123,18 +135,26 @@ class OrderPort extends Base
             return  $res?array('status'=>1,'message'=>'操作成功'):array('status'=>0,'message'=>'操作失败');
        }
     }
-    
+    //上传订舱单文件,运单号和 水运单文件
+    //参数 type= booking_note或者sea_waybill
+    //订单号码
+    public function waybill(){
+        $file = request()->file('file');
+        $order_num = $this->request->get('order_num');
+        $type = $this->request->get('type');
+        
+    }
 
-    //港到港订单页
+    //港到港 处理订单公共页
     public function portList()
     {   
-   
         return $this->view->fetch('orderPort/port_list_top');
     }
     //所有订单
     public function all_order()
     {    
-         //订单查询
+//      var_dump($this->order_status['stop']);exit;
+        //订单查询
         $order_num =  $this->request->param('order_num');
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
