@@ -137,7 +137,10 @@ class OrderPort extends Base
     //参数 type= booking_note或者sea_waybill
     //订单号码
     public function waybill_upload(){
+        $data= $this->request->param();
+      
         $file = request()->file('file');
+      
         $order_num = $this->request->param('order_num');
         $type = $this->request->param('type');
         $track_num= $this->request->param('track_num');

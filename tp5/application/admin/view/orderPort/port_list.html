@@ -120,12 +120,17 @@
       <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入备注信息" class="layui-input">
   </div>
 <!-- 提交运单号窗口 -->
-  <div id="order_num1">
+  <div id="ding">
     <div class="num1"></div>
     <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
-
-    <a class="syd" href="#">上传</a>
+    <a class="dcd" href="#">上传</a>
   </div>
+
+<!--水运单-->
+<div id="shui">
+    <div class="num2"></div>
+    <a class="syd" href="#">上传</a>
+</div>
   
 <script type="text/html" id="toolbarDemo1">
   <div class="layui-btn-container">
@@ -142,7 +147,7 @@
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-var url = "<{:url('admin/orderPort/Upload')}>";
+var url = "<{:url('admin/orderPort/waybill_upload')}>";
 layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){ 
   var layer = layui.layer
   ,table = layui.table
@@ -275,11 +280,10 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
         return '<div class="">'+ res.s_port +'-'+ res.e_port+'</div>'
       }}
       ,{field:'quoted_price', title:'总运费',width:100} 
-      ,{field:'book_note', title:'订舱单',width:100,event:'ding',templet:function(res){
+      ,{field:'container_status', title:'补料',width:200}
+      ,{field:'sea_waybill', title:'水运单',width:200,event:'shui',templet:function(res){
         return '<a class="dcd" href="#">上传</a>'
       }}
-      ,{field:'container_status', title:'补料',width:200}
-      ,{field:'sea_waybill', title:'水运单',width:200}
       ,{field:'container_buckle', title:'货物状态',width:200}
       ,{field:'money_status', title:'付款状态',width:200}
       ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:80}
@@ -351,31 +355,43 @@ table.on('tool()', function(obj){
       });   
     }else if(obj.event === 'yun'){//单击运单号
       let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();
-      $('.num1').html('运单号：<span>'+order_num+'</span>');
+      $('.num1').html('订单号：<span>'+order_num+'</span>');
       layer.open({
         type:1
-        ,title: '提交水运单'
-        ,content: $('#order_num1')
+        ,title: '提交订舱单'
+        ,content: $('#ding')
         ,shadeClose :true
-        ,btn:['确认']
+        ,btn:['上传']
         ,yes:function(index){
-          let track_num1 = $('#order_num1 input').val();
-          $.get(url,{data:track_num1},function(data){
-            if(data.status){
-                layer.close(index);
-                alert('添加成功');
-            }else{
-                alert('申请失败');
-            }
-          })
+          if($('#ding input').val()){
+              $('.dcd').click();
+          }else{
+              layer.msg('请输入运单号', {
+                icon: 7,
+                time: 1000 //1秒关闭（如果不配置，默认是3秒）
+              }, function(){
+                //do something
+              })
+          }
         }
       });
-    }else if(obj.event === 'ding'){      
-      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();      
+    }else if(obj.event === 'shui'){
+        $('#shui .num2').html($(this).siblings('td[data-field="order_num"]').find('a').html());
+        $('#shui a').click();
+    }
+  });
+
+
+  var order_num1 = "";
+  var track_num1 = '';
+  $('.dcd').click(function(){
+    order_num1 = $('.num1 span').html();
+    track_num1 = $('#ding input').val();
+   });
       //订舱单
-      upload.render({
-        elem: $(this) //绑定元素
-        , url: url + '?order_num=' + order_num + '&type=book_note' //上传接口
+   upload.render({
+        elem:'.dcd'  //绑定元素
+        , url: url + '?order_num=' + order_num1 + '&type=book_note' //上传接口
         , accept: 'file' //普通文件
         , done: function (res) {
           //上传完毕回调
@@ -386,20 +402,16 @@ table.on('tool()', function(obj){
           }
         }
       });
-    }
-
-  });
-
-
-  var order_num = "";
+  
   $('.syd').click(function(){
-    order_num = $('.num1 span').html();
+    order_num1 = $('.num2').html();
   });
-
+  
   //水运单
-  upload.render({
+    upload.render({
     elem: '.syd' //绑定元素
-    , url: url + '?order_num=' + order_num + '&type=sea_waybill' //上传接口
+    , url: url + '?order_num=' + order_num1 + '&type=sea_waybill' //上传接口
+    ,data:{id : 123}
     , accept: 'file' //普通文件
     , done: function (res) {
       //上传完毕回调
@@ -411,6 +423,7 @@ table.on('tool()', function(obj){
     }
 
   });
+
 
 
   //选中的数据
