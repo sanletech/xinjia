@@ -28,6 +28,18 @@
             </div>
         </div>
 
+        <div class="layui-inline">`
+          <div class="layui-input-inline">
+            <input type="text" name="date_start" id="date" lay-verify="date" placeholder="起始日期" autocomplete="off" class="layui-input">
+          </div>
+      </div>
+
+      <div class="layui-inline">
+          <div class="layui-input-inline">
+            <input type="text" name="date_end" id="date1" lay-verify="date" placeholder="结束日期" autocomplete="off" class="layui-input">
+          </div>
+      </div>
+
         <div class="layui-inline">
             <div class="layui-input-inline">
                 <a class="layui-btn cha">搜索</a>
@@ -44,9 +56,9 @@
               <strong>付款方式</strong>
             </div>
             <div class="port_rig">
-            <div class="cbox"><input type="checkbox" name="installment" value="installment" lay-skin="primary" title="到港付" checked=""></div>
-            <div class="cbox"><input type="checkbox" name="cash" value="cash" lay-skin="primary" title="在线付" checked=""></div>
-            <div class="cbox"><input type="checkbox" name="month" value="month" lay-skin="primary" title="月结" checked=""></div>
+            <div class="cbox"><input type="checkbox" name="installment" value="installment" lay-skin="primary" lay-filter="port" title="到港付" checked=""></div>
+            <div class="cbox"><input type="checkbox" name="cash" value="cash" lay-skin="primary" title="在线付" lay-filter="port" checked=""></div>
+            <div class="cbox"><input type="checkbox" name="month" value="month" lay-skin="primary" title="月结" lay-filter="port" checked=""></div>
           </div>
         </div>
         <!-- 订单进度 -->
@@ -55,9 +67,9 @@
               <strong>订单进度</strong>
             </div>
             <div class="port_rig">
-            <div class="cbox"><input type="checkbox" name="book_note" value="book_note" lay-skin="primary" title="订舱单"></div>
-            <div class="cbox"><input type="checkbox" name="container_code" value="container_code" lay-skin="primary" title="提交柜号"></div>
-            <div class="cbox"><input type="checkbox" name="book_note" value="book_note" lay-skin="primary" title="水运单"></div>
+            <div class="cbox"><input type="checkbox" name="book_note" value="book_note" lay-skin="primary" lay-filter="port" title="订舱单"></div>
+            <div class="cbox"><input type="checkbox" name="container_code" value="container_code" lay-skin="primary" lay-filter="port" title="提交柜号"></div>
+            <div class="cbox"><input type="checkbox" name="sea_waybill" value="sea_waybill" lay-skin="primary" lay-filter="port" title="水运单"></div>
           </div>
         </div>
         <!-- 收款状态 -->
@@ -66,8 +78,8 @@
               <strong>收款状态</strong>
             </div>
             <div class="port_rig">
-            <div class="cbox"><input type="checkbox" name="no_money"  value="no_money" lay-skin="primary" title="未收款" checked=""></div>
-            <div class="cbox"><input type="checkbox" name="have_money"  value="have_money" lay-skin="primary" title="已收款"></div>
+            <div class="cbox"><input type="checkbox" name="no_money"  value="no_money" lay-skin="primary" lay-filter="port" title="未收款" checked=""></div>
+            <div class="cbox"><input type="checkbox" name="have_money"  value="have_money" lay-skin="primary" lay-filter="port" title="已收款"></div>
             <div class="cbox"></div>
           </div>
         </div>
@@ -77,7 +89,8 @@
               <strong>订单状态</strong>
             </div>
             <div class="port_rig">
-            <div class="cbox"><input type="radio" name="completion"  value="undone" title="未完成" checked=""></div>
+            <div class="cbox"><input type="radio" name="completion"  value="all" title="所有订单" checked=""></div>
+            <div class="cbox"><input type="radio" name="completion"  value="undone" title="未完成"></div>
             <div class="cbox"><input type="radio" name="completion"  value="done"  title="已完成"></div>
             <div class="cbox"></div>
           </div>
@@ -88,35 +101,14 @@
               <strong>扣柜状态</strong>
             </div>
             <div class="port_rig">
-            <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中" checked=""></div>
+                <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="all" title="全部" checked=""></div>
+            <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中"></div>
             <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货"></div>
             <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货"></div>
           </div>
         </div>
     </div>
 
-    <!-- <div class="layui-form-item">
-      <label class="layui-form-label"></label>
-      <div class="layui-input-block">
-          <input type="checkbox" name="order_all" value="order_all"lay-skin="primary" title="所有订单" checked="">
-          <input type="checkbox" name="cash" value="cash" lay-skin="primary" title="在线付">
-          <input type="checkbox" name="month" value="month" lay-skin="primary" title="月结">
-          <input type="checkbox" name="book_note" value="book_note" lay-skin="primary" title="上传订舱/运单">
-          <input type="checkbox" name="container_code" value="container_code" lay-skin="primary" title="客户提交柜号">
-          <input type="checkbox" name="money_status"  value="money_status" lay-skin="primary" title="未收款">
-          <input type="checkbox" name="sea_waybill"  value="sea_waybill" lay-skin="primary" title="上传水运单">
-          <input type="checkbox" name="completion"  value="completion" lay-skin="primary" title="已经完成订单">
-      </div>
-    </div>
-
-    <div class="layui-form-item">
-        <label class="layui-form-label"></label>
-        <div class="layui-inline">
-        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中" checked="">
-        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货">
-        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货">
-        </div>
-    </div>     -->
     <table class="layui-hide" id="test1" lay-filter="test1"></table>
   </form>
 
@@ -126,6 +118,13 @@
    <div id="bz">
       <div class="beizhu"></div>
       <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入备注信息" class="layui-input">
+  </div>
+<!-- 提交运单号窗口 -->
+  <div id="order_num1">
+    <div class="num1"></div>
+    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
+
+    <a class="syd" href="#">上传</a>
   </div>
   
 <script type="text/html" id="toolbarDemo1">
@@ -143,19 +142,110 @@
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-
-layui.use(['jquery', 'layer','table','laydate','form'], function(){ 
+var url = "<{:url('admin/orderPort/Upload')}>";
+layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){ 
   var layer = layui.layer
   ,table = layui.table
   ,form = layui.form
   ,$ = layui.jquery
+  ,upload = layui.upload
   ,laydate = layui.laydate;
 
-  var container_buckle = 'apply';//货物状态
+  var order_num='';
+  var container_buckle = 'all';//扣柜状态
+  var completion = 'all';//订单状态
+  var installment = 'installment';//到港付
+  var cash = 'cash';//在线付
+  var month = 'month';//月结
+  var book_note = '';//订舱单
+  var container_code ='';//提交柜号
+  var sea_waybill = '';//水运单
+  var no_money = 'no_money';//未收款
+  var have_money ='';//已收款
+
+  var d = new Date()//当前时间
+  d.setMonth(d.getMonth()-3);//减去三个月
+  //日期
+  laydate.render({
+    elem: '#date',
+    format:'yyyy-MM-dd HH:mm:ss',
+    value:d
+  });
+  laydate.render({
+    elem: '#date1',
+    format:'yyyy-MM-dd HH:mm:ss',
+    value: new Date()
+  });
+
+  //判断扣柜状态
   form.on('radio(container_buckle)', function(data){
     container_buckle = data.value;
     $('.cha').click();
   });
+  //判断订单状态
+  form.on('radio(container_buckle)', function(data){
+    completion = data.value;
+    $('.cha').click();
+  });
+
+  //判断复选框是否选中
+  form.on('checkbox(port)', function(data){
+    chec(data);    
+  });
+
+    
+  //判断复制
+  function chec(data) {
+    if (data.value == 'installment') {//判断到港付
+      if (data.elem.checked) {
+        installment = 'installment';
+      } else {
+        installment = '';
+      }
+    } else if (data.value == 'cash') {//判断在线付
+      if (data.elem.checked) {
+        cash = 'cash';
+      } else {
+        cash = '';
+      }
+    }else if (data.value == 'month') {//判断月结
+      if (data.elem.checked) {
+        month = 'month';
+      } else {
+        month = '';
+      }
+    }else if (data.value == 'book_note') {//判断订舱单
+      if (data.elem.checked) {
+        book_note = 'book_note';
+      } else {
+        book_note = '';
+      }
+    }else if (data.value == 'container_code') {//判断提交柜号
+      if (data.elem.checked) {
+        container_code = 'container_code';
+      } else {
+        container_code = '';
+      }
+    }else if (data.value == 'sea_waybill') {//判断水运单    
+      if (data.elem.checked) {
+        sea_waybill = 'sea_waybill';
+      } else {
+        sea_waybill = '';
+      }
+    }else if (data.value == 'no_money') {//判断未收款
+      if (data.elem.checked) {
+        no_money = 'no_money';
+      } else {
+        no_money = '';
+      }
+    }else if (data.value == 'have_money') {//判断已收款
+      if (data.elem.checked) {
+        have_money = 'have_money';
+      } else {
+        have_money = '';
+      }
+    }
+  }
   
   var biao = table.render({
     elem: '#test1'
@@ -166,20 +256,28 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', unresize: true,width:60}
-      ,{field:'name', title:'订单号' ,width:150}
-      ,{field:'ctime', title:'提交时间' ,width:150}
-      ,{field:'member_code', title:'客户账号',sort: true ,width:200}
+      ,{field:'order_num', title:'订单号' ,width:150,templet:function(res){
+        return '<a href="<{:url("admin/orderPort/port_details")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>'
+      }}
+      ,{field:'ctime', title:'提交时间',sort: true,width:200}
+      ,{field:'member_code', title:'客户账号',width:200}
       ,{field:'company', title:'客户单位', width:200}
-      ,{field:'track_num', title:'运单号' ,width:100}
-      ,{field:'container_sum', title:'柜量' ,width:100}
-       ,{field:'container_size', title:'柜型' ,width:100}
+      ,{field:'track_num', title:'运单号' ,width:100,event:'yun',templet:function(res){
+        return '<div class="track_num1">'+ res.track_num +'</div>'
+      }}
+      ,{field:'container_sum', title:'柜量/柜型' ,width:100,templet:function(res){
+        return '<div class="">'+ res.container_sum +'/'+ res.container_size+'</div>'
+      }}
       ,{field:'ship_short_name', title:'船公司',width:100}
-      ,{field:'boat_name', title:'船名', sort: true,width:200}
-       ,{field:'boat_code', title:'航次', sort: true,width:200}
-     ,{field:'s_port', title:'起运港', sort: true,width:200}
-       ,{field:'e_port', title:'目的港', sort: true,width:200}
-      ,{field:'quoted_price', title:'总运费',width:100}
-      ,{field:'book_note', title:'订舱单',width:100}
+      ,{field:'boat_name', title:'船名',width:200}
+      ,{field:'boat_code', title:'航次',width:200}
+      ,{field:'s_port', title:'始-终(港)',width:200,templet:function(res){
+        return '<div class="">'+ res.s_port +'-'+ res.e_port+'</div>'
+      }}
+      ,{field:'quoted_price', title:'总运费',width:100} 
+      ,{field:'book_note', title:'订舱单',width:100,event:'ding',templet:function(res){
+        return '<a class="dcd" href="#">上传</a>'
+      }}
       ,{field:'container_status', title:'补料',width:200}
       ,{field:'sea_waybill', title:'水运单',width:200}
       ,{field:'container_buckle', title:'货物状态',width:200}
@@ -201,20 +299,29 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
 
 //搜索
 $('.cha').click(function(){
-  let data = $('#cont').serializeArray();//表单数据
-  console.log(data);
-
-
-  let company = $("input[name='company']").val();//用户名
-  let order_num = $("input[name='order_num']").val();//订单号
-  let track_num = $("input[name='track_num']").val();//订单号
-  
+  let company = $('input[name="company"]').val();//客户单位
+  company = company.replace(/\s+/g, "");
+  let order_num = $('input[name="order_num"]').val();//订单号
+  let track_num = $('input[name="track_num"]').val();//运单号
+  let date_start = $("input[name='date_start']").val();;//起始日期
+  let date_end = $("input[name='date_end']").val();;//结束日期
   biao.reload({
     where:{
       company:company,
       order_num:order_num,
       track_num:track_num,
+      date_start:date_start,
+      date_end:date_end,
       container_buckle:container_buckle,
+      completion:completion,
+      installment:installment,
+      cash:cash,
+      month:month,
+      book_note:book_note,
+      container_code:container_code,
+      sea_waybill:sea_waybill,
+      no_money:no_money,
+      have_money:have_money
     },
     page:{curr:1}
   })
@@ -223,7 +330,7 @@ $('.cha').click(function(){
 //监听行工具事件
 table.on('tool()', function(obj){
     var data = obj.data;
-    if(obj.event === 'edit'){
+    if(obj.event === 'edit'){//点击备注
       layer.open({
         type:1
         ,title: '添加备注'
@@ -242,16 +349,75 @@ table.on('tool()', function(obj){
           })
         }
       });   
-    } 
+    }else if(obj.event === 'yun'){//单击运单号
+      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();
+      $('.num1').html('运单号：<span>'+order_num+'</span>');
+      layer.open({
+        type:1
+        ,title: '提交水运单'
+        ,content: $('#order_num1')
+        ,shadeClose :true
+        ,btn:['确认']
+        ,yes:function(index){
+          let track_num1 = $('#order_num1 input').val();
+          $.get(url,{data:track_num1},function(data){
+            if(data.status){
+                layer.close(index);
+                alert('添加成功');
+            }else{
+                alert('申请失败');
+            }
+          })
+        }
+      });
+    }else if(obj.event === 'ding'){      
+      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();      
+      //订舱单
+      upload.render({
+        elem: $(this) //绑定元素
+        , url: url + '?order_num=' + order_num + '&type=book_note' //上传接口
+        , accept: 'file' //普通文件
+        , done: function (res) {
+          //上传完毕回调
+          if (res.status > 0) {
+            alert(res.mssage)
+          } else {
+            alert(res.mssage)
+          }
+        }
+      });
+    }
+
   });
+
+
+  var order_num = "";
+  $('.syd').click(function(){
+    order_num = $('.num1 span').html();
+  });
+
+  //水运单
+  upload.render({
+    elem: '.syd' //绑定元素
+    , url: url + '?order_num=' + order_num + '&type=sea_waybill' //上传接口
+    , accept: 'file' //普通文件
+    , done: function (res) {
+      //上传完毕回调
+      if (res.status > 0) {
+        alert(res.mssage)
+      } else {
+        alert(res.mssage)
+      }
+    }
+
+  });
+
 
   //选中的数据
   $('button').click(function(){
     var checkStatus = table.checkStatus('test1');
-  })
+    console.log(checkStatus);
+  });
 
 });
-
-
-
 </script>

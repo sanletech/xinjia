@@ -7,7 +7,10 @@
     z-index: 1;
     overflow: hidden;
 }
-#bz{
+a{
+    color: #2e8de5;
+}
+#bz,#order_num1{
   display: none;
   padding: 10px;
 }
@@ -18,9 +21,12 @@
   height: 40px;
   margin-bottom: 5px;
 }
+#order_num1{
+    width: 300px;
+}
 .xuan{
     height: 100px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     .fangfa{
         // border-right: 1px solid #000;
         margin-right: 40px;
