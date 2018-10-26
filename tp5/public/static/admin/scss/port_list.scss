@@ -1,0 +1,47 @@
+.laytable-cell-checkbox, .laytable-cell-numbers, .laytable-cell-space{
+    padding: 8px;
+}
+.layui-datatable-switch {margin-top: 0px;width: 56px;}
+.x-nav{
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+#bz{
+  display: none;
+  padding: 10px;
+}
+.beizhu{
+  margin: 10px 0;
+}
+.layui-form-item{
+  height: 40px;
+  margin-bottom: 5px;
+}
+.xuan{
+    height: 100px;
+    margin-bottom: 30px;
+    .fangfa{
+        // border-right: 1px solid #000;
+        margin-right: 40px;
+        margin-top: 20px;
+        float: left;
+        width: 180px;
+        .port_left,.port_rig{
+            float: left;
+        }
+        .port_left{
+            width: 20px;
+            line-height: 20px;
+            margin-right: 30px;
+        }
+        .port_rig{
+            .cbox{
+                height: 30px;
+                .layui-form-radio{
+                    margin: 0;
+                }
+            }
+        }
+      }
+}
