@@ -5,6 +5,16 @@ use think\Db;
 use think\Session;
 class orderPort extends Model
 {
+    private $order_status;
+    private $page=5;
+
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->order_status = config('config.order_status');
+  
+    }            
+
     public function order_audit($pages,$state){
         $list =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
@@ -134,12 +144,54 @@ class orderPort extends Model
     }
     
     //记录订单的更新状态和时间
-    public function orderUpdate($order_num,$status,$title) {
+    public function orderUpdate($order_num,$status,$title,$comment='') {
         $submitter= Session::get('user_info','think');
-         $mtime =  date('Y-m-d H:i:s');
-        $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'submitter'=>$submitter);
-        $res =Db ::name('order_port_status')->insert($data);
+        $mtime =  date('Y-m-d H:i:s');
+        $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'comment'=>$comment,'submitter'=>$submitter,'mtime'=>$mtime);
+        $res =Db ::name('order_port_status')->insert($data); //记录操作
+        //根据不同的记录是否更新order_port 和order_bill 的状态
+        $order_status= $this->order_status;
+       
+        //只更改订单和账单的对应字段
+        $map1 =array($order_status['payment_status'],$order_status['container_appley'],
+            $order_status['container_lock'],$order_status['container_unlock'],$order_status['up_container_code']);
+         //修改order_bill的状态 ,对应order_port的状态和其字段container_status的更改 
+        $map2 = array_diff($order_status,$map1) ;     
+        if(in_array($status,$map1)){
+            switch ($status) {
+                case $order_status['payment_status']:
+                $param = ['money_status'=>1];
+                break;
+                case $order_status['container_appley']:
+                $param = ['container_buckle'=>'lock'];
+                break;
+                case $order_status['container_unlock']:
+                $param = ['container_buckle'=>'unlock'];
+                break;
+                case $order_status['container_unlock']:
+                $param = ['container_buckle'=>'unlock'];
+                break;
+                case $order_status['up_container_code']:
+                $param = ['container_status'=>'1','status'=>$order_status['up_container_code']];
+                break;
+            }
+        }elseif(in_array($status,$map2)) {
+            $param =['status'=>$status];
+        }
         
+        Db::startTrans();
+        try{
+        $res =Db::name('order_port')->where('order_num',$order_num)->update($param);
+        $res1 =Db::name('order_bill')->where('order_num',$order_num)->update($param);
+        Db::commit();    
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return array('status'=>0,'message'=>'操作失败');
+        }      
+        
+        return array('status'=>1,'message'=>'操作成功');
+       
     }
     
     //子订单的修改order_truckage 也是送货 装货服务的信息修改

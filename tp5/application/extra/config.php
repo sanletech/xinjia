@@ -3,7 +3,8 @@
 
 return [
     //港到港的订单状态编码
-    //505中止404取消2待审核3录入运单号和上传文件4客户提交柜号5根据收款状态6扣柜7上传水运单文件8通知车队
+    //5,6,7,8, 只更改订单和账单的对应字段money_status，container_buckle
+    //4,修改order_bill，order_port的状态和对应字段
     'order_status' =>[
         'stop'=>505,//中止
         'cancel'=>404,//取消
