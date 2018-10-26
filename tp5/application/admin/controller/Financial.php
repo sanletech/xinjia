@@ -86,30 +86,18 @@ class Financial extends Base
             $data =$this->request->param();
             $type =$data['type'];
             $order_num =$data['order_num'];
-            $action =$data['comment'];
+            $comment =$data['comment'];
             //$type 的值是pass就放柜，fail 就不放柜
             if($type=='fail'){
                 $status = $this->order_status['container_lock'];
-                $container_buckle='lock';
+                $title='申请放柜>驳回';
             }elseif($type=='pass') {
                 $status = $this->order_status['container_unlock'];
-                $container_buckle='unlock';
-            }
-            //同时修改订单和账单的扣柜状态
-             // 启动事务
-            Db::startTrans();
-            try{
-            $res =Db::name('order_port')->where('order_num',$order_num)->update(['container_buckle'=>$container_buckle]);
-            $res1 =Db::name('order_bill')->where('order_num',$order_num)->update(['container_buckle'=>$container_buckle]);
-            Db::commit();    
-            } catch (\Exception $e) {
-                // 回滚事务
-                Db::rollback();
-                return array('status'=>0,'message'=>'操作失败');
+                $title='申请放柜>通过';
             }
             $data = new \app\admin\model\orderPort();
-            $data->orderUpdate($order_num,$status,$action);
-            return array('status'=>1,'message'=>'操作成功');
+            $response= $data->orderUpdate($order_num,$status,$title,$comment);
+            return $response;
        }
     }
     

@@ -19,13 +19,13 @@ class OrderPort extends Base
     }
 
 
-    public function Upload()
+    public function Upload($order_num,$type,$file)
     {
         // 获取表单上传文件,订单号，上传文件的类别 
         // sea_waybill 水运单  book_note 订舱单
-        $file = request()->file('file');
-        $order_num = $this->request->get('order_num');
-        $type = $this->request->get('type');
+//        $file = request()->file('file');
+//        $order_num = $this->request->get('order_num');
+//        $type = $this->request->get('type');
         $rename = $order_num.'_'.$type;
          // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file->validate(['size'=>2097152,'ext'=>'text,txt,pdf,docx,doc,docm,dotx,dotm'])
@@ -39,8 +39,9 @@ class OrderPort extends Base
             $res ? $response=['status'>1,'mssage'=>'提交成功']:$response=['status'>0,'mssage'=>'提交失败'];
             //文件上传成功后更新订单状态
             if($res){
-                  // 上传成功
-                 return['status'=>1,'mssage'=>'上传成功'] ;
+                  // 上传成功后更新订单和账单的状态
+                
+                return['status'=>1,'mssage'=>'上传成功'] ;
             }
         }else{
             // 上传失败获取错误信息
@@ -87,7 +88,7 @@ class OrderPort extends Base
     public function order_audit() 
     {
         $data = new OrderM;
-        $list = $data->order_audit($this->page,$this->status['order_audit']);
+        $list = $data->order_audit($this->page,$this->order_status['order_audit']);
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count',$count);
@@ -113,15 +114,38 @@ class OrderPort extends Base
         ]);;
         return $this->view->fetch('orderPort/audit_page');
     }
+    //审核页面的 订单通过或取消
+    public function order_judgment() {
+        $order_num = $this->request->param('order_num');
+        $type = $this->request->param('type');
+        $comment = $this->request->param('reject');
+        if($type=='pass'){
+            $title='订单审核pass';
+            $status =  $this->order_status['booking_note'];
+        }elseif ($type=='fail') {
+            $title='订单审核fail';
+            $status =  $this->order_status['cancel'];
+        }
+        $data = new OrderM;
+        $response = $data->orderUpdate($order_num,$status,$title,$comment);
+//        var_dump($response);exit;
+        return json($response);
+    }
     
   
     //上传订舱单文件,运单号和 水运单文件
     //参数 type= booking_note或者sea_waybill
     //订单号码
-    public function waybill(){
+    public function waybill_upload(){
         $file = request()->file('file');
-        $order_num = $this->request->get('order_num');
-        $type = $this->request->get('type');
+        $order_num = $this->request->param('order_num');
+        $type = $this->request->param('type');
+        $track_num= $this->request->param('track_num');
+        if(!empty(trim($track_num))){
+           $res1= Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]);
+        }
+        $res =$this->Upload($order_num,$type,$file);
+        
         
     }
 

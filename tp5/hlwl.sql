@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-25 19:20:00
+Date: 2018-10-26 18:34:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4690,24 +4690,25 @@ CREATE TABLE `hl_order_bill` (
   `comment` varchar(100) DEFAULT NULL COMMENT '订单的备注',
   `extra_info` varchar(255) DEFAULT NULL COMMENT '订单的额外备注',
   `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
-  `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款 1付款',
+  `money_status` int(1) NOT NULL DEFAULT '0' COMMENT '付款状态0未付款 1付款',
   `container_buckle` varchar(6) DEFAULT 'lock' COMMENT 'lock扣柜unlock放货apply申请放货',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+  `container_status` int(1) DEFAULT '0' COMMENT '客户是否提交柜号了0未提交1已经提交',
+  PRIMARY KEY (`id`,`money_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_bill
 -- ----------------------------
-INSERT INTO `hl_order_bill` VALUES ('1', 'AA19466880844019', 'ZD-A-001', '23075', '3', '40HQ', '2018-10-19 18:58:08', null, null, '2', '发射点发司法所', null, 'kehu002', '1', 'unlock');
-INSERT INTO `hl_order_bill` VALUES ('2', 'AA19508158986320', 'ZD-A-002', '23125', '3', '40HQ', '2018-10-19 20:06:56', null, null, '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu003', '1', 'lock');
-INSERT INTO `hl_order_bill` VALUES ('3', 'AA22922801626294', 'ZD-A-003', '2950', '1', '20GP', '2018-10-22 15:11:20', null, null, '2', '', null, 'kehu004', '1', 'unlock');
-INSERT INTO `hl_order_bill` VALUES ('4', 'AA22924899118261', 'ZD-A-004', '4640', '1', '40HQ', '2018-10-22 15:14:50', null, null, '2', '', null, 'kehu005', '0', 'unlock');
-INSERT INTO `hl_order_bill` VALUES ('5', 'AA22987079098653', 'ZD-A-005', '9370', '3', '20GP', '2018-10-22 16:58:28', null, null, '2', '撒旦法撒法撒旦法', null, 'kehu006', '1', 'lock');
-INSERT INTO `hl_order_bill` VALUES ('6', 'AA19466880844021', 'ZD-A-006', '23075', '3', '40HQ', '2018-10-19 18:58:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '发射点发司法所', '', 'kehu007', '1', 'unlock');
-INSERT INTO `hl_order_bill` VALUES ('7', 'AA19508158986322', 'ZD-A-007', '23125', '3', '40HQ', '2018-10-19 20:06:56', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', '', 'kehu009', '1', 'lock');
-INSERT INTO `hl_order_bill` VALUES ('8', 'AA22922801626295', 'ZD-A-008', '2950', '1', '20GP', '2018-10-22 15:11:20', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '', '', 'kehu0010', '0', 'lock');
-INSERT INTO `hl_order_bill` VALUES ('9', 'AA22924899118269', 'ZD-A-009', '4640', '1', '40HQ', '2018-10-22 15:14:50', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '', '', 'kehu008', '1', 'lock');
-INSERT INTO `hl_order_bill` VALUES ('10', 'AA22987079098655', 'ZD-A-010', '9370', '3', '20GP', '2018-10-22 16:58:28', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '撒旦法撒法撒旦法', '', 'cshengle', '0', 'unlock');
+INSERT INTO `hl_order_bill` VALUES ('1', 'AA19466880844019', 'ZD-A-001', '23075', '3', '40HQ', '2018-10-19 18:58:08', null, null, '2', '发射点发司法所', null, 'kehu002', '1', 'unlock', '0');
+INSERT INTO `hl_order_bill` VALUES ('2', 'AA19508158986320', 'ZD-A-002', '23125', '3', '40HQ', '2018-10-19 20:06:56', null, null, '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu003', '1', 'lock', '0');
+INSERT INTO `hl_order_bill` VALUES ('3', 'AA22922801626294', 'ZD-A-003', '2950', '1', '20GP', '2018-10-22 15:11:20', null, null, '2', '', null, 'kehu004', '1', 'unlock', '0');
+INSERT INTO `hl_order_bill` VALUES ('4', 'AA22924899118261', 'ZD-A-004', '4640', '1', '40HQ', '2018-10-22 15:14:50', null, null, '2', '', null, 'kehu005', '0', 'unlock', '0');
+INSERT INTO `hl_order_bill` VALUES ('5', 'AA22987079098653', 'ZD-A-005', '9370', '3', '20GP', '2018-10-22 16:58:28', null, null, '2', '撒旦法撒法撒旦法', null, 'kehu006', '1', 'lock', '0');
+INSERT INTO `hl_order_bill` VALUES ('6', 'AA19466880844021', 'ZD-A-006', '23075', '3', '40HQ', '2018-10-19 18:58:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '发射点发司法所', '', 'kehu007', '1', 'unlock', '0');
+INSERT INTO `hl_order_bill` VALUES ('7', 'AA19508158986322', 'ZD-A-007', '23125', '3', '40HQ', '2018-10-19 20:06:56', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', '', 'kehu009', '1', 'lock', '0');
+INSERT INTO `hl_order_bill` VALUES ('8', 'AA22922801626295', 'ZD-A-008', '2950', '1', '20GP', '2018-10-22 15:11:20', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '', '', 'kehu0010', '0', 'lock', '0');
+INSERT INTO `hl_order_bill` VALUES ('9', 'AA22924899118269', 'ZD-A-009', '4640', '1', '40HQ', '2018-10-22 15:14:50', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '', '', 'kehu008', '1', 'lock', '0');
+INSERT INTO `hl_order_bill` VALUES ('10', 'AA22987079098655', 'ZD-A-010', '9370', '3', '20GP', '2018-10-22 16:58:28', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '撒旦法撒法撒旦法', '', 'cshengle', '0', 'unlock', '0');
 
 -- ----------------------------
 -- Table structure for `hl_order_comment`
@@ -4811,7 +4812,7 @@ CREATE TABLE `hl_order_port` (
   `member_code` varchar(11) DEFAULT NULL COMMENT '客户code',
   `belong_order` varchar(20) DEFAULT '0' COMMENT '从那里拆开的订单编码',
   `ctime` datetime DEFAULT NULL COMMENT '创建时间',
-  `payment_method` varchar(20) DEFAULT NULL COMMENT '收款方式,month月结cash现款 special特殊 installment到港付',
+  `payment_method` varchar(20) DEFAULT NULL COMMENT '收款方式,month月结cash现款 installment到港付',
   `cash_id` int(11) DEFAULT NULL COMMENT '在线付的id',
   `tax_rate` int(10) DEFAULT NULL COMMENT '税率种类选择1不需要,2为6%实际4% ,3为11%实际7%',
   `invoice_id` varchar(10) DEFAULT NULL COMMENT '发票id',
@@ -4832,8 +4833,8 @@ CREATE TABLE `hl_order_port` (
   `track_num` varchar(19) DEFAULT NULL COMMENT '运单号',
   `book_note` varchar(38) DEFAULT NULL COMMENT '订舱单文件的存贮地址',
   `sea_waybill` varchar(38) DEFAULT NULL COMMENT '水运单文件的存贮的地址',
-  `money_status` varchar(5) DEFAULT '0' COMMENT '付款状态0未付款 1付款',
-  `container_status` varchar(1) DEFAULT '0' COMMENT '客户是否提交柜号了0未提交1已经提交',
+  `money_status` int(1) DEFAULT '0' COMMENT '付款状态0未付款 1付款',
+  `container_status` int(1) DEFAULT '0' COMMENT '客户是否提交柜号了0未提交1已经提交',
   `container_buckle` varchar(6) DEFAULT 'lock' COMMENT 'lock扣柜unlock放货apply申请放货',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
@@ -4842,7 +4843,7 @@ CREATE TABLE `hl_order_port` (
 -- Records of hl_order_port
 -- ----------------------------
 INSERT INTO `hl_order_port` VALUES ('1', 'AA19466880844019', '鸡肉', '40HQ', '3', '10', '80', '1', '发射点发司法所', null, null, 'kehu001', '0', '2018-10-19 18:58:08', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'FFF,收货F公司,100085556', '15', '8000', null, '240', '555', '100', '400', '23075', '通过审核>待录入运单', '3', null, null, null, '1', '0', 'apply');
-INSERT INTO `hl_order_port` VALUES ('2', 'AA19506804684341', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, null, 'kehu001', '0', '2018-10-19 20:04:40', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', null, '2', null, null, null, '0', '0', 'apply');
+INSERT INTO `hl_order_port` VALUES ('2', 'AA19506804684341', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, null, 'kehu001', '0', '2018-10-19 20:04:40', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', null, '3', null, null, null, '0', '0', 'apply');
 INSERT INTO `hl_order_port` VALUES ('3', 'AA19508158986320', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, null, 'kehu001', '0', '2018-10-19 20:06:55', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', '通过审核>待录入运单', '3', null, null, null, '0', '0', 'lock');
 INSERT INTO `hl_order_port` VALUES ('4', 'AA22922801626294', '', '20GP', '1', '0', '0', '1', '', null, null, 'kehu001', '0', '2018-10-22 15:11:20', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '2', '3500', null, '0', '550', '0', '0', '2950', '价格不对', '404', null, null, null, '0', '0', 'lock');
 INSERT INTO `hl_order_port` VALUES ('5', 'AA22924899118261', 'asdfa', '40HQ', '1', '10', '40', '1', '', null, null, 'kehu001', '0', '2018-10-22 15:14:49', 'installment', '0', null, '0', '1', 'FFF,收货F公司,100085556', '6', 'AA,送货A公司,55555', '6', '5000', null, '40', '400', '0', '0', '4640', null, '2', null, null, null, '0', '0', 'unlock');
@@ -4861,7 +4862,7 @@ CREATE TABLE `hl_order_port_status` (
   `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
   `comment` varchar(100) DEFAULT NULL COMMENT '驳回,删除订单的原因',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
@@ -4888,6 +4889,38 @@ INSERT INTO `hl_order_port_status` VALUES ('19', 'AA19508158986320', '3', '通�
 INSERT INTO `hl_order_port_status` VALUES ('20', 'AA22922801626295', '7', '', null, 'sales1', null);
 INSERT INTO `hl_order_port_status` VALUES ('21', 'AA19466880844019', '5', '确认收款', null, 'sales1', null);
 INSERT INTO `hl_order_port_status` VALUES ('22', 'AA19466880844021', '5', '确认收款', null, 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('23', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:45:53', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('24', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:45:57', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('25', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:46:09', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('26', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:46:17', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('27', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:47:01', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('28', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:47:29', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('29', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:48:00', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('30', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:48:51', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('31', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:49:09', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('32', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:54:00', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('33', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:54:11', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('34', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:54:20', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('35', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:55:10', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('36', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:55:28', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('37', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:55:39', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('38', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:55:53', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('39', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:56:52', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('40', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:57:50', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('41', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:58:13', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('42', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:58:31', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('43', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:59:15', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('44', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:59:39', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('45', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 17:59:51', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('46', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:00:11', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('47', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:00:33', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('48', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:00:43', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('49', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:01:59', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('50', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:02:26', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('51', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:02:32', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('52', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:15', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('53', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:43', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('54', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:59', 'sales1', null);
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -5905,7 +5938,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-25 19:14:20', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-26 17:01:05', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
