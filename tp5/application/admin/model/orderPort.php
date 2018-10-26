@@ -36,10 +36,46 @@ class orderPort extends Model
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
                 ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port,P2.port_name e_port,B.boat_code,B.boat_name')
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')->buildSql();
+//$this->_p($map);exit;
         $count=Db::table($list.' A')->where($map)->count(); 
-       
+//       var_dump($count);exit;
         $list =Db::table($list.' A')->where($map)->limit($tol,$limit)->select();       
-               
+        foreach ($list as $key => $value) {
+            switch($value['container_buckle'])
+            {
+                case 'lock':
+                $list[$key]['container_buckle'] ='扣货';
+                break;   
+                case 'unlock':
+                $list[$key]['container_buckle'] ='放货';
+                break;  
+                case 'apply':
+                $list[$key]['container_buckle'] ='申请放货';
+                break;  
+            }
+           
+            switch($value['money_status'])
+            {
+                case '0':
+                $list[$key]['money_status'] ='未付款';
+                break; 
+                case '1':
+                $list[$key]['money_status'] ='已付款';
+                break; 
+            }   
+            switch($value['container_status'])
+            {
+                case '0':
+                $list[$key]['container_status'] ='已提交柜号';
+                break; 
+                case '1':
+                $list[$key]['container_status'] ='未提交柜号';
+                break; 
+            }   
+        }
+        
+        
+        
         return array('list'=>$list,'count'=>$count);
         
     }

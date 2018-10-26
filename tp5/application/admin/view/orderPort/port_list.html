@@ -1,22 +1,5 @@
 <link rel="stylesheet" href="__STATIC__/../index/layui/css/layui.css">
-<style>
-    .laytable-cell-checkbox, .laytable-cell-numbers, .laytable-cell-space{
-        padding: 8px;
-    }
-    .layui-datatable-switch {margin-top: 0px;width: 56px;}
-    .x-nav{
-        position: relative;
-        z-index: 1;
-        overflow: hidden;
-    }
-    #bz{
-      display: none;
-      padding: 10px;
-    }
-    .beizhu{
-      margin: 10px 0;
-    }
-</style>
+<link rel="stylesheet" href="__STATIC__/css/port_list.css">
 <div class="x-nav">
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
       title="刷新">
@@ -24,7 +7,8 @@
     </a>
 </div>
 
-  <div class="layui-form" id="cont">
+  <form class="layui-form" id="cont">
+    <!-- 搜索内容 -->
     <div class="layui-form-item">
         <div class="layui-inline">
           <label class="layui-form-label"></label>
@@ -38,7 +22,7 @@
             </div>
         </div>
 
-        <div class="layui-inline">`
+        <div class="layui-inline">
             <div class="layui-input-inline">
                 <input type="text" name="track_num" placeholder="运单号"  autocomplete="off" class="layui-input">
             </div>
@@ -46,9 +30,83 @@
 
         <div class="layui-inline">
             <div class="layui-input-inline">
-                <button class="layui-btn cha">搜索</button>
+                <a class="layui-btn cha">搜索</a>
             </div>
         </div>
+    </div>
+
+    <!-- 筛选内容 -->
+    <div class="layui-row xuan">
+        <label class="layui-form-label"></label>
+        <!-- 付款方式 -->
+        <div class="fangfa">
+            <div class="port_left">
+              <strong>付款方式</strong>
+            </div>
+            <div class="port_rig">
+            <div class="cbox"><input type="checkbox" name="installment" value="installment" lay-skin="primary" title="到港付" checked=""></div>
+            <div class="cbox"><input type="checkbox" name="cash" value="cash" lay-skin="primary" title="在线付" checked=""></div>
+            <div class="cbox"><input type="checkbox" name="month" value="month" lay-skin="primary" title="月结" checked=""></div>
+          </div>
+        </div>
+        <!-- 订单进度 -->
+        <div class="fangfa">
+            <div class="port_left">
+              <strong>订单进度</strong>
+            </div>
+            <div class="port_rig">
+            <div class="cbox"><input type="checkbox" name="book_note" value="book_note" lay-skin="primary" title="订舱单"></div>
+            <div class="cbox"><input type="checkbox" name="container_code" value="container_code" lay-skin="primary" title="提交柜号"></div>
+            <div class="cbox"><input type="checkbox" name="book_note" value="book_note" lay-skin="primary" title="水运单"></div>
+          </div>
+        </div>
+        <!-- 收款状态 -->
+        <div class="fangfa">
+            <div class="port_left">
+              <strong>收款状态</strong>
+            </div>
+            <div class="port_rig">
+            <div class="cbox"><input type="checkbox" name="no_money"  value="no_money" lay-skin="primary" title="未收款" checked=""></div>
+            <div class="cbox"><input type="checkbox" name="have_money"  value="have_money" lay-skin="primary" title="已收款"></div>
+            <div class="cbox"></div>
+          </div>
+        </div>
+        <!-- 订单状态 -->
+        <div class="fangfa">
+            <div class="port_left">
+              <strong>订单状态</strong>
+            </div>
+            <div class="port_rig">
+            <div class="cbox"><input type="radio" name="completion"  value="undone" title="未完成" checked=""></div>
+            <div class="cbox"><input type="radio" name="completion"  value="done"  title="已完成"></div>
+            <div class="cbox"></div>
+          </div>
+        </div>
+        <!-- 扣柜状态 -->
+        <div class="fangfa">
+            <div class="port_left">
+              <strong>扣柜状态</strong>
+            </div>
+            <div class="port_rig">
+            <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中" checked=""></div>
+            <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货"></div>
+            <div class="cbox"><input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货"></div>
+          </div>
+        </div>
+    </div>
+
+    <!-- <div class="layui-form-item">
+      <label class="layui-form-label"></label>
+      <div class="layui-input-block">
+          <input type="checkbox" name="order_all" value="order_all"lay-skin="primary" title="所有订单" checked="">
+          <input type="checkbox" name="cash" value="cash" lay-skin="primary" title="在线付">
+          <input type="checkbox" name="month" value="month" lay-skin="primary" title="月结">
+          <input type="checkbox" name="book_note" value="book_note" lay-skin="primary" title="上传订舱/运单">
+          <input type="checkbox" name="container_code" value="container_code" lay-skin="primary" title="客户提交柜号">
+          <input type="checkbox" name="money_status"  value="money_status" lay-skin="primary" title="未收款">
+          <input type="checkbox" name="sea_waybill"  value="sea_waybill" lay-skin="primary" title="上传水运单">
+          <input type="checkbox" name="completion"  value="completion" lay-skin="primary" title="已经完成订单">
+      </div>
     </div>
 
     <div class="layui-form-item">
@@ -58,22 +116,9 @@
         <input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货">
         <input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货">
         </div>
-
-        <div style="margin-right: 130px; display: inline-block;"></div>
-        <div class="layui-inline">
-            <input type="radio" lay-filter="money_status" name="order_all" value="all" title="所有订单" checked="">
-            <input type="radio" lay-filter="money_status" name="cash" value="cash" title="在线付">
-            <input type="radio" lay-filter="money_status" name="month" value="month" title="月结">
-            <input type="radio" lay-filter="money_status" name="book_note" value="waybill" title="上传订舱/运单">
-            <input type="radio" lay-filter="money_status" name="container_code" value="container" title="客户提交柜号">
-            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="未收款">
-            <input type="radio" lay-filter="money_status" name="sea_waybill" value="0" title="上传水运单">
-            <input type="radio" lay-filter="money_status" name="completion" value="1" title="已经完成订单">
-        </div>
-    </div>
-    
+    </div>     -->
     <table class="layui-hide" id="test1" lay-filter="test1"></table>
-  </div>
+  </form>
 
 
 
@@ -98,6 +143,7 @@
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
+
 layui.use(['jquery', 'layer','table','laydate','form'], function(){ 
   var layer = layui.layer
   ,table = layui.table
@@ -105,15 +151,9 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
   ,$ = layui.jquery
   ,laydate = layui.laydate;
 
-
   var container_buckle = 'apply';//货物状态
-  var money_status = '2';//付款状态
   form.on('radio(container_buckle)', function(data){
     container_buckle = data.value;
-    $('.cha').click();
-  }); 
-  form.on('radio(money_status)', function(data){
-    money_status = data.value;
     $('.cha').click();
   });
   
@@ -127,22 +167,23 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', unresize: true,width:60}
       ,{field:'name', title:'订单号' ,width:150}
-      ,{field:'bill_num', title:'提交时间' ,width:150}
-      ,{field:'check_date', title:'客户账号',sort: true ,width:200}
-      ,{field:'order_num', title:'客户单位', width:200}
-      ,{field:'container_size', title:'运单号' ,width:100}
-      ,{field:'container_sum', title:'柜量/柜型' ,width:100}
-      ,{field:'quoted_price', title:'船公司',width:100}
-      ,{field:'ctime', title:'船名航次', sort: true,width:200}
-      ,{field:'container_buckle', title:'起运港-目的港',width:100,templet:function(res){
-        return '<div class="">'+ res.container_buckle +'-'+res.container_buckle+'</div>'
-      }}
-      ,{field:'money_status', title:'总运费',width:100}
-      ,{field:'status', title:'订舱单',width:100}
-      ,{field:'extra_info', title:'补料',width:200}
-      ,{field:'comment', title:'水运单',width:200}
-      ,{field:'comment', title:'货物状态',width:200}
-      ,{field:'comment', title:'付款状态',width:200}
+      ,{field:'ctime', title:'提交时间' ,width:150}
+      ,{field:'member_code', title:'客户账号',sort: true ,width:200}
+      ,{field:'company', title:'客户单位', width:200}
+      ,{field:'track_num', title:'运单号' ,width:100}
+      ,{field:'container_sum', title:'柜量' ,width:100}
+       ,{field:'container_size', title:'柜型' ,width:100}
+      ,{field:'ship_short_name', title:'船公司',width:100}
+      ,{field:'boat_name', title:'船名', sort: true,width:200}
+       ,{field:'boat_code', title:'航次', sort: true,width:200}
+     ,{field:'s_port', title:'起运港', sort: true,width:200}
+       ,{field:'e_port', title:'目的港', sort: true,width:200}
+      ,{field:'quoted_price', title:'总运费',width:100}
+      ,{field:'book_note', title:'订舱单',width:100}
+      ,{field:'container_status', title:'补料',width:200}
+      ,{field:'sea_waybill', title:'水运单',width:200}
+      ,{field:'container_buckle', title:'货物状态',width:200}
+      ,{field:'money_status', title:'付款状态',width:200}
       ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:80}
     ]]
     ,page: true
@@ -160,18 +201,20 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
 
 //搜索
 $('.cha').click(function(){
-  let member = $("input[name='member']").val();//用户名
-  let order_num = $("input[name='order_num']").val();;//订单号
-  let date_start = $("input[name='date_start']").val();;//起始日期
-  let date_end = $("input[name='date_end']").val();;//结束日期
+  let data = $('#cont').serializeArray();//表单数据
+  console.log(data);
+
+
+  let company = $("input[name='company']").val();//用户名
+  let order_num = $("input[name='order_num']").val();//订单号
+  let track_num = $("input[name='track_num']").val();//订单号
+  
   biao.reload({
     where:{
-      member:member,
+      company:company,
       order_num:order_num,
-      date_start:date_start,
-      date_end:date_end,
+      track_num:track_num,
       container_buckle:container_buckle,
-      money_status:money_status
     },
     page:{curr:1}
   })

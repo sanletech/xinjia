@@ -138,7 +138,8 @@ class OrderPort extends Base
         // 在线付,月结,到港付 -
         // 上传订舱单,客户提交柜号,上传水运单
         //  -已经完成订单/未完成
-        
+//        $canshu = $this->request->param();
+//        $this->_p($canshu);exit;
         $map =[];
         $cash = $this->request->param('cash');//在线付款
         $cash?$map['A.payment_method'][]='cash':'';
@@ -146,7 +147,7 @@ class OrderPort extends Base
         $month?$map['A.payment_method'][]='month':'';
         $installment = $this->request->param('installment'); //到港付
         $installment?$map['A.payment_method'][]='installment':'';
-        if(count($map['A.payment_method'])>1){
+        if(isset($map['A.payment_method']) && count($map['A.payment_method'])>1){
             $map['A.payment_method'][]='or';
         }
         $book_note = $this->request->param('book_note'); //订单进度 待上传订舱单文件
@@ -155,12 +156,20 @@ class OrderPort extends Base
         $container_code ? $map['A.status'][]=$this->order_status['up_container_code']:'';
         $sea_waybille = $this->request->param('sea_waybill'); //订单进度 待上传水单
         $container_code ? $map['A.status'][]=$this->order_status['sea_waybill']:'';
-        if(count($map['A.status'])>1){
+        if(isset($map['A.status']) && count($map['A.status'])>1){
             $map['A.status'][]='or';
         }
-
+        $have_money =$this->request->param('have_money'); //未收款
+        $have_money?$map['A.money_status'][]=0:'';
+        $no_money =$this->request->param('no_money');//已经收款
+        $no_money?$map['A.money_status'][]=1:'';
+        if(isset($map['A.money_status']) && count($map['A.money_status'])>1){
+            $map['A.status'][]='or';
+        }
+        
         $completion = $this->request->param('completion','undone','strval'); //订单完成 默认未完成
         if($completion=='undone' && (!isset($map['status'])) ){
+            $map['A.status'][]='in';
             $map['A.status'][]=array($this->order_status['booking_note'],$this->order_status['up_container_code'],$this->order_status['sea_waybill']);
         }elseif($completion=='done'){
             $map['A.status']=null;//清空选择的上传订舱和水运单
@@ -187,11 +196,10 @@ class OrderPort extends Base
         //计算出从那条开始查询
         $tol=($page-1)*$limit;
         $data = new OrderM;
-        $list = $data->order_status($tol,$limit,$map);
-    //    $this->_p($list);exit;
-      
-        
-
+        $lists = $data->order_status($tol,$limit,$map);
+//        $this->_p($lists);exit;
+        return array('code'=>0,'msg'=>'','count'=>$lists['count'],'data'=>$lists['list']);
+         
     }
 
 
