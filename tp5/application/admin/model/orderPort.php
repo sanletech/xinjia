@@ -24,12 +24,7 @@ class orderPort extends Model
     } 
 
     //订单的状态
-    public function order_status($tol,$limit,$state,$order_num='',$payment_method= array('month','cash','special','installment')) {
-        if(empty($order_num)){
-            $order_num = 'not NUll';
-        }else{
-            $order_num = trim($order_num);
-        }
+    public function order_status($tol,$limit,$map){
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -40,14 +35,12 @@ class orderPort extends Model
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
                 ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port,P2.port_name e_port,B.boat_code,B.boat_name')
-                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
-                ->where('OP.status','in',$state)
-                ->where('OP.order_num',$order_num)
-                ->where('OP.payment_method','in',$payment_method)
-                ->limit($tol,$limit)->select();
-//        $this->_p($list);exit;
-//        var_dump(Db::getLastSql());exit;     
-        return $list;
+                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')->buildSql();
+        $count=Db::table($list.' A')->where($map)->count(); 
+       
+        $list =Db::table($list.' A')->where($map)->limit($tol,$limit)->select();       
+               
+        return array('list'=>$list,'count'=>$count);
         
     }
     

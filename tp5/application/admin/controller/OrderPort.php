@@ -133,23 +133,51 @@ class OrderPort extends Base
     //所有订单
     public function portlist_data()
     {    
-        //客户单位,订单号,运单号,审核中apply，扣货lock，已放货unlock， 所有订单2，已付款1，未付款0，
-        $member = $this->request->param('member','not null','strval');
-        $member = $member? $member:'not null';
-        $order_num = $this->request->param('order_num','not null','strval');
-        $order_num =$order_num ?$order_num:'not null';
-        $date_start = $this->request->param('date_start',date('y-m-d h:i:s',strtotime('-3month')));
-        $date_start=$date_start ?$date_start :date('y-m-d h:i:s',strtotime('-3month'));
-        $date_end = $this->request->param('date_end',date('y-m-d h:i:s'));
-        $date_end=$date_end ?$date_end :date('y-m-d h:i:s');
-        $container_buckle = $this->request->param('container_buckle','apply','strval');
-        $money_status = $this->request->param('money_status',2,'intval');
-        if($money_status == 2){
-            $money_status = 'not null';
+        //客户单位,订单号,运单号,
+        //审核中apply,扣货lock,已放货unlock,上传水运单
+        // 在线付,月结,到港付 -
+        // 上传订舱单,客户提交柜号,上传水运单
+        //  -已经完成订单/未完成
+        
+        $map =[];
+        $cash = $this->request->param('cash');//在线付款
+        $cash?$map['A.payment_method'][]='cash':'';
+        $month = $this->request->param('month'); //月结付款
+        $month?$map['A.payment_method'][]='month':'';
+        $installment = $this->request->param('installment'); //到港付
+        $installment?$map['A.payment_method'][]='installment':'';
+        if(count($map['A.payment_method'])>1){
+            $map['A.payment_method'][]='or';
         }
-       $page =$this->request->param('page',1,'intval');
-       $limit =$this->request->param('limit',10,'intval');
-       $tol = ($page-1)*$limit;
+        $book_note = $this->request->param('book_note'); //订单进度 待上传订舱单文件
+        $book_note ? $map['A.status'][]=$this->order_status['booking_note']:'';
+        $container_code = $this->request->param('container_code'); //订单进度 客户待提交柜号
+        $container_code ? $map['A.status'][]=$this->order_status['up_container_code']:'';
+        $sea_waybille = $this->request->param('sea_waybill'); //订单进度 待上传水单
+        $container_code ? $map['A.status'][]=$this->order_status['sea_waybill']:'';
+        if(count($map['A.status'])>1){
+            $map['A.status'][]='or';
+        }
+
+        $completion = $this->request->param('completion','undone','strval'); //订单完成 默认未完成
+        if($completion=='undone' && (!isset($map['status'])) ){
+            $map['A.status'][]=array($this->order_status['booking_note'],$this->order_status['up_container_code'],$this->order_status['sea_waybill']);
+        }elseif($completion=='done'){
+            $map['A.status']=null;//清空选择的上传订舱和水运单
+            $map['A.status'][]=$this->order_status['completion'];
+        }
+        $container_buckle = $this->request->param('container_buckle','apply','strval');
+        $map['A.container_buckle']=$container_buckle;
+        $company  = $this->request->param('company'); //公司查询
+        $company?$map['A.company']=$company:'';
+        $order_num = $this->request->param('order_num');//订单号查询
+        $company?$map['A.order_num']=$order_num:'';
+        $track_num = $this->request->param('track_num');//运单号查询
+        $company?$map['A.track_num']=$track_num:'';
+        $page =$this->request->param('page',1,'intval');
+        $limit =$this->request->param('limit',10,'intval');
+        $tol = ($page-1)*$limit;
+     
         //订单查询
         $order_num =  $this->request->param('order_num');
         //获取每页显示的条数
@@ -159,70 +187,14 @@ class OrderPort extends Base
         //计算出从那条开始查询
         $tol=($page-1)*$limit;
         $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num);
+        $list = $data->order_status($tol,$limit,$map);
     //    $this->_p($list);exit;
-        $count =  count($list);
+      
         
-        $this->view->assign('count',$count);
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        $this->view->assign('order_num',$order_num);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
-        $this->view->assign('url',url('admin/OrderPort/all_order')); 
-        return $this->view->fetch('orderPort/all_order');
+
     }
-    //在线支付
-    public function port_payment()
-    {   
-             //订单查询
-        $order_num =  $this->request->param('order_num');
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'cash');
-//        $this->_p($list);exit;
-        $count =  count($list);
-        $this->view->assign('count',$count);
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        $this->view->assign('order_num',$order_num);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
-        $this->view->assign('url',url('admin/OrderPort/port_payment')); 
-        return $this->view->fetch('orderPort/all_order');
-    }
-    //月结
-    public function port_month()
-    {   
-         //订单查询
-        $order_num =  $this->request->param('order_num');
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num,'monthly');
-//        $this->_p($list);exit;
-        $count =  count($list);
-        $this->view->assign('count',$count);
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        $this->view->assign('order_num',$order_num);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
-        $this->view->assign('url',url('admin/OrderPort/port_month')); 
-        return $this->view->fetch('orderPort/all_order');
-    }
+
+
     //详情
     public function port_details()
     {   
