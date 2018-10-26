@@ -133,7 +133,23 @@ class OrderPort extends Base
     //所有订单
     public function portlist_data()
     {    
-//      var_dump($this->order_status['stop']);exit;
+        //客户单位,订单号,运单号,审核中apply，扣货lock，已放货unlock， 所有订单2，已付款1，未付款0，
+        $member = $this->request->param('member','not null','strval');
+        $member = $member? $member:'not null';
+        $order_num = $this->request->param('order_num','not null','strval');
+        $order_num =$order_num ?$order_num:'not null';
+        $date_start = $this->request->param('date_start',date('y-m-d h:i:s',strtotime('-3month')));
+        $date_start=$date_start ?$date_start :date('y-m-d h:i:s',strtotime('-3month'));
+        $date_end = $this->request->param('date_end',date('y-m-d h:i:s'));
+        $date_end=$date_end ?$date_end :date('y-m-d h:i:s');
+        $container_buckle = $this->request->param('container_buckle','apply','strval');
+        $money_status = $this->request->param('money_status',2,'intval');
+        if($money_status == 2){
+            $money_status = 'not null';
+        }
+       $page =$this->request->param('page',1,'intval');
+       $limit =$this->request->param('limit',10,'intval');
+       $tol = ($page-1)*$limit;
         //订单查询
         $order_num =  $this->request->param('order_num');
         //获取每页显示的条数
@@ -146,6 +162,7 @@ class OrderPort extends Base
         $list = $data->order_status($tol,$limit,array(3,4,5,6),$order_num);
     //    $this->_p($list);exit;
         $count =  count($list);
+        
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
