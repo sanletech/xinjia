@@ -90,11 +90,10 @@ class Price extends Base
     }
     //航线执行修改
     public function route_toedit(){
-        $data = $this->request->param();
-//      $this->_p($data);exit;
+        $data = $this->request->except('type');
+        $type = $this->request->only('type');//修改还是重新发布
+//      $this->_p($data);var_dump($type);exit;
         $seaprice = new PriceM;
-        $type = $data['type'];  //修改还是重新发布
-        unset($data['type']);
         if($type=='edit'){
             $res = $seaprice->price_route_toedit($data);    
         }elseif ($type=='again') {
@@ -203,7 +202,7 @@ class Price extends Base
         //拖车运价执行修改
     public function trailer_toedit(){
         $data = $this->request->param();
-       $this->_p($data);exit;
+//       $this->_p($data);exit;
         $carprice = new PriceM;
         $res =$carprice->price_trailer_toedit($data);          
         if(!array_key_exists('fail', $res)){

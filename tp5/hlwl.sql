@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-26 18:34:21
+Date: 2018-10-26 20:03:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4862,7 +4862,7 @@ CREATE TABLE `hl_order_port_status` (
   `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
   `comment` varchar(100) DEFAULT NULL COMMENT '驳回,删除订单的原因',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
@@ -4921,6 +4921,7 @@ INSERT INTO `hl_order_port_status` VALUES ('51', 'AA19506804684341', '3', '订�
 INSERT INTO `hl_order_port_status` VALUES ('52', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:15', 'sales1', null);
 INSERT INTO `hl_order_port_status` VALUES ('53', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:43', 'sales1', null);
 INSERT INTO `hl_order_port_status` VALUES ('54', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:59', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('55', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:53:17', 'sales1', null);
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -5938,7 +5939,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-26 17:01:05', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-26 19:49:40', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

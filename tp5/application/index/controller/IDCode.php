@@ -38,6 +38,23 @@ namespace app\index\controller;
         $code = sprintf('%s-%s-%s', $prefix, $word, $digital); 
         return $code; 
     } 
+    
+    
+    /**  创建订单编码
+     * @param  String $type    门到门 door 港到港 port
+     * @return String
+     */     
+    public function order_num($type) {
+        $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+        if($type=='door'){
+            $type='D';
+        }elseif ($type=='port') {
+            $type='P';
+        }
+       // $order_num =$type.$yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
+        $order_num =$type.$yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).sprintf('%02d', rand(0, 99));
+        return $order_num;
+    }
  
  }
  

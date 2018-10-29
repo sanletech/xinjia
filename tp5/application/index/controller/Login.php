@@ -4,6 +4,7 @@ use think\Db;
 use think\Controller;
 use app\index\model\Login as LoginM;
 use think\Session;
+use Aliyun\SmS as AliyunM;
 class Login extends Controller
 {
     //登陆
@@ -52,15 +53,33 @@ class Login extends Controller
         return array('status'=>$status,'message'=>$message);
     }
     
+    //阿里云短信
+    public function ali_sms(){
+        $mobile = $this->request->only('phone/d');
+        $code = rand (1000, 9999);
+        $sms = new AliyunM;
+        //测试模式
+        $status = $sms->send_verify($mobile, $code);
+        $response=[];
+        if (!$status) {
+            $response= ['message'=> $sms->error,'status'=>0,'code'=>''];
+        }  else {
+            $response= ['message'=>'发送短信成功','status'=>1,'code'=>$code];
+        }
+        return json($response);
+    }
+
+
     public function check_register() {
-         $data = input('post.');
-         //var_dump($data);exit;
+        $data = input('post.');
+//         var_dump($data);exit;
         // 数据验证
         $result = $this->validate($data,'Login');
-      //  var_dump($result);exit;
+        //  var_dump($result);exit;
         if (true !== $result) {
             return ['message'.':'.$result];
         }
+        $phone =$data['phone'];
         $member = new LoginM;
         // 数据保存
         $res =$member ->register($data);
@@ -69,8 +88,6 @@ class Login extends Controller
         } else {
             return '[message:注册失败 ]';
         }
-        
-        
         
     }
     
