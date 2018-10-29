@@ -4,6 +4,7 @@ use think\Db;
 use think\Controller;
 use app\index\model\Login as LoginM;
 use think\Session;
+use Aliyun\SmS as AliyunM;
 class Login extends Controller
 {
     //登陆
@@ -52,15 +53,44 @@ class Login extends Controller
         return array('status'=>$status,'message'=>$message);
     }
     
+    //阿里云短信
+    public function ali_sms(){
+        $data = $this->request->only('phone');
+        $phone =$data['phone'];
+        //查询同一条手机号的发送时间是否超过五分钟
+        $ctime = date('y-m-d H:i:s');
+        $again_time = date('y-m-d H:i:s',strtotime("$ctime -2min"));
+        $again = Db::name('ali_sms')->where('phone',$phone)->whereTime('ctime','<',$again_time)->find();
+        if($again){
+            $response= ['message'=>'2分钟后再发送','status'=>0,'code'=>''];
+            return json($response);
+        }
+        $sms = new AliyunM;
+        //短信发送
+        $code = rand (1000, 9999);
+        $status = $sms->send_verify($phone, $code);
+        $response=[];
+        if (!$status) {
+            $response= ['message'=>'发送短信成功','status'=>1,'code'=>$code];
+        }  else {
+            $response= ['message'=>$sms->error,'status'=>0,'code'=>''];           
+             //存贮发送时间，验证码,手机号到数据库里
+            $res=Db::name('ali_sms')->insert(['phone'=>$phone,'code'=>$code,'ctime'=>$ctime]);
+        }
+        return json($response);
+    }
+
+
     public function check_register() {
-         $data = input('post.');
-         //var_dump($data);exit;
+        $data = input('post.');
+//         var_dump($data);exit;
         // 数据验证
         $result = $this->validate($data,'Login');
-      //  var_dump($result);exit;
+        //  var_dump($result);exit;
         if (true !== $result) {
             return ['message'.':'.$result];
         }
+        $phone =$data['phone'];
         $member = new LoginM;
         // 数据保存
         $res =$member ->register($data);
@@ -69,8 +99,6 @@ class Login extends Controller
         } else {
             return '[message:注册失败 ]';
         }
-        
-        
         
     }
     

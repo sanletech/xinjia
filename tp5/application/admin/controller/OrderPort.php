@@ -142,7 +142,6 @@ class OrderPort extends Base
         $data= $this->request->param();
       
         $file = request()->file('file');
-      
         $order_num = $this->request->param('order_num');
         $type = $this->request->param('type');
         $track_num= $this->request->param('track_num');
@@ -150,8 +149,8 @@ class OrderPort extends Base
            $res1= Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]);
         }
         $res =$this->Upload($order_num,$type,$file);
-        var_dump($res);exit;
-        return json($res);
+        return $res;
+        
     }
 
     //港到港 处理订单公共页
