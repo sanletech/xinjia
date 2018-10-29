@@ -35,7 +35,7 @@ namespace app\index\controller;
         // 生成数字部分 
         $mod = $id % $base;
         $digital = str_pad($mod, $num_length, 0, STR_PAD_LEFT); 
-        $code = sprintf('%s-%s-%s', $prefix, $word, $digital); 
+        $code = sprintf('%s_%s_%s', $prefix, $word, $digital); 
         return $code; 
     } 
     

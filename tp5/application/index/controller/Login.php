@@ -77,6 +77,7 @@ class Login extends Controller
              //存贮发送时间，验证码,手机号到数据库里
             $res=Db::name('ali_sms')->insert(['phone'=>$phone,'code'=>$code,'ctime'=>$ctime]);
         }
+        $response['code']= md5($response['code']);
         return json($response);
     }
 

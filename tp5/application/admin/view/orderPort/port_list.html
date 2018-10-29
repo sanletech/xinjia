@@ -261,11 +261,11 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
     ,cols: [[
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', unresize: true,width:60}
-      ,{field:'order_num', title:'订单号' ,width:150,templet:function(res){
+      ,{field:'order_num', title:'订单号' ,width:200,templet:function(res){
         return '<a href="<{:url("admin/orderPort/port_details")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>'
       }}
       ,{field:'ctime', title:'提交时间',sort: true,width:200}
-      ,{field:'member_code', title:'客户账号',width:200}
+      ,{field:'member_code', title:'客户账号',width:150}
       ,{field:'company', title:'客户单位', width:200}
       ,{field:'track_num', title:'运单号' ,width:100,event:'yun',templet:function(res){
         return '<div class="track_num1">'+ res.track_num +'</div>'
@@ -274,18 +274,18 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
         return '<div class="">'+ res.container_sum +'/'+ res.container_size+'</div>'
       }}
       ,{field:'ship_short_name', title:'船公司',width:100}
-      ,{field:'boat_name', title:'船名',width:200}
-      ,{field:'boat_code', title:'航次',width:200}
+      ,{field:'boat_name', title:'船名',width:100}
+      ,{field:'boat_code', title:'航次',width:100}
       ,{field:'s_port', title:'始-终(港)',width:200,templet:function(res){
         return '<div class="">'+ res.s_port +'-'+ res.e_port+'</div>'
       }}
       ,{field:'quoted_price', title:'总运费',width:100} 
-      ,{field:'container_status', title:'补料',width:200}
-      ,{field:'sea_waybill', title:'水运单',width:200,event:'shui',templet:function(res){
-        return '<a class="dcd" href="#">上传</a>'
+      ,{field:'container_status', title:'补料',width:100}
+      ,{field:'sea_waybill', title:'水运单',width:100,event:'shui',templet:function(res){
+        return '<a class="" href="#">上传</a>'
       }}
-      ,{field:'container_buckle', title:'货物状态',width:200}
-      ,{field:'money_status', title:'付款状态',width:200}
+      ,{field:'container_buckle', title:'货物状态',width:100}
+      ,{field:'money_status', title:'付款状态',width:100}
       ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:80}
     ]]
     ,page: true
@@ -331,6 +331,9 @@ $('.cha').click(function(){
   })
 });
 
+  var order_num1 = "";
+  var track_num1 = '';
+
 //监听行工具事件
 table.on('tool()', function(obj){
     var data = obj.data;
@@ -354,7 +357,7 @@ table.on('tool()', function(obj){
         }
       });   
     }else if(obj.event === 'yun'){//单击运单号
-      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();
+      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();      
       $('.num1').html('订单号：<span>'+order_num+'</span>');
       layer.open({
         type:1
@@ -364,7 +367,9 @@ table.on('tool()', function(obj){
         ,btn:['上传']
         ,yes:function(index){
           if($('#ding input').val()){
-              $('.dcd').click();
+            track_num1 = $('.num1 span').html();       
+               
+            $('.dcd').click();
           }else{
               layer.msg('请输入运单号', {
                 icon: 7,
@@ -376,24 +381,19 @@ table.on('tool()', function(obj){
         }
       });
     }else if(obj.event === 'shui'){
-        $('#shui .num2').html($(this).siblings('td[data-field="order_num"]').find('a').html());
-        $('#shui a').click();
+      $('#shui .num2').html($(this).siblings('td[data-field="order_num"]').find('a').html());
+      order_num1 = $('#shui .num2').html();  
+      $('#shui a').click();
     }
   });
 
-
-  var order_num1 = "";
-  var track_num1 = '';
-  $('.dcd').click(function(){
-    order_num1 = $('.num1 span').html();
-    track_num1 = $('#ding input').val();
-   });
-      //订舱单
+  //订舱单
    upload.render({
         elem:'.dcd'  //绑定元素
         , url: url + '?order_num=' + order_num1 + '&type=book_note' //上传接口
         , accept: 'file' //普通文件
         , done: function (res) {
+          console.log(order_num1);
           //上传完毕回调
           if (res.status > 0) {
             alert(res.mssage)
@@ -403,23 +403,24 @@ table.on('tool()', function(obj){
         }
       });
   
-  $('.syd').click(function(){
-    order_num1 = $('.num2').html();
-  });
-  
   //水运单
     upload.render({
     elem: '.syd' //绑定元素
-    , url: url + '?order_num=' + order_num1 + '&type=sea_waybill' //上传接口
-    ,data:{id : 123}
+    , url: url + '?order_num=AA19466880844019&type=sea_waybill' //上传接口
     , accept: 'file' //普通文件
     , done: function (res) {
+      console.log(res);
+      
       //上传完毕回调
-      if (res.status > 0) {
-        alert(res.mssage)
-      } else {
-        alert(res.mssage)
-      }
+      // if (res.status > 0) {
+      //   alert(res.mssage)
+      // } else {
+      //   alert(res.mssage)
+      // }
+    }
+    ,error:function(){
+      console.log(1111);
+      
     }
 
   });

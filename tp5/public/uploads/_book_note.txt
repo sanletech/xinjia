@@ -1,39 +1,13 @@
-http://114.67.248.3/sladmin.php?m=block&f=edit&block=236
+2658640197@qq.com ban bangbangmai88 ��Ʒ   3237398823@qq.com ban bangbangmai88  ũ�
+΢��С����  AppSecret:ee123d5edeab39f44ecca894cc9eb984��ee123d5edeab39f44ecca894cc9eb984
+������ ����
+�˼�����
 
-网站帐号sanle 
-密码sanle@2017
 
-服务器帐号root
-端口 114.67.248.3:22
-密码  Sanle=36
-
-企业邮箱
-https://exmail.qq.com/cgi-bin/loginpage
-shenhao@sanletech.com
-Sanle工号
+http://www.jq22.com/jquery-info8627
+ģ̬�����ĵ�
 
 
 
-/帮卖优品
-ssh root@193.112.13.241
-新网站：  Bbm@2018
-mysql :  root /   Bbm@mysql
-mysql -uroot -pBbm@mysql
 
-
-海浪物流
-120.78.235.101
-hailang@2018
-mysql -uroot -phailang@2018
-阿里云
-海浪集团
-hailang@2018
-
-
-https://lnmp.org/install.html
-
-rm -rf *  在某个目录 下删除该目录下所有文件 
-
- chmod -R 777 /home/wwwroot/hailang/
- 
- 数据库密码
+aIibcJqA1GVY46PNM3LIr3Iap2cufcNff8hrKSIGta1IN7TAmp1UhwFaO8Ny2xtU
