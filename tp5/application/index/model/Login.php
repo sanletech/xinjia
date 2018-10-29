@@ -6,38 +6,32 @@ use think\Db;
 class Login extends Model
 {
     public function register($data) {
-        $member_name=$data['membername'];
-        $company =$data['company'];
-        $password =md5($data['password']);
-        $create_time = date('y-m-d');
-        $phone = $data['phone'];//手机号码
-        $member_code = $data['member_code'];//登录帐号
+        $map['name']=$data['membername'];
+        $map['company'] =$data['company'];
+        $map['password'] =md5($data['password']);
+        $map['create_time'] = date('y-m-d');
+        $map['phone'] = $data['phone'];//手机号码
+        $map['member_code'] = $data['member_code'];//登录帐号
 
         if(!empty($company)){
             $type ='company';
         }else{
             $type ='person';
         }        
-        $sql= "insert into hl_member (name,company,password,create_time,"
-                . "phone,member_code,type,status) values"
-                . "('$member_name','$company','$password','$create_time',"
-                . "'$phone','$member_code','$type',1)";
-       // var_dump($sql);exit;
-        $res =Db::execute($sql);
+
+        $res =Db::name('member')->insert($map);
         //同时将推荐人和业务员绑定
         if(array_key_exists('sales',$data)){
             $salesName =$data['sales'];
             if(!empty($salesName)){
                 //根据业务姓名查询其业务编号 如果没有就填0
-               // $sql= "select sales_code from hl_salesman where salesname ='$salesName'";
                 $sales_code =Db::name('user')->where('user_name',$salesName)->where('type','sales')->value('user_code');
                 $sales_code = $sales_code ?$sales_code :0;
             }
-           
-        } else {
-            $sales_code=0; $salesName='nobody';
+        }else{
+            $sales_code=0; 
+            $salesName='nobody';
         }
-        $sales_code = $sales_code ?$sales_code :0;
         //将业务对应客户的关系插入
         $data =['sales_code'=>$sales_code ,'sales_name'=>$salesName ,'member_code'=>$member_code ,'member_name'=>$member_name];
         $res = Db::name('sales_member')->insert($data);
@@ -64,7 +58,7 @@ class Login extends Model
 //            $this->_v($data);exit;
             //同时默认设置客户的利润价格为200
             $res = Db::name('member_profit')->insertAll($data);
-             //var_dump($res);exit;
+            return $res ? TRUE : FALSE;
     }
     
     //设置客户的在线支付优惠
@@ -81,7 +75,8 @@ class Login extends Model
 //            $this->_v($data);exit;
             //同时默认设置客户的初始在线支付优惠价格
             $res = Db::name('member_profit')->insertAll($data);
-             //var_dump($res);exit;
+            return $res ? TRUE : FALSE;
+            //var_dump($res);exit;
     }
     
 }
