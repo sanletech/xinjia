@@ -123,26 +123,47 @@ function tiao() {
     arr = dataArray;
     $('.xin').html('');
     for (let i in dataArray) {
-      $('.xin').append('<li class="layui-col-xs6">'
-        + '<div class="nei" onclick="xzwt(this)">'
-        + ' <div class="le">'
-        + '<div class="tiao">公司名：</div>'
-        + '<div class="tiao">姓名：</div>'
-        + '<div class="tiao">手机号：</div>'
-        + '</div>'
-        + '<div class="rig">'
-        + '<div class="tiao_id" style="display: none;"> ' + dataArray[i].id + '</div>'
-        + '<div class="tiao">' + dataArray[i].company + '</div>'
-        + '<div class="tiao">' + dataArray[i].name + '</div>'
-        + '<div class="tiao">' + dataArray[i].phone + '</div>'
-        + '</div>'
-        + '</div>'
-        + '</li>'
-      )
+      shuzu(dataArray[i]);
     }
   }
 
+  $('.btn_sou').click(function(){//单击搜索
+    let name = $('.xing').val();
+    $('.xin').html('');
+    for (let i in arr) {
+      if (name) {
+        if (arr[i].name == name) {
+         shuzu(arr[i]);
+        }
+      }else{
+        boot = true;
+        shuzu(arr[i]);
+      }
+    }
+  });
+
+
+  function shuzu(arr){
+    $('.xin').append('<li class="layui-col-xs6">'
+    + '<div class="nei" onclick="xzwt(this)">'
+    + ' <div class="le">'
+    + '<div class="tiao">公司名：</div>'
+    + '<div class="tiao">姓名：</div>'
+    + '<div class="tiao">手机号：</div>'
+    + '</div>'
+    + '<div class="rig">'
+    + '<div class="tiao_id" style="display: none;"> ' + arr.id + '</div>'
+    + '<div class="tiao">' + arr.company + '</div>'
+    + '<div class="tiao">' + arr.name + '</div>'
+    + '<div class="tiao">' + arr.phone + '</div>'
+    + '</div>'
+    + '</div>'
+    + '</li>'
+  )
+  }
 }
+
+
 
 //选中委托信息
 var lei;//判断是送货还是收货

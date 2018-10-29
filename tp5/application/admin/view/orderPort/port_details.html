@@ -191,6 +191,7 @@
                         </div>
                     </div>
                 </div>
+            </form>
 
                 <!-- 委托信息 -->
                 <div class="xxtx_dd er">
@@ -205,22 +206,22 @@
                                 <div class="grid-demo" style="margin-top: 10px;">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>发货单位：</div>
-                                    <div class="layui-col-xs9">
-                                        <input type="text" name="r_company" value="<{$shipperArr[0]}>" class="in">
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        <{$shipperArr[0]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <input type="text" name="r_name" value="<{$shipperArr[1]}>" class="in">
+                                        <{$shipperArr[1]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <input type="text" name="r_phone" value="<{$shipperArr[2]}>" class="in">
+                                        <{$shipperArr[2]}>
                                     </div>
                                 </div>
 
@@ -231,21 +232,21 @@
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货单位：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <input type="text" name="s_company" value="<{$consignerArr[0]}>" class="in">
+                                        <{$consignerArr[0]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <input type="text" name="s_name" value="<{$consignerArr[1]}>" class="in">
+                                        <{$consignerArr[1]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <input type="text" name="s_phone" value="<{$consignerArr[2]}>" class="in">
+                                        <{$consignerArr[2]}>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +267,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>货名：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                    <input type="text" name="cargo" value="<{$list.cargo}>" placeholder="货名">
+                                    <{$list.cargo}>
                                 </div>
                             </div>
                         </div>
@@ -274,24 +275,17 @@
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>包装：</div>
-                                <div class="layui-col-xs6">
-                                    <div class="select">
-                                        <select name='container_type'>
-                                            <option value='1'  <?php if($list['container_type_id']==1){echo "selected='true'";} ?> >杂货集装箱</option>
-                                            <option value='2'  <?php if($list['container_type_id']==2){echo "selected='true'";} ?>>散货集装箱</option>
-                                            <option value='3'  <?php if($list['container_type_id']==3){echo "selected='true'";} ?>>液体货集装箱</option>
-                                        </select>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        <{$list.container_type}>
                                     </div>
-
-                                </div>
                             </div>
                         </div>
                         <div class="layui-col-xs4 er">
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>重量：</div>
-                                <div class="layui-col-xs6">
-                                    <input type="text" name="weight" value="<{$list.weight}>" placeholder="">
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                    <{$list.weight}>
                                 </div>
                                 <div class="layui-col-xs2" style="text-align: left;">
                                     <span>吨(T)</span>
@@ -313,12 +307,9 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>柜量：</div>
                                     <span id="gl" style="display: none;"><{$list.container_sum}></span>
-                                <div class="layui-col-xs6">
-                                    <div class="select">
-                                        <select name='container_sum'  value=""  class="guil" id='container_sum'  onfocus="this.si=this.selectedIndex;" onchange="this.selectedIndex=this.si;">
-                                        </select>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        <{$list.container_sum}>
                                     </div>
-                                </div>
                             </div>
 
                         </div>
@@ -326,8 +317,8 @@
                             <div class="grid-demo" style="margin-top: 0px;">
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>保险金额：</div>
-                                <div class="layui-col-xs6">
-                                    <input id="bxje" type="text" name="cargo_cost" value="<{$list.cargo_cost}>" placeholder="">
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    <{$list.cargo_cost}>
                                 </div>
 
                                 <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
@@ -339,17 +330,22 @@
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>结账方式：</div>
-                                <div class="layui-col-xs6">
-                                    <div class="select">
-                                        <select name="payment_method" class='mony_fs'>
-                                            <option  <?php if($list['payment_method']=='installment'){echo"checked";}  ?>  value='installment'>到港付</option>
-                                            <option  <?php if($list['payment_method']=='month'){echo"checked";}  ?> value='month'>月结付</option>
-                                            <{volist name="discount" id="rows"}>
-                                            <option title="<{$rows.money}>" value='<{$rows.id}>'   <?php if($list['cash_id']==$rows['id']){echo"checked";}  ?> ><{$rows.title}></option>"
-                                            <{/volist}>
-                                        </select>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        <?php 
+                                    $payment_method=  $list['payment_method'];
+                                    if($payment_method=='installment'){
+                                         echo'到港付';
+                                    }elseif($payment_method=='month'){
+                                        echo'月结';
+                                    }elseif($payment_method=='cash'){
+                                        foreach($discount as $rows){
+                                            if($rows['id']== $list['cash_id']){
+                                                echo $rows['title'];
+                                            }
+                                        }
+                                    }
+                                ?>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -361,35 +357,8 @@
                                     备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
                                 </div>
                                 <div class="layui-col-xs10 inp">
-                                    <input type="text" name="comment" value="<{$list.comment}>" placeholder="无" class="layui-input">
+                                    <{$list.comment}>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="fp layui-col-xs12">
-                            <!-- 是否开取发票 -->
-                            <div class="fp1 layui-col-xs2 layui-form" onclick="kfp(this)">
-                                <input type="checkbox" name="invoice_if" title="是否开取发票信息" lay-skin="primary" value="1">
-                            </div>
-                            <div class="layui-col-xs1">&nbsp;</div>
-                            <!-- 选择发票 -->
-                            <div class="layui-col-xs3">
-                                <div class="ze">
-                                    <div class="layui-col-xs3 zep">
-                                        发票：
-                                    </div>
-                                    <div class="layui-col-xs6">
-                                        <div class="select">
-                                            <select name='tax_rate' disabled="ture" class="layui-disabled fp01">
-                                                <option value='0' selected>不需要</option>
-                                                <option value='1'>6%</option>
-                                                <option value='2'>10%</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-xs3 tx">
-                                <a class="trigger-default">填写发票信息</a>
                             </div>
                         </div>
                     </div>
@@ -415,7 +384,7 @@
                         <div class="dd_nei">
                             <div class="layui-col-xs12 layui-form er">
                                 <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang">
-                                <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_bge()">增加</a>
+                                <!-- <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_bge()">增加</a> -->
                             </div>
                             <div class="layui-col-xs12 er biaoge zhuanghuo">
                                 <table class="layui-table" lay-size="sm">
@@ -431,45 +400,41 @@
                                             <th>联系电话</th>
                                             <th>指定车队</th>
                                             <th>备注</th>
-                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bge">
                                        <{volist name="$carData.r" id="carR"}>
-                                        <tr>
-                                            <td>
-                                                <input  type="hidden" name ="r_container_code[<{$i-1}>]" value="<{$carR.container_code}>">
-                                                <input class="r_price" type="text" name ="r_car_price[<{$i-1}>]" value="<{$carR.car_price}>">
-                                            </td>
-                                            <td>
-                                                <input class="r_num" type="text" name ="r_num[<{$i-1}>]" value="<{$carR.num}>">
-                                            </td>
-                                            <td>柜</td>
-                                            <td>
-                                                <input type="text" name='r_add[<{$i-1}>]' value="<{$carR.add}>">
-                                            </td>
-                                            <td>
-                                                <input type="text" name="r_link_man[<{$i-1}>]"  value="<{$carR.link_man}>">
-                                            </td>
-                                            <td>
-                                                <input type="text" name="shipper[<{$i-1}>]" value="<{$carR.shipper}>">
-                                            </td>
-                                            <td>
-                                                <input type="date" name="r_load_time[<{$i-1}>]"  value="<{$carR.load_time}>">
-                                            </td>
-                                            <td>
-                                                <input type="text" name="r_link_phone[<{$i-1}>]" value="<{$carR.link_phone}>">
-                                            </td>
-                                            <td>
-                                                <input type="text" name="r_car[<{$i-1}>]" value="<{$carR.car}>">
-                                            </td>
-                                            <td>
-                                                <input type="text" name ="r_comment[<{$i-1}>]" value="<{$carR.comment}>">
-                                            </td>
-                                            <td class="dele">
-                                                <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
-                                            </td>
-                                        </tr>  
+                                       <tr>
+                                        <td>
+                                            <input type="hidden" name="r_container_code[<{$i-1}>]" value="<{$carR.container_code}>">
+                                            <{$carR.car_price}>
+                                        </td>
+                                        <td>
+                                            <{$carR.num}>
+                                        </td>
+                                        <td>柜</td>
+                                        <td>
+                                            <{$carR.add}>
+                                        </td>
+                                        <td>
+                                            <{$carR.link_man}>
+                                        </td>
+                                        <td>
+                                            <{$carR.shipper}>
+                                        </td>
+                                        <td>
+                                            <{$carR.load_time}>
+                                        </td>
+                                        <td>
+                                            <{$carR.link_phone}>
+                                        </td>
+                                        <td>
+                                            <{$carR.car}>
+                                        </td>
+                                        <td>
+                                            <{$carR.comment}>
+                                        </td>
+                                    </tr> 
                                        <{/volist}>
                                     </tbody>
                                 </table>
@@ -491,31 +456,27 @@
                                             <th>送货地址</th>
                                             <th>指定车队</th>
                                             <th>备注</th>
-                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bge_song">
                                         <{volist name="$carData.s" id="carS" }>
                                         <tr>
                                             <td>
-                                                <input  type="hidden" name ="s_container_code[<{$i-1}>]" value="<{$carS.container_code}>">
-                                                <input class="s_price" type="text" name="s_car_price[<{$i-1}>]"  value="<{$carS.car_price}>">
+                                                <input type="hidden" name="s_container_code[<{$i-1}>]" value="<{$carS.container_code}>">
+                                                <{$carS.car_price}>
                                             </td>
                                             <td>
-                                                <input class="s_num" type="text" name="s_num[<{$i-1}>]"  value="<{$carS.num}>">
+                                                <{$carS.num}>
                                             </td>
                                             <td>柜</td>
                                             <td>
-                                                <input type="text" name="s_add[<{$i-1}>]" value="<{$carS.add}>">
+                                                <{$carS.add}>
                                             </td>
                                             <td>
-                                                <input type="text" name="s_car[<{$i-1}>]" value="<{$carS.car}>">
+                                                <{$carS.car}>
                                             </td>
                                             <td>
-                                                <input type="text" name="s_comment[<{$i-1}>]" value="<{$carS.comment}>">
-                                            </td>
-                                            <td class="dele">
-                                                <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
+                                                <{$carS.comment}>
                                             </td>
                                         </tr>
                                         <{/volist}>
@@ -651,7 +612,7 @@
                         <button class="layui-btn" lay-submit="" onclick='invoice()' lay-filter="demo1">立即保存</button>
                     </div>
                 </div>
-            </form>
+            
         </div>
 
 

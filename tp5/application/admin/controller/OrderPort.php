@@ -31,18 +31,20 @@ class OrderPort extends Base
         $info = $file->validate(['size'=>2097152,'ext'=>'text,txt,pdf,docx,doc,docm,dotx,dotm'])
                  ->move(ROOT_PATH . 'public' . DS . 'uploads',$rename);
         $response =[];
+       
         if($info){
+            // var_dump($info);exit;
             $reFile = str_replace('.','_',$info->getSaveName());
              // 将A926548346305370_book_note.pdf文档存进order_port表里
             $res = Db::name('order_port')->where('order_num',$order_num)
-                    ->update([$type=>$reFile]);
-            $res ? $response=['status'>1,'mssage'=>'提交成功']:$response=['status'>0,'mssage'=>'提交失败'];
+                    ->update([$type=>$reFile]);            
+            $response=['code'=>0,'msg'=>'提交成功','data'=>[]];
             //文件上传成功后更新订单状态
-            if($res){
+            //if($res){
                   // 上传成功后更新订单和账单的状态
                 
-                return['status'=>1,'mssage'=>'上传成功'] ;
-            }
+            return $response;
+           // }
         }else{
             // 上传失败获取错误信息
             return['status'=>0,'mssage'=>$file->getError()] ;
@@ -148,8 +150,8 @@ class OrderPort extends Base
            $res1= Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]);
         }
         $res =$this->Upload($order_num,$type,$file);
-        
-        
+        var_dump($res);exit;
+        return json($res);
     }
 
     //港到港 处理订单公共页
