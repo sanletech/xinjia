@@ -31,7 +31,7 @@
                 </div>
                 <div class="pwd" id="container">
                     <div class="pwd_le"><input type="checkbox" class="input_check" id="check1" checked='true'><label for="check1"></label><span>记住密码</span></div>
-                    <div class="pwd_rig"><a href="#">忘记登陆密码？</a></div>
+                    <div class="pwd_rig"><a href="javascript:;">忘记登陆密码？</a></div>
                 </div>
                 <div class="sub layui-col-xs12">
                     <button type="button" class="layui-btn layui-btn-fluid" id="loginbtn">登陆</button>
@@ -67,6 +67,20 @@
     if (window.top != window) {
         window.top.location.href = window.location.href;
     }
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+
+        $('.pwd_rig').click(function () {
+            layer.open({
+                type:2
+                ,title: '修改密码'
+                , content: "<{:url('index/login/forget_pwd')}>"
+                ,area:['560px','360px']
+            });
+        });
+    }); 
+        
     
 </script>
   </body>

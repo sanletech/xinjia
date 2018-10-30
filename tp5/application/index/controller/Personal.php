@@ -9,13 +9,12 @@ class Personal extends Base
     //个人中心
     public function steward()
     {   
-       
         return $this->view->fetch('personal/steward');
     }
-    //所有订单
-    public function all_order()
+    //修改密码
+    public function pwd_edit()
     {
-       return $this->view->fetch('personal/all_order');
+       return $this->view->fetch('personal/pwd_edit');
     }
     //作废订单
     public function invalid()

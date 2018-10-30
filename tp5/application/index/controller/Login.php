@@ -100,7 +100,6 @@ class Login extends Controller
         } else {
             return '[message:注册失败 ]';
         }
-        
     }
     
     
@@ -112,6 +111,11 @@ class Login extends Controller
       Session::delete('user_info');
       //执行成功,返回登录页面
       $this->success('注销成功,正在返回首页','index/index/index');
+    }
+
+    //忘记密码
+    public function forget_pwd(){
+        return $this->view->fetch('login/forget_pwd');
     }
     
 }

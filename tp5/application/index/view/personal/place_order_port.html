@@ -27,21 +27,33 @@
         </a>
     </div>
     <div class="invalid">
-      <form class="" action="" method="post">
+      <form class="layui-form" id="cha">
         <div class="layui-row">
-          <div class="layui-col-xs6">
+          <div class="layui-col-xs12">
             <div class="grid-demo">
               <div class="layui-form-item">
-                <label class="layui-form-label">订单号：</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="order_num" value='<{$order_num}>' placeholder="" autocomplete="off" class="layui-input">
+                    <input type="text" name="order_num" value='<{$order_num}>' placeholder="运单号" autocomplete="off" class="layui-input">
                 </div>
-
-                <div class="layui-input-inline" style="float:right;">
-                  <button class="layui-btn btn_select" lay-submit="" lay-filter="demo1">查询</button>
+                <div class="layui-input-inline">
+                  <input type="text" name="aaa" value='' placeholder="收货人" autocomplete="off" class="layui-input">
                 </div>
+                <div class="layui-input-inline">
+                  <input type="text"  value='' placeholder="起始时间" autocomplete="off" class="layui-input" name="date_start" id="date">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text" value='' placeholder="结束时间" autocomplete="off" class="layui-input" name="date_end" id="date1">
+                </div>
+                <button class="layui-btn btn_select">查询</button>
               </div>
             </div>
+          </div>
+
+          <div class="layui-col-xs12">
+              <input type="checkbox" name="like1[write]" lay-skin="primary" title="已审核" checked="">
+              <input type="checkbox" name="like1[read]" lay-skin="primary" title="已取消">
+              <input type="checkbox" name="like1[read]" lay-skin="primary" title="下单成功">
+              <input type="checkbox" name="like1[read]" lay-skin="primary" title="已完成">
           </div>
         </div>
       </form>
@@ -57,12 +69,9 @@
                     <th>运单号</th>
                     <th>提交时间</th>
                     <th>船公司</th>
-<!--                    <th>驳船</th>-->
                     <th>船名航次</th>
                     <th>起运港-目的港</th>
                     <th>总运费</th>
-                    
-                    
                     <th>订舱单</th>
                     <th>补料</th>
                     <td>货物状态</td>
@@ -102,6 +111,7 @@
                       <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>')">提交柜号</a>
                       <{/if}>
                     </td>
+                    <!-- 驳回提示  title -->
                     <td class="goods"><a href="javascript:void(0);" title=""><{$vo.container_buckle}></a></td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
@@ -153,18 +163,6 @@
 
             </div>
         </div>
-<!--        <div class="layui-form-item">
-          <label class="layui-form-label">货名:</label>
-          <div class="layui-input-block">
-            <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入货名" class="layui-input" type="text" value="黄金">
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <label class="layui-form-label">收货人:</label>
-          <div class="layui-input-block">
-            <input name="title" lay-verify="title" autocomplete="off" placeholder="请输入收货人" class="layui-input" type="text" value="海运兴佳">
-          </div>
-        </div>-->
       </form>
     </div>
 
@@ -209,6 +207,13 @@
           }
         })
       }
+
+      $('.btn_select').click(function(){
+        let data = $('#btn_select').serialize();
+        $.post(url,{data:data},function(res){
+          
+        })
+      })
     </script>
   </body>
 

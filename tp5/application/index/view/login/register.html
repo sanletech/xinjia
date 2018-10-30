@@ -35,17 +35,20 @@
           <div class="layui-form-item">
             <div class="layui-col-xs12 gu">
             <div >用户名称</div>
-                <input type="text" name="company" class="layui-col-xs12" placeholder="请输入你的公司名全称" required="required">
+                <input type="text" name="member_code" class="layui-col-xs12" placeholder="请输入你的公司名全称/个人名称" required="required">
             </div>
 
             <div class="layui-col-xs12 gu">
                 <div >登陆密码</div>
-              <input type="text" name="password" class="layui-col-xs12" placeholder="请输入您的密码" required="required">
+            <div class="layui-col-xs12">
+              <input type="password" name="password" class="layui-col-xs12 pwd" placeholder="请输入您的密码" required="required" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+              <div class="yan"> <i class="fa fa-eye"></i></div>
+            </div>
             </div>
 
             <div class="layui-col-xs12 gu">
               <div >确认密码</div>
-              <input type="text" name="repassword" class="layui-col-xs12" placeholder="请再次确认密码" required="required">
+                <input type="password" name="repassword" class="layui-col-xs12 pwd" placeholder="请再次确认密码" required="required" onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
             </div>
 
             <div class="layui-col-xs12 gu">
@@ -54,7 +57,7 @@
             </div>
 
             <div class="layui-col-xs12 gu yanz">
-              <div class="hong">*</div>
+              <div class="hong"></div>
               <input type="text" name="title" class="layui-col-xs8" placeholder="请输入您的短信验证码" required="required">
               <button type="button" name="button" id="btn">获取验证码</button>
             </div>
@@ -180,7 +183,8 @@
       $(document).on('click', '.trigger-default', function (event) {
           event.preventDefault();
           $('#modal-default').iziModal('open');
-      });    
+      });
+    
     function toajax (){
         $.ajax({
             type:'POST',
@@ -190,8 +194,7 @@
             success:function(status){
               alert(status)
             }
-        })
-        
+        })        
     }
 
     $('#btn').click(function(){//单击获取验证码
@@ -200,10 +203,7 @@
       if (telReg) {
         $.get("<{:url('index/login/ali_sms')}>",{phone:phone},function(res){
           if (res.status) {
-            yanzm = res.code;
-            alert('验证码获取成功!');
-            window.location.reload();
-            $.cookie('total',120);
+            $.cookie('mint',120);
             timekeeping();
           }
         });
@@ -211,40 +211,40 @@
         alert('您输入的手机号格式不正确！')
       }
     });
+    if ($.cookie('mint')) {
+      timekeeping()
+    }    
 
-
-  $(function(){
-   if($.cookie("total")!=undefined&&$.cookie("total")!='NaN'&&$.cookie("total")!='null'){//cookie存在倒计时
-     timekeeping();
-   }else{//cookie 没有倒计时
-     $('#btn').attr("disabled", false);
-   }
    function timekeeping(){
+     let mint = parseInt($.cookie('mint'));
     //把按钮设置为不可以点击
     $('#btn').attr("disabled", true);
     var interval=setInterval(function(){//每秒读取一次cookie
-     //从cookie 中读取剩余倒计时
-     let total=$.cookie("total");
      //在发送按钮显示剩余倒计时
-     $('#btn').html('等待'+total+'秒');
+     $('#btn').html('等待'+mint+'秒');
      //把剩余总倒计时减掉1
-     total--;
-     if(total==0){//剩余倒计时为零，则显示 重新发送，可点击
+     mint--;
+     if(mint==0){//剩余倒计时为零，则显示 重新发送，可点击
      //清除定时器
      clearInterval(interval);
-     //删除cookie
-     total=$.cookie("total",total, { expires: -1 });
      //显示重新发送
      $('#btn').html('重新发送');
      //把发送按钮设置为可点击
      $('#btn').attr("disabled", false);
      }else{//剩余倒计时不为零
      //重新写入总倒计时
-     $.cookie("total",total);
+     $.cookie("mint",mint);
      }
     },1000);
    }
+
+  $('.yan i').mousedown(function(){//按下时
+    $('.pwd').attr('type','text');
   });
+
+   $('.yan i').mouseup(function(){//松开时
+    $('.pwd').attr('type','password');
+   })
     </script>
  </body>
 </html>

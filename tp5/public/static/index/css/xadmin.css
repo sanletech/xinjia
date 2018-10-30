@@ -264,7 +264,7 @@ xblock{
 }
 .left-nav{
 	position: absolute;
-    top: 215px;
+    top: 135px;
     bottom: 42px;
     left: 0;
     z-index: 2;
@@ -347,7 +347,7 @@ xblock{
 }
 .page-content{
 	position: absolute;
-    top: 215px;
+    top: 135px;
     right: 0;
     bottom: 42px;
     left: 221px;

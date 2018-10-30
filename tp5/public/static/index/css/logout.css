@@ -66,6 +66,12 @@
         position: absolute;
         top: 15px;
         left: -15px; }
+      .zhuce .fm .gu .yan {
+        position: absolute;
+        right: -30px;
+        top: 25px; }
+        .zhuce .fm .gu .yan i {
+          cursor: pointer; }
     .zhuce .fm input {
       height: 38px;
       padding-left: 13px;
