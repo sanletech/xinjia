@@ -5,7 +5,7 @@
                 margin: 20px;
             }
         </style>
-        <form class="layui-form" id="pwd" action="">
+        <form class="layui-form" id="pwd">
             <div class="layui-row">
                 <div class="layui-col-xs12">
                     <div class="layui-form-item">
@@ -19,7 +19,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">验证码</label>
                             <div class="layui-input-inline">
-                            <input type="tel" name="zheng" placeholder="请输入您的短信验证码" autocomplete="off" class="layui-input">
+                            <input type="tel" name="code" placeholder="请输入您的短信验证码" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -30,14 +30,14 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">新密码</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+                            <input type="text" name="password" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input">
                         </div>
                     </div>
 
                     <div class="layui-form-item">
                         <label class="layui-form-label">确认密码</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="确认密码" class="layui-input">
+                            <input type="text" name="repassword" lay-verify="title" autocomplete="off" placeholder="确认密码" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -51,6 +51,7 @@
         </form>
         <script src="https://cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.js"></script>
         <script>
+            var forget_pwd_url ="<{:url('index/login/new_pwd')}>";
             $('#btn').click(function(){
                 let phone = $('#phone').val();  
                 var telReg = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);                              
@@ -68,7 +69,7 @@
 
             $('.pwd_ti').click(function(){
                 let data = $('#pwd').serialize();
-                $.post(url,{data:data},function(res){
+                $.post(forget_pwd_url,{data:data},function(res){
                     if (res.status) {
                         alert('提交成功！');
                     }

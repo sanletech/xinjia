@@ -11,7 +11,6 @@ class Login extends Model
         $map['password'] =md5($data['password']);
         $map['create_time'] = date('y-m-d');
         $map['phone'] = $data['phone'];//手机号码
-      
         $IDCode = controller('IDCode');
         //查询用户表最大的id 生成零时客户member_code
         $id =Db::name('member')->max('id')+1;

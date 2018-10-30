@@ -71,9 +71,9 @@ class Login extends Controller
         $status = $sms->send_verify($phone,$code);
         $response=[];
         if (!$status) {
-            $response= ['message'=>$sms->error,'status'=>0,'code'=>''];
+            $response= ['message'=>$sms->error,'status'=>0];
         }else{
-            $response= ['message'=>'发送短信成功','status'=>1,'code'=>$code];
+            $response= ['message'=>'发送短信成功','status'=>1];
              //存贮发送时间，验证码,手机号到数据库里
             $res=Db::name('ali_sms')->insert(['phone'=>$phone,'code'=>$code,'ctime'=>$ctime]);
         }
@@ -85,20 +85,28 @@ class Login extends Controller
     public function check_register() {
         $data = input('post.');
 //         var_dump($data);exit;
+//         判断验证码是否正确
+        $code = $data['code'];
+        $phone = $data['phone'];
+        $res_code = Db::name('ali_sms')->where('phone',$phone)
+                ->order('ctime desc')->limit(1)->value('code');
+        if($res_code!==$code){
+            return array('status'=>0,'message'=>'验证码不正确');
+        }
         // 数据验证
         $result = $this->validate($data,'Login');
         //  var_dump($result);exit;
         if (true !== $result) {
-            return ['message'.':'.$result];
+            return array('status'=>0,'message'=>$result);
         }
         $phone =$data['phone'];
         $member = new LoginM;
         // 数据保存
         $res =$member ->register($data);
         if($res){
-            return '[message:注册成功 ]';
+            return array('status'=>0,'message'=>'注册成功');
         } else {
-            return '[message:注册失败 ]';
+            return array('status'=>0,'message'=>'注册失败');
         }
     }
     
@@ -116,6 +124,17 @@ class Login extends Controller
     //忘记密码
     public function forget_pwd(){
         return $this->view->fetch('login/forget_pwd');
+    }
+    //修改密码
+    public function new_pwd(){
+        $data = $this->request->param();
+               $res_code = Db::name('ali_sms')->where('phone',$phone)
+                ->order('ctime desc')->limit(1)->value('code');
+        if($res_code!==$code){
+            return array('status'=>0,'message'=>'验证码不正确');
+        }
+        $map
+        
     }
     
 }

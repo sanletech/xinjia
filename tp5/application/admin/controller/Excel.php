@@ -85,7 +85,7 @@ class Excel
             // $j=2;
             foreach($excel_array as $k=>$v) {
 				
-				$sn = Db::name('agent')->where('agent_sn',$v[0])->find();
+                $sn = Db::name('agent')->where('agent_sn',$v[0])->find();
                 if ($sn) {
                 	$j = $k+2;
                 	$error_infos[$k] = "第{$j}条代理商编号已存在";
