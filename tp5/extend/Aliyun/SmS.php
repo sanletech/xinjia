@@ -91,8 +91,8 @@
             $result = curl_exec ( $ch );
             curl_close ( $ch );
             $result = json_decode ( $result, true );
-            //var_dump($result);die;
-            if (isset ( $result ['Code'] )) {
+//            var_dump($result);die;
+            if (isset($result ['Code'])&&$result ['Code']!=='OK') {
                 $this->error = $this->getErrorMessage ( $result ['Code'] );
                 return false;
             }
@@ -121,4 +121,6 @@
             }
             return $status;
         }
+        
+        
     }

@@ -68,12 +68,12 @@ class Login extends Controller
         $sms = new AliyunM;
         //短信发送
         $code = rand (1000, 9999);
-        $status = $sms->send_verify($phone, $code);
+        $status = $sms->send_verify($phone,$code);
         $response=[];
         if (!$status) {
+            $response= ['message'=>$sms->error,'status'=>0,'code'=>''];
+        }else{
             $response= ['message'=>'发送短信成功','status'=>1,'code'=>$code];
-        }  else {
-            $response= ['message'=>$sms->error,'status'=>0,'code'=>''];           
              //存贮发送时间，验证码,手机号到数据库里
             $res=Db::name('ali_sms')->insert(['phone'=>$phone,'code'=>$code,'ctime'=>$ctime]);
         }
