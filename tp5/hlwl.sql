@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-10-29 20:11:24
+Date: 2018-10-30 20:16:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4585,7 +4585,7 @@ INSERT INTO `hl_member` VALUES ('16', '王达成', 'e10adc3949ba59abbe56e057f20f
 INSERT INTO `hl_member` VALUES ('17', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao4', 'company');
 INSERT INTO `hl_member` VALUES ('18', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao5', 'company');
 INSERT INTO `hl_member` VALUES ('19', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company');
-INSERT INTO `hl_member` VALUES ('25', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-29 19:55:04', '18575280024', 'ssssi@qq.com', '1', '', '0000-00-00', '2', '外包公司', 'kehu001', 'person');
+INSERT INTO `hl_member` VALUES ('25', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-30 19:38:32', '18575280024', 'ssssi@qq.com', '1', '', '0000-00-00', '2', '外包公司', 'kehu001', 'person');
 INSERT INTO `hl_member` VALUES ('26', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575288024', '', '1', null, null, null, '海浪物流', 'cshengle', 'company');
 INSERT INTO `hl_member` VALUES ('27', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575288024', '', '1', null, null, null, '海浪物流', 'cshengle', 'company');
 INSERT INTO `hl_member` VALUES ('28', '', '63cd1166a51bafe8bd66986cedf5d9a2', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '1', null, null, null, '海浪物流有限公司', 'zh_A_028', null);
@@ -4643,7 +4643,8 @@ CREATE TABLE `hl_member_profit` (
   `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `member_code` varchar(10) DEFAULT NULL COMMENT '用户帐号',
   `ship_id` varchar(10) DEFAULT NULL COMMENT '船公司',
-  `money` int(10) DEFAULT '200' COMMENT '提成点',
+  `40HQ` int(5) DEFAULT NULL COMMENT '40HQ的零时优惠',
+  `20GP` int(5) DEFAULT NULL COMMENT '20GP的临时优惠',
   `mtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
@@ -4651,41 +4652,41 @@ CREATE TABLE `hl_member_profit` (
 -- ----------------------------
 -- Records of hl_member_profit
 -- ----------------------------
-INSERT INTO `hl_member_profit` VALUES ('1', 'kehu001', '1', '201', '2018-09-19 02:11:09');
-INSERT INTO `hl_member_profit` VALUES ('2', 'kehu001', '2', '202', '2018-09-19 02:11:09');
-INSERT INTO `hl_member_profit` VALUES ('3', 'kehu001', '3', '203', '2018-09-19 02:11:09');
-INSERT INTO `hl_member_profit` VALUES ('4', 'kehu001', '4', '204', '2018-09-19 02:11:09');
-INSERT INTO `hl_member_profit` VALUES ('5', 'kehu001', '5', '205', '2018-09-19 02:11:09');
-INSERT INTO `hl_member_profit` VALUES ('6', 'kehu001', '6', '206', '2018-09-19 02:11:09');
-INSERT INTO `hl_member_profit` VALUES ('7', 'kehu001', '7', '207', '2018-09-19 02:11:09');
-INSERT INTO `hl_member_profit` VALUES ('11', 'taobao6', '1', '200', '2018-08-26 10:41:45');
-INSERT INTO `hl_member_profit` VALUES ('12', 'taobao6', '2', '200', '2018-08-26 10:41:45');
-INSERT INTO `hl_member_profit` VALUES ('13', 'taobao6', '3', '200', '2018-08-26 10:41:45');
-INSERT INTO `hl_member_profit` VALUES ('14', 'taobao6', '4', '200', '2018-08-26 10:41:45');
-INSERT INTO `hl_member_profit` VALUES ('15', 'taobao6', '5', '200', '2018-08-26 10:41:45');
-INSERT INTO `hl_member_profit` VALUES ('16', 'taobao6', '6', '200', '2018-08-26 10:41:45');
-INSERT INTO `hl_member_profit` VALUES ('17', 'taobao6', '7', '200', '2018-08-26 10:41:45');
-INSERT INTO `hl_member_profit` VALUES ('18', 'kehu002', '2', '11', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('19', 'kehu002', '3', '222', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('20', 'kehu002', '4', '33', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('21', 'kehu002', '5', '444', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('22', 'kehu002', '6', '55', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('23', 'kehu002', '7', '66', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('24', 'kehu002', '8', '77', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('25', 'kehu002', '10', '88', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('26', 'kehu002', '12', '99', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('27', 'kehu002', '13', '100', '2018-10-22 12:01:48');
-INSERT INTO `hl_member_profit` VALUES ('28', 'zh_A_030', '2', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('29', 'zh_A_030', '3', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('30', 'zh_A_030', '4', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('31', 'zh_A_030', '5', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('32', 'zh_A_030', '6', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('33', 'zh_A_030', '7', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('34', 'zh_A_030', '8', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('35', 'zh_A_030', '10', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('36', 'zh_A_030', '12', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('37', 'zh_A_030', '13', '200', '2018-10-29 07:27:26');
-INSERT INTO `hl_member_profit` VALUES ('38', 'zh_A_030', '14', '200', '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('1', 'kehu001', '1', '100', null, '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('2', 'kehu001', '2', '100', null, '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('3', 'kehu001', '3', '200', '200', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('4', 'kehu001', '4', null, '200', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('5', 'kehu001', '5', null, null, '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('6', 'kehu001', '6', null, '100', '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('7', 'kehu001', '7', null, null, '2018-09-19 02:11:09');
+INSERT INTO `hl_member_profit` VALUES ('11', 'taobao6', '1', null, '105', '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('12', 'taobao6', '2', null, null, '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('13', 'taobao6', '3', null, '100', '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('14', 'taobao6', '4', null, null, '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('15', 'taobao6', '5', null, '110', '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('16', 'taobao6', '6', null, null, '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('17', 'taobao6', '7', null, null, '2018-08-26 10:41:45');
+INSERT INTO `hl_member_profit` VALUES ('18', 'kehu002', '2', '200', '100', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('19', 'kehu002', '3', '300', null, '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('20', 'kehu002', '4', '100', '500', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('21', 'kehu002', '5', '150', '400', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('22', 'kehu002', '6', '150', '200', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('23', 'kehu002', '7', '180', '100', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('24', 'kehu002', '8', '180', '100', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('25', 'kehu002', '10', '190', '100', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('26', 'kehu002', '12', '185', '100', '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('27', 'kehu002', '13', '75', null, '2018-10-22 12:01:48');
+INSERT INTO `hl_member_profit` VALUES ('28', 'zh_A_030', '2', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('29', 'zh_A_030', '3', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('30', 'zh_A_030', '4', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('31', 'zh_A_030', '5', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('32', 'zh_A_030', '6', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('33', 'zh_A_030', '7', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('34', 'zh_A_030', '8', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('35', 'zh_A_030', '10', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('36', 'zh_A_030', '12', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('37', 'zh_A_030', '13', null, null, '2018-10-29 07:27:26');
+INSERT INTO `hl_member_profit` VALUES ('38', 'zh_A_030', '14', null, null, '2018-10-29 07:27:26');
 
 -- ----------------------------
 -- Table structure for `hl_node`
@@ -4737,7 +4738,7 @@ CREATE TABLE `hl_order_bill` (
 INSERT INTO `hl_order_bill` VALUES ('1', 'AA19466880844019', 'ZD-A-001', '23075', '3', '40HQ', '2018-10-19 18:58:08', null, null, '2', '发射点发司法所', null, 'kehu002', '1', 'unlock', '0');
 INSERT INTO `hl_order_bill` VALUES ('2', 'AA19508158986320', 'ZD-A-002', '23125', '3', '40HQ', '2018-10-19 20:06:56', null, null, '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, 'kehu003', '1', 'lock', '0');
 INSERT INTO `hl_order_bill` VALUES ('3', 'AA22922801626294', 'ZD-A-003', '2950', '1', '20GP', '2018-10-22 15:11:20', null, null, '2', '', null, 'kehu004', '1', 'unlock', '0');
-INSERT INTO `hl_order_bill` VALUES ('4', 'AA22924899118261', 'ZD-A-004', '4640', '1', '40HQ', '2018-10-22 15:14:50', null, null, '2', '', null, 'kehu005', '0', 'unlock', '0');
+INSERT INTO `hl_order_bill` VALUES ('4', 'AA22924899118261', 'ZD-A-004', '4640', '1', '40HQ', '2018-10-22 15:14:50', null, null, '404', '', null, 'kehu005', '0', 'unlock', '0');
 INSERT INTO `hl_order_bill` VALUES ('5', 'AA22987079098653', 'ZD-A-005', '9370', '3', '20GP', '2018-10-22 16:58:28', null, null, '2', '撒旦法撒法撒旦法', null, 'kehu006', '1', 'lock', '0');
 INSERT INTO `hl_order_bill` VALUES ('6', 'AA19466880844021', 'ZD-A-006', '23075', '3', '40HQ', '2018-10-19 18:58:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '发射点发司法所', '', 'kehu007', '1', 'unlock', '0');
 INSERT INTO `hl_order_bill` VALUES ('7', 'AA19508158986322', 'ZD-A-007', '23125', '3', '40HQ', '2018-10-19 20:06:56', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '2', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', '', 'kehu009', '1', 'lock', '0');
@@ -4881,7 +4882,7 @@ INSERT INTO `hl_order_port` VALUES ('1', 'AA19466880844019', '鸡肉', '40HQ', '
 INSERT INTO `hl_order_port` VALUES ('2', 'AA19506804684341', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, null, 'kehu001', '0', '2018-10-19 20:04:40', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', null, '3', null, null, null, '0', '0', 'apply');
 INSERT INTO `hl_order_port` VALUES ('3', 'AA19508158986320', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, null, 'kehu001', '0', '2018-10-19 20:06:55', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', '通过审核>待录入运单', '3', null, null, null, '0', '0', 'apply');
 INSERT INTO `hl_order_port` VALUES ('4', 'AA22922801626294', '', '20GP', '1', '0', '0', '1', '', null, null, 'kehu001', '0', '2018-10-22 15:11:20', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '2', '3500', null, '0', '550', '0', '0', '2950', '价格不对', '404', null, null, null, '0', '0', 'lock');
-INSERT INTO `hl_order_port` VALUES ('5', 'AA22924899118261', 'asdfa', '40HQ', '1', '10', '40', '1', '', null, null, 'kehu001', '0', '2018-10-22 15:14:49', 'installment', '0', null, '0', '1', 'FFF,收货F公司,100085556', '6', 'AA,送货A公司,55555', '6', '5000', null, '40', '400', '0', '0', '4640', null, '2', null, null, null, '0', '0', 'unlock');
+INSERT INTO `hl_order_port` VALUES ('5', 'AA22924899118261', 'asdfa', '40HQ', '1', '10', '40', '1', '', null, null, 'kehu001', '0', '2018-10-22 15:14:49', 'installment', '0', null, '0', '1', 'FFF,收货F公司,100085556', '6', 'AA,送货A公司,55555', '6', '5000', null, '40', '400', '0', '0', '4640', null, '404', null, null, null, '0', '0', 'unlock');
 INSERT INTO `hl_order_port` VALUES ('6', 'AA22987079098653', '鸡肉', '20GP', '3', '10', '40', '1', '撒旦法撒法撒旦法', null, null, 'kehu001', '0', '2018-10-22 16:58:27', 'installment', '0', null, '0', '3', 'FFF,收货F公司,100085556', '6', 'CC,送货C公司,55555', '2', '3500', '单边', '120', '550', '100', '300', '9370', null, '2', null, null, null, '0', '0', 'lock');
 
 -- ----------------------------
@@ -4897,7 +4898,7 @@ CREATE TABLE `hl_order_port_status` (
   `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
   `comment` varchar(100) DEFAULT NULL COMMENT '驳回,删除订单的原因',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
@@ -4957,6 +4958,7 @@ INSERT INTO `hl_order_port_status` VALUES ('52', 'AA19506804684341', '3', '订�
 INSERT INTO `hl_order_port_status` VALUES ('53', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:43', 'sales1', null);
 INSERT INTO `hl_order_port_status` VALUES ('54', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:03:59', 'sales1', null);
 INSERT INTO `hl_order_port_status` VALUES ('55', 'AA19506804684341', '3', '订单审核pass', '2018-10-26 18:53:17', 'sales1', null);
+INSERT INTO `hl_order_port_status` VALUES ('56', 'AA22924899118261', '404', '订单审核fail', '2018-10-30 09:59:32', 'sales1', 'aaaaaaaaaaa');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -5979,7 +5981,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-29 19:57:31', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-10-30 09:43:44', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
