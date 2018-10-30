@@ -1,0 +1,53 @@
+<{include file='./public/head' /}>
+
+    <body>
+        <style>
+            form {
+                margin: 20px;
+            }
+        </style>
+        <form class="layui-form" id="pwd" action="">
+            <div class="layui-row">
+                <div class="layui-col-xs4">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">原始密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入原始密码" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">新密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">确认密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="确认密码" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn pwd_ti">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script>
+            $('.pwd_ti').click(function(){
+                let data = $('#pwd').serialize();
+                $.post(url,{data:data},function(res){
+                    if (res.status) {
+                        alert('提交成功！');
+                    }
+                })
+            })
+        </script>
+    </body>
+
+    </html>
