@@ -170,30 +170,30 @@ class OrderPort extends Base
     //    $this->_p($canshu);exit;
         $map =[];
         $cash = $this->request->param('cash');//在线付款
-        $cash?$map['A.payment_method'][]='cash':'';
+        $cash?$map['A.payment_method'][]=['=','cash']:'';
         $month = $this->request->param('month'); //月结付款
-        $month?$map['A.payment_method'][]='month':'';
+        $month?$map['A.payment_method'][]=['=','month']:'';
         $installment = $this->request->param('installment'); //到港付
-        $installment?$map['A.payment_method'][]='installment':'';
-        if(isset($map['A.payment_method']) && count($map['A.payment_method'])>1){
-            $map['A.payment_method'][]='or';
+        $installment?$map['A.payment_method'][]=['=','installment']:'';
+        if(isset($map['A.payment_method'])){
+            (count($map['A.payment_method'])-1) ? $map['A.payment_method'][]='or':$map['A.payment_method']=$map['A.payment_method']['0'];
         }
         $book_note = $this->request->param('book_note'); //订单进度 待上传订舱单文件
-        $book_note ? $map['A.status'][]=$this->order_status['booking_note']:'';
+        $book_note ? $map['A.status'][]=['=',$this->order_status['booking_note']]:'';
         $container_code = $this->request->param('container_code'); //订单进度 客户待提交柜号
-        $container_code ? $map['A.status'][]=$this->order_status['up_container_code']:'';
+        $container_code ? $map['A.status'][]=['=',$this->order_status['up_container_code']]:'';
         $sea_waybille = $this->request->param('sea_waybill'); //订单进度 待上传水单
-        $container_code ? $map['A.status'][]=$this->order_status['sea_waybill']:'';
-        if(isset($map['A.status']) && count($map['A.status'])>1){
-            $map['A.status'][]='or';
+        $container_code ? $map['A.status'][]=['=',$this->order_status['sea_waybill']]:'';
+        if(isset($map['A.status'])){
+            (count($map['A.status'])-1) ? $map['A.status'][]='or':$map['A.status']= $map['A.status']['0'];
         }
         $have_money =$this->request->param('have_money'); //未收款
         $have_money?$map['A.money_status'][]=0:'';
         $no_money =$this->request->param('no_money');//已经收款
         $no_money?$map['A.money_status'][]=1:'';
-        if(isset($map['A.money_status']) && count($map['A.money_status'])>1){
-            $map['A.status'][]='or';
-        }
+        if(array_key_exists('A.money_status', $map)){
+            array_unshift($map['A.money_status'],'in'); //插入条件in
+        } 
         
         $completion = $this->request->param('completion','undone','strval'); //订单完成 默认未完成
         if($completion=='undone' && (!isset($map['status'])) ){
@@ -202,9 +202,18 @@ class OrderPort extends Base
         }elseif($completion=='done'){
             $map['A.status']=null;//清空选择的上传订舱和水运单
             $map['A.status'][]=$this->order_status['completion'];
+        }elseif ($completion=='all') {
+            $map['A.status']=null;//清空选择的上传订舱和水运单
+            $map['A.status'][]='in';
+            $map['A.status'][]=array($this->order_status['booking_note'],$this->order_status['up_container_code'],$this->order_status['sea_waybill'],$this->order_status['completion']);
         }
         $container_buckle = $this->request->param('container_buckle','apply','strval');
-        $map['A.container_buckle']=$container_buckle;
+        if($container_buckle='all'){
+            $map['A.container_buckle']=[['=','apply'],['=','lock'],['=','unlock'],'or'];
+        }  else {
+            $map['A.container_buckle']=$container_buckle;
+        }
+     
         $company  = $this->request->param('company'); //公司查询
         $company?$map['A.company']=$company:'';
         $order_num = $this->request->param('order_num');//订单号查询
@@ -249,54 +258,8 @@ class OrderPort extends Base
         return $this->view->fetch('orderPort/port_details');
     }
 
-    //已完成订单
-    public function port_end()
-    {    
-        //订单查询
-        $order_num =  $this->request->param('order_num');
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(7),$order_num);
-//        $this->_p($list);exit;
-        $count =  count($list);
-        $this->view->assign('count',$count);
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        $this->view->assign('order_num',$order_num);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit);
-        $this->view->assign('url',url('admin/OrderPort/port_end')); 
-        return $this->view->fetch('orderPort/all_order');
-    }
-    
-    //订单删除
-    public function  orderPortDel(){
-        $idArr= $this->request->param();
-        $res =Db::name('order_port')->where('id','in',$idArr['id'])->update([
-            'status'=>505,'action'=>'订单删除']);
-        $respones =[];
-        $res ?$respones['success'][] ='订单删除成功':$respones['fail'][] ='订单删除失败';
-        $dataM =new OrderM;
-        $order_num =Db::name('order_port')->where('id','in',$idArr['id'])->column('order_num');
-        $status = 505 ;$title = '订单删除';
-        if($res){
-        foreach ($order_num as  $value) {
-            $res1=$dataM->orderUpdate($value,$status,$title) ;
-            $res1 ?$respones['success'][] ='订单状态修改成功':$respones['fail'][] ='订单状态修改失败';
-        }
-        }
-        if(array_key_exists('fail', $respones)){
-            return array('status'>1,'mssage'>'删除成功');
-        }else{
-             return array('status'>0,'mssage'>'删除失败');
-        }
-    }
+
+ 
     
     //废弃订单
     public function order_cancel() {
@@ -310,18 +273,31 @@ class OrderPort extends Base
         //计算出从那条开始查询
         $tol=($page-1)*$limit;
         $data = new OrderM;
-        $list = $data->order_status($tol,$limit,array(404,505),$order_num);
-//        $this->_p($list);exit;
-        $count =  count($list);
+        $map['A.status']=array('in',[$this->order_status['cancel'],$this->order_status['stop']] );
+        $lists = $data->order_status($tol,$limit,$map);
+        $count =$lists['count'];
+        $list=$lists['list'];
+        $cancel_list =Db::name('order_port_status')->alias('OPS')
+                ->join('hl_user U','U.user_code=OPS.submitter','left')
+                ->where('OPS.status','in',[$this->order_status['cancel'],
+                $this->order_status['stop']])->group('OPS.order_num')
+                ->field('OPS.*,U.user_name')->select();
+        
+        foreach ($list as $k => $v) {
+            foreach ($cancel_list as $key =>$value){
+                if($value['order_num']==$v['order_num']){
+                    $list[$k]['cancel_comment']= $value['comment'];
+                    $list[$k]['cancel_time']= $value['mtime'];
+                    $list[$k]['cancel_user']=$value['user_name'];
+                }
+            }
+        }
         $this->view->assign('count',$count);
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
         $this->view->assign('order_num',$order_num);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
-        $this->view->assign('url',url('admin/OrderPort/order_cancel')); 
-        return $this->view->fetch('orderPort/all_order');
+        return $this->view->fetch('orderPort/order_cancel');
     }
     //港到港的订单修改
     public function  orderEdit() {

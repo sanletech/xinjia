@@ -46,10 +46,11 @@ class orderPort extends Model
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
                 ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port,P2.port_name e_port,B.boat_code,B.boat_name')
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')->buildSql();
-//$this->_p($map);exit;
+// $this->_p($map); //exit;
         $count=Db::table($list.' A')->where($map)->count(); 
-//       var_dump($count);exit;
+//        var_dump( $list =Db::table($list.' A')->where()->limit($tol,$limit)->buildSql());exit;
         $list =Db::table($list.' A')->where($map)->limit($tol,$limit)->select();       
+//        $this->_p($list);exit;
         foreach ($list as $key => $value) {
             switch($value['container_buckle'])
             {

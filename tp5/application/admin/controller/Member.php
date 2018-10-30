@@ -55,36 +55,37 @@ class Member extends Base
     }
     
     //业务对应客户的提成管理
-    public function  pushMoneyList() {
-        $type = input('get.type'); //业务sales 用户customer
-        $account = input('get.account');  //帐号搜索
-        if($account){
-            $account =  trim($account);
-            $this->view->assign('account',$account); 
-        }
-        $type ?$type:'sales';
-        $this->view->assign('type',$type); 
-        $user = new MemberM ;
-        //船公司的集合
+    public function  pushMoney(){
+          //船公司的集合
         $ship_nameArr =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name');
         if(empty($ship_nameArr)){
             $this->error('船公司未添加,请先添加船公司的数据','admin/port/ship_list');
         }  else {
             $this->view->assign('ship_nameArr',$ship_nameArr);
         }
-        
-        $list = $user->pushMoneyList($type,$account,5);
-       
+//        $this->_p($ship_nameArr);exit;
         //所有业务的集合
         $salesArr =Db::name('user')->field('user_code,user_name')
-                ->where('status','1')->where('type','sales')
-                ->select();
-//        $this->_p($list);  var_dump($salesArr);exit;
-          
-        $this->view->assign('list',$list[0]);
-        $this->assign('page', $list[1]);
+                ->where('status','1')->where('type','sales')->select();
         $this->view->assign('salesArr',$salesArr);
+        
         return $this->view->fetch('member/pushMoney_List'); 
+    }
+    
+    public function  pushMoneyList() {
+        
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
+        $user = new MemberM ;
+        $lists = $user->pushMoneyList($tol,$limit);
+//        $this->_p($lists);exit;
+        return array('code'=>0,'msg'=>'','count'=>$lists['count'],'data'=>$lists['list']);
+
+       
     }
     
     //业务对应客户的提成管理的修改
