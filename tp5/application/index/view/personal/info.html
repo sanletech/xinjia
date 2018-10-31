@@ -11,25 +11,25 @@
             <form class="layui-form layui-col-xs5" id="info1" action="">
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">姓名:</label>
+                <label class="layui-form-label">账户名称:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input in" value="123">
+                  <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input in" value="123">
                 </div>
               </div>
 
               <div class="layui-col-xs10">
                 <label class="layui-form-label">企业名:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入企业名" class="layui-input in" value="123">
+                  <input type="text" name="company" lay-verify="title" autocomplete="off" placeholder="请输入企业名" class="layui-input in" value="123">
                 </div>
               </div>
 
-              <div class="layui-col-xs10">
-                <label class="layui-form-label">推荐人:</label>
+<!--              <div class="layui-col-xs10">
+                <label class="layui-form-label">推荐人帐号:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
+                  <input type="text" name="sales_code" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
                 </div>
-              </div>
+              </div>-->
 
               <!-- <div class="layui-col-xs10">
                 <label class="layui-form-label">绑定手机号:</label>
@@ -50,7 +50,7 @@
 
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn layui-btn-warm xiu">修改</button>
+                  <a class="layui-btn layui-btn-warm xiu">修改</a>
                 </div>
               </div>
             </form>
@@ -62,7 +62,7 @@
     <script>
       $('.xiu').click(function () {
           let data = $('#info1').serialize();
-          $.post(url, { data: data }, function (res) {
+          $.post('<{:url("index/personal/info_edit")}>',data, function (res) {
             if (res.status) {
               alert('修改成功！');
             }

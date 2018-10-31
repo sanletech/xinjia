@@ -13,14 +13,14 @@ class Excel
 	$list = Db::name("agent")->field("agent_id,agent_name,agent_phone,agent_sn,agent_fuzearea,root_id,agent_member,agent_event,agent_areainfo")->limit(50)->select();
 	$file_name = date('Y-m-d_His').'.xls';
         $path = dirname(__FILE__);
-        Loader::import('PHPExcel.Classes.PHPExcel');
-        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');
+        Loader::import('PHPExcel.Classes.PHPExcel'); //手动引入PHPExcel.php
+        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');//引入IOFactory.php 文件里面的PHPExcel_IOFactory这个类
       
-        $PHPExcel = new \PHPExcel();
+        $PHPExcel = new \PHPExcel(); //实例化
         // print_r($PHPExcel);die;
         $PHPSheet = $PHPExcel->getActiveSheet();
-        $PHPSheet->setTitle("代理商");
-        $PHPSheet->setCellValue("A1","ID");
+        $PHPSheet->setTitle("代理商");  //给当前活动sheet设置名称
+        $PHPSheet->setCellValue("A1","ID");//表格数据
         $PHPSheet->setCellValue("B1","名字");
         $PHPSheet->setCellValue("C1","电话");
         $PHPSheet->setCellValue("D1","编号");
@@ -46,9 +46,9 @@ class Excel
         	$PHPSheet->setCellValue('J'.$i,''.$value['agent_areainfo']);
         	$i++;
     	}
-        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel2007");
-        header('Content-Disposition: attachment;filename='.$file_name);
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $PHPWriter = \PHPExcel_IOFactory::createWriter($PHPExcel,"Excel2007"); //创建生成的格式
+        header('Content-Disposition: attachment;filename='.$file_name); //下载下来的表格名
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //表示在$path路径下面生成demo.xlsx文件
         $PHPWriter->save("php://output");
      }
  
@@ -74,7 +74,7 @@ class Excel
             $obj_PHPExcel =$objReader->load($file_name, $encode = 'utf-8');
               //加载文件内容,编码utf-8
             $excel_array=$obj_PHPExcel->getsheet(0)->toArray();
-            // print_r($excel_array);die;
+             print_r($excel_array);die;
                //转换为数组格式
             array_shift($excel_array);
               //删除第一个数组(标题);

@@ -127,14 +127,21 @@ class Login extends Controller
     }
     //修改密码
     public function new_pwd(){
-        $data = $this->request->param();
-               $res_code = Db::name('ali_sms')->where('phone',$phone)
+        $data = $this->request->only('phone,code,password,repassword');
+       
+        $res_code = Db::name('ali_sms')->where('phone',$data['phone'])
                 ->order('ctime desc')->limit(1)->value('code');
-        if($res_code!==$code){
+        if($res_code!==$data['code']){
             return array('status'=>0,'message'=>'验证码不正确');
         }
-        $map
-        
+        if($data['password']!==$data['repassword']){
+            return array('status'=>0,'message'=>'前后密码不一致');
+        }
+        $data['password'] = md5($data['password']);
+        //更新密码
+        $res2 =DB::name('member')->where('phone',$data['phone'])->update(['password'=>$data['password']]);
+        $res2 ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
+        return $response;
     }
     
 }
