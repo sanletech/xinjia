@@ -251,7 +251,8 @@
         var url="<{:url('admin/Price/route_toadd')}>";
         //加载船公司
         function loadship(){
-//             //加载 所有的船公司名字简称和相应的id
+            console.log(JS_SHIP_BOAT);
+            //加载 所有的船公司名字简称和相应的id
             var ship_length =js_ship_boat.length;
             var shipHtml = '';
             for(var i=0;i<ship_length;i++){
@@ -265,6 +266,7 @@
                 var code = d[0];
                 var count = d[1];
                 var index = d[2];
+                
                 if (count > 0) {
                     loadBoat(js_ship_boat[index].boat_list);
                 }else {
@@ -274,6 +276,8 @@
         }
         //加载船公司对应boat
         function loadBoat(boat){
+            console.log(boat);
+            
             var areaHtml = '';
             if(typeof(boat) !== 'undefined' && boat!=0){
                 var boat_length =boat.length;

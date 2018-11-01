@@ -1,6 +1,5 @@
 <!-- 港到港订单 -->
 <{include file='./public/head' /}>
-
   <body>
     <link rel="stylesheet" href="__STATIC__/css/place_details.css">
     <style>
@@ -30,13 +29,20 @@
       <form class="layui-form" id="cha">
         <div class="layui-row">
           <div class="layui-col-xs12">
-            <div class="grid-demo">
+            <div class="grid-demo sousuo">
               <div class="layui-form-item">
+                  <div class="yinc">
+                      <input type="text" id="start_id" name="start_id" value="<{$start_add ? $start_add: '';}>">
+                      <input type="text" id="end_id" name="end_id" value="<{$end_add ? $end_add: '';}>">
+                    </div>
                 <div class="layui-input-inline">
                     <input type="text" name="order_num" value='<{$order_num}>' placeholder="运单号" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-input-inline">
-                  <input type="text" name="aaa" value='' placeholder="收货人" autocomplete="off" class="layui-input">
+                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
                 </div>
                 <div class="layui-input-inline">
                   <input type="text"  value='' placeholder="起始时间" autocomplete="off" class="layui-input" name="date_start" id="date">
@@ -45,6 +51,15 @@
                   <input type="text" value='' placeholder="结束时间" autocomplete="off" class="layui-input" name="date_end" id="date1">
                 </div>
                 <button class="layui-btn btn_select">查询</button>
+              </div>
+
+              <div id="address">
+                  <ul>
+                    <li>省份</li>
+                    <li>城市</li>
+                    <li>港口</li>
+                  </ul>
+                  <div id="dizhi"></div>
               </div>
             </div>
           </div>
@@ -56,6 +71,8 @@
               <input type="checkbox" name="order_status[]" value='completion'  lay-skin="primary" title="已完成">
           </div>
         </div>
+
+        
       </form>
       <!-- 表格 -->
       <div class="biao">
@@ -173,6 +190,7 @@
       var url="<{:url('index/personal/place_order_port')}>";
     </script>
     <script src="__STATIC__/js/personal/page.js"></script>
+    <script src="__STATIC__/../admin/js/port.js"></script>
     <script src="__STATIC__/js/personal/cabinet_number.js"></script>
     <script>
         var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号

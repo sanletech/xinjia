@@ -62,3 +62,50 @@ $hei:#4c4c4c;
       }
     }
 }
+
+
+//省市区联动
+#address{
+  display: none;
+  position: absolute;
+  top: 42px;
+  left: 200px;
+  width: 428px;
+  height: 175px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1;
+  ul{
+    list-style: none;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 2px solid $lan;
+    li{
+      float: left;
+      height: 30px;
+      width: 100px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .lanse{
+      background: $lan;
+    }
+  }
+  #dizhi{
+    a{
+      display: inline-block;
+      height: 25px;
+      text-align: center;
+      line-height: 25px;
+      margin:0 5px;
+      cursor: pointer;
+      &:hover{
+        color:red;
+      }
+    }
+  }
+}
+.yinc{
+  display: none;
+}
