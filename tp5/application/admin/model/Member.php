@@ -37,7 +37,7 @@ class Member extends Model
     }
     
      //业务对应客户的提成管理
-    public function  pushMoneyList($type,$account,$pages='10') {
+    public function  pushMoneyList($tol,$limit) {
         $sql = " (SELECT M.id,M.member_code,M.name,SC.status ,SC.id AS ship_id"
                 . " FROM hl_member M CROSS JOIN hl_shipcompany SC "
                 . " WHERE SC.status = '1' and M.status='1' order by M.id,SC.id)";
@@ -45,46 +45,45 @@ class Member extends Model
         $list = Db::table($sql.' A')
             ->join('hl_member_profit MP','MP.member_code=A.member_code and A.ship_id=MP.ship_id','left')
             ->join('hl_sales_member SM','SM.member_code = A.member_code','left')
-            ->field('A.*,MP.money,SM.sales_name,SM.sales_code')
+            ->field('A.*,MP.40HQ,MP.20GP,SM.sales_name,SM.sales_code')
             ->group('A.member_code,A.ship_id')->order('A.id,A.ship_id')->buildSql();  
-//var_dump($list);exit;
-        $pageParam  = ['query' =>[]]; //设置分页查询参数  
-        if($type=='sales'&&!empty($account)){
-            $list =Db::table($list.' b')
-                ->where('b.sales_name','like',"%{$account}%")
-                ->whereOr('b.sales_code',$account)
-                ->buildSql(); 
-        } 
-    
-        if($type=='customer'&&!empty($account)){
-            $list =Db::table($list.' c')
-                ->where('c.name','like',"%{$account}%")
-                ->whereOr('c.member_code',$account)   
-                ->buildSql(); 
-        }
-        $pageParam['query']['account'] = $account;
-        $pageParam['query']['type'] = $type;
-        //var_dump($list);exit; //->paginate(20,false,$pageParam)
-        $pages = (Db::name('shipcompany')->where('status',1)->count())*$pages;
-//        var_dump($list);exit; var_dump($pages);exit;
 
-        $list =Db::table($list.' d')->paginate($pages,false,$pageParam);
-        $page = $list->render();
+        $count = (Db::name('shipcompany')->where('status',1)->count());
+        $limit = $count*$limit;
+        $tol =  $count*$tol;
+        $list =Db::table($list.' d')->limit($tol,$limit)->select();;
         $tem =[]; 
-        foreach ($list as  $row) {
-           $key= $row['member_code'];
-        $tem[$key]['id'] = $row['id'];
-        $tem[$key]['member_code'] = $row['member_code'];  
-        $tem[$key]['name'] = $row['name'];
-        $tem[$key]['status'] = $row['status'];
-        $tem[$key]['sales_name'] = $row['sales_name'];
-        $tem[$key]['sales_code'] = $row['sales_code'];
-        $tem[$key]['money'][] = $row['money'];
-        $tem[$key]['ship_id'][] = $row['ship_id'];
-       
+//        $this->_p($list);exit;
+        foreach ($list as $row) {
+            $key= $row['member_code'];
+      
+            $tem[$key]['id'] = $row['id'];
+            $tem[$key]['member_code'] = $row['member_code'];  
+            $tem[$key]['name'] = $row['name'];
+            $tem[$key]['status'] = $row['status'];
+            $tem[$key]['sales_name'] = $row['sales_name'];
+            $tem[$key]['sales_code'] = $row['sales_code'];
+            $tem[$key]['40HQ'][] = $row['40HQ'];
+            $tem[$key]['20GP'][] = $row['20GP'];
+            $tem[$key]['ship_id'][] = $row['ship_id'];
+
         }
         $tem = array_values($tem);
-        return array($tem,$page);       
+        foreach ($tem as $key => $value) {
+            foreach ($tem[$key]['40HQ'] as $k => $v) {
+                $tem[$key]['40HQ_'.$k]=$v;
+            }
+            unset($tem[$key]['40HQ']);
+        }
+        foreach ($tem as $key => $value) {
+            foreach ($tem[$key]['20GP'] as $k => $v) {
+                $tem[$key]['20GP_'.$k]=$v;
+            }
+            unset($tem[$key]['20GP']);
+        }
+        
+       
+        return array('list'=>$tem,'count'=>$count);       
     }
 
     

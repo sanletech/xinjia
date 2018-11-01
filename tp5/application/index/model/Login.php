@@ -11,7 +11,6 @@ class Login extends Model
         $map['password'] =md5($data['password']);
         $map['create_time'] = date('y-m-d');
         $map['phone'] = $data['phone'];//手机号码
-      
         $IDCode = controller('IDCode');
         //查询用户表最大的id 生成零时客户member_code
         $id =Db::name('member')->max('id')+1;
@@ -40,24 +39,24 @@ class Login extends Model
         //将业务对应客户的关系插入
         $data =['sales_code'=>$sales_code ,'sales_name'=>$salesName ,'member_code'=>$member_code ,'member_name'=>$data['company']];
         $res = Db::name('sales_member')->insert($data);
-         
-      //  $this->memberProfit($member_code);
+        $this->memberProfit($member_code);
         $this->memberDiscount($member_code);
         if ($res){
             $status= true;
         } else {
-             $status= false;
+            $status= false;
         }
         return $status;
     }
-    //设置客户的利润
+    //设置客户的利润,提成点
     public function memberProfit($member_code) {
             $ship_name =Db::name('shipcompany')->column('id');
             $data=[]; $mtime =date('y-m-d h:i:s');
             foreach ($ship_name as $key=>$value) {
                 $data[$key]['member_code']=$member_code;
                 $data[$key]['ship_id']= $value;
-                $data[$key]['money']= 200;
+                $data[$key]['40HQ']= 200;
+                $data[$key]['20GP']= 100;
                 $data[$key]['mtime']= $mtime;
             }
 //            $this->_v($data);exit;
@@ -79,7 +78,7 @@ class Login extends Model
             }
 //            $this->_v($data);exit;
             //同时默认设置客户的初始在线支付优惠价格
-            $res = Db::name('member_profit')->insertAll($data);
+            $res = Db::name('discount')->insertAll($data);
             return $res ? TRUE : FALSE;
             //var_dump($res);exit;
     }

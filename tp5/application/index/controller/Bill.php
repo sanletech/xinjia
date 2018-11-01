@@ -43,10 +43,9 @@ class Bill extends Base
         $list =Db::name('order_bill')->where('member_code',$member_code)
                 ->field('member_code',TRUE)->where('money_status',$money_status)
                 ->order('ctime desc,mtime desc')->buildSql();
-        $lista = Db::table($list.' a')->select();
-  
-        $count = count($lista);
+        $count = Db::table($list.' a')->count();
         $list = Db::table($list.' a')->limit($tol,$limit)->select();
+//        $this->_p($list);exit;
         
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
     }

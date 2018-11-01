@@ -5,6 +5,17 @@
             form {
                 margin: 20px;
             }
+
+            .mi {
+                position: relative;
+            }
+
+            .mi .yan {
+                position: absolute;
+                right: -25px;
+                top: 10px;
+                cursor: pointer;
+            }
         </style>
         <form class="layui-form" id="pwd" action="">
             <div class="layui-row">
@@ -18,15 +29,22 @@
 
                     <div class="layui-form-item">
                         <label class="layui-form-label">新密码</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input">
+                        <div class="layui-input-block mi">
+                            <input type="password" name="password" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input pwd"
+                                required="required" onpaste="return false" oncontextmenu="return false" oncopy="return false"
+                                oncut="return false">
+                            <div class="yan">
+                                <i class="fa fa-eye"></i>
+                            </div>
                         </div>
                     </div>
 
                     <div class="layui-form-item">
                         <label class="layui-form-label">确认密码</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="确认密码" class="layui-input">
+                            <input type="password" name="repassword" lay-verify="title" autocomplete="off" placeholder="确认密码" class="layui-input pwd"
+                                required="required" onpaste="return false" oncontextmenu="return false" oncopy="return false"
+                                oncut="return false">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -39,13 +57,21 @@
             </div>
         </form>
         <script>
-            $('.pwd_ti').click(function(){
+            $('.pwd_ti').click(function () {
                 let data = $('#pwd').serialize();
-                $.post(url,{data:data},function(res){
+                $.post(url, { data: data }, function (res) {
                     if (res.status) {
                         alert('提交成功！');
                     }
                 })
+            })
+
+            $('.yan i').mousedown(function () {//按下时
+                $('.pwd').attr('type', 'text');
+            });
+
+            $('.yan i').mouseup(function () {//松开时
+                $('.pwd').attr('type', 'password');
             })
         </script>
     </body>

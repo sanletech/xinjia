@@ -2,13 +2,26 @@
 <{include file='./public/head' /}>
   <body>
       <link rel="stylesheet" href="__STATIC__/css/info.css">
-      <script src="__STATIC__/js/personal/info.js"></script>
+      <style>
+        .layui-tab-content .layui-upload{
+          margin: 0;
+        }
+      </style>
     <div class="info">
       <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <!-- 个人信息修改 -->
         <div class="layui-tab-content layui-row" style="height: 100px;">
           <div class="layui-tab-item layui-show">
-            <form class="layui-form layui-col-xs5" id="info1" action="">
+            <form class="layui-form layui-col-xs5" id="info1">
+              <div class="layui-col-xs10">
+                <label class="layui-form-label">类型</label>
+                <div class="layui-input-block">
+                  <select name="interest" lay-filter="aihao">
+                    <option value="0">个人</option>
+                    <option value="1" selected="">公司</option>
+                  </select>
+                </div>
+              </div>
 
               <div class="layui-col-xs10">
                 <label class="layui-form-label">姓名:</label>
@@ -18,39 +31,38 @@
               </div>
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">企业名:</label>
+                <label class="layui-form-label">身份证:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入企业名" class="layui-input in" value="123">
+                <div class="layui-upload">
+                  <button type="button" class="layui-btn layui-btn-normal" id="test1">选择图片</button>
+                </div>
+              </div>
+              </div>
+
+              <div class="layui-col-xs10">
+                <label class="layui-form-label">联系邮箱:</label>
+                <div class="layui-input-block">
+                  <input type="text" name="mail" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
                 </div>
               </div>
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">推荐人:</label>
+                <label class="layui-form-label">详情地址:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
+                  <input type="text" name="addred" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
                 </div>
               </div>
 
-              <!-- <div class="layui-col-xs10">
-                <label class="layui-form-label">绑定手机号:</label>
-                <div class="layui-input-block">
-                  <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="绑定手机号" class="layui-input in" value="123" readonly='readonly'>
+              <div class="layui-col-xs10">
+                <label class="layui-form-label">审核认证:</label>
+                <div class="layui-input-block" style="padding-top: 10px;">
+                  <span>是/否</span>
                 </div>
-              </div> -->
-
-              <!-- <div class="layui-col-xs10 yin">
-                <div class="layui-inline layui-col-xs9">
-                  <label class="layui-form-label">验证码:</label>
-                  <div class="layui-input-block">
-                    <input type="tel" name="title" lay-verify="title" autocomplete="off" placeholder="验证码" class="layui-input" value="">
-                  </div>
-                </div>
-                <button class="layui-btn layui-btn-normal you">获取验证码</button>
-              </div> -->
+              </div>
 
               <div class="layui-form-item">
                 <div class="layui-input-block">
-                  <button class="layui-btn layui-btn-warm xiu">修改</button>
+                  <a class="layui-btn xiu">申请审核</a>
                 </div>
               </div>
             </form>
@@ -59,15 +71,41 @@
       </div>
     </div>
 
+
+    
     <script>
+    layui.use(['form','upload'], function(){
+      var $ = layui.jquery
+      ,upload = layui.upload
+      ,form = layui.form;
+      
+      //选完文件后不自动上传
+      upload.render({
+        elem: '#test1'
+        ,url: '/upload/'
+        ,auto: false
+        //,multiple: true
+        ,bindAction: '.xiu'
+        ,done: function(res){
+          console.log(res)
+        }
+      });
+
       $('.xiu').click(function () {
           let data = $('#info1').serialize();
           $.post(url, { data: data }, function (res) {
             if (res.status) {
-              alert('修改成功！');
+              alert('已经发送申请！');
             }
-          })
-        })
+         })
+      })
+      
+    });
+
+    
     </script>
   </body>
 </html>
+
+
+

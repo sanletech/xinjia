@@ -395,10 +395,10 @@ table.on('tool()', function(obj){
         , done: function (res) {
           console.log(order_num1);
           //上传完毕回调
-          if (res.status > 0) {
-            alert(res.mssage)
+          if (res.code = 0) {
+            alert(res.msg)
           } else {
-            alert(res.mssage)
+            alert(res.msg)
           }
         }
       });
@@ -408,15 +408,16 @@ table.on('tool()', function(obj){
     elem: '.syd' //绑定元素
     , url: url + '?order_num=AA19466880844019&type=sea_waybill' //上传接口
     , accept: 'file' //普通文件
-    , done: function (res) {
-      console.log(res);
-      
-      //上传完毕回调
-      // if (res.status > 0) {
-      //   alert(res.mssage)
-      // } else {
-      //   alert(res.mssage)
-      // }
+    ,choose:function(obj){
+      console.log(obj);
+    }
+    , done: function (res) {      
+      // 上传完毕回调
+      if (res.code = 0) {
+        alert(res.msg)
+      } else {
+        alert(res.msg)
+      }
     }
     ,error:function(){
       console.log(1111);

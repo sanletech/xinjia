@@ -132,7 +132,7 @@ function tiao() {
     $('.xin').html('');
     for (let i in arr) {
       if (name) {
-        if (arr[i].name == name) {
+        if (arr[i].name.indexOf(name) >= 0 ) {
          shuzu(arr[i]);
         }
       }else{
@@ -248,7 +248,17 @@ $('.wt_zeng').click(function () {
 
 //增加委托信息
 function zeng_wt(){
-  let data = $('#linkman_form').serialize();//增加委托信息表单数据    
+  let data = $('#linkman_form').serialize();//增加委托信息表单数据
+  let inpu = $('#linkman_form input');
+  let boot = true;
+  inpu.each(function(){
+    if (!$(this).val()) {
+      boot = false;
+      alert('请完善您的内容！')
+      return false;
+    }
+  })
+  if (boot) { 
   $.ajax({
     type: 'POST',
     url: linkmanAddURL,
@@ -262,28 +272,33 @@ function zeng_wt(){
         alert('修改联系人失败');
       }      
     }
-  });
-
+  });  
+} 
 }
 
 //修改委托信息
 $('.wt_xiu').click(function () {
-  layer.close(layer.index);
-  layer.open({
-    type: 1,
-    title: '修改信息',
-    area: ['600px'],
-    content: $('#wt3'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
-    skin: 'demo-class',
-    fixed: false,
-    success: function (data) {
-      // 模态框成功调用            
-      $('#wt3 input').eq(0).val(nei.id);      
-      $('#wt3 input').eq(1).val(nei.company);
-      $('#wt3 input').eq(2).val(nei.name);
-      $('#wt3 input').eq(3).val(nei.phone);
-    }
-  });
+  if (!nei.id) {
+    boot = false;
+    alert('请选择您要修改的信息');
+  }else{
+    layer.close(layer.index);
+    layer.open({
+      type: 1,
+      title: '修改信息',
+      area: ['600px'],
+      content: $('#wt3'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+      skin: 'demo-class',
+      fixed: false,
+      success: function (data) {
+        // 模态框成功调用            
+        $('#wt3 input').eq(0).val(nei.id);      
+        $('#wt3 input').eq(1).val(nei.company);
+        $('#wt3 input').eq(2).val(nei.name);
+        $('#wt3 input').eq(3).val(nei.phone);
+      }
+    });
+  }
 });
 
 //修改委托信息
@@ -293,20 +308,24 @@ function xiu_wt(){
   data.company = $('#wt3 input').eq(1).val();
   data.link_name = $('#wt3 input').eq(2).val();
   data.phone = $('#wt3 input').eq(3).val();
-  $.ajax({
-    type: 'POST',
-    url: linkmanUpdateURL,
-    data: data,
-    dataType: "json",
-    success: function (data) {
-      if(data.status){
-        layer.close(layer.index);//关闭添加窗口
-        $('.wt1').click();//重新查询并打开窗口
-      }else{
-        alert('修改联系人失败');
-      }   
-    }
-  });  
+  if (data.company && data.link_name && data.phone) {
+    $.ajax({
+      type: 'POST',
+      url: linkmanUpdateURL,
+      data: data,
+      dataType: "json",
+      success: function (data) {
+        if(data.status){
+          layer.close(layer.index);//关闭添加窗口
+          $('.wt1').click();//重新查询并打开窗口
+        }else{
+          alert('修改联系人失败');
+        }   
+      }
+    });
+  }else{
+    alert('请完善您的内容！')
+  }
 }
 
 //删除选中的委托信息
@@ -463,7 +482,7 @@ $('.tjiao').eq(0).find('.shi').click(function(){
     ,offset: 't'
     ,area:['80%','100%']
     ,shadeClose:true
-    ,cancel: function(index, layero){
+    ,end: function(index, layero){
       layer.close(index);
       $('.tjiao').eq(1).find('.qu').click();
     }

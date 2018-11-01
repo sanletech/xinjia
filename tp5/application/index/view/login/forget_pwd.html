@@ -1,105 +1,134 @@
 <!-- 登陆 -->
 <{include file='./public/head' /}>
-     <style>
-            form {
-                margin: 20px;
-            }
-        </style>
-        <form class="layui-form" id="pwd" action="">
-            <div class="layui-row">
-                <div class="layui-col-xs12">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">手机号码</label>
-                        <div class="layui-input-block">
-                            <input type="text" value="" name="phone" id="phone" class="layui-input" placeholder="请输入手机号码">
-                        </div>
-                    </div>
+    <style>
+        form {
+            margin: 20px;
+            padding-right: 30px;
+        }
 
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">验证码</label>
-                            <div class="layui-input-inline">
-                            <input type="tel" name="zheng" placeholder="请输入您的短信验证码" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <a class="layui-btn layui-btn-normal" id="btn">获取验证码</a>
-                        </div>
-                    </div>
+        .mi {
+            position: relative;
+        }
 
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">新密码</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input">
-                        </div>
+        .mi .yan {
+            position: absolute;
+            right: -25px;
+            top: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <form class="layui-form" id="pwd">
+        <div class="layui-row">
+            <div class="layui-col-xs12">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号码</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="" name="phone" id="phone" class="layui-input" placeholder="请输入手机号码">
                     </div>
+                </div>
 
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">确认密码</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="确认密码" class="layui-input">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">验证码</label>
+                        <div class="layui-input-inline">
+                            <input type="tel" name="code" placeholder="请输入您的短信验证码" autocomplete="off" class="layui-input">
                         </div>
                     </div>
-                    <div class="layui-form-item">
-                        <div class="layui-input-block">
-                            <button class="layui-btn pwd_ti">立即提交</button>
-                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <div class="layui-inline">
+                        <a class="layui-btn layui-btn-normal" id="btn">获取验证码</a>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">新密码</label>
+                    <div class="layui-input-block mi">
+                        <input type="password" name="password" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input pwd" required="required"
+                            onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+                        <div class="yan">
+                            <i class="fa fa-eye"></i>
                         </div>
                     </div>
                 </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">确认密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="repassword" lay-verify="title" autocomplete="off" placeholder="确认密码" class="layui-input pwd" required="required"
+                            onpaste="return false" oncontextmenu="return false" oncopy="return false" oncut="return false">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <a class="layui-btn pwd_ti">立即提交</a>
+                        <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+                    </div>
+                </div>
             </div>
-        </form>
-        <script src="https://cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.js"></script>
-        <script>
-            $('#btn').click(function(){
-                let phone = $('#phone').val();  
-                var telReg = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);                              
-                if (telReg) {
-                    $.get("<{:url('index/login/ali_sms')}>",{phone:phone},function(res){
+        </div>
+    </form>
+    <script src="https://cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.js"></script>
+    <script>
+        var forget_pwd_url = "<{:url('index/login/new_pwd')}>";
+        $('#btn').click(function () {
+            let phone = $('#phone').val();
+            var telReg = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+            if (telReg) {
+                $.get("<{:url('index/login/ali_sms')}>", { phone: phone }, function (res) {
                     if (res.status) {
-                        $.cookie('mint',120);
+                        $.cookie('mint', 120);
                         timekeeping();
                     }
                 });
-                }else{
-                    alert('您输入的手机号格式不正确！')
+            } else {
+                alert('您输入的手机号格式不正确！')
+            }
+        });
+
+        $('.pwd_ti').click(function () {
+            let data = $('#pwd').serialize();
+            console.log(data);
+            $.post('<{:url("index/login/new_pwd")}>', data, function (res) {
+                if (res.status) {
+                    layer.close(layer.index);
+                    alert('提交成功！');
                 }
-            });
-
-            $('.pwd_ti').click(function(){
-                let data = $('#pwd').serialize();
-                $.post(url,{data:data},function(res){
-                    if (res.status) {
-                        alert('提交成功！');
-                    }
-                })
             })
+        })
 
 
-            function timekeeping(){
-                let mint = parseInt($.cookie('mint'));
-                console.log(mint);
-                
-                //把按钮设置为不可以点击
-                $('#btn').attr("disabled", true);
-                var interval=setInterval(function(){//每秒读取一次cookie
+        function timekeeping() {
+            let mint = parseInt($.cookie('mint'));
+            console.log(mint);
+
+            //把按钮设置为不可以点击
+            $('#btn').attr("disabled", true);
+            var interval = setInterval(function () {//每秒读取一次cookie
                 //在发送按钮显示剩余倒计时
-                $('#btn').html('等待'+mint+'秒');
+                $('#btn').html('等待' + mint + '秒');
                 //把剩余总倒计时减掉1
                 mint--;
-                if(mint==0){//剩余倒计时为零，则显示 重新发送，可点击
-                //清除定时器
-                clearInterval(interval);
-                //显示重新发送
-                $('#btn').html('重新发送');
-                //把发送按钮设置为可点击
-                $('#btn').attr("disabled", false);
-                }else{//剩余倒计时不为零
-                //重新写入总倒计时
-                $.cookie("mint",mint);
+                if (mint == 0) {//剩余倒计时为零，则显示 重新发送，可点击
+                    //清除定时器
+                    clearInterval(interval);
+                    //显示重新发送
+                    $('#btn').html('重新发送');
+                    //把发送按钮设置为可点击
+                    $('#btn').attr("disabled", false);
+                } else {//剩余倒计时不为零
+                    //重新写入总倒计时
+                    $.cookie("mint", mint);
                 }
-                },1000);
-            }
-        </script>
+            }, 1000);
+        }
+
+        $('.yan i').mousedown(function () {//按下时
+            $('.pwd').attr('type', 'text');
+        });
+
+        $('.yan i').mouseup(function () {//松开时
+            $('.pwd').attr('type', 'password');
+        })
+    </script>
     </body>
-</html>
+
+    </html>
