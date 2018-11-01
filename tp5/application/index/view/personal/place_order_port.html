@@ -112,7 +112,7 @@
                       <{/if}>
                     </td>
                     <!-- 驳回提示  title -->
-                    <td class="goods"><a href="javascript:void(0);" title=""><{$vo.container_buckle}></a></td>
+                    <td class="goods"><a href="javascript:void(0);" title="<{$vo.container_buckle_comment}>"><{$vo.container_buckle}></a></td>
                     <td>
                       <!-- 有改变css('background-color','#00DB00') -->
                     <?php                                    
@@ -125,7 +125,7 @@
                     </td>
                     <td class="fukuan"><?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></td>
                     <td class="caozuo">
-                      状态说明
+                      <{$vo.status_title}>
                     </td> 
                   </tr>
                   <{/volist}>
