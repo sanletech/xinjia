@@ -50,10 +50,10 @@
           </div>
 
           <div class="layui-col-xs12">
-              <input type="checkbox" name="like1[write]" lay-skin="primary" title="已审核" checked="">
-              <input type="checkbox" name="like1[read]" lay-skin="primary" title="已取消">
-              <input type="checkbox" name="like1[read]" lay-skin="primary" title="下单成功">
-              <input type="checkbox" name="like1[read]" lay-skin="primary" title="已完成">
+              <input type="checkbox" name="order_status[]" value="order_audit" lay-skin="primary" title="已审核" checked="">
+              <input type="checkbox" name="order_status[]" value="cancel" lay-skin="primary" title="已取消">
+              <input type="checkbox" name="order_status[]" value="order_success" lay-skin="primary" title="进行中">
+              <input type="checkbox" name="order_status[]" value='completion'  lay-skin="primary" title="已完成">
           </div>
         </div>
       </form>

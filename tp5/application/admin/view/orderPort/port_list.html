@@ -268,7 +268,10 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
       ,{field:'member_code', title:'客户账号',width:150}
       ,{field:'company', title:'客户单位', width:200}
       ,{field:'track_num', title:'运单号' ,width:100,event:'yun',templet:function(res){
-        return '<div class="track_num1">'+ res.track_num +'</div>'
+        if (res.track_num == null) {
+          res.track_num = '上传';
+        }
+        return '<div class="track_num1"><a>'+ res.track_num +'</a></div>'
       }}
       ,{field:'container_sum', title:'柜量/柜型' ,width:100,templet:function(res){
         return '<div class="">'+ res.container_sum +'/'+ res.container_size+'</div>'
@@ -331,9 +334,6 @@ $('.cha').click(function(){
   })
 });
 
-  var order_num1 = "";
-  var track_num1 = '';
-
 //监听行工具事件
 table.on('tool()', function(obj){
     var data = obj.data;
@@ -366,9 +366,8 @@ table.on('tool()', function(obj){
         ,shadeClose :true
         ,btn:['上传']
         ,yes:function(index){
-          if($('#ding input').val()){
-            track_num1 = $('.num1 span').html();       
-               
+          if($('#ding input').val()){      
+            dingcang($('.num1 span').html(),index);
             $('.dcd').click();
           }else{
               layer.msg('请输入运单号', {
@@ -382,36 +381,41 @@ table.on('tool()', function(obj){
       });
     }else if(obj.event === 'shui'){
       $('#shui .num2').html($(this).siblings('td[data-field="order_num"]').find('a').html());
-      order_num1 = $('#shui .num2').html();  
+      shuiyun($('#shui .num2').html());  
       $('#shui a').click();
     }
   });
 
   //订舱单
+  function dingcang(order_id,index){
+   let track_num = $('#ding input').val();
    upload.render({
         elem:'.dcd'  //绑定元素
-        , url: url + '?order_num=' + order_num1 + '&type=book_note' //上传接口
+        , url: url + '?order_num=' + order_id + '&type=book_note' //上传接口
         , accept: 'file' //普通文件
+        ,data:{track_num:track_num}
         , done: function (res) {
-          console.log(order_num1);
           //上传完毕回调
           if (res.code = 0) {
-            alert(res.msg)
+            layer.close(index);//关闭小窗口
+            alert(res.msg);
           } else {
             alert(res.msg)
           }
         }
-      });
+    });
+  }
   
-  //水运单
+   //水运单
+  function shuiyun(order_id){
     upload.render({
     elem: '.syd' //绑定元素
-    , url: url + '?order_num=AA19466880844019&type=sea_waybill' //上传接口
+    , url: url + '?order_num='+order_id+'&type=sea_waybill' //上传接口
     , accept: 'file' //普通文件
     ,choose:function(obj){
       console.log(obj);
     }
-    , done: function (res) {      
+    , done: function (res) {            
       // 上传完毕回调
       if (res.code = 0) {
         alert(res.msg)
@@ -419,12 +423,8 @@ table.on('tool()', function(obj){
         alert(res.msg)
       }
     }
-    ,error:function(){
-      console.log(1111);
-      
-    }
-
   });
+  }
 
 
 

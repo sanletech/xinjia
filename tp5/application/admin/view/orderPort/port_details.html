@@ -383,7 +383,7 @@
 
                         <div class="dd_nei">
                             <div class="layui-col-xs12 layui-form er">
-                                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang">
+                                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" disabled>
                                 <!-- <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_bge()">增加</a> -->
                             </div>
                             <div class="layui-col-xs12 er biaoge zhuanghuo">
@@ -443,8 +443,7 @@
 
                         <div class="dd_nei">
                             <div class="layui-col-xs12 layui-form er">
-                                <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
-                                <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_song()">增加</a>
+                                <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="" disabled>
                             </div>
                             <div class="layui-col-xs12 er biaoge songhuo">
                                 <table class="layui-table" lay-size="sm">
@@ -493,9 +492,9 @@
                         </div>
                         <div class="feiyong">
                           <div class="layui-col-xs12">
-                            <span>海运费：</span>
+                            <span>海运费：<{$list.seaprice}></span>
                             <pi id="money"><{$list.seaprice}></pi>元
-                              <span class="shuo">已包含：双边</span>
+                              <span class="shuo"><{$list.price_description}></span>
                           </div>
                           <div class="layui-col-xs12">
                             <span>保险费：</span>
@@ -512,12 +511,12 @@
                           </div>
                           <div class="layui-col-xs12">
                             <span>优惠：</span>
-                            <strong id="discount"></strong>元
+                            <strong id="discount"><{$list['discount']*$list['container_sum']}></strong>元
                             <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
                           </div>
                           <div class="layui-col-xs12">
                             <span>总费用：</span>
-                            <strong class="zongfei" id="price_sum">0</strong>元
+                            <strong class="zongfei" id="price_sum"><{$list.quoted_price}></strong>元
                           </div>
                         </div>
                     </div>
@@ -617,13 +616,9 @@
 
 
         <script>
-            var loading = true;//装货状态
-            var delivery = true;//送货状态
             var url = "<{:url('admin/orderPort/Upload')}>";
             var xiu_url = "<{:url('admin/orderPort/orderEdit')}>";
         </script>
-        <script src="__STATIC__/../index/js/lrdd.js"></script>
-        <script src="__STATIC__/../index/js/place_order.js"></script>
         <script src="__STATIC__/js/port_money.js"></script>
         <script>
             $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();

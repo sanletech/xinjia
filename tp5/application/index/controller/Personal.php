@@ -5,7 +5,7 @@ use think\Db;
 use think\Session;
 use app\index\model\Personal as dataM;
 class Personal extends Base
-{
+{    
     //个人中心
     public function steward()
     {   
@@ -16,6 +16,38 @@ class Personal extends Base
     {
        return $this->view->fetch('personal/pwd_edit');
     }
+     //修改密码
+    public function pwd_toedit()
+    {
+        $data= $this->request->only('password,newpassword,repassword');
+        if($data['newpassword']!==$data['repassword']){
+            return array('status'=>0,'message'=>'两次密码不一致') ;
+        }
+        //查询密码是否和数据库的一致
+        $member_code =Session::get('member_code','think');
+        $password =Db::name('member')->where('member_code',$member_code)->value('password');
+        $data_password=md5($data['password']);
+        if($data_password==$password){
+            $res =Db::name('member')->where('member_code',$member_code)->update(['password'=>$data_password]);
+            $res ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
+            return $response;
+        }  else {
+            return array('status'=>0,'message'=>'密码不正确') ;
+        }
+    }
+       //个人信息
+    public function info()
+    {
+       return $this->view->fetch('personal/info');
+    }
+    //个人信息的修改
+    public function info_edit()
+    {
+        $data= $this->request->param();
+        $this->_p($data);exit;
+      
+    }
+    
     //作废订单
     public function invalid()
     {
@@ -49,11 +81,7 @@ class Personal extends Base
     {
        return $this->view->fetch('personal/bill_statement');
     }
-    //个人信息
-    public function info()
-    {
-       return $this->view->fetch('personal/info');
-    }
+ 
     //公司信息
     public function company()
     {
@@ -85,8 +113,64 @@ class Personal extends Base
     //港到港订单
     public function place_order_port()
     {   
+        $map =[];
         //订单查询
         $order_num =  $this->request->param('order_num');
+        if($order_num){
+            $this->view->assign('order_num',$order_num);
+            $map['A.order_num']=$order_num;
+        }
+        //港口查询
+        $start_add =$this->request->param('start_add');
+        $start_name =$this->request->param('start_name');
+        if($start_add){
+            $this->view->assign(['start_add'=>$start_add,'start_name'=>$start_name]);
+            $map['A.s_port_code']=$start_add;
+        }
+        $end_name =$this->request->param('end_name');
+        $end_add =$this->request->param('end_add');
+        if($end_add){
+            $this->view->assign(['end_add'=>$end_add,'end_name'=>$end_name]);
+            $map['A.e_port_code']=$end_add;
+        }
+      
+        //下单时间查询
+        $date_start = $this->request->param('date_start');
+        $date_end = $this->request->param('date_end');
+        if($date_start&&$date_end){
+            $this->view->assign(['date_start'=>$date_start,'date_end'=>$date_end]);
+            $map['A.ctime']=['between time',[$date_start,$end_add]];
+        }
+        //订单状态
+        $order_status = $this->request->param();
+        $order_status=  array_key_exists('order_status', $order_status)?$order_status['order_status']:'';
+//        $this->_p($order_status);exit;
+        if($order_status){
+            $this->view->assign('order_status',$order_status);
+            foreach ($order_status as $status){
+                switch ($status) {
+                    case 'order_audit':
+                        $map['A.status'][]=['=',  $this->order_status['order_audit']];
+                    break;
+                    case 'cancel':
+                        $map['A.status'][]=['in',  [$this->order_status['cancel'], $this->order_status['stop']]]; 
+                    break;
+                    case 'order_success':
+                        $map['A.status'][]=['in', array_slice($this->order_status, 3, -1)];
+                    break;
+                    case 'completion':
+                        $map['A.status'][]=['=',  $this->order_status['completion']];
+                    break;
+                    default :
+                        die('参数错误');   
+                }
+            }
+            if(count($map['A.status'])>1){
+                $map['A.status'][]='or';
+            }else{
+                $map['A.status']=$map['A.status'][0];
+            }
+        }
         $member_code =Session::get('member_code','think');
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
@@ -96,7 +180,7 @@ class Personal extends Base
         $tol=($page-1)*$limit;
         $dataM =new dataM;
        
-        $list = $dataM->place_order($member_code,$tol,$limit,array(2,3,4,5,6,7),$order_num);
+        $list = $dataM->place_order($member_code,$tol,$limit,$map);
 //        $this->_p($list);exit;
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);

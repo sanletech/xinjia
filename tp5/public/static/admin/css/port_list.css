@@ -11,7 +11,8 @@
   overflow: hidden; }
 
 a {
-  color: #2e8de5; }
+  color: #2e8de5;
+  cursor: pointer; }
 
 #bz, #ding, #shui, .dcd {
   display: none;

@@ -7,6 +7,8 @@ use think\Db;
 class Base extends Controller
 {
     protected $member_code='';
+    protected $order_status;
+    protected $page=5;
     protected function _initialize() {
         parent::_initialize();
         //在公共控制器的初始化方法中，创建一个常量用来判断用户是否登录或已经登录
@@ -17,7 +19,7 @@ class Base extends Controller
 //        }  else {
 //            $this->alreadylogin();
 //        }
-      
+        $this->order_status=config('config.order_status');//导入配置
         
     }
     

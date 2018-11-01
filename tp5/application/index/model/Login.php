@@ -6,8 +6,8 @@ use think\Db;
 class Login extends Model
 {
     public function register($data) {
-//        $map['name']=$data['membername'];
-        $map['company'] =$data['company'];
+        $map['name']=$data['name'];
+     //   $map['company'] =$data['company'];
         $map['password'] =md5($data['password']);
         $map['create_time'] = date('y-m-d');
         $map['phone'] = $data['phone'];//手机号码

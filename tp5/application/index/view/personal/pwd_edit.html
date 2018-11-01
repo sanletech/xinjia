@@ -23,14 +23,14 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">原始密码</label>
                         <div class="layui-input-block">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入原始密码" class="layui-input">
+                            <input type="text" name="password" lay-verify="title" autocomplete="off" placeholder="请输入原始密码" class="layui-input">
                         </div>
                     </div>
 
                     <div class="layui-form-item">
                         <label class="layui-form-label">新密码</label>
                         <div class="layui-input-block mi">
-                            <input type="password" name="password" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input pwd"
+                            <input type="password" name="newpassword" lay-verify="title" autocomplete="off" placeholder="请输入新密码" class="layui-input pwd"
                                 required="required" onpaste="return false" oncontextmenu="return false" oncopy="return false"
                                 oncut="return false">
                             <div class="yan">
@@ -49,20 +49,19 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn pwd_ti">立即提交</button>
-                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                             <a  class="layui-btn pwd_ti">立即提交</a>
+                            <a type="reset" class="layui-btn layui-btn-primary">重置</a>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
         <script>
-            $('.pwd_ti').click(function () {
+            
+            $('.pwd_ti').click(function(){
                 let data = $('#pwd').serialize();
-                $.post(url, { data: data }, function (res) {
-                    if (res.status) {
-                        alert('提交成功！');
-                    }
+                $.post('<{:url("index/personal/pwd_toedit")}>',data,function(res){
+                    alert(res.message);
                 })
             })
 
