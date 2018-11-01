@@ -46,16 +46,6 @@ function loadCity(citys_id) {
             if (arry == false) {
                 $('#address').hide();
             }
-            inp.val('');
-            if (boot) {
-                add.start_id = data.provinceCode;
-                add.start_name = data.provinceName;
-            } else {
-                add.end_id = data.provinceCode;
-                add.end_name = data.provinceName;
-            }
-
-            inp.val(data.provinceName);//当前选中的值
             $('#address li').removeClass('lanse').eq(1).addClass('lanse');//选中城市
         }
     })
@@ -74,14 +64,6 @@ function loadPort(areas_id) {
                 if (arry[i] == false) {//当后面没有数据的时候
                     $('#address').hide();
                 }
-                if (boot) {
-                    add.start_id = arry[i].cityCode;
-                    add.start_name = arry[i].cityName;
-                } else {
-                    add.end_id = arry[i].cityCode;
-                    add.end_name = arry[i].cityName;
-                }
-                inp.val(inp.val() + arry[i].cityName);//当前选中的值
                 $('#address li').removeClass('lanse').eq(2).addClass('lanse');
             }
         }
@@ -96,7 +78,7 @@ function jie_dao(dao_id,zj) {
         add.end_id = dao_id;
         add.end_name = $(zj).html();
     }
-    inp.val(inp.val() + $(zj).html());//当前选中的值
+    inp.val($(zj).html());//当前选中的值
     $('#address').hide();
 }
 
