@@ -7,7 +7,7 @@ use think\Db;
 class Excel
 {
     public function excel()
-     {
+    {
         //导出
 	//##########################################################################
 	$list = Db::name("agent")->field("agent_id,agent_name,agent_phone,agent_sn,agent_fuzearea,root_id,agent_member,agent_event,agent_areainfo")->limit(50)->select();
