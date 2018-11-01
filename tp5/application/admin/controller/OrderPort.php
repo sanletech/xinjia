@@ -54,7 +54,7 @@ class OrderPort extends Base
     }
     
     public function downs(){    
-            $order_name = $this->request->param('order_num');    //下载文件名  
+            $order_name = $this->request->param('order_num');    //下载文件名 
             $type = $this->request->param('type'); //文件类型
             $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
             var_dump($file);
@@ -140,7 +140,7 @@ class OrderPort extends Base
     //订单号码
     public function waybill_upload(){
         $data= $this->request->param();
-      
+        // var_dump($data);exit;
         $file = request()->file('file');
         $order_num = $this->request->param('order_num');
         $type = $this->request->param('type');

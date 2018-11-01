@@ -45,4 +45,10 @@
 nav {
   overflow: hidden; }
 
+.tui {
+  position: absolute;
+  right: 35px;
+  top: 35px;
+  font-size: 28px; }
+
 /*# sourceMappingURL=top.css.map */

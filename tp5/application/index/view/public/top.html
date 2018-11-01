@@ -29,9 +29,10 @@
             <a href="javascript:;">帮助与公告</a>
           </li>-->
           <{notempty name="$Think.session.member_code"}>
-          <li class="log">
+          <li class="log ge">
             <a href="<{:url('index/Index/personal')}>">个人中心</a>
           </li>
+          <a href="<{:url('login/logout')}>" title="退出登录"><i class="fa fa-sign-in fa-2x tui"></i></a>
           <{else /}>
           <li class="log" style="background-color:#2e8de5;">
             <a href="<{:url('index/login/login')}>" style="color: #fff;">企业登陆</a>
@@ -43,4 +44,5 @@
         </ul>
       </div>
     </header>
+    <!-- <{:url('login/logout')}> -->
    

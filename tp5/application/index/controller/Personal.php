@@ -27,8 +27,9 @@ class Personal extends Base
         $member_code =Session::get('member_code','think');
         $password =Db::name('member')->where('member_code',$member_code)->value('password');
         $data_password=md5($data['password']);
+        $data_new_password=md5($data['newpassword']);
         if($data_password==$password){
-            $res =Db::name('member')->where('member_code',$member_code)->update(['password'=>$data_password]);
+            $res =Db::name('member')->where('member_code',$member_code)->fetchSql(true)->update(['password'=>$data_new_password]);
             $res ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
             return $response;
         }  else {

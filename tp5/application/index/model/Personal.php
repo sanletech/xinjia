@@ -48,7 +48,6 @@ class Personal extends Model
         $lists =Db::table($data.' A')->where($map)->group('A.id')->limit(1,100)->select();
 
         //展示扣柜驳回的理由
-      
        
         $where = "where status =".$this->order_status['container_lock'];
         $container_buckle = Db::table($statusSql =$statusSql_1.$where.$statusSql_2." A")->select();

@@ -192,13 +192,15 @@ function toajax(url, data) {
         data: data,
         dataType: "json",
         success: function (data) {          
-            if (data.status == 1) {
+            if (data.status) {
                 layui.use('layer', function(){
                     var layer = layui.layer;
-                    layer.alert('订单提交成功', {icon: 1},function(){
+                    layer.alert('<div style="text-align: center;">订单提交成功</div>', {icon: 1},function(){
                       window.location.replace(index_url);//跳转个人中心 
                     });
                 });   
+            }else{
+                layer.alert('<div style="text-align: center;">请勿重复提交订单</div>', {icon: 2});
             }
         // $('.tjiao a').eq(0).attr("onclick","order_data(this)");//禁用提交按钮
         }

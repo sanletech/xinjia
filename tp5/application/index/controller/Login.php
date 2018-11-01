@@ -125,6 +125,7 @@ class Login extends Controller
     public function forget_pwd(){
         return $this->view->fetch('login/forget_pwd');
     }
+
     //修改密码
     public function new_pwd(){
         $data = $this->request->only('phone,code,password,repassword');
