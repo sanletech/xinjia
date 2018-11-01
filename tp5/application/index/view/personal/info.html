@@ -16,22 +16,22 @@
               <div class="layui-col-xs10">
                 <label class="layui-form-label">类型</label>
                 <div class="layui-input-block">
-                  <select name="interest" lay-filter="aihao">
-                    <option value="0">个人</option>
-                    <option value="1" selected="">公司</option>
+                  <select name="type" lay-filter="lei">
+                    <option value="personal" selected="">个人</option>
+                    <option value="company">公司</option>
                   </select>
                 </div>
               </div>
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">账户名称:</label>
+                <label class="layui-form-label mc">账户名称</label>
                 <div class="layui-input-block">
                   <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input in" value="123">
                 </div>
               </div>
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">身份证:</label>
+                <label class="layui-form-label zj">身份证</label>
                 <div class="layui-input-block">
                 <div class="layui-upload">
                   <button type="button" class="layui-btn layui-btn-normal" id="test1">选择图片</button>
@@ -40,21 +40,21 @@
               </div>
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">联系邮箱:</label>
+                <label class="layui-form-label">联系邮箱</label>
                 <div class="layui-input-block">
                   <input type="text" name="mail" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
                 </div>
               </div>
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">详情地址:</label>
+                <label class="layui-form-label">详情地址</label>
                 <div class="layui-input-block">
                   <input type="text" name="addred" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
                 </div>
               </div>
 
               <div class="layui-col-xs10">
-                <label class="layui-form-label">审核认证:</label>
+                <label class="layui-form-label">审核认证</label>
                 <div class="layui-input-block" style="padding-top: 10px;">
                   <span>是/否</span>
                 </div>
@@ -88,6 +88,17 @@
         ,bindAction: '.xiu'
         ,done: function(res){
           console.log(res)
+        }
+      });
+
+      form.on('select(lei)', function(data){
+        // console.log(data.value); //得到被选中的值
+        if (data.value == 'personal') {
+          $('.mc').html('账户名称');
+          $('.zj').html('身份证');
+        }else{
+          $('.mc').html('企业全称');
+          $('.zj').html('营业执照');
         }
       });
 
