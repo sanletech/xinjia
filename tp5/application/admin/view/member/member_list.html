@@ -4,11 +4,11 @@
     color: blue;
     cursor: pointer;
   }
-  #shen{
+  #examine{
     display: none;
     padding: 10px 30px;
   }
-  #shen ul li{
+  #examine ul li{
     margin: 6px 0;
   }
 </style>
@@ -85,7 +85,7 @@
     </div>
 
     <!-- 审核 -->
-    <div id="shen">
+    <div id="examine">
         <ul>
           <li>类型：个人</li>
           <li>账户名称：123</li>
@@ -108,17 +108,17 @@
             layer.open({
               type:1
               ,title: '用户信息'
-              ,content: $('#shen')
+              ,content: $('#examine')
               ,area:'220px'
               ,btn:['确定','驳回']
               ,btnAlign: 'c'
               ,yes:function(index){
-                $.get(url,{data:yes},function(res){//确定
+                $.get(url,{audit:yes},function(res){//确定
                   layui.close(index);
                   alert(res.message);
                 })
               },btn2:function(index){//驳回
-                $.get(url,{data:no},function(res){//确定
+                $.get(url,{audit:no},function(res){//确定
                   layui.close(index);
                   alert(res.message);
                 })
