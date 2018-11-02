@@ -88,7 +88,7 @@ class ExportExcelDroplist extends Model {
         $objValidation->setError('不在列表中的值');
         $objValidation->setPromptTitle('请选择');
         $objValidation->setPrompt('请从列表中选择一个值.');
-        $objValidation->setFormula1("=设计部");
+        $objValidation->setFormula1("=department");
 
         $objValidation = $objPHPExcel->getActiveSheet()->getCell($col2.$row)->getDataValidation();
         $objValidation->setType(\PHPExcel_Cell_DataValidation::TYPE_LIST );
