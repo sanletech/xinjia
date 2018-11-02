@@ -6,6 +6,13 @@
         .layui-tab-content .layui-upload{
           margin: 0;
         }
+        .xx{
+          color: red;
+          font-size: 14px;
+        }
+        .info{
+          /* display: none; */
+        }
       </style>
     <div class="info">
       <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
@@ -35,6 +42,8 @@
                 <div class="layui-input-block">
                 <div class="layui-upload">
                   <button type="button" class="layui-btn layui-btn-normal" id="test1">选择图片</button>
+                  <div class="xx">上传的身份证照片必须是本人将身份证正面</div>
+
                 </div>
               </div>
               </div>
@@ -72,23 +81,59 @@
     </div>
 
 
+    <!-- <div class="layui-upload">
+      <button type="button" class="layui-btn" id="test2">多图片上传</button> 
+      <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+        预览图：
+        <div class="layui-upload-list" id="demo2"></div>
+     </blockquote>
+    </div> -->
+
+
     
     <script>
     layui.use(['form','upload'], function(){
       var $ = layui.jquery
       ,upload = layui.upload
       ,form = layui.form;
-      
+
+
+  //      //多图片上传
+  // upload.render({
+  //   elem: '#test2'
+  //   ,url: '<{:url("index/personal/info_edit")}>'
+  //   ,multiple: true
+      // ,auto: false
+  //   ,bindAction: '.xiu'
+  //   ,before: function(obj){
+  //     //预读本地文件示例，不支持ie8
+  //     obj.preview(function(index, file, result){
+  //       $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+  //     });
+  //   }
+  //   ,done: function(res){
+  //     //上传完毕
+  //   }
+  // });
+
       //选完文件后不自动上传
       upload.render({
         elem: '#test1'
-        ,url: '/upload/'
+        ,url: '<{:url("index/personal/info_edit")}>'
         ,auto: false
         //,multiple: true
+        ,data:{type:function(){  
+          return $('#info1').serializeArray()[0].value;   
+        },name:function(){          
+          return $('#info1').serializeArray()[1].value;  
+        },file:function(){          
+          return $('#info1').serializeArray()[2].value;  
+        },mail:function(){          
+          return $('#info1').serializeArray()[3].value;
+        },addred:function(){          
+          return $('#info1').serializeArray()[4].value;
+        }}
         ,bindAction: '.xiu'
-        ,done: function(res){
-          console.log(res)
-        }
       });
 
       form.on('select(lei)', function(data){
@@ -96,21 +141,13 @@
         if (data.value == 'personal') {
           $('.mc').html('账户名称');
           $('.zj').html('身份证');
+          $('.xx').html('上传的身份证照片必须是本人将身份证正面');
         }else{
           $('.mc').html('企业全称');
           $('.zj').html('营业执照');
+          $('.xx').html('再次上传会覆盖之前的附件');
         }
-      });
-
-      $('.xiu').click(function () {
-          let data = $('#info1').serialize();
-          $.post('<{:url("index/personal/info_edit")}>',data, function (res) {
-            if (res.status) {
-              alert('已经发送申请！');
-            }
-         })
-      })
-      
+      });      
     });
 
     

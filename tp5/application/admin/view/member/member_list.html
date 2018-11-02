@@ -1,4 +1,17 @@
 <{include file='./public/header'/}>
+<style>
+  a{
+    color: blue;
+    cursor: pointer;
+  }
+  #shen{
+    display: none;
+    padding: 10px 30px;
+  }
+  #shen ul li{
+    margin: 6px 0;
+  }
+</style>
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -32,6 +45,7 @@
             <th>推荐人</th>
             <th>最新登录时间</th>
             <th>创建时间</th>
+            <th>审核认证</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
@@ -50,12 +64,10 @@
             <td><{$vo.sales_name}></td>
             <td><{$vo.logintime}></td>
             <td><{$vo.create_time}></td>
+            <td class="sh">审核中</td>
             <td class="td-status">
                 <span class="layui-btn layui-btn-normal layui-btn-mini" title="<{$vo.status}>">已启用</span></td>
             <td class="td-manage">
-<!--              <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/memberEdit")}>?id=<{$vo.id}>',700,550)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>-->
               <a title="禁用" onclick="stop(<{$vo.id}>)" href="javascript:;">
                 <i class="layui-icon">&#xe60b;</i>
               </a>
@@ -71,19 +83,49 @@
       </div>
 
     </div>
-    <script>
-      layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
-        });
 
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
+    <!-- 审核 -->
+    <div id="shen">
+        <ul>
+          <li>类型：个人</li>
+          <li>账户名称：123</li>
+          <li>身份证：<a href="#">查看</a></li>
+          <li>邮箱：123</li>
+          <li>详情地址：123</li>
+        </ul>
+    </div>
+
+    <script>
+    layui.use(['form','layer'], function(){
+        var $ = layui.jquery,
+        layer = layui.layer,
+        form = layui.form;
+        if ($('.sh').html() == '审核中') {
+          $('.sh').css({'color':'blue','cursor': 'pointer'});
+        }
+        $('.sh').click(function(){
+          if ($(this).html() == '审核中') {
+            layer.open({
+              type:1
+              ,title: '用户信息'
+              ,content: $('#shen')
+              ,area:'220px'
+              ,btn:['确定','驳回']
+              ,btnAlign: 'c'
+              ,yes:function(index){
+                $.get(url,{data:yes},function(res){//确定
+                  layui.close(index);
+                  alert(res.message);
+                })
+              },btn2:function(index){//驳回
+                $.get(url,{data:no},function(res){//确定
+                  layui.close(index);
+                  alert(res.message);
+                })
+              }
+            });  
+          }
+        })
       });
     function stop(id){
         $.ajax({
@@ -99,7 +141,6 @@
             })
     }
     
-  
       /*用户-删除*/
     function member_del(obj,did){
         layer.confirm('确认要删除吗？',function(index){
@@ -113,7 +154,7 @@
          });
       }
 
-   function delAll (argument) {
+    function delAll (argument) {
         var data = tableCheck.getData();
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
@@ -124,8 +165,7 @@
         });
       }
 
-
-       function toajax (dataArray){
+    function toajax (dataArray){
             $.ajax({
                 type:'POST',
                 url:"<{:url('admin/member/toDel')}>",    

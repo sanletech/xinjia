@@ -45,9 +45,10 @@ class Personal extends Base
     public function info_edit()
     {
         $data= $this->request->param();
+        $file = request()->file();
+        // var_dump($file);exit;
         $this->_p($data);exit;
-      
-    }
+    } 
     
     //作废订单
     public function invalid()
