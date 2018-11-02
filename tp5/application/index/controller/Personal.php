@@ -44,10 +44,39 @@ class Personal extends Base
     //个人信息的修改
     public function info_edit()
     {
-        $data= $this->request->param();
-        $this->_p($data);exit;
-      
+        $data= $this->request->param();  $this->_p($data);exit;
+        $file = request()->file();
+        $member_code=  Session::get('member_code','think');
+        $type= $data['type'];
+        $email= $data['email'];
+        $name =$data['name'];
+     
+        //将图片放到 
+        $file_path=[];
+        $response=[];
+        foreach($files as $file){
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->validate(['size'=>15678,'ext'=>'jpg,png,gif'])
+                ->rule('uniqid')->move(ROOT_PATH . 'public' . DS . 'upload/images');
+        if($info){
+            // 成功上传后 获取上传信息
+            $file_path[]=$info->getFilename(); 
+             
+            }else{
+                // 上传失败获取错误信息
+                return array('status'=>0,'message'=>$file->getError());
+            }    
+        }
+        $file_path =  implode(',', $file_path);
+        //修改用户信息
+        $res =Db::name('member')->where('member_code',$member_code)
+                ->update(['type'=>$type,'name'=>$name,
+                    'email'=>$email,'type'=>$type,
+                    'file_path'=>$file_path,'identification'=>1]);
+        $res ?$response=['status'=>1,'message'=>'更新成功']:$response=['status'=>0,'message'=>'更新失败'];
+        return $response;
     }
+    
     
     //作废订单
     public function invalid()

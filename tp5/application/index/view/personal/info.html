@@ -42,7 +42,7 @@
               <div class="layui-col-xs10">
                 <label class="layui-form-label">联系邮箱</label>
                 <div class="layui-input-block">
-                  <input type="text" name="mail" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
+                  <input type="text" name="email" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
                 </div>
               </div>
 
@@ -82,9 +82,9 @@
       //选完文件后不自动上传
       upload.render({
         elem: '#test1'
-        ,url: '/upload/'
+        ,url: '<{:url("index/personal/info_edit")}>'
         ,auto: false
-        //,multiple: true
+        ,data:$('#info1').serialize()
         ,bindAction: '.xiu'
         ,done: function(res){
           console.log(res)
@@ -102,14 +102,14 @@
         }
       });
 
-      $('.xiu').click(function () {
-          let data = $('#info1').serialize();
-          $.post('<{:url("index/personal/info_edit")}>',data, function (res) {
-            if (res.status) {
-              alert('已经发送申请！');
-            }
-         })
-      })
+//      $('.xiu').click(function () {
+//          let data = $('#info1').serialize();
+//          $.post('<{:url("index/personal/info_edit")}>',data, function (res) {
+//            if (res.status) {
+//              alert('已经发送申请！');
+//            }
+//         })
+//      })
       
     });
 

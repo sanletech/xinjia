@@ -29,7 +29,7 @@ class OrderPort extends Base
         $rename = $order_num.'_'.$type;
          // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file->validate(['size'=>2097152,'ext'=>'text,txt,pdf,docx,doc,docm,dotx,dotm'])
-                 ->move(ROOT_PATH . 'public' . DS . 'uploads',$rename);
+                 ->move(ROOT_PATH . 'public' . DS . 'uploads/files',$rename);
         $response =[];
        
         if($info){
@@ -62,7 +62,7 @@ class OrderPort extends Base
             $file_Extension= strstr(strrev($file),'_',true);
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
 //              var_dump($file_name);exit;
-            $file_dir = ROOT_PATH . 'public' . DS . 'uploads';        //下载文件存放目录    
+            $file_dir = ROOT_PATH . 'public' . DS . 'uploads/files';        //下载文件存放目录    
             //检查文件是否存在    
 //            var_dump($file_dir .DS. $file_name);exit;
             if (! file_exists ($file_dir .DS. $file_name)) {    
