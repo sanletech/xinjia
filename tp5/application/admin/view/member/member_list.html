@@ -1,4 +1,20 @@
 <{include file='./public/header'/}>
+<style>
+  a{
+    color: blue;
+    cursor: pointer;
+  }
+  #examine{
+    display: none;
+    padding: 10px 30px;
+  }
+  #examine ul li{
+    margin: 6px 0;
+  }
+  #phostos img{
+    width: 140px;
+  }
+</style>
   <body>
     <div class="x-nav">
       <span class="layui-breadcrumb">
@@ -13,8 +29,12 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
+            <input type="radio"  name="identification" value="1"  title="待认证" <?php if($identification=='1'){echo 'checked';}?> >
+            <input type="radio"  name="identification" value="0"  title="未认证"  <?php if($identification=='0'){echo 'checked';}?>  >
+            <input type="radio"  name="identification" value="2"  title="认证成功" <?php if($identification=='2'){echo 'checked';}?>  >
+            <input type="radio"  name="identification" value="3"  title="认证失败"<?php if($identification=='3'){echo 'checked';}?> >
             <input type="radio"  name="type" value="company"  title="公司" <?php if(!isset($type)){echo 'checked';}elseif($type=='company'){echo 'checked';}?> >
-                   <input type="radio"  name="type" value="person"  title="个人"  <?php if(isset($type)&&($type=='person')){echo 'checked';}?> >
+            <input type="radio"  name="type" value="person"  title="个人"  <?php if(isset($type)&&($type=='person')){echo 'checked';}?> >
             <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入账号名" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -32,6 +52,7 @@
             <th>推荐人</th>
             <th>最新登录时间</th>
             <th>创建时间</th>
+            <th>审核认证</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
@@ -50,17 +71,28 @@
             <td><{$vo.sales_name}></td>
             <td><{$vo.logintime}></td>
             <td><{$vo.create_time}></td>
+            <td class="sh"><{$vo.identification}></td>
             <td class="td-status">
                 <span class="layui-btn layui-btn-normal layui-btn-mini" title="<{$vo.status}>">已启用</span></td>
             <td class="td-manage">
-<!--              <a title="编辑"  onclick="x_admin_show('修改信息','<{:url("Member/memberEdit")}>?id=<{$vo.id}>',700,550)" href="javascript:;">
-                <i class="layui-icon">&#xe642;</i>
-              </a>-->
               <a title="禁用" onclick="stop(<{$vo.id}>)" href="javascript:;">
                 <i class="layui-icon">&#xe60b;</i>
               </a>
             </td>
           </tr>
+          
+           <div id="examine">
+                <ul>
+                  <li>类型：个人</li>
+                  <li>账户名称：123</li>
+                  <li id="phostos" class="layer-photos-demo">
+                    <div> 身份证：</div>
+                   <img layer-src="__STATIC__/../index/image/join/03.png" src="__STATIC__/../index/image/join/03.png" alt="证件">
+                  </li>
+                  <li>邮箱：123</li>
+                  <li>详情地址：123</li>
+                </ul>
+            </div>
           <{/volist}>
         </tbody>
       </table>
@@ -71,19 +103,60 @@
       </div>
 
     </div>
-    <script>
-      layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#start' //指定元素
-        });
 
-        //执行一个laydate实例
-        laydate.render({
-          elem: '#end' //指定元素
-        });
+    <!-- 审核 -->
+<!--    <div id="examine">
+        <ul>
+          <li>类型：个人</li>
+          <li>账户名称：123</li>
+          <li id="phostos" class="layer-photos-demo">
+            <div> 身份证：</div>
+           <img layer-src="__STATIC__/../index/image/join/03.png" src="__STATIC__/../index/image/join/03.png" alt="证件">
+          </li>
+          <li>邮箱：123</li>
+          <li>详情地址：123</li>
+        </ul>
+    </div>-->
+
+    <script>
+    layui.use(['form','layer'], function(){
+        var $ = layui.jquery,
+        layer = layui.layer,
+        form = layui.form;
+        if ($('.sh').html() == '审核中') {
+          $('.sh').css({'color':'blue','cursor': 'pointer'});
+        }
+        $('.sh').click(function(){
+          if ($(this).html() == '审核中') {
+            layer.open({
+              type:1
+              ,title: '用户信息'
+              ,content: $('#examine')
+              ,area:'300px'
+              ,btn:['确定','驳回']
+              ,btnAlign: 'c'
+              ,yes:function(index){
+                $.get(url,{audit:yes},function(res){//确定
+                  layui.close(index);
+                  alert(res.message);
+                })
+              },btn2:function(index){//驳回
+                $.get(url,{audit:no},function(res){//确定
+                  layui.close(index);
+                  alert(res.message);
+                })
+              }
+            });  
+          }
+        })
+
+        //查看图片
+        $("#phostos").unbind('click');
+          layer.photos({
+          photos: $("#phostos"),
+          closeBtn:true
+          ,anim: 0 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+          });
       });
     function stop(id){
         $.ajax({
@@ -99,7 +172,6 @@
             })
     }
     
-  
       /*用户-删除*/
     function member_del(obj,did){
         layer.confirm('确认要删除吗？',function(index){
@@ -113,7 +185,7 @@
          });
       }
 
-   function delAll (argument) {
+    function delAll (argument) {
         var data = tableCheck.getData();
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
@@ -124,8 +196,7 @@
         });
       }
 
-
-       function toajax (dataArray){
+    function toajax (dataArray){
             $.ajax({
                 type:'POST',
                 url:"<{:url('admin/member/toDel')}>",    

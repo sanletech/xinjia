@@ -24,15 +24,26 @@ class Member extends Base
         }else{
             $type='company';
         }
+        $identification= input('get.identification');
+        $identification?$identification:'0';
+        $this->view->assign('identification',$identification); 
         $user = new MemberM ;
         //var_dump($account,$type,1,'5');
-        $list = $user->memberList($account,$type,1,'5');
+        $list = $user->memberList($account,$type,$identification,1,'5');
     //    $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
         return $this->view->fetch('member/member_list'); 
     }
+    //客户的认证通过与否 0未认证，1待认证,2为认证不通过，3为认证通过
+    public function member_identification() {
+        $id = $this->request->param('id');
+        $identification = $this->request->param('identification');
+        $res =Db::name('member')->where('id','in',$id)->update(['identification'=>$identification]);
+        return $res ?TRUE:FALSE;
+    }
+    
     //禁止使用帐号
     public function memberStop() {
         $id = $this->request->param();
@@ -51,7 +62,7 @@ class Member extends Base
         $id =$idArr['id'];
         $res =Db::name('member')->where('id','in',$id)->delete();
         //var_dump(Db::getLastSql());exit;
-        return $res ?TRUE:FALSE;
+        return $res ?TRUE:FALSE;  
     }
     
     //业务对应客户的提成管理

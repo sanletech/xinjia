@@ -15,7 +15,6 @@ class OrderPort extends Base
     public function _initialize()
     {  
         $this->order_status=config('config.order_status');
-  
     }
 
 

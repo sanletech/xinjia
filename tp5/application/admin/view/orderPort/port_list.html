@@ -357,7 +357,8 @@ table.on('tool()', function(obj){
         }
       });   
     }else if(obj.event === 'yun'){//单击运单号
-      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();      
+      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();
+      let zj = $(this).find('a');      
       $('.num1').html('订单号：<span>'+order_num+'</span>');
       layer.open({
         type:1
@@ -366,8 +367,8 @@ table.on('tool()', function(obj){
         ,shadeClose :true
         ,btn:['上传']
         ,yes:function(index){
-          if($('#ding input').val()){      
-            dingcang($('.num1 span').html(),index);
+          if($('#ding input').val()){    
+            dingcang($('.num1 span').html(),zj,index);
             $('.dcd').click();
           }else{
               layer.msg('请输入运单号', {
@@ -387,7 +388,7 @@ table.on('tool()', function(obj){
   });
 
   //订舱单
-  function dingcang(order_id,index){
+  function dingcang(order_id,zj,index){
    let track_num = $('#ding input').val();
    upload.render({
         elem:'.dcd'  //绑定元素
@@ -396,12 +397,9 @@ table.on('tool()', function(obj){
         ,data:{track_num:track_num}
         , done: function (res) {
           //上传完毕回调
-          if (res.code = 0) {
-            layer.close(index);//关闭小窗口
-            alert(res.msg);
-          } else {
-            alert(res.msg)
-          }
+          layer.close(index);//关闭小窗口
+          zj.html(track_num);
+          alert(res.msg);
         }
     });
   }
