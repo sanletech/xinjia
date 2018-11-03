@@ -24,6 +24,7 @@ class Member extends Model
                 ->field('a.id,a.name,a.create_time,a.logintime,a.phone,a.email,'
                         . 'a.status,a.company,a.member_code,a.identification,a.file_path,b.sales_name')
                 ->buildSql();
+//        var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($account){
             $list = Db::table($list.' a')->where('a.name','like',"%{$account}%")->whereOr('a.member_code','like',"%{$account}%")->buildSql();

@@ -28,13 +28,15 @@ class Member extends Base
         $identification= isset($identification)?$identification:'2';
         $this->view->assign('identification',$identification); 
         $user = new MemberM ;
-        $list = $user->memberList($account,$type,$identification,1,'5');
-    //    $this->_p($list);exit;
+        $list = $user->memberList($account,$type,$identification,1,'15');
+//        $this->_p($list);exit;
         $page = $list->render();
+        $this->view->assign('image_path',ROOT_PATH . 'public' . DS . 'uploads/files');
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
         return $this->view->fetch('member/member_list'); 
     }
+    
     //客户的认证通过与否 0未认证，1待认证,2为认证不通过，3为认证通过
     public function member_identification() {
         $id = $this->request->param('id');
