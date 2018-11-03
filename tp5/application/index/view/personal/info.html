@@ -33,7 +33,7 @@
               <div class="layui-col-xs10">
                 <label class="layui-form-label mc">账户名称</label>
                 <div class="layui-input-block">
-                  <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input in" value="123">
+                  <input type="text" name="name" lay-verify="title" autocomplete="off" placeholder="账户名称" class="layui-input in" value="123">
                 </div>
               </div>
 
@@ -51,14 +51,14 @@
               <div class="layui-col-xs10">
                 <label class="layui-form-label">联系邮箱</label>
                 <div class="layui-input-block">
-                  <input type="text" name="email" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
+                  <input type="text" name="email" lay-verify="title" autocomplete="off" placeholder="联系邮箱" class="layui-input in" value="123" >
                 </div>
               </div>
 
               <div class="layui-col-xs10">
                 <label class="layui-form-label">详情地址</label>
                 <div class="layui-input-block">
-                  <input type="text" name="addred" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
+                  <input type="text" name="add" lay-verify="title" autocomplete="off" placeholder="详情地址" class="layui-input in" value="123" >
                 </div>
               </div>
 
@@ -111,7 +111,7 @@
           return $('#info1').serializeArray()[2].value;  
         },email:function(){          
           return $('#info1').serializeArray()[3].value;
-        },addred:function(){          
+        },add:function(){          
           return $('#info1').serializeArray()[4].value;
         }}
         ,bindAction: '.xiu'
