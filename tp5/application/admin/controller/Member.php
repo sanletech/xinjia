@@ -14,8 +14,8 @@ class Member extends Base
     //用户列表
     public function memberList()
     {   
-       $type = input('get.type'); //企业用户company 个人用户person
-       $account = input('get.account');  //帐号搜索
+       $type = $this->request->param('type'); //企业用户company 个人用户person
+       $account = $this->request->param('account');  //帐号搜索
         if($account){
              $this->view->assign('account',$account); 
         }
@@ -24,11 +24,10 @@ class Member extends Base
         }else{
             $type='company';
         }
-        $identification= input('get.identification');
-        $identification?$identification:'0';
+        $identification= $this->request->param('identification');
+        $identification= isset($identification)?$identification:'2';
         $this->view->assign('identification',$identification); 
         $user = new MemberM ;
-        //var_dump($account,$type,1,'5');
         $list = $user->memberList($account,$type,$identification,1,'5');
     //    $this->_p($list);exit;
         $page = $list->render();
@@ -36,7 +35,7 @@ class Member extends Base
         $this->view->assign('page',$page);
         return $this->view->fetch('member/member_list'); 
     }
-    //客户的认证通过与否 0未认证，1待认证,2为认证不通过，3为认证通过
+    //客户的认证通过与否 1未认证，2待认证,3为认证不通过，4为认证通过
     public function member_identification() {
         $id = $this->request->param('id');
         $identification = $this->request->param('identification');

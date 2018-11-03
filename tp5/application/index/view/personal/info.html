@@ -139,15 +139,15 @@
       });
       
       let rz = $('#rz');
-      if (rz.html() == '3') {//认证通过
+      if (rz.html() == '4') {//认证通过
         rz.html('认证通过');
         rz.css('color','#00FF00');
         // $('.xiu').hide();
+      }else if(rz.html() == '3'){
+        rz.html('认证失败');
       }else if(rz.html() == '2'){
-        rz.html('认证未通过');
-      }else if(rz.html() == '1'){
         rz.html('待认证');
-      }else if(rz.html() == '0'){
+      }else if(rz.html() == '1'){
         rz.html('未认证');
       }
   })
