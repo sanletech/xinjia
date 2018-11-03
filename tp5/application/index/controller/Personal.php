@@ -39,16 +39,46 @@ class Personal extends Base
        //个人信息
     public function info()
     {
+       $member_code=  Session::get('member_code','think');
+       $member_data =Db::name('member_code')->where('member_code',$member_code)->find();
+       $this->view->assign('member_data',$member_data);
+//       var data = "<{$member_data}>";
        return $this->view->fetch('personal/info');
     }
     //个人信息的修改
     public function info_edit()
     {
-        $data= $this->request->param();
-        $file = request()->file();
-        // var_dump($file);exit;
-        $this->_p($data);exit;
-    } 
+
+        $data= $this->request->param();  
+        $file = request()->file('file');
+//      this->_p($file);exit;
+        $member_code=  Session::get('member_code','think');
+        $type= $data['type'];
+        $email= $data['email'];
+        $name =$data['name'];
+        //将图片放到 
+        $file_path=[];
+        $response=[];
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->validate(['size'=>2097152,'ext'=>'jpg,png,gif'])
+                ->rule('uniqid')->move(ROOT_PATH . 'public' . DS . 'upload/images');
+        if($info){
+            // 成功上传后 获取上传信息
+            $file_path=$info->getFilename(); 
+            }else{
+                // 上传失败获取错误信息
+                return array('status'=>0,'message'=>$file->getError());
+            }    
+        //修改用户信息
+        $res =Db::name('member')->where('member_code',$member_code)
+                ->update(['type'=>$type,'name'=>$name,
+                    'email'=>$email,'type'=>$type,
+                    'file_path'=>$file_path,'identification'=>1]);
+        $res ?$response=['status'=>1,'message'=>'更新成功']:$response=['status'=>0,'message'=>'更新失败'];
+        return $response;
+    }
+
+    
     
     //作废订单
     public function invalid()

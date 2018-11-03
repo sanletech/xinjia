@@ -29,9 +29,10 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so">
-            <input type="radio"  name="audit" value="1"  title="审核中" checked>
-            <input type="radio"  name="audit" value="0"  title="未审核"  <?php if(isset($audit)&&($audit=='0')){echo 'checked';}?> >
-            <input type="radio"  name="audit" value="2"  title="已审核"  <?php if(isset($audit)&&($audit=='2')){echo 'checked';}?> >
+            <input type="radio"  name="identification" value="1"  title="待认证" <?php if($identification=='1'){echo 'checked';}?> >
+            <input type="radio"  name="identification" value="0"  title="未认证"  <?php if($identification=='0'){echo 'checked';}?>  >
+            <input type="radio"  name="identification" value="2"  title="认证成功" <?php if($identification=='2'){echo 'checked';}?>  >
+            <input type="radio"  name="identification" value="3"  title="认证失败"<?php if($identification=='3'){echo 'checked';}?> >
             <input type="radio"  name="type" value="company"  title="公司" <?php if(!isset($type)){echo 'checked';}elseif($type=='company'){echo 'checked';}?> >
             <input type="radio"  name="type" value="person"  title="个人"  <?php if(isset($type)&&($type=='person')){echo 'checked';}?> >
             <input type="text" name="account" value="<{$account?$account:'';}>" placeholder="请输入账号名" autocomplete="off" class="layui-input">
@@ -70,7 +71,7 @@
             <td><{$vo.sales_name}></td>
             <td><{$vo.logintime}></td>
             <td><{$vo.create_time}></td>
-            <td class="sh">审核中</td>
+            <td class="sh"><{$vo.identification}></td>
             <td class="td-status">
                 <span class="layui-btn layui-btn-normal layui-btn-mini" title="<{$vo.status}>">已启用</span></td>
             <td class="td-manage">
@@ -79,6 +80,19 @@
               </a>
             </td>
           </tr>
+          
+           <div id="examine">
+                <ul>
+                  <li>类型：个人</li>
+                  <li>账户名称：123</li>
+                  <li id="phostos" class="layer-photos-demo">
+                    <div> 身份证：</div>
+                   <img layer-src="__STATIC__/../index/image/join/03.png" src="__STATIC__/../index/image/join/03.png" alt="证件">
+                  </li>
+                  <li>邮箱：123</li>
+                  <li>详情地址：123</li>
+                </ul>
+            </div>
           <{/volist}>
         </tbody>
       </table>
@@ -91,7 +105,7 @@
     </div>
 
     <!-- 审核 -->
-    <div id="examine">
+<!--    <div id="examine">
         <ul>
           <li>类型：个人</li>
           <li>账户名称：123</li>
@@ -102,7 +116,7 @@
           <li>邮箱：123</li>
           <li>详情地址：123</li>
         </ul>
-    </div>
+    </div>-->
 
     <script>
     layui.use(['form','layer'], function(){

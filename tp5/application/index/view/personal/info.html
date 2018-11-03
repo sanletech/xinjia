@@ -51,7 +51,7 @@
               <div class="layui-col-xs10">
                 <label class="layui-form-label">联系邮箱</label>
                 <div class="layui-input-block">
-                  <input type="text" name="mail" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
+                  <input type="text" name="email" lay-verify="title" autocomplete="off" placeholder="请输入推荐人" class="layui-input in" value="123" >
                 </div>
               </div>
 
@@ -97,25 +97,6 @@
       ,upload = layui.upload
       ,form = layui.form;
 
-
-  //      //多图片上传
-  // upload.render({
-  //   elem: '#test2'
-  //   ,url: '<{:url("index/personal/info_edit")}>'
-  //   ,multiple: true
-      // ,auto: false
-  //   ,bindAction: '.xiu'
-  //   ,before: function(obj){
-  //     //预读本地文件示例，不支持ie8
-  //     obj.preview(function(index, file, result){
-  //       $('#demo2').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
-  //     });
-  //   }
-  //   ,done: function(res){
-  //     //上传完毕
-  //   }
-  // });
-
       //选完文件后不自动上传
       upload.render({
         elem: '#test1'
@@ -126,9 +107,9 @@
           return $('#info1').serializeArray()[0].value;   
         },name:function(){          
           return $('#info1').serializeArray()[1].value;  
-        },file:function(){          
+        },image:function(){          
           return $('#info1').serializeArray()[2].value;  
-        },mail:function(){          
+        },email:function(){          
           return $('#info1').serializeArray()[3].value;
         },addred:function(){          
           return $('#info1').serializeArray()[4].value;
@@ -147,8 +128,9 @@
           $('.zj').html('营业执照');
           $('.xx').html('再次上传会覆盖之前的附件');
         }
-      });      
-    });
+      });
+  })
+
 
     
     </script>

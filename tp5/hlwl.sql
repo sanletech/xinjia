@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-01 19:46:59
+Date: 2018-11-02 20:03:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4561,36 +4561,38 @@ CREATE TABLE `hl_member` (
   `company` varchar(10) DEFAULT NULL COMMENT '公司名称',
   `member_code` varchar(10) DEFAULT NULL COMMENT '客户的编码',
   `type` varchar(10) DEFAULT NULL COMMENT '企业用户company 个人用户person',
+  `identification` enum('0','1','2','3') DEFAULT '0' COMMENT '0未认证，1待认证,2为认证不通过，3为认证通过',
+  `file_path` varchar(255) DEFAULT NULL COMMENT '图片地址',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_member
 -- ----------------------------
-INSERT INTO `hl_member` VALUES ('1', '林如锋', '5d8dc5dbd84f605017f1c835da6031d7', '2018-10-10 00:00:00', '0000-00-00 00:00:00', '13600025294', '', '0', '', '0000-00-00', '', '', 'customer00', 'person');
-INSERT INTO `hl_member` VALUES ('2', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '18575280024', 'ssssi@qq.com', '1', '', '0000-00-00', '2', '服务公司', 'kehu002', 'person');
-INSERT INTO `hl_member` VALUES ('3', '客户王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '18575280024', 'wangwu@qq.com', '1', '', '0000-00-00', '3', '服务公司', 'kehu003', 'person');
-INSERT INTO `hl_member` VALUES ('4', '客户钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '0000-00-00', '1', '服务公司', 'kehu004', 'person');
-INSERT INTO `hl_member` VALUES ('5', '阿斯蒂芬', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '5646546', 'sdf', '0', null, null, null, '服务公司', 'kehu005', 'person');
-INSERT INTO `hl_member` VALUES ('6', '客户李七', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '18575280024', 'asaa@qq.com', '0', null, '0000-00-00', '3', '外包公司', 'kehu006', 'company');
-INSERT INTO `hl_member` VALUES ('7', '客户老八', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '0', null, '0000-00-00', '1', '服务公司', 'kehu007', 'company');
-INSERT INTO `hl_member` VALUES ('9', '客户第三方', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', '', '0000-00-00', '2', '新闻公司', 'kehu009', 'company');
-INSERT INTO `hl_member` VALUES ('10', '客户哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', '', '0000-00-00', '2', '新闻公司', 'kehu0010', 'company');
-INSERT INTO `hl_member` VALUES ('11', '客户哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '0', null, '0000-00-00', '2', '新闻公司', 'kehu008', 'company');
-INSERT INTO `hl_member` VALUES ('12', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'cshengle', 'company');
-INSERT INTO `hl_member` VALUES ('13', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'cshengle1', 'company');
-INSERT INTO `hl_member` VALUES ('14', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company');
-INSERT INTO `hl_member` VALUES ('15', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao11', 'company');
-INSERT INTO `hl_member` VALUES ('16', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao122', 'company');
-INSERT INTO `hl_member` VALUES ('17', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao4', 'company');
-INSERT INTO `hl_member` VALUES ('18', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao5', 'company');
-INSERT INTO `hl_member` VALUES ('19', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company');
-INSERT INTO `hl_member` VALUES ('25', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-01 14:53:17', '18575280024', 'ssssi@qq.com', '1', '', '0000-00-00', '2', '外包公司', 'kehu001', 'person');
-INSERT INTO `hl_member` VALUES ('26', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575288024', '', '1', null, null, null, '海浪物流', 'cshengle', 'company');
-INSERT INTO `hl_member` VALUES ('27', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575288024', '', '1', null, null, null, '海浪物流', 'cshengle', 'company');
-INSERT INTO `hl_member` VALUES ('28', '', '63cd1166a51bafe8bd66986cedf5d9a2', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '1', null, null, null, '海浪物流有限公司', 'zh_A_028', null);
-INSERT INTO `hl_member` VALUES ('29', '', '63cd1166a51bafe8bd66986cedf5d9a2', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '1', null, null, null, '海浪物流有限公司', 'zh_A_029', null);
-INSERT INTO `hl_member` VALUES ('30', '', '63cd1166a51bafe8bd66986cedf5d9a2', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '1', null, null, null, '海浪物流有限公司', 'zh_A_030', null);
+INSERT INTO `hl_member` VALUES ('1', '林如锋', '5d8dc5dbd84f605017f1c835da6031d7', '2018-10-10 00:00:00', '0000-00-00 00:00:00', '13600025294', '', '0', '', '0000-00-00', '', '', 'customer00', 'person', '1', null);
+INSERT INTO `hl_member` VALUES ('2', '客户王老五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '18575280024', 'ssssi@qq.com', '1', '', '0000-00-00', '2', '服务公司', 'kehu002', 'person', '2', null);
+INSERT INTO `hl_member` VALUES ('3', '客户王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '18575280024', 'wangwu@qq.com', '1', '', '0000-00-00', '3', '服务公司', 'kehu003', 'person', '3', null);
+INSERT INTO `hl_member` VALUES ('4', '客户钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '0000-00-00', '1', '服务公司', 'kehu004', 'person', '0', null);
+INSERT INTO `hl_member` VALUES ('5', '阿斯蒂芬', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '5646546', 'sdf', '0', null, null, null, '服务公司', 'kehu005', 'person', '0', null);
+INSERT INTO `hl_member` VALUES ('6', '客户李七', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '18575280024', 'asaa@qq.com', '1', null, '0000-00-00', '3', '外包公司', 'kehu006', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('7', '客户老八', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '0000-00-00', '1', '服务公司', 'kehu007', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('9', '客户第三方', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', '', '0000-00-00', '2', '新闻公司', 'kehu009', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('10', '客户哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '0', '', '0000-00-00', '2', '新闻公司', 'kehu0010', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('11', '客户哥哥个', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '0', null, '0000-00-00', '2', '新闻公司', 'kehu008', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('12', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'cshengle', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('13', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'cshengle1', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('14', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('15', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao11', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('16', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao122', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('17', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao4', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('18', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao5', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('19', '王达成', 'e10adc3949ba59abbe56e057f20f883e', '2018-08-25 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '0', null, null, null, '黄金宇宙', 'taobao6', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('25', '傻逼', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-02 18:13:06', '18575280024', '123456@qq.com', '1', '', '0000-00-00', '2', '外包公司', 'kehu001', 'company', '1', '5bdc24ad952b8.jpg');
+INSERT INTO `hl_member` VALUES ('26', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575288024', '', '1', null, null, null, '海浪物流', 'cshengle', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('27', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575288024', '', '1', null, null, null, '海浪物流', 'cshengle', 'company', '0', null);
+INSERT INTO `hl_member` VALUES ('28', '', '63cd1166a51bafe8bd66986cedf5d9a2', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '1', null, null, null, '海浪物流有限公司', 'zh_A_028', null, '0', null);
+INSERT INTO `hl_member` VALUES ('29', '', '63cd1166a51bafe8bd66986cedf5d9a2', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '1', null, null, null, '海浪物流有限公司', 'zh_A_029', null, '0', null);
+INSERT INTO `hl_member` VALUES ('30', '', '63cd1166a51bafe8bd66986cedf5d9a2', '2018-10-29 00:00:00', '0000-00-00 00:00:00', '18575280024', '', '1', null, null, null, '海浪物流有限公司', 'zh_A_030', null, '0', null);
 
 -- ----------------------------
 -- Table structure for `hl_member_add`
@@ -4878,7 +4880,7 @@ CREATE TABLE `hl_order_port` (
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
-INSERT INTO `hl_order_port` VALUES ('1', 'AA19466880844019', '鸡肉', '40HQ', '3', '10', '80', '1', '发射点发司法所', null, null, 'kehu001', '0', '2018-10-19 18:58:08', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'FFF,收货F公司,100085556', '15', '8000', null, '240', '555', '100', '400', '23075', '通过审核>待录入运单', '3', null, null, null, '1', '0', 'apply');
+INSERT INTO `hl_order_port` VALUES ('1', 'AA19466880844019', '鸡肉', '40HQ', '3', '10', '80', '1', '发射点发司法所', null, null, 'kehu001', '0', '2018-10-19 18:58:08', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'FFF,收货F公司,100085556', '15', '8000', null, '240', '555', '100', '400', '23075', '通过审核>待录入运单', '3', 'aaaaa', 'AA19466880844019_book_note_docx', null, '1', '0', 'apply');
 INSERT INTO `hl_order_port` VALUES ('2', 'AA19506804684341', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, null, 'kehu001', '0', '2018-10-19 20:04:40', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', null, '3', null, null, null, '0', '0', 'apply');
 INSERT INTO `hl_order_port` VALUES ('3', 'AA19508158986320', '炸鸡', '40HQ', '3', '10', '80', '1', '炸鸡炸鸡炸鸡炸鸡炸鸡炸鸡', null, null, 'kehu001', '0', '2018-10-19 20:06:55', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '15', '8000', null, '240', '555', '150', '400', '23125', '通过审核>待录入运单', '3', null, null, null, '0', '0', 'apply');
 INSERT INTO `hl_order_port` VALUES ('4', 'AA22922801626294', '', '20GP', '1', '0', '0', '1', '', null, null, 'kehu001', '0', '2018-10-22 15:11:20', 'installment', '0', null, '0', null, 'FFF,收货F公司,100085556', null, 'AA,送货A公司,55555', '2', '3500', null, '0', '550', '0', '0', '2950', '价格不对', '404', null, null, null, '0', '0', 'lock');
@@ -5983,7 +5985,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-01 15:13:59', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-02 18:26:59', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
