@@ -60,7 +60,7 @@
         <tbody >
             <{volist name="list" id ="vo"}>
           <tr>
-            <td style='display: none' id ='<{$vo.id}>' ><{$vo.id}></td>
+            <td style='display: none' class="id" id ='<{$vo.id}>' ><{$vo.id}></td>
             <td>
             <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'><i class="layui-icon">&#xe605;</i></div>
             </td>
@@ -80,19 +80,6 @@
               </a>
             </td>
           </tr>
-          
-           <div id="examine">
-                <ul>
-                  <li>类型：个人</li>
-                  <li>账户名称：123</li>
-                  <li id="phostos" class="layer-photos-demo">
-                    <div> 身份证：</div>
-                   <img layer-src="__STATIC__/../index/image/join/03.png" src="__STATIC__/../index/image/join/03.png" alt="证件">
-                  </li>
-                  <li>邮箱：123</li>
-                  <li>详情地址：123</li>
-                </ul>
-            </div>
           <{/volist}>
         </tbody>
       </table>
@@ -105,29 +92,44 @@
     </div>
 
     <!-- 审核 -->
-<!--    <div id="examine">
+   <div id="examine">
         <ul>
-          <li>类型：个人</li>
-          <li>账户名称：123</li>
+          <li>类型：<span id="type"></span></li>
+          <li>账户名称：<span id="name"></span></li>
           <li id="phostos" class="layer-photos-demo">
             <div> 身份证：</div>
            <img layer-src="__STATIC__/../index/image/join/03.png" src="__STATIC__/../index/image/join/03.png" alt="证件">
           </li>
-          <li>邮箱：123</li>
-          <li>详情地址：123</li>
+          <li>邮箱：<span id="email"></span></li>
+          <li>详情地址：<span id="addred"></span></li>
         </ul>
-    </div>-->
+    </div>
 
     <script>
     layui.use(['form','layer'], function(){
         var $ = layui.jquery,
         layer = layui.layer,
         form = layui.form;
-        if ($('.sh').html() == '审核中') {
-          $('.sh').css({'color':'blue','cursor': 'pointer'});
+        let rz = $('.sh');             
+        for (let i = 0;i<rz.length;i++) {          
+          if (rz.eq(i).html() == '0') {
+            rz.eq(i).html('待认证');
+            rz.eq(i).css({'color':'blue','cursor': 'pointer'});
+          }else if(rz.eq(i).html() == '1'){
+            rz.eq(i).html('待认证');
+          }else if(rz.eq(i).html() == '2'){
+            rz.eq(i).html('待认证');
+          }else if(rz.eq(i).html() == '3'){
+            rz.eq(i).html('待认证');
+          }
         }
-        $('.sh').click(function(){
-          if ($(this).html() == '审核中') {
+        rz.click(function(){
+          if ($(this).html() == '待认证') {
+            let id = $(this).siblings('.id').html();            
+            $.get("<{url:('Member/member_identification')}>",{id:id},function(res){
+              console.log(res);
+            })
+
             layer.open({
               type:1
               ,title: '用户信息'

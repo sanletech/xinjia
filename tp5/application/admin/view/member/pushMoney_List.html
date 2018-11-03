@@ -34,7 +34,7 @@
         <th lay-data="{field:'40HQ_<{$k}>', width:80}" rowspan="1"> <{$vo}> </th>
         <{/foreach}>
     </tr>
-    <tr> 
+    <tr>
         <th lay-data="{align:'center', width:80}" rowspan="1">20GP</th>
         <{foreach name="ship_nameArr" item="vo" key="k"}>
             <th lay-data="{field:'20GP_<{$k}>', width:80}" rowspan="1"><{$vo}></th>
@@ -53,7 +53,7 @@
             <th rowspan="2">柜型</th>    
             <th style="text-align: center;" colspan="<{$ship_nameArr|count}>" rowspan="1">船公司 </th>
         </tr>
-        <tr> 
+        <tr>
             <{foreach name="ship_nameArr" item="vo"}>
                 <th rowspan="1"><{$vo}></th>
             <{/foreach}>
@@ -70,7 +70,7 @@
           <td  rowspan="1"><{$V1}></td>
           <{/foreach}>
         </tr>
-        <tr> 
+        <tr>
           <th rowspan="1">20GP</th>
           <{foreach name="$vo.20GP" item="V2" }>
           <td  rowspan="1"><{$V2}></td>
@@ -98,28 +98,6 @@ layui.use(['table','laydate','layedit'], function(){
     elem: '#end'
   });
 
-  //监听单元格事件
-  table.on('tool(demo)', function(obj){
-    var data = obj.data;
-    console.log(data);
-    
-    if(obj.event === 'setSign'){
-      layer.prompt({
-        formType: 2
-        ,title: '修改 ID 为 ['+ data.id +'] 的用户签名'
-        ,value: data.sign
-      }, function(value, index){
-        layer.close(index);
-        
-        //这里一般是发送修改的Ajax请求
-        
-        //同步更新表格和缓存对应的值
-        obj.update({
-          sign: value
-        });
-      });
-    }
-  });
 });
 </script>
 

@@ -40,7 +40,7 @@ class Personal extends Base
     public function info()
     {
        $member_code=  Session::get('member_code','think');
-       $member_data =Db::name('member_code')->where('member_code',$member_code)->find();
+       $member_data =Db::name('member')->where('member_code',$member_code)->find();
        $this->view->assign('member_data',$member_data);
 //       var data = "<{$member_data}>";
        return $this->view->fetch('personal/info');
