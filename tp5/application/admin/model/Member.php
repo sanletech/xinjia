@@ -48,7 +48,8 @@ class Member extends Model
             ->field('A.*,MP.40HQ,MP.20GP,SM.sales_name,SM.sales_code')
             ->group('A.member_code,A.ship_id')->order('A.id,A.ship_id')->buildSql();  
 
-        $count = (Db::name('shipcompany')->where('status',1)->count());
+        $count = Db::name('shipcompany')->where('status',1)->count();
+        // $this->_p($count);
         $limit = $count*$limit;
         $tol =  $count*$tol;
         $list =Db::table($list.' d')->limit($tol,$limit)->select();;
@@ -69,21 +70,21 @@ class Member extends Model
 
         }
         $tem = array_values($tem);
-        foreach ($tem as $key => $value) {
-            foreach ($tem[$key]['40HQ'] as $k => $v) {
-                $tem[$key]['40HQ_'.$k]=$v;
-            }
-            unset($tem[$key]['40HQ']);
-        }
-        foreach ($tem as $key => $value) {
-            foreach ($tem[$key]['20GP'] as $k => $v) {
-                $tem[$key]['20GP_'.$k]=$v;
-            }
-            unset($tem[$key]['20GP']);
-        }
+        // foreach ($tem as $key => $value) {
+        //     foreach ($tem[$key]['40HQ'] as $k => $v) {
+        //         $tem[$key]['40HQ_'.$k]=$v;
+        //     }
+        //     unset($tem[$key]['40HQ']);
+        // }
+        // foreach ($tem as $key => $value) {
+        //     foreach ($tem[$key]['20GP'] as $k => $v) {
+        //         $tem[$key]['20GP_'.$k]=$v;
+        //     }
+        //     unset($tem[$key]['20GP']);
+        // }
         
-       
-        return array('list'=>$tem,'count'=>$count);       
+    //    $this->_p($tem);exit;
+        return array('lists'=>$tem,'count'=>$count);       
     }
 
     
