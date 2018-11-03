@@ -40,11 +40,12 @@ class Personal extends Base
     public function info()
     {
        $member_code=  Session::get('member_code','think');
-       $member_data =Db::name('membe')->where('member_code',$member_code)->find();
+       $member_data =Db::name('member')->where('member_code',$member_code)->field('password',true)->find();
        $this->view->assign('member_data',$member_data);
 //       var data = "<{$member_data}>";
        return $this->view->fetch('personal/info');
     }
+    
     //个人信息的修改
     public function info_edit()
     {
@@ -61,7 +62,7 @@ class Personal extends Base
         $response=[];
         // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file->validate(['size'=>2097152,'ext'=>'jpg,png,gif'])
-                ->rule('uniqid')->move(ROOT_PATH . 'public' . DS . 'upload/images');
+                ->rule('uniqid')->move(ROOT_PATH . 'public' . DS . 'uploads/images');
         if($info){
             // 成功上传后 获取上传信息
             $file_path=$info->getFilename(); 

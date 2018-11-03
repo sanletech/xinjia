@@ -28,9 +28,10 @@ class Member extends Base
         $identification= isset($identification)?$identification:'2';
         $this->view->assign('identification',$identification); 
         $user = new MemberM ;
-        $list = $user->memberList($account,$type,$identification,1,'5');
+        $list = $user->memberList($account,$type,$identification,1,'15');
     //    $this->_p($list);exit;
         $page = $list->render();
+        $this->view->assign('image_path',ROOT_PATH . 'public' . DS . 'uploads/images');
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
         return $this->view->fetch('member/member_list'); 
@@ -38,7 +39,13 @@ class Member extends Base
     //客户的认证通过与否 1未认证，2待认证,3为认证不通过，4为认证通过
     public function member_identification() {
         $id = $this->request->param('id');
-        $identification = $this->request->param('identification');
+        $identification = $this->request->param('audit');
+        if($identification=='yes'){
+            $identification =4;
+        }else{
+            $identification =3;
+        }
+
         $res =Db::name('member')->where('id','in',$id)->update(['identification'=>$identification]);
         return $res ?TRUE:FALSE;
     }
