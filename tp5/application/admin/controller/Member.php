@@ -74,7 +74,7 @@ class Member extends Base
     //业务对应客户的提成管理
     public function  pushMoney(){
           //船公司的集合
-        $ship_nameArr =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name');
+        $ship_nameArr =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name,id');
         if(empty($ship_nameArr)){
             $this->error('船公司未添加,请先添加船公司的数据','admin/port/ship_list');
         }  else {

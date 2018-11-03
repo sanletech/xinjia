@@ -1,5 +1,24 @@
 <{include file='./public/header'/}>
 <body>
+  <style>
+    .td_inp{
+      position: relative;
+    }
+    .td_inp input{
+      width: 99%;
+      height: 97%;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 0;
+      cursor: Default;
+    }
+    .td_inp .in{
+      cursor:auto;
+      border: 1px solid #00FFFF;
+    }
+  </style>
     <div class="x-nav">
         <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -22,59 +41,38 @@
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
         <span class="x-right" style="line-height:40px">共有数据：<{$count}> 条</span>
-      </xblock>
-    <!-- <table class="layui-table" lay-data="{url:'<{:url('admin/member/pushMoneyList')}>', id:'test3'}" lay-filter="test3" >
-    <thead>
-    <tr>
-        <th lay-data="{field:'id', width:20}" rowspan="2">ID</th>
-        <th lay-data="{field:'member_code', width:80}" rowspan="2">客户帐号</th>
-        <th lay-data="{field:'name', width:80}" rowspan="2">客户姓名</th>
-        <th lay-data="{align:'center', width:80}" rowspan="1">40HQ</th>
-        <{foreach name="ship_nameArr" item="vo" key="k"}>
-        <th lay-data="{field:'40HQ_<{$k}>', width:80}" rowspan="1"> <{$vo}> </th>
-        <{/foreach}>
-    </tr>
-    <tr>
-        <th lay-data="{align:'center', width:80}" rowspan="1">20GP</th>
-        <{foreach name="ship_nameArr" item="vo" key="k"}>
-            <th lay-data="{field:'20GP_<{$k}>', width:80}" rowspan="1"><{$vo}></th>
-        <{/foreach}>
-    </tr>
-  </thead>
-</table> -->
-
- 
-<table class="layui-table" id="demo" lay-filter="demo">
-    <thead>
-        <tr>
-            <th rowspan="2">ID</th>
-            <th rowspan="2">客户帐号</th>
-            <th rowspan="2">客户姓名</th>     
-            <th rowspan="2">柜型</th>    
-            <th style="text-align: center;" colspan="<{$ship_nameArr|count}>" rowspan="1">船公司 </th>
-        </tr>
-        <tr>
-            <{foreach name="ship_nameArr" item="vo"}>
-                <th rowspan="1"><{$vo}></th>
-            <{/foreach}>
-        </tr>
-    </thead>
+      </xblock> 
+    <table class="layui-table" id="demo" lay-filter="demo">
+      <thead>
+          <tr>
+              <th rowspan="2">ID</th>
+              <th rowspan="2">客户帐号</th>
+              <th rowspan="2">客户姓名</th>     
+              <th rowspan="2">柜型</th>    
+              <th style="text-align: center;" colspan="<{$ship_nameArr|count}>" rowspan="1">船公司 </th>
+          </tr>
+          <tr>
+              <{foreach name="ship_nameArr" item="vo" key="k"}>
+                  <th name="<{$vo}>" rowspan="1"><{$k}></th>
+              <{/foreach}>
+          </tr>
+      </thead>
     <tbody>
      <{volist name='lists' id='vo'}>
         <tr>
-          <td lay-data="edit:text"  rowspan="2"><{$vo.id}></td>
+          <td class="id" rowspan="2"><{$vo.id}></td>
           <td rowspan="2"><{$vo.member_code}></td>
           <td rowspan="2"><{$vo.name}></td>
-          <th rowspan="1">40HQ</th>
-          <{foreach name="$vo.40HQ" item="V1" }>
-          <td  rowspan="1"><{$V1}></td>
+          <td rowspan="1" class="gui">20GP</td>
+          <{foreach name="$vo.20GP" item="V2" }>
+          <td  rowspan="1" class="td_inp"><input type="text" value="<{$V2}>" class="" readonly></td>
           <{/foreach}>
         </tr>
         <tr>
-          <th rowspan="1">20GP</th>
-          <{foreach name="$vo.20GP" item="V2" }>
-          <td  rowspan="1"><{$V2}></td>
-          <{/foreach}>
+            <td rowspan="1" class="gui">40HQ</td>
+            <{foreach name="$vo.40HQ" item="V1" }>
+            <td  rowspan="1" class="td_inp"><input type="text" value="<{$V1}>" class="" readonly></td>
+            <{/foreach}>
         </tr>
         <{/volist}>
     </tbody>
@@ -98,6 +96,40 @@ layui.use(['table','laydate','layedit'], function(){
     elem: '#end'
   });
 
+  var ship;//当前点击下标
+  $('.td_inp input').dblclick(function(){//双击事件  
+    $(this).addClass('in').removeAttr('readonly');
+    ship = $(this).parents('td').index();//当前点击下标  
+  });
+
+  $('.td_inp input').blur(function(){//光标离开事件
+    inpu($(this));
+  })
+
+  $(".td_inp input").keyup(function(e){//监听键盘按键
+      if (e.which == 13) {//确认键
+        inpu($(this));
+      }
+  });
+
+  function inpu(zj){//当光标离开时
+    zj.removeClass('in').attr('readonly',true);
+    let id;//用户ID
+    let gui = zj.parents('td').siblings('.gui').html();//柜型
+    let valu = zj.val();//输入内容
+    let ship_id;//船公司ID
+    if (gui == '20GP') {
+      id = zj.parent('td').siblings('.id').html();
+      ship_id = $('#demo thead tr').eq(1).children('th').eq(ship-4).attr('name')
+    }else{
+      id = zj.parents('tr').prev().children('.id').html();
+      ship_id = $('#demo thead tr').eq(1).children('th').eq(ship-1).attr('name')
+    }
+    //用户ID：柜型   船公司id：输入内容
+    $.get(ship_edit_url,{[id]:gui,[ship_id]:valu},function(res){
+
+    })
+  }
 });
 </script>
 
