@@ -65,7 +65,7 @@
               <div class="layui-col-xs10">
                 <label class="layui-form-label">审核认证</label>
                 <div class="layui-input-block" style="padding-top: 10px;">
-                  <span>是/否</span>
+                  <span id="rz">3</span>
                 </div>
               </div>
 
@@ -79,6 +79,8 @@
         </div>
       </div>
     </div>
+
+
 
 
     <!-- <div class="layui-upload">
@@ -103,11 +105,11 @@
         ,url: '<{:url("index/personal/info_edit")}>'
         ,auto: false
         //,multiple: true
-        ,data:{type:function(){  
-          return $('#info1').serializeArray()[0].value;   
-        },name:function(){          
+        ,data:{type:function(){
+          return $('#info1').serializeArray()[0].value;  
+        },name:function(){
           return $('#info1').serializeArray()[1].value;  
-        },image:function(){          
+        },image:function(){
           return $('#info1').serializeArray()[2].value;  
         },email:function(){          
           return $('#info1').serializeArray()[3].value;
@@ -115,6 +117,12 @@
           return $('#info1').serializeArray()[4].value;
         }}
         ,bindAction: '.xiu'
+        ,before: function(obj){//选图片之前
+          
+        }
+        ,done: function(res,index){//请求成功
+          alert(res.message);
+        }
       });
 
       form.on('select(lei)', function(data){
@@ -129,6 +137,19 @@
           $('.xx').html('再次上传会覆盖之前的附件');
         }
       });
+      
+      let rz = $('#rz');
+      if (rz.html() == '4') {//认证通过
+        rz.html('认证通过');
+        rz.css('color','#00FF00');
+        // $('.xiu').hide();
+      }else if(rz.html() == '3'){
+        rz.html('认证失败');
+      }else if(rz.html() == '2'){
+        rz.html('待认证');
+      }else if(rz.html() == '1'){
+        rz.html('未认证');
+      }
   })
 
 

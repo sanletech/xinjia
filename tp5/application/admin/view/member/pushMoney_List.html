@@ -21,9 +21,9 @@
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn" onclick="x_admin_show('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
-        <span class="x-right" style="line-height:40px">共有数据：88 条</span>
+        <span class="x-right" style="line-height:40px">共有数据：<{$count}> 条</span>
       </xblock>
-        <table class="layui-table" lay-data="{url:'<{:url('admin/member/pushMoneyList')}>', id:'test3'}" lay-filter="test3" >
+    <!-- <table class="layui-table" lay-data="{url:'<{:url('admin/member/pushMoneyList')}>', id:'test3'}" lay-filter="test3" >
     <thead>
     <tr>
         <th lay-data="{field:'id', width:20}" rowspan="2">ID</th>
@@ -31,32 +31,73 @@
         <th lay-data="{field:'name', width:80}" rowspan="2">客户姓名</th>
         <th lay-data="{align:'center', width:80}" rowspan="1">40HQ</th>
         <{foreach name="ship_nameArr" item="vo" key="k"}>
-        <th lay-data="{field:'40HQ_<{$k}>', width:80}"> <{$vo}> </th>
+        <th lay-data="{field:'40HQ_<{$k}>', width:80}" rowspan="1"> <{$vo}> </th>
         <{/foreach}>
     </tr>
     <tr>
         <th lay-data="{align:'center', width:80}" rowspan="1">20GP</th>
         <{foreach name="ship_nameArr" item="vo" key="k"}>
-            <th lay-data="{field:'20GP_<{$k}>', width:80}"><{$vo}></th>
+            <th lay-data="{field:'20GP_<{$k}>', width:80}" rowspan="1"><{$vo}></th>
         <{/foreach}>
     </tr>
   </thead>
+</table> -->
+
+ 
+<table class="layui-table" id="demo" lay-filter="demo">
+    <thead>
+        <tr>
+            <th rowspan="2">ID</th>
+            <th rowspan="2">客户帐号</th>
+            <th rowspan="2">客户姓名</th>     
+            <th rowspan="2">柜型</th>    
+            <th style="text-align: center;" colspan="<{$ship_nameArr|count}>" rowspan="1">船公司 </th>
+        </tr>
+        <tr>
+            <{foreach name="ship_nameArr" item="vo"}>
+                <th rowspan="1"><{$vo}></th>
+            <{/foreach}>
+        </tr>
+    </thead>
+    <tbody>
+     <{volist name='lists' id='vo'}>
+        <tr>
+          <td lay-data="edit:text"  rowspan="2"><{$vo.id}></td>
+          <td rowspan="2"><{$vo.member_code}></td>
+          <td rowspan="2"><{$vo.name}></td>
+          <th rowspan="1">40HQ</th>
+          <{foreach name="$vo.40HQ" item="V1" }>
+          <td  rowspan="1"><{$V1}></td>
+          <{/foreach}>
+        </tr>
+        <tr>
+          <th rowspan="1">20GP</th>
+          <{foreach name="$vo.20GP" item="V2" }>
+          <td  rowspan="1"><{$V2}></td>
+          <{/foreach}>
+        </tr>
+        <{/volist}>
+    </tbody>
 </table>
               
           
 <!--<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>-->
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
-layui.use('table', function(){
-  var table = layui.table;
+layui.use(['table','laydate','layedit'], function(){
+  var table = layui.table,
+  $ = layui.jquery,
+  layedit = layui.layedit,
+  laydate = layui.laydate;
   
-  //监听单元格编辑
-  table.on('edit(test3)', function(obj){
-    var value = obj.value //得到修改后的值
-    ,data = obj.data //得到所在行所有键值
-    ,field = obj.field; //得到字段
-    layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+  //日期
+  laydate.render({
+    elem: '#start'
   });
+  laydate.render({
+    elem: '#end'
+  });
+
 });
 </script>
 

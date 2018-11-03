@@ -29,18 +29,23 @@ class Member extends Base
         $this->view->assign('identification',$identification); 
         $user = new MemberM ;
         $list = $user->memberList($account,$type,$identification,1,'15');
-//        $this->_p($list);exit;
+    //    $this->_p($list);exit;
         $page = $list->render();
-        $this->view->assign('image_path',ROOT_PATH . 'public' . DS . 'uploads/files');
+        $this->view->assign('image_path',ROOT_PATH . 'public' . DS . 'uploads/images');
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);
         return $this->view->fetch('member/member_list'); 
     }
-    
-    //客户的认证通过与否 0未认证，1待认证,2为认证不通过，3为认证通过
+    //客户的认证通过与否 1未认证，2待认证,3为认证不通过，4为认证通过
     public function member_identification() {
         $id = $this->request->param('id');
-        $identification = $this->request->param('identification');
+        $identification = $this->request->param('audit');
+        if($identification=='yes'){
+            $identification =4;
+        }else{
+            $identification =3;
+        }
+
         $res =Db::name('member')->where('id','in',$id)->update(['identification'=>$identification]);
         return $res ?TRUE:FALSE;
     }
@@ -75,30 +80,40 @@ class Member extends Base
         }  else {
             $this->view->assign('ship_nameArr',$ship_nameArr);
         }
-//        $this->_p($ship_nameArr);exit;
+    //    $this->_p($ship_nameArr);exit;
         //所有业务的集合
         $salesArr =Db::name('user')->field('user_code,user_name')
                 ->where('status','1')->where('type','sales')->select();
         $this->view->assign('salesArr',$salesArr);
-        
+
+          //获取每页显示的条数
+          $limit= $this->request->param('limit',10,'intval');
+          //获取当前页数
+          $page= $this->request->param('page',1,'intval');  
+          //计算出从那条开始查询
+          $tol=($page-1)*$limit;
+          $user = new MemberM ;
+          $data = $user->pushMoneyList($tol,$limit);
+        //  $this->_p($data['lists']);exit;
+      $this->view->assign('lists',$data['lists']);
+      $this->view->assign('count',$data['count']);
         return $this->view->fetch('member/pushMoney_List'); 
     }
     
-    public function  pushMoneyList() {
+    // public function  pushMoneyList() {
         
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        $user = new MemberM ;
-        $lists = $user->pushMoneyList($tol,$limit);
-//        $this->_p($lists);exit;
-        return array('code'=>0,'msg'=>'','count'=>$lists['count'],'data'=>$lists['list']);
-
-       
-    }
+    //     //获取每页显示的条数
+    //     $limit= $this->request->param('limit',10,'intval');
+    //     //获取当前页数
+    //     $page= $this->request->param('page',1,'intval');  
+    //     //计算出从那条开始查询
+    //     $tol=($page-1)*$limit;
+    //     $user = new MemberM ;
+    //     $lists = $user->pushMoneyList($tol,$limit);
+    // //    $this->_p($lists);exit;
+        
+    //     return array('code'=>0,'msg'=>'','count'=>$lists['count'],'data'=>$lists['list']);
+    // }
     
     //业务对应客户的提成管理的修改
     public function  pushMoneyEdit(){
