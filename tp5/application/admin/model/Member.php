@@ -14,20 +14,18 @@ class Member extends Model
          $status = [0=>'男',1=>'女'];
         return  $status[$value];
     }
-    
-    public function memberList($account,$type,$status,$identification,$pages='5'){
-        //'id ,membername ,create_time ,logintime ,phone ,email ,status ,remark,update_time ,meber_leve ,member_code '
+
+    public function memberList($account,$type,$identification,$status,$pages='5'){
         $list =Db::name('member')->alias('a')
                 ->join('hl_sales_member b','b.member_code = a.member_code','left')
                 ->where('a.type','in',$type)
                 ->where('a.status',$status)
-                ->where('a.identification',$identification)
-                ->field('a.id,a.name,a.create_time,a.logintime,a.phone,a.email,a.status,a.company,a.member_code,a.identification,b.sales_name')
+                ->where('a.identification',"$identification")
+                ->field('a.id,a.name,a.create_time,a.logintime,a.phone,a.email,'
+                        . 'a.status,a.company,a.member_code,a.identification,a.file_path,b.sales_name')
                 ->buildSql();
-//        var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($account){
-          
             $list = Db::table($list.' a')->where('a.name','like',"%{$account}%")->whereOr('a.member_code','like',"%{$account}%")->buildSql();
             $pageParam['query']['account'] = $account;
         }
