@@ -49,14 +49,12 @@ class Personal extends Base
     //个人信息的修改
     public function info_edit()
     {
-
         $data= $this->request->param();  
         $file = request()->file('file');
-//      this->_p($file);exit;
+//      $this->_p($data);exit;
         $member_code=  Session::get('member_code','think');
-        $type= $data['type'];
-        $email= $data['email'];
-        $name =$data['name'];
+        $type= $data['type']; $email= $data['email'];
+        $name =$data['name']; $add = $data['add'];
         //将图片放到 
         $file_path=[];
         $response=[];
@@ -73,7 +71,7 @@ class Personal extends Base
         //修改用户信息
         $res =Db::name('member')->where('member_code',$member_code)
                 ->update(['type'=>$type,'name'=>$name,
-                    'email'=>$email,'type'=>$type,
+                    'email'=>$email,'type'=>$type,'add'=>$add,
                     'file_path'=>$file_path,'identification'=>1]);
         $res ?$response=['status'=>1,'message'=>'更新成功']:$response=['status'=>0,'message'=>'更新失败'];
         return $response;
