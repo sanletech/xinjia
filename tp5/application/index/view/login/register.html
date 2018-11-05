@@ -205,10 +205,9 @@
       var telReg = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
       if (telReg) {
         $.get("<{:url('index/login/ali_sms')}>",{phone:phone},function(res){
-          if (res.status) {
-            $.cookie('mint',120);
-            timekeeping();
-          }
+          $.cookie('mint',120);
+          timekeeping();
+          if (res.status) {};
         });
       }else{
         alert('您输入的手机号格式不正确！')
