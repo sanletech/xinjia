@@ -191,8 +191,9 @@
             url:"<{:url('index/login/check_register')}>",    
             data:$("#register_form").serialize(),
             dataType:"json",
-            success:function(status){
-              alert(status)
+            success:function(res){
+              console.log(res);
+              
             }
         })        
     }
