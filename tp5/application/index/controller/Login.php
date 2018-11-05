@@ -60,11 +60,11 @@ class Login extends Controller
         //查询同一条手机号的发送时间是否超过五分钟
         $ctime = date('y-m-d H:i:s');
         $again_time = date('y-m-d H:i:s',strtotime("$ctime -2min"));
-        $again = Db::name('ali_sms')->where('phone',$phone)->whereTime('ctime','<',$again_time)->find();
-        if($again){
-            $response= ['message'=>'2分钟后再发送','status'=>0];
-            return json($response);
-        }
+        // $again = Db::name('ali_sms')->where('phone',$phone)->whereTime('ctime','<',$again_time)->find();
+        // if($again){
+        //     $response= ['message'=>'2分钟后再发送','status'=>0];
+        //     return json($response);
+        // }
         $sms = new AliyunM;
         //短信发送
         $code = rand (1000, 9999);
@@ -106,7 +106,7 @@ class Login extends Controller
         // 数据保存
         $res =$member ->register($data);
         if($res){
-            return array('status'=>0,'message'=>'注册成功');
+            return array('status'=>1,'message'=>'注册成功');
         } else {
             return array('status'=>0,'message'=>'注册失败');
         }
@@ -130,21 +130,25 @@ class Login extends Controller
 
     //修改密码
     public function new_pwd(){
-        $data = $this->request->only('phone,code,password,repassword');
+        $data = $this->request->only('phone,code,newpassword,repassword');
        
-        $res_code = Db::name('ali_sms')->where('phone',$data['phone'])
-                ->order('ctime desc')->limit(1)->value('code');
-        if($res_code!==$data['code']){
+        //20分钟内有效
+        $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
+        $res_code = Db::name('ali_sms')->where('phone',$phone)
+                ->where('ctime','between time',$valid_time)
+                ->order('ctime desc')->column('code');
+        if(!in_array($code,$res_code)){
             return array('status'=>0,'message'=>'验证码不正确');
         }
-        if($data['password']!==$data['repassword']){
+
+        if($data['newpassword']!==$data['repassword']){
             return array('status'=>0,'message'=>'前后密码不一致');
         }
-        $data['password'] = md5($data['password']);
+        $data['newpassword'] = md5($data['newpassword']);
         //更新密码
-        $res2 =DB::name('member')->where('phone',$data['phone'])->update(['password'=>$data['password']]);
+        $res2 =DB::name('member')->where('phone',$data['phone'])->update(['password'=>$data['newpassword']]);
         $res2 ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
-        return $response;
+        return josn($response);
     }
     
 }

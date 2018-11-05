@@ -192,8 +192,10 @@
             data:$("#register_form").serialize(),
             dataType:"json",
             success:function(res){
-              console.log(res);
-              
+              alert(res.message);
+              if (res.status) {
+                window.location.href = "<{:url('index/login/login')}>";
+              }
             }
         })        
     }
