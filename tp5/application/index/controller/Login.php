@@ -30,15 +30,13 @@ class Login extends Controller
         $passWord = md5($data['password']);
         //在member 表中进行查询
         $member =Db::name('member')->where('member_code|phone',$loginName)->field('password,member_code,name')->find();
-  
         //将用户名与密码分开验证
-        //如果没有查询到该用户
         if(is_null($member)){
             //设置返回信息
            $message = '用户名不正确';
         }elseif($member['password'] != $passWord){
             //设置密码提示信息
-             $message = '密码不正确';
+            $message = '密码不正确';
         }else {    
          //用户通过验证 修改返回信息
             $status = 1;
@@ -49,6 +47,7 @@ class Login extends Controller
             //将用户登录的信息保存到session中,供其他控制器使用
             Session::set('member_code',$member['member_code']);
             Session::set('name',$member['name']);
+//            var_dump($_SESSION);exit;
            // Session::set('user_info',$user['loginname']);
         }
         return array('status'=>$status,'message'=>$message);
@@ -61,11 +60,11 @@ class Login extends Controller
         //查询同一条手机号的发送时间是否超过五分钟
         $ctime = date('y-m-d H:i:s');
         $again_time = date('y-m-d H:i:s',strtotime("$ctime -2min"));
-        $again = Db::name('ali_sms')->where('phone',$phone)->whereTime('ctime','<',$again_time)->find();
-        if($again){
-            $response= ['message'=>'2分钟后再发送','status'=>0,];
-            return json($response);
-        }
+        // $again = Db::name('ali_sms')->where('phone',$phone)->whereTime('ctime','<',$again_time)->find();
+        // if($again){
+        //     $response= ['message'=>'2分钟后再发送','status'=>0];
+        //     return json($response);
+        // }
         $sms = new AliyunM;
         //短信发送
         $code = rand (1000, 9999);
@@ -78,7 +77,6 @@ class Login extends Controller
              //存贮发送时间，验证码,手机号到数据库里
             $res=Db::name('ali_sms')->insert(['phone'=>$phone,'code'=>$code,'ctime'=>$ctime]);
         }
-        
         return json($response);
     }
 
@@ -117,7 +115,7 @@ class Login extends Controller
     
         //退出登录
     public function logout()
-    {
+    { 
       //删除当前用户的session 值
       Session::delete('member_code');
       Session::delete('user_info');
@@ -132,21 +130,27 @@ class Login extends Controller
 
     //修改密码
     public function new_pwd(){
-        $data = $this->request->only('phone,code,password,repassword');
-       
+        $data = $this->request->only('phone,code,newpassword,repassword');
+        if (count($data)!==4){
+            $response=['status'=>0,'message'=>'少输了参数'];
+            return json($response);
+        }
+        //20分钟内有效
+        $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
         $res_code = Db::name('ali_sms')->where('phone',$data['phone'])
-                ->order('ctime desc')->limit(1)->value('code');
-        if($res_code!==$data['code']){
+                ->where('ctime','between time',$valid_time)
+                ->order('ctime desc')->column('code');
+        if(!in_array($data['code'],$res_code)){
             return array('status'=>0,'message'=>'验证码不正确');
         }
-        if($data['password']!==$data['repassword']){
+        if($data['newpassword']!==$data['repassword']){
             return array('status'=>0,'message'=>'前后密码不一致');
         }
-        $data['password'] = md5($data['password']);
+        $data['newpassword'] = md5($data['newpassword']);
         //更新密码
-        $res2 =DB::name('member')->where('phone',$data['phone'])->update(['password'=>$data['password']]);
+        $res2 =DB::name('member')->where('phone',$data['phone'])->update(['password'=>$data['newpassword']]);
         $res2 ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
-        return $response;
+        return json($response);
     }
     
 }

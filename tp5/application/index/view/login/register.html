@@ -191,8 +191,11 @@
             url:"<{:url('index/login/check_register')}>",    
             data:$("#register_form").serialize(),
             dataType:"json",
-            success:function(status){
-              alert(status)
+            success:function(res){
+              alert(res.message);
+              if (res.status) {
+                window.location.href = "<{:url('index/login/login')}>";
+              }
             }
         })        
     }

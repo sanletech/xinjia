@@ -22,7 +22,10 @@ class Login extends Model
             $type ='person';
         }        
         $res =Db::name('member')->insert($map);
+       
         $this->memberProfit($member_code);
+    //     $this->memberDiscount($member_code);
+    //    var_dump($res);exit;
         return $res?true:false;;
     }
     //设置客户的利润,提成点

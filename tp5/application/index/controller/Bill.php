@@ -6,11 +6,19 @@ use think\Db;
 use think\Session;
 class Bill extends Base 
 {    
+    public $order_status;
+    public $page=5;
+
+    public function _initialize()
+    {  
+        $this->order_status=config('config.order_status');
+    }
+    
     //海运运价
     public function billCreate($order_num){
         $data =Db::name('order_port')
-                ->field('order_num,container_size,container_sum,comment,status,money_status,'
-                       . 'quoted_price,member_code')
+                ->field('order_num,container_size,container_sum,comment,extra_info,'
+                        . 'status,money_status,quoted_price,member_code')
                 ->where('order_num',$order_num)->find();
         $data['ctime']=  date('Y-m-d H:i:s');
         //插入订单的数据
@@ -45,6 +53,33 @@ class Bill extends Base
                 ->order('ctime desc,mtime desc')->buildSql();
         $count = Db::table($list.' a')->count();
         $list = Db::table($list.' a')->limit($tol,$limit)->select();
+        //转换付款状态,账单状态，备注信息  $this->order_status
+        foreach ($list as $key => $value) {
+            switch ($value['status']) {
+                case $this->order_status['stop']:
+                case $this->order_status['cancel']:
+                $list[$key]['status'] ='订单中止';
+                break;
+                case $this->order_status['completion']:            
+                $list[$key]['status'] ='订单完成';
+                break;
+                default:
+                $list[$key]['status'] ='下单成功';
+                break;
+            }
+            switch ($value['money_status']) {
+                case 0:
+                $list[$key]['money_status'] ='未付款';
+                break;
+                case 1:            
+                $list[$key]['status'] ='已付款';
+                break;
+                default:
+                $list[$key]['status'] ='参数有变化';
+                break;
+            }
+            $list[$key]['comment']= trim(($value['comment'].'</br>'.$value['extra_info']),' ');
+        }
 //        $this->_p($list);exit;
         
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);

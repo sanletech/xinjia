@@ -87,12 +87,11 @@
 
         $('.pwd_ti').click(function () {
             let data = $('#pwd').serialize();
-            console.log(data);
             $.post('<{:url("index/login/new_pwd")}>', data, function (res) {
                 if (res.status) {
                     layer.close(layer.index);
-                    alert('提交成功！');
                 }
+                layer.msg(res.message,{icon: 1,time:1000});
             })
         })
 
