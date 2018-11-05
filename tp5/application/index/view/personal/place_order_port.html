@@ -18,6 +18,10 @@
         width: 45px;
         text-align: center;
       }
+      #te .caozuo a{
+        color: #666;
+        font-size: 12px;
+      }
     </style>
     <div class="x-nav">
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
@@ -101,7 +105,7 @@
                 <{volist name="list" id="vo"}>
                   <tr>
                     <td class="ddh">
-                      <a href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>" target="_blank" ><{$vo.order_num}></a>
+                      <a href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>" title="订单详情" target="_blank" ><{$vo.order_num}></a>
                     </td>
                     <td><{$vo.track_num}></td>
                     <td><{$vo.ctime}></td>
@@ -120,7 +124,7 @@
                     ?>
                     </td>
                     
-                    <td>
+                    <td class="tj_gh">
                       <!-- 有改变css('background-color','#00DB00') -->
                       <{if condition="($vo['status']>4) "}>
                       已补料
@@ -142,7 +146,7 @@
                     </td>
                     <td class="fukuan"><?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></td>
                     <td class="caozuo">
-                      <{$vo.status_title}>
+                      <a title="<{$vo['change_comment']}>"><{$vo.status_title}></a>
                     </td> 
                   </tr>
                   <{/volist}>

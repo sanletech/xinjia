@@ -141,7 +141,7 @@ class Login extends Controller
                 ->where('ctime','between time',$valid_time)
                 ->order('ctime desc')->column('code');
         if(!in_array($data['code'],$res_code)){
-            return array('status'=>0,'message'=>'验证码不正确');
+            return array('status'=>0,'message'=>'验证码不正确或手机号码已注册');
         }
         if($data['newpassword']!==$data['repassword']){
             return array('status'=>0,'message'=>'前后密码不一致');
@@ -152,5 +152,4 @@ class Login extends Controller
         $res2 ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
         return json($response);
     }
-    
 }

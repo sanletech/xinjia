@@ -46,7 +46,7 @@ class OrderPort extends Base
            // }
         }else{
             // 上传失败获取错误信息
-            return['status'=>0,'mssage'=>$file->getError()] ;
+            return['status'=>0,'mssage'=>$file->getError()];
         }
 
 

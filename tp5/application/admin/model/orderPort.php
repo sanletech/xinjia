@@ -184,7 +184,7 @@ class orderPort extends Model
         try{
         $res =Db::name('order_port')->where('order_num',$order_num)->update($param);
         $res1 =Db::name('order_bill')->where('order_num',$order_num)->update($param);
-        Db::commit();    
+        Db::commit();
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
