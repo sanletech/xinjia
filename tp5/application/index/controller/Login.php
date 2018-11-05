@@ -29,7 +29,7 @@ class Login extends Controller
         $loginName = $data['loginname'];
         $passWord = md5($data['password']);
         //在member 表中进行查询
-        $member =Db::name('member')->where('member_code|phone',$loginName)->field('password,member_code')->find();
+        $member =Db::name('member')->where('member_code|phone',$loginName)->field('password,member_code,name')->find();
   
         //将用户名与密码分开验证
         //如果没有查询到该用户
@@ -48,6 +48,7 @@ class Login extends Controller
           
             //将用户登录的信息保存到session中,供其他控制器使用
             Session::set('member_code',$member['member_code']);
+            Session::set('name',$member['name']);
            // Session::set('user_info',$user['loginname']);
         }
         return array('status'=>$status,'message'=>$message);
@@ -107,7 +108,7 @@ class Login extends Controller
         // 数据保存
         $res =$member ->register($data);
         if($res){
-            return array('status'=>0,'message'=>'注册成功');
+            return array('status'=>1,'message'=>'注册成功');
         } else {
             return array('status'=>0,'message'=>'注册失败');
         }

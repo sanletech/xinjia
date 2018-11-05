@@ -23,8 +23,6 @@ class Login extends Model
         }        
         $res =Db::name('member')->insert($map);
         $this->memberProfit($member_code);
-        $this->memberDiscount($member_code);
-      
         return $res?true:false;;
     }
     //设置客户的利润,提成点
@@ -45,11 +43,10 @@ class Login extends Model
     }
     
     //设置客户的在线支付优惠
-    public function memberDiscount($member_code) {
+    public function memberDiscount() {
             $ship_name =Db::name('shipcompany')->column('id');
             $data=[]; $mtime =date('y-m-d h:i:s');
             foreach ($ship_name as $key=>$value) {
-                $data[$key]['member_code']=$member_code;
                 $data[$key]['ship_id']= $value;
                 $data[$key]['40HQ']= 200;
                 $data[$key]['20GP']= 100;
