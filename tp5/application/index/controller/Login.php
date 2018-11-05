@@ -152,5 +152,4 @@ class Login extends Controller
         $res2 ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
         return json($response);
     }
-    
 }

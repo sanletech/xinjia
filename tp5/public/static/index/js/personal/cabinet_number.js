@@ -20,6 +20,8 @@ function cabinet(od_num,gui) {
 
 //弹出报柜号
 function order_num(){
+    let stast = $(this).parent().siblings('.caozuo').find('a').html();
+    if (stast == '订单进行中') {
     layer.open({
         type: 1,
         title: '报柜号',
@@ -33,7 +35,10 @@ function order_num(){
             //按钮【按钮一】的回调
             $.post(track_num, $('#cabinet form').serialize());
         }
-    });
+    });           
+  }else{
+    layer.msg(stast, {icon: 5,time: 1000});
+  }
 }
 
 if ($('.fukuan').html() == '未付款') {
@@ -41,22 +46,35 @@ if ($('.fukuan').html() == '未付款') {
 }else{
     $('.fukuan').css('color','#00DB00');
 }
-let huo = $('.goods a');
+var huo = $('.goods a');
+var st = $('.caozuo a');
+var tj = $('.tj_gh a');
+
 for (let i = 0; i < huo.length; i++) {
     if(huo.eq(i).html() == 'lock'){
         huo.eq(i).html('扣货');
+        if (st.eq(i).html() == '订单进行中') {
+            huo.eq(i).css('background-color','#FF2400');
+        }
     }else if(huo.eq(i).html() == 'unlock'){
         huo.eq(i).html('放货');
-        huo.eq(i).css('background-color','#00DB00');
+        if (st.eq(i).html() == '订单进行中') {
+            huo.eq(i).css('background-color','#00DB00');
+        }
     }else if(huo.eq(i).html() == 'apply'){
         huo.eq(i).html('申请中');
-        huo.eq(i).css('background-color','#C9C9C9');
-    }     
+        // huo.eq(i).css('background-color','#C9C9C9');
+    }
+    
+    if (st.eq(i).html() == '订单进行中') {
+        tj.eq(i).css('background-color','#FF2400');
+    }
 }
 
 $('.goods a').click(function(){
-    let order_num = $(this).parent().siblings('.ddh').find('a').html();;
-    if ($(this).html() == '扣货') {
+    let order_num = $(this).parent().siblings('.ddh').find('a').html();
+    let stast = $(this).parent().siblings('.caozuo').find('a').html();
+    if ($(this).html() == '扣货' && stast == '订单进行中') {
         layer.open({
             type:1
             ,title: '货物状态'
@@ -79,7 +97,9 @@ $('.goods a').click(function(){
                 layer.close(index);
             }
         });     
-    } 
+    }else if($(this).html() == '扣货'){
+        layer.msg(stast, {icon: 5,time: 1000});
+    }
 });
 
 

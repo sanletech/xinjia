@@ -87,21 +87,6 @@
         </form>
       </div>
 
-      <!-- <div class="fm layui-row">
-        <form class="" action="index.html" method="post">
-          <input type="text" name="title" placeholder="请输入您的企业名" class="layui-col-xs12">
-          <input type="text" name="title" placeholder="请输入推荐人" class="layui-col-xs12">
-
-          <div class="sub layui-col-xs12">
-            <button type="submit" class="layui-btn layui-btn-fluid" name="button">登陆</button>
-          </div>
-
-          <div class="zh">
-            <span>没有帐号？<a href="#">立即注册</a></span>
-          </div>
-        </form>
-      </div> -->
-
     </div>
     <!-- 模态窗口 -->
     <div id="modal-default" class="iziModal">
@@ -167,12 +152,11 @@
     <script src="__STATIC__/js/iziModal.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.js"></script>
     <script type="text/javascript">
-      // $('#zc li').eq(0).addClass('yan');
-      // $('.fm').eq(0).show();
-      // $('#zc li').click(function(event) {
-      //   $(this).addClass('yan').siblings('li').removeClass('yan');
-      //   $('.fm').eq($(this).index()).show().siblings('.fm').hide();
-      // });
+    layui.use('layer', function(){
+      var layer = layui.layer,
+      $ = layui.jquery;
+    
+    });
       $("#modal-default").iziModal({
           title: "注册协议",
           iconClass: 'icon-announcement',
@@ -185,16 +169,18 @@
           $('#modal-default').iziModal('open');
       });
     
-    function toajax (){
+    function toajax (){      
         $.ajax({
             type:'POST',
             url:"<{:url('index/login/check_register')}>",    
             data:$("#register_form").serialize(),
             dataType:"json",
             success:function(res){
-              alert(res.message);
               if (res.status) {
+                layer.msg(res.message,{icon: 1,time:1000});
                 window.location.href = "<{:url('index/login/login')}>";
+              }else{
+                layer.msg(res.message,{icon: 2,time:1000});
               }
             }
         })        
@@ -205,10 +191,9 @@
       var telReg = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
       if (telReg) {
         $.get("<{:url('index/login/ali_sms')}>",{phone:phone},function(res){
-          if (res.status) {
-            $.cookie('mint',120);
-            timekeeping();
-          }
+          $.cookie('mint',120);
+          timekeeping();
+          if (res.status) {};
         });
       }else{
         alert('您输入的手机号格式不正确！')
@@ -217,7 +202,8 @@
     if ($.cookie('mint')) {
       timekeeping()
     }    
-
+    
+  //验证码倒计时
    function timekeeping(){
      let mint = parseInt($.cookie('mint'));
     //把按钮设置为不可以点击
@@ -247,7 +233,7 @@
 
    $('.yan i').mouseup(function(){//松开时
     $('.pwd').attr('type','password');
-   })
+   });
     </script>
  </body>
 </html>

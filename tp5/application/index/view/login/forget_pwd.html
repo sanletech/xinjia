@@ -69,29 +69,35 @@
     </form>
     <script src="https://cdn.bootcss.com/jquery-cookie/1.2/jquery.cookie.js"></script>
     <script>
-        var forget_pwd_url = "<{:url('index/login/new_pwd')}>";
+     var forget_pwd_url = "<{:url('index/login/new_pwd')}>";
+    layui.use('layer', function(){
+        var layer = layui.layer;
         $('#btn').click(function () {
             let phone = $('#phone').val();
             var telReg = !!phone.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
             if (telReg) {
                 $.get("<{:url('index/login/ali_sms')}>", { phone: phone }, function (res) {
-                    if (res.status) {
-                        $.cookie('mint', 120);
-                        timekeeping();
-                    }
+                    $.cookie('mint', 120);
+                    timekeeping();
+                    if (res.status) {}
                 });
             } else {
                 alert('您输入的手机号格式不正确！')
             }
         });
-
+        
+    
         $('.pwd_ti').click(function () {
             let data = $('#pwd').serialize();
             $.post('<{:url("index/login/new_pwd")}>', data, function (res) {
                 if (res.status) {
-                    layer.close(layer.index);
+                    layer.msg(res.message,{icon: 1,time:1000},function(){
+                        parent.layer.close(parent.layer.index);
+                    });
+                }else{
+                    layer.msg(res.message,{icon: 2,time:1000});
                 }
-                layer.msg(res.message,{icon: 1,time:1000});
+                
             })
         })
 
@@ -128,6 +134,7 @@
         $('.yan i').mouseup(function () {//松开时
             $('.pwd').attr('type', 'password');
         })
+    });
     </script>
     </body>
 
