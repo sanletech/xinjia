@@ -16,37 +16,16 @@ class Login extends Model
         $id =Db::name('member')->max('id')+1;
         $member_code = $IDCode->create($id, 'zh');
         $map['member_code'] = $member_code;//登录帐号
-
         if(!empty($company)){
             $type ='company';
         }else{
             $type ='person';
         }        
-
         $res =Db::name('member')->insert($map);
-        //同时将推荐人和业务员绑定
-        if(array_key_exists('sales',$data)){
-            $salesName =$data['sales'];
-            if(!empty($salesName)){
-                //根据业务姓名查询其业务编号 如果没有就填0
-                $sales_code =Db::name('user')->where('user_name',$salesName)->where('type','sales')->value('user_code');
-                $sales_code = $sales_code ?$sales_code :0;
-            }
-        }else{
-            $sales_code=0; 
-            $salesName='nobody';
-        }
-        //将业务对应客户的关系插入
-        $data =['sales_code'=>$sales_code ,'sales_name'=>$salesName ,'member_code'=>$member_code ,'member_name'=>$data['company']];
-        $res = Db::name('sales_member')->insert($data);
         $this->memberProfit($member_code);
         $this->memberDiscount($member_code);
-        if ($res){
-            $status= true;
-        } else {
-            $status= false;
-        }
-        return $status;
+      
+        return $res?true:false;;
     }
     //设置客户的利润,提成点
     public function memberProfit($member_code) {

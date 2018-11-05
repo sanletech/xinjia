@@ -62,7 +62,7 @@ class Login extends Controller
         $again_time = date('y-m-d H:i:s',strtotime("$ctime -2min"));
         $again = Db::name('ali_sms')->where('phone',$phone)->whereTime('ctime','<',$again_time)->find();
         if($again){
-            $response= ['message'=>'2分钟后再发送','status'=>0,'code'=>''];
+            $response= ['message'=>'2分钟后再发送','status'=>0,];
             return json($response);
         }
         $sms = new AliyunM;
@@ -77,7 +77,7 @@ class Login extends Controller
              //存贮发送时间，验证码,手机号到数据库里
             $res=Db::name('ali_sms')->insert(['phone'=>$phone,'code'=>$code,'ctime'=>$ctime]);
         }
-        $response['code']= md5($response['code']);
+        
         return json($response);
     }
 
