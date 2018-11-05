@@ -131,16 +131,18 @@ class Login extends Controller
     //修改密码
     public function new_pwd(){
         $data = $this->request->only('phone,code,newpassword,repassword');
-       
+        if (count($data)!==4){
+            $response=['status'=>0,'message'=>'少输了参数'];
+            return json($response);
+        }
         //20分钟内有效
         $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
-        $res_code = Db::name('ali_sms')->where('phone',$phone)
+        $res_code = Db::name('ali_sms')->where('phone',$data['phone'])
                 ->where('ctime','between time',$valid_time)
                 ->order('ctime desc')->column('code');
-        if(!in_array($code,$res_code)){
+        if(!in_array($data['code'],$res_code)){
             return array('status'=>0,'message'=>'验证码不正确');
         }
-
         if($data['newpassword']!==$data['repassword']){
             return array('status'=>0,'message'=>'前后密码不一致');
         }
@@ -148,7 +150,7 @@ class Login extends Controller
         //更新密码
         $res2 =DB::name('member')->where('phone',$data['phone'])->update(['password'=>$data['newpassword']]);
         $res2 ?$response=['status'=>1,'message'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
-        return josn($response);
+        return json($response);
     }
     
 }

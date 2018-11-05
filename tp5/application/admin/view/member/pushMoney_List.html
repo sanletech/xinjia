@@ -5,8 +5,8 @@
       position: relative;
     }
     .td_inp input{
-      width: 99%;
-      height: 97%;
+      width: 98%;
+      height: 98%;
       text-align: center;
       position: absolute;
       top: 0;
@@ -65,13 +65,13 @@
           <td rowspan="2"><{$vo.name}></td>
           <td rowspan="1" class="gui">20GP</td>
           <{foreach name="$vo.20GP" item="V2" }>
-          <td  rowspan="1" class="td_inp"><input type="text" value="<{$V2}>" class="" readonly></td>
+          <td  rowspan="1" class="td_inp"><input type="text" class="" readonly  unselectable='on' value="<{$V2}>"></td>
           <{/foreach}>
         </tr>
         <tr>
             <td rowspan="1" class="gui">40HQ</td>
             <{foreach name="$vo.40HQ" item="V1" }>
-            <td  rowspan="1" class="td_inp"><input type="text" value="<{$V1}>" class="" readonly></td>
+            <td  rowspan="1" class="td_inp"><input type="text" class="" readonly unselectable='on' value="<{$V1}>"></td>
             <{/foreach}>
         </tr>
         <{/volist}>
@@ -97,9 +97,10 @@ layui.use(['table','laydate','layedit'], function(){
   });
 
   var ship;//当前点击下标
+  
   $('.td_inp input').dblclick(function(){//双击事件  
     $(this).addClass('in').removeAttr('readonly');
-    ship = $(this).parents('td').index();//当前点击下标  
+    ship = $(this).parents('td').index();//当前点击下标
   });
 
   $('.td_inp input').blur(function(){//光标离开事件
@@ -126,9 +127,7 @@ layui.use(['table','laydate','layedit'], function(){
       ship_id = $('#demo thead tr').eq(1).children('th').eq(ship-1).attr('name')
     }
     //用户ID：柜型   船公司id：输入内容
-    $.get(ship_edit_url,{[id]:gui,[ship_id]:valu},function(res){
-
-    })
+    // $.get(ship_edit_url,{[id]:gui,[ship_id]:valu});
   }
 });
 </script>
