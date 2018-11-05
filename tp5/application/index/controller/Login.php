@@ -88,9 +88,12 @@ class Login extends Controller
 //         判断验证码是否正确
         $code = $data['code'];
         $phone = $data['phone'];
+        //20分钟内有效
+        $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
         $res_code = Db::name('ali_sms')->where('phone',$phone)
-                ->order('ctime desc')->limit(1)->value('code');
-        if($res_code!==$code){
+                ->where('ctime','between time',$valid_time)
+                ->order('ctime desc')->column('code');
+        if(!in_array($code,$res_code)){
             return array('status'=>0,'message'=>'验证码不正确');
         }
         // 数据验证
