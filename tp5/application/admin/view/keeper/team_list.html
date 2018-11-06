@@ -48,6 +48,11 @@
         laydate.render({
           elem: '#end' //指定元素
         });
+
+        $('.an').click(function(){
+          console.log(111);
+          
+        })
       });
 
       //给状态加样式
@@ -58,6 +63,7 @@
           $('.zt').eq(i).addClass('layui-btn-danger');
         }
       }
+
 
       function toajax(id, status) {
         $.ajax({

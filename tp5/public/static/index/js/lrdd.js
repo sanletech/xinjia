@@ -473,8 +473,12 @@ $('.tjiao').eq(0).find('.shi').click(function(){
   $('.lche,.fuwu').show();
   $('input').css('border','0').attr('readonly',true);
   $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
+  $('.select').css('border','0');
+  $("select").each(function () {
+    $(this).attr("disabled","disabled");
+  });
   // $("html,body").animate({scrollTop:100}, 500);
-  console.log(window.location.port);
+  // console.log(window.location.port);
   layer.open({
     type:1
     ,title: '确认信息'
@@ -498,6 +502,11 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('.tjiao').eq(0).show();
   $('.lche,.fuwu').hide();
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);
+  $('#bxje').css('border','0').attr('readonly',true);
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();
+  $('.select').css('border','1px solid #aaa');
+  $("select").each(function () {
+    $(this).removeAttr("disabled");
+  });
 })

@@ -13,8 +13,15 @@
                 color: #2e8de5;
             }
 
-            .shi {
+            .shi { 
                 background-color: red !important;
+            }
+            .mony{
+                color: red;
+                font-size: 24px;
+            }
+            .xxtx .tjiao {
+                width: 100px;
             }
         </style>
         <form class="" id='order_data_form'>
@@ -28,15 +35,7 @@
                         <div class="layui-col-xs12">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">支付状态：</label>
-                                <div class="layui-input-block">
-                                    <?php if($list['payment_method']=='month'){
-                                           echo'月结'; 
-                                        }elseif($list['payment_method']=='installment'){
-                                           echo'到港付';
-                                        }else{
-                                            echo'在线支付';
-                                        }
-                                    ?>
+                                <div class="layui-input-block mony">
                                     <?php if($list['money_status']){
                                         echo'已付款';
                                     }else{
@@ -286,9 +285,10 @@
                                     <span>*&nbsp;</span>重量：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
                                     <{$list.weight}>
+                                    <span>吨(T)</span>
                                 </div>
                                 <div class="layui-col-xs2" style="text-align: left;">
-                                    <span>吨(T)</span>
+                                    <!-- <span>吨(T)</span> -->
                                 </div>
                             </div>
                         </div>
@@ -302,33 +302,42 @@
                         <span>发票信息提醒：平台支持开具6%的服务费增值税专用发票，订单完成后联系客服沟通开发票</span>
                     </div>
                     <div class="dd_nei">
-                        <div class="layui-col-xs4 er">
+                        <div class="layui-col-xs3 er">
                             <div class="grid-demo nei">
-                                <div class="layui-col-xs3">
+                                <div class="layui-col-xs4">
                                     <span>*&nbsp;</span>柜量：</div>
                                     <span id="gl" style="display: none;"><{$list.container_sum}></span>
                                     <div class="layui-col-xs6" style="text-align: left">
                                         <{$list.container_sum}>
                                     </div>
                             </div>
-
                         </div>
-                        <div class="layui-col-xs4 er">
+
+                        <div class="layui-col-xs3 er">
                             <div class="grid-demo" style="margin-top: 0px;">
-                                <div class="layui-col-xs3">
-                                    <span>*&nbsp;</span>保险金额：</div>
+                                <div class="layui-col-xs4">
+                                    <span>*&nbsp;</span>单柜货值：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
                                     <{$list.cargo_cost}>
-                                </div>
-
-                                <div class="layui-col-xs2" style="text-align: left;margin-left:8px;">
                                     <span>万</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-col-xs4 er">
+
+                        <div class="layui-col-xs3 er">
+                            <div class="grid-demo" style="margin-top: 0px;">
+                                <div class="layui-col-xs4">
+                                    <span>*&nbsp;</span>单柜保险：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    <{$list.cargo_cost*3}>
+                                    <span>元</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs3 er">
                             <div class="grid-demo nei">
-                                <div class="layui-col-xs3">
+                                <div class="layui-col-xs4">
                                     <span>*&nbsp;</span>结账方式：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
                                         <?php 
@@ -363,17 +372,13 @@
                         </div>
                     </div>
                     <!-- 总运费 -->
-                    <div class="sun">
+                    <!-- <div class="sun">
                         <div class="fapiao layui-form-item layui-form">
                             <div class="fp_tt">
                                 <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
                             </div>
                         </div>
-                        <!-- <span>总运费:
-              <strong>￥
-                <span id="price_sum">0.00</span>元</strong>
-            </span> -->
-                    </div>
+                    </div> -->
 
                     <!-- 拖车服务 -->
                     <div class="xxtx_dd">
@@ -383,8 +388,9 @@
 
                         <div class="dd_nei">
                             <div class="layui-col-xs12 layui-form er">
-                                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" disabled>
+                                <!-- <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" disabled> -->
                                 <!-- <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="admin_bge()">增加</a> -->
+                                <div>装货服务</div>
                             </div>
                             <div class="layui-col-xs12 er biaoge zhuanghuo">
                                 <table class="layui-table" lay-size="sm">
@@ -443,7 +449,8 @@
 
                         <div class="dd_nei">
                             <div class="layui-col-xs12 layui-form er">
-                                <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="" disabled>
+                                <!-- <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="" disabled> -->
+                                <div>送货服务</div>
                             </div>
                             <div class="layui-col-xs12 er biaoge songhuo">
                                 <table class="layui-table" lay-size="sm">
@@ -492,8 +499,8 @@
                         </div>
                         <div class="feiyong">
                           <div class="layui-col-xs12">
-                            <span>海运费：<{$list.seaprice}></span>
-                            <pi id="money"><{$list.seaprice}></pi>元
+                            <span>海运费：</span>
+                            <pi id="money"><{$list.seaprice*$list.container_sum}></pi>元
                               <span class="shuo"><{$list.price_description}></span>
                           </div>
                           <div class="layui-col-xs12">
@@ -555,7 +562,7 @@
                     </div> -->
 
                     <div class="tjiao">
-                        <a href="javascript:;" onclick="xiu_order(this)">保存</a>
+                        <!-- <a href="javascript:;" onclick="xiu_order(this)">保存</a> -->
                         <a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
                     </div>
                 </div>
@@ -621,27 +628,9 @@
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
         <script>
-            $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();
-            $('.in').css('border', '1px solid #e6e6e6');
-            input_null();
+            $('.songhuo,.zhuanghuo').show();
+            $('input').attr('readonly', true);
+            $('input').css('border', '0');
         </script>
-        
-        <script type="text/javascript">
-//    function download_file(http://www.tp5.com/admin.php/order_port/downs/aa/111)
-//    {
-//        if (typeof (download_file.iframe) == "undefined")
-//        {
-//            var iframe = document.createElement("iframe");
-//            download_file.iframe = iframe;
-//            document.body.appendChild(download_file.iframe);
-//        }
-//        //alert(download_file.iframe);
-//        download_file.iframe.src = url;
-//        download_file.iframe.style.display = "none";
-//    }
-</script>
-
-
     </body>
-
     </html>
