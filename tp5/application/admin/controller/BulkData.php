@@ -213,7 +213,7 @@ class BulkData extends Base{
                 NULL, // 忽略的值,不会在excel中显示
                 'A1' // 赋值的起始位置
         );
-
+         
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
         ob_end_clean();//清除缓冲区,避免乱码
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -243,7 +243,9 @@ class BulkData extends Base{
 
         /** 实例化 */
         Loader::import('PHPExcel.Classes.PHPExcel'); //手动引入PHPExcel.php
-        $objPHPExcel = new PHPExcel();
+        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');//引入IOFactory.php 文件里面的PHPExcel_IOFactory这个类
+          Loader::import('PHPExcel.Classes.PHPExcel.PHPExcel_Style_Alignment');//引入IOFactory.php 文件里面的PHPExcel_IOFactory这个类
+        $objPHPExcel = new \PHPExcel();
         $cellName = array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM','AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ');
 
         /** 缺省情况下,PHPExcel会自动创建第一个SHEET，其索引SheetIndex=0 */
@@ -251,18 +253,18 @@ class BulkData extends Base{
         foreach($expTableData as $key => $item) {
             if($key !== 0) $objPHPExcel->createSheet();
             $objPHPExcel->setactivesheetindex($key);
-            /** 设置工作表名称 */
+            /** 设置工作表名称 */ 
             $objPHPExcel->getActiveSheet($key)->setTitle($sheetName[$key]);
 
             for($i = 0; $i < $cellNum; $i++)
             {
                 /** 垂直居中 */
-                $objPHPExcel->setActiveSheetIndex($key)->getStyle($cellName[$i])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                /** 水平居中 */
-                $objPHPExcel->setActiveSheetIndex($key)->getStyle($cellName[$i])->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+//                $objPHPExcel->setActiveSheetIndex($key)->getStyle($cellName[$i])->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+//                /** 水平居中 */
+//                $objPHPExcel->setActiveSheetIndex($key)->getStyle($cellName[$i])->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
                 /** 设置默认宽度 */
                 $objPHPExcel->setActiveSheetIndex($key)->getColumnDimension($cellName[$i])->setWidth($defaultWidth);
-                $objPHPExcel->setActiveSheetIndex($key)->setCellValue($cellName[$i].'1', $expCellName[$i][1]);
+                $objPHPExcel->setActiveSheetIndex($key)->setCellValue($cellName[$i].'1', $expCellName[$i]);
             }
 
             /** 写入多行数据 */
@@ -270,7 +272,7 @@ class BulkData extends Base{
             {
                 for($j = 0; $j < $cellNum; $j++)
                 {
-                  $objPHPExcel->getActiveSheet($key)->setCellValue($cellName[$j].($i+2), $item[$i][$expCellName[$j][0]]);
+                  $objPHPExcel->getActiveSheet($key)->setCellValue($cellName[$j].($i+2), $item[$i][$expCellName[$j]]);
                 }
             }
         }
@@ -299,10 +301,46 @@ class BulkData extends Base{
                . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
              . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,"
                . " SP.boat_id,B.boat_name,B.boat_code,SP.generalize,price_description")
-                ->order('SP.ship_id,SP.mtime DESC')->group('SP.route_id,SP.ship_id')->select();
-        //船舶
-        $boat_list= Db::name('boat')->where('status',1)->select();
-              
+                ->order('SP.ship_id,SP.mtime DESC')->where('SP.status',1)->group('SP.route_id,SP.ship_id')->select();
+        $sea_price_arr = []; //海运价格分组
+        $sea_price_head =array('ID','船公司ID','船公司','航线ID','起运港','目的港',
+            '中间港口','20GP海运费','40HQ海运费','船期','截单时间','海上时效',
+            '预计到港时间','预计送货时间','创建时间','船舶ID','船名','航次',
+            '是否推荐','价格说明');
+        
+        foreach ($sea_price_lists as  $sea_price_list) {
+            $key = $sea_price_list['ship_id'];
+            $sea_price_arr[$key][] = $sea_price_list;
+           
+        }
+        array_shift($sea_price_arr);
+        array_shift($sea_price_arr);
+        //
+
+         //生成航运价格excel
+        $expTitle ='海运价格明细'; 
+        $expCellName=  array_values($sea_price_arr);
+        $expCellName=$expCellName['0']['0'];
+        $expTableData= array_values($sea_price_arr);
+        $sheetName =Db::name('shipcompany')->where('id','in',array_keys($sea_price_arr))->order('id')->column('ship_short_name') ;
+     
+        $this->exportExcel($expTitle, $expCellName, $expTableData, $sheetName)   ;  
+ 
+//        $boat_head =array('ID','船公司ID','船名','航次');
+//        $boat_arr=[];   //船舶分组
+//        $boat_lists= Db::name('boat')->field('id,ship_id,boat_name,boat_code')->where('status',1)->select();
+//        foreach ($boat_lists as $boat_list) {
+//            $key =$boat_list['ship_id'];
+//            $boat_arr[$key][] =$boat_list;
+//        }
+//        $expTitle ='海运价格明细'; 
+//        $expCellName=  array_keys($sea_price_arr['0']['0']);
+//        $expTableData=$sea_price_arr;
+//        $this->exportExcel($expTitle, $expCellName, $expTableData, $sheetName)  
+       
+        
+        
+
     }
 
  }

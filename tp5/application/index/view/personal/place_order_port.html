@@ -126,10 +126,10 @@
                     
                     <td class="tj_gh">
                       <!-- 有改变css('background-color','#00DB00') -->
-                      <{if condition="($vo['status']>4) "}>
+                      <{if condition="($vo['status']>4&&$vo['status']!==505&&$vo['status']!==404) "}>
                       已补料
                       <{else /}>
-                      <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>')">提交柜号</a>
+                      <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>',this)">提交柜号</a>
                       <{/if}>
                     </td>
                     <!-- 驳回提示  title -->
