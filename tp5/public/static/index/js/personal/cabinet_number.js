@@ -1,4 +1,4 @@
-function cabinet(od_num,gui) { 
+function cabinet(od_num,gui,zj) { 
     $('#gui').val(gui);
     $('#order_number').val(od_num);
     $.get(track_data, { order_num: od_num },//获取柜量
@@ -14,13 +14,13 @@ function cabinet(od_num,gui) {
             '<div class="guinei"><input name="seal[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="'+data[i].seal+'"></div>'+
         '</div>');
         };
-        order_num();
+        order_num(zj);
     });
 }
 
 //弹出报柜号
-function order_num(){
-    let stast = $(this).parent().siblings('.caozuo').find('a').html();
+function order_num(zj){
+    let stast = $(zj).parent().siblings('.caozuo').find('a').html();    
     if (stast == '进行中') {
     layer.open({
         type: 1,

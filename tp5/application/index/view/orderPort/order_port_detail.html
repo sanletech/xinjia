@@ -58,6 +58,26 @@
     <form class="" id='order_data_form'>
       <div class="xxtx">
 
+      <!-- 是否支付 -->
+      <div class="xxtx_dd er">
+          <div class="xx">
+            <strong>订单状态</strong>
+          </div>
+          <div class="dd_nei">
+            <div class="layui-col-xs12 zhifu">
+              <h2>支付状态：
+                <span><?php if($list['money_status']==0){echo'未付款';}else{echo'已付款';} ?></span>
+              </h2>
+            </div>
+            <div class="layui-col-xs3">
+              <span>订单号：<{$list.order_num}></span>
+            </div>
+            <div class="layui-col-xs9">
+              <span>下单时间：<{$list.ctime}></span>
+            </div>
+          </div>
+        </div>
+
         <!-- 动态一 -->
         <div class="xxtx_dd er">
           <div class="xx">
@@ -98,12 +118,12 @@
             <div class="layui-col-xs4">
               <span>货名：<{$list.cargo}></span>
             </div>
-            <div class="layui-col-xs4">
+            <!-- <div class="layui-col-xs4">
               <span>发货人信息：<{$list.shipper}></span>
             </div>
             <div class="layui-col-xs4">
               <span>收货人信息：<{$list.consigner}></span>
-            </div>
+            </div> -->
               
           </div>
         </div>
@@ -131,28 +151,7 @@
           </div>
         </div>
 
-
-        <!-- 是否支付 -->
-        <div class="xxtx_dd er">
-          <div class="xx">
-            <strong>订单状态</strong>
-          </div>
-          <div class="dd_nei">
-            <div class="layui-col-xs12 zhifu">
-              <h2>支付状态：
-                <span><?php if($list['money_status']==0){echo'未付款';}else{echo'已付款';} ?></span>
-              </h2>
-            </div>
-            <div class="layui-col-xs3">
-              <span>订单号：<{$list.order_num}></span>
-            </div>
-            <div class="layui-col-xs9">
-              <span>下单时间：<{$list.ctime}></span>
-            </div>
-          </div>
-        </div>
-<!--
-         委托信息 
+         <!-- 委托信息  -->
         <div class="xxtx_dd er">
           <div class="xx" style="margin-bottom:0px;">
             <strong>委托信息</strong>
@@ -165,21 +164,21 @@
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>装货单位：</div>
                   <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                    填写信息
+                    <{$shipperArr[0]}>
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>装货联系人：</div>
                   <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                    填写信息
+                    <{$shipperArr[1]}>
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>装货联系人电话：</div>
                   <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                    填写信息
+                    <{$shipperArr[2]}>
                   </div>
                 </div>
 
@@ -190,21 +189,21 @@
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>收货单位：</div>
                   <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                    填写信息
+                    <{$consignerArr[0]}>
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>收货联系人：</div>
                   <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                    填写信息
+                    <{$consignerArr[1]}>
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>收货联系人电话：</div>
                   <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                    填写信息
+                    <{$consignerArr[2]}>
                   </div>
                 </div>
               </div>
@@ -213,8 +212,8 @@
           </div>
         </div>
 
-         货物 
-        <div class="xxtx_dd">
+         <!-- 货物  -->
+        <!-- <div class="xxtx_dd">
           <div class="xx">
             <strong>货物</strong>
             <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span>
@@ -252,54 +251,74 @@
               </div>
             </div>
           </div>
-        </div>-->
+        </div> -->
 
-<!--         费用 
+        <!-- 费用  -->
         <div class="xxtx_dd" style="margin-bottom: 0px;">
           <div class="xx">
             <strong>费用</strong>
             <span>发票信息提醒：平台支持开具6%的服务费增值税专用发票，订单完成后联系客服沟通开发票</span>
           </div>
           <div class="dd_nei">
-            <div class="layui-col-xs4 er">
+            <div class="layui-col-xs3 er">
               <div class="grid-demo nei">
-                <div class="layui-col-xs3">
+                <div class="layui-col-xs4">
                   <span>*&nbsp;</span>柜量：</div>
                 <div class="layui-col-xs6" style="text-align: left;">
-                  填写信息
+                  <{$list.container_sum}>
                 </div>
               </div>
-
             </div>
-            <div class="layui-col-xs4 er">
+
+            <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
-                <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>保险金额：</div>
+                <div class="layui-col-xs4">
+                  <span>*&nbsp;</span>单柜货值：</div>
                 <div class="layui-col-xs6" style="text-align: left;">
-                  110
+                  <{$list.cargo_cost}>
                   <span>万</span>
                 </div>
 
-                <div class="layui-col-xs2" style="text-align: left;">
+              </div>
+            </div>
 
+            <div class="layui-col-xs3 er">
+              <div class="grid-demo" style="margin-top: 0px;">
+                <div class="layui-col-xs4">
+                  <span>*&nbsp;</span>单柜保险：</div>
+                <div class="layui-col-xs6" style="text-align: left;">
+                  <{$list.cargo_cost*3}>
+                  <span>元</span>
                 </div>
               </div>
             </div>
 
-            <div class="layui-col-xs4 er">
+
+            <div class="layui-col-xs3 er">
               <div class="grid-demo nei">
-                <div class="layui-col-xs3">
+                <div class="layui-col-xs4">
                   <span>*&nbsp;</span>结账方式：</div>
                 <div class="layui-col-xs6" style="text-align: left;">
-                  填写信息
+                  <?php 
+                  $payment_method=  $list['payment_method'];
+                  if($payment_method=='installment'){
+                       echo'到港付';
+                  }elseif($payment_method=='month'){
+                      echo'月结';
+                  }elseif($payment_method=='cash'){
+                      foreach($discount as $rows){
+                          if($rows['id']== $list['cash_id']){
+                              echo $rows['title'];
+                          }
+                      }
+                  }
+              ?>
                 </div>
-              </div>-->
-
-<!--
+              </div>
             </div>
           </div>
-           发票 
-          <div class="kpf">
+           <!-- 发票  -->
+          <!-- <div class="kpf">
             <div class="layui-col-xs12 bei">
               <div class="grid-demo">
                 <div class="layui-col-xs1 you">
@@ -331,19 +350,7 @@
                 <a class="trigger-default">填写发票信息</a>
               </div>
             </div>
-          </div>-->
-<!--           总运费 
-          <div class="sun">
-            <div class="fapiao layui-form-item layui-form">
-              <div class="fp_tt">
-                <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
-              </div>
-            </div>
-             <span>总运费:
-              <strong>￥
-                <span id="price_sum">0.00</span>元</strong>
-            </span> 
-          </div>-->
+          </div> -->
 
           <!-- 拖车服务 -->
           <div class="xxtx_dd">
@@ -353,7 +360,8 @@
 
             <div class="dd_nei">
               <div class="layui-col-xs12 layui-form er">
-                <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" disabled>
+                <!-- <input type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" disabled> -->
+                <div>装货服务</div>
               </div>
               <div class="layui-col-xs12 er biaoge zhuanghuo">
                 <table class="layui-table" lay-size="sm">
@@ -393,7 +401,8 @@
 
             <div class="dd_nei">
               <div class="layui-col-xs12 layui-form er">
-                <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="" disabled>
+                <!-- <input type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="" disabled> -->
+                <div>送货服务</div>
               </div>
               <div class="layui-col-xs12 er biaoge songhuo">
                 <table class="layui-table" lay-size="sm">
@@ -431,7 +440,7 @@
             </div>
             <div class="feiyong">
               <div class="layui-col-xs12">
-                <span>海运费：</span><{$list.seaprice}>元
+                <span>海运费：</span><{$list.seaprice*$list.container_sum}>元
                 <span class="shuo"><{$list.price_description}></span>
               </div>
               <div class="layui-col-xs12">
@@ -459,15 +468,13 @@
 
   
 
-    <{include file='./public/foot' /}>
+    <!-- <{include file='./public/foot' /}> -->
 
-    <script src="__STATIC__/js/lrdd.js"></script>
+    <!-- <script src="__STATIC__/js/lrdd.js"></script> -->
     <script>
       $('.songhuo,.zhuanghuo').show();
-      $('input').attr('readonly', true);
-      $('input').css('border', '0');
 
-      input_null();
+      // input_null();
 
     </script>
   </body>

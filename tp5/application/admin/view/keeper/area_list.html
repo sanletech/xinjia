@@ -1,4 +1,4 @@
-<{include file='./public/header' /}>
+
     <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -96,7 +96,6 @@
 
       //给状态加样式
       for (let i = 0; i <  $('.zt').length; i++) {
-      //  console.log($('.zt').eq(i).html());
         if( $('.zt').eq(i).html() == '启用'){
           $('.zt').eq(i).addClass('layui-btn-normal');
         }else{
@@ -133,7 +132,6 @@
         url: "<{:url('admin/keeper/userStop')}>?id="+id+'&'+status,
         dataType: "json",
         success: function (data) {
-            console.log(data);
                 if (data == 1) {
                 alert("提交成功");
                 } else {
