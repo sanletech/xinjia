@@ -50,7 +50,7 @@ class Price extends Base
     //航线添加
     public function route_toadd(){
         $data = $this->request->param();
-//       $this->_p($data);  exit;
+       $this->_p($data);  exit;
         $seaprice = new PriceM;
         $res = $seaprice->price_route_add($data); 
         if(!array_key_exists('fail', $res)){

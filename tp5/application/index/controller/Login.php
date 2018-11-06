@@ -29,16 +29,14 @@ class Login extends Controller
         $loginName = $data['loginname'];
         $passWord = md5($data['password']);
         //在member 表中进行查询
-        $member =Db::name('member')->where('member_code|phone',$loginName)->field('password,member_code')->find();
-  
+        $member =Db::name('member')->where('member_code|phone',$loginName)->field('password,member_code,name')->find();
         //将用户名与密码分开验证
-        //如果没有查询到该用户
         if(is_null($member)){
             //设置返回信息
            $message = '用户名不正确';
         }elseif($member['password'] != $passWord){
             //设置密码提示信息
-             $message = '密码不正确';
+            $message = '密码不正确';
         }else {    
          //用户通过验证 修改返回信息
             $status = 1;
@@ -48,6 +46,8 @@ class Login extends Controller
           
             //将用户登录的信息保存到session中,供其他控制器使用
             Session::set('member_code',$member['member_code']);
+            Session::set('name',$member['name']);
+//            var_dump($_SESSION);exit;
            // Session::set('user_info',$user['loginname']);
         }
         return array('status'=>$status,'message'=>$message);
@@ -115,7 +115,7 @@ class Login extends Controller
     
         //退出登录
     public function logout()
-    {
+    { 
       //删除当前用户的session 值
       Session::delete('member_code');
       Session::delete('user_info');
@@ -141,7 +141,7 @@ class Login extends Controller
                 ->where('ctime','between time',$valid_time)
                 ->order('ctime desc')->column('code');
         if(!in_array($data['code'],$res_code)){
-            return array('status'=>0,'message'=>'验证码不正确或手机号码已注册');
+            return array('status'=>0,'message'=>'验证码不正确');
         }
         if($data['newpassword']!==$data['repassword']){
             return array('status'=>0,'message'=>'前后密码不一致');

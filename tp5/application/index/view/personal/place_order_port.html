@@ -138,8 +138,10 @@
                       <!-- 有改变css('background-color','#00DB00') -->
                     <?php                                    
                     $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'sea_waybill']);
-                    if($vo['sea_waybill']){
-                        echo '<a href="'.$url.'">运单</a>';
+                    if($vo['container_buckle']=='unlock'){
+                        if($vo['sea_waybill']){
+                            echo '<a href="'.$url.'">运单</a>';
+                        }
                     }
                     ?>
                       <!--<a href="javascript:void(0);">运单</a>-->
