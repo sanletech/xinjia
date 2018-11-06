@@ -270,7 +270,7 @@ class Personal extends Base
 
 
 
-    public function downs(){    
+    public function downs(){  
         $order_name = $this->request->param('order_num');    //下载文件名  
         $type = $this->request->param('type'); //文件类型
         $member_code = Session::get('member_code','think');

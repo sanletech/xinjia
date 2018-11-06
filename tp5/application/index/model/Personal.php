@@ -68,21 +68,21 @@ class Personal extends Model
             switch ($list['status']){
                 case $this->order_status['stop']:
                 case $this->order_status['cancel']:
-                    $lists[$key]['status_title']='订单取消';
+                    $lists[$key]['status_title']='已取消';//已取消
                     break;
                 case $this->order_status['order_audit']:
-                    $lists[$key]['status_title']='订单审核';
+                    $lists[$key]['status_title']='审核中';//审核中
                     $lists[$key]['change_comment']='';
                     break;
                     break;
                 case $this->order_status['booking_note']:
                 case $this->order_status['up_container_code']: 
                 case $this->order_status['sea_waybill']:
-                    $lists[$key]['status_title']='订单进行中';
+                    $lists[$key]['status_title']='进行中';
                     $lists[$key]['change_comment']='';
                     break;
                 case $this->order_status['completion']:
-                    $lists[$key]['status_title']='订单完成';
+                    $lists[$key]['status_title']='已完成';
                     $lists[$key]['change_comment']='';
                     break;
                 default :
