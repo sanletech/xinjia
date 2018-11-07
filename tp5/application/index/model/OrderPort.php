@@ -108,7 +108,22 @@ class OrderPort extends Model
     //处理装货费用和送货费用  订单号码和 装货 送货的信息
     public function truckage($order_num,$container_sum,$truckageData){
         
-        function  insertdata($insertR,$order_num,$container_sum,$type){
+        $insertR = $truckageData['r']; 
+//        $this->_p($insertR);exit;
+        $resultR = $this->insertdata($insertR, $order_num, $container_sum, 'r');
+        $insertS = $truckageData['s'];
+        $resultS = $this->insertdata($insertS, $order_num, $container_sum, 's');
+    
+        if((array_key_exists('fail', $resultR))&&(array_key_exists('fail', $resultS))){
+            return FALSE;
+        }else{
+            $priceR =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'r'])->sum('car_price');
+            $priceS =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'S'])->sum('car_price');
+            return array('carprice_r'=>$priceR,'carprice_s'=>$priceS);
+        }
+    }
+    //根据送货装货信息生成对应的记录
+    public function  insertdata($insertR,$order_num,$container_sum,$type){
             $container_code = time();   // 设置虚拟的柜号
             if(!empty($insertR))
             {   $kr = array_keys($insertR);
@@ -138,21 +153,6 @@ class OrderPort extends Model
                 }
             }
             return $response;
-        }
-        
-        $insertR = $truckageData['r']; 
-//        $this->_p($insertR);exit;
-        $resultR = insertdata($insertR, $order_num, $container_sum, 'r');
-        $insertS = $truckageData['s'];
-        $resultS = insertdata($insertS, $order_num, $container_sum, 's');
-    
-        if((array_key_exists('fail', $resultR))&&(array_key_exists('fail', $resultS))){
-            return FALSE;
-        }else{
-            $priceR =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'r'])->sum('car_price');
-            $priceS =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'S'])->sum('car_price');
-            return array('carprice_r'=>$priceR,'carprice_s'=>$priceS);
-        }
     }
     
     public function route_detail($seaprice_id)
