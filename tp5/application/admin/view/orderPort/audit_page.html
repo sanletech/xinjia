@@ -435,9 +435,11 @@
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭
                         parent.location.reload();//父窗口刷新
-                        alert('申请成功');
+                        // alert('申请成功');
+                        layui.layer.msg('申请成功', {icon: 1,time: 500});
                     } else {
-                        alert('申请失败');
+                        // alert('申请失败');
+                        layui.layer.msg('申请失败', {icon: 2,time: 1000});
                     }
                 });
             });
@@ -452,13 +454,16 @@
                         let bo = $('#bo input').val();//驳回理由
                         $.get(url, { 'order_num': order_num ,'reject':bo,'type':'fail'}, function (data) {
                             if (data.status) {
-                                //当你在iframe页面关闭自身时
-                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                                parent.layer.close(index); //再执行关闭
-                                parent.location.reload();//父窗口刷新
-                                alert('驳回成功');
+                                // alert('驳回成功');
+                                layui.layer.msg('驳回成功', {icon: 1,time: 1000},function(){
+                                    //当你在iframe页面关闭自身时
+                                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                                    parent.layer.close(index); //再执行关闭
+                                    parent.location.reload();//父窗口刷新
+                                });
                             } else {
-                                alert('驳回失败');
+                                // alert('驳回失败');
+                                layui.layer.msg('驳回失败', {icon: 2,time: 1000});
                             }
                         });
                     },function(index){

@@ -226,21 +226,31 @@ function pand($){
               ,yes:function (index, layero) {
                   $.post(appley_cargo_url,{'order_num':order_num,'comment':bo,'type':'pass'},function(data){
                       if(data.status){
+                        layui.layer.msg('申请成功', {icon: 1,time: 1000},function(){
                           layer.close(index);
-                          alert('申请成功');
                           location.reload();
+                        });
+                          // layer.close(index);
+                          // alert('申请成功');
+                          // location.reload();
                       }else{
-                          alert('申请失败');
+                        layui.layer.msg('申请失败', {icon: 2,time: 1000});
+                          // alert('申请失败');
                       }
                   });
               },btn2:function (index) {
                   $.get(appley_cargo_url,{'order_num':order_num,'comment':bo,'type':'fail'},function(data){
                       if(data.status){
+                        layui.layer.msg('驳回成功', {icon: 1,time: 1000},function(){
                           layer.close(index);
-                          alert('驳回成功');
                           location.reload();
+                        });
+                          // layer.close(index);
+                          // alert('驳回失败');
+                          // location.reload();
                       }else{
-                          alert('驳回失败');
+                          // alert('驳回失败');
+                          layui.layer.msg('驳回失败', {icon: 2,time: 1000});
                       }
                   });
                 return false;
@@ -266,10 +276,13 @@ function pand($){
              $.post(money_status_changeURL,{'order_num':order_num},function(data){
                   if(data.status){
                     thi.html('已付款');
-                    layer.close(index);
-                    alert('提交成功');
+                    layui.layer.msg('提交成功', {icon: 1,time: 1000},function(){
+                      layer.close(index);
+                    });
+                    // alert('提交成功');
                   }else{
-                     alert('提交失败');
+                    //  alert('提交失败');
+                     layui.layer.msg('提交失败', {icon: 2,time: 1000});
                   }
              })       
             }

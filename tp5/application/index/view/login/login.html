@@ -57,8 +57,9 @@
                     if(data.status==1){
                         window.location.href="<{:url('index/OrderPort/orderPort')}>";
                     }else{
-                        alert(data.message);
-                        window.location.href="<{:url('index/login/login')}>";
+                        // alert(data.message);
+                        layui.layer.msg(data.message,{icon: 2,time: 1000});
+                        // window.location.href="<{:url('index/login/login')}>";
                     }
                 }
             })

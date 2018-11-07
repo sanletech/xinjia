@@ -21,9 +21,6 @@
         background-color: blue;
         color: #fff;
       }
-      .layui-layer-dialog .layui-layer-content .layui-layer-ico{
-        left:65px;
-      }
     </style>
     <!-- <div class="banner"></div> -->
     <form class="" id='order_data_form'>
@@ -143,52 +140,52 @@
           <div class="dd_nei">
             <div class="layui-row" style="padding-bottom: 10px;">
               <div class="layui-col-xs6 er_le">
-                <div style="display: none;"><input type="text" name="r_id" value="" readonly='readonly' class="in"></div>
+                <div style="display: none;"><input type="text" name="r_id" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['id'] ;} ?>" readonly='readonly' class="in"></div>
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>发货单位：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="r_company" value="" readonly='readonly' class="in">
+                      <input type="text" name="r_company" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['company'] ;} ?>" readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>发货联系人：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="r_name" value="" readonly='readonly' class="in">
+                    <input type="text" name="r_name" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['name'] ;} ?>" readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>发货联系电话：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="r_phone" value="" readonly='readonly' class="in">
+                    <input type="text" name="r_phone" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['phone'] ;} ?>" readonly='readonly' class="in">
                   </div>
                 </div>
 
               </div>
 
               <div class="layui-col-xs6 er_rig">
-                  <div style="display: none;"><input type="text" name="s_id" value="" readonly='readonly' class="in"></div>
+                  <div style="display: none;"><input type="text" name="s_id" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['s']['id'] ;} ?>" readonly='readonly' class="in"></div>
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>收货单位：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="s_company" value="" readonly='readonly' class="in">
+                    <input type="text" name="s_company" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['s']['company'] ;} ?>" readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>收货联系人：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="s_name" value="" readonly='readonly' class="in">
+                    <input type="text" name="s_name" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['s']['name'] ;} ?>" readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>收货联系人电话：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="s_phone" value="" readonly='readonly' class="in">
+                    <input type="text" name="s_phone" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['s']['phone'] ;} ?>" readonly='readonly' class="in">
                   </div>
                 </div>
               </div>
@@ -766,6 +763,8 @@
       var linkmanDelURL = "<{:url('index/order/linkmanDel')}>";
         //收货/发货人的修改 
       var linkmanUpdateURL = "<{:url('index/order/linkmanUpdate')}>";
+      //设置默认
+      var linkman_default = "<{:url('index/personal/default_address')}>";
       // 发票的信息提交 
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交

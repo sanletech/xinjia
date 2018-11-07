@@ -84,11 +84,14 @@ $('.goods a').click(function(){
             ,yes:function (index, layero) {
                 $.get(apply_cargo_url,{'order_num':order_num},function(data){
                     if(data.status){
-                        layer.close(index);
-                        alert('申请成功');
+                        // alert('申请成功');
+                        layui.layer.msg('申请成功',{icon: 2,time: 500},function(){
+                            layer.close(index);
+                        });
                         location.reload();
                     }else{
-                        alert('申请失败');
+                        // alert('申请失败');
+                        layui.layer.msg('申请成功',{icon: 2,time: 1000});
                     }
                     
                 });

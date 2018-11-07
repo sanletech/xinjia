@@ -107,9 +107,10 @@
                 dataType:"json",
                 success:function(data){
                     if(data.status==1){
-                      alert(data.message)
+                      layui.layer.msg(data.message, {icon: 6,time: 500});
+                      // alert(data.message)
                     }else{
-                       alert(data.message)
+                      layui.layer.msg(data.message, {icon: 5,time: 1000});
                   }
                 }
             })

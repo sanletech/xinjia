@@ -149,19 +149,25 @@
               ,yes:function(index){
                 $.get(identification_url,{id:id,audit:'yes'},function(res){//确定
                   if (res) {
-                    alert('提交成功');
-                    layer.close(layer.index);//关闭窗口
+                    // alert('提交成功');
+                    layui.layer.msg('提交成功', {icon: 1,time: 1000},function(){
+                      layer.close(layer.index);//关闭窗口
+                    });
                   }else{
-                    alert('提交失败');
+                    // alert('提交失败');
+                    layui.layer.msg("提交失败", {icon: 2,time: 1000});
                   }
                 });
               },btn2:function(index){//驳回
                 $.get(identification_url,{id:id,audit:'no'},function(res){
                   if (res) {
-                    alert('提交成功');
-                    layer.close(layer.index);//关闭窗口
+                    // alert('提交成功');
+                    layui.layer.msg('提交成功', {icon: 1,time: 1000},function(){
+                      layer.close(layer.index);//关闭窗口
+                    });
                   }else{
-                    alert('提交失败');
+                    // alert('提交失败');
+                    layui.layer.msg("提交失败", {icon: 2,time: 1000});
                   }
                 });
               }
@@ -185,7 +191,8 @@
                     if(data==true){
                       $('#'+id).parent("tr").hide();
                     }else{
-                        alert('失败') ;
+                        // alert('失败') ;
+                        layui.layer.msg("提交失败", {icon: 2,time: 1000});
                   }
                 }
             })

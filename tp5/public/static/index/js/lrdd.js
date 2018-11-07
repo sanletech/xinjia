@@ -254,7 +254,8 @@ function zeng_wt(){
   inpu.each(function(){
     if (!$(this).val()) {
       boot = false;
-      alert('请完善您的内容！')
+      // alert('请完善您的内容！');
+      layui.layer.msg('请完善您的内容！',{icon: 2,time: 1000});
       return false;
     }
   })
@@ -269,7 +270,8 @@ function zeng_wt(){
         layer.close(layer.index);//关闭添加窗口
         $('.wt1').click();//重新查询并打开窗口
       }else{
-        alert('修改联系人失败');
+        // alert('修改联系人失败');
+        layui.layer.msg('修改联系人失败',{icon: 2,time: 500});
       }      
     }
   });  
@@ -280,7 +282,8 @@ function zeng_wt(){
 $('.wt_xiu').click(function () {
   if (!nei.id) {
     boot = false;
-    alert('请选择您要修改的信息');
+    // alert('请选择您要修改的信息');
+    layui.layer.msg('请选择您要修改的信息',{icon: 2,time: 1000});
   }else{
     layer.close(layer.index);
     layer.open({
@@ -319,12 +322,14 @@ function xiu_wt(){
           layer.close(layer.index);//关闭添加窗口
           $('.wt1').click();//重新查询并打开窗口
         }else{
-          alert('修改联系人失败');
+          // alert('修改联系人失败');
+          layui.layer.msg('修改联系人失败',{icon: 2,time: 1000});
         }   
       }
     });
   }else{
-    alert('请完善您的内容！')
+    // alert('请完善您的内容！')
+    layui.layer.msg('请完善您的内容！',{icon: 2,time: 1000});
   }
 }
 
@@ -333,9 +338,11 @@ $('.wt_del').click(function(){
   $.get(linkmanDelURL,{'id':id},function(data){
     if(data.status){
       $('.nei_a').parent().remove();//删除当前选中的节点
-      alert('成功删除联系人');
+      // alert('成功删除联系人');
+      layui.layer.msg('成功删除联系人',{icon: 1,time: 500});
     }else{
-      alert('删除联系人失败');
+      // alert('删除联系人失败');
+      layui.layer.msg('请选择联系人',{icon: 2,time: 1000});
     }   
   });
 });
@@ -345,13 +352,15 @@ $('.wt_default').click(function(){
   if ($(lei).hasClass('song')) {//判断是不是收货
     $.get(linkman_default,{'id':id,type:'r'},function(data){
       if(data.status){
-        alert('成功设置默认信息')
+        // alert('成功设置默认信息')
+        layui.layer.msg('成功设置默认信息',{icon: 2,time: 500});
       }
     });
   }else{//发货
     $.get(linkman_default,{'id':id,type:'s'},function(data){
       if(data.status){
-        alert('成功设置默认信息')
+        // alert('成功设置默认信息')
+        layui.layer.msg('成功设置默认信息',{icon: 2,time: 500});
       }
     });
   }
@@ -415,7 +424,8 @@ function input_a() {
     });
     st();//重新计算价格
     if (i == 1) {//避免重复跳出提示框
-      alert('当前数量大于柜量,请重新输入！');
+      // alert('当前数量大于柜量,请重新输入！');
+      layui.layer.msg('当前数量大于柜量,请重新输入！',{icon: 2,time: 1000});
       i = 0;
       return false;
     }
@@ -474,9 +484,9 @@ $('.tjiao').eq(0).find('.shi').click(function(){
   $('input').css('border','0').attr('readonly',true);
   $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
   $('.select').css('border','0');
-//  $("select").each(function () {
-//    $(this).attr("disabled","disabled");
-//  });
+  // $("select").each(function () {
+  //   $(this).attr("disabled","disabled");
+  // });
   // $("html,body").animate({scrollTop:100}, 500);
   // console.log(window.location.port);
   layer.open({
@@ -506,7 +516,7 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();
   $('.select').css('border','1px solid #aaa');
-//  $("select").each(function () {
-//    $(this).removeAttr("disabled");
-//  });
+  // $("select").each(function () {
+  //   $(this).removeAttr("disabled");
+  // });
 })

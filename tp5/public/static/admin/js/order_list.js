@@ -30,7 +30,8 @@ $('#yd .yes').click(function(){
     let order_num = $(this).parent('div').parent('div').prev().find('#order_num');
     list.push({[order_num.attr('name')]:order_num.attr('value')});
     if(list.length == 0){
-        alert("请选择运单号集装箱");
+        layui.layer.msg('请选择运单号集装箱', {icon: 2,time: 1000});
+        // alert("请选择运单号集装箱");
     }
     toajax(list);
 });

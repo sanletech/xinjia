@@ -61,7 +61,7 @@
             $('.pwd_ti').click(function(){
                 let data = $('#pwd').serialize();
                 $.post('<{:url("index/personal/pwd_toedit")}>',data,function(res){
-                    alert(res.message);
+                    layui.layer.msg(res.message,{icon: 0,time: 1000});
                 })
             })
 

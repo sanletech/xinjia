@@ -192,10 +192,13 @@ table.on('tool()', function(obj){
           let beizhu = $('#bz input').val();
           $.get(url,{data:beizhu},function(data){
             if(data.status){
-                layer.close(index);
-                alert('添加成功');
+                layui.layer.msg('添加成功', {icon: 1,time: 1000},function(){
+                  layer.close(index);
+                });
+                // alert('添加成功');
             }else{
-                alert('申请失败');
+                // alert('申请失败');
+                layui.layer.msg('添加失败', {icon: 2,time: 1000});
             }
           })
         }

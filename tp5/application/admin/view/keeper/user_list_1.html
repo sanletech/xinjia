@@ -103,11 +103,13 @@
           url: "<{:url('admin/keeper/userStop')}>?id=" + id + '&' + status,
           dataType: "json",
           success: function (data) {
-            console.log(data);
+            // console.log(data);
             if (data == 1) {
-              alert("提交成功");
+              layui.layer.msg('提交成功', {icon: 1,time: 1000});
+              // alert("提交成功");
             } else {
-              alert("提交失败");
+              layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              // alert("提交失败");
             }
           }
         })

@@ -309,7 +309,20 @@ class Personal extends Base
     
     //设置默认的收货,送货地址
     public function default_address(){
-
-
+        $data =  $this->request->only('id,default'); 
+        $member_code =Session::get('member_code','think');
+        //先查询有没有设置默认值
+        $default_id =Db::name('linkman')->where(['member_code'=>$member_code,'default'=>'not null'])->value('id');
+        $response=[];
+        if($default_id){
+            $res =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$default_id])->update(['default'=>'null']);
+            $res?$response['success'][]='更新原有数据成功':$response['fail'][]='更新原有数据失败' ;
+        }
+        $res1 =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$data['id']])->update(['default'=>$data['default']]);
+        $res1?$response['success'][]='设置成功':$response['fail'][]='设置失败' ;
+        if(array_key_exists('fail', $response)){
+            return json(array('status'=>0,'message'=>'设置失败')) ;
+        }           
+       return json(array('status'=>1,'message'=>'设置成功')) ;
     } 
 }

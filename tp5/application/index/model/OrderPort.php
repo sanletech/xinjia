@@ -64,21 +64,30 @@ class OrderPort extends Model
             $res['price'] = $res['price_40HQ'];
             unset($res['price_20GP'],$res['price_40HQ']);
         } 
-        
         //查询有没有活动优惠
         $nowtime = date('y-m-d h:i:s');
         $discount = Db::name('discount')->where([
                         'discount_start'=>['<= time',$nowtime],
                         'discount_end'=>['>= time',$nowtime],
-                        'status'=>1,
-                        'ship_id'=>$ship_id,
-                       ])->field("id,title,type,".$container_size. ' money')->select();
-//               var_dump($discount);exit;
-//        if(empty($discount)){
-//            $discount=array('id'=>0,'title'=>'没有添加此船公司的优惠','type'=>'','money'=>0);
-//        } 
-//        $this->_p($res); $this->_p($discount);exit;
-        return array($res,$discount);            
+                        'status'=>1,  'ship_id'=>$ship_id,])
+                      ->field("id,title,type,".$container_size. ' money')->select();
+        //查询有没有设置默认地址
+        $default_add= Db::name('linkman')->where('member_code',$member_code)
+                ->where('default=r or default=s')
+                ->field('member_code,town_code,mtime',true)->select();
+        $default_addArr=[];
+        if($default_add){
+            foreach ($default_add as $add){
+                $default_type= $add['default'];
+                $default_addArr[$default_type]=$add;
+            }
+            if(!array_key_exists('s', $default_addArr)){$default_addArr['s']='';}
+            if(!array_key_exists('r', $default_addArr)){$default_addArr['r']='';}
+        }  else {
+            $default_addArr=['r'=>'','s'=>''];
+        }
+           
+        return array('seapriceData'=>$res,'discount'=>$discount,'default_addArr'=>$default_addArr);            
         
     }
     
