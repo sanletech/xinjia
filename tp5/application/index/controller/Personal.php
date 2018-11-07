@@ -305,6 +305,11 @@ class Personal extends Base
             fclose ( $file );    
             exit ();    
         }    
-
     }
+    
+    //设置默认的收货,送货地址
+    public function default_address(){
+
+
+    } 
 }

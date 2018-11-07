@@ -83,9 +83,9 @@ class OrderPort extends Controller
 //         $this->_p($data);exit;
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复
-        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-            return array('status'=>0,'mssage'=>'不要重复提交订单');
-        }
+//        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+//            return array('status'=>0,'mssage'=>'不要重复提交订单');
+//        }
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
         $mtime= date('Y-m-d H:i:s'); //订单时间
@@ -100,7 +100,7 @@ class OrderPort extends Controller
             $cash_id = $payment_method;
             $payment_method='cash';
             //计算单个柜优惠的现金优惠金额
-            $discount = Db::name('discount')->where('id',$cash_id)->value('$container_size');
+            $discount = Db::name('discount')->where('id',$cash_id)->value($container_size);
             //在线支付付款状态就改为已付款
             $money_status =1;
         }  else {
@@ -118,7 +118,7 @@ class OrderPort extends Controller
                
         // 根据订单号, 下单的柜子总数, 和实际的装货送货数据 来生成order_trackage的信息
         $truckagePrice = $Pirce->truckage($order_num,$data['container_sum'], $truckageData);
-        
+     
         //计算出对应的海运，柜型,的单个柜海运费
         $ship_carriage = Db::name('seaprice')->where('id',$data['seaprice_id'])->value('price_'.$container_size);
         if(intval($ship_carriage)!==intval($data['carriage'])){
@@ -157,8 +157,8 @@ class OrderPort extends Controller
         $res1 = Db::name('order_port')->insert($fatherData); 
         //同时生成账单
         $Bill = controller('Bill');
-        $list =$Bill->billCreate($order_num);
-        return $res1 ? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');
+        $billCreate_res =$Bill->billCreate($order_num);
+        return json($res1 ? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败'));
  
                 
     }

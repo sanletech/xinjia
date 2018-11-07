@@ -183,6 +183,10 @@ function order_data(zj) {
     obj['discount'] = $('#discount').html();//优惠价格
     obj['price_sum'] = $('#price_sum').html();//总运费
     obj['price_description'] = $('.you span').html();//价格说明
+//    obj['container_sum'] = $('#container_sum').val();//装量
+//    obj['container_type'] = $('#container_type').val();//包装
+//    obj['mony_fs'] = $('.mony_fs').val();//结账方式
+//    console.log(obj);
     toajax(OrderUrl, obj);
 }
 function toajax(url, data) {
@@ -265,13 +269,13 @@ function youhui(){ //优惠价格
     $('#discount').html(mony_fs);
     $('#bxje1').html($('#bxje').val() * container);    
     $('#money').html($('.carriage').html() * container);
-    zong_sum(0,0);
+    zong_sum(0,0);st();
 }
 
 $('#bxje').bind('input propertychange', function () {//监听保险金额
     let container = $('#container_sum').find("option:selected").val();
     $('#bxje1').html($('#bxje').val() * container);
-    zong_sum(0,0);
+    youhui();st();
 });
 
 //监听货值
@@ -284,7 +288,7 @@ $('#cargo_value').bind('input propertychange', function () {
     let baoxian = $(this).val() * 4;
     $('#bxje').val(baoxian);
     $('#bxje1').html(baoxian * container);
-    zong_sum(0,0);
+    youhui();st();
 });
 
 

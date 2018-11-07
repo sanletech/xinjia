@@ -474,9 +474,9 @@ $('.tjiao').eq(0).find('.shi').click(function(){
   $('input').css('border','0').attr('readonly',true);
   $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
   $('.select').css('border','0');
-  $("select").each(function () {
-    $(this).attr("disabled","disabled");
-  });
+//  $("select").each(function () {
+//    $(this).attr("disabled","disabled");
+//  });
   // $("html,body").animate({scrollTop:100}, 500);
   // console.log(window.location.port);
   layer.open({
@@ -506,7 +506,7 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();
   $('.select').css('border','1px solid #aaa');
-  $("select").each(function () {
-    $(this).removeAttr("disabled");
-  });
+//  $("select").each(function () {
+//    $(this).removeAttr("disabled");
+//  });
 })

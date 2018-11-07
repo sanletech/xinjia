@@ -108,51 +108,58 @@ class OrderPort extends Model
     //处理装货费用和送货费用  订单号码和 装货 送货的信息
     public function truckage($order_num,$container_sum,$truckageData){
         
-        $insertR = $truckageData['r']; 
-//        $this->_p($insertR);exit;
-        $resultR = $this->insertdata($insertR, $order_num, $container_sum, 'r');
-        $insertS = $truckageData['s'];
-        $resultS = $this->insertdata($insertS, $order_num, $container_sum, 's');
-    
-        if((array_key_exists('fail', $resultR))&&(array_key_exists('fail', $resultS))){
+        $resultR = $this->insertdata($truckageData['r'], $order_num, $container_sum, 'r');
+        $resultS = $this->insertdata($truckageData['s'], $order_num, $container_sum, 's');
+        
+        if(!($resultR&&$resultS)){
             return FALSE;
         }else{
             $priceR =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'r'])->sum('car_price');
-            $priceS =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'S'])->sum('car_price');
+            $priceS =Db::name('order_truckage')->where(['order_num'=>$order_num,'type'=>'s'])->sum('car_price');
             return array('carprice_r'=>$priceR,'carprice_s'=>$priceS);
         }
     }
     //根据送货装货信息生成对应的记录
-    public function  insertdata($insertR,$order_num,$container_sum,$type){
-            $container_code = time();   // 设置虚拟的柜号
-            if(!empty($insertR))
-            {   $kr = array_keys($insertR);
+    public function  insertdata($insertR,$order_num,$container_sum,$type)
+    {
+        if(!empty($insertR))
+            {            
+                $kr = array_keys($insertR);
                 foreach ($insertR['num'] as $i => $v) {
                     $tmp[$i] = array_combine($kr,array_column($insertR,$i));
-                    $tmp[$i]['order_num'] = $order_num;  $tmp[$i]['type']=$type;
+                    $tmp[$i]['order_num'] = $order_num;  
+                    $tmp[$i]['type']=$type;
+                    $tmp[$i]['state']=0;
                 }
                 //如果装货的柜子数量少于订单的总柜子数量 就存在有客户自己装货的
-                $receiveContainerSum= array_sum( $insertR['num']);
-                $freeContainerR = $container_sum- $receiveContainerSum;//客户自己处理的柜子数量
+                $receiveContainerSum= array_sum($insertR['num']);
+                $freeContainerR = intval($container_sum - $receiveContainerSum);//客户自己处理的柜子数量
                 if($freeContainerR >0){
-                    $tmp[]=array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$freeContainerR);
+                    $nextI= $i+1;
+                    $tmp[$nextI]= array_fill_keys(array_keys($tmp[$i]),'');
+                    $tmp[$nextI]['state']=1;
+                    $tmp[$nextI]['type']=$type;
+                    $tmp[$nextI]['num']=$freeContainerR;
                 }
             }  else {
                 $tmp[] =array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$container_sum);
             }  
-            $response =[];
+     
             $tmp = array_values($tmp);//将键重新从零开始
+            $inser_arr=[];
+            $k=0;//计数
             for($i=0;$i<count($tmp);$i++){
                 $cycle = $tmp[$i]['num'];
+                
                 for($j=0;$j<$cycle;$j++){
-                    $tmp[$i]['sequence']= $i;
-                    //$tmp[$i]['container_code']=$container_code.$i.$j;
-                    unset($tmp[$i]['num']);
-                    $res =Db::name('order_truckage')->insert($tmp[$i]);
-                    $res ? $response['success'][]= $i.$j.'添加成功':$response['fail'][]= $i.$j.'添加失败'; 
+                    $tmp[$i]['sequence']=$k;
+                    $inser_arr[] = $tmp[$i];
+                    ++$k;
                 }
             }
-            return $response;
+            $res =Db::name('order_truckage')->insertAll($inser_arr);
+//            var_dump($res);exit;
+            return $res ? TRUE:FALSE; 
     }
     
     public function route_detail($seaprice_id)
