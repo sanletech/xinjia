@@ -92,6 +92,11 @@ class Order extends Base
         $res ? $response=['status'=>1,'message'=>'修改联系人成功']: $response=['status'=>0,'message'=>'修改联系人失败'];
         return $response;
     }
+
+    public function aaa(){
+        $data =$this->request->param();
+        var_dump($data);exit;
+    }
     
     
     //传给前台客户对应的发票信息
