@@ -204,7 +204,8 @@
                         $('#jg ul').append('<li><span name="'+data+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
                     });
                 }else{
-                    alert('您输入的是空值');
+                    // alert('您输入的是空值');
+                    layui.layer.msg('您输入的是空值', {icon: 2,time: 1000});
                 }
                 $('.in').hide();
             }
@@ -367,7 +368,8 @@
                 gangkou--;
                 mark.appendChild(btn);
             }else{
-                alert('最多两个港口');
+                // alert('最多两个港口');
+                layui.layer.msg('最多两个港口', {icon: 2,time: 1000});
             }
          }
          

@@ -228,9 +228,11 @@
                     dataType:"json",
                     success:function(status){
                      if(status==1){
-                         alert('添加成功')
+                        //  alert('添加成功')
+                         layui.layer.msg('添加成功', {icon: 1,time: 1000});
                      }else{
-                         alert('添加失败')
+                        //  alert('添加失败')
+                         layui.layer.msg('添加失败', {icon: 2,time: 1000});
                      }
                     }
                 });

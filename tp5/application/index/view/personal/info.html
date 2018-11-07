@@ -121,7 +121,8 @@
           
         }
         ,done: function(res,index){//请求成功
-          alert(res.message);
+          // alert(res.message);
+          layui.layer.msg(res.message, {icon: 0,time: 1000});
         }
       });
 

@@ -82,7 +82,8 @@
                     if (res.status) {}
                 });
             } else {
-                alert('您输入的手机号格式不正确！')
+                layui.layer.msg('您输入的手机号格式不正确！',{icon: 2,time: 1000});
+                // alert('您输入的手机号格式不正确！')
             }
         });
         

@@ -120,7 +120,8 @@
                     if(data==true){
                       $('#'+id).parent("tr").hide();
                     }else{
-                        alert('失败') ;
+                        // alert('失败') ;
+                        layui.layer.msg('失败', {icon: 2,time: 1000});
                   }
                 }
             })
@@ -162,11 +163,12 @@
                 contentType: "application/json",
                 success:function(data){
                     if(data==1){
-                        alert('修改成功');
+                        // alert('修改成功');
+                        layui.layer.msg('修改成功', {icon: 1,time: 1000});
                         location.assign(location);
                     }else{
-                        alert('修改失败');
-                        location.assign(location);
+                      layui.layer.msg('修改失败', {icon: 2,time: 1000});
+                      location.assign(location);
                   }
                 }
             })

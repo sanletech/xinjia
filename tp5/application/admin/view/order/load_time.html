@@ -59,10 +59,12 @@
           dataType: "json",
           success: function (data) {
             if (data.status == 1) {
-                alert("提交成功");
+                // alert("提交成功");
+                layui.layer.msg('提交成功', {icon: 1,time: 1000});
                 parent.location.reload()
             } else {
-              alert(data.msg+"提交失败");
+            //   alert(data.msg+"提交失败");
+              layui.layer.msg(data.msg+"提交失败", {icon: 2,time: 1000});
             }
           }
         })

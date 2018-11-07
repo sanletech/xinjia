@@ -348,10 +348,13 @@ table.on('tool()', function(obj){
           let beizhu = $('#bz input').val();
           $.get(url,{data:beizhu},function(data){
             if(data.status){
-                layer.close(index);
-                alert('添加成功');
+                // alert('添加成功');
+                layui.layer.msg('添加成功', {icon: 1,time: 500},function(){
+                  layer.close(index);
+                });
             }else{
-                alert('申请失败');
+                // alert('申请失败');
+                layui.layer.msg('添加失败', {icon: 2,time: 1000});
             }
           })
         }
@@ -399,7 +402,8 @@ table.on('tool()', function(obj){
           //上传完毕回调
           layer.close(index);//关闭小窗口
           zj.html(track_num);
-          alert(res.msg);
+          layui.layer.msg(res.msg, {icon: 0,time: 1000});
+          // alert(res.msg);
         }
     });
   }
@@ -416,9 +420,11 @@ table.on('tool()', function(obj){
     , done: function (res) {            
       // 上传完毕回调
       if (res.code = 0) {
-        alert(res.msg)
+        // alert(res.msg)
+        layui.layer.msg(res.msg, {icon: 1,time: 1000});
       } else {
-        alert(res.msg)
+        // alert(res.msg)
+        layui.layer.msg(res.msg, {icon: 2,time: 1000});
       }
     }
   });

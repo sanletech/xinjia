@@ -21,9 +21,6 @@
         background-color: blue;
         color: #fff;
       }
-      .layui-layer-dialog .layui-layer-content .layui-layer-ico{
-        left:65px;
-      }
     </style>
     <!-- <div class="banner"></div> -->
     <form class="" id='order_data_form'>
@@ -766,6 +763,8 @@
       var linkmanDelURL = "<{:url('index/order/linkmanDel')}>";
         //收货/发货人的修改 
       var linkmanUpdateURL = "<{:url('index/order/linkmanUpdate')}>";
+      //设置默认
+      var linkman_default = "<{:url('index/order/linkmanUpdate')}>";
       // 发票的信息提交 
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交

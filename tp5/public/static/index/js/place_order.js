@@ -240,7 +240,8 @@ $('#container_sum').change(function () {//监听柜量
     });
 
     if (container < shu || container < fa) {
-        alert('当前柜量小于装送货服柜量');
+        // alert('当前柜量小于装送货服柜量');
+        layui.layer.msg('当前柜量小于装送货服柜量',{icon: 2,time: 500});
         if (shu >= fa) {
             $('#container_sum').val(shu);
         }else{
@@ -278,7 +279,8 @@ $('#bxje').bind('input propertychange', function () {//监听保险金额
 $('#cargo_value').bind('input propertychange', function () {
     if ($(this).val() < 0) {
         $(this).val(0);
-        alert('输入的值必须大于0');
+        // alert('输入的值必须大于0');
+        layui.layer.msg('输入的值必须大于0',{icon: 2,time: 1000});
     }
     let container = $('#container_sum').find("option:selected").val();
     let baoxian = $(this).val() * 4;
@@ -292,7 +294,8 @@ $('#cargo_value').bind('input propertychange', function () {
 $('#weight').bind('input propertychange', function () {
     if ($(this).val() > 34 || $(this).val() < 1) {
         $(this).val($(this).val().substr($(this).val().length - 1,1));
-        alert('不能小于1大于34');
+        // alert('不能小于1大于34');
+        layui.layer.msg('不能小于1大于34',{icon: 2,time: 1000});
     }    
 });
 

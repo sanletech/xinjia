@@ -10,10 +10,12 @@ layui.use('upload', function () {
         , accept: 'file' //普通文件
         , done: function (res) {
             //上传完毕回调
-            if(res.status>0){
-                alert(res.mssage)
+            if(res.status){
+                // alert(res.mssage)
+                layui.layer.msg(res.mssage, {icon: 1,time: 1000});
             }else{
-                alert(res.mssage)
+                // alert(res.mssage)
+                layui.layer.msg(res.mssage, {icon: 2,time: 1000});
             }
         }
        
@@ -25,10 +27,11 @@ layui.use('upload', function () {
         , accept: 'file' //普通文件
         , done: function (res) {
             //上传完毕回调
-             if(res.status>0){
-                alert(res.mssage)
+             if(res.status){
+                // alert(res.mssage)
+                layer.msg(res.mssage, {icon: 1,time: 1000});
             }else{
-                alert(res.mssage)
+                layer.msg(res.mssage, {icon: 2,time: 1000});
             }
         }
        
@@ -71,7 +74,8 @@ function xiu_ajax(data) {
         dataType: "json",
         success: function (data) {            
             if (data.status == 1) {
-                alert('提交表单成功');
+                // alert('提交表单成功');
+                layer.msg('提交表单成功', {icon: 1,time: 1000});
             }
         }
     });

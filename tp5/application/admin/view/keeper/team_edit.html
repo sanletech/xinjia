@@ -121,9 +121,11 @@
           success: function (data) {
             console.log(data);
             if (data == 1) {
-              alert("提交成功");
+              // alert("提交成功");
+              layui.layer.msg('提交成功', {icon: 1,time: 1000});
             } else {
-              alert("提交失败");
+              // alert("提交失败");
+              layui.layer.msg('提交失败', {icon: 2,time: 1000});
             }
           }
         })

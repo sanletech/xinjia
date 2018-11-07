@@ -112,10 +112,12 @@
 //                contentType: "application/json",
                 success:function(data){
                     if(data.status==1){
-                        alert('修改成功');
+                        // alert('修改成功');
+                        layui.layer.msg('修改成功', {icon: 1,time: 1000});
                         location.assign(location);
                     }else{
-                        alert('修改失败');
+                        // alert('修改失败');
+                        layui.layer.msg('提交失败', {icon: 2,time: 1000});
                         location.assign(location);
                   }
                 }
