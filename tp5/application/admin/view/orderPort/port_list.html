@@ -374,12 +374,7 @@ table.on('tool()', function(obj){
             dingcang($('.num1 span').html(),zj,index);
             $('.dcd').click();
           }else{
-              layer.msg('请输入运单号', {
-                icon: 7,
-                time: 1000 //1秒关闭（如果不配置，默认是3秒）
-              }, function(){
-                //do something
-              })
+              layer.msg('请输入运单号', {icon: 7,time: 1000});
           }
         }
       });
@@ -398,12 +393,17 @@ table.on('tool()', function(obj){
         , url: url + '?order_num=' + order_id + '&type=book_note' //上传接口
         , accept: 'file' //普通文件
         ,data:{track_num:track_num}
-        , done: function (res) {
-          //上传完毕回调
+        ,before: function(obj){
           layer.close(index);//关闭小窗口
-          zj.html(track_num);
-          layui.layer.msg(res.msg, {icon: 0,time: 1000});
-          // alert(res.msg);
+        }
+        , done: function (res) {
+          //上传完毕回调          
+          if (res.code == 0) {
+            layui.layer.msg(res.msg, {icon: 1,time: 1000});
+            zj.html(track_num);//复制运单号
+          }else{
+            layui.layer.msg(res.msg, {icon: 2,time: 1000});
+          }
         }
     });
   }
@@ -415,11 +415,13 @@ table.on('tool()', function(obj){
     , url: url + '?order_num='+order_id+'&type=sea_waybill' //上传接口
     , accept: 'file' //普通文件
     ,choose:function(obj){
-      console.log(obj);
+      // console.log(obj);
     }
-    , done: function (res) {            
+    , done: function (res) {    
+      console.log(res);
+              
       // 上传完毕回调
-      if (res.code = 0) {
+      if (res.code == 0) {
         // alert(res.msg)
         layui.layer.msg(res.msg, {icon: 1,time: 1000});
       } else {
