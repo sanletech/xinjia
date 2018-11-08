@@ -24,10 +24,10 @@ class Personal extends Model
 //        var_dump($order_status_on);exit;
         $order_status_on = implode(',', $order_status_on);
         $where = "where status in ($order_status_on)";
-        $statusSql_1 ="(select b.* from  hl_order_port_status b right join"
-                . " (SELECT order_num , max(mtime) as mtime FROM `hl_order_port_status` ";
+        $statusSql_1 ="(select b.* from  hl_order_port_status b right join "
+                . " (SELECT order_num , max(mtime) as mtime from hl_order_port_status  ";
         // 中间连接where 条件
-        $statusSql_2 = "  group by order_num) a"
+        $statusSql_2 = "  group by order_num) a "
                 . "  on a.mtime = b.mtime and a.order_num = b.order_num)";
        $statusSql =$statusSql_1.$where.$statusSql_2;
 //        var_dump($statusSql);exit;
@@ -45,9 +45,10 @@ class Personal extends Model
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,'
                         . 'P1.port_code s_port_code, P1.port_name s_port,'
                         . 'P2.port_code e_port_code, P2.port_name e_port')
-                ->group('OP.order_num')->order('OP.ctime desc')->buildSql();
-        $lists =Db::table($data.' A')->where($map)->group('A.id')->limit(1,100)->select();
-
+                ->group('OP.order_num')->buildSql();
+//var_dump($data);exit;
+        $lists =Db::table($data.' A')->where($map)->order('A.ctime')->group('A.id')->limit($tol,$limit)->select();
+//        $this->_p($lists);exit;
         //展示扣柜驳回的理由
         $where = "where status =".$this->order_status['container_lock'];
         $container_buckle = Db::table($statusSql =$statusSql_1.$where.$statusSql_2." A")->select();

@@ -24,10 +24,8 @@
       }
     </style>
     <div class="x-nav">
-        <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
-          title="刷新">
-          <i class="layui-icon" style="line-height:30px">ဂ</i>
-        </a>
+             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
     </div>
     <div class="invalid">
       <form class="layui-form" id="cha">
@@ -69,10 +67,10 @@
           </div>
 
           <div class="layui-col-xs12">
-              <input type="checkbox" name="order_status[]" value="order_audit" lay-skin="primary" title="已审核" checked="">
-              <input type="checkbox" name="order_status[]" value="cancel" lay-skin="primary" title="已取消">
-              <input type="checkbox" name="order_status[]" value="order_success" lay-skin="primary" title="进行中">
-              <input type="checkbox" name="order_status[]" value='completion'  lay-skin="primary" title="已完成">
+              <input type="checkbox" name="order_status[]" value="order_audit" lay-skin="primary" title="审核中" <?php echo(in_array('order_audit',$order_status)?'checked':''); ?> >
+              <input type="checkbox" name="order_status[]" value="cancel" lay-skin="primary" title="已取消" <?php echo(in_array('cancel',$order_status)?'checked':''); ?> >
+              <input type="checkbox" name="order_status[]" value="order_success" lay-skin="primary" title="进行中" <?php echo(in_array('order_success',$order_status)?'checked':''); ?> >
+              <input type="checkbox" name="order_status[]" value='completion'  lay-skin="primary" title="已完成" <?php echo(in_array('completion',$order_status)?'checked':''); ?> >
           </div>
         </div>
 

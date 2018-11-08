@@ -2,6 +2,7 @@
 namespace app\admin\model;
 use think\Model;
 use think\db;
+use think\paginator;
 class Member extends Model
 {
     public function  getJoinDateAttr($value)
@@ -18,23 +19,26 @@ class Member extends Model
     public function memberList($account,$type,$identification,$status,$pages='5'){
         $list =Db::name('member')->alias('a')
                 ->join('hl_sales_member b','b.member_code = a.member_code','left')
-                ->where('a.type','in',$type)
+                ->where('a.type',$type)
                 ->where('a.status',$status)
                 ->where('a.identification',"$identification")
                 ->field('a.id,a.name,a.create_time,a.phone,
                 a.email,a.status,a.company,a.member_code,a.logintime,a.add,
                 a.type,a.identification,a.file_path,b.sales_name')
-                
                 ->buildSql();
 //        var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
+        $pageParam['query']['type'] = $type;
+        $pageParam['query']['identification'] = $identification;
         if($account){
-            $list = Db::table($list.' a')->where('a.name','like',"%{$account}%")->whereOr('a.member_code','like',"%{$account}%")->buildSql();
+            $list = Db::table($list.' a')->where('a.name','like',"%{$account}%")
+                    ->whereOr('a.member_code','like',"%{$account}%")
+                    ->buildSql();
             $pageParam['query']['account'] = $account;
         }
-    
-        $list =Db::table($list.' b')->order('id,logintime')->paginate($pages,false,$pageParam); 
-      
+//        var_dump($list);exit;      
+        $list =Db::table($list.' b')->order('id,logintime')->paginate($pages,FALSE,$pageParam); 
+//        $this->_p($list);exit;
         return $list;
         
     }

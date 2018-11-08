@@ -152,10 +152,10 @@ function tiao() {
     + '<div class="tiao">手机号：</div>'
     + '</div>'
     + '<div class="rig">'
-    + '<div class="tiao_id" style="display: none;"> ' + arr.id + '</div>'
-    + '<div class="tiao">' + arr.company + '</div>'
-    + '<div class="tiao">' + arr.name + '</div>'
-    + '<div class="tiao">' + arr.phone + '</div>'
+    + '<div class="tiao_id" style="display: none;">'+arr.id+'</div>'
+    + '<div class="tiao">'+arr.company+'</div>'
+    + '<div class="tiao">'+arr.name+'</div>'
+    + '<div class="tiao">'+arr.phone+'</div>'
     + '</div>'
     + '</div>'
     + '</li>'
@@ -335,34 +335,43 @@ function xiu_wt(){
 
 //删除选中的委托信息
 $('.wt_del').click(function(){
-  $.get(linkmanDelURL,{'id':id},function(data){
-    if(data.status){
-      $('.nei_a').parent().remove();//删除当前选中的节点
-      // alert('成功删除联系人');
-      layui.layer.msg('成功删除联系人',{icon: 1,time: 500});
-    }else{
-      // alert('删除联系人失败');
-      layui.layer.msg('请选择联系人',{icon: 2,time: 1000});
-    }   
-  });
+  if (id) {
+    $.get(linkmanDelURL,{'id':id},function(data){
+      if(data.status){
+        $('.nei_a').parent().remove();//删除当前选中的节点
+        // alert('成功删除联系人');
+        layui.layer.msg('成功删除联系人',{icon: 1,time: 500});
+        id = 0;
+      }else{
+        // alert('删除联系人失败');
+        layui.layer.msg('请选择联系人',{icon: 2,time: 1000});
+      }   
+    });
+  }else{
+    layui.layer.msg('请选择联系人',{icon: 2,time: 1000});
+  }
 });
 
 //点击默认
-$('.wt_default').click(function(){
-  if ($(lei).hasClass('song')) {//判断是不是收货
-    $.get(linkman_default,{'id':id,type:'r'},function(data){
-      if(data.status){
-        // alert('成功设置默认信息')
-        layui.layer.msg('成功设置默认信息',{icon: 2,time: 500});
-      }
-    });
-  }else{//发货
-    $.get(linkman_default,{'id':id,type:'s'},function(data){
-      if(data.status){
-        // alert('成功设置默认信息')
-        layui.layer.msg('成功设置默认信息',{icon: 2,time: 500});
-      }
-    });
+$('.wt_default').click(function(){  
+  if (id) {
+    if ($(lei).hasClass('song')) {//判断是不是收货
+      $.get(linkman_default,{'id':id,type:'r'},function(data){
+        if(data.status){
+          // alert('成功设置默认信息')
+          layui.layer.msg('成功设置默认信息',{icon: 1,time: 500});
+        }
+      });
+    }else{//发货
+      $.get(linkman_default,{'id':id,type:'s'},function(data){
+        if(data.status){
+          // alert('成功设置默认信息')
+          layui.layer.msg('成功设置默认信息',{icon: 1,time: 500});
+        }
+      });
+    }   
+  }else{
+    layui.layer.msg('请选择联系人',{icon: 2,time: 1000});
   }
 })
 
@@ -512,6 +521,7 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('.tjiao').eq(0).show();
   $('.lche,.fuwu').hide();
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);
+  $('.er .in').attr('readonly',true);
   $('#bxje').css('border','0').attr('readonly',true);
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();
@@ -520,3 +530,5 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   //   $(this).removeAttr("disabled");
   // });
 })
+
+

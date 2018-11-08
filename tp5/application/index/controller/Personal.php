@@ -41,8 +41,8 @@ class Personal extends Base
     {
        $member_code=  Session::get('member_code','think');
        $member_data =Db::name('member')->where('member_code',$member_code)->field('password',true)->find();
+//       $this->_p($member_data);exit;
        $this->view->assign('member_data',$member_data);
-//       var data = "<{$member_data}>";
        return $this->view->fetch('personal/info');
     }
     
@@ -56,8 +56,6 @@ class Personal extends Base
         $type= $data['type']; $email= $data['email'];
         $name =$data['name']; $add = $data['add'];
         //将图片放到 
-        $file_path=[];
-        $response=[];
         // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file->validate(['size'=>2097152,'ext'=>'jpg,png,gif'])
                 ->rule('uniqid')->move(ROOT_PATH . 'public' . DS . 'uploads/images');
@@ -68,11 +66,11 @@ class Personal extends Base
                 // 上传失败获取错误信息
                 return array('status'=>0,'message'=>$file->getError());
             }    
-        //修改用户信息
+        //修改用户信息 //1未认证，2待认证,3为认证不通过，4为认证通过
         $res =Db::name('member')->where('member_code',$member_code)
                 ->update(['type'=>$type,'name'=>$name,
                     'email'=>$email,'type'=>$type,'add'=>$add,
-                    'file_path'=>$file_path,'identification'=>1]);
+                    'file_path'=>$file_path,'identification'=>2]);
         $res ?$response=['status'=>1,'message'=>'更新成功']:$response=['status'=>0,'message'=>'更新失败'];
         return $response;
     }
@@ -174,10 +172,9 @@ class Personal extends Base
         }
         //订单状态
         $order_status = $this->request->param();
-        $order_status=  array_key_exists('order_status', $order_status)?$order_status['order_status']:'';
+        $order_status=  array_key_exists('order_status', $order_status)?$order_status['order_status']:array();
 //        $this->_p($order_status);exit;
         if($order_status){
-            $this->view->assign('order_status',$order_status);
             foreach ($order_status as $status){
                 switch ($status) {
                     case 'order_audit':
@@ -210,8 +207,8 @@ class Personal extends Base
         //计算出从那条开始查询
         $tol=($page-1)*$limit;
         $dataM =new dataM;
-       
         $list = $dataM->place_order($member_code,$tol,$limit,$map);
+        
 //        $this->_p($list);exit;
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);
@@ -219,6 +216,7 @@ class Personal extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
+        $this->view->assign('order_status',$order_status);
        return $this->view->fetch('personal/place_order_port');
     }
 
@@ -309,7 +307,7 @@ class Personal extends Base
     
     //设置默认的收货,送货地址
     public function default_address(){
-        $data =  $this->request->only('id,default'); 
+        $data =  $this->request->only('id,type'); 
         $member_code =Session::get('member_code','think');
         //先查询有没有设置默认值
         $default_id =Db::name('linkman')->where(['member_code'=>$member_code,'default'=>'not null'])->value('id');
@@ -318,7 +316,7 @@ class Personal extends Base
             $res =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$default_id])->update(['default'=>'null']);
             $res?$response['success'][]='更新原有数据成功':$response['fail'][]='更新原有数据失败' ;
         }
-        $res1 =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$data['id']])->update(['default'=>$data['default']]);
+        $res1 =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$data['id']])->update(['default'=>$data['type']]);
         $res1?$response['success'][]='设置成功':$response['fail'][]='设置失败' ;
         if(array_key_exists('fail', $response)){
             return json(array('status'=>0,'message'=>'设置失败')) ;

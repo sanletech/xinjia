@@ -109,9 +109,9 @@ class Financial extends Base
         $order_num = $this->request->param('order_num','not null','strval');
         $order_num =$order_num ?$order_num:'not null';
         $date_start = $this->request->param('date_start',date('y-m-d h:i:s',strtotime('-3month')));
-        $date_start=$date_start ?$date_start :date('y-m-d h:i:s',strtotime('-3month'));
-        $date_end = $this->request->param('date_end',date('y-m-d h:i:s'));
-        $date_end=$date_end ?$date_end :date('y-m-d h:i:s');
+        $date_start=$date_start ?$date_start :date('y-m-d H:i:s',strtotime('-3month'));
+        $date_end = $this->request->param('date_end',date('y-m-d H:i:s'));
+        $date_end=$date_end ?$date_end :date('y-m-d H:i:s');
         $container_buckle = $this->request->param('container_buckle','apply','strval');
         $money_status = $this->request->param('money_status',2,'intval');
         if($money_status == 2){
@@ -130,7 +130,7 @@ class Financial extends Base
                 ->where('OB.container_buckle',$container_buckle)
                 ->where('OB.money_status',$money_status)
                 ->order('ctime desc,mtime desc')->buildSql();
-                // var_dump($list);exit;
+//                 var_dump($list);exit;
         $lista = Db::table($list.' a')->select();
   
         $count = count($lista);
@@ -159,6 +159,21 @@ class Financial extends Base
                 $list[$key]['money_status'] ='已付款';
                 break; 
             }
+            switch($value['status'])
+           {
+                case $this->order_status['cancel']:
+                $list[$key]['status'] ='订单取消';
+                break; 
+                case $this->order_status['order_audit']:
+                $list[$key]['status'] ='订单审核中';
+                break;
+                case $this->order_status['completion']:
+                $list[$key]['status'] ='订单审已经完成';
+                break;  
+                default:
+                $list[$key]['status'] ='订单进行中';  
+            }
+
 
         }
         

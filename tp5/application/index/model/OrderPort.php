@@ -73,7 +73,7 @@ class OrderPort extends Model
                       ->field("id,title,type,".$container_size. ' money')->select();
         //查询有没有设置默认地址
         $default_add= Db::name('linkman')->where('member_code',$member_code)
-                ->where('default=r or default=s')
+                ->where('default',['=','r'],['=','s'],'or')
                 ->field('member_code,town_code,mtime',true)->select();
         $default_addArr=[];
         if($default_add){

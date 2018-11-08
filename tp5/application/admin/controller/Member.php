@@ -13,22 +13,21 @@ class Member extends Base
  
     //用户列表
     public function memberList()
-    {   
+    {        
+//        $this->_p( $this->request->param());exit;
        $type = $this->request->param('type'); //企业用户company 个人用户person
        $account = $this->request->param('account');  //帐号搜索
         if($account){
-             $this->view->assign('account',$account); 
+            $this->view->assign('account',$account); 
         }
-        if($type){
-             $this->view->assign('type',$type); 
-        }else{
-            $type='company';
-        }
+        $type= $type?$type:'person';
+        $this->view->assign('type',$type); 
+       
         $identification= $this->request->param('identification');
         $identification= isset($identification)?$identification:'2';
         $this->view->assign('identification',$identification); 
         $user = new MemberM ;
-        $list = $user->memberList($account,$type,$identification,1,'15');
+        $list = $user->memberList($account,$type,$identification,1,'10');
     //    $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('image_path',ROOT_PATH . 'public' . DS . 'uploads/images');

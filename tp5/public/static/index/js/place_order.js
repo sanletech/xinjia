@@ -1,35 +1,35 @@
-//获取文本value值
-function input_wu() {
-    $('.er .in').each(function () {
-        if ($(this).val() == '') {
-            $(this).val('无');
-        }
-    })
-}
-function input_null() {
-    $('.er .in').each(function () {
-        if ($(this).val() == '无') {
-            $(this).val('');
-        }
-    })
-}
+// //获取文本value值
+// function input_wu() {
+//     $('.er .in').each(function () {
+//         if ($(this).val() == '') {
+//             $(this).val('无');
+//         }
+//     })
+// }
+// function input_null() {
+//     $('.er .in').each(function () {
+//         if ($(this).val() == '无') {
+//             $(this).val('');
+//         }
+//     })
+// }
 //修改设置
-input_wu();
-$('.in').css('border', '0');
-function xiu() {
-    var gai = $('.er_anniu .wt3').val();
-    if (gai == '修改' || gai == '') {
-        $('.er_anniu .wt3').val('确认');
-        $('.in').css('border', '1px solid #e6e6e6');
-        $('.in').removeAttr('readonly');
-        input_null();
-    } else if (gai == '确认') {
-        $('.er_anniu .wt3').val('修改');
-        $('.in').css('border', '0');
-        $('.in').attr('readonly', 'readonly');
-        input_wu();
-    }
-}
+// input_wu();
+// $('.in').css('border', '0');
+// function xiu() {
+//     var gai = $('.er_anniu .wt3').val();
+//     if (gai == '修改' || gai == '') {
+//         $('.er_anniu .wt3').val('确认');
+//         $('.in').css('border', '1px solid #e6e6e6');
+//         $('.in').removeAttr('readonly');
+//         input_null();
+//     } else if (gai == '确认') {
+//         $('.er_anniu .wt3').val('修改');
+//         $('.in').css('border', '0');
+//         $('.in').attr('readonly', 'readonly');
+//         input_wu();
+//     }
+// }
 //发票设置
 $('#fk').change(function () {
     let fk = $(this).children('option:selected').val();
@@ -105,11 +105,11 @@ function wt(data) {
             + '<div class="tiao">装货地址：</div>'
             + '</div>'
             + '<div class="rig">'
-            + '<div class="tiao_id" style="display: none;"> '+ dataArray[i].id + '</div>'
-            + '<div class="tiao">' + dataArray[i].name + '</div>'
-            + '<div class="tiao">' + dataArray[i].phone + '</div>'
-            + '<div class="tiao">' + dataArray[i].company + '</div>'
-            + '<div class="tiao wu">' + dataArray[i].address + '</div>'
+            + '<div class="tiao_id" style="display: none;">'+dataArray[i].id+'</div>'
+            + '<div class="tiao">'+dataArray[i].name+'</div>'
+            + '<div class="tiao">'+dataArray[i].phone+'</div>'
+            + '<div class="tiao">'+dataArray[i].company+'</div>'
+            + '<div class="tiao wu">'+dataArray[i].address+'</div>'
             + '</div>'
             + '</div>'
             + '</li>'
