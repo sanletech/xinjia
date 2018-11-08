@@ -63,8 +63,11 @@ class Bill extends Base
                 case $this->order_status['completion']:            
                 $list[$key]['status'] ='订单完成';
                 break;
+                case $this->order_status['order_audit']:            
+                $list[$key]['status'] ='订单审核中';
+                break;
                 default:
-                $list[$key]['status'] ='下单成功';
+                $list[$key]['status'] ='订单进行中';
                 break;
             }
             switch ($value['money_status']) {

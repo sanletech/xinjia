@@ -47,7 +47,7 @@ class Personal extends Model
                         . 'P2.port_code e_port_code, P2.port_name e_port')
                 ->group('OP.order_num')->buildSql();
 //var_dump($data);exit;
-        $lists =Db::table($data.' A')->where($map)->order('A.ctime')->group('A.id')->limit($tol,$limit)->select();
+        $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->group('A.id')->limit($tol,$limit)->select();
 //        $this->_p($lists);exit;
         //展示扣柜驳回的理由
         $where = "where status =".$this->order_status['container_lock'];
