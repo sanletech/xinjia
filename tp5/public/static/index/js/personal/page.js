@@ -26,7 +26,6 @@ layui.use(['laypage', 'layer'], function(){
               //首次不执行
               if (!first) {
                 //do something
-               
                 window.location.href = url+"?page=" + obj.curr + '&limit=' + obj.limit;
               }
         }
