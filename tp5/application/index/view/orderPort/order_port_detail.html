@@ -93,7 +93,7 @@
                 if(!$list['book_note']){
                     echo'<span>订舱单未上传</span>';}
                 else{
-                    $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
+                    $url= url('index/Personal/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
                     $str ='<a href="'.$url.'">下载</a>';
                     echo '<span>订舱单已上传</span>'.$str.'</br>';
                     }
@@ -141,7 +141,7 @@
                     echo'<span>水运单未上传</span>';}
                 else{
                     $order_num= $list['order_num'];
-                    $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
+                    $url= url('index/Personal/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
                     $str ='<a href="'.$url.'">下载</a>';
                     echo '<span>水运单已上传</span>'.$str.'</br>';
                     }

@@ -32,7 +32,7 @@ function order_num(zj){
         skin: 'demo-class',
         btn: ['确认'],
         yes: function(index, layero){
-            //按钮【按钮一】的回调
+            //按钮【按钮一】的回调            
             $.post(track_num, $('#cabinet form').serialize());
         }
     });           

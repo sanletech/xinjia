@@ -144,6 +144,7 @@ class Personal extends Base
     //港到港订单
     public function place_order_port()
     {   
+        var_dump($this->request->param());exit;
         $map =[];
         //订单查询
         $order_num =  $this->request->param('order_num');
@@ -233,7 +234,7 @@ class Personal extends Base
     public function track_num() {
        // $member_code =Session::get('member_code','think');
         $data = $this->request->param(); 
-//        $this->_p($data);exit;
+       $this->_p($data);exit;
         $order_num =$data['order_num'];
         $id  =$data['id'];
         $container_code =$data['container_code'];//
@@ -284,10 +285,10 @@ class Personal extends Base
         $file_Extension= strstr(strrev($file),'_',true);
         $file_Extension =  strrev($file_Extension);
         $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
-//              var_dump($file_name);exit;
-        $file_dir = ROOT_PATH . 'public' . DS . 'uploads';        //下载文件存放目录    
+            //  var_dump($file_name);exit;
+        $file_dir = ROOT_PATH . 'public' . DS . 'uploads'. DS .'files';        //下载文件存放目录    
         //检查文件是否存在    
-//            var_dump($file_dir .DS. $file_name);exit;
+        //    var_dump($file_dir .DS. $file_name);exit;
         if (! file_exists ($file_dir .DS. $file_name)) {    
             echo "文件找不到";    
             exit ();    

@@ -22,6 +22,9 @@
         color: #666;
         font-size: 12px;
       }
+      #te .xiaz a{
+        background-color:#00DB00;
+      }
     </style>
     <div class="x-nav">
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
@@ -114,7 +117,7 @@
                     <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
                     <td><{$vo.s_port}>-<{$vo.e_port}></td>
                     <td><{$vo.quoted_price}></td>
-                    <td>
+                    <td class="xiaz">
                       <!-- 有改变css('background-color','#00DB00') -->
                     <?php                                    
                     $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'book_note']);
@@ -134,7 +137,7 @@
                     </td>
                     <!-- 驳回提示  title -->
                     <td class="goods"><a href="javascript:void(0);" title="<{$vo.container_buckle_comment}>"><{$vo.container_buckle}></a></td>
-                    <td>
+                    <td class="xiaz">
                       <!-- 有改变css('background-color','#00DB00') -->
                     <?php                                    
                     $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'sea_waybill']);
@@ -163,7 +166,7 @@
     </div>
 
     <div id="cabinet">
-      <form class="layui-form" action="">
+      <form class="layui-form">
           <div class="guiding" style="margin: 10px 0;overflow: hidden;">
               <div class="layui-col-xs6">
                 <label class="layui-form-label">柜型:</label>
