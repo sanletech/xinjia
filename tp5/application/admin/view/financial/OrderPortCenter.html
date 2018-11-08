@@ -12,7 +12,7 @@
     .fuk1,#shenqi{
         display: none;
         padding: 10px;
-      }
+    }
 </style>
 <div class="x-nav">
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
@@ -89,12 +89,12 @@
       </div>
   
       <!-- 是否申请发货 -->
-      <div id="shenqi">      
+      <div id="shenqi">
         <div class="order_num1" style="margin: 10px 0"></div>
           <div class="layui-col-sx12">
             <input type="text" name="title" lay-verify="title" placeholder="请输入说明" class="layui-input">
           </div>
-      </div> 
+      </div>
 <script type="text/html" id="toolbarDemo1">
   <div class="layui-btn-container">
     <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -135,7 +135,7 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
   form.on('radio(container_buckle)', function(data){
     container_buckle = data.value;
     $('.cha').click();
-  }); 
+  });
   form.on('radio(money_status)', function(data){
     money_status = data.value;
     $('.cha').click();
@@ -159,10 +159,10 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
       ,{field:'quoted_price', title:'总价(元)',width:100}
       ,{field:'ctime', title:'账单生成时间', sort: true,width:200}
       ,{field:'container_buckle', title:'货物状态',width:100,templet:function(res){
-        return '<div class="goods">'+ res.container_buckle +'</div>'
+        return '<div class="goods" style="color: blue;">'+ res.container_buckle +'</div>'
       }}
       ,{field:'money_status', title:'付款状态',width:100,templet:function(res){
-        return '<div class="fukuan">'+ res.money_status +'</div>'
+        return '<div class="fukuan" style="color: blue;">'+ res.money_status +'</div>'
       }}
       ,{field:'status', title:'账单状态',width:100}
       ,{field:'extra_info', title:'附加备注',width:200}
@@ -270,7 +270,7 @@ function pand($){
             area: '400px',
             offset: 'auto',
             shadeClose: 'true',
-            content: '<div>请确认是否收到货款</div>',
+            content: '<div style="padding:10px;">请确认是否收到货款</div>',
             btn: ['YES','NO'],
             yes: function (index, layero) {
              $.post(money_status_changeURL,{'order_num':order_num},function(data){

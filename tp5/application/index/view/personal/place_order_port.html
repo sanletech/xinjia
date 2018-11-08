@@ -194,9 +194,9 @@
     <script>
       var xiangqing = "<{:url('index/Order/place_details')}>";//订单详情页
       var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
-      var url="<{:url('index/personal/place_order_port')}>";//
+      var url="<{:url('index/personal/place_order_port')}>";//显示港订单
     </script>
-    <script src="__STATIC__/js/personal/page.js"></script>
+    <!-- <script src="__STATIC__/js/personal/page.js"></script> -->
     <script src="__STATIC__/../admin/js/port.js"></script>
     <script src="__STATIC__/js/personal/cabinet_number.js"></script>
     <script>
@@ -205,40 +205,66 @@
         var page ='<{$page}>';
         var count='<{$count}>';
         var limit='<{$limit}>';
-        function del(obj, did) {
-        layer.confirm('确认要删除吗？', function (index) {
-          //转成数组形式
-          var dataA = new Array()
-          dataA[0] = did;
-          var dataArray = { id: dataA }
-          toajax(dataArray);
-          $(obj).parents("tr").remove();
-          layer.msg('已删除!', { icon: 1, time: 1000 });
-        });
-      }
-      
-        function toajax(dataArray) {
-        $.ajax({
-          type: 'POST',
-          url: "<{:url('admin/orderPort/orderPortDel')}>",
-          data: dataArray,
-          dataType: "json",
-          success: function (data) {
-            if (data.status == 1) {
-              return 1;
-            } else {
-              return 0;
-            }
-          }
-        })
-      }
 
-      $('.btn_select').click(function(){
+      $('.btn_select').click(function(){//查询
         let data = $('#btn_select').serialize();        
         $.post(url,{data:data},function(res){
           
         })
       })
+
+
+
+      layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+        });
+      });
+
+      //分页
+      layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+        ,layer = layui.layer;
+
+        laypage.render({
+                  elem: 'pages',
+                  limit: limit,
+                  limits: [5, 10, 15],
+                  count: count,
+                  layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                  curr: page,
+                  theme: '#c00',
+                  jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    //console.log(obj.limit); //得到每页显示的条数                    
+                    //首次不执行
+                    if (!first) {
+                      //do something
+                      let data = $('#btn_select').serializeArray();
+                      let list = $.param(data);
+                      window.location.href = url+"?page=" + obj.curr + '&limit=' + obj.limit+'&'+list;
+                    }
+              }
+          });
+        });
+
+    layui.use(['form', 'layedit', 'laydate'], function(){
+      var form = layui.form
+      ,layer = layui.layer
+      ,layedit = layui.layedit
+      ,laydate = layui.laydate;
+
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+    });
     </script>
   </body>
 

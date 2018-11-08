@@ -32,7 +32,7 @@ function order_num(zj){
         skin: 'demo-class',
         btn: ['确认'],
         yes: function(index, layero){
-            //按钮【按钮一】的回调            
+            //按钮【按钮一】的回调
             $.post(track_num, $('#cabinet form').serialize());
         }
     });           
@@ -64,10 +64,13 @@ for (let i = 0; i < huo.length; i++) {
     }else if(huo.eq(i).html() == 'apply'){
         huo.eq(i).html('申请中');
         // huo.eq(i).css('background-color','#C9C9C9');
-    }   
+    }
     
     if (st.eq(i).html() == '进行中') {
-        tj.eq(i).css('background-color','#FF2400');
+        tj.eq(i).css('background-color','#FF2400');        
+    }else if(st.eq(i).html() == '已取消'){
+        st.eq(i).parent('td').siblings('.fukuan').css('color','#C9C9C9');
+        st.eq(i).parent('td').siblings('.ddh').find('a').css('color','#C9C9C9')        
     }
 }
 

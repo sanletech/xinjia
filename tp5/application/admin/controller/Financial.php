@@ -113,6 +113,7 @@ class Financial extends Base
         $date_end = $this->request->param('date_end',date('y-m-d H:i:s'));
         $date_end=$date_end ?$date_end :date('y-m-d H:i:s');
         $container_buckle = $this->request->param('container_buckle','apply','strval');
+        // var_dump($container_buckle);exit;
         $money_status = $this->request->param('money_status',2,'intval');
         if($money_status == 2){
             $money_status = 'not null';
@@ -130,10 +131,8 @@ class Financial extends Base
                 ->where('OB.container_buckle',$container_buckle)
                 ->where('OB.money_status',$money_status)
                 ->order('ctime desc,mtime desc')->buildSql();
-//                 var_dump($list);exit;
-        $lista = Db::table($list.' a')->select();
-  
-        $count = count($lista);
+        // var_dump($list);exit;
+        $count =  Db::table($list.' a')->count();
         $list = Db::table($list.' a')->limit($tol,$limit)->select();
         foreach($list as $key=>$value){
 

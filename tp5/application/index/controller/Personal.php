@@ -142,7 +142,7 @@ class Personal extends Base
     //港到港订单
     public function place_order_port()
     {   
-        var_dump($this->request->param());exit;
+        // var_dump($this->request->param());exit;
         $map =[];
         //订单查询
         $order_num =  $this->request->param('order_num');

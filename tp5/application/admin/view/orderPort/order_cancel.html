@@ -41,7 +41,7 @@
         <tbody>
         <{volist name='list' id='vo'}>
           <tr>
-            <td><{$vo.order_num}></td>
+            <td><a href="<{:url('admin/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>" title="订单详情" target="_blank" ><{$vo.order_num}></a></td>
             <td><{$vo.cargo}>&nbsp;&nbsp;<{$vo.container_sum}>&nbsp;&nbsp;<{$vo.container_size}></td>
             <td><{$vo.weight}></td>
             <td><{$vo.s_port}>-<{$vo.e_port}></td>

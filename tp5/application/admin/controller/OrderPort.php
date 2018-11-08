@@ -258,6 +258,26 @@ class OrderPort extends Base
     }
 
 
+        //港到港订单详情页面
+        public function orderPortDetail() {
+        
+            $order_num =  $this->request->get('order_num');
+            //访问后台的 model\orderPort\orderData 方法
+            $data = new \app\admin\model\orderPort();
+            $dataArr = $data->orderData($order_num);
+           
+            $this->assign([
+                    'list'  =>$dataArr['list'],
+                    'containerData' => $dataArr['containerData'],
+                    'carData'=> $dataArr['carData'],
+                    'shipperArr'=>$dataArr['shipperArr'],
+                    'consignerArr'=>$dataArr['consignerArr'],
+                    'discount'=>$dataArr['discount']
+            ]);
+            //渲染后台的详情页面
+            return $this->view->fetch('orderPort/order_port_detail');
+        }
+
  
     
     //废弃订单
