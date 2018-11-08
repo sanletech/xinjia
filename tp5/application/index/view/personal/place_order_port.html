@@ -30,7 +30,7 @@
         </a>
     </div>
     <div class="invalid">
-      <form class="layui-form" id="cha">
+      <form class="layui-form" id="btn_select">
         <div class="layui-row">
           <div class="layui-col-xs12">
             <div class="grid-demo sousuo">
@@ -69,9 +69,9 @@
           </div>
 
           <div class="layui-col-xs12">
-              <input type="checkbox" name="order_status[]" value="order_audit" lay-skin="primary" title="已审核" checked="">
-              <input type="checkbox" name="order_status[]" value="cancel" lay-skin="primary" title="已取消">
+              <input type="checkbox" name="order_status[]" value="order_audit" lay-skin="primary" title="审核中" checked="">
               <input type="checkbox" name="order_status[]" value="order_success" lay-skin="primary" title="进行中">
+              <input type="checkbox" name="order_status[]" value="cancel" lay-skin="primary" title="已取消">
               <input type="checkbox" name="order_status[]" value='completion'  lay-skin="primary" title="已完成">
           </div>
         </div>
@@ -191,9 +191,9 @@
 
     <div id="state_goods">是否申请放货</div>
     <script>
-      var xiangqing = "<{:url('index/Order/place_details')}>";
+      var xiangqing = "<{:url('index/Order/place_details')}>";//订单详情页
       var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
-      var url="<{:url('index/personal/place_order_port')}>";
+      var url="<{:url('index/personal/place_order_port')}>";//
     </script>
     <script src="__STATIC__/js/personal/page.js"></script>
     <script src="__STATIC__/../admin/js/port.js"></script>
@@ -233,7 +233,7 @@
       }
 
       $('.btn_select').click(function(){
-        let data = $('#btn_select').serialize();
+        let data = $('#btn_select').serialize();        
         $.post(url,{data:data},function(res){
           
         })

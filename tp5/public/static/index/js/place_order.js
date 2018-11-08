@@ -198,7 +198,7 @@ function toajax(url, data) {
                     layer.alert('<div style="text-align: center;">订单提交成功</div>', {icon: 1},function(){
                       window.location.replace(index_url);//跳转个人中心 
                     });
-                });   
+                });
             }else{
                 layer.alert('<div style="text-align: center;">请勿重复提交订单</div>', {icon: 2});
             }

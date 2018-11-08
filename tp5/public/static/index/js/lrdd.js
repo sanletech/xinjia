@@ -530,5 +530,3 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   //   $(this).removeAttr("disabled");
   // });
 })
-
-
