@@ -227,7 +227,7 @@ class Personal extends Base
         return json($data);
     }
     //处理提交柜号
-    public function track_num() {
+   public function track_num() {
        // $member_code =Session::get('member_code','think');
         $data = $this->request->param(); 
 //       $this->_p($data);exit;
@@ -237,35 +237,36 @@ class Personal extends Base
         $seal =$data['seal']; 
         //查询数据库的状态和柜子数量
         $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('container_sum,status')->find();
-        if($sqlData['status']>4 && !($sqlData['status']==505||$sqlData['status']=404) ){
-            return array('status'=>0,'message'=>'不可再录入柜号');
+
+        if($sqlData['status']>4 && !($sqlData['status']==505||$sqlData['status']==404) ){
+            return  json(array('status'=>0,'message'=>'不可再录入柜号'));
         }
         $response =[];
-        //根据订单号 添加 修改柜号和封条号
+		//根据订单号 添加 修改柜号和封条号
+        $mtime = date('y-m-d H:i:s');
         for($i=0;$i<count($container_code);$i++){
             //如果为空就跳过此次循环
             if(empty($container_code[$i]) || empty($seal[$i])){
                 continue;
             }else{
                 $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'id'=>$data_id[$i]])
-                    ->update([ 'container_code'=>$container_code[$i],'seal'=>$seal[$i]]);
+                    ->update([ 'container_code'=>$container_code[$i],'seal'=>$seal[$i] ,'mtime'=>$mtime]);
                 $res? $response['success'][]='录入成功':$response['fail'][]='录入失败'.$container_code[$i];
             }
 
         }
-         
+         //$this->_p($response);exit;
         if(array_key_exists('fail', $response)){
-                $status = array('status'=>0,'message'=>'报柜号失败');
+			    $message_code =implode('-',$response['fail']);
+                $status = array('status'=>0,'message'=>'报柜号失败'.$message_code);
         }  else {
                 $status = array('status'=>1,'message'=>'报柜号成功'); 
                 //提交的柜号和封条号和订单的总柜子数量对应的上，订单就修改报柜号完毕
-                if(array_filter($seal) == $sqlData['container_sum']){
-                    $res3 =Db::name('order_port')->where('order_num',$order_num)->update(['statu'=>9,'container_status'=>1]);
-                    $res3 ? $status = array('status'=>1,'message'=>'柜号封条号全部录完不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
+                if(count(array_filter($seal))==$sqlData['container_sum']){
+                    $res3 =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>9,'container_status'=>1]);
+                    $res3 ? $status = array('status'=>2,'message'=>'柜号封条号全部录完成功不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
                 }
             }
- 
-
         return $status;    
     }
 

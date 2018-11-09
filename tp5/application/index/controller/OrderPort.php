@@ -83,9 +83,9 @@ class OrderPort extends Controller
 //         $this->_p($data);exit;
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复
-//        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-//            return array('status'=>0,'mssage'=>'不要重复提交订单');
-//        }
+        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+            return array('status'=>0,'mssage'=>'不要重复提交订单');
+        }
         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
         $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
         $mtime= date('Y-m-d H:i:s'); //订单时间
