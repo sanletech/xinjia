@@ -58,6 +58,12 @@
             })
         })
     })
+
+    $('input').keyup(function(e){//确定键登陆
+        if (e.which == 13) {
+            $('#loginbtn').click();
+        }
+    })
     
 </script>
 

@@ -20,7 +20,7 @@ function cabinet(od_num,gui,zj) {
 
 //弹出报柜号
 function order_num(zj){
-    let stast = $(zj).parent().siblings('.caozuo').find('a').html();    
+    let stast = $(zj).parent().siblings('.caozuo').find('a').html();       
     if (stast == '进行中') {
     layer.open({
         type: 1,
@@ -33,7 +33,20 @@ function order_num(zj){
         btn: ['确认'],
         yes: function(index, layero){
             //按钮【按钮一】的回调
-            $.post(track_num, $('#cabinet form').serialize());
+            $.post(track_num, $('#cabinet form').serialize(),function(res){
+                if (res.status == 1) {
+                    layer.msg('提交成功', {icon: 6,time: 1000},function(){
+                        layer.close(index);
+                    });
+                }else if(res.status == 2){
+                    $(zj).parent().html('已补料');
+                    layer.msg('已完成柜号', {icon: 6,time: 3000},function(){
+                        layer.close(index);
+                    });
+                }else{
+                    layer.msg('柜号封号一对提交', {icon: 5,time: 1000});
+                }
+            });
         }
     });           
   }else{
