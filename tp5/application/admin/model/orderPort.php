@@ -26,7 +26,7 @@ class orderPort extends Model
             ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶 
             ->field('OP.*,HM.company,HM.name,SC.ship_short_name,B.boat_code,B.boat_name,P1.port_name s_port_name ,P2.port_name e_port_name')
-            ->group('HM.id,OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
+            ->group('OP.id')
             ->where('OP.status','in',$state)
             ->paginate($pages); 
 //    $this->_p($list);exit; 
@@ -111,7 +111,7 @@ class orderPort extends Model
         //根据订单号 查询对应柜子的 柜号和封条号码
         $containerData =Db::name('order_truckage')->alias('OT')
                 ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
-                ->where('OT.order_num',$order_num)
+                ->where('OT.order_num',$order_num)->where('OT.type','s')
                 ->field('OT.container_code,OT.seal')->select();
         
         //根据订单查询出拖车信息

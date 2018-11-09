@@ -4,7 +4,7 @@
 return [
     //港到港的订单状态编码
     //5,6,7,8, 只更改订单和账单的对应字段money_status，container_buckle
-    //4,修改order_bill，order_port的状态和对应字段
+    //4,修改order_bill，order_port的状态和对应字段container_status
     'order_status' =>[
         'stop'=>505,//中止
         'cancel'=>404,//取消

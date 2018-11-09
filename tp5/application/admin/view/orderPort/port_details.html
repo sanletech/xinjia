@@ -144,17 +144,19 @@
                         </div>-->
 
                          <{if condition ="($list['status']>4)" }>
-                        <div class="guix">
+                         <div class="guix">
                             <div class="wenzi">柜号-封号：</div>
                             <div class="ggh">
                                 <{volist name="containerData" id="container"}>
                                 <div class="layui-form-item">
-                                    <div class="guinei">
-                                        <input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.container_code}>">
+                                    <div class="guinei" style="text-align:right;margin-top: 12px;">
+                                        <!--<input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.container_code}>">-->
+                                        <{$container.container_code}>
                                     </div>
                                     <div class="layui-form-mid">-</div>
-                                    <div class="guinei">
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.seal}>">
+                                    <div class="guinei" style="margin-top: 12px;">
+                                        <!--<input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.seal}>">-->
+                                        <{$container.seal}>
                                     </div>
                                 </div>
                                 <{/volist}>

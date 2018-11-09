@@ -6,6 +6,14 @@ use think\Session;
 use app\index\model\Personal as dataM;
 class Personal extends Base
 {    
+    public $order_status;
+    public $page=5;
+
+    public function _initialize()
+    {  
+        $this->order_status=config('config.order_status');
+  
+    }
     //个人中心
     public function steward()
     {   
@@ -91,7 +99,7 @@ class Personal extends Base
         $tol=($page-1)*$limit;
         $dataM =new dataM;
        
-        $list = $dataM->place_order($member_code,$tol,$limit,array(404,505),$order_num);
+        $list = $dataM->place_order($member_code,$tol,$limit,array($this->order_status['stop'],$this->order_status['cancel']),$order_num);
         $count =  count($list); 
         $this->view->assign('order_num',$order_num);
         $this->view->assign('page',$page); 
@@ -236,9 +244,9 @@ class Personal extends Base
         $container_code =$data['container_code'];//
         $seal =$data['seal']; 
         //查询数据库的状态和柜子数量
-        $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('container_sum,status')->find();
+        $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('container_sum,status,container_status')->find();
 
-        if($sqlData['status']>4 && !($sqlData['status']==505||$sqlData['status']==404) ){
+        if($sqlData['container_status']==1 ){
             return  json(array('status'=>0,'message'=>'不可再录入柜号'));
         }
         $response =[];
@@ -247,26 +255,33 @@ class Personal extends Base
         for($i=0;$i<count($container_code);$i++){
             //如果为空就跳过此次循环
             if(empty($container_code[$i]) || empty($seal[$i])){
-                continue;
-            }else{
-                $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'id'=>$data_id[$i]])
-                    ->update([ 'container_code'=>$container_code[$i],'seal'=>$seal[$i] ,'mtime'=>$mtime]);
-                $res? $response['success'][]='录入成功':$response['fail'][]='录入失败'.$container_code[$i];
+                continue; 
             }
-
+            $res =Db::name('order_truckage')->where(['order_num'=>$order_num,'id'=>$data_id[$i]])
+                    ->update([ 'container_code'=>$container_code[$i],'seal'=>$seal[$i] ,'mtime'=>$mtime]);
+            $res? $response['success'][]='录入成功':$response['fail'][]='录入失败'.$container_code[$i];
         }
-         //$this->_p($response);exit;
+        //如果为空说明没有执行修改
+        if(empty($response)){
+            $status = array('status'=>0,'message'=>'请填写柜号封条号');
+            return $status; 
+        } 
         if(array_key_exists('fail', $response)){
 			    $message_code =implode('-',$response['fail']);
                 $status = array('status'=>0,'message'=>'报柜号失败'.$message_code);
         }  else {
                 $status = array('status'=>1,'message'=>'报柜号成功'); 
-                //提交的柜号和封条号和订单的总柜子数量对应的上，订单就修改报柜号完毕
+                //提交的柜号和封条号和订单的总柜子数量对应的上，
+                //订单就修改报柜号完毕
+                //修改账单和订单的状态
                 if(count(array_filter($seal))==$sqlData['container_sum']){
-                    $res3 =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>9,'container_status'=>1]);
-                    $res3 ? $status = array('status'=>2,'message'=>'柜号封条号全部录完成功不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
+                    $res3 =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$this->order_status['sea_waybill'],'container_status'=>1]);
+                    $res4 =Db::name('order_bill')->where('order_num',$order_num)->update(['status'=>$this->order_status['sea_waybill'],'container_status'=>1]);
+                    if($res && $res4){$res_arr =TRUE ;}else{$res_arr =FALSE ;}
+                    $res_arr ? $status = array('status'=>2,'message'=>'柜号封条号全部录完成功不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
                 }
             }
+          
         return $status;    
     }
 

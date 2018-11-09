@@ -16,72 +16,59 @@ class BulkData extends Base{
         return $this->view->fetch('excel/price_route_excel');
     }
     
-    //港到港数据导入
-    public function insert_excel()
-    {
-    	Loader::import('PHPExcel.Classes.PHPExcel');
-        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');
-        Loader::import('PHPExcel.Classes.PHPExcel.Reader.Excel5');
-        $PHPExcel = new \PHPExcel();
-        //获取表单上传文件
+    function import_excel(){
         $file = request()->file('excel');
- 
-        // echo function_exists($connect->validate);die;
-        $info = $file->validate(['size'=>15678,'ext'=>'xlsx,xls,csv'])->move(ROOT_PATH . 'public' . DS . 'excel');
-        if ($info) {
-            $exclePath = $info->getSaveName();
-              //获取文件名
-            $file_name = ROOT_PATH . 'public' . DS . 'excel' . DS . $exclePath;
-               //上传文件的地址
-            $objReader =\PHPExcel_IOFactory::createReader('Excel2007');
-            $obj_PHPExcel =$objReader->load($file_name, $encode = 'utf-8');
-              //加载文件内容,编码utf-8
-            $excel_array=$obj_PHPExcel->getsheet(0)->toArray();
-            $this->_p($excel_array);die;
-               //转换为数组格式
-            array_shift($excel_array);
-              //删除第一个数组(标题);
-            $city = [];
-            $error_infos = [];
-            $login_info = [];
-            $i=0;
-            // $j=2;
-            foreach($excel_array as $k=>$v) {
-				
-                $sn = Db::name('agent')->where('agent_sn',$v[0])->find();
-                if ($sn) {
-                	$j = $k+2;
-                	$error_infos[$k] = "第{$j}条代理商编号已存在";
-                	$i++;
-                	continue;
-                }
-				$city[$k]['agent_sn'] 		= $v[0];
-                $city[$k]['agent_name'] 	= $v[1];
-                $city[$k]['agent_phone'] 	= $v[2];
-                $city[$k]['agent_fuzearea'] = $v[3];                
-                $city[$k]['root_id'] 		= $v[4];
-                $city[$k]['agent_member'] 	= $v[5];
-                $city[$k]['agent_event'] 	= $v[6];
-                $city[$k]['agent_areainfo'] = $v[7];
-                               
-                $i++;
-            }
-            // print_r($city);die;
-            $success = Db::name('agent')->insertAll($city);		
-            $error=$i-$success;  
-            $error_infos['msg'] = "总{$i}条，成功{$success}条，失败{$error}条。";
- 
-            if ($i>0 && $res2>0) {
-            	return $this->ok(205,"xc",$error_infos);
-            }else{
-            	return $this->no(300,'导入失败');
-            }
-             //批量插入数据
-        } else {
-            echo $file->getError();
+        $info = $file->validate(['size'=>15678,'ext'=>'xlsx,xls'])
+               ->move(ROOT_PATH . 'public' . DS . 'uploads'. DS .'excel');
+        if(!$info){
+            return '上传错误'.$file->getError();
         }
+
+        $type =$info->getExtension(); 
+        /** 实例化 */
+        Loader::import('PHPExcel.Classes.PHPExcel'); //手动引入PHPExcel.php
+        Loader::import('PHPExcel.Classes.PHPExcel.IOFactory.PHPExcel_IOFactory');//引入IOFactory.php 文件里面的PHPExcel_IOFactory这个类
+        Loader::import('PHPExcel.Classes.PHPExcel.PHPExcel_Style_Alignment');//引入IOFactory.php 文件里面的PHPExcel_IOFactory这个类
+        
+        if ($type=='xlsx') { 
+            $type='Excel2007'; 
+        }elseif($type=='xls') { 
+            $type = 'Excel5'; 
+        } 
+        ini_set('max_execution_time', '0');
+//        Vendor('PHPExcel.PHPExcel');
+        $objReader = \PHPExcel_IOFactory::createReader($type);//判断使用哪种格式
+        $objReader ->setReadDataOnly(true); //只读取数据,会智能忽略所有空白行,这点很重要！！！
+        $file_path= ROOT_PATH . 'public' . DS . 'uploads'. DS .'excel'. DS .$info->getSaveName();
+        $objPHPExcel = $objReader->load($file_path); //加载Excel文件
+        $sheetCount = $objPHPExcel->getSheetCount();//获取sheet工作表总个数
+        $rowData = array();
+        $RowNum = 0;
+        /*读取表格数据*/
+        for($i =0;$i <= $sheetCount-1;$i++){//循环sheet工作表的总个数
+            $sheet = $objPHPExcel->getSheet($i);
+            $highestRow = $sheet->getHighestRow();
+            $RowNum += $highestRow-1;//计算所有sheet的总行数
+            $highestColumn = $sheet->getHighestColumn();
+            //从第$i个sheet的第1行开始获取数据
+            for($row = 1;$row <= $highestRow;$row++){
+                //把每个sheet作为一个新的数组元素 键名以sheet的索引命名 利于后期数组的提取
+                $rowData[$i][] = array($sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE));
+            }
+        }
+//        /*删除每行表头数据*/
+//        foreach($rowData as $k=>$v){
+//            array_shift($rowData[$k]);
+//        }
+        echo '<pre>';
+        print_r($rowData);//打印结果
+        echo '</pre>';       
+             echo '--------';  
+        $this->_v($RowNum);$this->_v($rowData);
+//        return array("RowNum" => $RowNum,"Excel_Data" => $rowData);
     }
 
+    
 
     /**
      * @creator Jimmy
@@ -133,13 +120,6 @@ class BulkData extends Base{
                 }
             }
         }
-        
-        
-//            ob_end_clean();//清除缓冲区,避免乱码    
-//        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-//        header('Content-Disposition: attachment;filename="航线批量操作.xlsx"');
-//        header('Cache-Control: max-age=0');
-//        $objWriter->save('php://output');
 
         /** 设置第一个工作表为活动工作表 */
         $objPHPExcel->setactivesheetindex(0);
@@ -182,34 +162,14 @@ class BulkData extends Base{
         }
         //船公司id数组
         $ship_id_arr= array_filter(array_keys($sea_price_arr));
-        
-//        $this->_p($sea_price_arr);exit;
-        array_shift($sea_price_arr);
-        array_shift($sea_price_arr);
-
         //生成航运价格excel
         $expTitle ='海运价格明细'; 
-        $expCellName = array_values($sea_price_arr);
-        $expCellName = array_keys($expCellName['0']['0']);
+        $expTableData = array_values($sea_price_arr);
+        $expCellName = array_keys($expTableData['0']['0']);
         $tableHeader= $sea_price_head;
         $sheetName =Db::name('shipcompany')->where('id','in',$ship_id_arr)->order('id')->column('ship_short_name') ;
-//          $this->_p($expTableData);   $this->_p($sheetName);exit;
-        $this->exportExcel($expTitle, $expCellName, $sea_price_arr, $sheetName,$tableHeader)   ;  
- 
-        $boat_head =array('ID','船公司ID','船名','航次');
-        $boat_arr=[];   //船舶分组
-        $boat_lists= Db::name('boat')->field('id,boat_name,boat_code,ship_id')->where('status',1)->select();
-        foreach ($boat_lists as $boat_list) {
-            $key =$boat_list['ship_id'];
-            $boat_arr[$key][] =$boat_list;
-        }
-        //船舶对应的船公司id数组
-        $boat_ship_id_arr= array_filter(array_keys($boat_arr));
-        $boat_expCellName =array('id','boat_name','boat_code','ship_id');
-        $boat_expTableData = array_values($boat_arr);
-        $boat_sheetName = Db::name('shipcompany')->where('id','in',$boat_ship_id_arr)->order('id')->column('ship_short_name') ;
-//        $this->_p($boat_expTableData);$this->_p($boat_sheetName);exit;
-        $this->exportExcel('船公司对应船舶明细', $boat_expCellName,$boat_expTableData,$boat_sheetName,$boat_head); 
+        $expTableData = array_values($sea_price_arr);
+        $this->exportExcel($expTitle, $expCellName, $expTableData, $sheetName,$tableHeader)   ;  
 
     }
     //船舶导出excl
