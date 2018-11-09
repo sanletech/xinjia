@@ -146,6 +146,7 @@ class OrderPort extends Model
                 if($freeContainerR >0){
                     $nextI= $i+1;
                     $tmp[$nextI]= array_fill_keys(array_keys($tmp[$i]),'');
+                    $tmp[$nextI]['order_num'] = $order_num;  
                     $tmp[$nextI]['state']=1;
                     $tmp[$nextI]['type']=$type;
                     $tmp[$nextI]['num']=$freeContainerR;

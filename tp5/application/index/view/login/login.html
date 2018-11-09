@@ -66,6 +66,12 @@
         })
     })
 
+    $('input').keyup(function(e){//确定键登陆
+        if (e.which == 13) {
+            $('#loginbtn').click();
+        }
+    })
+
     if (window.top != window) {
         window.top.location.href = window.location.href;
     }
