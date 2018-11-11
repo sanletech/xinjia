@@ -49,25 +49,77 @@ class BulkData extends Base{
             $sheet = $objPHPExcel->getSheet($i);
             $highestRow = $sheet->getHighestRow();
             $RowNum += $highestRow-1;//计算所有sheet的总行数
-            $highestColumn = $sheet->getHighestColumn();
+            $highestColumn = $sheet->getHighestColumn();//总列数
             //从第$i个sheet的第1行开始获取数据
             for($row = 1;$row <= $highestRow;$row++){
                 //把每个sheet作为一个新的数组元素 键名以sheet的索引命名 利于后期数组的提取
-                $rowData[$i][] = array($sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE));
+            $rowData[$i][] = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+          
             }
         }
-//        /*删除每行表头数据*/
-//        foreach($rowData as $k=>$v){
-//            array_shift($rowData[$k]);
-//        }
+        /*删除每行表头数据 整理成二维数组*/
+        $temp=[];
+        foreach($rowData as $k=>$v){
+            $temp[$k] =array_column($v,0);
+            array_shift($temp[$k]);
+        }
+        
         echo '<pre>';
-        print_r($rowData);//打印结果
+        print_r($temp);//打印结果
         echo '</pre>';       
-             echo '--------';  
-        $this->_v($RowNum);$this->_v($rowData);
+           echo '--------</br>';
+       // $this->_v($RowNum);echo '--------</br>'; $this->_v($rowData);
 //        return array("RowNum" => $RowNum,"Excel_Data" => $rowData);
     }
 
+    //处理excel的数据到数据里
+    public function seaprice_excel($rowData) {
+        $tmp = [];
+        $mtime = date('y-m-d H:i:s');//当前时间
+        //前后三天
+        $before_mtime= date('y-m-d H:i:s',  strtotime($mtime.'-1day'));
+        $after_mtime= date('y-m-d H:i:s',  strtotime($mtime.'+1day'));      
+        $response=[];
+        $sheet_title =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name','id');
+        foreach ($rowData as $sheets) {
+            //循环每个sheet
+            foreach ($sheets as $key=> $rows) {
+                //新的航线运价需要1=>船公司id,3=>航线id, 
+                //7=>20GP,40HQ海运费,船期,截单时间,海上时效,预计到港时间,13=>预计送货时间,
+                //15=>船舶ID,18=>是否推荐,19=>价格说明
+                $tmp['ship_id']=$rows['1'];
+                $tmp['route_id']=$rows['3'];
+                $tmp['boat_id']=$rows['15'];
+                $tmp['price_20GP']=$rows['7'];
+                $tmp['price_40HQ']=$rows['8'];
+                $tmp['shipping_date']=$rows['9'];
+                $tmp['cutoff_date']=$rows['10'];
+                $tmp['sea_limitation']=$rows['11'];
+                $tmp['generalize']=$rows['18'];
+                $tmp['price_description']=$rows['18'];
+                $tmp['mtime']=$mtime;
+                $tmp['ETA']=$rows['12'];
+                $tmp['EDD']=$rows['13'];
+                //先查询是否有重复再数据库里
+                $sqlLogs =[];
+                $map= array_slice($tmp,0,3);
+                $select_res = Db::name('seaprice')->where($map)
+                    ->whereTime('mtime','between',[$before_mtime,$after_mtime])
+                    ->limit(1)->value('id');
+                if(!$res){
+                    $insert_res=Db::name('seaprice')->inset($tmp);
+                }  else {
+                    $sqlLogs =['status'=>0,'message'=>'存在重复航线','ID'=>''];
+                }
+               
+               
+            }
+            
+            
+        }
+        
+    }
+    
     
 
     /**
@@ -148,7 +200,7 @@ class BulkData extends Base{
                . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
              . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,"
                . " SP.boat_id,B.boat_name,B.boat_code,SP.generalize,price_description")
-                ->order('SP.ship_id,SP.mtime DESC')->where('SP.status',1)->group('SP.route_id,SP.ship_id')->select();
+                ->order('SP.ship_id')->where('SP.status',1)->group('SP.route_id,SP.ship_id')->select();
         $sea_price_arr = []; //海运价格分组
         $sea_price_head =array('ID','船公司ID','船公司','航线ID','起运港','目的港',
             '中间港口','20GP海运费','40HQ海运费','船期','截单时间','海上时效',
