@@ -7,10 +7,15 @@ use app\admin\common\Base;
 use think\Request;
 use think\Loader;
 use think\Db;
+use think\Validate;
+use think\Debug;
 use app\admin\model\ExportExcelDroplist;
 
 class BulkData extends Base{
  
+
+    
+    
     //港到港批量导入页面
     public function price_route_excel(){
         return $this->view->fetch('excel/price_route_excel');
@@ -38,7 +43,8 @@ class BulkData extends Base{
         ini_set('max_execution_time', '0');
 //        Vendor('PHPExcel.PHPExcel');
         $objReader = \PHPExcel_IOFactory::createReader($type);//判断使用哪种格式
-        $objReader ->setReadDataOnly(true); //只读取数据,会智能忽略所有空白行,这点很重要！！！
+        Debug::remark('begin');
+        $objReader ->setReadDataOnly(true); //只读取数据,会智能忽略所有空白行,这点很重要！！！设置为true 会快很多
         $file_path= ROOT_PATH . 'public' . DS . 'uploads'. DS .'excel'. DS .$info->getSaveName();
         $objPHPExcel = $objReader->load($file_path); //加载Excel文件
         $sheetCount = $objPHPExcel->getSheetCount();//获取sheet工作表总个数
@@ -53,10 +59,12 @@ class BulkData extends Base{
             //从第$i个sheet的第1行开始获取数据
             for($row = 1;$row <= $highestRow;$row++){
                 //把每个sheet作为一个新的数组元素 键名以sheet的索引命名 利于后期数组的提取
-            $rowData[$i][] = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
+            $rowData[$i][] = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL, TRUE, FALSE);
           
             }
         }
+        Debug::remark('end');
+       
         /*删除每行表头数据 整理成二维数组*/
         $temp=[];
         foreach($rowData as $k=>$v){
@@ -67,7 +75,11 @@ class BulkData extends Base{
         echo '<pre>';
         print_r($temp);//打印结果
         echo '</pre>';       
-           echo '--------</br>';
+        echo '--------</br>';
+        echo Debug::getRangeTime('begin','end',6).'s';
+        echo Debug::getRangeMem('begin','end').'kb';
+        $this->seaprice_excel($temp);
+         
        // $this->_v($RowNum);echo '--------</br>'; $this->_v($rowData);
 //        return array("RowNum" => $RowNum,"Excel_Data" => $rowData);
     }
@@ -80,10 +92,12 @@ class BulkData extends Base{
         $before_mtime= date('y-m-d H:i:s',  strtotime($mtime.'-1day'));
         $after_mtime= date('y-m-d H:i:s',  strtotime($mtime.'+1day'));      
         $response=[];
-        $sheet_title =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name','id');
-        foreach ($rowData as $sheets) {
+        $sheet_title =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name');
+        //设置数据验证
+     
+        foreach ($rowData as $key=>$sheets) {
             //循环每个sheet
-            foreach ($sheets as $key=> $rows) {
+            foreach ($sheets as $k=> $rows) {
                 //新的航线运价需要1=>船公司id,3=>航线id, 
                 //7=>20GP,40HQ海运费,船期,截单时间,海上时效,预计到港时间,13=>预计送货时间,
                 //15=>船舶ID,18=>是否推荐,19=>价格说明
@@ -92,24 +106,35 @@ class BulkData extends Base{
                 $tmp['boat_id']=$rows['15'];
                 $tmp['price_20GP']=$rows['7'];
                 $tmp['price_40HQ']=$rows['8'];
-                $tmp['shipping_date']=$rows['9'];
-                $tmp['cutoff_date']=$rows['10'];
+                $tmp['shipping_date'] = date('Y-m-d H:i:s',strtotime($rows['9']));
+                $tmp['cutoff_date']=date('Y-m-d H:i:s',strtotime($rows['10']));
                 $tmp['sea_limitation']=$rows['11'];
                 $tmp['generalize']=$rows['18'];
                 $tmp['price_description']=$rows['18'];
                 $tmp['mtime']=$mtime;
                 $tmp['ETA']=$rows['12'];
                 $tmp['EDD']=$rows['13'];
+                $this->_p($tmp);
+               //验证数据的类型是否符合
+                $result = $this->validate($tmp,'BulkData');
+                if(true !== $result){
+                    // 验证失败 输出错误信息
+                   dump($result);exit;
+                }
+
+
                 //先查询是否有重复再数据库里
                 $sqlLogs =[];
                 $map= array_slice($tmp,0,3);
                 $select_res = Db::name('seaprice')->where($map)
                     ->whereTime('mtime','between',[$before_mtime,$after_mtime])
                     ->limit(1)->value('id');
-                if(!$res){
-                    $insert_res=Db::name('seaprice')->inset($tmp);
+                if(!$select_res){
+                    $insert_res = Db::name('seaprice')->insert($tmp);
+                    $insert_res ?TRUE:$sqlLogs[] =['status'=>2,'message'=>'添加失败','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>''];
                 }  else {
-                    $sqlLogs =['status'=>0,'message'=>'存在重复航线','ID'=>''];
+                    //记录那个sheet 那一行报错(表头+1)
+                    $sqlLogs[] =['status'=>1,'message'=>'存在重复航线','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>$select_res];
                 }
                
                
