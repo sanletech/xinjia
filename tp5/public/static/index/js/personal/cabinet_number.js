@@ -61,7 +61,7 @@ if ($('.fukuan').html() == '未付款') {
 }
 var huo = $('.goods a');//货物状态
 var st = $('.caozuo a');//订单状态
-var tj = $('.tj_gh a');//提交柜号
+var tj = $('.tj_gh');//提交柜号
 
 for (let i = 0; i < huo.length; i++) {
     if(huo.eq(i).html() == 'lock'){
@@ -79,8 +79,8 @@ for (let i = 0; i < huo.length; i++) {
         // huo.eq(i).css('background-color','#C9C9C9');
     }
     
-    if (st.eq(i).html() == '进行中') {
-        tj.eq(i).css('background-color','#FF2400');        
+    if (st.eq(i).html() == '进行中') {        
+        tj.eq(i).find('a').css('background-color','#FF2400');        
     }else if(st.eq(i).html() == '已取消'){
         st.eq(i).parent('td').siblings('.fukuan').css('color','#C9C9C9');
         st.eq(i).parent('td').siblings('.ddh').find('a').css('color','#C9C9C9')        
@@ -98,8 +98,10 @@ $('.goods a').click(function(){
             ,btn:['申请放货','取消']
             ,content: $('#state_goods')
             ,yes:function (index, layero) {
-                $.get(apply_cargo_url,{'order_num':order_num},function(data){
-                    if(data.status){
+                $.get(apply_cargo_url,{'order_num':order_num},function(res){
+                    console.log(res);
+                    
+                    if(res.status){
                         // alert('申请成功');
                         layui.layer.msg('申请成功',{icon: 2,time: 500},function(){
                             layer.close(index);
@@ -107,7 +109,7 @@ $('.goods a').click(function(){
                         location.reload();
                     }else{
                         // alert('申请失败');
-                        layui.layer.msg('申请成功',{icon: 2,time: 1000});
+                        layui.layer.msg('申请失败',{icon: 2,time: 1000});
                     }
                     
                 });
