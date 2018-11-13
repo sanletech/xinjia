@@ -22,7 +22,7 @@ class BulkData extends Base{
     }
     //查看日志页面
     public function logs () {
-        $dir =  ROOT_PATH . 'public' . DS . 'uploads'. DS . 'logs';  //要获取的目录
+        $dir =  ROOT_PATH . 'public' . DS . 'uploads'. DS . 'logs'. DS ;  //要获取的目录
         echo "********** 获取目录下所有文件和文件夹 ***********<hr/>";
         //先判断指定的路径是不是一个文件夹
         if (is_dir($dir)){
@@ -32,11 +32,36 @@ class BulkData extends Base{
                     $filePath = $dir.$file;
                     //获取文件修改时间
                     $fmt = filemtime($filePath);
-                    echo "<span style='color:#666'>(".date("Y-m-d H:i:s",$fmt).")</span> ".$filePath."<br/>";
+                    echo "<span style='color:#666'>(".date("Y-m-d H:i:s",$fmt).")</span><a href='".url('admin/BulkData/logsDown',"log=$file")."'> ".$file."</a><br/>";
                 }
                 closedir($dh);
             }
         }
+
+    }
+    public function logsDown() {
+            $logs_name = $this->request->param('log');    //下载文件名 
+            $file_dir = ROOT_PATH . 'public' . DS . 'uploads/logs';        //下载文件存放目录    
+            //检查文件是否存在    
+//            var_dump($file_dir .DS. $file_name);exit;
+            if (! file_exists ($file_dir .DS. $logs_name)) {    
+                echo "文件找不到";    
+                exit ();    
+            } else {    
+                //打开文件
+//                var_dump($file_dir .DS. $file_name);
+                $file = fopen ($file_dir .DS. $logs_name, "r" );    
+                //输入文件标签     
+                Header ( "Content-type: application/octet-stream" );    
+                Header ( "Accept-Ranges: bytes" );    
+                Header ( "Accept-Length: " . filesize ($file_dir .DS. $logs_name) );    
+                Header ( "Content-Disposition: attachment; filename=" . $logs_name );    
+                //输出文件内容     
+                //读取文件内容并直接输出到浏览器    
+                echo fread ( $file, filesize ($file_dir .DS. $logs_name) );    
+                fclose ( $file );    
+                exit ();    
+            }      
     }
     
     
@@ -118,14 +143,14 @@ class BulkData extends Base{
                 $tmp['boat_id']=$rows['15'];
                 $tmp['price_20GP']=$rows['7'];
                 $tmp['price_40HQ']=$rows['8'];
-                $tmp['shipping_date'] = date('Y-m-d H:i:s',strtotime($rows['9']));
-                $tmp['cutoff_date']=date('Y-m-d H:i:s',strtotime($rows['10']));
+                $tmp['shipping_date'] = date('Y-m-d',(($rows['9']-25569)* 24*60*60) );
+                $tmp['cutoff_date']= date('Y-m-d', (($rows['10']-25569)* 24*60*60) );
                 $tmp['sea_limitation']=$rows['11'];
                 $tmp['generalize']=$rows['18'];
                 $tmp['price_description']=$rows['18'];
                 $tmp['mtime']=$mtime;
-                $tmp['ETA']=$rows['12'];
-                $tmp['EDD']=$rows['13'];
+                $tmp['ETA'] = date('Y-m-d',(($rows['12']-25569)* 24*60*60) );
+                $tmp['EDD'] = date('Y-m-d',(($rows['13']-25569)* 24*60*60) );
 //                $this->_p($tmp);
                //验证数据的类型是否符合
                 $result = $this->validate($tmp,'BulkData');

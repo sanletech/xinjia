@@ -286,15 +286,20 @@ class Personal extends Base
     }
 
 
-
-
     public function downs(){  
-        $order_name = $this->request->param('order_num');    //下载文件名  
+        $order_name = $this->request->only('order_num');    //下载文件名  
         $type = $this->request->param('type'); //文件类型
         $member_code = Session::get('member_code','think');
-        $data = Db::name('order_port')->where('order_num',$order_name)->field($type.',member_code')->find();
+        $data = Db::name('order_port')->where('order_num',$order_name)->field($type.',member_code,container_buckle')->find();
+        if(empty($data)){
+            echo '无此订单';exit; 
+        }
+        //判断下载的用户是否与登录帐号一致, 扣货状态是否通过
         if($data['member_code']!==$member_code){
             echo"无权限下载";exit;
+        }
+        if($data['container_buckle']!=='unlock'){
+            echo"没有通过扣货申请";exit;
         }
         $file =$data[$type];
      //   var_dump($file);

@@ -113,6 +113,7 @@ class Financial extends Base
         $date_end = $this->request->param('date_end',date('y-m-d H:i:s'));
         $date_end=$date_end ?$date_end :date('y-m-d H:i:s');
         $container_buckle = $this->request->param('container_buckle','apply','strval');
+        if($container_buckle=='all'){$container_buckle ='not null'; }
         // var_dump($container_buckle);exit;
         $money_status = $this->request->param('money_status',2,'intval');
         if($money_status == 2){
