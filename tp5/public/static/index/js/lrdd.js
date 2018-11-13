@@ -407,9 +407,17 @@ input_a();
 function input_a() {
   var i = 0;
   $('.biaoge input').bind('input propertychange', function () {//监听发货表格
-    var $this = $(this);    
+    var $this = $(this);
+    var bl = $this.val();
     var text_length = $this.val().length;//获取当前文本框的长度
-    var current_width = parseInt(text_length) * 11;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度
+    var current_width = 0;
+    // if ($this.val().match( /^[\u4E00-\u9FA5]{1,}$/g)) {判断是不是中文}       
+      if (Number(bl)) {        
+        current_width = parseInt(text_length) * 7;
+      }else{
+        current_width = parseInt(text_length) * 13;
+      }
+    //var current_width = parseInt(text_length) * 13;//该16是改变前的宽度除以当前字符串的长度,算出每个字符的长度    
     $this.css("width", current_width + "px");
     let shu = 0;//装货数量
     let fa = 0;//发货数量
@@ -483,33 +491,51 @@ function dele(zj) {//删除当前装货或者送货
   $(zj).parents('tr').remove();
   st();//重新计算价格 方法在plce_order.js
 }
-
+var  bootble = true;
 //第一次 下单
 $('.tjiao').eq(0).find('.shi').click(function(){
-  $('.tjiao').eq(0).hide();
-  $('.lc,.wt1,.dd_nei .layui-form').hide();
-  $('.tjiao').eq(1).show();
-  $('.lche,.fuwu').show();
-  $('input').css('border','0').attr('readonly',true);
-  $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
-  $('.select').css('border','0');
-  // $("select").each(function () {
-  //   $(this).attr("disabled","disabled");
-  // });
-  // $("html,body").animate({scrollTop:100}, 500);
-  // console.log(window.location.port);
-  layer.open({
-    type:1
-    ,title: '确认信息'
-    ,content: $('#order_data_form')
-    ,offset: 't'
-    ,area:['80%','100%']
-    ,shadeClose:true
-    ,end: function(index, layero){
-      layer.close(index);
-      $('.tjiao').eq(1).find('.qu').click();
-    }
-  });
+  let huo = $.trim($('input[name="cargo"]').val());
+  // bootble = huo?true:false;
+  if (huo) {
+    $('.er .in').each(function () {
+      if (!$(this).val()) {
+        bootble == false;
+        layui.layer.msg('委托信息不完整',{icon: 2,time: 1000});
+        return false;
+      }else{
+        bootble = true;
+      }
+    })
+  }else{
+    layui.layer.msg('请输入货名',{icon: 2,time: 1000});
+    bootble = false;
+  }
+  if (bootble) {//判断信息输入完整
+    $('.tjiao').eq(0).hide();
+    $('.lc,.wt1,.dd_nei .layui-form').hide();
+    $('.tjiao').eq(1).show();
+    $('.lche,.fuwu').show();
+    $('input').css('border','0').attr('readonly',true);
+    $('.er .layui-form-checkbox[lay-skin=primary] i').hide();
+    $('.select').css('border','0');
+    // $("select").each(function () {
+    //   $(this).attr("disabled","disabled");
+    // });
+    // $("html,body").animate({scrollTop:100}, 500);
+    // console.log(window.location.port);
+    layer.open({
+      type:1
+      ,title: '确认信息'
+      ,content: $('#order_data_form')
+      ,offset: 't'
+      ,area:['80%','100%']
+      ,shadeClose:true
+      ,end: function(index, layero){
+        layer.close(index);
+        $('.tjiao').eq(1).find('.qu').click();
+      }
+    });
+  }
   
 })
 

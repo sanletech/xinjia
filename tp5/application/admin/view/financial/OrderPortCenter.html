@@ -65,10 +65,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label"></label>
         <div class="layui-inline">
-        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="all" title="全部" checked="">
-        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="apply" title="审核中" checked="">
         <input type="radio" lay-filter="container_buckle" name="container_buckle" value="lock" title="扣货">
         <input type="radio" lay-filter="container_buckle" name="container_buckle" value="unlock" title="已放货">
+        <input type="radio" lay-filter="container_buckle" name="container_buckle" value="all" title="全部">
         </div>
 
         <div style="margin-right: 130px; display: inline-block;"></div>
@@ -251,7 +251,9 @@ $('.cha').click(function(){
 function pand($){
     let huo = $('.goods').html();        
         $('.goods').click(function(){
-          let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').html();   
+          let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').find('a').html();
+          console.log(order_num);
+          
           $('.order_num1').html('订单号：'+order_num); 
           let bo = $('#shenqi input').val();
           if($(this).html() == '申请放货'){
@@ -278,17 +280,13 @@ function pand($){
                       }
                   });
               },btn2:function (index) {
-                  $.get(appley_cargo_url,{'order_num':order_num,'comment':bo,'type':'fail'},function(data){
+                  $.post(appley_cargo_url,{'order_num':order_num,'comment':bo,'type':'fail'},function(data){
                       if(data.status){
                         layui.layer.msg('驳回成功', {icon: 1,time: 1000},function(){
                           layer.close(index);
                           location.reload();
                         });
-                          // layer.close(index);
-                          // alert('驳回失败');
-                          // location.reload();
                       }else{
-                          // alert('驳回失败');
                           layui.layer.msg('驳回失败', {icon: 2,time: 1000});
                       }
                   });
@@ -301,8 +299,8 @@ function pand($){
         $('.fukuan').click(function () {
           let thi = $(this);
          if($(this).html() == '未付款'){
-          let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').html();   
-          let money = $('input:radio[name="money"]:checked').val()
+          let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').find('a').html();   
+          let money = $('input:radio[name="money"]:checked').val();
           layer.open({
             type: 1,
             title: '是否付款',

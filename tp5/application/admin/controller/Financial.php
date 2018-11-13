@@ -84,6 +84,7 @@ class Financial extends Base
     { 
        if (request()->isAjax()){
             $data =$this->request->param();
+            // var_dump($data);exit;
             $type =$data['type'];
             $order_num =$data['order_num'];
             $comment =$data['comment'];
