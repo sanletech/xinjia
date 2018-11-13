@@ -20,6 +20,50 @@ class BulkData extends Base{
     public function price_route_excel(){
         return $this->view->fetch('excel/price_route_excel');
     }
+    //查看日志页面
+    public function logs () {
+        $dir =  ROOT_PATH . 'public' . DS . 'uploads'. DS . 'logs'. DS ;  //要获取的目录
+        echo "********** 获取目录下所有文件和文件夹 ***********<hr/>";
+        //先判断指定的路径是不是一个文件夹
+        if (is_dir($dir)){
+            if ($dh = opendir($dir)){
+                while (($file = readdir($dh))!= false){
+                    //文件名的全路径 包含文件名
+                    $filePath = $dir.$file;
+                    //获取文件修改时间
+                    $fmt = filemtime($filePath);
+                    echo "<span style='color:#666'>(".date("Y-m-d H:i:s",$fmt).")</span><a href='".url('admin/BulkData/logsDown',"log=$file")."'> ".$file."</a><br/>";
+                }
+                closedir($dh);
+            }
+        }
+
+    }
+    public function logsDown() {
+            $logs_name = $this->request->param('log');    //下载文件名 
+            $file_dir = ROOT_PATH . 'public' . DS . 'uploads/logs';        //下载文件存放目录    
+            //检查文件是否存在    
+//            var_dump($file_dir .DS. $file_name);exit;
+            if (! file_exists ($file_dir .DS. $logs_name)) {    
+                echo "文件找不到";    
+                exit ();    
+            } else {    
+                //打开文件
+//                var_dump($file_dir .DS. $file_name);
+                $file = fopen ($file_dir .DS. $logs_name, "r" );    
+                //输入文件标签     
+                Header ( "Content-type: application/octet-stream" );    
+                Header ( "Accept-Ranges: bytes" );    
+                Header ( "Accept-Length: " . filesize ($file_dir .DS. $logs_name) );    
+                Header ( "Content-Disposition: attachment; filename=" . $logs_name );    
+                //输出文件内容     
+                //读取文件内容并直接输出到浏览器    
+                echo fread ( $file, filesize ($file_dir .DS. $logs_name) );    
+                fclose ( $file );    
+                exit ();    
+            }      
+    }
+    
     
     function import_excel(){
         $file = request()->file('excel');
@@ -63,7 +107,6 @@ class BulkData extends Base{
           
             }
         }
-        Debug::remark('end');
        
         /*删除每行表头数据 整理成二维数组*/
         $temp=[];
@@ -72,16 +115,10 @@ class BulkData extends Base{
             array_shift($temp[$k]);
         }
         
-        echo '<pre>';
-        print_r($temp);//打印结果
-        echo '</pre>';       
-        echo '--------</br>';
-        echo Debug::getRangeTime('begin','end',6).'s';
-        echo Debug::getRangeMem('begin','end').'kb';
+     //  $this->_p($temp);//打印结果
         $this->seaprice_excel($temp);
          
-       // $this->_v($RowNum);echo '--------</br>'; $this->_v($rowData);
-//        return array("RowNum" => $RowNum,"Excel_Data" => $rowData);
+
     }
 
     //处理excel的数据到数据里
@@ -94,7 +131,7 @@ class BulkData extends Base{
         $response=[];
         $sheet_title =Db::name('shipcompany')->where('status',1)->order('id')->column('ship_short_name');
         //设置数据验证
-     
+       $sqlLogs =[];//日志记录
         foreach ($rowData as $key=>$sheets) {
             //循环每个sheet
             foreach ($sheets as $k=> $rows) {
@@ -106,42 +143,57 @@ class BulkData extends Base{
                 $tmp['boat_id']=$rows['15'];
                 $tmp['price_20GP']=$rows['7'];
                 $tmp['price_40HQ']=$rows['8'];
-                $tmp['shipping_date'] = date('Y-m-d H:i:s',strtotime($rows['9']));
-                $tmp['cutoff_date']=date('Y-m-d H:i:s',strtotime($rows['10']));
+                $tmp['shipping_date'] = date('Y-m-d',(($rows['9']-25569)* 24*60*60) );
+                $tmp['cutoff_date']= date('Y-m-d', (($rows['10']-25569)* 24*60*60) );
                 $tmp['sea_limitation']=$rows['11'];
                 $tmp['generalize']=$rows['18'];
                 $tmp['price_description']=$rows['18'];
                 $tmp['mtime']=$mtime;
-                $tmp['ETA']=$rows['12'];
-                $tmp['EDD']=$rows['13'];
-                $this->_p($tmp);
+                $tmp['ETA'] = date('Y-m-d',(($rows['12']-25569)* 24*60*60) );
+                $tmp['EDD'] = date('Y-m-d',(($rows['13']-25569)* 24*60*60) );
+//                $this->_p($tmp);
                //验证数据的类型是否符合
                 $result = $this->validate($tmp,'BulkData');
                 if(true !== $result){
                     // 验证失败 输出错误信息
-                   dump($result);exit;
-                }
-
-
-                //先查询是否有重复再数据库里
-                $sqlLogs =[];
-                $map= array_slice($tmp,0,3);
-                $select_res = Db::name('seaprice')->where($map)
-                    ->whereTime('mtime','between',[$before_mtime,$after_mtime])
-                    ->limit(1)->value('id');
-                if(!$select_res){
-                    $insert_res = Db::name('seaprice')->insert($tmp);
-                    $insert_res ?TRUE:$sqlLogs[] =['status'=>2,'message'=>'添加失败','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>''];
+                   $sqlLogs[]=['status'=>3,'message'=>$result,'row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>''];
                 }  else {
-                    //记录那个sheet 那一行报错(表头+1)
-                    $sqlLogs[] =['status'=>1,'message'=>'存在重复航线','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>$select_res];
+                    //先查询是否有重复再数据库里
+                    $map= array_slice($tmp,0,3);
+                    $select_res = Db::name('seaprice')->where($map)
+                        ->whereTime('mtime','between',[$before_mtime,$after_mtime])
+                        ->limit(1)->value('id');
+                    if(!$select_res){
+                        $insert_res = Db::name('seaprice')->insert($tmp);
+                        $insert_res ?$sqlLogs[] =['status'=>0,'message'=>'添加成功','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>'']:$sqlLogs[] =['status'=>2,'message'=>'添加失败','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>''];
+                    }  else {
+                        //记录那个sheet 那一行报错(表头+1)
+                        $sqlLogs[] =['status'=>1,'message'=>'存在重复航线','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>$select_res];
+                    }
                 }
-               
-               
             }
-            
-            
         }
+//        $this->_p($sqlLogs);
+        //写进文件生成日志记录
+        $file_dir = ROOT_PATH . 'public' . DS . 'uploads'. DS . 'logs';        //文件存放目录
+        $filename =  date("YmdH").".txt";
+        if(!file_exists($file_dir.'DS'.$filename)){
+            array_unshift($sqlLogs,array('状态','错误信息','错误行数','数据库重复ID')); 
+        }  
+        $file_data = '';
+         for ($i=0;$i<count($sqlLogs);$i++) {
+            $file_data .= implode('---- ', $sqlLogs[$i])."\r\n";
+        }
+
+        $handle = fopen($file_dir.DS .$filename ,"a+");//写入文件
+        if(flock($handle,LOCK_EX)){
+            fwrite($handle, $file_data);
+            flock($handle,LOCK_UN);
+        }  else {
+           echo'不能同时批量录入数据';exit;    
+        }
+        fclose($handle);
+        echo'批量录入完成,具体情况请查看日志';
         
     }
     
