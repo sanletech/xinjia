@@ -1,0 +1,99 @@
+think\paginator\driver\Bootstrap Object
+(
+    [simple:protected] => 
+    [items:protected] => think\Collection Object
+        (
+            [items:protected] => Array
+                (
+                    [0] => Array
+                        (
+                            [id] => 9
+                            [name] => 客户第三方
+                            [create_time] => 0000-00-00 00:00:00
+                            [phone] => 10086
+                            [email] => aaa@qq.com
+                            [status] => 1
+                            [company] => 新闻公司
+                            [member_code] => kehu009
+                            [logintime] => 0000-00-00 00:00:00
+                            [type] => company
+                            [identification] => 2
+                            [file_path] => 
+                            [sales_name] => 马六
+                        )
+
+                    [1] => Array
+                        (
+                            [id] => 26
+                            [name] => 沈浩
+                            [create_time] => 2018-10-29 00:00:00
+                            [phone] => 18575288024
+                            [email] => 
+                            [status] => 1
+                            [company] => 海浪物流
+                            [member_code] => cshengle
+                            [logintime] => 0000-00-00 00:00:00
+                            [type] => company
+                            [identification] => 2
+                            [file_path] => 
+                            [sales_name] => 李四
+                        )
+
+                    [2] => Array
+                        (
+                            [id] => 26
+                            [name] => 沈浩
+                            [create_time] => 2018-10-29 00:00:00
+                            [phone] => 18575288024
+                            [email] => 
+                            [status] => 1
+                            [company] => 海浪物流
+                            [member_code] => cshengle
+                            [logintime] => 0000-00-00 00:00:00
+                            [type] => company
+                            [identification] => 2
+                            [file_path] => 
+                            [sales_name] => aaa
+                        )
+
+                    [3] => Array
+                        (
+                            [id] => 26
+                            [name] => 沈浩
+                            [create_time] => 2018-10-29 00:00:00
+                            [phone] => 18575288024
+                            [email] => 
+                            [status] => 1
+                            [company] => 海浪物流
+                            [member_code] => cshengle
+                            [logintime] => 0000-00-00 00:00:00
+                            [type] => company
+                            [identification] => 2
+                            [file_path] => 
+                            [sales_name] => aaa
+                        )
+
+                )
+
+        )
+
+    [currentPage:protected] => 1
+    [lastPage:protected] => 1
+    [total:protected] => 4
+    [listRows:protected] => 15
+    [hasMore:protected] => 
+    [options:protected] => Array
+        (
+            [var_page] => page
+            [path] => /admin.php/member/memberlist.html
+            [query] => Array
+                (
+                )
+
+            [fragment] => 
+            [type] => bootstrap
+            [list_rows] => 15
+        )
+
+    [nextItem:protected] => 
+)
