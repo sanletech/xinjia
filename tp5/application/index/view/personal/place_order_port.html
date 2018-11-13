@@ -143,6 +143,10 @@
                         if($vo['sea_waybill']){
                             echo '<a href="'.$url.'">运单</a>';
                         }
+                    }elseif($vo['container_buckle']=='lock'){
+                      echo '请申请放货';
+                    }elseif($vo['container_buckle']=='apply'){
+                      echo '待申请放货通过';
                     }
                     ?>
                       <!--<a href="javascript:void(0);">运单</a>-->

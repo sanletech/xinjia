@@ -77,10 +77,10 @@ class orderPort extends Model
             switch($value['container_status'])
             {
                 case '0':
-                $list[$key]['container_status'] ='已提交柜号';
+                $list[$key]['container_status'] ='未提交柜号';
                 break; 
                 case '1':
-                $list[$key]['container_status'] ='未提交柜号';
+                $list[$key]['container_status'] ='已提交柜号';
                 break; 
             }   
         }
