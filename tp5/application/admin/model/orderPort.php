@@ -179,7 +179,7 @@ class orderPort extends Model
         }elseif(in_array($status,$map2)) {
             $param =['status'=>$status];
         }
-        
+            $param['mtime']=$mtime;
         Db::startTrans();
         try{
         $res =Db::name('order_port')->where('order_num',$order_num)->update($param);

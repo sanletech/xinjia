@@ -11,37 +11,34 @@ class BulkData extends Validate
         'ship_id'  => 'require|number',
         'route_id' => 'require|number',
         'boat_id' => 'require|number',
-        'price_20GP' => 'require|number',
-        'price_40HQ' => 'require|number',
+        'price_20GP' => 'require|number|egt:100|elt:6000',
+        'price_40HQ' => 'require|number|egt:100|elt:6000',
         'shipping_date' => 'require|date|checkDate',
         'cutoff_date' => 'date',
         'sea_limitation' => 'number',
         'generalize' => 'require|in:0,1',
-        'price_description' => 'max:50|min:5',
+        'price_description' =>'require',
         'ETA' => 'date',
         'EDD' => 'date',
     ];
     
-    public function _initialize(){
-
-        $this->rule=11;
-        
-    }
-    
-    protected $message = [
-        'shipping_date' => '时间错误',
-     
-    ];
-
-    
-    protected function checkName($value,$rule,$data)
+    protected function checkDate($value,$rule,$data)
     {
-        $data=  date('y-m-d H:i:s');
-        $value = date('y-m-d H:i:s', strtotime($value));
-        return $value<$data? true : '名称错误';
+        $data= time();
+        $value = strtotime($value);
+        return $value>$data? true : '船期不能晚于'.$data;
     }
+    
     protected function checkShip($value,$rule,$data){
         //查询船公司
+        $ship_id = Db::name('shipcompany')->where('status',1)->order('id')->column('id');
+        return in_array($value, $ship_id) ? true:'船公司ID不在范围内';
+    }
+    
+    protected function checkBoat($value,$rule,$data){
+        //查询船公司
+        $ship_id = Db::name('boat')->where('status',1)->order('id')->column('id');
+        return in_array($value, $ship_id) ? true:'船舶ID不在范围内';
     }
 
     

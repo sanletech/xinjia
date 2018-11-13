@@ -129,7 +129,7 @@ class Financial extends Base
                 ->where('OB.order_num',$order_num)
                 ->whereTime('OB.ctime','between', [$date_start, $date_end])
                 ->where('OB.container_buckle',$container_buckle)
-                ->where('OB.money_status',$money_status)
+                ->where('OB.money_status',$money_status)->group('OB.order_num')
                 ->order('ctime desc,mtime desc')->buildSql();
         // var_dump($list);exit;
         $count =  Db::table($list.' a')->count();
