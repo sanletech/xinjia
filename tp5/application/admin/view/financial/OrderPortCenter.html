@@ -13,7 +13,15 @@
         display: none;
         padding: 10px;
     }
+    .time{
+      display: none;
+      padding: 20px 30px 10px;
+    }
 </style>
+<div class="layui-form time">
+  <input type="text" class="layui-input" id="sj" placeholder="yyyy-MM-dd">
+</div>
+
 <div class="x-nav">
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
       title="刷新">
@@ -98,7 +106,7 @@
       </div>
 <script type="text/html" id="toolbarDemo1">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">选择对账日期</button>
   </div>
 </script>               
 
@@ -129,8 +137,9 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
     format:'yyyy-MM-dd HH:mm:ss',
     value: new Date()
   });
-
-
+  laydate.render({
+    elem: '#sj'
+  });
   var container_buckle = 'apply';//货物状态
   var money_status = '2';//付款状态
   form.on('radio(container_buckle)', function(data){
@@ -155,7 +164,7 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
       ,{field:'bill_num', title:'对账单号' ,width:150}
       ,{field:'check_date', title:'对账日期',sort: true ,width:200}
       ,{field:'order_num', title:'订单号', width:200,templet:function(res){
-        return '<a style="color:blue;" href="<{:url("index/OrderPort/orderPortDetail")}>?order_num='+res.order_num+'" title="订单详情" target="_blank" >'+res.order_num+'</a>';
+        return '<a style="color:blue;" href="<{:url("admin/orderPort/port_details")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>';
       }}
       ,{field:'container_size', title:'柜型' ,width:100}
       ,{field:'container_sum', title:'箱量' ,width:100}
@@ -207,6 +216,31 @@ $('.cha').click(function(){
   //选中的数据
   $('button').click(function(){
     var checkStatus = table.checkStatus('test1');
+    var list=[];
+    for (let i in checkStatus.data) {
+      list.push(checkStatus.data[i].order_num);
+    }
+    if (list.length) {
+      
+      layer.open({
+      type: 1, 
+      title: '选择时间',
+      content: $('.time'),
+      shadeClose :true,
+      btn:['提交'],
+      success: function(layero, index){
+        $('.time input').focus();
+      },
+      yes:function(index, layero){
+       let time = $('.time input').val();  
+       $.post('<{:url("admin/financial/aaa")}>',{data:list,time:time},function(res){
+
+       });
+      }
+      }); 
+    }else{
+      layer.msg('请选择订单', {icon: 2,time: 1000});
+    }
   })
 
 });

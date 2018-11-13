@@ -285,7 +285,11 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
       ,{field:'quoted_price', title:'总运费',width:100} 
       ,{field:'container_status', title:'补料',width:100}
       ,{field:'sea_waybill', title:'水运单',width:100,event:'shui',templet:function(res){
-        return '<a class="" href="#">上传</a>'
+        if(res.sea_waybill){
+          return '<a href="<{:url("admin/OrderPort/downs")}>?order_num='+res.order_num+'&type=sea_waybill">下载</a>'
+        }else{
+          return '<a class="" href="#">上传</a>';
+        }
       }}
       ,{field:'container_buckle', title:'货物状态',width:100}
       ,{field:'money_status', title:'付款状态',width:100}
@@ -381,7 +385,9 @@ table.on('tool()', function(obj){
     }else if(obj.event === 'shui'){
       $('#shui .num2').html($(this).siblings('td[data-field="order_num"]').find('a').html());
       shuiyun($('#shui .num2').html());  
-      $('#shui a').click();
+      if ($(this).find('a').html() == '上传') {
+        $('#shui a').click();
+      }      
     }
   });
 
@@ -417,13 +423,13 @@ table.on('tool()', function(obj){
     ,choose:function(obj){
       // console.log(obj);
     }
-    , done: function (res) {    
-      console.log(res);
-              
+    , done: function (res) {                  
       // 上传完毕回调
       if (res.code == 0) {
         // alert(res.msg)
-        layui.layer.msg(res.msg, {icon: 1,time: 1000});
+        layui.layer.msg(res.msg, {icon: 1,time: 1000},function(res){
+          location.replace(location.href);
+        });
       } else {
         // alert(res.msg)
         layui.layer.msg(res.msg, {icon: 2,time: 1000});

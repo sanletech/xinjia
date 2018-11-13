@@ -182,6 +182,10 @@ class Financial extends Base
             'money_status'=>$money_status); 
     }       
 
+    public function aaa(){
+        var_dump($this->request->param());exit;
+    }
+
  
 } 
 
