@@ -106,7 +106,7 @@
       </div>
 <script type="text/html" id="toolbarDemo1">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">选择对账日期</button>
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData" >选择对账日期</button>
   </div>
 </script>               
 
@@ -213,36 +213,38 @@ $('.cha').click(function(){
   })
 });
 
-  //选中的数据
-  $('button').click(function(){
+  // 选中的数据
+  table.on('toolbar(test1)', function(obj){
     var checkStatus = table.checkStatus('test1');
-    var list=[];
-    for (let i in checkStatus.data) {
-      list.push(checkStatus.data[i].order_num);
-    }
-    if (list.length) {
-      
-      layer.open({
-      type: 1, 
-      title: '选择时间',
-      content: $('.time'),
-      shadeClose :true,
-      btn:['提交'],
-      success: function(layero, index){
-        $('.time input').focus();
-      },
-      yes:function(index, layero){
-       let time = $('.time input').val();  
-       $.post('<{:url("admin/financial/aaa")}>',{data:list,time:time},function(res){
-
-       });
+    switch(obj.event){
+      case 'getCheckData':
+      var list=[];
+      for (let i in checkStatus.data) {
+        list.push(checkStatus.data[i].order_num);
       }
-      }); 
-    }else{
-      layer.msg('请选择订单', {icon: 2,time: 1000});
-    }
-  })
+      if (list.length) {
+        layer.open({
+        type: 1, 
+        title: '选择时间',
+        content: $('.time'),
+        shadeClose :true,
+        btn:['提交'],
+        success: function(layero, index){
+          $('.time input').focus();
+        },
+        yes:function(index, layero){
+        let time = $('.time input').val();  
+        $.post('<{:url("admin/financial/aaa")}>',{data:list,time:time},function(res){
 
+        });
+        }
+        }); 
+      }else{
+        layer.msg('请选择订单', {icon: 2,time: 1000});
+      }
+      break;
+    }
+  });
 });
 
 

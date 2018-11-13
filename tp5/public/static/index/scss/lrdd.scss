@@ -326,9 +326,9 @@ body{
   }
 
   .tjiao{
-    width: 100px;
+    width: 35%;
     margin:50px auto;
-    .shi{
+    .shi,.qu{
       display: inline-block;
       height: 35px;
       width: 100px;
@@ -339,8 +339,19 @@ body{
       border: 0;
       cursor: pointer;
     }
+    .shi:nth-child(1){
+      float: right;
+      background-color: #ff9f19;
+    }
+    .qu:nth-child(1){
+      background-color: #ff9f19;
+      float: right;
+    }
     .yi{
       width: 100px;
+    }
+    .tj{
+      // display: none;
     }
   }
 }
