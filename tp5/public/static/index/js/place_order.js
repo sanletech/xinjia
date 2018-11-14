@@ -280,9 +280,9 @@ $('#bxje').bind('input propertychange', function () {//监听保险金额
 });
 
 //监听货值
-$('#cargo_value').bind('input propertychange', function () {
-    if ($(this).val() < 0) {
-        $(this).val(0);
+$('#cargo_value').bind('input propertychange', function () {    
+    if (!Number($(this).val()) || $(this).val() <= 0) {
+        $(this).val('');
         // alert('输入的值必须大于0');
         layui.layer.msg('输入的值必须大于0',{icon: 2,time: 1000});
     }
