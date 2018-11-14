@@ -287,9 +287,10 @@ class Personal extends Base
 
 
     public function downs(){  
-        $order_name = $this->request->only('order_num');    //下载文件名  
+    
+        $order_name = $this->request->param('order_num');    //下载文件名  
         $type = $this->request->param('type'); //文件类型
-        $member_code = Session::get('member_code','think');
+        $member_code = Session::get('member_code','think');    
         $data = Db::name('order_port')->where('order_num',$order_name)->field($type.',member_code,container_buckle')->find();
         if(empty($data)){
             echo '无此订单';exit; 

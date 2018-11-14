@@ -251,7 +251,7 @@ body {
   .xxtx .tjiao {
     width: 35%;
     margin: 50px auto; }
-    .xxtx .tjiao .shi, .xxtx .tjiao .qu {
+    .xxtx .tjiao a {
       display: inline-block;
       height: 35px;
       width: 100px;
@@ -261,12 +261,14 @@ body {
       background-color: red;
       border: 0;
       cursor: pointer; }
-    .xxtx .tjiao .shi:nth-child(1) {
+    .xxtx .tjiao .shi:nth-child(1), .xxtx .tjiao .no {
       float: right;
       background-color: #ff9f19; }
     .xxtx .tjiao .qu:nth-child(1) {
       background-color: #ff9f19;
       float: right; }
+    .xxtx .tjiao .yes {
+      background-color: #ff9f19; }
     .xxtx .tjiao .yi {
       width: 100px; }
   .xxtx .tj {

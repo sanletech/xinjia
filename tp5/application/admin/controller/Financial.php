@@ -103,7 +103,7 @@ class Financial extends Base
        }
     }
     
-    //放货对账付款状态更改
+    //账单中心放货对账
     public function OrderPortdata(){
         //用户名，订单号，起始日期，结束日期，审核中apply，扣货lock，已放货unlock， 所有订单2，已付款1，未付款0，
         $member = $this->request->param('member','not null','strval');
@@ -205,6 +205,20 @@ class Financial extends Base
        
     }
 
- 
+    //确认完成订单
+    public function  Order_completion() {
+        if (request()->isAjax()){
+            $order_num =$this->request->only('order_num');
+            $status = $this->order_status['completion'];
+            $title='申请放柜>通过';
+            $data = new \app\admin\model\orderPort();
+            $response= $data->orderUpdate($order_num,$status,$title,$comment);
+            return $response;
+        
+         }else{
+             return FALSE;
+        }
+    }
+    
 } 
 

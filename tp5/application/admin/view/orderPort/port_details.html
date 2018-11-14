@@ -538,10 +538,12 @@
 
     
 
-                    <!-- <div class="tjiao">
-                        <a href="javascript:;" class="yi layui-btn layui-btn-disabled">已完成</a>
-                        <a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
-                    </div> -->
+                    <div class="tjiao" style="text-align:center;">
+                        <{if condition="$list.status!=='completion'"}>
+                        <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
+                        <{else /}><a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
+                        <{/if}>
+                    </div> 
                 </div>
         </form>
         <!-- 填写发票窗口 -->
@@ -601,13 +603,14 @@
 
         <script>
             var url = "<{:url('admin/orderPort/Upload')}>";
-            var xiu_url = "<{:url('admin/orderPort/orderEdit')}>";//已完成订单
+            var xiu_url = "<{:url('admin/Financial/Order_completion')}>";//已完成订单
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
         <script>
             $('.songhuo,.zhuanghuo').show();
             $('input').attr('readonly', true);
             $('input').css('border', '0');
+            
         </script>
     </body>
     </html>
