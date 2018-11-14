@@ -54,11 +54,6 @@ function order_num(zj){
   }
 }
 
-if ($('.fukuan').html() == '未付款') {
-    $('.fukuan').css('color','red');
-}else{
-    $('.fukuan').css('color','#00DB00');
-}
 var huo = $('.goods a');//货物状态
 var st = $('.caozuo a');//订单状态
 var tj = $('.tj_gh');//提交柜号
@@ -84,6 +79,12 @@ for (let i = 0; i < huo.length; i++) {
     }else if(st.eq(i).html() == '已取消'){
         st.eq(i).parent('td').siblings('.fukuan').css('color','#C9C9C9');
         st.eq(i).parent('td').siblings('.ddh').find('a').css('color','#C9C9C9')        
+    }
+
+    if ($('.fukuan').eq(i).html() == '未付款') {
+        $('.fukuan').eq(i).css('color','red');
+    }else{
+        $('.fukuan').eq(i).css('color','#00DB00');
     }
 }
 

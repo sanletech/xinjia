@@ -328,7 +328,7 @@ body{
   .tjiao{
     width: 35%;
     margin:50px auto;
-    .shi,.qu{
+    a{
       display: inline-block;
       height: 35px;
       width: 100px;
@@ -339,13 +339,16 @@ body{
       border: 0;
       cursor: pointer;
     }
-    .shi:nth-child(1){
+    .shi:nth-child(1),.no{
       float: right;
       background-color: #ff9f19;
     }
     .qu:nth-child(1){
       background-color: #ff9f19;
       float: right;
+    }
+    .yes{
+      background-color: #ff9f19;
     }
     .yi{
       width: 100px;

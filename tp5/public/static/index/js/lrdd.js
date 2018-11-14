@@ -497,7 +497,7 @@ $('.tjiao').eq(0).find('.shi').click(function(){
   let huo = $.trim($('input[name="cargo"]').val());
 
   // bootble = huo?true:false;  
-  if ($('#cargo_value').val() == 0 || $('#cargo_value').val()) {
+  if ($('#cargo_value').val() == 0 || $('#cargo_value').val() == '') {
     bootble = false;
     $('#cargo_value').val('');
     layui.layer.msg('请检查货值信息',{icon: 2,time: 1000});

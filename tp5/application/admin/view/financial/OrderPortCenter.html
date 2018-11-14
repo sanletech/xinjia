@@ -233,10 +233,17 @@ $('.cha').click(function(){
           $('.time input').focus();
         },
         yes:function(index, layero){
-        let time = $('.time input').val();
-        $.post('<{:url("admin/financial/aaa")}>',{data:list,time:time},function(res){
-          
-        });
+        let time = $('.time input').val();  
+          $.post('<{:url("admin/financial/check_date")}>',{data:list,time:time},function(res){
+            if (res.status) {
+              layui.layer.msg('对账日期以生成', {icon: 1,time: 1000},function(){
+                layer.close(index);
+                location.reload();
+              });
+            }else{
+              layui.layer.msg('提交失败', {icon: 2,time: 1000});
+            }
+          });
         }
         }); 
       }else{

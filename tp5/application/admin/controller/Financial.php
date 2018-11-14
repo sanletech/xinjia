@@ -6,6 +6,7 @@ namespace app\admin\controller;
 use app\admin\common\Base;
 use think\Request;
 use think\Db;
+use think\Session;
 class Financial extends Base
 {
     private $order_status;
@@ -184,8 +185,24 @@ class Financial extends Base
             'money_status'=>$money_status); 
     }       
 
-    public function aaa(){
-        var_dump($this->request->param());exit;
+    public function check_date(){
+        $data =$this->request->param();
+//        var_dump($data);exit;
+        $order_num_arr =$data['data'];
+        $time =$data['time'];
+        //更新账单的对账日期
+        $res = Db::name('order_bill')->where('order_num','in',$order_num_arr)->update(['check_date'=>$time]);
+        //记录操作人员        
+        $submitter= Session::get('user_info','think');
+        $mtime =  date('Y-m-d H:i:s');
+        $inser_data=[];
+        foreach ($order_num_arr as $order_num) {
+            $inser_data[] = array('order_num'=>$order_num,'status'=>$this->order_status['check_bill'],'title'=>'对账日期','submitter'=>$submitter,'mtime'=>$mtime);
+        }
+        $res2 =Db ::name('order_port_status')->insertAll($inser_data); //记录操作
+        
+        return $res2 ? array('status'=>1,'message'=>'操作成功'):array('status'=>0,'message'=>'操作失败');
+       
     }
 
  
