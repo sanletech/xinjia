@@ -11,12 +11,12 @@ class OrderPort extends Model
 //        var_dump($tol,$limit,$start_add,$end_add,$ship_id,$seaprice_id);exit;
         $nowtime= date('y-m-d h:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
-                ->join('hl_ship_route SR','SR.id =SP.route_id')//海运路线表
-                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
-                ->join('hl_shipcompany SC','SC.id = SP.ship_id')//船公司表
-                ->join('hl_boat BA','BA.id =SP.boat_id')//船舶表
-                ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
-                ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
+                ->join('hl_ship_route SR','SR.id =SP.route_id','left')//海运路线表
+                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')//起始,目的港口
+                ->join('hl_shipcompany SC','SC.id = SP.ship_id','left')//船公司表
+                ->join('hl_boat BA','BA.id =SP.boat_id','left')//船舶表
+                ->join('hl_port PR','PR.port_code = SB.sl_start','left')//起始港口
+                ->join('hl_port PS','PS.port_code = SB.sl_end','left')//目的港口
                 ->field('SP.*,SC.ship_short_name,BA.boat_name,BA.boat_code,'
                         . 'PR.port_name r_port_name,PS.port_name s_port_name,'
                         . 'PR.port_code r_port_code,PS.port_code s_port_code,'

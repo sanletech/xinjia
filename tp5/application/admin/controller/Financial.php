@@ -134,7 +134,7 @@ class Financial extends Base
                 ->where('OB.container_buckle',$container_buckle)
                 ->where('OB.money_status',$money_status)->group('OB.order_num')
                 ->order('ctime desc,mtime desc')->buildSql();
-        // var_dump($list);exit;
+//         var_dump($list);exit;
         $count =  Db::table($list.' a')->count();
         $list = Db::table($list.' a')->limit($tol,$limit)->select();
         foreach($list as $key=>$value){
