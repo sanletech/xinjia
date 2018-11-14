@@ -376,4 +376,18 @@ class OrderPort extends Base
         }
         
     }
+    //添加额外的备注信息
+    public function extra_info() {
+        $extra_info = $this->request->param('extra_info');
+        $order_num = $this->request->param('order_num');
+        $extra_info =  trim($extra_info);
+        $sql ="update hl_order_port  set extra_info =concat('extra_info',',$extra_info') ";
+        $sql1 ="update hl_order_bill set extra_info =concat('extra_info',',$extra_info') ";
+        $res = Db::execute($sql);
+        $res1 =Db::execute($sql1);
+        if($res!==FALSE && $res1!==FALSE){
+            return array('status'=>1,'message'=>'执行成功');
+        }
+        return  array('status'=>0,'message'=>'执行失败');
+    }
 }

@@ -157,42 +157,45 @@ class orderPort extends Model
         $map1 =array($order_status['payment_status'],$order_status['container_appley'],
             $order_status['container_lock'],$order_status['container_unlock'],$order_status['up_container_code']);
          //修改order_bill的状态 ,对应order_port的状态和其字段container_status的更改 
-        $map2 = array_diff($order_status,$map1) ;     
-        if(in_array($status,$map1)){
-            switch ($status) {
-                case $order_status['payment_status']:
-                $param = ['money_status'=>1];
-                break;
-                case $order_status['container_appley']:
-                $param = ['container_buckle'=>'lock'];
-                break;
-                case $order_status['container_unlock']:
-                $param = ['container_buckle'=>'unlock'];
-                break;
-                case $order_status['container_unlock']:
-                $param = ['container_buckle'=>'unlock'];
-                break;
-                case $order_status['up_container_code']:
-                $param = ['container_status'=>'1','status'=>$order_status['up_container_code']];
-                break;
+        $map2 = array_diff($order_status,$map1) ;  
+        if(in_array($status,$order_status)){
+            
+            if(in_array($status,$map1)){
+                switch ($status) {
+                    case $order_status['payment_status']:
+                    $param = ['money_status'=>1];
+                    break;
+                    case $order_status['container_appley']:
+                    $param = ['container_buckle'=>'lock'];
+                    break;
+                    case $order_status['container_unlock']:
+                    $param = ['container_buckle'=>'unlock'];
+                    break;
+                    case $order_status['container_unlock']:
+                    $param = ['container_buckle'=>'unlock'];
+                    break;
+                    case $order_status['up_container_code']:
+                    $param = ['container_status'=>'1','status'=>$order_status['up_container_code']];
+                    break;
+                }
+            }elseif(in_array($status,$map2)) {
+                $param =['status'=>$status];
             }
-        }elseif(in_array($status,$map2)) {
-            $param =['status'=>$status];
-        }
             $param['mtime']=$mtime;
-        Db::startTrans();
-        try{
-        $res =Db::name('order_port')->where('order_num',$order_num)->update($param);
-        $res1 =Db::name('order_bill')->where('order_num',$order_num)->update($param);
-        Db::commit();
-        } catch (\Exception $e) {
-            // 回滚事务
-            Db::rollback();
-            return array('status'=>0,'message'=>'操作失败');
-        }      
-        
-        return array('status'=>1,'message'=>'操作成功');
-       
+            Db::startTrans();
+            try{
+                $res =Db::name('order_port')->where('order_num',$order_num)->update($param);
+                $res1 =Db::name('order_bill')->where('order_num',$order_num)->update($param);
+            Db::commit();
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return array('status'=>0,'message'=>'操作失败');
+            }      
+                return array('status'=>1,'message'=>'操作成功');
+        }else{
+            return array('status'=>1,'message'=>'操作成功');
+        }
     }
     
     //子订单的修改order_truckage 也是送货 装货服务的信息修改

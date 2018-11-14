@@ -122,7 +122,7 @@ class Keeper extends Base
 
     }
     
-    //职位调调
+    //职位列表
     public function userEdit() 
     {   
         $uid = $this->request->get('uid');
@@ -229,11 +229,7 @@ class Keeper extends Base
         $this->view->assign('jobList',$list);
         $tree= $this->procHtml($list);
         $this->view->assign('tree',$tree);
-        
         $this->view->assign('list',$listfather);
-    
-    
-       
         $this->view->engine->layout('Keeper/team_public');
         return $this->view->fetch('keeper/team_sonadd');
     }
