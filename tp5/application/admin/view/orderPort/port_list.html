@@ -1,5 +1,7 @@
+<{include file='./public/header' /}>
 <link rel="stylesheet" href="__STATIC__/../index/layui/css/layui.css">
 <link rel="stylesheet" href="__STATIC__/css/port_list.css">
+<link rel="stylesheet" href="__STATIC__/../index/css/place_details.css">
 <div class="x-nav">
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
       title="刷新">
@@ -13,14 +15,14 @@
         <div class="layui-inline">
           <label class="layui-form-label"></label>
           <div class="layui-input-inline">
-            <input type="text" name="company" placeholder="客户单位" autocomplete="off" class="layui-input">
+            <input type="text" name="order_num" placeholder="订单号"  autocomplete="off" class="layui-input">
           </div>
         </div>
-        <div class="layui-inline">
+        <!-- <div class="layui-inline">
             <div class="layui-input-inline">
               <input type="text" name="order_num" placeholder="订单号"  autocomplete="off" class="layui-input">
             </div>
-        </div>
+        </div> -->
 
         <div class="layui-inline">
             <div class="layui-input-inline">
@@ -40,12 +42,62 @@
           </div>
       </div>
 
-        <div class="layui-inline">
+        <!-- <div class="layui-inline">
             <div class="layui-input-inline">
                 <a class="layui-btn cha">搜索</a>
             </div>
-        </div>
+        </div> -->
     </div>
+
+    <div class="layui-form-item">
+        <div class="yinc">
+            <input type="text" id="start_id" name="start_id" value="<{$start_add ? $start_add: '';}>">
+            <input type="text" id="end_id" name="end_id" value="<{$end_add ? $end_add: '';}>">
+          </div>
+      <div class="layui-inline">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-inline">
+          <input type="text" name="company" placeholder="客户单位" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-inline">
+          <div class="layui-input-inline">
+            <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
+          </div>
+      </div>
+
+      <div class="layui-inline">
+          <div class="layui-input-inline">
+            <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
+          </div>
+      </div>
+
+      <div class="layui-inline">
+        <div class="layui-input-inline">
+            <select id="ship_company" name="ship_id" lay-filter="ship" lay-search >
+                <option value="" >请选择船公司</option>
+            </select>
+        </div>
+      </div>
+
+      <div class="layui-inline">
+          <div class="layui-input-inline">
+              <a class="layui-btn cha">搜索</a>
+          </div>
+      </div>
+
+      <div id="address" style="top: 127px;z-index: 999;">
+          <ul>
+            <li>省份</li>
+            <li>城市</li>
+            <li>港口</li>
+          </ul>
+          <div id="dizhi"></div>
+      </div>
+    </div>
+
+  </div>
+    
 
     <!-- 筛选内容 -->
     <div class="layui-row xuan">
@@ -144,6 +196,10 @@
 
 <!-- <script src="__STATIC__/js/jquery-3.2.1.min.js"></script>  -->
 <script src="__STATIC__/../index/layui/layui.js"></script>
+<script src="__STATIC__/js/port.js"></script>
+<script src="__STATIC__/js/ship_boat.js"></script> 
+<script src="__STATIC__/js/ship_company.js"></script>
+
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>

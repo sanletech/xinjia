@@ -1,5 +1,6 @@
 <{include file='./public/top'/}>
     <link rel="stylesheet" href="__STATIC__/css/xadmin.css">
+    <link rel="stylesheet" href="__STATIC__/css/personal_info.css">
     <script type="text/javascript" src="__STATIC__/js/xadmin.js"></script>
     <!-- 顶部开始 -->
 
@@ -121,7 +122,7 @@
 
 
             <ul id="nav">
-                <li>
+                <li class="lan">
                     <a _href="<{:url('personal/place_order_port')}>">
                         <i class="iconfont">&#xe6a7;</i>
                         <cite>港到港订单</cite>
@@ -134,6 +135,18 @@
                     </a>
                 </li>
                 <li>
+                        <a _href="<{:url('personal/info')}>">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>完善信息</cite>
+                        </a>
+                    </li>
+                    <li>
+                        <a _href="<{:url('personal/pwd_edit')}>">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>修改密码</cite>
+                        </a>
+                    </li>
+                <!-- <li>
                     <a href="javascript:;">
                         <i class="iconfont">&#xe6a7;</i>
                         <cite>个人信息</cite>
@@ -152,7 +165,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -185,5 +198,16 @@
     </div>
     <!-- 底部结束 -->
     <script>
-            $('#top ul li').eq(1).addClass('hang').siblings('li').removeClass('hang');
+        $('#top ul li').eq(1).addClass('hang').siblings('li').removeClass('hang');
+        $('#nav li').hover(
+            function(){
+                $(this).css('background-color','#2e8de5');
+            },
+            function(){
+                $(this).css('background-color','');
+            }
+        )
+        $('#nav li').click(function(){
+            $(this).addClass('lan').siblings('li').removeClass('lan');
+        })
     </script>

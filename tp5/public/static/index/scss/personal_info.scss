@@ -1,0 +1,18 @@
+$lan:#2e8de5;
+.left-nav{
+    background-color: black;
+    #nav{
+        li{
+            border: 0;
+            height: 60px;
+            line-height: 45px;
+            a{
+                color: #fff;
+            }
+        }
+        .lan{
+            background-color: $lan;
+        }
+        
+    }
+}
