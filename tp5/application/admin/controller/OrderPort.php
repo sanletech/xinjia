@@ -168,6 +168,12 @@ class OrderPort extends Base
     //    $canshu = $this->request->param();
     //    $this->_p($canshu);exit;
         $map =[];
+        //起运港口,目的港口
+        $start_port = $this->request->param('stat_port');
+        $start_port ? $map['A.sl_start'][]=['=',$start_port]:'';
+        $end_port = $this->request->param('sl_start');
+        $end_port ? $map['A.sl_end'][]=['=',$end_port]:'';
+        
         $cash = $this->request->param('cash');//在线付款
         $cash?$map['A.payment_method'][]=['=','cash']:'';
         $month = $this->request->param('month'); //月结付款

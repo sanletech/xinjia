@@ -292,6 +292,7 @@ class Personal extends Base
         $type = $this->request->param('type'); //文件类型
         $member_code = Session::get('member_code','think');    
         $data = Db::name('order_port')->where('order_num',$order_name)->field($type.',member_code,container_buckle')->find();
+//        var_dump($data);exit;
         if(empty($data)){
             echo '无此订单';exit; 
         }
@@ -299,7 +300,7 @@ class Personal extends Base
         if($data['member_code']!==$member_code){
             echo"无权限下载";exit;
         }
-        if($data['container_buckle']!=='unlock'){
+        if($type=='sea_waybill'&&$data['container_buckle']!=='unlock'){
             echo"没有通过扣货申请";exit;
         }
         $file =$data[$type];
