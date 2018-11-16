@@ -541,6 +541,7 @@
                     <div class="tjiao" style="text-align:center;">
                         <{if condition="$list.status!=='completion'"}>
                         <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
+                        <a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
                         <{else /}><a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
                         <{/if}>
                     </div> 

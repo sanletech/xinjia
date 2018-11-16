@@ -92,7 +92,11 @@ function que(order_num) {
         layer.confirm('是否确定订单，确定之后将不能修改', { icon: 3, title: '提示' }, function (index) {
             $.get(xiu_url, { 'order_num': order_num},
             function(res){
-                layer.msg('订单提交成功',{icon:1,time:1000});
+                if (res.status) {
+                    layer.msg('订单提交成功',{icon:1,time:1000});
+                }else{
+                    layer.msg('订单提交失败',{icon:2,time:1000});
+                }
             });
             layer.close(index);//关闭提示框
         });

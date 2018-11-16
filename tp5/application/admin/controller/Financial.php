@@ -207,12 +207,14 @@ class Financial extends Base
 
     //确认完成订单
     public function  Order_completion() {
+        // $data =$this->request->param();
+        //        var_dump($data);exit;
         if (request()->isAjax()){
             $order_num =$this->request->only('order_num');
             $status = $this->order_status['completion'];
             $title='申请放柜>通过';
             $data = new \app\admin\model\orderPort();
-            $response= $data->orderUpdate($order_num,$status,$title,$comment);
+            $response= $data->orderUpdate($order_num,$status,$title);
             return $response;
         
          }else{
