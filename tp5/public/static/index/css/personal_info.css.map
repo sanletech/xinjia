@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AACA,SAAS;EACL,gBAAgB,EAAE,KAAK;EAEnB,iBAAE;IACE,MAAM,EAAE,CAAC;IACT,MAAM,EAAE,IAAI;IACZ,WAAW,EAAE,IAAI;IACjB,mBAAC;MACG,KAAK,EAAE,IAAI;EAGnB,mBAAI;IACA,gBAAgB,EAbvB,OAAO",
+"sources": ["../scss/personal_info.scss"],
+"names": [],
+"file": "personal_info.css"
+}

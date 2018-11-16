@@ -1,0 +1,12 @@
+.left-nav {
+  background-color: black; }
+  .left-nav #nav li {
+    border: 0;
+    height: 60px;
+    line-height: 45px; }
+    .left-nav #nav li a {
+      color: #fff; }
+  .left-nav #nav .lan {
+    background-color: #2e8de5; }
+
+/*# sourceMappingURL=personal_info.css.map */
