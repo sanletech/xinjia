@@ -165,8 +165,8 @@ class OrderPort extends Base
         // 在线付,月结,到港付 -
         // 上传订舱单,客户提交柜号,上传水运单
         //  -已经完成订单/未完成
-    //    $canshu = $this->request->param();
-    //    $this->_p($canshu);exit;
+        $canshu = $this->request->param();
+        $this->_p($canshu);exit;
         $map =[];
         //起运港口,目的港口
         $start_port = $this->request->param('stat_port');
