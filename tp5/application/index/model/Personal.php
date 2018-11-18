@@ -48,7 +48,7 @@ class Personal extends Model
                 ->where('OP.member_code',$member_code)
                 ->group('OP.order_num')->buildSql();
 //var_dump($data);exit;
-        $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->limit($tol,$limit)->select();
+        $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->fetchSql(false)->limit($tol,$limit)->select();
 //        $this->_p($lists);exit;
         //展示扣柜驳回的理由
         $where = "where status =".$this->order_status['container_lock'];

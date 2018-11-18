@@ -54,10 +54,10 @@ class CarMan  extends Base
         $id = implode(',', $id['id']);
         $res = $ManDel->car_del($id);
         if(!array_key_exists('fail', $res)){
-                  $status =1; 
-              }else {
-                  $status =0;  
-                    }
+            $status =1; 
+        }else {
+            $status =0;  
+        }
         json_encode($status);   
         
          return $status;   

@@ -27,7 +27,7 @@ class Member extends Base
         $identification= isset($identification)?$identification:'2';
         $this->view->assign('identification',$identification); 
         $user = new MemberM ;
-        $list = $user->memberList($account,$type,$identification,1,'10');
+        $list = $user->memberList($account,$type,1,'10',$identification);
     //    $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('image_path',ROOT_PATH . 'public' . DS . 'uploads/images');
@@ -99,21 +99,7 @@ class Member extends Base
         return $this->view->fetch('member/pushMoney_List'); 
     }
     
-    // public function  pushMoneyList() {
-        
-    //     //获取每页显示的条数
-    //     $limit= $this->request->param('limit',10,'intval');
-    //     //获取当前页数
-    //     $page= $this->request->param('page',1,'intval');  
-    //     //计算出从那条开始查询
-    //     $tol=($page-1)*$limit;
-    //     $user = new MemberM ;
-    //     $lists = $user->pushMoneyList($tol,$limit);
-    // //    $this->_p($lists);exit;
-        
-    //     return array('code'=>0,'msg'=>'','count'=>$lists['count'],'data'=>$lists['list']);
-    // }
-    
+
     //业务对应客户的提成管理的修改
     public function  pushMoneyEdit(){
      

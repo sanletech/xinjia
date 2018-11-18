@@ -141,7 +141,7 @@
               <strong>订单状态</strong>
             </div>
             <div class="port_rig">
-            <div class="cbox"><input type="radio" name="completion"  value="all" title="所有订单" checked=""></div>
+            <div class="cbox"><input type="radio" name="completion"  value="all" title="所有订单" ></div>
             <div class="cbox"><input type="radio" name="completion"  value="undone" title="未完成"></div>
             <div class="cbox"><input type="radio" name="completion"  value="done"  title="已完成"></div>
             <div class="cbox"></div>
@@ -251,7 +251,7 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
 
   //判断复选框是否选中
   form.on('checkbox(port)', function(data){
-    chec(data);    
+    chec(data);
   });
 
     
@@ -374,12 +374,20 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
 
 //搜索
 $('.cha').click(function(){
+  
+  console.log($('#cont').serializeArray());
+  
   let company = $('input[name="company"]').val();//客户单位
   company = company.replace(/\s+/g, "");
   let order_num = $('input[name="order_num"]').val();//订单号
   let track_num = $('input[name="track_num"]').val();//运单号
   let date_start = $("input[name='date_start']").val();;//起始日期
-  let date_end = $("input[name='date_end']").val();;//结束日期
+  let date_end = $("input[name='date_end']").val();//结束日期
+  let start_id = $("input[name='start_id']").val();//港口起始ID
+  let start_name = $("#start_add").val();//港口起始名
+  let end_id = $("input[name='end_id']").val();//港口结束ID
+  let end_name = $("#end_add").val();//港口结束名
+  let ship_id = $('#ship_company').val();//船公司ID
   biao.reload({
     where:{
       company:company,
@@ -396,7 +404,12 @@ $('.cha').click(function(){
       container_code:container_code,
       sea_waybill:sea_waybill,
       no_money:no_money,
-      have_money:have_money
+      have_money:have_money,
+      start_id:start_id,
+      start_name:start_name,
+      end_id:end_id,
+      end_name:end_name,
+      ship_id:ship_id
     },
     page:{curr:1}
   })
