@@ -90,7 +90,7 @@
         </div>
         
         <!-- 中间线 -->
-        <div class="layui-col-xs2 xian"></div>
+        <div class="layui-col-xs2 xian" style="height: 95px;"></div>
         
         <!-- 收货 -->
         <div class="layui-col-xs5">
@@ -123,7 +123,7 @@
        <div class="layui-form-item layui-col-xs12 niu">
           <div class="layui-col-md1 layui-col-md-offset4">
             <div class="grid-demo grid-demo-bg1">
-              <button class="layui-btn" type="button"  onclick="trailerAjax()">添加</button>
+              <button class="layui-btn" type="button"  onclick="trailerAjax()">修改</button>
             </div>
           </div>
           <div class="layui-col-md1 layui-col-md-offset2">
@@ -143,8 +143,8 @@
       });
       
        //加载 所有的船公司名字简称和相应的id
-        var js_car = '<?php echo $js_car; ?>';
-            js_car=JSON.parse(js_car);    
+        // var js_car = '<?php echo $js_car; ?>';
+        //     js_car=JSON.parse(js_car);    
         //加载 所有的港口名字和相应的城市code
         var js_port = JS_PORT;
             
@@ -158,7 +158,7 @@
             form = layui.form;
             $form = $('form');
             loadProvince1();
-            loadCar();
+            // loadCar();
           //  olddata();
           
         } );     
@@ -228,31 +228,31 @@
             } ) 
         }
         
-        function loadCar(){
-            //加载 所有的车队名字和相应的车队id
-            var car_length =js_car.length;
-            var scarHtml = ''; var rcarHtml = '';
-            for(var i=0;i<car_length;i++){
-                if(s_carid ==js_car[i].id){
+        // function loadCar(){
+        //     //加载 所有的车队名字和相应的车队id
+        //     var car_length =js_car.length;
+        //     var scarHtml = ''; var rcarHtml = '';
+        //     for(var i=0;i<car_length;i++){
+        //         if(s_carid ==js_car[i].id){
                   
-                    scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
-                }else{
-                    scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
-                }   
-                if(r_carid ==js_car[i].id){
-                    rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
-                }else{
-                    rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
-                }   
-            }
+        //             scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
+        //         }else{
+        //             scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
+        //         }   
+        //         if(r_carid ==js_car[i].id){
+        //             rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
+        //         }else{
+        //             rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
+        //         }   
+        //     }
              
-            $form.find('select[name=car_load]').append(rcarHtml);
-            $form.find('select[name=car_send]').append(scarHtml);
-            form.render();
-            form.on('select(car)', function(data) {
-            } ) 
+        //     $form.find('select[name=car_load]').append(rcarHtml);
+        //     $form.find('select[name=car_send]').append(scarHtml);
+        //     form.render();
+        //     form.on('select(car)', function(data) {
+        //     } ) 
 
-        }
+        // }
         
         
         function  trailerAjax(){

@@ -20,7 +20,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加','<{:url('Price/trailer_add')}>',1200,400)" href="javascript:;"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="x_admin_show('添加','<{:url('Price/trailer_add')}>',1000,400)" href="javascript:;"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -70,7 +70,7 @@
            <!--<td><{$vo.r_variable}></td>-->
            
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/trailer_edit')}>?cl_id=<{$vo.cl_id}>&s_id=<{$vo.s_id}>&r_id=<{$vo.r_id}>',1200,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/trailer_edit')}>?cl_id=<{$vo.cl_id}>&s_id=<{$vo.s_id}>&r_id=<{$vo.r_id}>',1000,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<{$vo.cl_id}>')" href="javascript:;">
