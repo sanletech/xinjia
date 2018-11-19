@@ -16,7 +16,7 @@ class Member extends Model
         return  $status[$value];
     }
 
-    public function memberList($account,$type,$identification,$status,$pages='5'){
+    public function memberList($account,$type,$status,$pages='5',$identification='not null'){
         $list =Db::name('member')->alias('a')
                 ->join('hl_sales_member b','b.member_code = a.member_code','left')
                 ->where('a.type',$type)
@@ -77,20 +77,6 @@ class Member extends Model
 
         }
         $tem = array_values($tem);
-        // foreach ($tem as $key => $value) {
-        //     foreach ($tem[$key]['40HQ'] as $k => $v) {
-        //         $tem[$key]['40HQ_'.$k]=$v;
-        //     }
-        //     unset($tem[$key]['40HQ']);
-        // }
-        // foreach ($tem as $key => $value) {
-        //     foreach ($tem[$key]['20GP'] as $k => $v) {
-        //         $tem[$key]['20GP_'.$k]=$v;
-        //     }
-        //     unset($tem[$key]['20GP']);
-        // }
-        
-    //    $this->_p($tem);exit;
         return array('lists'=>$tem,'count'=>$count);       
     }
 

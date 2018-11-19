@@ -45,15 +45,16 @@ class Personal extends Model
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,'
                         . 'P1.port_code s_port_code, P1.port_name s_port,'
                         . 'P2.port_code e_port_code, P2.port_name e_port')
+                ->where('OP.member_code',$member_code)
                 ->group('OP.order_num')->buildSql();
 //var_dump($data);exit;
-        $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->group('A.id')->limit($tol,$limit)->select();
+        $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->fetchSql(false)->limit($tol,$limit)->select();
 //        $this->_p($lists);exit;
         //展示扣柜驳回的理由
         $where = "where status =".$this->order_status['container_lock'];
         $container_buckle = Db::table($statusSql =$statusSql_1.$where.$statusSql_2." A")->select();
         //展示订单取消的理由
-//        var_dump($container_buckle);exit;
+//        $this->_p($container_buckle);exit;
         foreach ($lists as $key =>$list){  
             foreach ($container_buckle as $k=>$v){
                 if($list['order_num']==$v['order_num']){

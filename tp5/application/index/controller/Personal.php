@@ -157,14 +157,14 @@ class Personal extends Base
             $map['A.order_num']=$order_num;
         }
         //港口查询
-        $start_add =$this->request->param('start_add');
+        $start_add =$this->request->param('start_id');
         $start_name =$this->request->param('start_name');
         if($start_add){
             $this->view->assign(['start_add'=>$start_add,'start_name'=>$start_name]);
             $map['A.s_port_code']=$start_add;
         }
         $end_name =$this->request->param('end_name');
-        $end_add =$this->request->param('end_add');
+        $end_add =$this->request->param('end_id');
         if($end_add){
             $this->view->assign(['end_add'=>$end_add,'end_name'=>$end_name]);
             $map['A.e_port_code']=$end_add;
@@ -173,10 +173,16 @@ class Personal extends Base
         //下单时间查询
         $date_start = $this->request->param('date_start');
         $date_end = $this->request->param('date_end');
-        if($date_start&&$date_end){
-            $this->view->assign(['date_start'=>$date_start,'date_end'=>$date_end]);
-            $map['A.ctime']=['between time',[$date_start,$end_add]];
-        }
+        //设置默认时间
+        $time_statr_default= date('Y-m-d H:i:s', strtotime('-3month'));
+        $time_end_default= date('Y-m-d H:i:s');
+        $date_start? $map['A.ctime'][]=['>=',$date_start]:$map['A.ctime'][]=['>=',$time_statr_default];
+        $this->view->assign(['date_start'=>$date_start]);
+        
+        $date_end ? $map['A.ctime'][]=['<=',$date_end]:$map['A.ctime'][]=['<=',$time_end_default];
+        $this->view->assign(['date_end'=>$date_end]);
+           
+//        var_dump( $map['A.ctime']);exit;
         //订单状态
         $order_status = $this->request->param();
         $order_status=  array_key_exists('order_status', $order_status)?$order_status['order_status']:array();
@@ -292,6 +298,7 @@ class Personal extends Base
         $type = $this->request->param('type'); //文件类型
         $member_code = Session::get('member_code','think');    
         $data = Db::name('order_port')->where('order_num',$order_name)->field($type.',member_code,container_buckle')->find();
+//        var_dump($data);exit;
         if(empty($data)){
             echo '无此订单';exit; 
         }

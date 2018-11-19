@@ -17,6 +17,6 @@ return [
             'container_unlock'=>8, //同意放柜
         'sea_waybill'=>9,//上传水运单
         'completion'=>10, //港到港订单完成
-        'check_bill'=>11, //港到港对账单 单独使用
+            'check_bill'=>11, //港到港对账单 单独使用
     ]
 ];

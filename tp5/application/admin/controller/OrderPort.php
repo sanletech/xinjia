@@ -160,14 +160,19 @@ class OrderPort extends Base
     //所有订单
     public function portlist_data()
     {    
-        //客户单位,订单号,运单号,
-        //审核中apply,扣货lock,已放货unlock,上传水运单
-        // 在线付,月结,到港付 -
-        // 上传订舱单,客户提交柜号,上传水运单
-        //  -已经完成订单/未完成
-    //    $canshu = $this->request->param();
-    //    $this->_p($canshu);exit;
         $map =[];
+        //起运港口,目的港口
+        $start_port = $this->request->param('stat_id');
+            $start_port ? $map['A.sl_start']=['=',$start_port]:'';
+        $end_port = $this->request->param('end_id');
+            $end_port ? $map['A.sl_end']=['=',$end_port]:'';
+        
+        //客户单位 船公司
+        $member_company= $this->request->param('company');
+            $member_company ? $map['A.company']=['=',$member_company]:'';
+        $ship_id = $this->request->param('ship_id');
+            $ship_id ? $map['A.ship_id']=['=',$ship_id]:'';
+        
         $cash = $this->request->param('cash');//在线付款
         $cash?$map['A.payment_method'][]=['=','cash']:'';
         $month = $this->request->param('month'); //月结付款
@@ -187,24 +192,27 @@ class OrderPort extends Base
             (count($map['A.status'])-1) ? $map['A.status'][]='or':$map['A.status']= $map['A.status']['0'];
         }
         $have_money =$this->request->param('have_money'); //未收款
-        $have_money?$map['A.money_status'][]=0:'';
+        $have_money?$map['A.money_status'][1][]='0':'';
         $no_money =$this->request->param('no_money');//已经收款
-        $no_money?$map['A.money_status'][]=1:'';
+        $no_money?$map['A.money_status'][1][]='1':'';
         if(array_key_exists('A.money_status', $map)){
             array_unshift($map['A.money_status'],'in'); //插入条件in
         } 
         
         $completion = $this->request->param('completion','undone','strval'); //订单完成 默认未完成
-        if($completion=='undone' && (!isset($map['status'])) ){
-            $map['A.status'][]='in';
-            $map['A.status'][]=array($this->order_status['booking_note'],$this->order_status['up_container_code'],$this->order_status['sea_waybill']);
-        }elseif($completion=='done'){
-            $map['A.status']=null;//清空选择的上传订舱和水运单
-            $map['A.status'][]=$this->order_status['completion'];
-        }elseif ($completion=='all') {
-            $map['A.status']=null;//清空选择的上传订舱和水运单
-            $map['A.status'][]='in';
-            $map['A.status'][]=array($this->order_status['booking_note'],$this->order_status['up_container_code'],$this->order_status['sea_waybill'],$this->order_status['completion']);
+        if(!array_key_exists('A.status', $map)){
+            if($completion=='undone'){
+                $map['A.status'][]='in';
+                $map['A.status'][]=array($this->order_status['booking_note'],$this->order_status['up_container_code'],$this->order_status['sea_waybill']);
+            }elseif($completion=='done'){
+                $map['A.status']=null;//清空选择的上传订舱和水运单
+                $map['A.status'][]='in';
+                $map['A.status'][]=$this->order_status['completion'];
+            }elseif ($completion=='all') {
+                $map['A.status']=null;//清空选择的上传订舱和水运单
+                $map['A.status'][]='in';
+                $map['A.status'][]=$this->order_status;
+            }
         }
         $container_buckle = $this->request->param('container_buckle','apply','strval');
         if($container_buckle='all'){

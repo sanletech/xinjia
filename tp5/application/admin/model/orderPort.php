@@ -44,12 +44,14 @@ class orderPort extends Model
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
-                ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port,P2.port_name e_port,B.boat_code,B.boat_name')
+                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name,SB.sl_start,'
+                        . 'P1.port_name s_port,SB.sl_end,P2.port_name e_port,'
+                        . 'B.boat_code,B.boat_name,HM.company')
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')->buildSql();
 // $this->_p($map); //exit;
         $count=Db::table($list.' A')->where($map)->count(); 
 //        var_dump( $list =Db::table($list.' A')->where()->limit($tol,$limit)->buildSql());exit;
-        $list =Db::table($list.' A')->where($map)->limit($tol,$limit)->select();       
+        $list =Db::table($list.' A')->where($map)->limit($tol,$limit)->fetchSql(FALSE)->select();       
 //        $this->_p($list);exit;
         foreach ($list as $key => $value) {
             switch($value['container_buckle'])
@@ -145,11 +147,15 @@ class orderPort extends Model
     }
     
     //记录订单的更新状态和时间
-    public function orderUpdate($order_num,$status,$title,$comment='') {
-        $submitter= Session::get('user_info','think');
+    public function orderUpdate($order_num,$status,$title,$comment='',$submitter='') {
+        if(empty($submitter)){
+            $submitter= Session::get('user_info','think');
+        }
         $mtime =  date('Y-m-d H:i:s');
         $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'comment'=>$comment,'submitter'=>$submitter,'mtime'=>$mtime);
+//        var_dump($data);exit;
         $res =Db ::name('order_port_status')->insert($data); //记录操作
+//        var_dump($res);exit;
         //根据不同的记录是否更新order_port 和order_bill 的状态
         $order_status= $this->order_status;
        
@@ -166,10 +172,10 @@ class orderPort extends Model
                     $param = ['money_status'=>1];
                     break;
                     case $order_status['container_appley']:
-                    $param = ['container_buckle'=>'lock'];
+                    $param = ['container_buckle'=>'appley'];
                     break;
-                    case $order_status['container_unlock']:
-                    $param = ['container_buckle'=>'unlock'];
+                    case $order_status['container_lock']:
+                    $param = ['container_buckle'=>'lock'];
                     break;
                     case $order_status['container_unlock']:
                     $param = ['container_buckle'=>'unlock'];
@@ -182,6 +188,7 @@ class orderPort extends Model
                 $param =['status'=>$status];
             }
             $param['mtime']=$mtime;
+//            var_dump($param);exit;
             Db::startTrans();
             try{
                 $res =Db::name('order_port')->where('order_num',$order_num)->update($param);

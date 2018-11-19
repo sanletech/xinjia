@@ -357,7 +357,7 @@
         });
         
        var shipData =JS_SHIP_BOAT;//船公司
-       var ship_id = $('.ship_id').html();//船公司ID   
+       var ship_id = $('.ship_id').html();//船公司ID
        for (let i = 0; i < shipData.length; i++) {
         if(i+1 == ship_id){
           $('#ship_company').append("<option value='" + shipData[i].ship_id + "' selected>" + shipData[i].ship_name + "</option>");

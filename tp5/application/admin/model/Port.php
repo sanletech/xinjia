@@ -135,7 +135,7 @@ class Port extends Model
     }
     
 
-                  //航线详情list
+    //航线详情list
     public function  shiproute_list($sl_start,$sl_end,$pages)
     {      
         $list =Db::name('ship_route')->alias('SR')
@@ -228,12 +228,9 @@ class Port extends Model
         return $sealine_id ;
     }
     
-
-    
-    
        
     //船名list
-       public function  boat_list($ship_name , $boat_name, $pages=5)
+    public function  boat_list($ship_name , $boat_name, $pages=5)
     {   
         $list = Db::name('boat')->alias('B')
                 ->join('hl_shipcompany SC',"SC.id = B.ship_id and SC.status='1'",'left')
