@@ -299,7 +299,7 @@ class Personal extends Base
         if($data['member_code']!==$member_code){
             echo"无权限下载";exit;
         }
-        if($data['container_buckle']!=='unlock'){
+        if($type=='sea_waybill'&& $data['container_buckle']!=='unlock'){
             echo"没有通过扣货申请";exit;
         }
         $file =$data[$type];

@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/phpstudy/WWW/xinjia/tp5/application/admin/controller/BulkData.php</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/Financial.php</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/financial/OrderPortCenter.html</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/controller/OrderPort.php</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/admin/view/orderPort/port_details.html</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/extra/config.php</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/controller/OrderPort.php</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/view/personal/place_order_port.html</file>
+            <file>file:/E:/xampp/htdocs/xinjia/tp5/application/index/controller/Personal.php</file>
         </group>
     </open-files>
 </project-private>
