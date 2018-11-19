@@ -61,7 +61,7 @@
      <{volist name='lists' id='vo'}>
         <tr>
           <td class="id" rowspan="2"><{$vo.id}></td>
-          <td rowspan="2"><{$vo.member_code}></td>
+          <td class="name" rowspan="2"><{$vo.member_code}></td>
           <td rowspan="2"><{$vo.name}></td>
           <td rowspan="1" class="gui">20GP</td>
           <{foreach name="$vo.20GP" item="V2" }>
@@ -82,6 +82,7 @@
 <!--<script src="//res.layui.com/layui/dist/layui.js" charset="utf-8"></script>-->
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
+var ship_edit_url ="<{:url('member/pushMoneyEdit')}>";
 layui.use(['table','laydate','layedit'], function(){
   var table = layui.table,
   $ = layui.jquery,
@@ -120,14 +121,15 @@ layui.use(['table','laydate','layedit'], function(){
     let valu = zj.val();//输入内容
     let ship_id;//船公司ID
     if (gui == '20GP') {
-      id = zj.parent('td').siblings('.id').html();
+      id = zj.parent('td').siblings('.name').html();
       ship_id = $('#demo thead tr').eq(1).children('th').eq(ship-4).attr('name')
     }else{
       id = zj.parents('tr').prev().children('.id').html();
       ship_id = $('#demo thead tr').eq(1).children('th').eq(ship-1).attr('name')
     }
+
     //用户ID：柜型   船公司id：输入内容
-    // $.get(ship_edit_url,{[id]:gui,[ship_id]:valu});
+     $.get(ship_edit_url,{member_code:id,ship_id:ship_id,container_size:gui,price:valu});
   }
 });
 </script>

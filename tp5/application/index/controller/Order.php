@@ -27,7 +27,7 @@ class Order extends Base
         //获取当前页数
         $page= $this->request->param('page',1,'intval');  
         //计算出从那条开始查询
-        // $tol=($page-1)*$limit+1;
+//         $tol=($page-1)*$limit+1;
         // 查询出当前页数显示的数据
         $list = Db::table($list.' A')->limit(($page-1)*$limit,$limit)->select();
       
@@ -36,7 +36,7 @@ class Order extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-//      $this->_p($list);exit;
+      $this->_p($list);exit;
        return $this->view->fetch('order/order_list');
     }
     

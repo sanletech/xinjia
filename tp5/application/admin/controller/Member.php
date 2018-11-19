@@ -104,42 +104,20 @@ class Member extends Base
     public function  pushMoneyEdit(){
      
         $data = $this->request->param();
-        $data = $data['dataArray'];
-//        $this->_p($data);exit;
-        $arr= [];
-        $dataArr = array_splice($data, -5);
-        foreach ($dataArr as $key => $value) {
-            $arr += $value;
+        $member_code =$data['member_code'];
+        $ship_id =$data['ship_id'];
+        $container_size =$data['container_size'];
+        $price =$data['price'];
+        $mtime =  date('Y-m-d H:i:s');
+        //先查询是否存在
+        $selcet_res = Db::name('member_profit')->where(['member_code'=>$member_code,'ship_id'=>$ship_id])->limit(1)->find();
+        if(empty($selcet_res)){
+            $res =Db::name('member_profit')->insert(['member_code'=>$member_code,'ship_id'=>$ship_id,$container_size=>$price,'mtime'=>$mtime]);
+        }  else {
+            $res =Db::name('member_profit')->where(['member_code'=>$member_code,'ship_id'=>$ship_id])->update([$container_size=>$price,'mtime'=>$mtime]);
         }
-       
-        $moneyArr = array_splice($data, 0,(count($data)/2));
-        //形成以ship_id为键,money 为值的数组
-//        $this->_p($data);$this->_p($moneyArr);exit;
-        $money_ship = array_combine(array_column($data,'ship_id'),array_column($moneyArr,'money'));
         
-        $sales['sales_name'] = $arr['sales_name'];
-        $sales['sales_code']= $arr['sales_code'];
-        $member_code= $arr['member_code'];
-        //更新业务表客户对应的业务员
-        $res =Db::name('sales_member')->where('member_code',$member_code)->update($sales);
-        $status[] =$res ? true :false;
-        unset($arr['sales_name'],$arr['sales_code'],$arr['member_code'],$arr['member_name'],$arr['customer_id']);
-        $mtime =date('Y-m-d H:i:s');
-        foreach ($money_ship as $shipSql =>$moneySql){
-            //如果客户对应的船公司如果存在就更新 否则就添加
-            $res2 =Db::name('member_profit')->where('member_code',$member_code)
-                    ->where('ship_id',$shipSql)->find();
-            if(empty($res2)){
-                $res1 =Db::name('member_profit')
-                    ->insert(['member_code'=>$member_code,'ship_id'=>$shipSql,'money'=>$moneySql,'mtime'=>$mtime]);
-            }else{
-                $res1 =Db::name('member_profit')->where('member_code',$member_code)
-                    ->where('ship_id',$shipSql)
-                    ->update(['money'=>$moneySql,'mtime'=>$mtime]);
-            }            
-            $status[] =$res1 ? true :false;
-        }
-        if(array_key_exists('false', $status)){
+        if(empty($res)){
             return array('status'=>0,'message'=>'客户提成修改失败');
         }else{
             return array('status'=>1,'message'=>'客户提成修改成功');
