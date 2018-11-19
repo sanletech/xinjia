@@ -1,7 +1,7 @@
 <{include file='./public/header' /}>
 
   <body>
-<!--    <link rel="stylesheet" href="__STATIC__/css/trailer_add.css">-->
+   <link rel="stylesheet" href="__STATIC__/css/trailer_add.css">
     <form class="layui-form" id="trailerform" >
       <div class="trailer layui-row">
         <!-- 选择港口 -->
@@ -76,7 +76,7 @@
           </div>
         </div>
         <!-- 中间线 -->
-        <div class="layui-col-xs2 xian"></div>
+        <div class="layui-col-xs2 xian" style="height: 95px;"></div>
         <!-- 送货 -->
         <div class="layui-col-xs5">
           <div class="grid-demo">
@@ -126,12 +126,9 @@
         var index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
       });
-      
-//       //加载 所有的车公司名字简称和相应的id
-//        var js_car = '<?php echo $js_car; ?>';
-//            js_car=JSON.parse(js_car);    
-//        //加载 所有的港口名字和相应的城市code
-//        var js_port = JS_PORT;
+
+        //加载 所有的港口名字和相应的城市code
+        var js_port = JS_PORT;
          
         
         var url="<{:url('admin/price/trailer_toadd')}>";    
@@ -141,7 +138,7 @@
             form = layui.form;
             $form = $('form');
             loadProvince1();
-            loadCar();
+            // loadCar();
         });  
         
            //加载省数据
@@ -209,20 +206,7 @@
             } ) 
         }
       
-//        function loadCar(){
-//            //加载 所有的车队名字和相应的车队id
-//            var car_length =js_car.length;
-//            var carHtml = '';
-//            for(var i=0;i<car_length;i++){
-//                carHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
-//            }
-//            $form.find('select[name=car_load]').append(carHtml);
-//            $form.find('select[name=car_send]').append(carHtml);
-//            form.render();
-//            form.on('select(car)', function(data) {
-//            } ) 
-//        }
-        
+
         function  trailerAjax(){
             var loading = layer.load(1);
             post_adduser = true;    

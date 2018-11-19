@@ -98,10 +98,11 @@ layui.use(['table','laydate','layedit'], function(){
   });
 
   var ship;//当前点击下标
-  
+  var zhi;//当前值
   $('.td_inp input').dblclick(function(){//双击事件  
     $(this).addClass('in').removeAttr('readonly');
     ship = $(this).parents('td').index();//当前点击下标
+    zhi = $(this).val();
   });
 
   $('.td_inp input').blur(function(){//光标离开事件
@@ -127,9 +128,17 @@ layui.use(['table','laydate','layedit'], function(){
       id = zj.parents('tr').prev().children('.id').html();
       ship_id = $('#demo thead tr').eq(1).children('th').eq(ship-1).attr('name')
     }
-
+    console.log(zhi);
+    
     //用户ID：柜型   船公司id：输入内容
-     $.get(ship_edit_url,{member_code:id,ship_id:ship_id,container_size:gui,price:valu});
+     $.get(ship_edit_url,{member_code:id,contaniner_code:gui,ship_id:ship_id,price:valu},function(res){
+       if (res.status) {
+         layui.layer.msg("修改成功", {icon: 1,time: 500});
+       }else{
+         zj.val(zhi);
+         layui.layer.msg("提交失败", {icon: 2,time: 1000});
+       }
+     });
   }
 });
 </script>
