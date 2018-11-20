@@ -39,15 +39,15 @@
           <tr >
             <td><{$vo.port_name}></td>
             <td><{$vo.ship_short_name}></td> 
-            <td>￥<{$vo.r20GP}></td>
-            <td>￥<{$vo.r40HQ}></td>
-            <td>￥<{$vo.s20GP}></td>
-            <td>￥<{$vo.s40HQ}></td>
+            <td>￥<{$vo.r_20GP}></td>
+            <td>￥<{$vo.r_40HQ}></td>
+            <td>￥<{$vo.s_20GP}></td>
+            <td>￥<{$vo.s_40HQ}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/incidentalEdit')}>?rid=<{$vo.rid}>&sid=<{$vo.sid}>',600,400)" href="javascript:;">
+              <a title="编辑"  onclick="x_admin_show('修改','<{:url('Price/incidentalEdit')}>?id=<{$vo.id}>',600,400)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
-              <a title="删除" onclick="member_del(this,'<{$vo.rid}>_<{$vo.sid}>')" href="javascript:;">
+              <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
             </td>

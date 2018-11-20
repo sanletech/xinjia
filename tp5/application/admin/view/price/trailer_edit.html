@@ -5,6 +5,7 @@
     <form class="layui-form" id="trailerform" >
       <div class="trailer layui-row">
         <!-- 选择港口 -->
+         <input type="hidden" name="id"  value="<{$data.id}>" >
          <div class="layui-form-item">
           <label class="layui-form-label">港口:</label>
                 <div class="layui-input-inline" id ="oldport" >
@@ -170,7 +171,6 @@
             var cityHtml = '';
             for (var i = 0; i < citys.length; i++) {
                 cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
-              //  cityHtml += '<option  style="width: 40px" value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
             }
             $form.find('select[name=city1]').html(cityHtml).parent().show();
             form.render();
@@ -182,7 +182,7 @@
                 var index = d[2];
                 if (count > 0) {
                     //将城市Id 传给港口loadPort()
-                    //console.log(citys[index].cityCode);
+                    console.log(citys[index].cityCode);
                    loadPort(citys[index].mallPortList);
                   // loadArea(citys[index].mallAreaList);
                 } else {
@@ -193,18 +193,18 @@
      
         //加载对应城市的港口，并显示已经选中了
         function loadPort(CityCode){
+            let ports = CityCode;
             var areaHtml = '';
             for(var i=0;i<ports.length;i++){
-                areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
+            areaHtml += '<option value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>'; 
             }
             $form.find('select[name=port]').html(areaHtml).parent().show();
             form.render();
-            
             form.on('select(port)', function(data) {
-                   $('#oldport').remove();
-            } ) 
+            $('#oldport').remove();
+            })
         }
-        
+
         
         
         function  trailerAjax(){

@@ -4,15 +4,13 @@
 
      <form class="layui-form" id="editform">
     <div class="route layui-row">
+        <input type="hidden" name="id"  value="<{$list.id}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
         <!-- 航务公司 -->
         <div class="layui-form-item">
             <label class="layui-form-label">船务公司</label>
             <div class="layui-input-inline">
                     <input type="hidden" name="ship_id"  value="<{$list.ship_id}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
                     <input type="text" name="ship_name"  value="<{$list.ship_short_name}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
-<!--                <select name="ship" lay-filter="ship" lay-search>
-                    <option value="" >请选择船公司</option>
-                </select>  -->
             </div>
         </div>
         <!-- 港口航线 -->
@@ -23,21 +21,6 @@
                     <input type="hidden" name="port_code"  value="<{$list.port_code}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
                     <input type="text" name="port_name"  value="<{$list.port_name}>" lay-verify="title" readOnly="readOnly" class="layui-input"/>
                 </div>
-<!--                <div class="layui-input-inline">
-                    <select name="province" lay-filter="province" >
-                        <option value="">请选择省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" id ='citydiv' style="display: none;">
-                    <select name="city" lay-filter="city" >
-                        <option value="">请选择市</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline" style="display: none;">
-                    <select name="area"  lay-filter="area">
-                        <option value="">请选择起点/终点港口</option>
-                    </select>
-                </div>-->
               <div class="layui-form-item" id ="search_port">
               </div>
             </div>
@@ -46,19 +29,19 @@
         <div class="layui-form-item">
             <label class="layui-form-label">起运港口杂费</label>
             <div class="layui-input-inline">
-                <input type="text" name="start_40HQ_fee"  value="<{$list.r40HQ}>" lay-verify="title" autocomplete="off" placeholder="40HQ起运港杂费" class="layui-input"/>
+                <input type="text" name="start_40HQ_fee"  value="<{$list.r_40HQ}>" lay-verify="title" autocomplete="off" placeholder="40HQ起运港杂费" class="layui-input"/>
             </div>
             <div class="layui-input-inline">
-                <input type="text" name="start_20GP_fee"  value="<{$list.r20GP}>" lay-verify="title" autocomplete="off" placeholder="20GP起运港杂费" class="layui-input"/>
+                <input type="text" name="start_20GP_fee"  value="<{$list.r_20GP}>" lay-verify="title" autocomplete="off" placeholder="20GP起运港杂费" class="layui-input"/>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">目的港口杂费</label>
             <div class="layui-input-inline">
-                <input type="text" name="end_40HQ_fee" value="<{$list.s40HQ}>"  lay-verify="title" autocomplete="off" placeholder="40HQ目的港杂费" class="layui-input"/>
+                <input type="text" name="end_40HQ_fee" value="<{$list.s_40HQ}>"  lay-verify="title" autocomplete="off" placeholder="40HQ目的港杂费" class="layui-input"/>
             </div>
             <div class="layui-input-inline">
-                <input type="text" name="end_20GP_fee"  value="<{$list.s20GP}>" lay-verify="title" autocomplete="off" placeholder="20GP目的港杂费" class="layui-input"/>
+                <input type="text" name="end_20GP_fee"  value="<{$list.s_20GP}>" lay-verify="title" autocomplete="off" placeholder="20GP目的港杂费" class="layui-input"/>
             </div>
         </div>        
 

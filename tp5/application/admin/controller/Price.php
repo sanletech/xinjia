@@ -153,10 +153,8 @@ class Price extends Base
         //根据港口和地址 贮存车队送货/装货线路
         $port_id = strstr($data['port'],'_',true); 
         $address_data =  $data['town'] ? $data['town'] :$data['area']; 
-        $load = $data['load'];
-        $send = $data['send'];
         $carprice = new PriceM;
-        $res = $carprice->price_trailer_toadd($port_id, $address_data, $load, $send);
+        $res = $carprice->price_trailer_toadd($port_id, $address_data, $data);
         return json( $res ? array('status'=>1,'message'=>'添加成功') : array('status'=>0,'message'=>'添加失败') );   
       
     }
@@ -175,27 +173,44 @@ class Price extends Base
         //拖车运价执行修改
     public function trailer_toedit(){
         $data = $this->request->param();
-//       $this->_p($data);exit;
-        $carprice = new PriceM;
-        $res =$carprice->price_trailer_toedit($data);          
-        if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);  
-         return $status; 
+//        $this->_p($data);exit;
+        if(!array_key_exists('port_id', $data)){
+            $port_id = strstr($data['port'],'_',TRUE);
+            $port_name = ltrim($data['port'], $port_id.'_');
+        }  else {
+            $port_id = $data['port_id'];
+            $port_name = $data['port_name'];
+        }
+        if(!array_key_exists('address_id', $data)){
+            $area_id = strstr($data['area'], '_',TRUE);
+            $add_name =Db::name('area')->alias('A')
+                    ->join('hl_city C','A.father = C.city_id','left')
+                    ->join('hl_province P','C.father = P.province_id','left')
+                    ->where('A.area_id ',$area_id)
+                    ->field('P.province,C.city,A.area')
+                    ->find();
+            $address_id =strstr($data['town'], '_',TRUE);
+            $address_name = implode('', $add_name).ltrim($data['town'],$address_id.'_');
+        }  else {
+            $address_id = $data['address_id'];
+            $address_name = $data['address_name'];
+        }
+        $id = $data['id'];
+        $mtime = date('Y-m-d H:i:s');
+        $up_data =array('port_id'=>$port_id,'address_id'=>$address_id,
+            'address_name'=>$address_name,'r_20GP'=>$data['r_20GP'],
+            'r_40HQ'=>$data['r_40HQ'],'s_20GP'=>$data['s_20GP'],
+            's_40HQ'=>$data['s_40HQ'],'mtime'=>$mtime);
+        $res =Db::name('carprice')->where('id',$id)->update($up_data);
+        return json($res ? array('status'=>1,'message'=>'修改成功'): array('status'=>0,'message'=>'修改失败')); 
     }
         //拖车运价执行删除
     public function traile_del(){
         //接受price_route_del 的id 数组
         $data = $this->request->param();
         $carprice_id = $data['id'];
-        $carprice = new PriceM;
-        $res = $carprice->price_trailer_del($carprice_id);
-         if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status;   
+        $res =Db::name('carprice')->where('id','in',$carprice_id)->update(['status'=>0]);
+        return json($res ? array('status'=>1,'message'=>'删除成功'): array('status'=>0,'message'=>'删除失败'));    
     }
     //港口杂费
     public function priceIncidental(){
@@ -211,9 +226,9 @@ class Price extends Base
         $dataM = new PriceM;
         $listArr = $dataM->priceIncidental($tol,$limit,$port_name,$ship_name);
         //分页数据
-        $list =$listArr[0];
+        $list =$listArr['list'];
         // 总页数
-        $count = $listArr[1];
+        $count = $listArr['count'];
         $this->view->assign('port_name',$port_name);
         $this->view->assign('ship_name',$ship_name);
         $this->view->assign('list',$list);
@@ -227,19 +242,12 @@ class Price extends Base
     
     //港口杂费修改
     public function incidentalEdit(){
-        $data = $this->request->only(['rid','sid'],'get');
-       // var_dump($data);exit;
-        $list =Db::name('price_incidental')->alias('R')->
-                join('hl_price_incidental S',"R.port_code=S.port_code " 
-                        . "and R.ship_id =S.ship_id and R.type='R' and  S.type='S' and S.id <> R.id",'left')
-                ->join('hl_port P','P.port_code=R.port_code','left')
-                ->join('hl_shipcompany SC',"SC.id=R.ship_id and SC.status='1'",'left')
-                ->where('S.id',$data['sid'])->where('R.id',$data['rid'])
-                ->field('R.id rid,S.id sid,R.port_code,P.port_name,R.40HQ r40HQ,'
-                        . 'R.20GP r20GP,S.40HQ s40HQ,S.20GP s20GP ,R.ship_id ,SC.ship_short_name')
-                ->group('R.id,S.id')
-                ->find();
-//        $this->_p($list);EXIT;
+        $id = $this->request->param('id');
+        $list =Db::name('price_incidental')->alias('PI')
+                ->join('hl_port P','P.port_code=PI.port_code','left')
+                ->join('hl_shipcompany SC',"SC.id=PI.ship_id and SC.status='1'",'left')
+                ->field('PI.*,P.port_name,SC.ship_short_name')
+                ->where('PI.id',$id)->find();
         $this->view->assign('list',$list);
         return $this->view->fetch('price/price_incidentaledit'); 
     }
@@ -247,6 +255,7 @@ class Price extends Base
     //港口杂费执行修改
     public function incidentalToEdit(){
         $data = $this->request->param();
+        $id = $data['id'];
         $ship_id = $data['ship_id'];
         $port_code =$data['port_code'];
         $start_40HQ_fee =$data['start_40HQ_fee'];
@@ -255,23 +264,17 @@ class Price extends Base
         $end_20GP_fee = $data['end_20GP_fee'];
         $mtime = date('Y-m-d H:i:s');
         $res =Db::name('price_incidental')
-                ->where(array('ship_id'=>$ship_id,'port_code'=>$port_code,'type'=>'r'))
-                ->update(array('40HQ'=>$start_40HQ_fee,'20GP'=>$start_20GP_fee,'mtime'=>$mtime));
-        $res1 =Db::name('price_incidental')
-               ->where(array('ship_id'=>$ship_id,'port_code'=>$port_code,'type'=>'s'))
-               ->update(array('40HQ'=>$end_40HQ_fee,'20GP'=>$end_20GP_fee,'mtime'=>$mtime));
-        $response =[];
+            ->where(array('ship_id'=>$ship_id,'port_code'=>$port_code))
+            ->update(array('r_40HQ'=>$start_40HQ_fee,'r_20GP'=>$start_20GP_fee,
+                's_40HQ'=>$end_40HQ_fee,'s_20GP'=>$end_20GP_fee,'mtime'=>$mtime));
         
-        $res?$response=['status'=>1,'mssage'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
-        $res1?$response=['status'=>1,'mssage'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败'];
-        return $response;
+        return json($res?$response=['status'=>1,'mssage'=>'修改成功']:$response=['status'=>0,'message'=>'修改失败']);
     }
     
     //港口杂费删除
     public function incidentalDel(){
-        $id = $this->request->only(['id'],'post');
-        $idArr = explode('_', $id['id']['0']);
-        $res =Db::name('price_incidental')->where('id','in',$idArr)->delete();
+        $id = $this->request->param(['id']);
+        $res =Db::name('price_incidental')->where('id','in',$idArr)->update(['status'=>0]);
         return  $res ?$response=['status'=>1,'mssage'=>'删除成功']:$response=['status'=>0,'message'=>'删除失败'];
     }
         //添加港口杂费
@@ -286,9 +289,9 @@ class Price extends Base
         //先查询是否已经存在港口了
         $res1 = Db::name('price_incidental')->where(['ship_id'=>$ship_id,'port_code'=>$port_code])->find();
         if(!$res1){
-            $insertData[0] = ['port_code'=>$port_code,'ship_id'=>$ship_id,'40HQ'=>$data['start_40HQ_fee'],'20GP'=>$data['start_20GP_fee'],'type'=>'r','mtime'=>$mtime];
-            $insertData[1] = ['port_code'=>$port_code,'ship_id'=>$ship_id,'40HQ'=>$data['end_40HQ_fee'],'20GP'=>$data['end_20GP_fee'],'type'=>'s','mtime'=>$mtime];
-            $res= Db::name('price_incidental')->insertAll($insertData);
+            $insertData = ['port_code'=>$port_code,'ship_id'=>$ship_id,'r_40HQ'=>$data['start_40HQ_fee'],'r_20GP'=>$data['start_20GP_fee'],
+                    's_40HQ'=>$data['end_40HQ_fee'],'s_20GP'=>$data['end_20GP_fee'],'mtime'=>$mtime];
+            $res= Db::name('price_incidental')->insert($insertData);
             return  $res ?$response=['status'=>1,'mssage'=>'添加成功']:$response=['status'=>0,'message'=>'添加失败'];
         }  else {
             return $response=['status'=>0,'message'=>'已经存在此港口请先删除再做添加'];;
