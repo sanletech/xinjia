@@ -133,7 +133,7 @@ class Price extends Base
     
         $route = new PriceM;
         $list = $route->price_trailer_list($port_name ,15);
-        //$this->_p($list);exit;
+//        $this->_p($list);exit;
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
@@ -154,35 +154,22 @@ class Price extends Base
         $port_id = strstr($data['port'],'_',true); 
         $address_data =  $data['town'] ? $data['town'] :$data['area']; 
         $load = $data['load'];
-        $load['car']= strstr($data['car_load'],'_',true); 
         $send = $data['send'];
-        $send['car']= strstr($data['car_send'],'_',true); 
         $carprice = new PriceM;
         $res = $carprice->price_trailer_toadd($port_id, $address_data, $load, $send);
-        if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status;   
+        return json( $res ? array('status'=>1,'message'=>'添加成功') : array('status'=>0,'message'=>'添加失败') );   
       
     }
     
     //拖车运价修改页面
     public function trailer_edit(){
-        $data = $this->request->param();
-        $carprice = new PriceM;
-        $res =$carprice->price_trailer_edit($data);   
-//      $this->_p($res);exit;
-
-  
-        //传递所有的车队给前台页面
-        $sql2="select id ,car_name from  hl_cardata ";
-        $car_data =Db::query($sql2);
-       //转成json格式传给js
-        $js_car = json_encode($car_data);
-        
-        $this->view->assign('js_car',$js_car);
-        $this->view->assign('data',$res);
+        $id = $this->request->param('id'); 
+        $data = Db::name('carprice')->alias('CP')
+                ->join('hl_port P', 'CP.port_id =P.port_code', 'left')
+                ->field('CP.*,P.port_name')
+                ->where('CP.id',$id)->find();
+//         $this->_p($data);EXIT;
+        $this->view->assign('data',$data);
         return $this->view->fetch("price/trailer_edit");
     }
         //拖车运价执行修改

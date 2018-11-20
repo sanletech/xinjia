@@ -3,16 +3,13 @@
   <body>
     <link rel="stylesheet" href="__STATIC__/css/trailer_add.css">
     <form class="layui-form" id="trailerform" >
-    <input type="hidden" name="s_id"  value="<{$data.0.s_id}>" >
-    <input type="hidden" name="r_id"  value="<{$data.0.r_id}>" >
-    <input type="hidden" name="cl_id"  value="<{$data.0.cl_id}>" >
       <div class="trailer layui-row">
         <!-- 选择港口 -->
          <div class="layui-form-item">
           <label class="layui-form-label">港口:</label>
                 <div class="layui-input-inline" id ="oldport" >
-                    <input type="text" name="port_name" value="<{$data.0.port_name}>" readonly="readonly"  class="layui-input">
-                    <input type="hidden" name="port_id"  value="<{$data.0.port_id}>" >
+                    <input type="text" name="port_name" value="<{$data.port_name}>" readonly="readonly"  class="layui-input">
+                    <input type="hidden" name="port_id"  value="<{$data.port_id}>" >
                 </div>
               <div class="layui-input-inline">
                     <select name="province1" lay-filter="province1" >
@@ -36,8 +33,8 @@
                 <span class="x-red">*</span>请选择地址
                 </label>
                 <div class="layui-input-inline" id ="oldadd" >
-                    <input type="text" name="address_name" value="<{$data.0.address_name}>" readonly="readonly"  class="layui-input">
-                     <input type="hidden" name="address_id"  value="<{$data.0.address_id}>" >
+                    <input type="text" name="address_name" value="<{$data.address_name}>" readonly="readonly"  class="layui-input">
+                     <input type="hidden" name="address_id"  value="<{$data.address_id}>" >
                 </div>
                 <div class="layui-input-inline">
                     <select name="province" lay-filter="province" >
@@ -68,23 +65,15 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">送货20GP:</label>
                 <div class="layui-input-block">
-                    <input type="text" name="send[price_20GP]" value="<{$data.0.s_20GP}>" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                    <input type="text" name="s_20GP" value="<{$data.s_20GP}>" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">送货40HQ:</label>
                 <div class="layui-input-block">
-                  <input type="text" name="send[price_40HQ]" value="<{$data.0.s_40HQ}>" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                  <input type="text" name="s_40HQ" value="<{$data.s_40HQ}>" lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
                 </div>
               </div>
-<!--              <div class="layui-form-item">
-                <label class="layui-form-label">送货车队名:</label>
-                <div class="layui-input-inline" >
-                    <select name ="car_send"  lay-filter="car" lay-search>
-                        <option value="">请选装货车队</option>
-                    </select>
-                </div>
-              </div>-->
             </div>
           </div>
         </div>
@@ -98,27 +87,17 @@
             <div class="layui-form-item">
               <label class="layui-form-label">装货20GP:</label>
               <div class="layui-input-block">
-                  <input type="text" name="load[price_20GP]"  value="<{$data['0']['r_20GP']}>"  lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                  <input type="text" name="r_20GP"  value="<{$data.r_20GP}>"  lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
               </div>
             </div>
             <div class="layui-form-item">
               <label class="layui-form-label">装货40HQ:</label>
               <div class="layui-input-block">
-                <input type="text" name="load[price_40HQ]" value="<{$data.0.r_40HQ}>"  lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                <input type="text" name="r_40HQ" value="<{$data.r_40HQ}>"  lay-verify="title" autocomplete="off" placeholder="请输入价格" class="layui-input">
               </div>
             </div>
-<!--            <div class="layui-form-item">
-              <label class="layui-form-label">装货车队名:</label>
-                <div class="layui-input-inline" >
-                <select name ="car_load"  lay-filter="car" lay-search>
-                    <option value="">请选装货车队</option>
-                </select>
-                </div>
-            </div>-->
           </div>
         </div>
-
-  
 
        <div class="layui-form-item layui-col-xs12 niu">
           <div class="layui-col-md1 layui-col-md-offset4">
@@ -142,13 +121,11 @@
         parent.layer.close(index);
       });
       
-       //加载 所有的船公司名字简称和相应的id
-        // var js_car = '<?php echo $js_car; ?>';
-        //     js_car=JSON.parse(js_car);    
+       
         //加载 所有的港口名字和相应的城市code
         var js_port = JS_PORT;
             
-        var port_id = "<{$data.0.port_id}>";
+        var port_id = "<{$data.port_id}>";
      
         
         var url="<{:url('admin/price/trailer_toedit')}>";    
@@ -228,31 +205,6 @@
             } ) 
         }
         
-        // function loadCar(){
-        //     //加载 所有的车队名字和相应的车队id
-        //     var car_length =js_car.length;
-        //     var scarHtml = ''; var rcarHtml = '';
-        //     for(var i=0;i<car_length;i++){
-        //         if(s_carid ==js_car[i].id){
-                  
-        //             scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
-        //         }else{
-        //             scarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
-        //         }   
-        //         if(r_carid ==js_car[i].id){
-        //             rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '" selected="selected">' + js_car[i].car_name + '</option>';  
-        //         }else{
-        //             rcarHtml += '<option  value="' + js_car[i].id +'_'+ js_car[i].car_name + '">' + js_car[i].car_name + '</option>';  
-        //         }   
-        //     }
-             
-        //     $form.find('select[name=car_load]').append(rcarHtml);
-        //     $form.find('select[name=car_send]').append(scarHtml);
-        //     form.render();
-        //     form.on('select(car)', function(data) {
-        //     } ) 
-
-        // }
         
         
         function  trailerAjax(){
