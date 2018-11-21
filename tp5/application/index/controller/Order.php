@@ -36,7 +36,7 @@ class Order extends Base
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
-      $this->_p($list);exit;
+//      $this->_p($list);exit;
        return $this->view->fetch('order/order_list');
     }
     

@@ -112,11 +112,8 @@
       /*用户-删除*/
     function member_del(obj,did){
         layer.confirm('确认要删除吗？',function(index){
-            //转成数组形式
-            var dataA=new Array()
-            dataA[0]=did ;
-            var dataArray={id:dataA}
-            toajax(dataArray);
+            var dataArray={id:did}
+            toajax(dataArray);            
             $(obj).parents("tr").remove();
             layer.msg('已删除!',{icon:1,time:1000});
          });
@@ -140,10 +137,10 @@
                 data:dataArray,
                 dataType:"json",
                 success:function(data){
-                    if(data.status==1){
+                    if(data.status){
                       return 1;
                     }else{
-                        return 0 ;
+                      return 0 ;
                   }
                 }
             })

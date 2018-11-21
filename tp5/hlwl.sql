@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-20 15:45:17
+Date: 2018-11-20 17:58:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3528,8 +3528,8 @@ CREATE TABLE `hl_carprice` (
 -- ----------------------------
 -- Records of hl_carprice
 -- ----------------------------
-INSERT INTO `hl_carprice` VALUES ('1', '500', '200', '500', '100', null, '1', '2018-11-20 15:16:56', '北京市北京市东城区景山街道', '110101002', '110100002');
-INSERT INTO `hl_carprice` VALUES ('2', '500', '200', '500', '100', null, '1', '2018-11-20 15:16:30', '北京市北京市东城区交道口街道', '110101003', '110100002');
+INSERT INTO `hl_carprice` VALUES ('1', '500', '200', '500', '200', null, '1', '2018-11-20 16:52:36', '北京市北京市东城区景山街道', '110101002', '110100004');
+INSERT INTO `hl_carprice` VALUES ('2', '500', '200', '500', '100', null, '0', '2018-11-20 16:52:53', '北京市北京市东城区交道口街道', '110101003', '110100004');
 
 -- ----------------------------
 -- Table structure for `hl_car_book`
@@ -3609,77 +3609,6 @@ INSERT INTO `hl_car_city` VALUES ('北京市', '20', '110100', '87');
 INSERT INTO `hl_car_city` VALUES ('唐山市', '20', '130200', '88');
 INSERT INTO `hl_car_city` VALUES ('邯郸市', '20', '130400', '89');
 INSERT INTO `hl_car_city` VALUES ('保定市', '20', '130600', '90');
-
--- ----------------------------
--- Table structure for `hl_car_line`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_car_line`;
-CREATE TABLE `hl_car_line` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `address_name` varchar(80) DEFAULT NULL,
-  `address_id` int(11) DEFAULT NULL COMMENT 'id',
-  `port_id` int(11) DEFAULT NULL COMMENT '港口的port_code',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_car_line
--- ----------------------------
-INSERT INTO `hl_car_line` VALUES ('1', 'aaaa', '421125100', '110100002');
-INSERT INTO `hl_car_line` VALUES ('23', null, '421125117', '110100003');
-INSERT INTO `hl_car_line` VALUES ('24', null, '421125117', '110100004');
-INSERT INTO `hl_car_line` VALUES ('25', null, '421125117', '110100005');
-INSERT INTO `hl_car_line` VALUES ('26', null, '120102002', '110100006');
-INSERT INTO `hl_car_line` VALUES ('27', null, '110105001', '110100007');
-INSERT INTO `hl_car_line` VALUES ('28', null, '230102001', '110100008');
-INSERT INTO `hl_car_line` VALUES ('29', '鼓楼街道', '110228001', '110100009');
-INSERT INTO `hl_car_line` VALUES ('30', '浙江省温州市瓯海区景山街道', '330304001', '110100010');
-INSERT INTO `hl_car_line` VALUES ('31', '北京市市辖区东城区景山街道', '110101002', '120100002');
-INSERT INTO `hl_car_line` VALUES ('32', '广西壮族自治区桂林市资源县车田苗族乡', '450329203', '120100003');
-INSERT INTO `hl_car_line` VALUES ('33', '北京市北京市东城区东华门街道', '110101001', '120100004');
-INSERT INTO `hl_car_line` VALUES ('34', '天津市天津市和平区新兴街道', '120101004', '120100005');
-INSERT INTO `hl_car_line` VALUES ('35', '北京市北京市西城区西长安街街道', '110102001', '110100003');
-INSERT INTO `hl_car_line` VALUES ('36', '河北省石家庄市新华区宁安街道', '130105004', '110100002');
-INSERT INTO `hl_car_line` VALUES ('37', '北京市北京市丰台区右安门街道', '110106001', '110100002');
-INSERT INTO `hl_car_line` VALUES ('38', '北京市北京市通州区玉桥街道', '110112004', '110100003');
-INSERT INTO `hl_car_line` VALUES ('39', '安徽省合肥市瑶海区明光路街道', '340102001', '120100009');
-INSERT INTO `hl_car_line` VALUES ('40', '', '0', '0');
-INSERT INTO `hl_car_line` VALUES ('41', 'P.provinceC.cityA.area东华门街道', '110101001', '110100002');
-
--- ----------------------------
--- Table structure for `hl_car_listprice`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_car_listprice`;
-CREATE TABLE `hl_car_listprice` (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT '车运目录定价ID',
-  `cl_id` int(20) DEFAULT NULL COMMENT 'car_line的id即路线id',
-  `price_20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子车运价格',
-  `price_40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子车运价格',
-  `latest_order_time` int(10) DEFAULT NULL COMMENT '最新的合作订单时间',
-  `variable` char(1) DEFAULT NULL COMMENT '区分是装货还是送货  装货为r 送货为s',
-  `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_car_listprice
--- ----------------------------
-INSERT INTO `hl_car_listprice` VALUES ('30', '33', '1000.00', '111111112.00', null, 'r', '1528782891');
-INSERT INTO `hl_car_listprice` VALUES ('31', '33', '200.00', '2000.00', null, 's', '1528782891');
-INSERT INTO `hl_car_listprice` VALUES ('32', '31', '5000.00', '55555.00', null, 'r', '1528783034');
-INSERT INTO `hl_car_listprice` VALUES ('33', '31', '555.00', '445454.00', null, 's', '1528783034');
-INSERT INTO `hl_car_listprice` VALUES ('34', '32', '2000.00', '4111.00', null, 'r', '1530002159');
-INSERT INTO `hl_car_listprice` VALUES ('35', '32', '1220.00', '455000.00', null, 's', '1530002159');
-INSERT INTO `hl_car_listprice` VALUES ('36', '35', '500.00', '1000.00', null, 'r', '1530071239');
-INSERT INTO `hl_car_listprice` VALUES ('37', '35', '500.00', '1200.00', null, 's', '1530071239');
-INSERT INTO `hl_car_listprice` VALUES ('38', '36', '800.00', '1600.00', null, 'r', '1530071320');
-INSERT INTO `hl_car_listprice` VALUES ('39', '36', '800.00', '1700.00', null, 's', '1530071320');
-INSERT INTO `hl_car_listprice` VALUES ('42', '37', '500.00', '1000.00', null, 'r', '1530172947');
-INSERT INTO `hl_car_listprice` VALUES ('43', '37', '550.00', '1200.00', null, 's', '1530172947');
-INSERT INTO `hl_car_listprice` VALUES ('44', '38', '600.00', '1500.00', null, 'r', '1530172993');
-INSERT INTO `hl_car_listprice` VALUES ('45', '38', '700.00', '1550.00', null, 's', '1530172993');
-INSERT INTO `hl_car_listprice` VALUES ('46', '39', '200.00', '500.00', null, 'r', '1530672893');
-INSERT INTO `hl_car_listprice` VALUES ('47', '39', '200.00', '500.00', null, 's', '1530672893');
 
 -- ----------------------------
 -- Table structure for `hl_car_port`
@@ -5161,34 +5090,19 @@ CREATE TABLE `hl_price_incidental` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `port_code` int(10) DEFAULT NULL,
   `ship_id` int(10) DEFAULT NULL COMMENT '船公司',
-  `40HQ` int(10) DEFAULT NULL,
-  `20GP` int(10) DEFAULT NULL,
-  `type` varchar(5) DEFAULT NULL COMMENT '装货港receive r 发货港口send s',
+  `r_40HQ` int(10) DEFAULT NULL COMMENT '起运港杂费',
+  `r_20GP` int(10) DEFAULT NULL,
   `mtime` datetime DEFAULT NULL,
+  `s_40HQ` int(10) DEFAULT NULL COMMENT '目的杂费',
+  `s_20GP` int(10) DEFAULT NULL,
+  `status` enum('1','0') DEFAULT '1' COMMENT '1为正常 0为删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_price_incidental
 -- ----------------------------
-INSERT INTO `hl_price_incidental` VALUES ('1', '110100002', '1', '1000', '1500', 'r', '2018-09-12 11:12:48');
-INSERT INTO `hl_price_incidental` VALUES ('2', '110100002', '1', '54564', '45646', 's', '2018-09-12 11:12:48');
-INSERT INTO `hl_price_incidental` VALUES ('3', '110100004', '2', '555', '550', 'r', '2018-09-12 11:12:18');
-INSERT INTO `hl_price_incidental` VALUES ('4', '110100004', '2', '350', '300', 's', '2018-09-12 11:12:18');
-INSERT INTO `hl_price_incidental` VALUES ('5', '110100007', '3', '400', '310', 'r', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('6', '110100007', '3', '450', '300', 's', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('7', '110100008', '4', '400', '310', 'r', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('8', '110100008', '4', '480', '258', 's', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('9', '110100010', '5', '440', '250', 'r', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('10', '110100010', '5', '400', '200', 's', '2018-09-03 11:26:16');
-INSERT INTO `hl_price_incidental` VALUES ('11', '110100006', '1', '2000', '1000', 'r', '2018-09-12 11:23:51');
-INSERT INTO `hl_price_incidental` VALUES ('12', '110100006', '1', '250', '100', 's', '2018-09-12 11:23:51');
-INSERT INTO `hl_price_incidental` VALUES ('13', '110100005', '2', '100', '11521', 'r', '2018-09-14 11:44:08');
-INSERT INTO `hl_price_incidental` VALUES ('14', '110100005', '2', '15151', '5151', 's', '2018-09-14 11:44:08');
-INSERT INTO `hl_price_incidental` VALUES ('15', '110100003', '2', '55', '555', 'r', '2018-09-14 11:45:44');
-INSERT INTO `hl_price_incidental` VALUES ('16', '110100003', '2', '555', '555', 's', '2018-09-14 11:45:44');
-INSERT INTO `hl_price_incidental` VALUES ('17', '110100002', '2', '100', '1515', 'r', '2018-09-14 11:55:37');
-INSERT INTO `hl_price_incidental` VALUES ('18', '110100002', '2', '1515', '120', 's', '2018-09-14 11:55:37');
+INSERT INTO `hl_price_incidental` VALUES ('1', '120100002', '2', '200', '300', '2018-11-20 17:42:26', '100', '100', '1');
 
 -- ----------------------------
 -- Table structure for `hl_province`

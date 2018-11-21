@@ -111,10 +111,10 @@
                   <div class="ship_id"><{$ship_id ? $ship_id: '';}></div>
                 </div>
               <div class="layui-col-xs3 diz">
-                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input" readonly>
+                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
               </div>
               <div class="layui-col-xs3 diz">
-                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input" readonly>
+                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
               </div>
 
               <div class="layui-col-xs3 diz">
@@ -282,7 +282,7 @@
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', ship_id: '' };
         //          起点ID        起点名称        终点ID        终点名称      船公司
       </script>
-      <script src="__STATIC__/../admin/js/ship_boat.js"></script> 
+      <script src="__STATIC__/../admin/js/ship_boat.js"></script>
       <script src="__STATIC__/../admin/js/port.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
       <script>

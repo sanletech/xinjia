@@ -144,6 +144,7 @@ class Price extends Model
          $list = Db::name('carprice')->alias('CP')
                 ->join('hl_port P', 'CP.port_id =P.port_code', 'left')
                 ->field('CP.*,P.port_name')
+                 ->where('CP.status',1)
                 ->order('CP.id')->buildSql();
         
         $pageParam  = ['query' =>[]]; //设置分页查询参数
@@ -156,27 +157,19 @@ class Price extends Model
         return $lista;
         
     }
-    //车队运价 删除
-    public function price_trailer_del($carprice_id){
-        $res = Db::name('carprice')->where('cl_id','in',$carprice_id )->delete();
-        $res ?  $response['success'][] = '删除carprice表':$response['fail'][] = '删除carprice表';
-        return $response ;
-    }
+
     //车队运价的添加
-    public function price_trailer_toadd($port_id, $address_data, $load, $send){
+    public function price_trailer_toadd($port_id, $address_data, $data){
             
         
         $address_id= strstr($address_data,'_',true);
-        $select_res = Db::name('carprice')->where(['port_id'=>$port_id, 'address_id'=>$address_id])->find();
+        $select_res = Db::name('carprice')->where(['port_id'=>$port_id, 'address_id'=>$address_id,'status'=>1])->find();
         $mtime =  date('Y-m-d H:i:s');
         //如果没有查到就添加这条记录 否则就修改
         if(!$select_res){
-            //对$address_id 做判断是县级还是镇级 ,获取县级code
-            if(strlen($address_id)==9){
-                $area_id = substr($address_id,0,-3); //镇级 
-            }  else {
-                $area_id =$address_id; //县级
-            } 
+             //获取县级code
+            $area_id = substr($address_id,0,-3);
+        
             $address_name= ltrim($address_data ,$address_id.'_'); //地址 
           
             $add_name =Db::name('area')->alias('A')
@@ -187,94 +180,20 @@ class Price extends Model
                     ->find();
             $add_name = implode('', $add_name).$address_name;
          
-            $data = array( 'r_20GP'=>$load['price_20GP'],'r_40HQ'=>$load['price_40HQ'],
-                            's_20GP'=>$send['price_20GP'],'s_40HQ'=>$send['price_40HQ'],
+            $data = array( 'r_20GP'=>$data['r_20GP'],'r_40HQ'=>$data['r_40HQ'],
+                            's_20GP'=>$data['s_20GP'],'s_20GP'=>$data['s_20GP'],
                             'port_id'=>$port_id,'address_id'=>$address_id,
                             'address_name'=>$add_name,'mtime'=>$mtime );
             $res =Db::name('carprice')->insert($data);
         }  else {
-            $up_data = ['r_20GP'=>$load['price_20GP'],'r_40HQ'=>$load['price_40HQ'],
-                        's_20GP'=>$send['price_20GP'],'s_40HQ'=>$send['price_40HQ'],'mtime'=>$mtime];
+            $up_data = ['r_20GP'=>$data['r_20GP'],'r_40HQ'=>$data['r_40HQ'],
+                        's_20GP'=>$data['s_20GP'],'s_20GP'=>$data['s_20GP'],'mtime'=>$mtime];
             $res =Db::name('carprice')->where('id',$select_res['id']) ->update($up_data);
         }
         
         return $res ? true :FALSE ;
     }
     
-    
-    //车队运价的修改更新
-    public function  price_trailer_toedit($data)
-    {   
-        $s_id = $data['s_id'];  //送货车队的 运线id
-        $r_id = $data['r_id'];  //装货车队的 运线id
-        
-        //如果存在address_name就是原来的
-        if( array_key_exists('address_name', $data)){
-            $cl_id =  $data['cl_id']; //路线id
-        }else{
-             //根据港口和地址 贮存车队送货/装货线路
-            if( array_key_exists('port_id', $data)){
-                $port_id =  $data['port_id']; //港口id
-            }  else {
-                $port_id = strstr($data['port'],'_',true);//港口id
-            }
-            $address_data =  $data['town'] ? $data['town'] :$data['area']; 
-          
-            $cl_id = $this->lineCar($port_id,$address_data);
-        }
-         $mtime =  date('Y-m-d H:i:s'); //修改时间
-        
-       //装货和送货车队的id ,价格
-        $load_car = strstr($data['car_load'],'_',true); 
-        $load_price_20GP = $data['load']['price_20GP'];
-        $load_price_40HQ = $data['load']['price_40HQ'];
-        
-        $send_car = strstr($data['car_send'],'_',true); 
-        $send_price_20GP = $data['send']['price_20GP'];
-        $send_price_40HQ = $data['send']['price_40HQ'];
-        
-        $sql = "update hl_carprice set cl_id ='$cl_id',car_id ='0',"
-                . "price_20GP ='$load_price_20GP',price_40HQ ='$load_price_40HQ'"
-                . ",mtime='$mtime'  where id ='$r_id'";
-        $sql2 = "update hl_carprice set cl_id ='$cl_id',car_id ='0',"
-                . "price_20GP ='$send_price_20GP',price_40HQ ='$send_price_40HQ'"
-                . ",mtime='$mtime'  where id ='$s_id'";
-        $res = Db::execute($sql); $res2 = Db::execute($sql2);
-        $res ? $response['success'][] = '修改carprice表_装货':$response['fail'][] = '修改carprice表_装货';
-        $res2 ? $response['success'][] = '修改carprice表_送货':$response['fail'][] = '修改carprice表_送货货';
-        return $response;
-    }
-    
-    //查询车队运输线是否存在 若存在就反悔线路id不存在就添加 
-    //参数分别为 港口id, 目的地址, 
-    public function  lineCar($port_id,$address_data){
-        $address_id= strstr($address_data,'_',true);
-      
-        $res = Db::name('car_line')->where(['port_id'=>$port_id, 'address_id'=>$address_id])->limit(1)->find();
-        //如果没有查到就添加这条记录 否则返回路线的id
-        if(!$res){
-            //对$address_id 做判断是县级还是镇级
-            if(strlen($address_id)==9){
-                $area_id = substr($address_id,0,-3); //镇级 
-            }  else {
-                $area_id =$address_id; //县级code
-            } 
-            $address_name= ltrim($address_data ,$address_id.'_'); //地址 
-          
-            $add_name =Db::name('area')->alias('A')
-                    ->join('hl_city C','A.father = C.city_id','left')
-                    ->join('hl_province P','C.father = P.province_id','left')
-                    ->where('A.area_id ',$area_id)
-                    ->field("concat_ws('','P.province','C.city','A.area') AS add_name")
-                    ->find();
-           
-            $add_name =  $add_name['add_name'].$address_name;
-            $id = Db::name('car_line')->insertGetId(['port_id'=>$port_id,'address_id'=>$address_id,'address_name'=>$add_name]);
-        }  else {
-            $id = $res['id'] ;   
-        }
-        return $id ;
-    }
     
     public function priceIncidental($tol,$limit,$port_name,$ship_name){
         $param =[];
@@ -284,23 +203,13 @@ class Price extends Model
         if($ship_name){
             $param['SC.ship_short_name'] =['like',"%{$ship_name}%"];
         }
-//        if(empty($param)){
-//            $param['PI']=['>',0];
-//        }
-//        var_dump($param);exit;
-        $listSql =Db::name('price_incidental')->alias('PI')
+        $list =Db::name('price_incidental')->alias('PI')
                 ->join('hl_port P','P.port_code=PI.port_code','left')
                 ->join('hl_shipcompany SC',"SC.id=PI.ship_id and SC.status='1'",'left')
                 ->field('PI.*,P.port_name,SC.ship_short_name')
-                ->where($param)->group('PI.id')->buildSql();
-        
-        $list = Db::table($listSql.' A')
-                ->join("$listSql B","A.port_code=B.port_code and A.ship_id=B.ship_id and A.type='r'and B.type='s'")
-                ->field('A.id rid,B.id sid,A.port_code,A.port_name,A.40HQ r40HQ,A.20GP r20GP,B.40HQ s40HQ,B.20GP s20GP ,A.ship_id ,A.ship_short_name')
-                ->order('A.id ,A.mtime desc')->limit($tol,$limit)->select();
-//        $this->_p($list);exit;
+                ->where($param)->group('PI.id')->limit($tol,$limit)->select();
         $count =  count($list); 
-        return array($list,$count);
+        return array('list'=>$list,'count'=>$count);
 
     }
     

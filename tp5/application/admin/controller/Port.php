@@ -57,7 +57,7 @@ class Port extends Base
         }else {
             $response = array('status'=>0,'message'=>'添加港口失败');
         } 
-        var_dump($response);exit;
+        // var_dump($response);exit;
         return $response;   
     }
     
@@ -67,6 +67,7 @@ class Port extends Base
     {
        //接受port_del 的id 数组
         $data = $this->request->param();
+        var_dump($data);exit;
         $seaprice_id = $data['id'];
         $portdel = new PortM;
         $res = $portdel ->shiproute_boat_port_del($seaprice_id,'port');
