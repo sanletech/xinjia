@@ -9,10 +9,8 @@ class Order extends Model
     
    
     //前台页面展示门到门的价格表
-    public function  price_sum($member_code,$start_add='',$end_add='',$load_time=''){
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
+    public function  price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit){
         $nowtime= date('y-m-d h:i:s');//要设置船期
-        
         $price_list = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
                 ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
@@ -25,16 +23,15 @@ class Order extends Model
                 ->join('hl_boat BA','BA.id =SP.boat_id','left') //船舶
                 ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
                 ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
-                ->field('SP.id sea_id, CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,SP.route_id,SC.ship_short_name,SP.shipping_date,'
-                        . ' SP.cutoff_date,BA.boat_code,BA.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.generalize,SP.mtime,'
-                        . ' SP.ship_id,SB.sl_start,SB.sl_end,'
+                ->field('SP.*, CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,SC.ship_short_name,'
+                        . ' BA.boat_code,BA.boat_name,SB.sl_start,SB.sl_end,'
                         . ' PR.port_name r_port_name,PS.port_name s_port_name,CPR.address_name r_add,CPS.address_name s_add,'
-                        . ' (select SP.price_20GP + PIR.r_20GP + CPR.r_20GP + PIS.s_20GP + CPS.s_20GP + MP.20GP ) as price_20GP,'
-                        . ' (select SP.price_40HQ + PIR.r_40HQ + CPR.r_40HQ + PIS.s_40HQ + CPS.s_40HQ + MP.40HQ ) as price_40HQ')
+                        . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
+                        . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
                 ->where('MP.member_code',$member_code)
                 ->group('SP.id')
                 ->buildSql();
-//        var_dump($price_list);
+//        var_dump($price_list);exit;
 //        if($load_time){
 //            $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
 //        }
@@ -44,28 +41,43 @@ class Order extends Model
         if($end_add){
             $price_list = Db::table($price_list.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
         }
-        return $price_list;
+        $list = Db::table($price_list.' H')->page($page,$limit)->select();
+        $count = count($list);
+        return array('list'=>$list, 'count'=>$count);
              
     }
     //展示已经选择好的价格信息
-    public function orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code,$pir_id,$pis_id) {
-        if(!($container_size =='20GP'||$container_size =='40HQ')){
-            return '参数错误';
-        } 
-        $list= $this->price_sum($member_code);
+    public function orderBook($sea_id ,$container_size,$member_code) {
+   
         //航线信息
-        $res = Db::table($list.' A')
-            ->where('sea_id',$sea_id)
-            ->where('rid',$r_car_id)
-            ->where('sid',$s_car_id)
-            ->field('A.sea_id, A.rid, A.sid,A.pir_id,A.pis_id,A.ship_id, A.ship_short_name, A.shipping_date,'
-                . 'A.boat_code, A.boat_name, A.sea_limitation,A.ETA,'
-                . 'A.sl_start,A.r_port_name,A.r_add ,A.sl_end,A.s_port_name,A.s_add ,'
-                . 'price_'.$container_size.' as price' )->find();
+        $price = Db::name('seaprice')->alias('SP')
+                ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
+                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
+                ->join('hl_carprice CPR',"CPR.port_id = SB.sl_start and CPR.status='1'",'left') //拖车装货费
+                ->join('hl_carprice CPS',"CPS.port_id = SB.sl_end and CPS.status='1'",'left') //拖车送货货费
+                ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.port_code = SB.sl_start and PIR.status='1' ",'left') //起运港口杂费
+                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.port_code = SB.sl_end   and PIS.status='1'",'left') //起运港口杂费
+                ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ,'left') //不同客户对应不同船公司的利润
+                ->join('hl_shipcompany SC','SC.id = SP.ship_id','left') //船公司
+                ->join('hl_boat BA','BA.id =SP.boat_id','left') //船舶
+                ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
+                ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
+                ->field('SP.*, CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,SC.ship_short_name,'
+                        . ' BA.boat_code,BA.boat_name,SB.sl_start,SB.sl_end,'
+                        . ' PR.port_name r_port_name,PS.port_name s_port_name,CPR.address_name r_add,CPS.address_name s_add,'
+                        . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
+                        . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
+                ->where('MP.member_code',$member_code)->where('SP.id',$sea_id)
+                ->group('SP.id')->find();
+//        $this->_p($price);exit;
         // 将集装箱字的尺寸添加到数组中
-        $res['container_size']=$container_size;
-        
-        return $res;            
+        $price['container_size']=$container_size;
+        if($container_size=='40HQ'){
+            unset($price['price_sum_20GP'],$price['price_20GP']);
+        } elseif($container_size=='20GP') {
+            unset($price['price_sum_40HQ'],$price['price_40HQ']);
+        }
+        return $price;            
     }
     //添加收/发货人的信息
     public function linkmanAdd($data)

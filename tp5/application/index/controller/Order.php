@@ -18,20 +18,17 @@ class Order extends Base
         $load_time =$this->request->param('load_time');
         if($load_time){ $this->view->assign('load_time',$load_time);  
         $load_time =strtotime($load_time); }
-        $sea_pirce =new OrderM;
-        $list = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time);
-        //获取总页数
-        $count =  Db::table($list.' A')->count(); 
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数
         $page= $this->request->param('page',1,'intval');  
         //计算出从那条开始查询
-//         $tol=($page-1)*$limit+1;
-        // 查询出当前页数显示的数据
-        $list = Db::table($list.' A')->limit(($page-1)*$limit,$limit)->select();
+        $sea_pirce =new OrderM;
+        $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
+        //获取总页数
+        $count =  $data['count']; 
+        $list = $data['list'] ;
       
-       // $page= $list->render();
         $this->view->assign('page',$page); 
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
@@ -45,16 +42,15 @@ class Order extends Base
     {
         $data =$this->request->param();
         $sea_id = $data['sea_id'];//海运费id
-        $r_car_id = $data['r_car_id']; //起运港装货拖车费
-        $s_car_id = $data['s_car_id']; //目的港送货拖车费
-        $pir_id =$data['pir_id'];//起运港港口杂费
-        $pis_id =$data['pis_id'];//目的港港口杂费
         $container_size = $data['container_size'];
+        if(!($container_size=='40HQ' || $container_size=='20GP')){
+            return false;
+        }
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->orderBook($sea_id,$r_car_id,$s_car_id,$container_size,$member_code,$pir_id,$pis_id);
+        $list = $sea_pirce ->orderBook($sea_id ,$container_size,$member_code);
+//        $this->_p($list);exit;
         $this->view->assign('list',$list);
-      
         return $this->view->fetch('order/order_book');
     }
     
@@ -129,6 +125,7 @@ class Order extends Base
       public function order_data()
     {
         $data =$this->request->param();
+        $this->_p($data);exit;
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
         $seaprice_id =$data['seaprice_id'];  $carprice_rid=$data['rid']; $carprice_sid =$data['sid'];
