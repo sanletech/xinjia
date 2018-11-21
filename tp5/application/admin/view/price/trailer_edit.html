@@ -193,6 +193,7 @@
      
         //加载对应城市的港口，并显示已经选中了
         function loadPort(CityCode){
+            let ports = CityCode;
             var areaHtml = '';
             for(var i=0;i<ports.length;i++){
                 areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
@@ -201,8 +202,8 @@
             form.render();
             
             form.on('select(port)', function(data) {
-                   $('#oldport').remove();
-            } ) 
+                $('#oldport').remove();
+            })
         }
         
         
