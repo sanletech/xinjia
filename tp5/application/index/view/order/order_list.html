@@ -136,17 +136,17 @@
                       </li>
                       <li>
                         ￥
-                        <{$vo.price_20GP}>
+                        <{$vo.price_sum_20GP}>
                           <div class="dian">
-                              <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&pir_id=<{$vo.pir_id}>&pis_id=<{$vo.pis_id}>&container_size=20GP"
+                              <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.id}>&container_size=20GP"
                               class="gp">下单</a>
                           </div>
                       </li>
                       <li>
                         ￥
-                        <{$vo.price_40HQ}>
+                        <{$vo.price_sum_40HQ}>
                           <div class="dian">
-                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.sea_id}>&s_car_id=<{$vo.sid}>&r_car_id=<{$vo.rid}>&pir_id=<{$vo.pir_id}>&pis_id=<{$vo.pis_id}>&container_size=40HQ"
+                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
                           </div>
                       </li>
@@ -155,7 +155,7 @@
 
                   <div class="nei_rig">
 
-                     <a href="<{:url('Order/route_detail')}>?middle_id=<{$vo.middle_id}>" class="trigger-default">航线详情</a> 
+                     <a href="<{:url('OrderPort/routeDetail')}>?sea_id=<{$vo.id}>" class="trigger-default">航线详情</a> 
                     <a onclick="mo()" href="javascript:;">航线详情</a>
 
                   </div>

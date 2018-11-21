@@ -24,7 +24,7 @@
           </ul>
         </div>
         <!-- 订单信息 -->
-        <input type="hidden" name='sea_id' value="<{$list.sea_id}>">
+        <input type="hidden" name='sea_id' value="<{$list.id}>">
         <input type="hidden" name='rid' value="<{$list.rid}>">
         <input type="hidden" name='sid' value="<{$list.sid}>">
         <input type="hidden" name='pir_id' value="<{$list.pir_id}>">
@@ -81,7 +81,7 @@
                 <{$list.container_size}>
               </span>
               <p>￥
-                <strong class="money"><{$list.price}></strong>
+                <strong class="money"><?php echo $list['price_sum_'.$list['container_size']]; ?></strong>
               </p>
             </div>
             <div class="you">价格说明：这是纯运费</div>
