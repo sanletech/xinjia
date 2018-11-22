@@ -259,7 +259,6 @@ function pand($){
     let huo = $('.goods').html();        
         $('.goods').click(function(){
           let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').find('a').html();
-          
           $('.order_num1').html('订单号：'+order_num); 
           if($(this).html() == '申请放货'){
             layer.open({

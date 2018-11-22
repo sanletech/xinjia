@@ -137,15 +137,28 @@ function add_food(dao_id, zj) {
 $('#start_add').focus(function () {//选择地址
     inp = $('#start_add');
     boot = true;
-    $('#address').css('left', '0px');
-    $('#address').show();
+    $('#address,#select_add').css('left', '0px');
+    if ($(this).val()) {
+        $('#address').hide();
+        $('#select_add').show();
+    }else{
+        $('#address').show();
+        $('#select_add').hide();
+    }
+    
     loadProvince();  //默认展示省份
 })
 $('#end_add').focus(function () {//选择地址
     boot = false;
     inp = $('#end_add');
-    $('#address').css('left', '25%');
-    $('#address').show();
+    $('#address,#select_add').css('left', '25%');
+    if ($(this).val()) {
+        $('#address').hide();
+        $('#select_add').show();
+    }else{
+        $('#address').show();
+        $('#select_add').hide();
+    }
     loadProvince();  //默认展示省份
 })
 
@@ -156,7 +169,45 @@ $('#search_price').click(function () {
 $(document).click(function () {//判断是否点击地址元素 否则隐藏
     if (cli) {
         $('#address').hide();
+        $('#select_add').hide();
     } else {
         cli = true;
     }
+});
+
+var add_di = []; 
+for (let i = 0; i < areaData.length; i++) {
+    var didi = areaData[i].provinceName;
+    
+    for (let j = 0; j < areaData[i].mallCityList.length; j++) {
+        let arry = areaData[i].mallCityList[j].mallAreaList;    
+        for (let g = 0; g < arry.length; g++) {
+            didi = areaData[i].provinceName+areaData[i].mallCityList[j].cityName + arry[g].areaName;
+            add_di.push(didi); 
+        }
+    }
+}
+
+console.log(add_di);
+
+
+$('#start_add,#end_add').on(" input propertychange",function(){
+    if ($(this).val()) {
+        $('#address').hide();
+        $('#select_add').show();
+        $('#select_add ul').html('');
+        for (let i = 0; i < add_di.length; i++) {
+            if (add_di[i].indexOf($(this).val()) != -1) {
+                $('#select_add ul').append('<li>'+add_di[i]+'</li>');
+            }
+        }
+    }else{
+        $('#address').show();
+        $('#select_add').hide();
+    }
+});
+
+$('#select_add').on('click','li',function(){
+    inp.val($(this).html());
+    $('#select_add').hide();
 })
