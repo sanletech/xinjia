@@ -14,10 +14,37 @@ layui.use(['form', 'layedit', 'laydate'], function () {
     });
 });
 
+
+var gk = [];//港口
 //初始数据
 var areaData = JS_PORT;//获取所有地区
 var inp;//选择文本框并赋值区县
 var boot;//判断地址是否是起点还是终点
+
+for (let i = 0; i < areaData.length; i++) {
+    for (let j in areaData[i].mallCityList) {
+        // console.log(areaData[i].mallCityList[j].mallPortList);
+        for (let s = 0; s < areaData[i].mallCityList[j].mallPortList.length; s++) {
+            gk.push(areaData[i].mallCityList[j].mallPortList[s]);
+            
+        }
+    }    
+}
+
+$('#start_add,#end_add').on(" input propertychange",function(){
+    $('#dizhi').html('');
+    for (let i = 0; i < gk.length; i++) {
+        // console.log(gk[i].portName);
+        if (gk[i].portName.indexOf($(this).val()) != -1) {
+            $('#dizhi').append('<a href="javascript:void(0)" onclick="jie_dao(' + gk[i].portCode + ',this)">' + gk[i].portName + '</a>');
+        }
+    }
+    $('#address li').removeClass('lanse').eq(2).addClass('lanse');
+});  
+
+
+
+
 //单击省份
 $('#address li').eq(0).click(function () {
     loadProvince();

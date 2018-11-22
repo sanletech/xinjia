@@ -1,4 +1,4 @@
-<!-- 海运运价 -->
+<!-- 订舱平台 -->
 <{include file='./public/top' /}>
 
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
@@ -58,49 +58,6 @@
       }
     </style>
     <div class="banner">
-      <!-- <div class="gnhy">
-        <div class="gnhy_top">国内海运</div>
-        <form class="layui-form layui-col-md12 x-so" method="post" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
-          <div class="gnhy_nei layui-row">
-            <div class="yinc">
-              <input type="text" name="start_add" value="<{$start_add ? $start_add: '';}>">
-              <input type="text" name="end_add" value="<{$end_add ? $end_add: '';}>">
-              <div class="ship_id"><{$ship_id ? $ship_id: '';}></div>
-            </div>
-            <input autocomplete="off" type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" placeholder="请输入起始地" class="layui-col-xs12">
-            <input autocomplete="off" type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
-            <div class="layui-form-item">
-                <select id="ship_company" name="ship_id" lay-filter="ship" lay-search >
-                    <option value="" >请选择船公司</option>
-                </select>
-            </div>
-            
-          </div>
-
-          <div class="gnhy_di">
-            <div class="di_zuo">
-              <a href="" style="margin-right:50px;">
-                <i class="fa fa-ban on fa-lg"></i>&nbsp;不接货物</a>
-              <a href="">
-                <i class="fa fa-warning fa-lg c"></i>&nbsp;国家禁运品声明</a>
-            </div>
-            <div class="di_you">
-              <button type="button" onclick="toajax()">查价</button>
-            </div>
-          </div>
-
-          <div id="address">
-            <ul>
-              <li>省份</li>
-              <li>城市</li>
-              <li>港口</li>
-            </ul>
-            <div id="dizhi">
-
-            </div>
-          </div>
-        </form>
-      </div> -->
     </div>
     <div class="head_hy">
         <form class="layui-form x-so" method="post" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
@@ -111,10 +68,10 @@
                   <div class="ship_id"><{$ship_id ? $ship_id: '';}></div>
                 </div>
               <div class="layui-col-xs3 diz">
-                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input" readonly>
+                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
               </div>
               <div class="layui-col-xs3 diz">
-                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input" readonly>
+                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
               </div>
 
               <div class="layui-col-xs3 diz">
@@ -282,7 +239,7 @@
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', ship_id: '' };
         //          起点ID        起点名称        终点ID        终点名称      船公司
       </script>
-      <script src="__STATIC__/../admin/js/ship_boat.js"></script> 
+      <script src="__STATIC__/../admin/js/ship_boat.js"></script>
       <script src="__STATIC__/../admin/js/port.js"></script>
       <script src="__STATIC__/js/order_address.js"></script>
       <script>

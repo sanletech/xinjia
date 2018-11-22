@@ -1,70 +1,111 @@
- 海运运价 
+<!-- 海运运价 -->
 <{include file='./public/top' /}>
 
-  <body>
-    <script> 
-    </script>
     <link rel="stylesheet" href="__STATIC__/css/hyyj.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
     <style>
       #dizhi{
         cursor: pointer;
       }
+      .cen_nei .nei_dao ul li{
+        width:12%;
+      }
+      .cen_nei .nei_nei .hang_nei .nei_le ul li{
+        width: 13.5%;
+      }
+      #hxxq{
+        margin-left: -20px !important;
+      }
+      .diz{
+        padding-right: 2%;
+      }
+      .diz input{
+        height: 50px;
+        border-radius: 15px;
+      }
+      #search_price{
+        position: relative;
+      }
+      .butt{
+        text-align: center;
+      }
+      .butt button{
+        color: #fff;
+        background-color: #3385FF;
+        height: 50px;
+        width: 130px;
+        font-size: 20px;
+
+      }
+      .butt button:hover{
+        color: #fff;
+      }
+      .yinc{
+        display: none;
+      }
+      #address{
+        top: 55px;
+        z-index: 2;
+        border-radius: 15px;
+      }
+      .x-so{
+        width: 80%;
+        margin: 0 auto;
+      }
+      .layui-form-select dl{
+        top:55px;
+        border-radius: 15px;  
+      }
     </style>
     <div class="banner">
-      <div class="gnhy">
-        <div class="gnhy_top">国内海运</div>
-        <form class="layui-form layui-col-md12 x-so" id="search_price">
-          <div class="gnhy_nei layui-row">
-            <input type="text" name="start_add" id="start_add" value="<{$start_add ? $start_add : '';}>" placeholder="请输入起始地" class="layui-col-xs12">
-            <input type="text" name="end_add" id="end_add" value="<{$end_add ? $end_add : '';}>" placeholder="请输入目的地" class="layui-col-xs12">
-            <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>" placeholder="装货时间" class="layui-col-xs12"
-              autocomplete="off">
-          </div>
-
-          <div class="gnhy_di">
-            <div class="di_zuo">
-              <a href="" style="margin-right:50px;">
-                <i class="fa fa-ban on fa-lg"></i>&nbsp;不接货物</a>
-              <a href="">
-                <i class="fa fa-warning fa-lg c"></i>&nbsp;国家禁运品声明</a>
-            </div>
-            <div class="di_you">
-              <button type="button" onclick="toajax()">查价</button>
-               <button class="layui-btn" lay-submit="" lay-filter="sreach">查价</button> 
-            </div>
-          </div>
-
-
-           <!-- ======================================  -->
-           <!-- 省市区联动  -->
-          <div id="address">
-            <ul>
-              <li>省份</li>
-              <li>城市</li>
-              <li>区县</li>
-              <li>街道</li>
-            </ul>
-            <div id="dizhi">
-
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
     <div class="head_hy">
-       查询表单 
+        <form class="layui-form x-so" method="post" id="search_price" action="<{:url('index/OrderPort/orderPort')}>">
+          <div class="gnhy_nei layui-row">
+              <div class="yinc">
+                  <input type="text" name="start_add" value="<{$start_add ? $start_add: '';}>">
+                  <input type="text" name="end_add" value="<{$end_add ? $end_add: '';}>">
+                  <div class="ship_id"><{$ship_id ? $ship_id: '';}></div>
+                </div>
+              <div class="layui-col-xs3 diz">
+                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="起始地" class="layui-input">
+              </div>
+              <div class="layui-col-xs3 diz">
+                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的地" class="layui-input">
+              </div>
 
-       查询内容 
+              <div class="layui-col-xs3 diz">
+                <input type="text" name="load_time" id="load_time" value="<{$load_time ? $load_time : '';}>" placeholder="装货时间" class="layui-input" autocomplete="off">
+              </div>
+
+              <div class="layui-col-xs3 butt"><button type="button" class="layui-btn layui-btn-radius" onclick="toajax()">搜&nbsp;索</button></div>
+          </div>
+
+          <div id="address">
+              <ul>
+                <li>省份</li>
+                <li>城市</li>
+                <li>区县</li>
+                <li>街道</li>
+              </ul>
+              <div id="dizhi">
+  
+              </div>
+          </div>
+        </form>
+      <!-- 查询表单 -->
+
+      <!-- 查询内容 -->
       <div class="cen_nei">
-         查询导航 
+        <!-- 查询导航 -->
         <div class="nei_dao">
           <ul>
             <li>航公司</li>
-            <li>截单时间</li>
-            <li>预计开船日期</li>
+            <li>船期</li>
+            <li>起始港</li>
             <li>航线</li>
-            <li>预计到港日期</li>
-            <li>预计送货日期&nbsp;
+            <li>目的港</li>
+            <!-- <li>预计送货日期&nbsp; -->
               <i class="icon iconfont icon-paixu"></i>
             </li>
             <li>20GP&nbsp;
@@ -76,8 +117,10 @@
             <li>操作</li>
           </ul>
         </div>
-         查询内容 
+        <!-- 查询内容 -->
         <{volist name='list' id='vo' }>
+        
+      
           <div class="nei_nei">
             <{if condition="$vo['generalize']=1" }>
               <div class="tj">
@@ -88,8 +131,9 @@
                 <div class="hang_nei">
                   <div class="nei_le">
                     <ul>
+                        
                       <li>
-                        <{$vo.ship_short_name}>
+                        <span class="lan"><{$vo.ship_short_name}></span>
                           <div class="dian">
                             <i class="icon iconfont icon-chuan se"></i>&nbsp;
                             <{if condition="$vo['middle_id']=0" }>
@@ -99,112 +143,112 @@
                                 <{/if}>
                           </div>
                       </li>
+                      
                       <li>
-                        <{$vo.cutoff_date}>
+                        <{$vo.shipping_date|substr=0,-9}>
                       </li>
                       <li>
-                        <{$vo.shipping_date}>
+                        <{$vo.r_port_name}>
                           <div class="dian">
-                            <i class="icon iconfont icon-dingwei se">&nbsp;</i>
-                            <span class="hui">
-                              <{$vo.r_port_name}>
-                            </span>
+                            <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
+<!--                            <span class="hui">
+                              <{$vo.shipping_date}>
+                            </span>-->
                           </div>
                       </li>
+                      
                       <li class="zhi">
                         <div class="hui">
-                          <{$vo.boat_name}>
+                          <span class="lan"><{$vo.sea_limitation}>天</span>
                         </div>
                         <div>
                           <div class="j"></div>
                         </div>
                         <div class="hui">
-                          <{$vo.boat_code}>
+                            <{$vo.boat_name}>/<{$vo.boat_code}>
                         </div>
                       </li>
+                      
                       <li>
-                        <{$vo.ETA}>
+                        <{$vo.s_port_name}>
                           <div class="dian">
-                            <i class="icon iconfont icon-dingwei se">&nbsp;</i>
-                            <span class="hui">
-                              <{$vo.s_port_name}>
-                            </span>
+                            <!-- <i class="icon iconfont icon-dingwei se">&nbsp;</i> -->
+<!--                            <span class="hui">
+                              <{$vo.ETA}>
+                            </span>-->
                           </div>
                       </li>
-                      <li>
+                      
+                      <!-- <li>
                         <{$vo.EDD}>
-                      </li>
+                      </li> -->
                       <li>
-                        ￥
-                        <{$vo.price_sum_20GP}>
+                        <span class="hong"><k>￥</k><{$vo.price_20GP}></span>
                           <div class="dian">
-                              <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.id}>&container_size=20GP"
+                            <{if condition="$vo['price_20GP']==0"}>
+                            <!-- <a href="javascript:;" class="gp">下单</a> -->
+                            <{else /}>
+                            <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.id}>&container_size=20GP"
                               class="gp">下单</a>
+                              <{/if}>
                           </div>
                       </li>
+                      
                       <li>
-                        ￥
-                        <{$vo.price_sum_40HQ}>
+                        <span class="hong"><k>￥</k><{$vo.price_40HQ}></span>
                           <div class="dian">
+                            <{if condition="$vo['price_40HQ']==0"}>
+                            <!-- <a href="javascript:;" class="gp">下单</a> -->
+                            <{else /}>
                             <a href="<{:url('index/Order/orderBook')}>?sea_id=<{$vo.id}>&container_size=40HQ"
                               class="gp">下单</a>
+                            <{/if}>
                           </div>
                       </li>
+                      
                     </ul>
                   </div>
 
                   <div class="nei_rig">
-
-                     <a href="<{:url('OrderPort/routeDetail')}>?sea_id=<{$vo.id}>" class="trigger-default">航线详情</a> 
-                    <a onclick="mo()" href="javascript:;">航线详情</a>
-
+                    <a id="hxxq" onclick="mo(this)" href="javascript:;">航线详情</a>
+                    <div class="seapr_id" style="display: none;"><{$vo.id}></div>
                   </div>
 
-                  <div class="sm">
-                    截单时间：2018-1-18&nbsp;&nbsp;&nbsp;海上走船：5天&nbsp;&nbsp;&nbsp; 说明时间：到货时间为估算时间，具体送货时间以实际开船和实际靠港为准&nbsp;&nbsp;&nbsp; 价格说明：已含们到门所有费用，不含开票。
-                  </div>
+                    <div class="sm">价格说明：<{$vo.price_description}></div>
                 </div>
           </div>
           <{/volist}>
 
-            <div class="text-center" id="pages"></div>
-      </div>
-
-       模态窗口 
+          <div class="text-center" id="pages"></div>
+      
+        </div>
+    </div>
+      <!-- 模态窗口 -->
       <div class="mo_cen">
         <div class="man">
-          <div>
-            <span>广州</span>
-            <p>2018-2-12</p>
-          </div>
-          <div class="xian"><div></div></div>
-          <div>
-            <span>天津</span>
-            <p>2018-3-12</p>
-          </div>         
+   
         </div>
       </div>
       <{include file='./public/foot' /}>
       <script>
+        $('#top ul li').eq(1).addClass('hang').siblings('li').removeClass('hang');
         var addressURL = "<{:url('admin.php/address/town')}>";
         var add = { start_id: '', start_name: '', end_id: '', end_name: '', load_time: '' };
         //          起点ID        起点名称        终点ID        终点名称      装货时间
       </script>
-      <script type="text/javascript" src="__STATIC__/js/area.js"></script>
-       <script src="__STATIC__/js/order_list.js"></script>  
-      <script src="__STATIC__/../admin/js/port.js"></script>
-      <script src="__STATIC__/js/order_list.js"></script>
+      <script src="__STATIC__/js/area.js"></script>
+      <script src="__STATIC__/js/order_list.js"></script>  
       <script>
         function toajax() {
           add.load_time = $('#load_time').val();
           console.log(add);
           $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: "<{:url('index/order/order_list')}>",
             data: add,
             dataType: "json",
             success: function (data) {
-              if (data.status == 1) {
+              if (data.status) {
                 return 1;
               } else {
                 return 0;
@@ -213,19 +257,34 @@
           })
         }
 
-        function mo(){
-            layer.open({
+        //路线详情
+        function mo(zj){
+            let seapr_id = $(zj).next().html();//获取当前ID
+            $('.man').html('');//清空航线详情内容
+            layer.open({//打开航线详情窗口
             type: 1,
-            title:'路线详情',
-            area:['900px'],
+            title:'航线详情',
+            area:['900px','200px'],
             content: $('.mo_cen'), //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
             skin: 'demo-class',
             scrollbar: false,
+            shadeClose:true,
             fixed : false,
             success: function(){
               //监听滚动条
               $('html',window.parent.document).css('overflow-y','hidden');
-              $(".demo-class").css('top',$(parent.window).scrollTop());
+              $(".demo-class").css('top',$(parent.window).scrollTop()+300);
+              $.get("<{:url('orderPort/routedetail')}>",{seaprice_id:seapr_id},function(data){
+                let arr=data.m_port.split(",");//截取航线中间内容
+                //航线详情起点
+                $('.man').append('<div><span class="qi_name">'+data.s_port+'</span><p class="qi_time">'+data.shipping_date.substring(0,10)+'</p></div><div class="xian"><div></div></div>');
+                //循环航线详情中间站
+                for (let i = 0; i < arr.length; i++) {
+                  $('.man').append('<div style="margin-top:10px;"><span>'+arr[i]+'</span><p></p></div><div class="xian"><div></div></div>');
+                }
+                //航线详情终点
+                $('.man').append('<div><span class="end_name">'+data.e_port+'</span><p class="end_time">'+data.ETA.substring(0,10)+'</p></div>');         
+              })
             },
             //关闭窗口时
             cancel:function(){

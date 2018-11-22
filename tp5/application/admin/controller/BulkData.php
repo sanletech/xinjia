@@ -149,8 +149,8 @@ class BulkData extends Base{
                 $tmp['generalize']=$rows['18'];
                 $tmp['price_description']=$rows['18'];
                 $tmp['mtime']=$mtime;
-                $tmp['ETA'] = date('Y-m-d',(($rows['12']-25569)* 24*60*60) );
-                $tmp['EDD'] = date('Y-m-d',(($rows['13']-25569)* 24*60*60) );
+                $tmp['ETA'] = date('Y-m-d H:i:s',strtotime($tmp['shipping_date'].'+ '.$tmp['sea_limitation'].'day'));
+                $tmp['EDD'] = date('Y-m-d H:i:s',strtotime("+3day",strtotime($tmp['ETA'])));
 //                $this->_p($tmp);
                //验证数据的类型是否符合
                 $result = $this->validate($tmp,'BulkData');

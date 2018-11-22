@@ -137,14 +137,14 @@ function add_food(dao_id, zj) {
 $('#start_add').focus(function () {//选择地址
     inp = $('#start_add');
     boot = true;
-    $('#address').css('top', '80px');
+    $('#address').css('left', '0px');
     $('#address').show();
     loadProvince();  //默认展示省份
 })
 $('#end_add').focus(function () {//选择地址
     boot = false;
     inp = $('#end_add');
-    $('#address').css('top', '140px');
+    $('#address').css('left', '25%');
     $('#address').show();
     loadProvince();  //默认展示省份
 })
