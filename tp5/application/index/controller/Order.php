@@ -84,6 +84,7 @@ class Order extends Base
         $tem['name'] = $data['link_name'];
         $tem['phone'] = $data['phone'];
         $tem['company'] = $data['company'];
+        $tem['add'] = $data['add'];
         $res =Db::name('linkman')->where('id',$id)->update($tem);
         $res ? $response=['status'=>1,'message'=>'修改联系人成功']: $response=['status'=>0,'message'=>'修改联系人失败'];
         return $response;

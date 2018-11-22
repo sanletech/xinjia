@@ -33,7 +33,7 @@ class Order extends Model
                 ->buildSql();
 //        var_dump($price_list);exit;
 //        if($load_time){
-//            $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
+//             $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
 //        }
         if($start_add){
             $price_list = Db::table($price_list.' F')->where('F.r_add','like',"%$start_add%")->buildSql();
@@ -48,7 +48,6 @@ class Order extends Model
     }
     //展示已经选择好的价格信息
     public function orderBook($sea_id ,$container_size,$member_code) {
-   
         //航线信息
         $price = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
@@ -85,7 +84,7 @@ class Order extends Model
         $link_name = $data['link_name'];
         $phone = $data['phone'];
         $company = $data['company'];
-        // $add = $data['add'];
+        $add = $data['add'];
         $member_code =Session::get('member_code');
         $time = date("Y-m-d H:i:s"); 
         $sql= "insert into hl_linkman(name ,phone ,company ,mtime,member_code) "
