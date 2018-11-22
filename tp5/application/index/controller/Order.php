@@ -132,21 +132,20 @@ class Order extends Base
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
         $sea_id = $data['sea_id']; //海运路线ID
-        $carprice_rid = $data['rid']; //拖车装货费
-        $carprice_sid = $data['sid'];//拖车送货费
-        $pir_id = $data['pir_id'];    //起运港口港杂费
-        $pis_id = $data['pis_id'];   //目的港口杂费
+        $carprice_rid = $data['rid']; //拖车装货费_id
+        $carprice_sid = $data['sid'];//拖车送货费_id
+        $pir_id = $data['pir_id'];    //起运港口港杂费_id
+        $pis_id = $data['pis_id'];   //目的港口杂费_id
         $premium = $data['premium']; //保险费
         
-        //装货人
-        
-        
-        //计算出车装货价格 送货价格 船运价格 保险费, 法税 ,利润 ,港口杂费
-        $carprice_r= Db::name('carprice')->where('id',$carprice_rid)->value('price_'.$data['container']); //车装货费
-        $carprice_s= Db::name('carprice')->where('id',$carprice_sid)->value('price_'.$data['container']); //车送货费
-        $seaprice = Db::name('seaprice')->where('id',$seaprice_id)->value('price_'.$data['container']); //海运费
-        $portprice_r =Db::name('price_incidental')->where('id',$pir_id)->value($data['container']);    //起运港杂费
-        $portprice_s =Db::name('price_incidental')->where('id',$pis_id)->value($data['container']);    //目的港杂费
+        $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone']));//装货信息
+        $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone']));//送货信息
+        //计算出车装货价格 送货价格 船运价格 ,利润 ,港口杂费 是否一致
+        $member_code =Session::get('member_code');
+        $container_size =$data['container_size'];
+        $sea_pirce =new OrderM;
+        $sea_pirce->orderBook($sea_id ,$container_size,$member_code);
+
         $premium  = $data['cargo_cost']*6; //保险费
         $profit = Db::name('member_profit')->alias('MP')  //利润
                 ->join('hl_seaprice SP','SP.ship_id=MP.ship_id','left')
