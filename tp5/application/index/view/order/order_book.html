@@ -600,6 +600,13 @@
           </div>
 
           <div class="layui-form-item">
+            <label class="layui-form-label">详细地址：</label>
+            <div class="layui-input-block">
+              <input type="text" name="add" lay-verify="title" value="" autocomplete="off" placeholder="请输入地址" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
             <div class="layui-input-block">
               <a class="layui-btn" onclick="zeng_wt()">确认添加</a>
               <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -635,6 +642,13 @@
           </div>
 
           <div class="layui-form-item">
+            <label class="layui-form-label">详细地址：</label>
+            <div class="layui-input-block">
+              <input type="text" name="add" lay-verify="title" value="" autocomplete="off" placeholder="请输入地址" class="layui-input">
+            </div>
+          </div>
+
+          <div class="layui-form-item">
             <div class="layui-input-block">
               <a class="layui-btn"  onclick="xiu_wt()">确认修改</a>
               <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -647,11 +661,11 @@
       //首页
       var index_url = "<{:url('index/index/personal')}>";
       //详情页
-      var xiangqing = "<{:url('index/order_port/orderportdetail')}>"
+      var xiangqing = "<{:url('index/order_port/orderportdetail')}>";
       // 获取session 的客户的code
       var member_code = '<{$Think.session.member_code}>';
       //客户的收货人,发货人选择
-      var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
+      var selectlinkUrl = "<{:url('index/order/selectlinkman')}>";
       //收货/发货人的添加 
       var linkmanAddURL = "<{:url('index/order/linkmanAdd')}>";
         //收货/发货人的删除
@@ -667,7 +681,7 @@
       var loading = false;//装货状态
       var delivery = false;//送货状态
     </script>
-    <script src="__STATIC__/js/lrdd.js"></script>
+    <script src="__STATIC__/js/order_book.js"></script>
     <script src="__STATIC__/js/place_order.js"></script>
     <script>
       $('.in').css('border', '1px solid #e6e6e6'); 

@@ -300,3 +300,33 @@ button:hover{
     }
   }
 }
+
+#select_add{
+  display: none;
+  position: absolute;
+  top: 52px;
+  left: 0px;
+  width: 300px;
+  padding: 5px;
+  background: #fff;
+  z-index: 999;
+  ul{
+    height: 200px;
+    overflow-y:auto;
+    li{
+      padding: 5px;
+      height: 25px;
+      line-height: 25px;
+      border: 1px solid #8c8c8c;
+      cursor: pointer;
+      &:hover{
+        background-color: $lan;
+        color: #fff;
+      }
+      &:nth-child(n+1){
+        border-bottom: 0;
+      }
+    }
+    
+  }
+}

@@ -230,4 +230,28 @@ button:hover {
     #address #dizhi a:hover {
       color: red; }
 
+#select_add {
+  display: none;
+  position: absolute;
+  top: 52px;
+  left: 0px;
+  width: 300px;
+  padding: 5px;
+  background: #fff;
+  z-index: 999; }
+  #select_add ul {
+    height: 200px;
+    overflow-y: auto; }
+    #select_add ul li {
+      padding: 5px;
+      height: 25px;
+      line-height: 25px;
+      border: 1px solid #8c8c8c;
+      cursor: pointer; }
+      #select_add ul li:hover {
+        background-color: #2e8de5;
+        color: #fff; }
+      #select_add ul li:nth-child(n+1) {
+        border-bottom: 0; }
+
 /*# sourceMappingURL=hyyj.css.map */

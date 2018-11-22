@@ -258,11 +258,8 @@ $('.cha').click(function(){
 function pand($){
     let huo = $('.goods').html();        
         $('.goods').click(function(){
-          let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').find('a').html();
-          console.log(order_num);
-          
-          $('.order_num1').html('订单号：'+order_num); 
-          let bo = $('#shenqi input').val();
+          let order_num = $(this).parents('td').siblings('td[data-field="order_num"]').find('div').find('a').html();          
+          $('.order_num1').html('订单号：'+order_num);           
           if($(this).html() == '申请放货'){
             layer.open({
               type:1
@@ -272,6 +269,7 @@ function pand($){
               ,area:['300px']
               ,content: $('#shenqi')
               ,yes:function (index, layero) {
+                  let bo = $('#shenqi input').val();
                   $.post(appley_cargo_url,{'order_num':order_num,'comment':bo,'type':'pass'},function(data){
                       if(data.status){
                         layui.layer.msg('申请成功', {icon: 1,time: 1000},function(){
@@ -287,6 +285,7 @@ function pand($){
                       }
                   });
               },btn2:function (index) {
+                  let bo = $('#shenqi input').val();
                   $.post(appley_cargo_url,{'order_num':order_num,'comment':bo,'type':'fail'},function(data){
                       if(data.status){
                         layui.layer.msg('驳回成功', {icon: 1,time: 1000},function(){
