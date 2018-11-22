@@ -86,7 +86,8 @@ class OrderPort extends Controller
         if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
             return array('status'=>0,'mssage'=>'不要重复提交订单');
         }
-        $order_num = action('OrderToken/order_num',['type'=>'port'], 'controller');
+        
+        $order_num = action('IDCode/order_num',['type'=>'port'], 'controller');
         
         $mtime= date('Y-m-d H:i:s'); //订单时间
         $member_code =Session::get('member_code','think');//提交账户

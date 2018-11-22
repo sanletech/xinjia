@@ -50,6 +50,8 @@ class Order extends Base
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
         $list = $sea_pirce ->orderBook($sea_id ,$container_size,$member_code);
+         //创建订单令牌
+        action('OrderToken/createToken','', 'controller');
 //        $this->_p($list);exit;
         $this->view->assign('list',$list);
         return $this->view->fetch('order/order_book');
@@ -128,7 +130,7 @@ class Order extends Base
       public function order_data()
     {
         $data =$this->request->param();
-        $this->_p($data);exit;
+//        $this->_p($data);exit;
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复
         if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
@@ -150,8 +152,9 @@ class Order extends Base
         $container_sum = $data['container_sum'];
         $sea_pirce =new OrderM;
         $data_price  = $sea_pirce->orderBook($sea_id ,$container_size,$member_code); //一个柜的总价格
+        $carriage = $data_price['price_sum_'.$container_size];
         //计算门到门的海运费是否一致
-        if(intval($carriage) !== intval($data_price['price_sum_'.$container_size])){
+        if(intval($data['carriage']) !== intval($carriage)){
             return array('status'=>0,'mssage'=>'海运费错误');
         }
         //计算保险费 = 单个柜货值(万元为单位)*4*柜量
@@ -159,10 +162,11 @@ class Order extends Base
             return array('status'=>0,'mssage'=>'保险费错误');
         }
         //计算下单总共柜子的报价
-        if(intval($data['price_sum'])!==  intval($carriage*$container_size)){
+//        var_dump(intval($data['price_sum']), intval($carriage*$container_sum));exit;
+        if( intval($data['price_sum'])!==  intval($carriage*$container_sum+$data['premium']) ){
             return array('status'=>0,'mssage'=>'总费用错误');
         }
-        $order_num = action('OrderToken/order_num',['type'=>'door'], 'controller');   
+        $order_num = action('IDCode/order_num',['type'=>'door'], 'controller');   
         
         $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone']));//装货信息
         $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone']));//送货信息
