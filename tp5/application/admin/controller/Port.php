@@ -55,7 +55,7 @@ class Port extends Base
         if(!array_key_exists('fail', $res)){
             $response = array('status'=>1,'message'=>'添加港口成功');
         }else {
-            $response = array('status'=>0,'message'=>'添加港口失败');
+            $response = array('status'=>0,'message'=>$res['fail']);
         } 
         // var_dump($response);exit;
         return $response;   

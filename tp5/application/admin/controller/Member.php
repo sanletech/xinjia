@@ -104,15 +104,16 @@ class Member extends Base
     public function  pushMoneyEdit(){
      
         $data = $this->request->param();
+//        $this->_p($data);exit;
         $member_code =$data['member_code'];
-        $ship_id =$data['ship_id'];
+        $ship_id =$data['ship_id'];  
         $container_size =$data['container_size'];
         $price =$data['price'];
         $mtime =  date('Y-m-d H:i:s');
         //先查询是否存在
         $selcet_res = Db::name('member_profit')->where(['member_code'=>$member_code,'ship_id'=>$ship_id])->limit(1)->find();
         if(empty($selcet_res)){
-            $res =Db::name('member_profit')->insert(['member_code'=>$member_code,'ship_id'=>$ship_id,$container_size=>$price,'mtime'=>$mtime]);
+            $res =Db::name('member_profit')->fetchSql(false)->insert(['member_code'=>$member_code,'ship_id'=>$ship_id,$container_size=>$price,'mtime'=>$mtime]);
         }  else {
             $res =Db::name('member_profit')->where(['member_code'=>$member_code,'ship_id'=>$ship_id])->update([$container_size=>$price,'mtime'=>$mtime]);
         }

@@ -55,13 +55,14 @@ class Port extends Model
         $response=[];
         //先查询是否存在同名的港口
         $res2 =Db::name('port')->where('city_id',$city_id)->where('port_name','in',$port_array)->column('port_name');
+     ;
         if($res2){
             $port_name_list=  implode(',', $res2);
-            $response['fail']= '添加port表存在港口'.$port_name_list;
+            $response['fail']= '已存在港口'.$port_name_list;
             return $response;
         }
         $mtime = date('Y-m-d H:i:s');
-        $port_code = Db::name('port')->where('city_id',"'$city_id'")->max('port_code');
+        $port_code = Db::name('port')->where('city_id',$city_id)->max('port_code');
         if($port_code < ($city_id * 1000)){
             $port_code = $city_id * 1000+1;
         }else { 
@@ -72,7 +73,7 @@ class Port extends Model
             $data[] =['port_code'=>$port_code,'port_name'=>$port_name,'city_id'=>$city_id,'mtime'=>$mtime];
             ++$port_code;
         }
-
+//        $this->_p($data);exit;
         $res = Db::name('port')->insertAll($data);
         $res ?  $response['success'] = '添加港口成功':$response['fail'] = '添加港口失败';
         $this->port_js();

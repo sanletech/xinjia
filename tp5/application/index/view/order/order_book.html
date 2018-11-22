@@ -121,7 +121,7 @@
                 </span>
                 <p>￥<strong class="carriage"><?php echo $list['price_sum_'.$list['container_size']]; ?></strong></p>
               </div>
-              <div class="you">价格说明:<span>123</span></div>
+              <div class="you">价格说明:<span><{$list.price_description}></span></div>
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@
                     <div class="layui-col-xs4">
                       <span>*&nbsp;</span>发货地址：</div>
                     <div class="layui-col-xs8">
-                      <input type="text" name="r_phone" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['phone'] ;} ?>" readonly='readonly' class="in">
+                      <input type="text" name="r_add" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['add'] ;} ?>" readonly='readonly' class="in">
                     </div>
                   </div>
 
@@ -201,7 +201,7 @@
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>收货地址：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="s_phone" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['phone'] ;} ?>" readonly='readonly' class="in">
+                    <input type="text" name="s_add" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['add'] ;} ?>" readonly='readonly' class="in">
                   </div>
                 </div>
               </div>
@@ -326,8 +326,8 @@
                   <div class="select">
 
                     <select name='payment_method'>
-                        <option value='cash'>到港付</option>
-                        <option value='monthly'>月结付</option>
+                        <option value='installment'>到港付</option>
+                        <option value='month'>月结付</option>
                         <option value='pledge'>压柜付</option>
                     </select>
                   </div>
@@ -677,7 +677,7 @@
       // 发票的信息提交 
       var invoiceUrl = "<{:url('index/order/invoice')}>";
       //订单信息的提交
-      var OrderUrl = "<{:url('index/orderPort/port_data')}>";
+      var OrderUrl = "<{:url('index/order/order_data')}>";
       var loading = false;//装货状态
       var delivery = false;//送货状态
     </script>

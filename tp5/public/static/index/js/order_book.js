@@ -120,7 +120,7 @@ function tiao() {
   //展示委托信息
   function weituo(data) {
     var dataArray = eval(data);
-    arr = dataArray;
+    arr = dataArray;    
     $('.xin').html('');
     for (let i in dataArray) {
       shuzu(dataArray[i]);
@@ -157,7 +157,7 @@ function tiao() {
     + '<div class="tiao">'+arr.company+'</div>'
     + '<div class="tiao">'+arr.name+'</div>'
     + '<div class="tiao">'+arr.phone+'</div>'
-    + '<div class="tiao">'+arr.add+'</div>'
+    + '<div class="tiao">'+arr.address+'</div>'
     + '</div>'
     + '</div>'
     + '</li>'
@@ -200,13 +200,13 @@ function wtxx() {
     $(input[1]).val(nei.company);
     $(input[2]).val(nei.name);
     $(input[3]).val(nei.phone);
-    $(input[4]).val(nei.add);
+    $(input[4]).val(nei.address);
   } else {
     $(input[5]).val(nei.id);
     $(input[6]).val(nei.company);
     $(input[7]).val(nei.name);
     $(input[8]).val(nei.phone);
-    $(input[9]).val(nei.add);
+    $(input[9]).val(nei.address);
   }
   layer.close(layer.index);
 }
@@ -298,11 +298,14 @@ $('.wt_xiu').click(function () {
       skin: 'demo-class',
       fixed: false,
       success: function (data) {
-        // 模态框成功调用            
+        // 模态框成功调用 
         $('#wt3 input').eq(0).val(nei.id);      
         $('#wt3 input').eq(1).val(nei.company);
         $('#wt3 input').eq(2).val(nei.name);
         $('#wt3 input').eq(3).val(nei.phone);
+        $('#wt3 input').eq(4).val(nei.address);
+        console.log(nei);
+        
       }
     });
   }
@@ -315,6 +318,7 @@ function xiu_wt(){
   data.company = $('#wt3 input').eq(1).val();
   data.link_name = $('#wt3 input').eq(2).val();
   data.phone = $('#wt3 input').eq(3).val();
+  data.add = $('#wt3 input').eq(4).val();
   if (data.company && data.link_name && data.phone) {
     $.ajax({
       type: 'POST',

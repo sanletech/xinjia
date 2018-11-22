@@ -131,7 +131,7 @@ layui.use(['table','laydate','layedit'], function(){
     console.log(zhi);
     
     //用户ID：柜型   船公司id：输入内容
-     $.get(ship_edit_url,{member_code:id,contaniner_code:gui,ship_id:ship_id,price:valu},function(res){
+     $.get(ship_edit_url,{member_code:id,container_size:gui,ship_id:ship_id,price:valu},function(res){
        if (res.status) {
          layui.layer.msg("修改成功", {icon: 1,time: 500});
        }else{

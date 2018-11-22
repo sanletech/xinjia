@@ -86,6 +86,7 @@ class Order extends Base
         $tem['name'] = $data['link_name'];
         $tem['phone'] = $data['phone'];
         $tem['company'] = $data['company'];
+        $tem['address'] = $data['add'];
         $res =Db::name('linkman')->where('id',$id)->update($tem);
         $res ? $response=['status'=>1,'message'=>'修改联系人成功']: $response=['status'=>0,'message'=>'修改联系人失败'];
         return $response;
@@ -130,8 +131,16 @@ class Order extends Base
         $this->_p($data);exit;
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
-        $seaprice_id =$data['seaprice_id'];  $carprice_rid=$data['rid']; $carprice_sid =$data['sid'];
-        $pir_id=$data['pir_id']; $pis_id =$data['pis_id'];
+        $sea_id = $data['sea_id']; //海运路线ID
+        $carprice_rid = $data['rid']; //拖车装货费
+        $carprice_sid = $data['sid'];//拖车送货费
+        $pir_id = $data['pir_id'];    //起运港口港杂费
+        $pis_id = $data['pis_id'];   //目的港口杂费
+        $premium = $data['premium']; //保险费
+        
+        //装货人
+        
+        
         //计算出车装货价格 送货价格 船运价格 保险费, 法税 ,利润 ,港口杂费
         $carprice_r= Db::name('carprice')->where('id',$carprice_rid)->value('price_'.$data['container']); //车装货费
         $carprice_s= Db::name('carprice')->where('id',$carprice_sid)->value('price_'.$data['container']); //车送货费
