@@ -10,6 +10,7 @@ class Order extends Base
     //海运运价
     public function order_list()
     {   
+        // var_dump($this->request->param());exit;
         $member_code =Session::get('member_code','think');
         $start_add =$this->request->param('start_id');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
@@ -53,6 +54,7 @@ class Order extends Base
         $this->view->assign('list',$list);
         return $this->view->fetch('order/order_book');
     }
+
     
     //添加收/发货人的信息
     public function linkmanAdd()
