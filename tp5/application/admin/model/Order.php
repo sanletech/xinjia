@@ -7,33 +7,26 @@ use think\session;
 class Order extends Model
 {
     
-    //订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货
     //审核客户提交的订单
-    public function order_audit($pages=5,$state='0')
-    {
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        //查询客户的订单编号order_father 查询对应的订单信息
-        $fatherSql= Db::name('order_father')->alias('OF')
-                ->join('hl_seaprice SP','SP.id= OF.seaprice_id','left')  //对应的船运价格表
-                ->join('hl_ship_route SR','SR.id = SP.route_id','left') //船运路线表
-                ->join('hl_sea_bothend SB','SB.sealine_id = SR.bothend_id','left') //船运路线 目的 和起运港表
-                ->join('hl_port P1','P1.port_code = SB.sl_start','left') //船运起点港口
-                ->join('hl_port P2','P2.port_code = SB.sl_end','left')   //船运目的港口
-                ->join('hl_shipcompany SC',"SC.id =SP.ship_id and SC.status='1'",'left')//船公司
-                ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
-                ->join('hl_sales_member SM','SM.member_code = OF.member_code','left')  //业务对应客户表
-                ->join('hl_user U',"U.user_code= SM.sales_code and U.type='sales'",'left')  //业务表
-                ->join('hl_member MB','MB.member_code =OF.member_code' ,'left')//客户表
-                ->field('OF.id ,OF.order_num,MB.phone,MB.name membername,U.user_name,'
-                        . 'SB.sl_start,P1.port_name s_port_name,SB.sl_end,P2.port_name e_port_name,'
-                        . 'OF.cargo,SC.ship_short_name,B.boat_code,B.boat_name,OF.ctime')
-                ->group('OF.id')->where('OF.state','eq',$state)
-                ->order('OF.id ,OF.ctime desc ')->buildSql();
-        
-        $list = Db::table($fatherSql.' A')->paginate($pages,false,$pageParam);
-        return $list;
-    }
-    
+    public function order_audit($pages,$state){
+        $list =Db::name('order_port')->alias('OP')
+            ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
+            ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
+            ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
+            ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
+            ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id                                                    //起始港终点港
+            ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
+            ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
+            ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶 
+            ->field('OP.*,HM.company,HM.name,SC.ship_short_name,B.boat_code,B.boat_name,P1.port_name s_port_name ,P2.port_name e_port_name')
+            ->group('OP.id')
+            ->where('OP.status','in',$state)
+            ->where('OP.type','door')
+            ->paginate($pages);
+ 
+//    $this->_p($list);exit; 
+            return $list;
+    } 
         //订单页面list 
     public function listOrder($tol,$limit,$state='100') {
         

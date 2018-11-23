@@ -20,9 +20,8 @@
         </form>
       </div>
       <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn layui-btn-normal" onclick="passAll()"><i class="layui-icon"></i>批量通过</button>
-        <span class="x-right" style="line-height:40px">总共有<{$count}>条记录</span>
+<!--        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn layui-btn-normal" onclick="passAll()"><i class="layui-icon"></i>批量通过</button>-->
       </xblock>
       <table class="layui-table">
         <thead>
@@ -33,7 +32,6 @@
             <th>订单号</th>
             <th>客户账号</th>
             <th>客户姓名</th>
-            <th>业务员</th>
             <th>航线</th>
             <th>货名</th>
             <th>船名/航次</th>
@@ -48,9 +46,8 @@
                 <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata"><{$vo.order_num}></td>
-            <td><{$vo.phone}></td>
-            <td><{$vo.membername}></td>
-            <td><{$vo.user_name}></td>
+            <td><{$vo.member_code}></td>
+            <td><{$vo.name}></td>
             <td><{$vo.s_port_name}>-<{$vo.e_port_name}></td>
             <td><{$vo.cargo}></td>
             <td><{$vo.ship_short_name}>--<{$vo.boat_name}>/<{$vo.boat_code}></td>

@@ -156,7 +156,7 @@ class orderPort extends Model
 //        var_dump($data);exit;
         $res =Db ::name('order_port_status')->insert($data); //记录操作
 //        var_dump($res);exit;
-        //根据不同的记录是否更新order_port 和order_bill 的状态
+        //根据不同的记录是否更新order_port的状态
         $order_status= $this->order_status;
        
         //只更改订单和账单的对应字段

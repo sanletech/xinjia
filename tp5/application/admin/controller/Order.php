@@ -16,7 +16,8 @@ class Order extends Base
     public function order_audit() 
     {
         $data = new OrderM;
-        $list = $data->order_audit();
+        $list = $data->order_audit(5,2);
+//        $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count',$count);

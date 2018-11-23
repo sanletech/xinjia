@@ -179,6 +179,7 @@ class Order extends Base
             'price_description'=>$data['price_description'],'premium'=>$data['premium'],'quoted_price'=>$data['price_sum'],
             'type'=>'door','status'=>2);
         $res =Db::name('order_port')->insert($fatherData);
+        action('Bill/billCreate',['order_num'=>$order_num], 'controller'); //同时创建账单
         return json($res ? array('status'=>1,'message'=>'下单成功'):array('status'=>0,'message'=>'下单失败') );
     }
     
