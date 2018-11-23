@@ -483,4 +483,20 @@ body {
   .guix .layui-form-item .layui-form-mid {
     margin: 0 4% 0 4.1%; }
 
+.bao {
+  position: relative; }
+  .bao .bao1 {
+    display: none;
+    position: absolute;
+    width: 14.5%;
+    top: 102px;
+    left: 43.6%;
+    text-align: left;
+    background-color: #fff; }
+    .bao .bao1 li {
+      padding: 5px;
+      cursor: pointer; }
+      .bao .bao1 li:hover {
+        background-color: #2e8de5; }
+
 /*# sourceMappingURL=lrdd.css.map */

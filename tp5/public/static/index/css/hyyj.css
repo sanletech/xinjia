@@ -236,11 +236,11 @@ button:hover {
   top: 52px;
   left: 0px;
   width: 300px;
-  padding: 5px;
+  padding: 8px 5px;
   background: #fff;
   z-index: 999; }
   #select_add ul {
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto; }
     #select_add ul li {
       padding: 5px;
@@ -251,7 +251,7 @@ button:hover {
       #select_add ul li:hover {
         background-color: #2e8de5;
         color: #fff; }
-      #select_add ul li:nth-child(n+1) {
-        border-bottom: 0; }
+      #select_add ul li:nth-child(n+2) {
+        border-top: 0; }
 
 /*# sourceMappingURL=hyyj.css.map */
