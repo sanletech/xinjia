@@ -385,3 +385,29 @@ function st(){
         zong_sum(0,zs_sum);
     }
 }
+
+
+$('.bao1 li').click(function(){
+    $('#container_type').val($(this).html());
+    $('.bao1').hide();
+});
+
+$('#container_type').bind('input',function(){//监听input
+    if ($(this).val()) {
+        $('.bao1').hide();
+    }else{
+        $('.bao1').show();
+    }
+})
+
+$('#container_type').focus(function(e){//获取焦点
+    if ($(this).val()) {
+        $('.bao1').hide();
+    }else{
+        $('.bao1').show();
+    }
+})
+
+$('#container_type').blur(function(e){//失去焦点
+    setTimeout(function(){ $('.bao1').hide()}, 100);
+});

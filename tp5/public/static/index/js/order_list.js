@@ -169,36 +169,37 @@ $('#search_price').click(function () {
 $(document).click(function () {//判断是否点击地址元素 否则隐藏
     if (cli) {
         $('#address').hide();
-        $('#select_add').hide();
+        $('#select_add').hide();        
     } else {
         cli = true;
     }
 });
 
 var add_di = []; 
-for (let i = 0; i < areaData.length; i++) {
-    var didi = areaData[i].provinceName;
-    
-    for (let j = 0; j < areaData[i].mallCityList.length; j++) {
-        let arry = areaData[i].mallCityList[j].mallAreaList;    
-        for (let g = 0; g < arry.length; g++) {
-            didi = areaData[i].provinceName+areaData[i].mallCityList[j].cityName + arry[g].areaName;
-            add_di.push(didi); 
+for (let i = 0; i < addres.length; i++) {//省    
+    for (let j = 0; j < addres[i].children.length; j++) {//市
+        let arry =  addres[i].children[j].children; 
+        for (let g = 0; g < arry.length; g++) {//区
+            for (let h = 0; h < arry[g].children.length; h++) {//街道
+                add_di.push({id:arry[g].code,name:addres[i].name+ addres[i].children[j].name+arry[g].name+arry[g].children[h].name}); 
+            }            
         }
     }
 }
-
-console.log(add_di);
-
-
 $('#start_add,#end_add').on(" input propertychange",function(){
+    var p = 0;
     if ($(this).val()) {
         $('#address').hide();
         $('#select_add').show();
-        $('#select_add ul').html('');
+        $('#select_add ul').html('');//清空地址栏
         for (let i = 0; i < add_di.length; i++) {
-            if (add_di[i].indexOf($(this).val()) != -1) {
-                $('#select_add ul').append('<li>'+add_di[i]+'</li>');
+            if (add_di[i].name.indexOf($(this).val()) != -1) {//查找相关信息
+                if (p < 30) {
+                    p++;//最多查询30条
+                    $('#select_add ul').append('<li name='+add_di[i].id+'>'+add_di[i].name+'</li>');//地址展现
+                }else{
+                    return false;
+                }
             }
         }
     }else{
@@ -209,5 +210,10 @@ $('#start_add,#end_add').on(" input propertychange",function(){
 
 $('#select_add').on('click','li',function(){
     inp.val($(this).html());
+    if (inp.attr('id') == 'start_add') {
+        add.start_id = $(this).attr('name');
+    }else{
+        add.end_id = $(this).attr('name');;
+    }
     $('#select_add').hide();
 })

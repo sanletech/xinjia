@@ -23,10 +23,32 @@ class Order extends Model
             ->where('OP.status','in',$state)
             ->where('OP.type','door')
             ->paginate($pages);
- 
-//    $this->_p($list);exit; 
-            return $list;
+        return $list;
     } 
+    
+      //订单的详细信息
+    public function orderData($order_num) {
+        $list =Db::name('order_port')->alias('OP')
+                ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
+                ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
+                ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
+                ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
+                ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id                                                    //起始港终点港
+                ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
+                ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
+                ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
+                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name')
+                ->where('OP.order_num',$order_num)
+                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
+                ->find();
+        
+        $shipperArr= explode(',',$list['shipper']); 
+        $consignerArr= explode(',',$list['consigner']);
+//        'containerData'=>$containerData,'carData'=>$carData,'discount'=>$discount,
+        return array('list'=>$list ,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
+    }
+    
+    
         //订单页面list 
     public function listOrder($tol,$limit,$state='100') {
         

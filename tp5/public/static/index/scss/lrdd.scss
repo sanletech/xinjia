@@ -643,14 +643,23 @@ body{
   }
 }
 
-// .bao{
-//   position: relative;
-
-//   ul{
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     z-index: 9;
-//   }
-// }
+.bao{
+  position: relative;
+  .bao1{
+    display: none;
+    position: absolute;
+    width: 14.5%;
+    top: 102px;
+    left: 43.6%;
+    text-align: left;
+    background-color: #fff;
+    li{
+      padding: 5px;
+      cursor: pointer;
+      &:hover{
+        background-color: $lan;
+      }
+    }
+  }
+}
 

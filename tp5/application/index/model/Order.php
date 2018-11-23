@@ -26,6 +26,7 @@ class Order extends Model
                 ->field('SP.*, CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,SC.ship_short_name,'
                         . ' BA.boat_code,BA.boat_name,SB.sl_start,SB.sl_end,'
                         . ' PR.port_name r_port_name,PS.port_name s_port_name,CPR.address_name r_add,CPS.address_name s_add,'
+                        . '  CPR.r_20GP,CPR.r_40HQ,CPS.s_20GP,CPR.s_40HQ,MP.20GP discount_20GP,MP.40HQ discount_40HQ,'
                         . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
                         . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
                 ->where('MP.member_code',$member_code)
@@ -51,13 +52,12 @@ class Order extends Model
         //航线信息
         $price= $this-> price_sum($member_code,$start_add='',$end_add='',$load_time='',$page=1,$limit=100,$sea_id);
         $price =$price['list'][0]; 
-        
         // 将集装箱字的尺寸添加到数组中
         $price['container_size']=$container_size;
         if($container_size=='40HQ'){
-            unset($price['price_sum_20GP'],$price['price_20GP']);
+            unset($price['price_sum_20GP'],$price['price_20GP'],$price['r_20GP'],$price['s_20GP'],$price['discount_20GP']);
         } elseif($container_size=='20GP') {
-            unset($price['price_sum_40HQ'],$price['price_40HQ']);
+            unset($price['price_sum_40HQ'],$price['price_40HQ'],$price['r_40HQ'],$price['s_40HQ'],$price['discount_40HQ']);
         }
         return $price;            
     }

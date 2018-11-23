@@ -213,51 +213,63 @@
         </div>
 
         <!-- 货物 -->
-        <div class="xxtx_dd">
-          <div class="xx">
-            <strong>货物信息</strong>
-            <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span>
+        <div class="bao">
+
+          <div class="xxtx_dd">
+            <div class="xx">
+              <strong>货物信息</strong>
+              <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span>
+            </div>
+            <div class="dd_nei">
+              <div class="layui-col-xs4 er">
+                <div class="grid-demo nei">
+                  <div class="layui-col-xs3">
+                    <span>*&nbsp;</span>货名：</div>
+                  <div class="layui-col-xs6">
+                    <input type="text" name="cargo" value="" placeholder="">
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-xs4 er">
+                <div class="grid-demo nei">
+                  <div class="layui-col-xs3">
+                    <span>*&nbsp;</span>包装：</div>
+                  <div class="layui-col-xs6">
+                      <input type="text" name='container_type' id="container_type" value="" placeholder="">
+                      <!-- <div class="select">
+                          <select name='container_type' id="container_type">
+                            <option value='1'>铁桶</option>
+                            <option value='2'>木架</option>
+                            <option value='3'>纸箱</option>
+                            <option value='4'>编制袋</option>
+                        </select>
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-xs4 er">
+                <div class="grid-demo nei">
+                  <div class="layui-col-xs3">
+                    <span>*&nbsp;</span>每柜重量：</div>
+                  <div class="layui-col-xs6">
+                    <input type="text" name="weight" id="weight" value="1" placeholder="">
+                  </div>
+                  <div class="layui-col-xs2" style="text-align: left;margin-left: 8px; ">
+                    <span>吨(T)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="dd_nei">
-            <div class="layui-col-xs4 er">
-              <div class="grid-demo nei">
-                <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>货名：</div>
-                <div class="layui-col-xs6">
-                  <input type="text" name="cargo" value="" placeholder="">
-                </div>
-              </div>
-            </div>
-            <div class="layui-col-xs4 er">
-              <div class="grid-demo nei">
-                <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>包装：</div>
-                <div class="layui-col-xs6 bao">
-                    <!-- <input type="text" name='container_type' id="container_type" value="" placeholder=""> -->
-                    <div class="select">
-                        <select name='container_type' id="container_type">
-                          <option value='1'>铁桶</option>
-                          <option value='2'>木架</option>
-                          <option value='3'>纸箱</option>
-                          <option value='4'>编制袋</option>
-                      </select>
-                    </div>
-                </div>
-              </div>
-            </div>
-            <div class="layui-col-xs4 er">
-              <div class="grid-demo nei">
-                <div class="layui-col-xs3">
-                  <span>*&nbsp;</span>每柜重量：</div>
-                <div class="layui-col-xs6">
-                  <input type="text" name="weight" id="weight" value="1" placeholder="">
-                </div>
-                <div class="layui-col-xs2" style="text-align: left;margin-left: 8px; ">
-                  <span>吨(T)</span>
-                </div>
-              </div>
-            </div>
-          </div>
+
+          <ul class="bao1">
+            <li>铁桶</li>
+            <li>木架</li>
+            <li>纸箱</li>
+            <li>编制袋</li>
+          </ul>
+
+                  
         </div>
 
         <!-- 费用 -->
