@@ -86,8 +86,9 @@ class OrderPort extends Controller
         if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
             return array('status'=>0,'mssage'=>'不要重复提交订单');
         }
-        $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
-        $order_num =  $yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).substr(microtime(), 2, 5).sprintf('%02d', rand(0, 99));
+        
+        $order_num = action('IDCode/order_num',['type'=>'port'], 'controller');
+        
         $mtime= date('Y-m-d H:i:s'); //订单时间
         $member_code =Session::get('member_code','think');//提交账户
         $seaprice_id = $data['seaprice_id']; //海运价格表id
@@ -149,11 +150,12 @@ class OrderPort extends Controller
         $fatherData= array(
         'order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
         'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
-        'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
+        'container_type'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
         'payment_method'=>$payment_method,'cash_id'=>$cash_id,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
         'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],'money_status'=>$money_status,
         'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>$discount,
-        'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,'status'=>2);
+        'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,
+        'type'=>'port', 'status'=>2);
         $res1 = Db::name('order_port')->insert($fatherData); 
         //同时生成账单
         $Bill = controller('Bill');
