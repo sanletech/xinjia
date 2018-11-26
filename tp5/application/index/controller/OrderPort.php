@@ -153,7 +153,7 @@ class OrderPort extends Controller
         'container_type'=>$data['container_type'],'comment'=>$data['comment'],'ctime'=>$mtime,'member_code'=>$member_code,
         'payment_method'=>$payment_method,'cash_id'=>$cash_id,'invoice_id'=>$data['invoice_if'],'seaprice_id'=>$data['seaprice_id'],
         'shipper_id'=>$data['s_id'],'consigner_id'=>$data['r_id'],'price_description'=>$data['price_description'],'money_status'=>$money_status,
-        'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>$discount,
+        'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$ship_carriage,'premium'=>$data['premium'],'discount'=>-$discount,
         'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price,
         'type'=>'port', 'status'=>2);
         $res1 = Db::name('order_port')->insert($fatherData); 
@@ -168,7 +168,6 @@ class OrderPort extends Controller
         $order_num =  $this->request->param('order_num');
         $mtime =  date('Y-m-d H:i:s');
         $res = Db::name('order_port')->where('order_num',$order_num)->update(['container_buckle'=>'apply','mtime'=>$mtime]);
-        $res1 = Db::name('order_bill')->where('order_num',$order_num)->update(['container_buckle'=>'apply','mtime'=>$mtime]);
         return $res? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');       
     }
 

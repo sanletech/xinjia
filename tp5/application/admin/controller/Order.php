@@ -16,7 +16,8 @@ class Order extends Base
     public function order_audit() 
     {
         $data = new OrderM;
-        $list = $data->order_audit();
+        $list = $data->order_audit(5,2);
+//        $this->_p($list);exit;
         $page =$list->render();
         $count =  count($list);
         $this->view->assign('count',$count);
@@ -24,6 +25,27 @@ class Order extends Base
         $this->view->assign('page',$page);
         return $this->view->fetch('order/order_audit'); 
     }
+         //审核详情页
+    public function audit_page()
+    {   
+        $order_num =  $this->request->get('order_num');
+        $data = new OrderM;
+        $dataArr = $data->orderData($order_num);
+//        $this->_p($dataArr);exit;
+
+        $this->assign([
+            'list'  =>$dataArr['list'],
+//            'containerData' => $dataArr['containerData'],
+//            'carData'=> $dataArr['carData'],
+            'shipperArr'=>$dataArr['shipperArr'],
+            'consignerArr'=>$dataArr['consignerArr'],
+//            'discount'=>$dataArr['discount']
+        ]);;
+        return $this->view->fetch('orderPort/audit_page');
+    }
+    
+
+    
     //审核订单 的通过
     public function order_audit_pass() 
     { 
@@ -496,23 +518,7 @@ class Order extends Base
        
     }
 
-    //审核详情页
-    public function audit_page(){
-        $order_num =  $this->request->get('order_num');
-        $data = new OrderM;
-        $dataArr = $data->orderData($order_num);
-//        $this->_p($dataArr);exit;
 
-        $this->assign([
-            'list'  =>$dataArr['list'],
-            'containerData' => $dataArr['containerData'],
-            'carData'=> $dataArr['carData'],
-            'shipperArr'=>$dataArr['shipperArr'],
-            'consignerArr'=>$dataArr['consignerArr'],
-            'discount'=>$dataArr['discount']
-        ]);;
-        return $this->view->fetch('order/audit_page');
-    }
     
     //展示待卸船信息的页面
     public function  listUnShip(){

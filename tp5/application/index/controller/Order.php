@@ -29,7 +29,6 @@ class Order extends Base
         //获取总页数
         $count =  $data['count']; 
         $list = $data['list'] ;
-      
         $this->view->assign('page',$page); 
         $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
@@ -157,6 +156,10 @@ class Order extends Base
         if(intval($data['carriage']) !== intval($carriage)){
             return array('status'=>0,'mssage'=>'海运费错误');
         }
+        //门到门的总装货费,送货费,客户的利润
+        $carprice_r = $data_price['r_'.$container_size];
+        $carprice_s = $data_price['s_'.$container_size]; 
+        $discount  = $data_price['discount_'.$container_size]; 
         //计算保险费 = 单个柜货值(万元为单位)*4*柜量
         if(intval($data['premium'])!==intval($data['cargo_value']*4)*$container_sum){
             return array('status'=>0,'mssage'=>'保险费错误');
@@ -177,8 +180,10 @@ class Order extends Base
             'ctime'=>date('Y-m-d H:i:s'),'payment_method'=>$data['payment_method'],'shipper_id'=>$data['r_id'],
             'shipper'=>$shipper,'consigner_id'=>$data['s_id'],'consigner'=>$consigner,'seaprice_id'=>$sea_id,
             'price_description'=>$data['price_description'],'premium'=>$data['premium'],'quoted_price'=>$data['price_sum'],
+            'carprice_r'=>$carprice_r,'carprice_s'=>$carprice_s,'discount'=>$discount,
             'type'=>'door','status'=>2);
         $res =Db::name('order_port')->insert($fatherData);
+        action('Bill/billCreate',['order_num'=>$order_num], 'controller'); //同时创建账单
         return json($res ? array('status'=>1,'message'=>'下单成功'):array('status'=>0,'message'=>'下单失败') );
     }
     

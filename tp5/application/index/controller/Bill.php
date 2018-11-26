@@ -18,7 +18,7 @@ class Bill extends Base
     public function billCreate($order_num){
         $data =Db::name('order_port')
                 ->field('order_num,container_size,container_sum,comment,extra_info,'
-                        . 'status,money_status,quoted_price,member_code')
+                        . 'quoted_price,member_code,type')
                 ->where('order_num',$order_num)->find();
         $data['ctime']=  date('Y-m-d H:i:s');
         //插入订单的数据

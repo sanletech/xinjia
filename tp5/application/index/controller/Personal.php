@@ -282,9 +282,7 @@ class Personal extends Base
                 //修改账单和订单的状态
                 if(count(array_filter($seal))==$sqlData['container_sum']){
                     $res3 =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$this->order_status['sea_waybill'],'container_status'=>1]);
-                    $res4 =Db::name('order_bill')->where('order_num',$order_num)->update(['status'=>$this->order_status['sea_waybill'],'container_status'=>1]);
-                    if($res && $res4){$res_arr =TRUE ;}else{$res_arr =FALSE ;}
-                    $res_arr ? $status = array('status'=>2,'message'=>'柜号封条号全部录完成功不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
+                    $res3 ? $status = array('status'=>2,'message'=>'柜号封条号全部录完成功不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
                 }
             }
           

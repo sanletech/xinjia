@@ -390,10 +390,8 @@ class OrderPort extends Base
         $order_num = $this->request->param('order_num');
         $extra_info =  trim($extra_info);
         $sql ="update hl_order_port  set `extra_info` =concat(`extra_info`,',$extra_info') where order_num= '$order_num'";
-        $sql1 ="update hl_order_bill set `extra_info` =concat(`extra_info`,',$extra_info') where order_num= '$order_num'";
         $res = Db::execute($sql);
-        $res1 =Db::execute($sql1);
-        if($res!==FALSE && $res1!==FALSE){
+        if($res!==FALSE){
             return array('status'=>1,'message'=>'执行成功');
         }
         return  array('status'=>0,'message'=>'执行失败');

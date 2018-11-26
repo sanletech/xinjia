@@ -104,9 +104,9 @@ class orderPort extends Model
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
-                ->join('hl_container_type CT','CT.id=OP.container_type_id','left')//集装箱子的型号
-                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name,CT.container_type')
+                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name')
                 ->where('OP.order_num',$order_num)
+                ->where('OP.type','port')
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
                 ->find();
 //        $this->_p($list);exit;
@@ -156,7 +156,7 @@ class orderPort extends Model
 //        var_dump($data);exit;
         $res =Db ::name('order_port_status')->insert($data); //记录操作
 //        var_dump($res);exit;
-        //根据不同的记录是否更新order_port 和order_bill 的状态
+        //根据不同的记录是否更新order_port的状态
         $order_status= $this->order_status;
        
         //只更改订单和账单的对应字段
