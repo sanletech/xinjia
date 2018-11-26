@@ -92,4 +92,14 @@
     padding: 0 10px;
     display: block !important; }
 
+#cont {
+  margin: 10px 0; }
+
+.layui-form-checkbox[lay-skin=primary] {
+  padding-left: 0;
+  padding-right: 25px; }
+
+#car, #pei_post, #at_mony, #at_port {
+  display: none; }
+
 /*# sourceMappingURL=order_list.css.map */
