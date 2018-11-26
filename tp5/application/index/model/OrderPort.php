@@ -130,7 +130,8 @@ class OrderPort extends Model
     }
     //根据送货装货信息生成对应的记录
     public function  insertdata($insertR,$order_num,$container_sum,$type)
-    {
+    {   
+        $mtime = date('Y-m-d H:i:s');
         if(!empty($insertR))
             {            
                 $kr = array_keys($insertR);
@@ -138,7 +139,8 @@ class OrderPort extends Model
                     $tmp[$i] = array_combine($kr,array_column($insertR,$i));
                     $tmp[$i]['order_num'] = $order_num;  
                     $tmp[$i]['type']=$type;
-                    $tmp[$i]['state']=0;
+                    $tmp[$i]['state']='charge';
+                    $tmp[$i]['mtime']=$mtime;
                 }
                 //如果装货的柜子数量少于订单的总柜子数量 就存在有客户自己装货的
                 $receiveContainerSum= array_sum($insertR['num']);
@@ -147,12 +149,13 @@ class OrderPort extends Model
                     $nextI= $i+1;
                     $tmp[$nextI]= array_fill_keys(array_keys($tmp[$i]),'');
                     $tmp[$nextI]['order_num'] = $order_num;  
-                    $tmp[$nextI]['state']=1;
+                    $tmp[$nextI]['state']='free';
                     $tmp[$nextI]['type']=$type;
                     $tmp[$nextI]['num']=$freeContainerR;
+                    $tmp[$nextI]['mtime']=$mtime;
                 }
             }  else {
-                $tmp[] =array('order_num'=>$order_num,'state'=>1,'type'=>$type,'num'=>$container_sum);
+                $tmp[] =array('order_num'=>$order_num,'state'=>'free','type'=>$type,'num'=>$container_sum,'mtime'=>$mtime);
             }  
      
             $tmp = array_values($tmp);//将键重新从零开始
@@ -168,7 +171,7 @@ class OrderPort extends Model
                 }
             }
             $res =Db::name('order_truckage')->insertAll($inser_arr);
-//            var_dump($res);exit;
+//            $this->_p($res);
             return $res ? TRUE:FALSE; 
     }
     

@@ -128,8 +128,8 @@ class Financial extends Base
         $list =Db::name('order_bill')->alias('OB')
                 ->join('hl_member M','M.member_code=OB.member_code','left')
                 ->join('hl_order_port OP','OP.order_num =OB.order_num','left')
-                ->field('OB.*,,M.name,OP.status,OP.money_status,OP.container_buckle,'
-                        . 'OP.container_status,OP.comment,OP.extra_info')
+                ->field('OB.*,M.name,OP.status,OP.money_status,OP.container_buckle,'
+                        . 'OP.container_status,OP.extra_info')
                 ->where('OB.member_code|M.name',$member)
                 ->where('OB.order_num',$order_num)
                 ->whereTime('OB.ctime','between', [$date_start, $date_end])
@@ -139,6 +139,7 @@ class Financial extends Base
 //         var_dump($list);exit;
         $count =  Db::table($list.' a')->count();
         $list = Db::table($list.' a')->limit($tol,$limit)->select();
+//        $this->_p($list);exit;
         foreach($list as $key=>$value){
 
             switch($value['container_buckle'])

@@ -107,7 +107,7 @@ class orderPort extends Model
                 ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name')
                 ->where('OP.order_num',$order_num)
                 ->where('OP.type','port')
-                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
+                ->group('OP.id')
                 ->find();
 //        $this->_p($list);exit;
         //根据订单号 查询对应柜子的 柜号和封条号码
@@ -119,14 +119,14 @@ class orderPort extends Model
         //根据订单查询出拖车信息
         $carData['r'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
-                ->where('state',0) //收费柜子
+                ->where('state','charge') //收费柜子
                 ->where('type','r')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime,link_man,shipper,load_time,link_phone,car,`comment`,seal')
                 ->select();
        
         $carData['s'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
-                ->where('state',0) //收费柜子
+                ->where('state','charge') //收费柜子
                 ->where('type','s')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
@@ -140,8 +140,32 @@ class orderPort extends Model
                        ])->field("id,title,type,".$list['container_size']. ' money')->select();
         
         $shipperArr= explode(',',$list['shipper']); 
-        $consignerArr= explode(',',$list['consigner']);
-        
+        $consignerArr= explode(',',$list['consigner']); 
+       switch ($list['payment_method'])
+       {
+            case 'month':
+                $list['payment_method']='月结付款';
+                break; 
+            case 'cash':
+                $list['payment_method']='在线支付';
+                break; 
+            case 'installment':
+                $list['payment_method']='到港付款';
+                break; 
+            case 'pledge':
+                $list['payment_method']='压柜付款';
+                break; 
+        }
+        switch ($list['money_status'])
+       {
+            case '0':
+                $list['money_status']='未付款';
+                break; 
+            case '1':
+                $list['money_status']='已付款';
+                break; 
+        }
+        $list['extra_info'] = ltrim($list['extra_info'],','); 
         return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'discount'=>$discount,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
         
     }
@@ -159,17 +183,16 @@ class orderPort extends Model
         //根据不同的记录是否更新order_port的状态
         $order_status= $this->order_status;
        
-        //只更改订单和账单的对应字段
+        //更改订单状态和对应字段
         $map1 =array($order_status['payment_status'],$order_status['container_appley'],
             $order_status['container_lock'],$order_status['container_unlock'],$order_status['up_container_code']);
          //修改order_bill的状态 ,对应order_port的状态和其字段container_status的更改 
         $map2 = array_diff($order_status,$map1) ;  
         if(in_array($status,$order_status)){
-            
             if(in_array($status,$map1)){
                 switch ($status) {
                     case $order_status['payment_status']:
-                    $param = ['money_status'=>1];
+                    $param = ['money_status'=>'1'];
                     break;
                     case $order_status['container_appley']:
                     $param = ['container_buckle'=>'appley'];
@@ -192,7 +215,6 @@ class orderPort extends Model
             Db::startTrans();
             try{
                 $res =Db::name('order_port')->where('order_num',$order_num)->update($param);
-                $res1 =Db::name('order_bill')->where('order_num',$order_num)->update($param);
             Db::commit();
             } catch (\Exception $e) {
                 // 回滚事务

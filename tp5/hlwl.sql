@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-22 19:42:49
+Date: 2018-11-23 17:57:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4695,15 +4695,16 @@ CREATE TABLE `hl_order_bill` (
   `money_status` int(1) NOT NULL DEFAULT '0' COMMENT '付款状态0未付款 1付款',
   `container_buckle` enum('apply','unlock','lock') DEFAULT 'lock' COMMENT 'lock扣柜unlock放货apply申请放货',
   `container_status` int(1) DEFAULT '0' COMMENT '客户是否提交柜号了0未提交1已经提交',
+  `type` enum('port','door') DEFAULT 'port' COMMENT '是港到港还是门到门',
   PRIMARY KEY (`id`,`money_status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_bill
 -- ----------------------------
-INSERT INTO `hl_order_bill` VALUES ('1', 'AB14871970148629', 'ZD_A_001', '2138', '1', '20GP', '2018-11-14 17:19:57', null, '2018-11-22 14:41:16', '3', '', null, 'zh_A_001', '1', 'unlock', '0');
-INSERT INTO `hl_order_bill` VALUES ('2', 'AB22692870850686', 'ZD_A_002', '6534', '3', '20GP', '2018-11-22 14:48:07', null, '2018-11-22 14:49:37', '404', '法撒旦法撒', null, 'zh_A_001', '0', 'lock', '0');
-INSERT INTO `hl_order_bill` VALUES ('3', 'AB22694732360649', 'ZD_A_003', '3265', '1', '40HQ', '2018-11-22 14:51:13', null, '2018-11-22 14:57:05', '3', '', null, 'zh_A_001', '0', 'lock', '0');
+INSERT INTO `hl_order_bill` VALUES ('1', 'AB14871970148629', 'ZD_A_001', '2138', '1', '20GP', '2018-11-14 17:19:57', null, '2018-11-22 14:41:16', '3', '', null, 'zh_A_001', '1', 'unlock', '0', 'port');
+INSERT INTO `hl_order_bill` VALUES ('2', 'AB22692870850686', 'ZD_A_002', '6534', '3', '20GP', '2018-11-22 14:48:07', null, '2018-11-22 14:49:37', '404', '法撒旦法撒', null, 'zh_A_001', '0', 'lock', '0', 'port');
+INSERT INTO `hl_order_bill` VALUES ('3', 'AB22694732360649', 'ZD_A_003', '3265', '1', '40HQ', '2018-11-22 14:51:13', null, '2018-11-22 14:57:05', '3', '', null, 'zh_A_001', '0', 'lock', '0', 'port');
 
 -- ----------------------------
 -- Table structure for `hl_order_comment`
@@ -4833,15 +4834,25 @@ CREATE TABLE `hl_order_port` (
   `container_status` enum('1','0') DEFAULT '0' COMMENT '客户是否提交柜号了0未提交1已经提交',
   `type` enum('port','door') DEFAULT 'port' COMMENT '港到港的订单port, 门到门的door',
   PRIMARY KEY (`id`,`money_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
+INSERT INTO `hl_order_port` VALUES ('0', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', null, null, 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, null, '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', null, '2', null, null, null, '0', 'lock', '0', 'door');
 INSERT INTO `hl_order_port` VALUES ('1', 'AB14871970148629', '猪肉', '20GP', '1', '1', '0', '1', '', null, '2018-11-22 14:41:16', 'zh_A_001', '0', '2018-11-14 17:19:57', 'installment', '0', null, '0', '5343', '老王,广州海浪网络有限公司,123456', '5346', '陈老板,广州海浪物流,10086', '2', '2138', '1', '0', '0', '0', '0', '2138', null, '3', 'asdfasdfsa', 'AB14871970148629_book_note_docx', 'AB14871970148629_sea_waybill_docx', '1', 'unlock', '0', 'port');
 INSERT INTO `hl_order_port` VALUES ('2', 'AB22692870850686', '猪肉', '20GP', '3', '1', '40', '1', '法撒旦法撒', null, '2018-11-22 14:49:37', 'zh_A_001', '0', '2018-11-22 14:48:07', 'installment', '0', null, '0', '5343', '老王,广州海浪网络有限公司,123456', '5346', '陈老板,广州海浪物流,10086', '1', '2138', '价格双边收费', '120', '0', '0', '0', '6534', null, '404', null, null, null, '0', 'lock', '0', 'port');
 INSERT INTO `hl_order_port` VALUES ('3', 'AB22694732360649', '猪肉', '40HQ', '1', '10', '40', '1', '', null, '2018-11-22 14:57:05', 'zh_A_001', '0', '2018-11-22 14:51:13', 'installment', '0', null, '0', '5343', '老王,广州海浪网络有限公司,123456', '5346', '陈老板,广州海浪物流,10086', '5', '3225', '价格双边收费', '40', '0', '0', '0', '3265', null, '3', null, null, null, '0', 'lock', '0', 'port');
-INSERT INTO `hl_order_port` VALUES ('4', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', null, null, 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, null, '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', null, '2', null, null, null, '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('5', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('6', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('7', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('8', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('9', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('10', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('11', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('12', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('13', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('14', 'DAB228667059', '猪肉', '40HQ', '3', '1', '40', '1', '猪肉得烤乳猪', '', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-11-22 19:37:50', 'installment', null, null, '', '5346', '老王,广州海浪网络有限公司,123456', '5345', '王老板,广州兴佳网络有限公司,789456', '1', null, '价格双边收费', '120', null, null, null, '10395', '', '2', '', '', '', '0', 'lock', '0', 'door');
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
@@ -5884,7 +5895,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-22 19:40:36', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-23 10:24:55', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);

@@ -36,12 +36,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">支付状态：</label>
                                 <div class="layui-input-block mony">
-                                    <?php if($list['money_status']){
-                                        echo'已付款';
-                                    }else{
-                                        echo'未付款';
-                                    }
-                                    ?>
+                                   <{$list.money_status}>　<{$list.payment_method}>
                                 </div>
                             </div>
                         </div>
@@ -338,20 +333,7 @@
                                 <div class="layui-col-xs4">
                                     <span>*&nbsp;</span>结账方式：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                        <?php 
-                                    $payment_method=  $list['payment_method'];
-                                    if($payment_method=='installment'){
-                                         echo'到港付';
-                                    }elseif($payment_method=='month'){
-                                        echo'月结';
-                                    }elseif($payment_method=='cash'){
-                                        foreach($discount as $rows){
-                                            if($rows['id']== $list['cash_id']){
-                                                echo $rows['title'];
-                                            }
-                                        }
-                                    }
-                                ?>
+                           　　　　　　　<{$list.payment_method}>
                                     </div>
                             </div>
                         </div>

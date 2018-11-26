@@ -48,9 +48,12 @@ class Bill extends Base
         $limit =$this->request->param('limit',10,'intval');
         $tol = ($page-1)*$limit;
         $member_code =Session::get('member_code','think');
-        $list =Db::name('order_bill')->where('member_code',$member_code)
-                ->field('member_code',TRUE)->where('money_status',$money_status)
-                ->order('ctime desc,mtime desc')->buildSql();
+        $list =Db::name('order_bill')->alias('OB')
+                ->join('hl_order_port OP','OB.order_num=OP.order_num','left')
+                ->where('OB.member_code',$member_code)
+                ->field('OB.*,OP.extra_info,OP.money_status,OP.container_buckle,OP.container_status,OP.status')->where('OP.money_status',$money_status)
+                ->order('OB.ctime desc,OB.mtime desc')->buildSql();
+//var_dump($list);exit;
         $count = Db::table($list.' a')->count();
         $list = Db::table($list.' a')->limit($tol,$limit)->select();
         //转换付款状态,账单状态，备注信息  $this->order_status
