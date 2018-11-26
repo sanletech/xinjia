@@ -1,0 +1,291 @@
+<{include file='./public/header' /}>
+<link rel="stylesheet" href="__STATIC__/../index/layui/css/layui.css">
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+      title="刷新">
+      <i class="layui-icon" style="line-height:30px">ဂ</i>
+    </a>
+</div>
+
+  <form class="layui-form" id="cont">
+    <!-- 搜索内容 -->
+    <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label"></label>
+          <div class="layui-input-inline">
+            <input type="text" name="username" placeholder="收货联系人" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <input type="text" name="username" placeholder="装货公司名全称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <div class="layui-input-inline">
+                <a class="layui-btn cha">搜索</a>
+            </div>
+          </div>
+    </div>
+    
+  
+
+    <!-- 筛选内容 -->
+    <div class="layui-row xuan">
+        <label class="layui-form-label"></label>
+
+        <!-- 收款状态 -->
+        <div class="fangfa">
+            <div class="port_rig">
+            <input type="checkbox" name="no_money"  value="1" lay-skin="primary" lay-filter="port" title="待订舱" checked="">
+            <input type="checkbox" name="have_money"  value="2" lay-skin="primary" lay-filter="port" title="待派车" checked="">
+            <input type="checkbox" name="have_money"  value="3" lay-skin="primary" lay-filter="port" title="待装货" checked="">
+            <input type="checkbox" name="have_money"  value="4" lay-skin="primary" lay-filter="port" title="待报柜号" checked="">
+            <input type="checkbox" name="have_money"  value="5" lay-skin="primary" lay-filter="port" title="待配船" checked="">
+            <input type="checkbox" name="have_money"  value="6" lay-skin="primary" lay-filter="port" title="待到港" checked="">
+            <input type="checkbox" name="have_money"  value="7" lay-skin="primary" lay-filter="port" title="待卸船" checked="">
+            <input type="checkbox" name="have_money"  value="8" lay-skin="primary" lay-filter="port" title="待收款" checked="">
+            <input type="checkbox" name="have_money"  value="9" lay-skin="primary" lay-filter="port" title="待送货" checked="">
+          </div>
+        </div>
+    </div>
+
+    <table class="layui-hide" id="test1" lay-filter="test1"></table>
+  </form>
+
+
+
+   <!-- 添加备注窗口 -->
+   <div id="bz">
+      <div class="beizhu"></div>
+      <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入备注信息" class="layui-input">
+  </div>
+<!-- 提交运单号窗口 -->
+  <div id="ding">
+    <div class="num1"></div>
+    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
+    <a class="dcd" href="#">上传</a>
+  </div>
+
+<!--水运单-->
+<div id="shui">
+    <div class="num2"></div>
+    <a class="syd" href="#">上传</a>
+</div>
+  
+<script type="text/html" id="toolbarDemo1">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+  </div>
+</script> 
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit"  title="">确定</a>
+</script>
+
+<!-- <script src="__STATIC__/js/jquery-3.2.1.min.js"></script>  -->
+<script src="__STATIC__/../index/layui/layui.js"></script>
+<script src="__STATIC__/js/port.js"></script>
+<script src="__STATIC__/js/ship_boat.js"></script> 
+<script src="__STATIC__/js/ship_company.js"></script>
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+var url = "<{:url('admin/orderPort/waybill_upload')}>";
+layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){ 
+  var layer = layui.layer
+  ,table = layui.table
+  ,form = layui.form
+  ,$ = layui.jquery
+  ,upload = layui.upload
+  ,laydate = layui.laydate;
+
+  var biao = table.render({
+    elem: '#test1'
+    ,url: "<{:url('admin/orderPort/portlist_data')}>"
+    ,toolbar: '#toolbarDemo1'
+    ,title: '用户数据表'
+    ,width:'99%'
+    ,cols: [[
+      {type: 'checkbox', fixed: 'left'}
+      ,{field:'id', title:'ID', unresize: true,width:60}
+      ,{field:'order_num', title:'业务员' ,width:200,templet:function(res){
+        return '<a href="<{:url("admin/orderPort/port_details")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>'
+      }}
+      ,{field:'ctime', title:'创建时间',sort: true,width:200}
+      ,{field:'member_code', title:'船期',width:150}
+      ,{field:'company', title:'海上时效', width:200}
+      ,{field:'track_num', title:'截单时间' ,width:100,event:'yun',templet:function(res){
+        // if (res.track_num == null) {
+        //   res.track_num = '上传';
+        // }
+        // return '<div class="track_num1"><a>'+ res.track_num +'</a></div>'
+      }}
+      ,{field:'container_sum', title:'船公司/船名/航次' ,width:100,templet:function(res){
+        return '<div class="">'+ res.container_sum +'/'+ res.container_size+'</div>'
+      }}
+      ,{field:'ship_short_name', title:'订单号',width:100}
+      ,{field:'boat_name', title:'收货人',width:100}
+      ,{field:'boat_code', title:'货名',width:100}
+      ,{field:'s_port', title:'航线',width:200,templet:function(res){
+        return '<div class="">'+ res.s_port +'-'+ res.e_port+'</div>'
+      }}
+      ,{field:'quoted_price', title:'箱型*箱量',width:100} 
+      ,{field:'container_status', title:'本订单箱量',width:100}
+      ,{field:'sea_waybill', title:'状态',width:100,event:'shui',templet:function(res){        
+        // if(res.sea_waybill){
+        //   return '<a href="<{:url("admin/OrderPort/downs")}>?order_num='+res.order_num+'&type=sea_waybill">下载</a>'
+        // }else{
+        //   return '<a class="" href="#">上传</a>';
+        // }
+      }}
+      ,{field:'container_buckle', title:'天数',width:100}
+      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:80}
+    ]]
+    ,page: true
+    , done: function(res, curr, count){//数据调用之后
+    //如果是异步请求数据方式，res即为你接口返回的信息。
+    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+    // console.log(res);
+    //得到当前页码
+    // console.log(curr); 
+    //得到数据总量
+    // console.log(count);  
+    // let arry = res.data;
+    // for (let i in arry) {
+    //   $('a[lay-event="edit"]').eq(i).attr('title','465464&#10;');
+    //   let shu = arry[i].extra_info.split(',');
+    //   let ju = $('a[lay-event="edit"]').eq(i);
+    //   for (let j = 0; j<shu.length-1;j++) {
+    //     ju.attr('title',shu[j]+'&#10;')
+    //   }
+    // }
+  }
+  });
+
+//搜索
+$('.cha').click(function(){
+  
+  console.log($('#cont').serializeArray());
+  
+  biao.reload({
+    where:{
+        data:$('#cont').serialize()
+    },
+    page:{curr:1}
+  })
+});
+
+//监听行工具事件
+table.on('tool()', function(obj){
+    var data = obj.data;
+    if(obj.event === 'edit'){//点击备注
+      layer.open({
+        type:1
+        ,title: '添加备注'
+        ,content: $('#bz')
+        ,shadeClose :true
+        ,btn:['确认']
+        ,yes:function(index){
+          let beizhu = $('#bz input').val();
+          $.get('<{:url("admin/orderPort/extra_info")}>',{extra_info:beizhu,order_num:data.order_num},function(data){
+            if(data.status){
+                // alert('添加成功');
+                layui.layer.msg('添加成功', {icon: 1,time: 500},function(){
+                  layer.close(index);
+                });
+            }else{
+                // alert('申请失败');
+                layui.layer.msg('添加失败', {icon: 2,time: 1000});
+            }
+          })
+        }
+      });   
+    }else if(obj.event === 'yun'){//单击运单号
+      let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();
+      let zj = $(this).find('a');      
+      $('.num1').html('订单号：<span>'+order_num+'</span>');
+      layer.open({
+        type:1
+        ,title: '提交订舱单'
+        ,content: $('#ding')
+        ,shadeClose :true
+        ,btn:['上传']
+        ,yes:function(index){
+          if($('#ding input').val()){    
+            dingcang($('.num1 span').html(),zj,index);
+            $('.dcd').click();
+          }else{
+              layer.msg('请输入运单号', {icon: 7,time: 1000});
+          }
+        }
+      });
+    }else if(obj.event === 'shui'){
+      $('#shui .num2').html($(this).siblings('td[data-field="order_num"]').find('a').html());
+      shuiyun($('#shui .num2').html());  
+      if ($(this).find('a').html() == '上传') {
+        $('#shui a').click();
+      }      
+    }
+  });
+
+  //订舱单
+  function dingcang(order_id,zj,index){
+   let track_num = $('#ding input').val();
+   upload.render({
+        elem:'.dcd'  //绑定元素
+        , url: url + '?order_num=' + order_id + '&type=book_note' //上传接口
+        , accept: 'file' //普通文件
+        ,data:{track_num:track_num}
+        ,before: function(obj){
+          layer.close(index);//关闭小窗口
+        }
+        , done: function (res) {
+          //上传完毕回调          
+          if (res.code == 0) {
+            layui.layer.msg(res.msg, {icon: 1,time: 1000});
+            zj.html(track_num);//复制运单号
+          }else{
+            layui.layer.msg(res.msg, {icon: 2,time: 1000});
+          }
+        }
+    });
+  }
+  
+   //水运单
+  function shuiyun(order_id){
+    upload.render({
+    elem: '.syd' //绑定元素
+    , url: url + '?order_num='+order_id+'&type=sea_waybill' //上传接口
+    , accept: 'file' //普通文件
+    ,choose:function(obj){
+      // console.log(obj);
+    }
+    , done: function (res) {                  
+      // 上传完毕回调
+      if (res.code == 0) {
+        // alert(res.msg)
+        layui.layer.msg(res.msg, {icon: 1,time: 1000},function(res){
+          location.replace(location.href);
+        });
+      } else {
+        // alert(res.msg)
+        layui.layer.msg(res.msg, {icon: 2,time: 1000});
+      }
+    }
+  });
+  }
+
+
+
+  //选中的数据
+  $('button').click(function(){
+    var checkStatus = table.checkStatus('test1');
+    console.log(checkStatus);
+  });
+
+});
+</script>
