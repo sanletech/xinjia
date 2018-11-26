@@ -389,6 +389,7 @@ function st(){
 
 $('.bao1 li').click(function(){
     $('#container_type').val($(this).html());
+//    console.log($(this).html());
     $('.bao1').hide();
 });
 
@@ -409,5 +410,5 @@ $('#container_type').focus(function(e){//获取焦点
 })
 
 $('#container_type').blur(function(e){//失去焦点
-    setTimeout(function(){ $('.bao1').hide()}, 100);
+    setTimeout(function(){ $('.bao1').hide()}, 300);
 });

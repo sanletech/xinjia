@@ -41,7 +41,30 @@ class Order extends Model
                 ->where('OP.order_num',$order_num)
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
                 ->find();
-        
+        switch ($list['payment_method'])
+       {
+            case 'month':
+                $list['payment_method']='月结付款';
+                break; 
+            case 'cash':
+                $list['payment_method']='在线支付';
+                break; 
+            case 'installment':
+                $list['payment_method']='到港付款';
+                break; 
+            case 'pledge':
+                $list['payment_method']='压柜付款';
+                break; 
+        }
+        switch ($list['money_status'])
+       {
+            case '0':
+                $list['money_status']='未付款';
+                break; 
+            case '1':
+                $list['money_status']='已付款';
+                break; 
+        }
         $shipperArr= explode(',',$list['shipper']); 
         $consignerArr= explode(',',$list['consigner']);
 //        'containerData'=>$containerData,'carData'=>$carData,'discount'=>$discount,

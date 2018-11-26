@@ -35,45 +35,44 @@ class Order extends Base
 
         $this->assign([
             'list'  =>$dataArr['list'],
-//            'containerData' => $dataArr['containerData'],
-//            'carData'=> $dataArr['carData'],
+            'containerData' => '',
+            'carData'=> '',
             'shipperArr'=>$dataArr['shipperArr'],
             'consignerArr'=>$dataArr['consignerArr'],
-//            'discount'=>$dataArr['discount']
+            'discount'=>''
         ]);;
-        return $this->view->fetch('orderPort/audit_page');
+        return $this->view->fetch('order/audit_page');
     }
     
-
     
-    //审核订单 的通过
-    public function order_audit_pass() 
-    { 
-       if (request()->isAjax()){
-           $idArr =$this->request->param();
-           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>100,'action'=>'通过审核>待订舱']);
-           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
-            foreach ($order_numArr as $order_num) {
-               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>100,'action'=>'通过审核>待订舱'], 'controller');
-            }
-           return json($res ? 1 : 0) ;
-       }
-    }
+//    //审核订单 的通过
+//    public function order_audit_pass() 
+//    { 
+//       if (request()->isAjax()){
+//           $idArr =$this->request->param();
+//           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>100,'action'=>'通过审核>待订舱']);
+//           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+//            foreach ($order_numArr as $order_num) {
+//               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>100,'action'=>'通过审核>待订舱'], 'controller');
+//            }
+//           return json($res ? 1 : 0) ;
+//       }
+//    }
     
-      //审核订单 的删除
-    public function order_audit_del() 
-    {
-         if (request()->isAjax()){
-            $idArr =$this->request->param();
-            $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404040,'action'=>'订单删除']);
-            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
-            foreach ($order_numArr as $order_num) {
-               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>404040,'action'=>'订单删除'], 'controller');
-            }
-           return json($res ? 1 : 0) ;
-       }
-        
-    }
+//      //审核订单 的删除
+//    public function order_audit_del() 
+//    {
+//        if (request()->isAjax()){
+//            $idArr =$this->request->param();
+//            $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404040,'action'=>'订单删除']);
+//            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+//            foreach ($order_numArr as $order_num) {
+//               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>404040,'action'=>'订单删除'], 'controller');
+//            }
+//            return json($res ? 1 : 0) ;
+//        }
+//        
+//    }
         
     //查看订单
     public function order_edit() 
@@ -97,9 +96,9 @@ class Order extends Base
     public function order_waste_pass() 
     { 
        if (request()->isAjax()){
-           $idArr =$this->request->param();
-           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>0,'action'=>'通过恢复>待审核']);
-           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
+            $idArr =$this->request->param();
+            $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>0,'action'=>'通过恢复>待审核']);
+            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
             foreach ($order_numArr as $order_num) {
                action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>0,'action'=>'通过恢复>待审核'], 'controller');
             }

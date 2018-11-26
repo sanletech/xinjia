@@ -171,8 +171,8 @@ class Order extends Base
         }
         $order_num = action('IDCode/order_num',['type'=>'door'], 'controller');   
         
-        $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone']));//装货信息
-        $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone']));//送货信息
+        $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone'],$data['r_add']));//装货信息
+        $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone'],$data['s_add']));//送货信息
        
         $fatherData =array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
             'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],

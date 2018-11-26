@@ -112,7 +112,7 @@ class OrderPort extends Base
             'shipperArr'=>$dataArr['shipperArr'],
             'consignerArr'=>$dataArr['consignerArr'],
             'discount'=>$dataArr['discount']
-        ]);;
+        ]);
         return $this->view->fetch('orderPort/audit_page');
     }
     //审核页面的 订单通过或取消
