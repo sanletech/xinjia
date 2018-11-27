@@ -112,7 +112,7 @@ class OrderPort extends Base
             'shipperArr'=>$dataArr['shipperArr'],
             'consignerArr'=>$dataArr['consignerArr'],
             'discount'=>$dataArr['discount']
-        ]);;
+        ]);
         return $this->view->fetch('orderPort/audit_page');
     }
     //审核页面的 订单通过或取消
@@ -389,7 +389,8 @@ class OrderPort extends Base
         $extra_info = $this->request->param('extra_info');
         $order_num = $this->request->param('order_num');
         $extra_info =  trim($extra_info);
-        $sql ="update hl_order_port  set `extra_info` =concat(`extra_info`,',$extra_info') where order_num= '$order_num'";
+        $sql ="update hl_order_port  set `extra_info` =concat(ifnull(`extra_info`,''),',$extra_info') where order_num= '$order_num'";
+//        var_dump($sql);exit;
         $res = Db::execute($sql);
         if($res!==FALSE){
             return array('status'=>1,'message'=>'执行成功');

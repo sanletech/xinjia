@@ -68,7 +68,9 @@ class OrderPort extends Controller
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
         $data = $sea_pirce ->portBook($member_code,$seaprice_id,$container_size);
-        $list =$data['seapriceData'];$discount=$data['discount'];$default_addArr=$data['default_addArr'];
+        $list =$data['seapriceData']; //下单信息
+        $discount=$data['discount']; //优惠信息
+        $default_addArr=$data['default_addArr']; //默认地址
         //创建订单令牌
         action('OrderToken/createToken','', 'controller');
         // $this->_p($data);exit;
