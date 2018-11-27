@@ -491,35 +491,37 @@ function dele(zj) {//删除当前装货或者送货
   $(zj).parents('tr').remove();
   st();//重新计算价格 方法在plce_order.js
 }
-var  bootble = true;
+var bootble = true;
 //第一次 下单
 $('.tjiao').eq(0).find('.shi').click(function(){
   let huo = $.trim($('input[name="cargo"]').val());
-
   // bootble = huo?true:false;  
-  if ($('#cargo_value').val() == 0 || $('#cargo_value').val() == '') {
+  if ($('#cargo_value').val() == 0) {
     bootble = false;
-    $('#cargo_value').val('');
     layui.layer.msg('请检查货值信息',{icon: 2,time: 1000});
-  } else{
+  }else{
     bootble = true;
-  }
-  if (bootble) {
-    if (huo) {
-      $('.er .in').each(function () {
-        if (!$(this).val()) {
-          bootble = false;
-          layui.layer.msg('委托信息不完整',{icon: 2,time: 1000});
-          return false;
-        }else{
-          bootble = true;        
-        }
-      })
+    if (huo && bootble) {
+      if ($('#container_type').val()) {
+        $('.er .in').each(function () {
+          if (!$(this).val()) {
+            bootble = false;
+            layui.layer.msg('委托信息不完整',{icon: 2,time: 1000});
+            return false;
+          }else{
+            bootble = true;        
+          }
+        })
+      }else{
+        layui.layer.msg('请输入包装',{icon: 2,time: 1000});
+        bootble = false;
+      }
     }else{
       layui.layer.msg('请输入货名',{icon: 2,time: 1000});
       bootble = false;
     }
   }
+  
   if (bootble) {//判断信息输入完整
     $('.tjiao').eq(0).hide();
     $('.lc,.wt1,.dd_nei .layui-form').hide();
