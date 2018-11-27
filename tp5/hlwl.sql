@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-26 18:10:24
+Date: 2018-11-27 20:05:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3434,44 +3434,6 @@ INSERT INTO `hl_book_line_444` VALUES ('11', '32', null, '11', '8', 'aaa', '1529
 INSERT INTO `hl_book_line_444` VALUES ('16', null, null, '26', '2', '中海', '1529510400', '1529942400', 'bbbc', '艾弗森', '5', '1529942400', '1530201600', '0', '1529565619', '110100004', '120100009', null, null);
 
 -- ----------------------------
--- Table structure for `hl_cardata`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_cardata`;
-CREATE TABLE `hl_cardata` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `car_name` varchar(10) DEFAULT NULL COMMENT '车队名字',
-  `address` varchar(80) DEFAULT NULL,
-  `symbiosis` int(1) DEFAULT '3' COMMENT '1为中止合作2为暂无合作3临时合作4长期合作',
-  `status` int(1) NOT NULL DEFAULT '2' COMMENT '1为删除2为正常默认为2',
-  `mtime` datetime DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_cardata
--- ----------------------------
-INSERT INTO `hl_cardata` VALUES ('1', '飞机', '撒旦发射', '1', '1', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('2', '火车', '不知名或许', '4', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('3', '宝马', '防守对方是否', '3', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('4', '单车', '大飞', '3', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('5', '公交', '速读法', '3', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('6', '马自达', '的说法撒旦', '3', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('7', '饿了没', '圣达菲卡', '3', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('8', '饿了么', '撒旦法', '4', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('9', '饿了吧', '撒旦法', '4', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('10', '还没饿', '盛大发售的方式', '4', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('11', '饿了不', 'aaaaaaaa', '1', '1', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('12', '饿了哦', 'dddd', '4', '1', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('13', '百度外卖', '阿萨德分', '3', '2', null);
-INSERT INTO `hl_cardata` VALUES ('14', '滴滴', '阿萨德发生', '2', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('15', '快递', '阿萨德发生', '2', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('16', '查水表', '阿萨德发生', '2', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('17', '天天快递', '阿萨德发生', '2', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('18', '顺风快递', '阿萨德发生', '2', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('19', '不饿了', '阿萨德发生', '2', '2', '0000-00-00 00:00:00');
-INSERT INTO `hl_cardata` VALUES ('20', ' aaa', '撒旦发射', '4', '2', '0000-00-00 00:00:00');
-
--- ----------------------------
 -- Table structure for `hl_carinfo`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_carinfo`;
@@ -3611,6 +3573,47 @@ INSERT INTO `hl_car_city` VALUES ('北京市', '20', '110100', '87');
 INSERT INTO `hl_car_city` VALUES ('唐山市', '20', '130200', '88');
 INSERT INTO `hl_car_city` VALUES ('邯郸市', '20', '130400', '89');
 INSERT INTO `hl_car_city` VALUES ('保定市', '20', '130600', '90');
+
+-- ----------------------------
+-- Table structure for `hl_car_data`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_car_data`;
+CREATE TABLE `hl_car_data` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `car_name` varchar(10) DEFAULT NULL COMMENT '车队名字',
+  `address` varchar(80) DEFAULT NULL,
+  `symbiosis` enum('temporary','long','stop') DEFAULT 'stop' COMMENT 'stop为中止合作temporary临时合作long长期合作',
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT '0为删除1为正常默认为1',
+  `mtime` datetime DEFAULT NULL COMMENT '修改时间',
+  `port_arr` varchar(100) DEFAULT NULL COMMENT '负责那些港口ID',
+  `city_arr` varchar(20) DEFAULT NULL COMMENT '负责那些城市的ID',
+  `ship_arr` varchar(20) DEFAULT NULL COMMENT '合作的船公司的ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_car_data
+-- ----------------------------
+INSERT INTO `hl_car_data` VALUES ('1', '飞机', '撒旦发射', 'temporary', '1', '0000-00-00 00:00:00', '110100002,110100003,110100004,110100005,440100002,440100003,440100004,440100005,440100006', '110100,120100,130100', '1,2,3,');
+INSERT INTO `hl_car_data` VALUES ('2', '火车', '不知名或许', 'long', '0', '0000-00-00 00:00:00', '110100002,110100003,110100004,110100005,440100002,440100003,440100004,440100005,440100006', '110100,120100,130100', '4,5,6');
+INSERT INTO `hl_car_data` VALUES ('3', '宝马', '防守对方是否', 'long', '1', '0000-00-00 00:00:00', '110100002,110100003,110100004,110100005,440100002,440100003,440100004,440100005,440100006', '110100,120100,130100', '7,8,9');
+INSERT INTO `hl_car_data` VALUES ('4', '单车', '大飞', 'temporary', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('5', '公交', '速读法', 'stop', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('6', '马自达', '的说法撒旦', 'stop', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('7', '饿了没', '圣达菲卡', 'stop', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('8', '饿了么', '撒旦法', 'long', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('9', '饿了吧', '撒旦法', 'long', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('10', '还没饿', '盛大发售的方式', 'long', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('11', '饿了不', 'aaaaaaaa', 'temporary', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('12', '饿了哦', 'dddd', 'long', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('13', '百度外卖', '阿萨德分', 'stop', '1', null, null, null, null);
+INSERT INTO `hl_car_data` VALUES ('14', '滴滴', '阿萨德发生', 'long', '0', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('15', '快递', '阿萨德发生', 'long', '0', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('16', '查水表', '阿萨德发生', 'long', '0', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('17', '天天快递', '阿萨德发生', 'long', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('18', '顺风快递', '阿萨德发生', 'long', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('19', '不饿了', '阿萨德发生', 'long', '1', '0000-00-00 00:00:00', null, null, null);
+INSERT INTO `hl_car_data` VALUES ('20', ' aaa', '撒旦发射', 'long', '1', '0000-00-00 00:00:00', null, null, null);
 
 -- ----------------------------
 -- Table structure for `hl_car_port`
@@ -5879,7 +5882,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-26 17:12:51', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-11-27 15:33:32', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
