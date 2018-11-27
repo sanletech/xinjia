@@ -130,6 +130,19 @@ $hui:#aaa;
     padding-right: 25px;
 }
 
-#car,#pei_post,#at_mony,#at_port{
+#car,#pei_post,#at_mony,#at_port,#dai_post{
     display: none;
+    padding-right: 50px;
+    margin-top: 10px;
+}
+
+#car{
+    // width: 800px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    white-space: nowrap;
+    .hang{
+        width: 250px;
+        display: inline-table;
+    }
 }

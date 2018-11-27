@@ -99,7 +99,17 @@
   padding-left: 0;
   padding-right: 25px; }
 
-#car, #pei_post, #at_mony, #at_port {
-  display: none; }
+#car, #pei_post, #at_mony, #at_port, #dai_post {
+  display: none;
+  padding-right: 50px;
+  margin-top: 10px; }
+
+#car {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap; }
+  #car .hang {
+    width: 250px;
+    display: inline-table; }
 
 /*# sourceMappingURL=order_list.css.map */
