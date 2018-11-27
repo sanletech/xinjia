@@ -7,34 +7,30 @@ use app\admin\common\Base;
 use app\admin\model\AddressBook as AddressBookM ;
 use think\Request;
 use think\Db;
+
 class AddressBook  extends Base
 {   
     //车队列表
     public function car_list()
     {   
-        $data= array_filter($this->request->param());
-        $car = new CarM;
-        //接受搜索提供的搜索条件
-        $data= $this->request->param();
-        $search =  array_filter($data);//过滤下空的参数;
-        //var_dump($search);
-        //给页面展示保留搜索内容
-        $bz=0; //设置一个判断标记
-        if(array_key_exists('port', $data)){
-        $bz=1;
-        $this->view->assign('searchport',$data['port']); 
+        $map =[]; //设置查询条件
+        $port= $this->request->param('port');
+        if($port){
+            $this->view->assign('searchport',$port); 
+            $map['A.port_name']=['like',"%$port%"];
+        }  
+        $city = $this->request->param('city');
+        if($city){
+            $this->view->assign('searchcity',$city);
+            $map['A.city_name']=['like',"%$city%"];
         }
-        if(array_key_exists('city', $data)){
-        $bz=1;    
-        $this->view->assign('searchcity',$data['city']); 
-        }
-        //展示分页内容
-        //  传参数展示分页carlist第一个参数是搜索条件 第二个参数是分页数量
-        if($bz){
-             $carlist= $car->carlist($search);
-        }else {
-             $carlist= $car->carlist();
-        }
+       
+        
+        $car = new AddressBookM;
+        
+        $carlist= $car->carlist($map);
+  
+
         //每页数量
         $count = count($carlist);
         // 获取分 页显示
@@ -43,7 +39,7 @@ class AddressBook  extends Base
         $this->view->assign('count',$count);
         $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);
-        return $this->view->fetch('car/car_list'); 
+        return $this->view->fetch('AddressBook/car_list'); 
     }
     
     //展示修改车队信息
