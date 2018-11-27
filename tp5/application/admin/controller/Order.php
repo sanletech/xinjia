@@ -703,5 +703,9 @@ class Order extends Base
         $this->view->assign('page_url',url('admin/order/order_public'));
         return $this->view->fetch('Order/order_public');
     }
+
+    public function aaa() {
+        return $this->view->fetch('Order/aaa');
+    }
     
 } 
