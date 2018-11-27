@@ -73,7 +73,7 @@ class Order extends Model
     
     
         //订单页面list 
-    public function order_public($tol,$limit,$state='100') {
+    public function order_public111($page,$limit,$state='3') {
         
         //查询客户的订单编号order_father 查询对应的订单信息
         $listSql = Db::name('order_father')->alias('OF')
@@ -103,11 +103,40 @@ class Order extends Model
         //获取总页数
         $count =  Db::table($listSql.' A')->count(); 
         // 查询出当前页数显示的数据
-        $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->limit($tol,$limit)->select();
+        $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->page($page,$limit)->select();
         //下单时间和当前时间相差多少天
-        return array($list,$count);
+        return array('list'=>$list,'count'=>$count);
     }
     
+    
+    public function order_public($page,$limit,$state='3') {
+        
+        $listSql =Db::name('order_port')->alias('OP')
+            ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
+            ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
+            ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
+            ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
+            ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id   
+            ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
+            ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
+            ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
+            ->join('hl_sales_member SM','SM.member_code=OP.member_code','left') //业务员
+            ->field('OP.id,OP.order_num,OP.ctime,OP.container_size,OP.container_sum,'
+                    . 'OP.cargo,OP.consigner,SC.ship_short_name,B.boat_code,B.boat_name'
+                    . ',P1.port_name s_port_name ,P2.port_name e_port_name,OP.status,'
+                    . 'SM.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation')
+            ->group('OP.id')
+            ->where('OP.status','in',$state)
+            ->where('OP.type','door')
+            ->buildSql();
+//    var_dump($listSql);exit;
+        //获取总页数
+        $count =  Db::table($listSql.' A')->count(); 
+        // 查询出当前页数显示的数据
+        $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->page($page,$limit)->select();
+        //下单时间和当前时间相差多少天
+        return array('list'=>$list,'count'=>$count);
+    }
 
    //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
     //订单号 集装箱数量, 运单号, 运单号数量

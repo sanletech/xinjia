@@ -24,77 +24,33 @@ class AddressBook  extends Base
             $this->view->assign('searchcity',$city);
             $map['A.city_name']=['like',"%$city%"];
         }
-       
         
         $car = new AddressBookM;
-        
         $carlist= $car->carlist($map);
-  
-
-        //每页数量
-        $count = count($carlist);
-        // 获取分 页显示
-        $page = $carlist->render();
+        $page = $carlist->render();  // 获取分 页显示
        // $this->_p($carlist); 
-        $this->view->assign('count',$count);
         $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);
-        return $this->view->fetch('AddressBook/car_list'); 
+        return $this->view->fetch('AddressBook/car/car_list'); 
     }
+    
+    //
     
     //展示修改车队信息
     public function car_edit(){
-        
-          //获取需要修改的港口车队car_port表的id
+        //获取需要修改的港口车队car_data表的id
         $id= $this->request->get('id'); 
-       
-         //根据修改的港口_车队car_port ID获取对应的 港口 船公司信息
-         
-        $sql="select CP.id , CP.port_id, P.port_name, CP.car_id ,CD.car_name, CD.address, CD.symbiosis, CD.status  ,"
-               . 'group_concat(distinct CC.city_id order by CC.id) city_code ,'
-               . 'group_concat(distinct CC.city_name order by CC.id) city_name , '
-               . 'group_concat(distinct CS.ship_id order by CS.ship_id) ship_id  , '
-               . 'group_concat(distinct SC.ship_short_name order by CS.ship_id )ship_short_name   ' 
-               ."  from hl_car_port CP  "
-               ."  left join  hl_car_city CC on CC.car_id = CP.car_id   "
-               ."  left join  hl_car_ship CS on CS.car_id = CP.car_id   "
-               ."  left join  hl_shipcompany SC on SC.id =  CS.ship_id and SC.status='1'  "     //查询船公司名字
-               ."  left join  hl_port P on P.id = CP.port_id            "    //查询对应的港口名字
-               ."  left join  hl_cardata CD on CD.id = CP.car_id        "
-               ."  where CP.id = '$id'  group by CP.id  "  ;
-        $data =Db::query($sql);
-  
-        $data=$data['0'];   //将二维数组转换成一维
-        //将字符串转成数组
-        $data['city_code']= explode(',', $data['city_code']);
-        $data['city_name']= explode(',', $data['city_name']);
-        $data['ship_id']= explode(',', $data['ship_id']);
-        $data['ship_short_name']= explode(',', $data['ship_short_name']);
-        //$this->_p($data);
-        
-        //根据车队$car_id  获取对应hl_cardata信息
-        $car_id = $data['car_id'];
-        $sql2="select *  from hl_cardata where id='$car_id'";
-        $car_data =Db::query($sql2);
-         
-        //传递所有的港口给前台页面
-        $sql3="select *  from  hl_port ";
-        $port_data =Db::query($sql3);
-       //转成json格式传给js
-        $js_port=json_encode($port_data);
-        
-        //传递所有的船公司给前台页面选择
-        $sql4="select id , ship_short_name  from  hl_shipcompany  ";
-        $ship_data =Db::query($sql4);
-       //转成json格式传给js
-        $js_ship=json_encode($ship_data);       
-        
-        $this->view->assign('data',$data);
-        $this->view->assign('car_data',$car_data);
-        $this->view->assign('js_port',$js_port);
-        $this->view->assign('js_ship',$js_ship);
-         
-        return $this->view->fetch('car/car_edit'); 
+        //获取原有的信息
+        $data = Db::name('car_data')->alias('CD')
+                ->join('hl_port P',"FIND_IN_SET(P.port_code,CD.port_arr)",'left')
+                ->join('hl_city C',"FIND_IN_SET(C.city_id,CD.city_arr)",'left')
+                ->join('hl_shipcompany SP',"FIND_IN_SET(SP.id,CD.ship_arr)",'left')
+                ->field('CD.*,group_concat(distinct P.port_name order by P.id) as port_name, '
+                        . 'group_concat(distinct C.city order by C.id) as city_name,'
+                        . 'group_concat(distinct SP.ship_short_name order by SP.id) as ship_name')
+                ->group('CD.id')->where('CD.id',$id)->find();
+        $this->assign('data', $data);
+        return $this->view->fetch('AddressBook/car/car_edit'); 
     }
     
     //执行车队的修改

@@ -23,6 +23,8 @@ class AddressBook extends Model
        
     }
     
+    //展示车队对应人员的资料
+    
     //执行删除
     public function todel($data) {
         $data = implode(',', $data);
