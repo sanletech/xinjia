@@ -687,6 +687,7 @@ class Order extends Base
     }
 
     public function order_public() {
+        
         return $this->view->fetch('Order/order_public');
     }
     

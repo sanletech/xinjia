@@ -73,7 +73,7 @@ class Order extends Model
     
     
         //订单页面list 
-    public function listOrder($tol,$limit,$state='100') {
+    public function order_public($tol,$limit,$state='100') {
         
         //查询客户的订单编号order_father 查询对应的订单信息
         $listSql = Db::name('order_father')->alias('OF')
@@ -105,12 +105,6 @@ class Order extends Model
         // 查询出当前页数显示的数据
         $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->limit($tol,$limit)->select();
         //下单时间和当前时间相差多少天
-        foreach ($list as $key => $value) {
-            $differ_day =1 + ceil((time()-strtotime($value['ctime']))/60/60/24);
-            $list[$key]['differ_day']= $differ_day;
-        }
-//        $this->_p($list);exit;
-      //  var_dump(Db::getLastSql());exit;
         return array($list,$count);
     }
     
