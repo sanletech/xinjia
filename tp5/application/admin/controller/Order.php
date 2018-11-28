@@ -7,6 +7,7 @@ use app\admin\common\Base;
 use think\Request;
 use think\Db;
 use app\admin\model\Order as OrderM;
+use \app\admin\model\OrderProcess as OrderProcessC;
 use think\Validate;
 class Order extends Base
 {       
@@ -628,18 +629,7 @@ class Order extends Base
        //展示处理订单送货页面
     public function deliveryInfo() {
         $order_num = $this->request->param('order_num');
-//        $container_sum =$this->request->get('container_sum');
-//        $container_code = $this->request->param('container_code');
-//        $track_num = Db::name('order_son')->where('order_num',$order_num)->column('track_num');
-//         $this->assign([
-//        'order_num'  => $order_num,
-//        'container_sum' => $container_sum,
-//        'container_code' => $container_code,
-//        'track_num'=>$track_num,
-//        'sendCarUrl'=>url('admin/Order/tosendCar')    
-//        ]);
-//        return $this->view->fetch('Order/sendCarInfo');
-//        
+
         //直接更改状态
         $container_codeArr =Db::name('order_son')->where('order_num',$order_num)->column('container_code');
         $response  = $dataM->updateState($order_num,$container_codeArr,'999','送货完成>订单完成');
@@ -666,11 +656,27 @@ class Order extends Base
         $dataM = new OrderM;
         $data = $dataM->order_public($page,$limit,$state='3');
         $list =$data['list']; //分页数据
+//        $this->_p($list);exit;
         $count = $data['count'];// 总页数
         
-         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
+        return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
        
     }
-
+    
+    public function waybill_upload(){
+        $data= $this->request->param();
+        // var_dump($data);exit;
+        $file = request()->file('file');
+        $order_num = $this->request->param('order_num');
+        $type = $this->request->param('type');
+        $track_num= $this->request->param('track_num');
+        if(!empty(trim($track_num))){
+           $res1= Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]);
+        }
+        $OrderProcessC =  new OrderProcessC();
+        $res =$OrderProcessC->Upload($order_num,$type,$file);
+        return $res;
+        
+    }
  
 } 

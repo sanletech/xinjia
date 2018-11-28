@@ -7,7 +7,7 @@
             <i class="layui-icon" style="line-height:30px">ဂ</i>
         </a>
     </div>
-
+    <!-- 搜索表单 -->
     <form class="layui-form" id="cont">
         <!-- 搜索内容 -->
         <div class="layui-form-item">
@@ -56,23 +56,31 @@
         <div class="layui-form-item">
             <label class="layui-form-label">运单号</label>
             <div class="layui-input-block">
-                    <input type="text" name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
+                    <input type="text" name="track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">订舱单</label>
             <div class="layui-input-block">
-                    <input type="text" name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入水运单" class="layui-input">
+                    <a class="layui-btn" id="scdc">上传</a>
             </div>
-        </div>
+        </div
 
         <!-- 订舱单 -->
+
         <div class="layui-form-item">
-            <div class="num2"></div>
-            <button class="layui-btn layui-btn-primary layui-btn-sm">上传</button>
+            <div class="layui-input-block dingcang">
+                <a class="layui-btn layui-btn-primary" id="scdc1">确定</a>
+            </div>
         </div>
     </form>
+
+    <div class="syd">
+        <button type="button" class="layui-btn" id="scsyd">
+            <i class="layui-icon">&#xe67c;</i>上传水运单
+        </button>
+    </div>
 
     <!-- 待派车，待送货 -->
     <form class="layui-form" id="car">
@@ -326,7 +334,6 @@
         </div>
     </form>
 
-
     <script type="text/html" id="toolbarDemo1">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -351,6 +358,49 @@
             , $ = layui.jquery
             , upload = layui.upload
             , laydate = layui.laydate;
+        var order_num;//运单号
+        // 上传订舱单
+        upload.render({
+            elem: '#scdc' //绑定元素
+            ,url: '/upload/?order_num='+order_num //上传接口
+            ,accept: 'file' //普通文件
+            ,auto:false
+            ,bindAction:'#scdc1'
+            ,data:{order_num:$('input[name="track_num"]').val()}
+            ,done: function(res){
+            //上传完毕回调
+            if (res.status) {
+                layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                    layer.close(index);
+                });
+            } else {
+                layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+            }
+            }
+            ,error: function(){
+            //请求异常回调
+            }
+        });
+
+        // 上传水运单
+        upload.render({
+            elem: '#scsyd' //绑定元素
+            ,url:  '/upload/?order_num='+order_num //上传接口
+            ,accept: 'file' //普通文件
+            ,done: function(res){
+            //上传完毕回调
+            if (res.status) {
+                layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                    layer.close(index);
+                });
+            } else {
+                layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+            }
+            }
+            ,error: function(){
+            //请求异常回调
+            }
+        });
 
         //日期
         laydate.render({
@@ -383,31 +433,28 @@
                         return '<a href="<{:url("admin/orderPort/port_details")}>?order_num=' + res.order_num + '"  target="_blank">' + res.order_num + '</a>'
                     }
                 }
-                , { field: 'track_num', title: '订舱单号', width: 150 }
+                , { field: 'member_code', title: '订舱单号', width: 150 }
                 , { field: 'ctime', title: '提交时间', sort: true, width: 200 }
 
-                , { field: 'ship_short_name', title: '船公司', width: 200 }
-                , { field: '', title: '船名/航次', width: 100, event: 'yun',templet: function (res) {
-                        return '<div class="">' + res.boat_name + '-' + res.boat_code + '</div>'
+                , { field: 'company', title: '船公司', width: 200 }
+                , { field: 'track_num', title: '船名/航次', width: 100, event: 'yun' }
+                , {
+                    field: 'container_sum', title: '起运港-目的港', width: 100, templet: function (res) {
+                        return '<div class="">' + res.s_port + '-' + res.e_port + '</div>'
                     }
                 }
+                , { field: 'ship_short_name', title: '货名', width: 100 }
+                , { field: 'boat_name', title: '业务员', width: 100 }
+                , { field: 'boat_code', title: '截单时间', sort: true, width: 100 }
+                , { field: 's_port', title: '船期', width: 200 }
+                , { field: 'quoted_price', title: '海上时效', width: 100 }
                 , {
-                    field: '', title: '起运港-目的港', width: 100, templet: function (res) {
-                        return '<div class="">' + res.s_port_name + '-' + res.e_port_name + '</div>'
-                    }
-                }
-                , { field: 'cargo', title: '货名', width: 100 }
-                , { field: 'sales_name', title: '业务员', width: 100 }
-                , { field: 'cutoff_date', title: '截单时间', sort: true, width: 100 }
-                , { field: 'shipping_date', title: '船期', width: 200 }
-                , { field: 'sea_limitation', title: '海上时效', width: 100 }
-                , {
-                    field: '', title: '箱型*柜量', width: 100, templet: function (res) {
+                    field: 'container_status', title: '箱型*柜量', width: 100, templet: function (res) {
                         return '<div class="">' + res.container_size + '*' + res.container_sum + '</div>'
                     }
                 }
                 , { field: 'status', title: '状态', width: 100 }
-                , { field: 'container_buckle', title: '处理天数', width: 100 }//需要计算当前时间-下单时间
+                , { field: 'container_buckle', title: '处理天数', width: 100 }
                 , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 80 }
             ]]
             , page: true
@@ -456,15 +503,15 @@
             var data = obj.data;
             if (obj.event === 'confirm') {//点击备注
                 data.status = '待订舱'
-                console.log(data.order_num, data.container_sum, data.status);
+                // console.log(data.order_num, data.container_sum, data.status);
                 if (data.status == '待订舱') {
+                    order_num = data.order_num;
                     layer.open({
                         type:1
                         ,title: '待订舱'
                         , shadeClose: true
                         , content: $('#dc')
                         , yes: function (res) {
-                            let zhi = $('input[name="order_num" ]').val();
                             $.get(URL, { order_num: order_num, zhi: zhi }, function (res) {
                                 if (res.status) {
                                     layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
@@ -476,6 +523,8 @@
                             })
                         }
                     });
+                   
+
                 } else if (data.status == '待派车') {
                     let shu = $('#chedui .hang')[0].outerHTML;
                     $('#chedui').html('')
@@ -616,16 +665,24 @@
                             })
                         }
                     });
-                } else if (data.status == '待收款') {
+                } else if (data.status == '上传水运单') {
                     layer.open({
                         type: 1
-                        , title: '待收款'
-                        , content: $('#at_mony')
+                        , title: '上传水运单'
+                        , content: $('.syd')
                         , shadeClose: true
                         , area: ['450px', '170px']
-                        , btn: ['确认']
-                        , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#at_port').serialize() }, function (res) {
+                    });
+                }else if (data.status == '申请放柜') {
+                    layer.open({
+                        type: 1
+                        , title: '申请放柜'
+                        , shadeClose: true
+                        , area: ['400px', '400px']
+                        , btn: ['确认','取消']
+                        , content: $('#dai_post')
+                        , yes: function (index, layero) {
+                            $.post(URL, function (res) {
                                 if (res.status) {
                                     layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
                                         layer.close(index);
@@ -634,6 +691,9 @@
                                     layui.layer.msg('提交失败', { icon: 2, time: 1000 });
                                 }
                             })
+                        }
+                        ,btn2:function(index){
+                            layer.close(index);
                         }
                     });
                 } else if (data.status == '待送货') {
@@ -669,7 +729,6 @@
 
             }
         });
-
 
         //选中的数据
         $('button').click(function () {

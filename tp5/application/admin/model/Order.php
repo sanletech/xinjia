@@ -6,6 +6,16 @@ use think\session;
 //订单模块
 class Order extends Model
 {
+    private $order_status;
+    private $page=5;
+
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->order_status = config('config.order_status');
+  
+    }   
+    
     
     //审核客户提交的订单
     public function order_audit($pages,$state){
@@ -130,11 +140,66 @@ class Order extends Model
             ->where('OP.type','door')
             ->buildSql();
 //    var_dump($listSql);exit;
-        //获取总页数
-        $count =  Db::table($listSql.' A')->count(); 
+        $count =  Db::table($listSql.' A')->count();  //获取总页数
         // 查询出当前页数显示的数据
         $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->page($page,$limit)->select();
-        //下单时间和当前时间相差多少天
+        //转换状态
+        foreach ($list as $key=>$value){
+            switch ($value['status']){
+                case $this->order_status['stop']:
+                case $this->order_status['cancel']:
+                    $list[$key]['status']= '中止';
+                    break;
+                case $this->order_status['order_audit']:
+                    $list[$key]['status']= '审核中';
+                    break;
+                case $this->order_status['booking_note']:
+                    $list[$key]['status']= '上传订舱单和运单号';
+                    break;
+                case $this->order_status['send_car']:
+                    $list[$key]['status']= '派车装货';
+                    break;
+                case $this->order_status['loading']:
+                    $list[$key]['status']= '装货信息录入';
+                    break;
+                case $this->order_status['up_container_code']:
+                    $list[$key]['status']= '提报柜号';
+                    break;
+                case $this->order_status['load_ship']:
+                    $list[$key]['status']= '配船';
+                    break;
+                case $this->order_status['arrive_port']:
+                    $list[$key]['status']= '到港';
+                    break;
+                case $this->order_status['unload_ship']:
+                    $list[$key]['status']= '卸船';
+                    break;
+                case $this->order_status['payment_status']:
+                    $list[$key]['status']= '确认收款';
+                    break;
+                case $this->order_status['sea_waybill']:
+                    $list[$key]['status']= '上传水运单';
+                    break;
+                case $this->order_status['container_appley']:
+                    $list[$key]['status']= '申请放柜';
+                    break;
+                case $this->order_status['container_lock']:
+                    $list[$key]['status']= '继续扣柜';
+                    break;
+                case $this->order_status['container_unlock']:
+                    $list[$key]['status']= '同意放柜';
+                    break;
+                case $this->order_status['unloading']:
+                    $list[$key]['status']= '同意放柜';
+                    break;
+                case $this->order_status['completion']:
+                    $list[$key]['status']= '订单完成';
+                    break;
+                case $this->order_status['check_bill']:
+                    $list[$key]['status']= '对账完成';
+                    break;
+            }
+        }
         return array('list'=>$list,'count'=>$count);
     }
 
