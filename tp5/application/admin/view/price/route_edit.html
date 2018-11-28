@@ -117,7 +117,7 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">航线详情</label>
             <div class="layui-input-inline" >
-                <select name ="route"  lay-filter="route" lay-search>
+                <select name ="route_id"  lay-filter="route_id" lay-search>
                     <option value="">请选择航线</option>
                 </select>
             </div>
@@ -339,7 +339,7 @@
             }else{
                     areaHtml = '<option  value="">无此航线</option>'; 
             }
-            $form.find('select[name=route]').html(areaHtml).parent().show();
+            $form.find('select[name=route_id]').html(areaHtml).parent().show();
             form.render();
             loadProvince();  //选择港口 
         }

@@ -121,7 +121,7 @@ class Order extends Model
             ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
             ->join('hl_sales_member SM','SM.member_code=OP.member_code','left') //业务员
-            ->field('OP.id,OP.order_num,OP.ctime,OP.container_size,OP.container_sum,'
+            ->field('OP.id,OP.order_num,OP.track_num,OP.ctime,OP.container_size,OP.container_sum,'
                     . 'OP.cargo,OP.consigner,SC.ship_short_name,B.boat_code,B.boat_name'
                     . ',P1.port_name s_port_name ,P2.port_name e_port_name,OP.status,'
                     . 'SM.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation')

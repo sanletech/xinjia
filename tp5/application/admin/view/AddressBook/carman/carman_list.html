@@ -16,13 +16,13 @@
         <form id="searchform" class="layui-form 
               layui-col-md12 x-so" >
             <input type="text" name="car_name"  value="<{$searchcar ? $searchcar : '';}>"  placeholder="请输入车队名字" autocomplete="off" class="layui-input">
-          <button class="layui-btn"  lay-submit="" lay-filter="sreach" onclick="search()"><i class="layui-icon">&#xe615;</i></button>
+          <button class="layui-btn"  lay-submit="" lay-filter="sreach" "><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('admin/carMan/man_add')}>',700,450)"><i class="layui-icon"></i>添加</button>
-     <span class="x-right" style="line-height:40px"> 本页有<{$count}>条记录</span>
+     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('admin/AddressBook/carman_add')}>',700,450)"><i class="layui-icon"></i>添加</button>
+    
       </xblock>
       <table class="layui-table">
         <thead>
@@ -31,7 +31,6 @@
               <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>
             </th>
             <th>ID</th>
-            <th>车队id</th>
             <th>车队名</th>
             <th>姓名</th>
             <th>职位</th>
@@ -39,6 +38,8 @@
             <th>手机</th>
             <th>QQ/微信</th>
             <th>传真</th>
+            <th>所属港口</th>
+            <th>所属城市</th>
             <th>操作</th></tr>
         </thead>
     <tbody >
@@ -49,14 +50,15 @@
              <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='<{$vo.id}>'><i class="layui-icon">&#xe605;</i></div>
             </td>
             <td class="tdata"><{$vo.id}></td>
-            <td><{$vo.car_data_id}></td>
-            <td><{$vo.car_name}></td>
+            <td><{$vo.company}></td>
             <td><{$vo.name}></td>
             <td><{$vo.position}></td>
              <td><{$vo.tel}></td>
             <td><{$vo.phone}></td>
             <td><{$vo.qq}></td>
             <td><{$vo.fax}></td>
+            <td><{$vo.port_name}></td>
+            <td><{$vo.city}></td>
             <td class="td-manage">
               <a title="删除" onclick="member_del(this,'<{$vo.id}>') " href="javascript:;">
                 <i class="layui-icon">&#xe640;</i> 
@@ -78,29 +80,29 @@
     <script>
            /*执行搜索车队或者港口*/
            
-    function search(){
-         $.ajax({
-                type:'get',
-                url:"<{:url('admin/CarMan/man_list')}>",     
-                data: $("#searchform").serialize(),
-              //  data:{"success":true,"id":"1"} ,
-                dataType:"json",
-                async:false,
-                success:function(data){
-                  if(data.status==1){
-                    return 1;
-                  }else{
-                      return 0 ;
-                 }
-                         
-               },   error: function(XMLHttpRequest, textStatus, errorThrown){
-                    console.log(XMLHttpRequest.status);
-                    console.log(XMLHttpRequest.readyState);
-                    console.log(textStatus);
-                },
-
-        });
-        return 1;
+//    function search(){
+//         $.ajax({
+//                type:'get',
+//                url:"<{:url('admin/CarMan/man_list')}>",     
+//                data: $("#searchform").serialize(),
+//              //  data:{"success":true,"id":"1"} ,
+//                dataType:"json",
+//                async:false,
+//                success:function(data){
+//                  if(data.status==1){
+//                    return 1;
+//                  }else{
+//                      return 0 ;
+//                 }
+//                         
+//               },   error: function(XMLHttpRequest, textStatus, errorThrown){
+//                    console.log(XMLHttpRequest.status);
+//                    console.log(XMLHttpRequest.readyState);
+//                    console.log(textStatus);
+//                },
+//
+//        });
+//        return 1;
     }
         
         

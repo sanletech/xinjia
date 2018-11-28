@@ -120,7 +120,35 @@ class Order extends Base
     }
         
     
-
+    //处理订单的公共头部
+    public function orderCenter() 
+    { 
+        return $this->view->fetch('order/order_center'); 
+    }
+    
+    //待订舱页面list
+    public function listBook() 
+    {   
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+        $tol=($page-1)*$limit;
+        $dataM = new OrderM;
+        $listArr = $dataM->listOrder($tol,$limit,$state='100');
+        //分页数据
+        $list =$listArr[0];
+        // 总页数
+        $count = $listArr[1];
+     
+        $this->view->assign('list_book',$list);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/listBook'));
+        return $this->view->fetch('listOrder/list_book'); 
+    }
     
     
     //展示录入运单号的页面信息
@@ -653,12 +681,12 @@ class Order extends Base
     //送货派车信息处理
     
     
-    //订单处理页面
-    public function order_public() {
-        return $this->view->fetch('Order/order_public');
+    //查看订单的信息
+    public function checkOrder() {
+        
     }
 
-    public function order_data() {
+    public function order_public() {
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数
@@ -667,10 +695,17 @@ class Order extends Base
         $data = $dataM->order_public($page,$limit,$state='3');
         $list =$data['list']; //分页数据
         $count = $data['count'];// 总页数
-        
-         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
-       
+//        $this->_p($list);exit;
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/order_public'));
+        return $this->view->fetch('Order/order_public');
     }
 
- 
+    public function aaa() {
+        return $this->view->fetch('Order/aaa');
+    }
+    
 } 
