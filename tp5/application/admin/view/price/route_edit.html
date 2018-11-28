@@ -81,7 +81,7 @@
         <!-- 航线详情 -->
         <div class="layui-form-item " id ="oldline">
             <label class="layui-form-label">港口航线</label>
-            <div class="layui-input-inline" style="width: 450px">
+            <div class="layui-input-inline">
                  <input type="hidden" name="route_id"  value="<{$data.route_id}>"   class="layui-input" >
                 <input type="text" name="route_line"  value="起点:<{$data.s_port}>-<{$data.m_port}>- 终点:<{$data.e_port}>"   class="layui-input" >
             </div>
@@ -117,7 +117,7 @@
         <div class="layui-form-item ">
             <label class="layui-form-label">航线详情</label>
             <div class="layui-input-inline" >
-                <select name ="route_id"  lay-filter="route_id" lay-search>
+                <select name="route"  lay-filter="route" lay-search>
                     <option value="">请选择航线</option>
                 </select>
             </div>
@@ -283,16 +283,19 @@
             form.render();
             
             boat(tt);
-            form.on('select(ship)', function(data) {                
+            form.on('select(ship)', function(data) {       
                 boat(data);                
             });
 
             function boat(data){
                 var value = data.value;
-                var d = value.split('_');
-                var code = d[0];
-                var count = d[1];
-                var index = d[2];
+                var d ;
+                if (value) {
+                    d = value.split('_');
+                    var code = d[0];
+                    var count = d[1];
+                    var index = d[2];
+                }
                 if (count > 0) {
                     loadBoat(js_ship_boat[index].boat_list);
                 }else {
@@ -314,7 +317,7 @@
             }else{
                 areaHtml = '<option  value="">此船公司无对应船舶</option>'; 
             }
-            $form.find('select[name=boat]').html(areaHtml).parent().show();
+            // $form.find('select[name=boat]').html(areaHtml).parent().show();
             form.render();
             form.on('select(boat)', function(data) {
             } ) 
@@ -385,11 +388,11 @@
          }
         function routeSelect(){
             //删除旧的数据 同时改名字
-           var obj = document.getElementById("oldline");
-           if (obj) {
-            del(obj);
-           $("#newline").html('港口航线');
-           }
+        //    var obj = document.getElementById("oldline");
+        //    if (obj) {
+        //     del(obj);
+        //    $("#newline").html('港口航线');
+        //    }
             var sl_start = $("input[name='port_code[]']:eq(0)").val();
             var sl_end  = $("input[name='port_code[]']:eq(1)").val();
             var data ={'sl_start':sl_start,'sl_end':sl_end};            
@@ -399,7 +402,11 @@
                 data: data,
                 dataType:"json",
                 success:function(data){
-                    loadShipRoute(data); 
+                    loadShipRoute(data);
+                    if (data.length) {
+                        $('#oldline').remove();
+                    }
+                    
                 }
             });
        
@@ -407,7 +414,7 @@
          
          
         function toajax (){
-                var loading = layer.load(1);
+                // var loading = layer.load(1);
                 post_adduser = true;    
                 $.ajax({
                     type:'POST',
@@ -417,7 +424,7 @@
                     success:function(status){
                         if(status>0){
                             post_adduser = false;
-                            layer.close(loading);
+                            // layer.close(loading);
                             layer.msg("修改成功", { icon: 6, time: 1000 }, function () {
                             // 获得frame索引
                             parent.location.reload();
@@ -427,14 +434,14 @@
                         });
                         }else{
                             post_adduser = false;
-                            layer.close(loading);
+                            // layer.close(loading);
                             layer.msg("修改失败", { icon: 5 });
                             }
                             },
                         error: function () {
                                 post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
-                                layer.close(loading);
-                                layer.msg("添加失败", { icon: 5 });
+                                // layer.close(loading);
+                                layer.msg("添加失败", { icon: 5 ,time: 1000 });
                             }
                 });
                 return false;//只此一句

@@ -104,7 +104,7 @@
           </div>
        
         <!-- 航线详情 -->
-        <div class="layui-form-item ">
+        <div class="layui-form-item">
             <label class="layui-form-label">航线详情</label>
             <div class="layui-input-inline" >
                 <select name ="route_id"  lay-filter="route_id" lay-search>
@@ -252,7 +252,6 @@
         var url="<{:url('admin/Price/route_toadd')}>";
         //加载船公司
         function loadship(){
-            console.log(JS_SHIP_BOAT);
             //加载 所有的船公司名字简称和相应的id
             var ship_length =js_ship_boat.length;
             var shipHtml = '';
@@ -277,8 +276,6 @@
         }
         //加载船公司对应boat
         function loadBoat(boat){
-            console.log(boat);
-            
             var areaHtml = '';
             if(typeof(boat) !== 'undefined' && boat!=0){
                 var boat_length =boat.length;
@@ -434,7 +431,7 @@
                 url:"<{:url('admin/Price/route_select')}>",
                 data: data,
                 dataType:"json",
-                success:function(data){                    
+                success:function(data){       
                     loadShipRoute(data); 
                 }
             });
@@ -443,37 +440,42 @@
          
          
         function toajax (){
-                var loading = layer.load(1);
-                post_adduser = true;    
-                $.ajax({
+                // var loading = layer.load(1);
+                post_adduser = true;
+                var a = $('select[name="route"]').val();                
+                if (a) {
+                    $.ajax({
                     type:'POST',
                     url:url,
                     data:$("#routeaddform").serialize(),
                     dataType:"json",
                     success:function(data){
-                        if(data.status>0){
+                        if(data.status){
                             post_adduser = false;
-                            layer.close(loading);
+                            // layer.close(loading);
                             layer.msg("修改成功", { icon: 6, time: 1000 }, function () {
                             // 获得frame索引
-                            parent.location.reload();
+                            // parent.location.reload();
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame
                             parent.layer.close(index);
                         });
                         }else{
                             post_adduser = false;
-                            layer.close(loading);
-                            layer.msg("修改失败", { icon: 5 });
+                            // layer.close(loading);
+                            layer.msg("修改失败", {icon: 5,time: 2000});
                             }
-                            },
+                        },
                         error: function () {
-                                post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
-                                layer.close(loading);
-                                layer.msg("添加失败", { icon: 5 });
-                            }
+                            post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
+                            // layer.close(loading);
+                            layer.msg("添加失败", {icon: 5,time: 2000});
+                        }
                 });
-                return false;//只此一句
+                }else{
+                    layer.msg("请选择航线详情", {icon: 5,time: 2000});
+                }
+                // return false;//只此一句
             }          
       
 </script>
