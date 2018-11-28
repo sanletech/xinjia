@@ -22,31 +22,19 @@ class OrderPort extends Base
     {
         // 获取表单上传文件,订单号，上传文件的类别 
         // sea_waybill 水运单  book_note 订舱单
-//        $file = request()->file('file');
-//        $order_num = $this->request->get('order_num');
-//        $type = $this->request->get('type');
         $rename = $order_num.'_'.$type;
          // 移动到框架应用根目录/public/uploads/ 目录下
         $info = $file->validate(['size'=>2097152,'ext'=>'text,txt,pdf,docx,doc,docm,dotx,dotm'])
                  ->move(ROOT_PATH . 'public' . DS . 'uploads/files',$rename);
-        $response =[];
-       
         if($info){
-            // var_dump($info);exit;
             $reFile = str_replace('.','_',$info->getSaveName());
-             // 将A926548346305370_book_note.pdf文档存进order_port表里
             $res = Db::name('order_port')->where('order_num',$order_num)
-                    ->update([$type=>$reFile]);            
-            $response=['code'=>0,'msg'=>'提交成功','data'=>[]];
-            //文件上传成功后更新订单状态
-            //if($res){
-                  // 上传成功后更新订单和账单的状态
-                
-            return $response;
+                    ->update([$type=>$reFile]);    
+            return  array('status'=>1,'mssage'=>'提交成功');
            // }
         }else{
             // 上传失败获取错误信息
-            return['status'=>0,'mssage'=>$file->getError()];
+            return array('status'=>0,'mssage'=>$file->getError());
         }
 
 

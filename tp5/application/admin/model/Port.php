@@ -172,7 +172,6 @@ class Port extends Model
         $sl_end = array_pop($port_arr);
         $bothend_id =  $this->bothEndLine($sl_start,$sl_end);
         $sl_middle = $port_arr;
-       
         if(!empty($sl_middle)){
             $middle_id =  $this->middleLine($sl_middle);
         } else {
@@ -193,15 +192,15 @@ class Port extends Model
     
         //查询航线是否存在 参数分别为 起始港口id, 目的港口id, 
     public function  bothEndLine($sl_start,$sl_end){
-        $res =Db::name('sea_bothend')->where(['sl_start'=>$sl_start,'sl_end'=>$sl_end])->value('sealine_id');
+        $sealine_id =Db::name('sea_bothend')->where(['sl_start'=>$sl_start,'sl_end'=>$sl_end])->value('sealine_id');
         $mtime =  date('Y-m-d H:i:s');
-        if(empty($res)){
+        if(empty($sealine_id)){
             $sealine_id = Db::name('sea_bothend')->max('sealine_id')+1;
             $data = ['sl_start'=>$sl_start,'sl_end'=>$sl_end,'sealine_id'=>$sealine_id,'mtime'=>$mtime];
-            $res2 =Db::name('sea_bothend')->insert($data);
-        }else{
-            $sealine_id = $res['sealine_id'] ;
+            $res  =Db::name('sea_bothend')->insert($data);
+            if(!$res){ return FALSE;}
         }
+        
         return $sealine_id ;
     }
     

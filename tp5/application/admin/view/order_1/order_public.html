@@ -1,0 +1,641 @@
+<{include file='./public/header' /}>
+  <link rel="stylesheet" href="__STATIC__/../index/layui/css/layui.css">
+  <link rel="stylesheet" href="__STATIC__/css/order_list.css">
+  <div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+      title="刷新">
+      <i class="layui-icon" style="line-height:30px">ဂ</i>
+    </a>
+  </div>
+
+  <form class="layui-form" id="cont">
+    <!-- 搜索内容 -->
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-inline">
+          <input type="text" name="username" placeholder="收货联系人" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-inline">
+        <div class="layui-input-inline">
+          <input type="text" name="username" placeholder="装货公司名全称" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-inline">
+        <div class="layui-input-inline">
+          <a class="layui-btn cha">搜索</a>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- 筛选内容 -->
+    <div class="layui-row">
+      <label class="layui-form-label"></label>
+      <input type="checkbox" name="status" value="booking_note" lay-skin="primary" lay-filter="port" title="待订舱" checked="">
+      <input type="checkbox" name="status" value="send_car" lay-skin="primary" lay-filter="port" title="待派车" checked="">
+      <input type="checkbox" name="status" value="loading" lay-skin="primary" lay-filter="port" title="待装货" checked="">
+      <input type="checkbox" name="status" value="up_container_code" lay-skin="primary" lay-filter="port" title="待报柜号" checked="">
+      <input type="checkbox" name="status" value="5" lay-skin="primary" lay-filter="port" title="待配船" checked="">
+      <input type="checkbox" name="status" value="6" lay-skin="primary" lay-filter="port" title="待到港" checked="">
+      <input type="checkbox" name="status" value="7" lay-skin="primary" lay-filter="port" title="待卸船" checked="">
+      <input type="checkbox" name="status" value="8" lay-skin="primary" lay-filter="port" title="待申请" checked="">
+      <input type="checkbox" name="status" value="9" lay-skin="primary" lay-filter="port" title="待送货" checked="">
+    </div>
+  </form>
+  
+  <div class="order_list layui-row">
+     <{volist name='list' id='vo'}>
+    <div class="nei layui-col-md12">
+      <div class="top">
+        <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='1'>
+          <i class="layui-icon">&#xe605;</i>
+          <span>创建时间:<{$vo.ctime}></span>
+        </div>
+        <span class="top_ma">
+          <span>业务员:<{$vo.sales_name}></span>
+          <span>船期:<{$vo.shipping_date}></span>
+          <span>海上时效:<{$vo.sea_limitation}>天<span>
+          <span>截单时间:<{$vo.cutoff_date}></span>
+        </span>
+      </div>
+      <div class="cen">
+        <div class="cen_le layui-col-md12">
+          <div class="layui-col-md3">
+            <p>订单号:
+                <inpu type='text' name="order_num" id='order_num' value='<{$vo.order_num}>'>
+            </p>
+            <p>船公司/船名/航次: <{$vo.ship_short_name}>/<{$vo.boat_name}>/<{$vo.boat_code}>次</p>
+          </div>
+          <div class="layui-col-md3">
+            <p>收货人:<{$vo.consigner}></p>
+            <p>货名：<{$vo.cargo}></p>
+          </div>
+          <div class="layui-col-md3">
+            <p>航线:<{$vo.s_port_name}>-<{$vo.e_port_name}></p>
+            <p>箱型*箱量:<{$vo.container_size}>*<{$vo.container_sum}></p>
+          </div>
+          <div class="layui-col-md2">
+            <p class="se">状态：待派车</p>
+            <p class="se">天数:6天</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fo">
+        <!-- 订单号，状态，柜量 -->
+        <a title="确定" onclick="tj('ADF565466','待报柜','3')" href="javascript:;">确认</a>
+        <a title="查看" onclick="x_admin_show('查看','<{:url('admin/OrderProcess/OrderDetail')}>',1000,500)" href="javascript:;">查看订单</a>
+        <a title="修改" onclick="x_admin_show('修改','<{:url('admin/OrderProcess/orderSplit')}>',700,300)" href="javascript:;">修改订单</a>
+        <a title="删除" onclick="discard('15546')" href="javascript:;">废弃订单</a>
+      </div>
+    </div>
+    <{/volist}>
+    <div class="text-center" id="pages"></div>
+  </div>
+  
+
+  <!-- 待派车，待送货 -->
+  <form class="layui-form" id="car">
+    <div class="layui-col-xs12">
+      <div class="layui-col-xs4">
+        <div class="layui-form-item">
+          <label class="layui-form-label">联系人</label>
+          <div class="layui-input-block">
+            <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入联系人" class="layui-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-xs4">
+        <div class="layui-form-item">
+          <label class="layui-form-label">手机号码</label>
+          <div class="layui-input-block">
+            <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入手机号码" class="layui-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="layui-col-xs4">
+        <div class="layui-form-item">
+          <label class="layui-form-label">派车时间</label>
+          <div class="layui-input-block">
+              <input type="text" name="date" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+      </div>
+    </div>
+    <p><br/><br/><br/><br/></p>
+    
+    <div id="chedui">
+      <div class="hang">
+        <div class="layui-form-item">
+          <label class="layui-form-label">车队名</label>
+          <div class="layui-input-block">
+            <input type="text" name="car_name" lay-verify="title" autocomplete="off" placeholder="请输入车队名" class="layui-input">
+          </div>
+        </div>
+    
+        <div class="layui-form-item">
+          <label class="layui-form-label">车牌号</label>
+          <div class="layui-input-block">
+            <input type="text" name="truck_code" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
+          </div>
+        </div>
+    
+        <div class="layui-form-item">
+          <label class="layui-form-label">司机姓名</label>
+          <div class="layui-input-block">
+            <input type="text" name="driver_name" lay-verify="title" autocomplete="off" placeholder="请输入司机姓名" class="layui-input">
+          </div>
+        </div>
+    
+        <div class="layui-form-item">
+          <label class="layui-form-label">身份证</label>
+          <div class="layui-input-block">
+            <input type="text" name="identity" lay-verify="title" autocomplete="off" placeholder="请输入身份证" class="layui-input">
+          </div>
+        </div>
+    
+        <div class="layui-form-item">
+          <label class="layui-form-label">柜号</label>
+          <div class="layui-input-block">
+            <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入柜号" class="layui-input">
+          </div>
+        </div>
+    
+        <div class="layui-form-item">
+          <label class="layui-form-label">封条号</label>
+          <div class="layui-input-block">
+            <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入封条号" class="layui-input">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- 待配船 -->
+  <form class="layui-form" id="pei_post">
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">港口</label>
+        <div class="layui-input-inline" style="width: 100px;">
+          <input type="text" name="price_min" placeholder="起始港" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid">-</div>
+        <div class="layui-input-inline" style="width: 100px;">
+          <input type="text" name="price_max" placeholder="目的港" autocomplete="off" class="layui-input">
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">船名</label>
+      <div class="layui-input-block">
+        <input type="text" name="truck_code" lay-verify="title" autocomplete="off" placeholder="请输入船名" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">时间</label>
+      <div class="layui-input-block">
+        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+  </form>
+
+  <!-- 待到港 -->
+  <form class="layui-form" id="at_port">
+    <div class="layui-form-item">
+      <label class="layui-form-label">车队名</label>
+      <div class="layui-input-block">
+        <input type="text" name="car_name" lay-verify="title" autocomplete="off" placeholder="请输入车队名" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">车牌号</label>
+      <div class="layui-input-block">
+        <input type="text" name="truck_code" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">司机姓名</label>
+      <div class="layui-input-block">
+        <input type="text" name="driver_name" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">身份证</label>
+      <div class="layui-input-block">
+        <input type="text" name="identity" lay-verify="title" autocomplete="off" placeholder="请输入身份证" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">手机</label>
+      <div class="layui-input-block">
+        <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入手机" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">柜号</label>
+      <div class="layui-input-block">
+        <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入柜号" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">封条号</label>
+      <div class="layui-input-block">
+        <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入封条号" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">收货人</label>
+      <div class="layui-input-block">
+        <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入收货人" class="layui-input">
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">装货时间</label>
+      <div class="layui-input-block">
+          <input type="text" name="date" id="date1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+
+  </form>
+
+  <!-- 待装货 -->
+  <form class="layui-form" id="container">
+
+  </form>
+<!-- 待配船，待到港，待卸船 -->
+<form class="layui-form" id="dai_post">
+  <div class="layui-form-item">
+    <label class="layui-form-label">船名</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入船名" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">航线-航次</label>
+      <div class="layui-input-inline" style="width: 85px;">
+        <input type="text" name="price_min" placeholder="航线" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-form-mid">-</div>
+      <div class="layui-input-inline" style="width: 85px;">
+        <input type="text" name="price_max" placeholder="航次" autocomplete="off" class="layui-input">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">装货港</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入港口名" class="layui-input">
+    </div>
+  </div>
+
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">实际装船时间</label>
+    <div class="layui-input-block">
+        <input type="text" name="date4" id="date4" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">离港时间</label>
+    <div class="layui-input-block">
+        <input type="text" name="date" id="date3" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">卸货港</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入港口名" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">到港时间</label>
+    <div class="layui-input-block">
+        <input type="text" name="date" id="date1" lay-verify="date1" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">开始卸船时间</label>
+    <div class="layui-input-block">
+        <input type="text" name="date" id="date2" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+  </div>
+</form>
+
+  <!-- 待收款 -->
+  <form class="layui-form" id="at_mony">
+    <div class="layui-form-item">
+        <label class="layui-form-label">收款状态</label>
+        <div class="layui-input-block">
+          <input type="radio" name="mony" value="1" title="已收钱">
+          <input type="radio" name="mony" value="2" title="月结" checked="">
+        </div>
+      </div>
+  </form>
+  <!-- <script src="__STATIC__/js/jquery-3.2.1.min.js"></script>  -->
+  <script src="__STATIC__/../index/layui/layui.js"></script>
+
+
+  <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+  <script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+      var form = layui.form
+      ,layer = layui.layer
+      ,layedit = layui.layedit
+      ,laydate = layui.laydate;
+      
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+      laydate.render({
+        elem: '#date2'
+      });
+      laydate.render({
+        elem: '#date3'
+      });
+      laydate.render({
+        elem: '#date4'
+      });
+      layui.use('laypage', function () {
+          var laypage = layui.laypage;
+       //   var $data = $("#search_price input");
+//          var start_add = $data[0].value;
+//          var end_add = $data[1].value;
+//          var load_time = $data[2].value;
+          //执行一个laypage实例        
+          laypage.render({
+            elem: 'pages',
+            limit:"<{$limit}>",
+            limits: [5, 10, 15],
+            count:"<{$count}>",
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+            curr:"<{$page}>",
+            theme: '#c00',
+            jump: function (obj, first) {
+              //obj包含了当前分页的所有参数，比如：
+              //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+              //console.log(obj.limit); //得到每页显示的条数
+              //首次不执行
+              if (!first) {
+                //do something
+                window.location.href = "<{$page_url}>?page=" + obj.curr + '&limit=' + obj.limit;
+              }
+            }
+          });
+        }) 
+    });
+    //搜索
+    $('.cha').click(function(){
+      console.log($('#cont').serializeArray());
+      $.post(URL,{data:$('#cont').serialize()});//点击搜索提交
+    });
+
+    // 废弃订单
+    function discard(order_num){
+      $.get(URL,{order_num:order_num},function(res){
+        if (res.status) {
+            layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+            });
+          }else{
+            layui.layer.msg('提交失败', {icon: 2,time: 1000});
+          }
+      })
+    }
+    
+
+    function tj(order_num,order_state,liang){
+      order_state = '待到港';
+      if (order_state == '待订舱') {
+        layer.open({
+          title: '待订舱'
+          ,shadeClose:true
+          ,content: '<div><input type="text" name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input"></div>'
+          ,yes:function(res){
+            let zhi = $('input[name="order_num" ]').val();            
+            $.get(URL,{order_num:order_num,zhi:zhi},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        }); 
+      }else if (order_state == '待派车') {
+        let shu = $('#chedui .hang')[0].outerHTML;
+        $('#chedui').html('')
+        for (let i = 0; i < liang; i++) {
+          $('#chedui').append(shu);
+        }
+        layer.open({
+          type:1
+          ,title: '待派车'
+          ,content:$('#car')
+          ,area:['800px','510px']
+          ,shadeClose:true
+          ,btn:['确认']
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#car').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }else if (order_state == '待装货') {
+        
+        for (let index = 0; index < liang; index++) {
+          $('#container').append('<div class="layui-form-item"><div class="layui-inline">'+
+          '<label class="layui-form-label">柜号-封条号</label><div class="layui-input-inline" style="width: 100px;">'+
+          '<input type="text" name="price_min" placeholder="柜号" autocomplete="off" class="layui-input">'+
+          '</div><div class="layui-form-mid">-</div><div class="layui-input-inline" style="width: 100px;">'+
+          '<input type="text" name="price_max" placeholder="封条号" autocomplete="off" class="layui-input">'+
+          '</div></div></div>'); 
+        }
+        layer.open({
+          type:1
+          ,title: '待装货'
+          ,shadeClose:true
+          ,content:$('#container')
+          ,btn:['确认']
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#car').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                  layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }else if (order_state == '待报柜号'){
+        for (let index = 0; index < liang; index++) {
+          $('#container').append('<div class="layui-form-item"><div class="layui-inline">'+
+          '<label class="layui-form-label">柜号-封条号</label><div class="layui-input-inline" style="width: 100px;">'+
+          '<input type="text" name="price_min" placeholder="柜号" autocomplete="off" class="layui-input">'+
+          '</div><div class="layui-form-mid">-</div><div class="layui-input-inline" style="width: 100px;">'+
+          '<input type="text" name="price_max" placeholder="封条号" autocomplete="off" class="layui-input">'+
+          '</div></div></div>'); 
+        }
+        layer.open({
+          type:1
+          ,title: '待装货'
+          ,shadeClose:true
+          ,content:$('#container')
+          ,btn:['确认']
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#car').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                  layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }else if (order_state == '待配船'){
+        layer.open({
+          type:1
+          ,title: '待到港'
+          ,shadeClose:true
+          ,area:['400px','400px']
+          ,btn:['确认']
+          ,content:$('#dai_post')
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#dai_post').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }else if (order_state == '待到港') {
+        layer.open({
+          type:1
+          ,title: '待到港'
+          ,shadeClose:true
+          ,area:['400px','400px']
+          ,btn:['确认']
+          ,content:$('#dai_post')
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#dai_post').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }else if (order_state == '待卸船'){
+        layer.open({
+          type:1
+          ,title: '待到港'
+          ,shadeClose:true
+          ,area:['400px','400px']
+          ,btn:['确认']
+          ,content:$('#dai_post')
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#dai_post').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }else if (order_state == '待收款') {
+        layer.open({
+          type:1
+          ,title: '待收款'
+          ,content:$('#at_mony')
+          ,shadeClose:true
+          ,area:['450px','170px']
+          ,btn:['确认']
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#at_port').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }else if (order_state == '待送货'){
+        let shu = $('#chedui .hang')[0].outerHTML;
+        $('#chedui').html('')
+        for (let i = 0; i < liang; i++) {
+          $('#chedui').append(shu);
+        }
+        layer.open({
+          type:1
+          ,title: '待派车'
+          ,content:$('#car')
+          ,shadeClose:true
+          ,area:['800px','510px']
+          ,shadeClose:true
+          ,btn:['确认']
+          ,yes:function(res){
+            $.post(URL,{order_num:order_num,data:$('#car').serialize()},function(res){
+              if (res.status) {
+                layui.layer.msg('提交成功', {icon: 1,time: 500},function(){
+                layer.close(index);
+                });
+              }else{
+                layui.layer.msg('提交失败', {icon: 2,time: 1000});
+              }
+            })
+          }
+        });
+      }
+    }
+  </script>

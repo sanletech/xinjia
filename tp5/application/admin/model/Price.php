@@ -66,7 +66,7 @@ class Price extends Model
         $pricedata['EDD'] = date('Y-m-d H:i:s',strtotime("+3day",strtotime($pricedata['ETA'])));
         $pricedata['generalize'] = $data['generalize'];
         $pricedata['mtime'] = date('Y-m-d H:i:s');
-        $pricedata['route_id'] =$data['route'];  
+        $pricedata['route_id'] =$data['route_id'];  
         //判断是否存在同一个船公司 船舶id  航线  船期同样的 
         $res =Db::name('seaprice')->where([
             'ship_id'=>$pricedata['ship_id'],
@@ -121,7 +121,7 @@ class Price extends Model
         $pricedata['route_id'] =$data['route_id'];  
         $res3 = Db::name('seaprice')->update($pricedata);
       // echo Db::getLastSql();exit;
-        $res3 ? $response['success'] = '修改seaprice表':$response['fail'] = '修改seaprice表';
+        $res3 ? $response['success'] = '修改seaprice表成功':$response['fail'] = '修改seaprice表失败';
         return  $response;
     }
     

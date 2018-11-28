@@ -139,11 +139,26 @@ class AddressBook extends Model
         return $response ;  
     }
 
-    //对车队的人员信息展示
-    public function carinfo ($id) {
-        $sql = "select * from hl_carinfo where car_data_id = '$id' " ;
-        $res = Db::query($sql);
-        return $res;
+    //车队的人员信息展示
+    public function car_address_book ($type='car',$pages='10',$id='') {
+        //设置id查询
+        $id ? $map =$id : $map = "not null";
+        $lists =Db::name('staff_list')->alias('SL')
+            ->join('hl_port P','P.port_code=SL.port_code','left')
+             ->join('hl_city C','C.city_id=SL.city_code','left')
+             ->field('SL.*,P.port_name,C.city')
+            ->where('SL.id',$map)->where('SL.type',$type)->buildSql();
+        if($type=='car'){
+            $list = Db::table($lists)->alias('A')
+                ->join('hl_car_data CD','CD.id=A.belong_id','left')
+                ->field('A.*,CD.car_name company')->fetchSql(FALSE)->paginate($pages);
+        }elseif ($type=='ship'){
+            $list = Db::table($lists,' A')->alias('A')
+                ->join('hl_shipcompany SC','SC.id=A.belong_id','left')
+                ->field('A.*,SC.ship_short_name company')->paginate($pages);   
+        }
+        
+        return $list;
     }
 }
 

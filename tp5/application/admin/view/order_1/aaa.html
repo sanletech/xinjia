@@ -7,7 +7,7 @@
             <i class="layui-icon" style="line-height:30px">ဂ</i>
         </a>
     </div>
-    <!-- 搜索表单 -->
+
     <form class="layui-form" id="cont">
         <!-- 搜索内容 -->
         <div class="layui-form-item">
@@ -56,31 +56,23 @@
         <div class="layui-form-item">
             <label class="layui-form-label">运单号</label>
             <div class="layui-input-block">
-                    <input type="text" name="track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
+                    <input type="text" name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">订舱单</label>
             <div class="layui-input-block">
-                    <a class="layui-btn" id="scdc">上传</a>
-            </div>
-        </div
-
-        <!-- 订舱单 -->
-
-        <div class="layui-form-item">
-            <div class="layui-input-block dingcang">
-                <a class="layui-btn layui-btn-primary" id="scdc1">确定</a>
+                    <input type="text" name="order_num" lay-verify="title" autocomplete="off" placeholder="请输入水运单" class="layui-input">
             </div>
         </div>
-    </form>
 
-    <div class="syd">
-        <button type="button" class="layui-btn" id="scsyd">
-            <i class="layui-icon">&#xe67c;</i>上传水运单
-        </button>
-    </div>
+        <!-- 订舱单 -->
+        <div class="layui-form-item">
+            <div class="num2"></div>
+            <button class="layui-btn layui-btn-primary layui-btn-sm">上传</button>
+        </div>
+    </form>
 
     <!-- 待派车，待送货 -->
     <form class="layui-form" id="car">
@@ -334,6 +326,7 @@
         </div>
     </form>
 
+
     <script type="text/html" id="toolbarDemo1">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -358,49 +351,6 @@
             , $ = layui.jquery
             , upload = layui.upload
             , laydate = layui.laydate;
-        var order_num;//运单号
-        // 上传订舱单
-        upload.render({
-            elem: '#scdc' //绑定元素
-            ,url: '/upload/?order_num='+order_num //上传接口
-            ,accept: 'file' //普通文件
-            ,auto:false
-            ,bindAction:'#scdc1'
-            ,data:{order_num:$('input[name="track_num"]').val()}
-            ,done: function(res){
-            //上传完毕回调
-            if (res.status) {
-                layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                    layer.close(index);
-                });
-            } else {
-                layui.layer.msg('提交失败', { icon: 2, time: 1000 });
-            }
-            }
-            ,error: function(){
-            //请求异常回调
-            }
-        });
-
-        // 上传水运单
-        upload.render({
-            elem: '#scsyd' //绑定元素
-            ,url:  '/upload/?order_num='+order_num //上传接口
-            ,accept: 'file' //普通文件
-            ,done: function(res){
-            //上传完毕回调
-            if (res.status) {
-                layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                    layer.close(index);
-                });
-            } else {
-                layui.layer.msg('提交失败', { icon: 2, time: 1000 });
-            }
-            }
-            ,error: function(){
-            //请求异常回调
-            }
-        });
 
         //日期
         laydate.render({
@@ -421,7 +371,7 @@
         //加载表格
         var biao = table.render({
             elem: '#test1'
-            , url: "<{:url('admin/order/order_data')}>"
+            , url: "<{:url('admin/orderPort/portlist_data')}>"
             , toolbar: '#toolbarDemo1'
             , title: '用户数据表'
             , width: '99%'
@@ -503,15 +453,15 @@
             var data = obj.data;
             if (obj.event === 'confirm') {//点击备注
                 data.status = '待订舱'
-                // console.log(data.order_num, data.container_sum, data.status);
+                console.log(data.order_num, data.container_sum, data.status);
                 if (data.status == '待订舱') {
-                    order_num = data.order_num;
                     layer.open({
                         type:1
                         ,title: '待订舱'
                         , shadeClose: true
                         , content: $('#dc')
                         , yes: function (res) {
+                            let zhi = $('input[name="order_num" ]').val();
                             $.get(URL, { order_num: order_num, zhi: zhi }, function (res) {
                                 if (res.status) {
                                     layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
@@ -523,8 +473,6 @@
                             })
                         }
                     });
-                   
-
                 } else if (data.status == '待派车') {
                     let shu = $('#chedui .hang')[0].outerHTML;
                     $('#chedui').html('')
@@ -665,24 +613,16 @@
                             })
                         }
                     });
-                } else if (data.status == '上传水运单') {
+                } else if (data.status == '待收款') {
                     layer.open({
                         type: 1
-                        , title: '上传水运单'
-                        , content: $('.syd')
+                        , title: '待收款'
+                        , content: $('#at_mony')
                         , shadeClose: true
                         , area: ['450px', '170px']
-                    });
-                }else if (data.status == '申请放柜') {
-                    layer.open({
-                        type: 1
-                        , title: '申请放柜'
-                        , shadeClose: true
-                        , area: ['400px', '400px']
-                        , btn: ['确认','取消']
-                        , content: $('#dai_post')
-                        , yes: function (index, layero) {
-                            $.post(URL, function (res) {
+                        , btn: ['确认']
+                        , yes: function (res) {
+                            $.post(URL, { order_num: order_num, data: $('#at_port').serialize() }, function (res) {
                                 if (res.status) {
                                     layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
                                         layer.close(index);
@@ -691,9 +631,6 @@
                                     layui.layer.msg('提交失败', { icon: 2, time: 1000 });
                                 }
                             })
-                        }
-                        ,btn2:function(index){
-                            layer.close(index);
                         }
                     });
                 } else if (data.status == '待送货') {
@@ -729,6 +666,7 @@
 
             }
         });
+
 
         //选中的数据
         $('button').click(function () {
