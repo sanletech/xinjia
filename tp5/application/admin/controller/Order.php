@@ -687,6 +687,20 @@ class Order extends Base
     }
 
     public function order_public() {
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        $dataM = new OrderM;
+        $data = $dataM->order_public($page,$limit,$state='3');
+        $list =$data['list']; //分页数据
+        $count = $data['count'];// 总页数
+//        $this->_p($list);exit;
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('page_url',url('admin/order/order_public'));
         return $this->view->fetch('Order/order_public');
     }
 

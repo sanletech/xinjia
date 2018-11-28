@@ -3,66 +3,27 @@ namespace app\admin\model;
 use think\Model;
 use think\Db;
 //通讯录模块
-class Car extends Model
+class AddressBook extends Model
 {
    
    
     //展示车队的对应信息
-    public function carlist($searchdata = array(),$page = 5) { 
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        // var_dump($searchdata);
-        //接受search条件，并做判断处理三种情况或 和且的条件处理
-        if( array_key_exists('port', $searchdata)){
-            $port_name ='  P.port_name like \'%'.$searchdata['port'].'%\'';
-            $sql = "select C.id from hl_car_port C left join hl_port P on C.port_id = P.id where".$port_name ;
-            $cp_id=Db::query($sql);
-            //取以car_data_id 为键名的二维数组转成一维 
-            $cp_id=array_column($cp_id, 'id');
-            $bz=1; //做标记
-            // 设置分页的额外参数 可以看http://www.thinkphp.cn/topic/44624.html 解释
-            $pageParam['query']['port'] = $searchdata['port'];
-         // var_dump($carid);
-        } else{ $bz = -1;}
-            
-        if(array_key_exists('city', $searchdata)){
-            $city_name ='  CC.city_name like \'%'.$searchdata['city'].'%\'';
-            $sql2 = "select C.id from hl_car_port C left join hl_car_city CC on CC.car_id = C.car_id  where".$city_name ;
-            $cp_id2=Db::query($sql2);
-            $cp_id2=array_column($cp_id2, 'id');
-            $bz2=1;
-            $pageParam['query']['city'] = $searchdata['city'];
-          //var_dump($carid2);
-        } else{ $bz2 = -1;}
-        if($bz>0 && $bz2>0 ){
-          $id=  array_intersect($cp_id,$cp_id2);
-        }elseif($bz>0 && $bz2<0){
-          $id= $cp_id;
-        }elseif($bz<0 && $bz2>0) {
-          $id= $cp_id2; 
-        }
-       
-        $sqlstr=Db::name('car_port')->alias('CP')
-                ->join('hl_car_city CC' , 'CC.car_id = CP.car_id' , 'left')
-                ->join('hl_car_ship CS' , 'CS.car_id = CP.car_id' , 'left')
-                ->join('hl_shipcompany SC' ,"SC.id =  CS.ship_id and SC.status='1'" , 'left')
-                ->join('hl_port P' , 'P.id = CP.port_id' , 'left')
-                ->join('hl_cardata CD' , 'CD.id = CP.car_id','left')
-                ->field('CP.id , CP.port_id, P.port_name,CP.car_id ,  CD.car_name, CD.address, CD.symbiosis, CD.status  ,'
-                        . 'group_concat(distinct CC.id order by CC.id) city_id ,'
-                        . 'group_concat(distinct CC.city_name order by CC.id) city_name , '
-                        . 'group_concat(distinct CS.ship_id order by CS.ship_id) ship_id  , '
-                        . 'group_concat(distinct SC.ship_short_name order by CS.ship_id )ship_short_name' );
-                
-        if(isset($id)){
-            $pageParam['query']['id'] = $id;
-            $list = $sqlstr->where('CP.id','in',$id)->order('CP.id')->group('CP.id') ->paginate($page,false,$pageParam);
-        }else{
-            $list=$sqlstr->order('CP.id')->group('CP.id') ->paginate($page);
-        }
-          
-        return $list;
+    public function carlist($map,$page =10) { 
+        $list = Db::name('car_data')->alias('CD')
+                ->join('hl_port P',"FIND_IN_SET(P.port_code,CD.port_arr)",'left')
+                ->join('hl_city C',"FIND_IN_SET(C.city_id,CD.city_arr)",'left')
+                ->join('hl_shipcompany SP',"FIND_IN_SET(SP.id,CD.ship_arr)",'left')
+                ->field('CD.*,group_concat(distinct P.port_name order by P.id) as port_name, '
+                        . 'group_concat(distinct C.city order by C.id) as city_name,'
+                        . 'group_concat(distinct SP.ship_short_name order by SP.id) as ship_name')
+                ->group('CD.id')->order('CD.id')->buildSql();
+        $list = Db::table($list.' A')->where($map)->fetchSql(FALSE)->paginate($page);
+//        $this->_p($list);exit;
+        return $list;//paginate($page)
        
     }
+    
+    //展示车队对应人员的资料
     
     //执行删除
     public function todel($data) {
