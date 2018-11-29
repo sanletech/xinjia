@@ -114,10 +114,10 @@
             </div></div>
          
         <!-- 航线详情 -->
-        <div class="layui-form-item ">
+        <div class="layui-form-item">
             <label class="layui-form-label">航线详情</label>
             <div class="layui-input-inline" >
-                <select name="route"  lay-filter="route" lay-search>
+                <select name ="route_id"  lay-filter="route_id" lay-search>
                     <option value="">请选择航线</option>
                 </select>
             </div>
@@ -172,353 +172,331 @@
 
 <script type="text/javascript" src="/static/admin/js/port.js"></script>
 <script type="text/javascript" src="/static/admin/js/ship_boat.js"></script>
-    <script type="text/javascript">
-        $('.jg').click(function () {            
-            layer.open({
-                type: 1,
-                title: '常用信息',
-                content: $('#jg')
-            });
+<script type="text/javascript">
+    $('.jg').click(function () {            
+        layer.open({
+            type: 1,
+            title: '常用信息',
+            content: $('#jg')
         });
-        $('#jg').on('click','span',function(){
-            let zhi = $(this).html();//当前选中的值            
-            $('.beizhu').val(zhi);//给input 赋值
-            layer.close(layer.index);//关闭窗口
-        })
-       var delurl= "<{:url('admin/Price/delMessage')}>";
-       var addurl ="<{:url('admin/Price/addMessage')}>";
-        function shan(zj){//删除
-            let id = $(zj).prev().attr('name');//删除当前ID
-            $(zj).parent('li').remove();//删除节点
-            $.get(delurl,{'id' : id});//删除ajax请求
-        }
+    });
+    $('#jg').on('click','span',function(){
+        let zhi = $(this).html();//当前选中的值            
+        $('.beizhu').val(zhi);//给input 赋值
+        layer.close(layer.index);//关闭窗口
+    })
+    // $('#jg li span').click(function(){//选中
+    //     let zhi = $(this).html();//当前选中的值
+    //     $('.beizhu').val(zhi);//给input 赋值
+    //     layer.close(layer.index);//关闭窗口
+    // })
+   var delurl= "<{:url('admin/Price/delMessage')}>";
+   var addurl ="<{:url('admin/Price/addMessage')}>";
+    function shan(zj){//删除
+        let id = $(zj).prev().attr('name');//删除当前ID
+        $(zj).parent('li').remove();//删除节点
+        $.get(delurl,{'id' : id});//删除ajax请求
+    }
 
-        $('.qb button').click(function(){//单机确定或者添加按钮时
-            if ($(this).index()) {//添加
-                $('.in').show();
-            }else{//确认
-                let d = $('.in input').val();//获取添加的值
-                if (d) {
-                    $.get(addurl,{'data' : d},//添加ajax请求返回ID
-                    function(data){//返回直接添加数据                    
-                        $('#jg ul').append('<li><span name="'+data+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
-                    });
-                }else{
-                    // alert('您输入的是空值');
-                    layui.layer.msg('您输入的是空值', {icon: 2,time: 1000});
-                }
-                $('.in').hide();
-            }
-            $('.in input').val('');
-        });
-
-
-        //取消关闭模态框
-        $('.cancel').click(function () {
-          var index = parent.layer.getFrameIndex(window.name);
-          parent.layer.close(index);
-        });
-
-        //海上时效天数
-        for (let i = 1; i < 31; i++) {
-          $('#day').append('<option value="' + i + '">' + i + '天</option>');
-        }
-        
-          var day = "<?php echo $data['sea_limitation']?>";
-          var ship_id = "<?php echo $data['ship_id']?>";
-        
-        //默认第五天
-      
-        $("#day").val(day);
-
-        layui.use(['form', 'layedit', 'laydate'], function () {
-            var form = layui.form
-            , layer = layui.layer
-            , layedit = layui.layedit
-            , laydate = layui.laydate;
-            //日期
-            laydate.render({
-              elem: '#date'
-            });
-            laydate.render({
-              elem: '#date1'
-            });
-          });
-        
-                
-        //初始数据
-        var areaData = JS_PORT;
-        var $form;
-        var form;
-        var $;
-        layui.use(['jquery', 'form'], function() {
-            $ = layui.jquery;
-            form = layui.form;
-            $form = $('form');
-            loadProvince();  //选择港口
-            loadship();//原有船公司的港口和城市
-        });     
-        
-        //加载 所有的船公司名字简称和相应boat的id
-        var js_ship_boat = JS_SHIP_BOAT;
-        //加载 所有的港口名字和相应的城市code
-        var js_port = JS_PORT;
-        var url="<{$toURL}>";
-        var ship_id ="<{$data.ship_id}>";
-        var boat_id ="<{$data.boat_id}>";
-        //加载船公司
-        function loadship(){
-//             //加载 所有的船公司名字简称和相应的id
-            var ship_length =js_ship_boat.length;
-            var shipHtml = '';
-            var tt = {};
-            for(var i=0;i<ship_length;i++){
-                if(js_ship_boat[i].ship_id == ship_id){
-                tt.value = js_ship_boat[i].ship_id  +'_'+ js_ship_boat[i].boat_list.length+'_' + i;
-                shipHtml += '<option  value="' + js_ship_boat[i].ship_id  +'_'+ js_ship_boat[i].boat_list.length+'_' + i + '"  selected="selected">' + js_ship_boat[i].ship_name + '</option>';  
-                }else{
-                shipHtml += '<option  value="' + js_ship_boat[i].ship_id  +'_'+ js_ship_boat[i].boat_list.length+ '_' + i + '">' + js_ship_boat[i].ship_name + '</option>';  
-            }}
-            $form.find('select[name=ship]').append(shipHtml);
-            form.render();
-            
-            boat(tt);
-            form.on('select(ship)', function(data) {       
-                boat(data);                
-            });
-
-            function boat(data){
-                var value = data.value;
-                var d ;
-                if (value) {
-                    d = value.split('_');
-                    var code = d[0];
-                    var count = d[1];
-                    var index = d[2];
-                }
-                if (count > 0) {
-                    loadBoat(js_ship_boat[index].boat_list);
-                }else {
-                    $form.find('select[name=ship]').parent().hide();
-                }
-            }
-        }
-        //加载船公司对应boat
-        function loadBoat(boat){
-            var areaHtml = '';
-            if(typeof(boat) !== 'undefined' && boat!=0){
-                var boat_length =boat.length;
-                for(var i=0;i<boat_length;i++){
-                    if(boat[i].id == boat_id){
-                        areaHtml += '<option  value="' + boat[i].id + '" selected="selected">' + boat[i].boat_name + '</option>';    
-                    }else{
-                    areaHtml += '<option  value="' + boat[i].id + '">' + boat[i].boat_name + '</option>';  
-                }}
+    $('.qb button').click(function(){//单机确定或者添加按钮时
+        if ($(this).index()) {//添加
+            $('.in').show();
+        }else{//确认
+            let d = $('.in input').val();//获取添加的值
+            if (d) {
+                $.get(addurl,{'data' : d},//添加ajax请求返回ID
+                function(data){//返回直接添加数据                    
+                    $('#jg ul').append('<li><span name="'+data+'">'+d+'</span><i class="layui-icon" onclick="shan(this)">&#x1006;</i></li>');
+                });
             }else{
-                areaHtml = '<option  value="">此船公司无对应船舶</option>'; 
+                // alert('您输入的是空值');
+                layui.layer.msg('您输入的是空值', {icon: 2,time: 1000});
             }
-            // $form.find('select[name=boat]').html(areaHtml).parent().show();
-            form.render();
-            form.on('select(boat)', function(data) {
-            } ) 
+            $('.in').hide();
         }
+        $('.in input').val('');
+    });
+
+    //取消关闭模态框
+    $('.cancel').click(function () {
+      var index = parent.layer.getFrameIndex(window.name);
+      parent.layer.close(index);
+    });
+
+    //海上时效天数
+    for (let i = 1; i < 31; i++) {
+      $('#day').append('<option value="' + i + '">' + i + '天</option>');
+    }
+    //默认第五天
+    $("#day").val(5);
+
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+        //日期
+        laydate.render({
+          elem: '#date'
+        });
+        laydate.render({
+          elem: '#date1'
+        });
+      });
     
+    //初始数据
+    var areaData = JS_PORT;
+    var $form;
+    var form;
+    var $;
+    layui.use(['jquery', 'form'], function() {
+        $ = layui.jquery;
+        form = layui.form;
+        $form = $('form');
+        loadProvince();  //选择港口
+        loadship();//原有船公司的港口和城市
         
-
-        //加载对应城市的港口，并显示已经选中了
-        function loadShipRoute(route_arr){
-            //console.log(route_arr);
-            var areaHtml = '';
-            if(route_arr.length!=0){
-                var j=0;
-                for(var i in route_arr){
-                    j++;
-                    if(route_arr[i]['m_port']==null){
-                        areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+'直航'+'</option>';
-                    }else{
-                        areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+ route_arr[i]['m_port']+ '</option>';   
-                    }
-                }
+    });     
+    
+    //加载 所有的船公司名字简称和相应boat的id
+    var js_ship_boat = JS_SHIP_BOAT;
+    var ship_name = '<{$data.ship_short_name}>';//船公司
+    var boat_name = '<{$data.boat_name}>';//船名
+    var url="<{:url('admin/Price/route_toadd')}>";
+    //加载船公司
+    function loadship(){
+        //加载 所有的船公司名字简称和相应的id
+        var ship_length =js_ship_boat.length;
+        var shipHtml = '';
+        for(var i=0;i<ship_length;i++){
+            if (js_ship_boat[i].ship_name == ship_name) {
+                shipHtml += '<option  value="' + js_ship_boat[i].ship_id  +'_'+ js_ship_boat[i].boat_list.length+ '_' + i + '" selected>' + js_ship_boat[i].ship_name + '</option>';
+                loadBoat(js_ship_boat[i].boat_list); 
             }else{
-                    areaHtml = '<option  value="">无此航线</option>'; 
+                shipHtml += '<option  value="' + js_ship_boat[i].ship_id  +'_'+ js_ship_boat[i].boat_list.length+ '_' + i + '">' + js_ship_boat[i].ship_name + '</option>'; 
+            } 
+        } 
+        $form.find('select[name=ship]').append(shipHtml);
+        form.render();
+        form.on('select(ship)', function(data) {
+            var value = data.value;
+            var d = value.split('_');
+            var code = d[0];
+            var count = d[1];
+            var index = d[2];
+            
+            if (count > 0) {
+                loadBoat(js_ship_boat[index].boat_list);
+            }else {
+                $form.find('select[name=boat]').parent().hide();
             }
-            $form.find('select[name=route_id]').html(areaHtml).parent().show();
-            form.render();
-            loadProvince();  //选择港口 
+        });
+    }
+    //加载船公司对应boat
+    function loadBoat(boat){
+        var areaHtml = '';
+        if(typeof(boat) !== 'undefined' && boat!=0){
+            var boat_length =boat.length;
+            for(var i=0;i<boat_length;i++){
+                if (boat[i].boat_name == boat_name) {
+                    areaHtml += '<option  value="' + boat[i].id+ '"> selected' + boat[i].boat_name + '</option>';
+                }else{
+                    areaHtml += '<option  value="' + boat[i].id+ '">' + boat[i].boat_name + '</option>';
+                }
+            }
+        }else{
+                areaHtml = '<option  value="">此船公司无对应船舶</option>'; 
         }
+        $form.find('select[name=boat]').html(areaHtml).parent().show();
+        form.render();
         
-        var gangkou = 2;//只能有两个港口
-        function  selectPortShip(port_id,port_name,mark){
-            var btn =document.createElement('button');
-                btn.className="layui-btn layui-btn-normal";
-                btn.style="display: inline\;" ;
-                btn.innerHTML=port_name;
-                btn.setAttribute('id',(port_id+'_'+port_name))
-                btn.addEventListener("click",function() {
+        form.on('select(area)', function(data) {
+        } ) 
+    }
+    
+//加载省数据
+    function loadProvince() {
+        var proHtml = '';
+        for (var i = 0; i < areaData.length; i++) {
+            proHtml += '<option  style="width: 40px"  value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+        }
+        //初始化省数据
+        $form.find('select[name=province]').append(proHtml);
+        form.render();
+        form.on('select(province)', function(data) {
+            $form.find('select[name=port]').html('<option value="">请选择县/区</option>').parent().hide();
+            var value = data.value;
+            var d = value.split('_');
+            var code = d[0];
+            var count = d[1];
+            var index = d[2];
+            if (count > 0) {
+                loadCity(areaData[index].mallCityList);
+            } else {
+                $form.find('select[name=city]').parent().hide();
+            }
+        });
+    }
+    
+//加载市数据
+    function loadCity(citys) {
+        var cityHtml = '';
+        for (var i = 0; i < citys.length; i++) {
+            cityHtml += '<option  style="width: 40px" value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+        }
+        $form.find('select[name=city]').html(cityHtml).parent().show();
+        form.render();
+        form.on('select(city)', function(data) {
+            var value = data.value;
+            var d = value.split('_');
+            var code = d[0];
+            var count = d[1];
+            var index = d[2];
+            if (count > 0) {
+                //将城市Id 传给港口loadPort()
+                loadPort(citys[index].mallPortList);
+            } else {
+                $form.find('select[name=area]').parent().hide();
+            }
+        });
+    }
+
+    //加载对应城市的港口，
+    function loadPort(ports){            
+        var areaHtml = '';
+        for(var i=0;i<ports.length;i++){
+            areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
+        }
+        $form.find('select[name=port]').html(areaHtml).parent().show();
+        form.render();
+        form.on('select(port)', function(data) {
+             var port =data.value.split('_');
+             var port_id =port['0'];
+             var port_name=port['1'];
+            var mark = document.getElementById('search_port');
+             //已经存的港口就不执行
+            if(! document.getElementById(port_id+'_'+port_name)  ){
+                selectPortShip(port_id,port_name,mark);
+            } 
+        } ) 
+    
+    }
+    
+         //加载对应城市的港口，并显示已经选中了
+    function loadShipRoute(route_arr){            
+        var areaHtml = '';
+        if(route_arr.length!=0){
+            $('#oldline').remove();
+            var j=0;
+            for(var i in route_arr){
+                j++;
+                if(route_arr[i]['m_port']==null){
+                    areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+'直航'+'</option>';
+                }else{
+                    areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+ route_arr[i]['m_port']+ '</option>';   
+                }
+            }
+        }else{
+                areaHtml = '<option  value="">无此航线</option>'; 
+        }
+        $form.find('select[name=route_id]').html(areaHtml).parent().show();
+        form.render();
+        loadProvince();  //选择港口
+    }
+
+    var gangkou = 2;//只能有两个港口
+    function  selectPortShip(port_id,port_name,mark){                      
+        var btn =document.createElement('button');
+            btn.className="layui-btn layui-btn-normal";
+            btn.style="display: inline\;" ;
+            btn.innerHTML=port_name;
+            btn.setAttribute('id',(port_id+'_'+port_name))
+            btn.addEventListener("click",function() {
                     del(this);
                     return false;
-                });
-            var ipt= document.createElement('input');
-                ipt.type="hidden";
-                ipt.name='port_code[]';
-                ipt.value=port_id;
-            var  i_tag=document.createElement('i');
-                 i_tag.className="layui-icon";
-                 i_tag.innerHTML="&#xe640\;";
-            btn.appendChild(ipt);   
-            btn.appendChild(i_tag);
-            if (gangkou) {
-                gangkou--;
-                mark.appendChild(btn);
-            }else{
-                // alert('最多两个港口');
-                layui.layer.msg('最多两个港口', {icon: 2,time: 1000});
+            });
+        var ipt= document.createElement('input');
+            ipt.type="hidden";
+            ipt.name='port_code[]';
+            ipt.value=port_id;
+        var  i_tag=document.createElement('i');
+             i_tag.className="layui-icon";
+             i_tag.innerHTML="&#xe640\;";
+        btn.appendChild(ipt);   
+        btn.appendChild(i_tag);
+        if (gangkou) {
+            gangkou--;
+            mark.appendChild(btn);
+        }else{
+            // alert('最多两个港口');
+            layui.layer.msg('最多两个港口', {icon: 2,time: 1000});
+        }
+       
+     }
+     
+    function del(obj){
+        obj.setAttribute('style','display: none;');
+       // 删除button的子节点
+        var childs = obj.childNodes; 
+            for(var i = childs.length - 1; i >= 0; i--) { 
+                obj.removeChild(childs[i]); 
             }
-         }
-         
-        function del(obj){
-            obj.setAttribute('style','display: none;');
-           // 删除button的子节点
-            var childs = obj.childNodes; 
-                for(var i = childs.length - 1; i >= 0; i--) { 
-                    obj.removeChild(childs[i]); 
-                }
-                //删除本身button
-                obj.parentNode.removeChild(obj);
-         }
-        function routeSelect(){
-            //删除旧的数据 同时改名字
-        //    var obj = document.getElementById("oldline");
-        //    if (obj) {
-        //     del(obj);
-        //    $("#newline").html('港口航线');
-        //    }
-            var sl_start = $("input[name='port_code[]']:eq(0)").val();
-            var sl_end  = $("input[name='port_code[]']:eq(1)").val();
-            var data ={'sl_start':sl_start,'sl_end':sl_end};            
-            $.ajax({
+            //删除本身button
+            obj.parentNode.removeChild(obj);
+            gangkou++;
+     }
+    function routeSelect(){
+        var sl_start = $("input[name='port_code[]']:eq(0)").val();
+        var sl_end  = $("input[name='port_code[]']:eq(1)").val();
+        var data ={'sl_start':sl_start,'sl_end':sl_end};
+        $.ajax({
+            type:'POST',
+            url:"<{:url('admin/Price/route_select')}>",
+            data: data,
+            dataType:"json",
+            success:function(data){       
+                loadShipRoute(data); 
+            }
+        });
+   
+    }
+     
+     
+    function toajax (){
+            // var loading = layer.load(1);
+            post_adduser = true;                      
+                $.ajax({
                 type:'POST',
-                url:"<{:url('admin/Price/route_select')}>",
-                data: data,
+                url:url,
+                data:$("#routeaddform").serialize(),
                 dataType:"json",
                 success:function(data){
-                    loadShipRoute(data);
-                    if (data.length) {
-                        $('#oldline').remove();
+                    if(data.status){
+                        post_adduser = false;
+                        // layer.close(loading);
+                        layer.msg("修改成功", { icon: 6, time: 1000 }, function () {
+                        // 获得frame索引
+                        // parent.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name);
+                        //关闭当前frame
+                        parent.layer.close(index);
+                    });
+                    }else{
+                        post_adduser = false;
+                        // layer.close(loading);
+                        layer.msg("修改失败", {icon: 5,time: 2000});
+                        }
+                    },
+                    error: function () {
+                        post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
+                        // layer.close(loading);
+                        layer.msg("添加失败", {icon: 5,time: 2000});
                     }
-                    
-                }
             });
-       
-        }
-         
-         
-        function toajax (){
-                // var loading = layer.load(1);
-                post_adduser = true;    
-                $.ajax({
-                    type:'POST',
-                    url:url,
-                    data:$("#routeaddform").serialize(),
-                    dataType:"json",
-                    success:function(status){
-                        if(status>0){
-                            post_adduser = false;
-                            // layer.close(loading);
-                            layer.msg("修改成功", { icon: 6, time: 1000 }, function () {
-                            // 获得frame索引
-                            parent.location.reload();
-                            var index = parent.layer.getFrameIndex(window.name);
-                            //关闭当前frame
-                            parent.layer.close(index);
-                        });
-                        }else{
-                            post_adduser = false;
-                            // layer.close(loading);
-                            layer.msg("修改失败", { icon: 5 });
-                            }
-                            },
-                        error: function () {
-                                post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
-                                // layer.close(loading);
-                                layer.msg("添加失败", { icon: 5 ,time: 1000 });
-                            }
-                });
-                return false;//只此一句
-            }          
-      
-        
-    //加载省数据
-        function loadProvince() {
-            var proHtml = '';
-            for (var i = 0; i < areaData.length; i++) {
-                proHtml += '<option  style="width: 40px"  value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
-            }
-            //初始化省数据
-            $form.find('select[name=province]').append(proHtml);
-            form.render();
-            form.on('select(province)', function(data) {
-                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
-                var value = data.value;
-                var d = value.split('_');
-                var code = d[0];
-                var count = d[1];
-                var index = d[2];
-                if (count > 0) {
-                    loadCity(areaData[index].mallCityList);
-                } else {
-                    $form.find('select[name=city]').parent().hide();
-                }
-            });
-        }
-        
-    //加载市数据
-        function loadCity(citys) {
-            var cityHtml = '';
-            for (var i = 0; i < citys.length; i++) {
-                cityHtml += '<option  style="width: 40px" value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
-            }
-            $form.find('select[name=city]').html(cityHtml).parent().show();
-            form.render();
-            form.on('select(city)', function(data) {
-                var value = data.value;
-                var d = value.split('_');
-                var code = d[0];
-                var count = d[1];
-                var index = d[2];
-                if (count > 0) {
-                    //将城市Id 传给港口loadPort()
-                    loadPort(citys[index].mallPortList);
-                } else {
-                    $form.find('select[name=area]').parent().hide();
-                }
-            });
-        }
-    
-        //加载对应城市的港口，
-        function loadPort(ports){
-            var areaHtml = '';
-            for(var i=0;i<ports.length;i++){
-                areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
-            }
-            $form.find('select[name=port]').html(areaHtml).parent().show();
-            form.render();
-            form.on('select(port)', function(data) {
-                 var port =data.value.split('_');
-                 var port_id =port['0'];
-                 var port_name=port['1'];
-                var mark = document.getElementById('search_port');
-                 //已经存的港口就不执行
-                if(! document.getElementById(port_id+'_'+port_name)  ){
-                    selectPortShip(port_id,port_name,mark);
-                } 
-            } ) 
-        
-        }     
-        
-      
-
-    </script>
+            // return false;//只此一句
+        }          
+  
+</script>
 
   </body>
   </html>
