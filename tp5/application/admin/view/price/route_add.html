@@ -442,7 +442,7 @@
         function toajax (){
                 // var loading = layer.load(1);
                 post_adduser = true;
-                var a = $('select[name="route"]').val();                
+                var a = $('select[name="route_id"]').val();                
                 if (a) {
                     $.ajax({
                     type:'POST',
@@ -453,7 +453,7 @@
                         if(data.status){
                             post_adduser = false;
                             // layer.close(loading);
-                            layer.msg("修改成功", { icon: 6, time: 1000 }, function () {
+                            layer.msg("添加成功", { icon: 6, time: 1000 }, function () {
                             // 获得frame索引
                             // parent.location.reload();
                             var index = parent.layer.getFrameIndex(window.name);
@@ -463,7 +463,7 @@
                         }else{
                             post_adduser = false;
                             // layer.close(loading);
-                            layer.msg("修改失败", {icon: 5,time: 2000});
+                            layer.msg("添加失败", {icon: 5,time: 2000});
                             }
                         },
                         error: function () {

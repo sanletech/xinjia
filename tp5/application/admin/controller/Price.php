@@ -66,7 +66,7 @@ class Price extends Base
         $seaprice_id = input('get.seaprice_id');
         $seaprice = new PriceM;
         $res = $seaprice-> price_route_list('','','',100,$seaprice_id);
-        $this->_p($res['0']);exit;
+//        $this->_p($res['0']);exit;
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
         $this->assign('data',$res['0']);

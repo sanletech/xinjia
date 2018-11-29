@@ -14,13 +14,13 @@
             <div class="layui-inline">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" placeholder="收货联系人" autocomplete="off" class="layui-input">
+                    <input type="text" name="order_num" placeholder="订单号" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="username" placeholder="装货公司名全称" autocomplete="off" class="layui-input">
+                    <input type="text" name="track_num" placeholder="运单号" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
@@ -36,16 +36,16 @@
         <!-- 筛选内容 -->
         <div class="layui-row">
             <label class="layui-form-label"></label>
-            <input type="checkbox" name="no_money" value="1" lay-skin="primary" lay-filter="port" title="待订舱" checked="">
-            <input type="checkbox" name="have_money" value="2" lay-skin="primary" lay-filter="port" title="待派车" checked="">
-            <input type="checkbox" name="have_money" value="3" lay-skin="primary" lay-filter="port" title="待装货" checked="">
-            <input type="checkbox" name="have_money" value="4" lay-skin="primary" lay-filter="port" title="待报柜号" checked="">
-            <input type="checkbox" name="have_money" value="5" lay-skin="primary" lay-filter="port" title="待配船" checked="">
-            <input type="checkbox" name="have_money" value="6" lay-skin="primary" lay-filter="port" title="待到港" checked="">
-            <input type="checkbox" name="have_money" value="7" lay-skin="primary" lay-filter="port" title="待卸船" checked="">
-            <input type="checkbox" name="have_money" value="8" lay-skin="primary" lay-filter="port" title="上传水运单" checked="">
-            <input type="checkbox" name="have_money" value="8" lay-skin="primary" lay-filter="port" title="申请放柜" checked="">
-            <input type="checkbox" name="have_money" value="9" lay-skin="primary" lay-filter="port" title="待送货" checked="">
+            <input type="checkbox" name="status" value="booking_note" lay-skin="primary" lay-filter="port" title="待订舱" checked="">
+            <input type="checkbox" name="status" value="send_car" lay-skin="primary" lay-filter="port" title="待派车" checked="">
+            <input type="checkbox" name="status" value="loading" lay-skin="primary" lay-filter="port" title="待装货" checked="">
+            <input type="checkbox" name="status" value="up_container_code" lay-skin="primary" lay-filter="port" title="待报柜号" checked="">
+            <input type="checkbox" name="status" value="load_ship" lay-skin="primary" lay-filter="port" title="待配船" checked="">
+            <input type="checkbox" name="status" value="arrive_port" lay-skin="primary" lay-filter="port" title="待到港" checked="">
+            <input type="checkbox" name="status" value="unload_ship" lay-skin="primary" lay-filter="port" title="待卸船" checked="">
+            <input type="checkbox" name="status" value="sea_waybill" lay-skin="primary" lay-filter="port" title="上传水运单" checked="">
+            <input type="checkbox" name="status" value="container_lock" lay-skin="primary" lay-filter="port" title="申请放柜" checked="">
+            <input type="checkbox" name="status" value="unloading" lay-skin="primary" lay-filter="port" title="待送货" checked="">
         </div>
 
         <table class="layui-hide" id="test1" lay-filter="test1"></table>
@@ -85,6 +85,12 @@
     <!-- 待派车，待送货 -->
     <form class="layui-form" id="car">
         <div class="layui-col-xs12">
+            <div class="yunding">
+                <!-- 订单号 -->
+                <input type="text" name="order_num">
+                <!-- 运单号 -->
+                <input type="text" name="track_num">
+            </div>
             <div class="layui-col-xs4">
                 <div class="layui-form-item">
                     <label class="layui-form-label">联系人</label>
@@ -124,42 +130,42 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">车队名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="car_name" lay-verify="title" autocomplete="off" placeholder="请输入车队名" class="layui-input">
+                        <input type="text" name="car_name[]" lay-verify="title" autocomplete="off" placeholder="请输入车队名" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">车牌号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="truck_code" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
+                        <input type="text" name="truck_code[]" lay-verify="title" autocomplete="off" placeholder="请输入车牌号" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">司机姓名</label>
                     <div class="layui-input-block">
-                        <input type="text" name="driver_name" lay-verify="title" autocomplete="off" placeholder="请输入司机姓名" class="layui-input">
+                        <input type="text" name="driver_name[]" lay-verify="title" autocomplete="off" placeholder="请输入司机姓名" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">身份证</label>
                     <div class="layui-input-block">
-                        <input type="text" name="identity" lay-verify="title" autocomplete="off" placeholder="请输入身份证" class="layui-input">
+                        <input type="text" name="identity[]" lay-verify="title" autocomplete="off" placeholder="请输入身份证" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">柜号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入柜号" class="layui-input">
+                        <input type="text" name="mobile[]" lay-verify="title" autocomplete="off" placeholder="请输入柜号" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">封条号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="mobile" lay-verify="title" autocomplete="off" placeholder="请输入封条号" class="layui-input">
+                        <input type="text" name="mobile[]" lay-verify="title" autocomplete="off" placeholder="请输入封条号" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -168,6 +174,12 @@
 
     <!-- 待配船 -->
     <form class="layui-form" id="pei_post">
+        <div class="yunding">
+            <!-- 订单号 -->
+            <input type="text" name="order_num">
+            <!-- 运单号 -->
+            <input type="text" name="track_num">
+        </div>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">港口</label>
@@ -198,6 +210,12 @@
 
     <!-- 待到港 -->
     <form class="layui-form" id="at_port">
+            <div class="yunding">
+                    <!-- 订单号 -->
+                    <input type="text" name="order_num">
+                    <!-- 运单号 -->
+                    <input type="text" name="track_num">
+                </div>
         <div class="layui-form-item">
             <label class="layui-form-label">车队名</label>
             <div class="layui-input-block">
@@ -270,6 +288,12 @@
 
     <!-- 待配船，待到港，待卸船 -->
     <form class="layui-form" id="dai_post">
+            <div class="yunding">
+                    <!-- 订单号 -->
+                    <input type="text" name="order_num">
+                    <!-- 运单号 -->
+                    <input type="text" name="track_num">
+                </div>
         <div class="layui-form-item">
             <label class="layui-form-label">船名</label>
             <div class="layui-input-block">
@@ -359,14 +383,17 @@
             , upload = layui.upload
             , laydate = layui.laydate;
         var order_num;//运单号
+
         // 上传订舱单
         upload.render({
             elem: '#scdc' //绑定元素
-            ,url: '<{:url("admin/order/waybill_upload")}>?order_num='+order_num //上传接口
+            ,url: "<{:url('admin/Order/waybill_upload?type=book_note')}>" //上传接口
             ,accept: 'file' //普通文件
             ,auto:false
             ,bindAction:'#scdc1'
-            ,data:{order_num:$('input[name="track_num"]').val()}
+            ,before: function(obj){
+                this.data ={order_num:order_num,track_num:$('input[name="track_num"]').val()};
+            }
             ,done: function(res){
             //上传完毕回调
             if (res.status) {
@@ -385,8 +412,11 @@
         // 上传水运单
         upload.render({
             elem: '#scsyd' //绑定元素
-            ,url:  '/upload/?order_num='+order_num //上传接口
+            ,url: "<{:url('admin/Order/order_aaa')}>" //上传接口
             ,accept: 'file' //普通文件
+            ,before: function(obj){
+                this.data ={order_num:order_num};
+            }
             ,done: function(res){
             //上传完毕回调
             if (res.status) {
@@ -501,8 +531,10 @@
         //监听行工具事件
         table.on('tool()', function (obj) {
             var data = obj.data;
+            $('.yunding input').eq(0).val(data.order_num);
+            $('.yunding input').eq(1).val(data.track_num);
             if (obj.event === 'confirm') {//点击备注
-                data.status = '待派车'
+                data.status = '待订舱'
                 // console.log(data.order_num, data.container_sum, data.status);
                 if (data.status == '待订舱') {
                     order_num = data.order_num;
@@ -511,20 +543,7 @@
                         ,title: '待订舱'
                         , shadeClose: true
                         , content: $('#dc')
-                        , yes: function (res) {
-                            $.get(URL, { order_num: order_num, zhi: zhi }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
-                                }
-                            })
-                        }
                     });
-                   
-
                 } else if (data.status == '待派车') {
                     let shu = $('#chedui .hang')[0].outerHTML;
                     $('#chedui').html('')
@@ -533,26 +552,31 @@
                     }
                     layer.open({
                         type: 1
-                        , title: '待派车'.order_num
+                        , title: '待派车,订单号：'+data.order_num+'  运单号：'+data.track_num
                         , content: $('#car')
                         , area: ['800px', '510px']
                         , shadeClose: true
                         , btn: ['确认']
                         , yes: function (res) {
-                            $.post("<{:url('admin/order/tosendCar')}>", { order_num: order_num, data: $('#car').serialize() }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                            $.ajax({
+                                type:"post",
+                                url:"<{:url('admin/Order/waybill_upload?type=book_note')}>",   //数据传输的控制器方法
+                                data:$('#car').serialize(),//这里data传递过去的是序列化以后的字符串
+                                success:function(res){
+                                    if (res.status) {
+                                        layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                                    }
                                 }
-                            })
+                            });
                         }
                     });
                 } else if (data.status == '待装货') {
-
-                    for (let index = 0; index < liang; index++) {
+                    $('#container').html('');
+                    for (let index = 0; index < data.container_sum; index++) {
                         $('#container').append('<div class="layui-form-item"><div class="layui-inline">' +
                             '<label class="layui-form-label">柜号-封条号</label><div class="layui-input-inline" style="width: 100px;">' +
                             '<input type="text" name="price_min" placeholder="柜号" autocomplete="off" class="layui-input">' +
@@ -562,24 +586,30 @@
                     }
                     layer.open({
                         type: 1
-                        , title: '待装货'
+                        , title: '待装货,订单号：'+data.order_num+'  运单号：'+data.track_num
                         , shadeClose: true
                         , content: $('#container')
                         , btn: ['确认']
                         , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#car').serialize() }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                            $.ajax({
+                                type:"post",
+                                url:"<{:url('admin/Order/order_aaa')}>",   //数据传输的控制器方法
+                                data:{list:$('#container').serialize(),order_num:data.order_num,track_num:data.track_num},//这里data传递过去的是序列化以后的字符串
+                                success:function(res){
+                                    if (res.status) {
+                                        layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                                    }
                                 }
-                            })
+                            });
                         }
                     });
                 } else if (data.status == '待报柜号') {
-                    for (let index = 0; index < liang; index++) {
+                    $('#container').html('');
+                    for (let index = 0; index < data.container_sum; index++) {
                         $('#container').append('<div class="layui-form-item"><div class="layui-inline">' +
                             '<label class="layui-form-label">柜号-封条号</label><div class="layui-input-inline" style="width: 100px;">' +
                             '<input type="text" name="price_min" placeholder="柜号" autocomplete="off" class="layui-input">' +
@@ -589,40 +619,50 @@
                     }
                     layer.open({
                         type: 1
-                        , title: '待装货'
+                        , title: '待报柜号'
                         , shadeClose: true
                         , content: $('#container')
                         , btn: ['确认']
                         , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#car').serialize() }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                            $.ajax({
+                                type:"post",
+                                url:"<{:url('admin/Order/order_aaa')}>",   //数据传输的控制器方法
+                                data:{list:$('#container').serialize(),order_num:data.order_num,track_num:data.track_num},//这里data传递过去的是序列化以后的字符串
+                                success:function(res){
+                                    if (res.status) {
+                                        layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                                    }
                                 }
-                            })
+                            });
                         }
                     });
                 } else if (data.status == '待配船') {
                     layer.open({
                         type: 1
-                        , title: '待到港'
+                        , title: '待配船'
                         , shadeClose: true
                         , area: ['400px', '400px']
                         , btn: ['确认']
                         , content: $('#dai_post')
                         , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#dai_post').serialize() }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                            $.ajax({
+                                type:"post",
+                                url:"<{:url('admin/Order/order_aaa')}>",   //数据传输的控制器方法
+                                data:$('#dai_post').serialize(),//这里data传递过去的是序列化以后的字符串
+                                success:function(res){
+                                    if (res.status) {
+                                        layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                                    }
                                 }
-                            })
+                            });
                         }
                     });
                 } else if (data.status == '待到港') {
@@ -634,44 +674,55 @@
                         , btn: ['确认']
                         , content: $('#dai_post')
                         , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#dai_post').serialize() }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                            $.ajax({
+                                type:"post",
+                                url:"<{:url('admin/Order/order_aaa')}>",   //数据传输的控制器方法
+                                data:$('#dai_post').serialize(),//这里data传递过去的是序列化以后的字符串
+                                success:function(res){
+                                    if (res.status) {
+                                        layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                                    }
                                 }
-                            })
+                            });
                         }
                     });
                 } else if (data.status == '待卸船') {
                     layer.open({
                         type: 1
-                        , title: '待到港'
+                        , title: '待卸船'
                         , shadeClose: true
                         , area: ['400px', '400px']
                         , btn: ['确认']
                         , content: $('#dai_post')
                         , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#dai_post').serialize() }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                            $.ajax({
+                                type:"post",
+                                url:"<{:url('admin/Order/order_aaa')}>",   //数据传输的控制器方法
+                                data:$('#dai_post').serialize(),//这里data传递过去的是序列化以后的字符串
+                                success:function(res){
+                                    if (res.status) {
+                                        layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                                    }
                                 }
-                            })
+                            });
                         }
                     });
                 } else if (data.status == '上传水运单') {
+                    order_num = data.order_num;
                     layer.open({
                         type: 1
                         , title: '上传水运单'
                         , content: $('.syd')
                         , shadeClose: true
-                        , area: ['450px', '170px']
+                        , area: ['200px', '110px']
                     });
                 }else if (data.status == '申请放柜') {
                     layer.open({
@@ -699,27 +750,32 @@
                 } else if (data.status == '待送货') {
                     let shu = $('#chedui .hang')[0].outerHTML;
                     $('#chedui').html('')
-                    for (let i = 0; i < liang; i++) {
+                    for (let i = 0; i < container_sum; i++) {
                         $('#chedui').append(shu);
                     }
                     layer.open({
                         type: 1
-                        , title: '待派车'
+                        , title: '待送货'
                         , content: $('#car')
                         , shadeClose: true
                         , area: ['800px', '510px']
                         , shadeClose: true
                         , btn: ['确认']
                         , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#car').serialize() }, function (res) {
-                                if (res.status) {
-                                    layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                        layer.close(index);
-                                    });
-                                } else {
-                                    layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                            $.ajax({
+                                type:"post",
+                                url:"<{:url('admin/Order/order_aaa')}>",   //数据传输的控制器方法
+                                data:$('#car').serialize(),//这里data传递过去的是序列化以后的字符串
+                                success:function(res){
+                                    if (res.status) {
+                                        layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                            layer.close(index);
+                                        });
+                                    } else {
+                                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                                    }
                                 }
-                            })
+                            });
                         }
                     });
                 }

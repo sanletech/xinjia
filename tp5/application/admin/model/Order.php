@@ -574,12 +574,12 @@ class Order extends Model
         if(in_array($status,$order_status)){
                 Db::startTrans();
                 try{
-                    $res =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$order_status,'mtime'=>$mtime]);
+                    Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$status,'mtime'=>$mtime]);
                     Db::commit();
                 } catch (\Exception $e) {
                     // 回滚事务
                     Db::rollback();
-                    return array('status'=>0,'message'=>'操作失败');
+                    return array('status'=>0,'message'=>'操作失败'.$e->getMessage());
                 }      
                     return array('status'=>1,'message'=>'操作成功');
         }else{
