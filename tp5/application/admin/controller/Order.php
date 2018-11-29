@@ -649,6 +649,7 @@ class Order extends Base
     }
 
     public function order_data() {
+        var_dump($this->request->param());exit;
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数
@@ -656,7 +657,7 @@ class Order extends Base
         $dataM = new OrderM;
         $data = $dataM->order_public($page,$limit,$state='3');
         $list =$data['list']; //分页数据
-//        $this->_p($list);exit;
+    //    $this->_p($list);exit;
         $count = $data['count'];// 总页数
         
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);

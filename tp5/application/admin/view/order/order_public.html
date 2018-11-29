@@ -453,6 +453,7 @@
             elem: '#test1'
             , url: "<{:url('admin/order/order_data')}>"
             , toolbar: '#toolbarDemo1'
+            , method:'post'
             , title: '用户数据表'
             , width: '99%'
             , cols: [[
@@ -510,18 +511,21 @@
 
         //搜索
         $('.cha').click(function () {
-            let arr = $('#cont').serializeArray();
             let arry = [];
-            arry[2] = [];
-            arr.forEach(function (item, i) {
-                if (i > 1) {
-                    arry[2][i - 2] = item.value;
+            let search,status;
+            $('#cont').serializeArray().forEach(function (item, i) {
+                if (i == 0) {
+                    search = item.value;
+                }else if(i == 1){
+                    status = item.value;
                 } else {
-                    arry[i] = { [item.name]: item.value };
+                    arry.push(item.value);
                 }
             });
             biao.reload({
                 where: {
+                    search:search,
+                    status:status,
                     data: arry
                 },
                 page: { curr: 1 }
@@ -540,7 +544,7 @@
                     order_num = data.order_num;
                     layer.open({
                         type:1
-                        ,title: '待订舱'
+                        ,title: '待订舱,订单号：'+data.order_num+'  运单号：'+data.track_num
                         , shadeClose: true
                         , content: $('#dc')
                     });

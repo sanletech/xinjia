@@ -83,7 +83,7 @@
             <label class="layui-form-label">港口航线</label>
             <div class="layui-input-inline">
                  <input type="hidden" name="route_id"  value="<{$data.route_id}>"   class="layui-input" >
-                <input type="text" name="route_line"  value="起点:<{$data.s_port}>-<{$data.m_port}>- 终点:<{$data.e_port}>"   class="layui-input" >
+                <input type="text" name="route_line"  value="起点:<{$data.s_port}>-<{$data.m_port}>- 终点:<{$data.e_port}>"   class="layui-input" readonly>
             </div>
   
         </div>
@@ -385,15 +385,19 @@
          //加载对应城市的港口，并显示已经选中了
     function loadShipRoute(route_arr){            
         var areaHtml = '';
+        console.log(route_arr);
+        
         if(route_arr.length!=0){
             $('#oldline').remove();
             var j=0;
             for(var i in route_arr){
                 j++;
+                console.log(route_arr[i].id);
+                
                 if(route_arr[i]['m_port']==null){
-                    areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+'直航'+'</option>';
+                    areaHtml += '<option  value="' +route_arr[i].id+'">路线'+j+'\-'+'直航'+'</option>';
                 }else{
-                    areaHtml += '<option  value="' +route_arr[i]['id']+'">路线'+j+'\-'+ route_arr[i]['m_port']+ '</option>';   
+                    areaHtml += '<option  value="' +route_arr[i].id+'">路线'+j+'\-'+ route_arr[i]['m_port']+ '</option>';   
                 }
             }
         }else{

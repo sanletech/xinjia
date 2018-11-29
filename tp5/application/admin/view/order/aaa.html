@@ -481,18 +481,21 @@
 
         //搜索
         $('.cha').click(function () {
-            let arr = $('#cont').serializeArray();
             let arry = [];
-            arry[2] = [];
-            arr.forEach(function (item, i) {
-                if (i > 1) {
-                    arry[2][i - 2] = item.value;
+            let search,status;
+            $('#cont').serializeArray().forEach(function (item, i) {
+                if (i == 0) {
+                    search = item.value;
+                }else if(i == 1){
+                    status = item.value;
                 } else {
-                    arry[i] = { [item.name]: item.value };
+                    arry.push(item.value);
                 }
             });
             biao.reload({
                 where: {
+                    search:search,
+                    status:status,
                     data: arry
                 },
                 page: { curr: 1 }
