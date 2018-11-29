@@ -512,7 +512,7 @@
                         , shadeClose: true
                         , content: $('#dc')
                         , yes: function (res) {
-                            $.get(URL, { order_num: order_num, zhi: zhi }, function (res) {
+                            $.get(URL, {order_num: order_num, zhi: zhi }, function (res) {
                                 if (res.status) {
                                     layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
                                         layer.close(index);

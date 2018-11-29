@@ -112,7 +112,7 @@
     width: 250px;
     display: inline-table; }
 
-.syd {
+.syd, .yunding, #container {
   display: none; }
 
 /*# sourceMappingURL=order_list.css.map */

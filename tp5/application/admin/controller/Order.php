@@ -678,5 +678,12 @@ class Order extends Base
         return $res;
         
     }
+
+    //查看订单
+    public function order_aaa()
+    {
+        $data= $this->request->param();
+        var_dump($data);exit;
+    }
  
 } 
