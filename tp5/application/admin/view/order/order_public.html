@@ -34,7 +34,7 @@
 
 
         <!-- 筛选内容 -->
-        <div class="layui-row">
+        <div class="layui-row sou">
             <label class="layui-form-label"></label>
             <input type="checkbox" name="status" value="booking_note" lay-skin="primary" lay-filter="port" title="待订舱" checked="">
             <input type="checkbox" name="status" value="send_car" lay-skin="primary" lay-filter="port" title="待派车" checked="">
@@ -453,6 +453,7 @@
             elem: '#test1'
             , url: "<{:url('admin/order/order_data')}>"
             , toolbar: '#toolbarDemo1'
+            , method:'post'
             , title: '用户数据表'
             , width: '99%'
             , cols: [[
@@ -510,19 +511,21 @@
 
         //搜索
         $('.cha').click(function () {
-            let arr = $('#cont').serializeArray();
             let arry = [];
-            arry[2] = [];
-            arr.forEach(function (item, i) {
-                if (i > 1) {
-                    arry[2][i - 2] = item.value;
-                } else {
-                    arry[i] = { [item.name]: item.value };
+            let search=[];
+            $('#cont input[type="text"]').each(function(){
+                search.push({[$(this).attr('name')]:$(this).val()});
+            })
+            $('#cont .sou input[type="checkbox"]').each(function(){
+                if($(this)[0].checked){
+                    arry.push($(this).val());
                 }
-            });
+            })
+            
             biao.reload({
                 where: {
-                    data: arry
+                    search:search,
+                    status: arry
                 },
                 page: { curr: 1 }
             })
@@ -540,7 +543,7 @@
                     order_num = data.order_num;
                     layer.open({
                         type:1
-                        ,title: '待订舱'
+                        ,title: '待订舱,订单号：'+data.order_num+'  运单号：'+data.track_num
                         , shadeClose: true
                         , content: $('#dc')
                     });

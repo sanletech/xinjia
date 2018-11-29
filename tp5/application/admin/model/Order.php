@@ -154,25 +154,25 @@ class Order extends Model
                     $list[$key]['status']= '审核中';
                     break;
                 case $this->order_status['booking_note']:
-                    $list[$key]['status']= '上传订舱单和运单号';
+                    $list[$key]['status']= '待订舱';
                     break;
                 case $this->order_status['send_car']:
-                    $list[$key]['status']= '派车装货';
+                    $list[$key]['status']= '待派车';
                     break;
                 case $this->order_status['loading']:
-                    $list[$key]['status']= '装货信息录入';
+                    $list[$key]['status']= '待装货';
                     break;
                 case $this->order_status['up_container_code']:
-                    $list[$key]['status']= '提报柜号';
+                    $list[$key]['status']= '待报柜号';
                     break;
                 case $this->order_status['load_ship']:
-                    $list[$key]['status']= '配船';
+                    $list[$key]['status']= '待配船';
                     break;
                 case $this->order_status['arrive_port']:
-                    $list[$key]['status']= '到港';
+                    $list[$key]['status']= '待到港';
                     break;
                 case $this->order_status['unload_ship']:
-                    $list[$key]['status']= '卸船';
+                    $list[$key]['status']= '待卸船';
                     break;
                 case $this->order_status['payment_status']:
                     $list[$key]['status']= '确认收款';
@@ -181,16 +181,16 @@ class Order extends Model
                     $list[$key]['status']= '上传水运单';
                     break;
                 case $this->order_status['container_appley']:
-                    $list[$key]['status']= '申请放柜';
+                    $list[$key]['status']= '申请放柜中';
                     break;
                 case $this->order_status['container_lock']:
-                    $list[$key]['status']= '继续扣柜';
+                    $list[$key]['status']= '申请放柜';
                     break;
                 case $this->order_status['container_unlock']:
                     $list[$key]['status']= '同意放柜';
                     break;
                 case $this->order_status['unloading']:
-                    $list[$key]['status']= '同意放柜';
+                    $list[$key]['status']= '待送货';
                     break;
                 case $this->order_status['completion']:
                     $list[$key]['status']= '订单完成';
