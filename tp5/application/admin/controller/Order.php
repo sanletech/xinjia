@@ -7,11 +7,17 @@ use app\admin\common\Base;
 use think\Request;
 use think\Db;
 use app\admin\model\Order as OrderM;
-use \app\admin\model\OrderProcess as OrderProcessC;
+use app\admin\controller\OrderProcess as OrderProcessC;
 use think\Validate;
 class Order extends Base
 {       
-    //订单状态显示0待确认100待订舱200待派车300待装货400待报柜号505待配船506待到港507待卸船800待收钱900待送货
+    private $order_status;
+    private $page=5;
+
+    public function _initialize()
+    {  
+        $this->order_status=config('config.order_status');
+    }
     
         //审核订单
     public function order_audit() 
@@ -194,29 +200,14 @@ class Order extends Base
         return $this->view->fetch('listOrder/list_sendCar');
     }
     
-    //展示录入派车信息页面
-    public function sendCarInfo() 
-    {  
-        $order_num =$this->request->get('order_num');
-        $container_sum =$this->request->get('container_sum');
-        $track_num =$this->request->get('track_num');
-        $container_code =$this->request->get('container_code');
-      // var_dump($track_num);exit;
-        $this->assign([
-        'order_num'  => $order_num,
-        'container_sum' => $container_sum,
-        'container_code' => $container_code,
-        'track_num'=>$track_num,
-        'sendCarUrl'=>url('admin/Order/tosendCar')    
-        ]);
-        return $this->view->fetch('order/sendCarInfo');
-    }
+
     
     //录入派车信息
     public function tosendCar() 
     {  
         $data =$this->request->param();
-      //$this->_v($data);exit;
+        $order_num = $this->request->param('order_num');
+        $track_num = $this->request->param('track_num');
         $Order= new OrderM;
         $response = $Order->tosendCar($data);
        // var_dump($response);exit;
@@ -662,21 +653,39 @@ class Order extends Base
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
        
     }
-    
+    //上传订舱单 和水运单
     public function waybill_upload(){
-        $data= $this->request->param();
-        // var_dump($data);exit;
+        
         $file = request()->file('file');
         $order_num = $this->request->param('order_num');
-        $type = $this->request->param('type');
-        $track_num= $this->request->param('track_num');
-        if(!empty(trim($track_num))){
-           $res1= Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]);
+        $type = trim($this->request->param('type'));
+        if(!($type=='book_note'||$type=='sea_waybill')){
+            return FALSE;
         }
+        $track_num= $this->request->param('track_num');
         $OrderProcessC =  new OrderProcessC();
         $res =$OrderProcessC->Upload($order_num,$type,$file);
-        return $res;
-        
+        //上传成功就更改状态
+        if($res['status']=='1'){
+            $dataM = new OrderM;
+            if($type=='book_note'){
+                $status =  $this->order_status['send_car'];
+                $title ='上传订舱单->待派车';
+                if(!empty(trim($track_num))){
+                    $map =['track_num'=>$track_num,'container_status'=>1];
+                    $res= Db::name('order_port')->where('order_num',$order_num)->update($map);
+                }
+            }elseif ($type=='sea_waybill') {
+                $status =  $this->order_status['send_car'];
+                $title ='上传水运单->待申请放柜';
+            }
+            //更改状态
+            $res1 = $dataM->orderUpdate($order_num,$status,$title);
+            return $res1; 
+        }  else {
+            return $res;
+        }
     }
+    //
  
 } 

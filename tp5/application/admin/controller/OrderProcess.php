@@ -37,9 +37,12 @@ class OrderProcess extends Base
     
     public function downs(){    
             $order_name = $this->request->param('order_num');    //下载文件名 
-            $type = $this->request->param('type'); //文件类型
-            $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
-            var_dump($file);
+            $type = trim($this->request->param('type')); //文件类型  
+            if(!($type=='book_note'||$type=='sea_waybill')){
+                echo '类型错误';             
+                return FALSE;
+            }
+            $file = Db::name('order_port')->where('order_num',$order_name)->value($type); 
             //将后缀修改成.
             $file_Extension= strstr(strrev($file),'_',true);
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     

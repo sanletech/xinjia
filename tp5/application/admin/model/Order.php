@@ -242,9 +242,7 @@ class Order extends Model
     {   
         $order_num =$data['order_num'];
         $track_num =$data['track_num'];
-        $container_code = $data['container_code'];  //虚拟的集装箱编码 
-        $container_code = explode('_', $container_code); //转换为数组 
-        $container_id = $data['container_id']; //录入的集装箱编码 
+
         $container_sum = $data['container_sum']; //一个订单里的集装箱数量
         
         //删除单个的数组的 container_code order_num container_sum  
@@ -562,5 +560,31 @@ class Order extends Model
         $response['orderStatus']=$orderStatusMax;$response['sequence']=$sequence;
         return $response;
        
+    }
+        //记录订单的更新状态和时间
+    public function orderUpdate($order_num,$status,$title,$comment='',$submitter='') {
+        if(empty($submitter)){
+            $submitter= Session::get('user_info','think');
+        }
+        $mtime =  date('Y-m-d H:i:s');
+        $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'comment'=>$comment,'submitter'=>$submitter,'mtime'=>$mtime);
+
+        $res =Db ::name('order_port_status')->insert($data); //记录操作
+        $order_status= $this->order_status;
+        if(in_array($status,$order_status)){
+                Db::startTrans();
+                try{
+                    $res =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$order_status,'mtime'=>$mtime]);
+                    Db::commit();
+                } catch (\Exception $e) {
+                    // 回滚事务
+                    Db::rollback();
+                    return array('status'=>0,'message'=>'操作失败');
+                }      
+                    return array('status'=>1,'message'=>'操作成功');
+        }else{
+            
+            return array('status'=>0,'message'=>'状态类型错误');
+        }
     }
 }

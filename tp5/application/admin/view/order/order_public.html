@@ -362,7 +362,7 @@
         // 上传订舱单
         upload.render({
             elem: '#scdc' //绑定元素
-            ,url: '/upload/?order_num='+order_num //上传接口
+            ,url: '<{:url("admin/order/waybill_upload")}>?order_num='+order_num //上传接口
             ,accept: 'file' //普通文件
             ,auto:false
             ,bindAction:'#scdc1'
@@ -502,7 +502,7 @@
         table.on('tool()', function (obj) {
             var data = obj.data;
             if (obj.event === 'confirm') {//点击备注
-                data.status = '待订舱'
+                data.status = '待派车'
                 // console.log(data.order_num, data.container_sum, data.status);
                 if (data.status == '待订舱') {
                     order_num = data.order_num;
@@ -528,18 +528,18 @@
                 } else if (data.status == '待派车') {
                     let shu = $('#chedui .hang')[0].outerHTML;
                     $('#chedui').html('')
-                    for (let i = 0; i < liang; i++) {
+                    for (let i = 0; i < data.container_sum; i++) {
                         $('#chedui').append(shu);
                     }
                     layer.open({
                         type: 1
-                        , title: '待派车'
+                        , title: '待派车'.order_num
                         , content: $('#car')
                         , area: ['800px', '510px']
                         , shadeClose: true
                         , btn: ['确认']
                         , yes: function (res) {
-                            $.post(URL, { order_num: order_num, data: $('#car').serialize() }, function (res) {
+                            $.post("<{:url('admin/order/tosendCar')}>", { order_num: order_num, data: $('#car').serialize() }, function (res) {
                                 if (res.status) {
                                     layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
                                         layer.close(index);
