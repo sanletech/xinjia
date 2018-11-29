@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-29 17:05:00
+Date: 2018-11-29 20:41:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4883,7 +4883,7 @@ INSERT INTO `hl_order_port` VALUES ('1', 'PAB261683623', '猪肉', '20GP', '3', 
 INSERT INTO `hl_order_port` VALUES ('5', 'DAB262445682', '猪肉', '40HQ', '3', '1', '40', '铁桶', '猪肉', null, '2018-11-26 17:48:52', 'zh_A_003', '0', '2018-11-26 17:27:36', 'installment', null, null, null, '1', 'AA,送货A公司,55555,北京市北京市东城区东华门街道', '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '1', null, '价格双边收费', '120', null, null, null, '9795', null, '404', null, null, null, '0', 'lock', '0', 'door');
 INSERT INTO `hl_order_port` VALUES ('6', 'DAB262550873', '猪肉', '20GP', '3', '1', '40', '纸箱', '爱的色放', null, '2018-11-29 16:56:17', 'zh_A_003', '0', '2018-11-26 17:45:08', 'installment', null, null, null, '1', 'AA,送货A公司,55555,北京市北京市东城区东华门街道', '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '1', null, '价格双边收费', '120', '100', null, null, '6834', null, '4', 'sadfadsf', 'DAB262550873_book_note_docx', null, '0', 'apply', '1', 'door');
 INSERT INTO `hl_order_port` VALUES ('7', 'DAB262564116', '猪肉', '40HQ', '4', '10', '40', '木架', '法撒旦法', null, '2018-11-28 17:38:04', 'zh_A_003', '0', '2018-11-26 17:47:21', 'installment', null, null, null, '1', 'AA,送货A公司,55555,北京市北京市东城区东华门街道', '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '1', null, '价格双边收费', '160', null, null, null, '13060', null, '3', null, null, null, '0', 'apply', '0', 'door');
-INSERT INTO `hl_order_port` VALUES ('8', 'DAB262674372', '猪肉', '40HQ', '3', '10', '40', '木架', '猪肉', null, '2018-11-26 18:06:14', 'zh_A_003', '0', '2018-11-26 18:05:43', 'installment', null, null, null, '1', 'AA,送货A公司,55555,北京市北京市东城区东华门街道', '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '1', null, '价格双边收费', '120', null, null, null, '9795', null, '404', null, null, null, '0', 'lock', '0', 'door');
+INSERT INTO `hl_order_port` VALUES ('8', 'DAB262674372', '猪肉', '40HQ', '3', '10', '40', '木架', '猪肉', null, '2018-11-29 17:15:34', 'zh_A_003', '0', '2018-11-26 18:05:43', 'installment', null, null, null, '1', 'AA,送货A公司,55555,北京市北京市东城区东华门街道', '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '1', null, '价格双边收费', '120', null, null, null, '9795', null, '4', 'yundanhao741', 'DAB262674372_book_note_docx', null, '0', 'lock', '1', 'door');
 INSERT INTO `hl_order_port` VALUES ('9', 'PAB289767172', '猪肉', '40HQ', '1', '1', '40', '木架', '苏打粉', null, '2018-11-28 17:38:06', 'zh_A_003', '0', '2018-11-28 17:34:31', 'installment', '0', null, '0', '3', 'AA,送货A公司,55555', '1', 'CC,送货C公司,55555', '1', '3225', '价格双边收费', '40', '0', '0', '0', '3265', null, '3', null, null, null, '0', 'apply', '0', 'port');
 
 -- ----------------------------
@@ -4899,7 +4899,7 @@ CREATE TABLE `hl_order_port_status` (
   `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
   `comment` varchar(100) DEFAULT NULL COMMENT '驳回,删除订单的原因',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
@@ -4921,6 +4921,7 @@ INSERT INTO `hl_order_port_status` VALUES ('14', 'DAB262550873', '4', '上传订
 INSERT INTO `hl_order_port_status` VALUES ('15', 'DAB262550873', '4', '上传订舱单->待派车', '2018-11-29 16:55:33', 'sales1', '');
 INSERT INTO `hl_order_port_status` VALUES ('16', 'DAB262550873', '4', '上传订舱单->待派车', '2018-11-29 16:55:44', 'sales1', '');
 INSERT INTO `hl_order_port_status` VALUES ('17', 'DAB262550873', '4', '上传订舱单->待派车', '2018-11-29 16:56:17', 'sales1', '');
+INSERT INTO `hl_order_port_status` VALUES ('18', 'DAB262674372', '4', '上传订舱单->待派车', '2018-11-29 17:15:34', 'sales1', '');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`

@@ -512,15 +512,16 @@
         //搜索
         $('.cha').click(function () {
             let arry = [];
-            let search=[];
+            let search={};
             $('#cont input[type="text"]').each(function(){
-                search.push({[$(this).attr('name')]:$(this).val()});
+                search[$(this).attr('name')]=$(this).val();
             })
             $('#cont .sou input[type="checkbox"]').each(function(){
                 if($(this)[0].checked){
                     arry.push($(this).val());
                 }
             })
+            console.log(search)
             
             biao.reload({
                 where: {

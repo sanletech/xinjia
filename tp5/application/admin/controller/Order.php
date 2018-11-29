@@ -648,11 +648,15 @@ class Order extends Base
     }
 
     public function order_data() {
-        $this->_p($this->request->param());exit;
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
+//        $this->_p($this->request->param());exit;
+       
+        $limit= $this->request->param('limit',10,'intval'); //获取每页显示的条数
+        $page= $this->request->param('page',1,'intval');   //获取当前页数
+        $search = $this->request->param('search'); //搜索条件
+        $status =  $this->request->param('status '); //状态选择
+        foreach (){
+            
+        }
         $dataM = new OrderM;
         $data = $dataM->order_public($page,$limit,$state='3');
         $list =$data['list']; //分页数据
