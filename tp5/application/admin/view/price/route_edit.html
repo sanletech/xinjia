@@ -82,10 +82,9 @@
         <div class="layui-form-item " id ="oldline">
             <label class="layui-form-label">港口航线</label>
             <div class="layui-input-inline">
-                 <input type="hidden" name="route_id"  value="<{$data.route_id}>"   class="layui-input" >
+                 <input type="hidden" name="route_id"  value="<{$data.route_id}>"   class="layui-input">
                 <input type="text" name="route_line"  value="起点:<{$data.s_port}>-<{$data.m_port}>- 终点:<{$data.e_port}>"   class="layui-input" readonly>
             </div>
-  
         </div>
         <!-- 港口航线 -->
         <div class="layui-form-item">
@@ -468,11 +467,21 @@
      
     function toajax (){
             // var loading = layer.load(1);
+            // 获取表单数据
+            let arr = $("#routeaddform").serializeArray();
+            arr.forEach(function(item){
+                if (item.name == 'route_id') {
+                    if (!item.value) {
+                        item.value = '<{$data.route_id}>';
+                    }
+                }
+            });
+            
             post_adduser = true;                      
                 $.ajax({
                 type:'POST',
                 url:url,
-                data:$("#routeaddform").serialize(),
+                data:arr,
                 dataType:"json",
                 success:function(data){
                     if(data.status){

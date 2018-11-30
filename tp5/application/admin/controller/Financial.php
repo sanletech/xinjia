@@ -213,9 +213,9 @@ class Financial extends Base
         // $data =$this->request->param();
         //        var_dump($data);exit;
         if (request()->isAjax()){
-            $order_num =$this->request->only('order_num');
+            $order_num =$this->request->param('order_num');
             $status = $this->order_status['completion'];
-            $title='申请放柜>通过';
+            $title='订单完成';
             $data = new \app\admin\model\orderPort();
             $response= $data->orderUpdate($order_num,$status,$title);
             return $response;
