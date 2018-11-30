@@ -51,35 +51,7 @@ class Order extends Base
         return $this->view->fetch('order/audit_page');
     }
     
-    
-//    //审核订单 的通过
-//    public function order_audit_pass() 
-//    { 
-//       if (request()->isAjax()){
-//           $idArr =$this->request->param();
-//           $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>100,'action'=>'通过审核>待订舱']);
-//           $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
-//            foreach ($order_numArr as $order_num) {
-//               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>100,'action'=>'通过审核>待订舱'], 'controller');
-//            }
-//           return json($res ? 1 : 0) ;
-//       }
-//    }
-    
-//      //审核订单 的删除
-//    public function order_audit_del() 
-//    {
-//        if (request()->isAjax()){
-//            $idArr =$this->request->param();
-//            $res =Db::name('order_father')->where('id','in',$idArr)->update(['state'=>404040,'action'=>'订单删除']);
-//            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
-//            foreach ($order_numArr as $order_num) {
-//               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>404040,'action'=>'订单删除'], 'controller');
-//            }
-//            return json($res ? 1 : 0) ;
-//        }
-//        
-//    }
+
         
     //查看订单
     public function order_edit() 
@@ -175,54 +147,31 @@ class Order extends Base
     }
     
     
-    //待派车list页面
-    public function listSendCar() 
-    {      
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        
-        $dataM = new OrderM;
-        $listArr = $dataM->listOrder($tol,$limit,$state='200');
-       // $this->_p($list);exit;
-        //分页数据
-        $list =$listArr[0];
-       // 总页数
-        $count = $listArr[1];
-        $this->view->assign('list_book',$list);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
-        $this->view->assign('page_url',url('admin/order/listSendCar')); 
-        return $this->view->fetch('listOrder/list_sendCar');
-    }
-    
 
     
     //录入派车信息
-    public function tosendCar() 
+    public function send_car() 
     {  
         $data =$this->request->param();
+        $this->_p($data);exit
+        ;
         $order_num = $this->request->param('order_num');
         $track_num = $this->request->param('track_num');
         $contact = $this->request->param('contact');
-        $car = $this->request->param('car');
-        $type =$this->request->param('type');
+        $car_data = $this->request->param('car_data');
+        $type =$this->request->param('type'); //load装货，send送货
+        
         //查询提交的司机信息个数是否和柜子数量一致
         $container_sum = Db::name('order_port')->where('order_num',$order_num)->value('container_sum');
         if($container_sum!== count($car)){
             return json(array('status'=>0,'message'=>'司机信息与柜子数量不符'));
         }
         $Order= new OrderM;
-        $response = $Order->tosendCar($order_num,$track_num,$contact,$car,$type);
-       // var_dump($response);exit;
+        $response = $Order->send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type);
         if(!array_key_exists('fail', $response)){
-            $status =['msg'=>'录入派车信息成功','status'=>1];
+            $status =['msg'=>implode(',', $response['success']) ,'status'=>1];
         }else {
-            $status =['msg'=>'录入派车信息失败','status'=>0]; 
+            $status =['msg'=>implode(',', $response['fail']) ,'status'=>0]; 
         } 
         return json($status);
     }
@@ -648,17 +597,15 @@ class Order extends Base
     }
 
     public function order_data() {
-//        $this->_p($this->request->param());exit;
-       
+        
+        $data= $this->request->except('limit,page');   
         $limit= $this->request->param('limit',10,'intval'); //获取每页显示的条数
         $page= $this->request->param('page',1,'intval');   //获取当前页数
-        $search = $this->request->param('search'); //搜索条件
-        $status =  $this->request->param('status '); //状态选择
-        foreach (){
-            
-        }
+        $search = array_key_exists('search', $data)? $data['search']:''; //搜索条件
+        $status = array_key_exists('status', $data)? $data['status']:array(); //状态选择
+        $status_arr = array_intersect_key($this->order_status, array_flip($status));
         $dataM = new OrderM;
-        $data = $dataM->order_public($page,$limit,$state='3');
+        $data = $dataM->order_public($page,$limit,$status_arr);
         $list =$data['list']; //分页数据
     //    $this->_p($list);exit;
         $count = $data['count'];// 总页数

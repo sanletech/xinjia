@@ -104,7 +104,7 @@ class orderPort extends Model
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
-                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name')
+                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name,P1.port_name s_port_name,P2.port_name e_port_name')
                 ->where('OP.order_num',$order_num)
                 ->where('OP.type','port')
                 ->group('OP.id')
@@ -130,15 +130,8 @@ class orderPort extends Model
                 ->where('type','s')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
-        //查询对应现金优惠金额 和临时优惠
-        $nowtime = date('y-m-d h:i:s');
-        $discount = Db::name('discount')->where([
-                        'discount_start'=>['<= time',$nowtime],
-                        'discount_end'=>['>= time',$nowtime],
-                        'status'=>1,
-                        'ship_id'=>$list['ship_id'],
-                       ])->field("id,title,type,".$list['container_size']. ' money')->fetchSql(true)->select();
-//               var_dump($discount);exit;
+ 
+
         $shipperArr= explode(',',$list['shipper']); 
         $consignerArr= explode(',',$list['consigner']); 
        switch ($list['payment_method'])
@@ -166,7 +159,10 @@ class orderPort extends Model
                 break; 
         }
         $list['extra_info'] = ltrim($list['extra_info'],','); 
-        return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'discount'=>$discount,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
+        
+        $list['completion']= ($list['status']== $this->order_status['completion'])?true:false;
+
+        return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
         
     }
     

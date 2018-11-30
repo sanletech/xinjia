@@ -577,7 +577,7 @@
                         let contact = fun_obj($('.xinx input'));                                  
                             $.ajax({
                                 type:"post",
-                                url:"<{:url('admin/Order/waybill_upload?type=book_note')}>",   //数据传输的控制器方法
+                                url:"<{:url('admin/Order/send_car')}>",   //数据传输的控制器方法
                                 data:$('#car').serialize(),//这里data传递过去的是序列化以后的字符串
                                 success:function(res){
                                     if (res.status) {

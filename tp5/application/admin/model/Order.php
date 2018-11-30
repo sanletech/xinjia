@@ -238,68 +238,37 @@ class Order extends Model
     }
     
     //录入派车信息
-    public function tosendCar($data) 
+    public function send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type)
     {   
-        $order_num =$data['order_num'];
-        $track_num =$data['track_num'];
-
-        $container_sum = $data['container_sum']; //一个订单里的集装箱数量
-        
-        //删除单个的数组的 container_code order_num container_sum  
-        unset($data['container_code'],$data['order_num'],$data['container_sum'],$data['track_num']);
-        //将$data数组由行转成列
-        $arr =[];$arr1 =[]; $arr2=[];
- //     $this->_p($data);exit;
-        $arr= array_keys($data);
-        $mtime = date('Y-m-d H:i:s');
-        $response=[];
-        // 启动事务
-        Db::startTrans();
-        try{
-            
-        for($i=0;$i< $container_sum;$i++){
-            $arr1 = array_column($data, $i);
-            $arr2[$i] = array_combine($arr,$arr1);
-            $arr2[$i]['mtime'] =$mtime;  //添加时间戳
+        $mtime = date('Y-m-d H:i:s');   $response=[];
+        //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
+        $order_car_id = Db::name('order_car')->where(['order_num'=>$order_num,'type'=>$type])->column('id');
+        foreach ($car_data as $key => $value) {
+            $car_data[$key]['mtime'] = $mtime;
+            $car_data[$key]['type'] = $type;
+            $car_data[$key]['order_num'] = $order_num;
         }
-        $res1 = Db::name('car_receive')->insertAll($arr2);
-        $res1 ? $response['success'][]="添加派车信息成功" :$response['fail'][]="添加派车信息成功";
-        
-        if($res1){
-            for($k=0;$k<$container_sum;$k++){
-                // 将container_code 修改为实际的集装箱编码
-                $res3 = Db::name('order_son')->where('order_num',$order_num)
-                        ->where('track_num',$track_num[$k])
-                        ->where('container_code',$container_code[$k])
-                        ->setField('container_code', $container_id[$k]);
-                $res3 ? $response['success'][]="修改$container_code[$k]柜子编码成功" :$response['fail'][]="修改$container_code[$k]柜子编码失败";
-                if($res3){
-                    $id = Db::name('car_receive')->where('track_num',$track_num[$k])->where('container_id',$container_id[$k])->value('id');
-                    // 根据获取的 虚拟的集装箱编码 首先将派车信息id添加到order_son表里
-                    $res2 = Db::name('order_son')->where('track_num',$track_num[$k])->where('container_code',$container_id[$k])->setField('car_receive_id', $id );
-                    $res2 ? $response['success'][]="添加柜子$container_code[$k]:派车id成功" :$response['fail'][]="添加柜子$container_code[$k]:派车id失败";
-                }
-            }    
+        if(empty($order_car_id)){
+            $res2 = Db::name('order_car')->allowfield(true)->lock(true)->insertAll($car_data);
+            $res2 ?$response['success'][]=['录入车队信息成功']:$response['fail'][]=['录入车队信息失败'];
+        }  else {
+            foreach ($car_data as $key => $value) {
+                $res3 = Db::name('order_car')->where('id',$order_car_id[$key])->update($value);
+                $res3 ?$response['success'][]=['更新车队信息成功']:$response['fail'][]=['更新车队信息失败'];
+            }
         }
-       
-        if(!array_key_exists('fail',$response)){
-            Db::commit();
-        } 
-        
-        } catch (\Exception $e) {
-           // 回滚事务
-        Db::rollback();
-            $response['fail'][]=$e->getMessage();
+        //将联系人信息插入到order_contact里
+        $order_contact_id = Db::name('order_contact')->where(['order_num'=>$order_num,'type'=>$type])->value('id');
+            $contact['type']= $type;  
+            $contact['order_num']=$order_num;
+            $contact['mtime']= $mtime;    
+        if(empty($order_contact_id)){
+            $res5 = Db::name('order_car')->lock(true)->insertAll($contact);
+            $res5 ?$response['success'][]=['录入联系人信息成功']:$response['fail'][]=['录入联系人信息失败'];
+        }  else {
+            $res6 = Db::name('order_car')->where('id',$order_contact_id)->update($contact);
+            $res6 ?$response['success'][]=['更新联系人信息成功']:$response['fail'][]=['更新联系人信息失败'];
         }
-        if(array_key_exists('fail',$response)){
-            return $response ;
-        }else{
-            //修改order_state的状态
-             $res4 = $this->updateState($order_num,$track_num,$container_id,'300','录完派车信息>待装货');
-             $res4?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
-        }
-        
-        
         return $response;
     }
     

@@ -263,7 +263,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>起港-目港：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                        <{$list.money_status}>-<{$list.payment_method}>
+                                        <{$list.s_port_name}>-<{$list.s_port_name}>
                                 </div>
                             </div>
                         </div>
@@ -567,7 +567,7 @@
     
 
                     <div class="tjiao" style="text-align:center;">
-                        <{if condition="$list.status!=='completion'"}>
+                        <{if condition="$list['completion']"}>
                         <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
                         <{else /}><a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
                         <{/if}>
