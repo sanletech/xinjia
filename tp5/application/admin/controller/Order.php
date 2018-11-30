@@ -649,7 +649,7 @@ class Order extends Base
     }
 
     public function order_data() {
-        var_dump($this->request->param());exit;
+        // var_dump($this->request->param());exit;
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数
@@ -684,7 +684,7 @@ class Order extends Base
     public function order_aaa()
     {
         $data= $this->request->param();
-        var_dump($data);exit;
+        $this->_p($data);exit;
     }
  
 } 
