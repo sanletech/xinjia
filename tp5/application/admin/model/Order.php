@@ -154,25 +154,25 @@ class Order extends Model
                     $list[$key]['status']= '审核中';
                     break;
                 case $this->order_status['booking_note']:
-                    $list[$key]['status']= '上传订舱单和运单号';
+                    $list[$key]['status']= '待订舱';
                     break;
                 case $this->order_status['send_car']:
-                    $list[$key]['status']= '派车装货';
+                    $list[$key]['status']= '待派车';
                     break;
                 case $this->order_status['loading']:
-                    $list[$key]['status']= '装货信息录入';
+                    $list[$key]['status']= '待装货';
                     break;
                 case $this->order_status['up_container_code']:
-                    $list[$key]['status']= '提报柜号';
+                    $list[$key]['status']= '待报柜号';
                     break;
                 case $this->order_status['load_ship']:
-                    $list[$key]['status']= '配船';
+                    $list[$key]['status']= '待配船';
                     break;
                 case $this->order_status['arrive_port']:
-                    $list[$key]['status']= '到港';
+                    $list[$key]['status']= '待到港';
                     break;
                 case $this->order_status['unload_ship']:
-                    $list[$key]['status']= '卸船';
+                    $list[$key]['status']= '待卸船';
                     break;
                 case $this->order_status['payment_status']:
                     $list[$key]['status']= '确认收款';
@@ -181,16 +181,16 @@ class Order extends Model
                     $list[$key]['status']= '上传水运单';
                     break;
                 case $this->order_status['container_appley']:
-                    $list[$key]['status']= '申请放柜';
+                    $list[$key]['status']= '申请放柜中';
                     break;
                 case $this->order_status['container_lock']:
-                    $list[$key]['status']= '继续扣柜';
+                    $list[$key]['status']= '申请放柜';
                     break;
                 case $this->order_status['container_unlock']:
                     $list[$key]['status']= '同意放柜';
                     break;
                 case $this->order_status['unloading']:
-                    $list[$key]['status']= '同意放柜';
+                    $list[$key]['status']= '待送货';
                     break;
                 case $this->order_status['completion']:
                     $list[$key]['status']= '订单完成';
@@ -242,9 +242,7 @@ class Order extends Model
     {   
         $order_num =$data['order_num'];
         $track_num =$data['track_num'];
-        $container_code = $data['container_code'];  //虚拟的集装箱编码 
-        $container_code = explode('_', $container_code); //转换为数组 
-        $container_id = $data['container_id']; //录入的集装箱编码 
+
         $container_sum = $data['container_sum']; //一个订单里的集装箱数量
         
         //删除单个的数组的 container_code order_num container_sum  
@@ -562,5 +560,31 @@ class Order extends Model
         $response['orderStatus']=$orderStatusMax;$response['sequence']=$sequence;
         return $response;
        
+    }
+        //记录订单的更新状态和时间
+    public function orderUpdate($order_num,$status,$title,$comment='',$submitter='') {
+        if(empty($submitter)){
+            $submitter= Session::get('user_info','think');
+        }
+        $mtime =  date('Y-m-d H:i:s');
+        $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'comment'=>$comment,'submitter'=>$submitter,'mtime'=>$mtime);
+
+        $res =Db ::name('order_port_status')->insert($data); //记录操作
+        $order_status= $this->order_status;
+        if(in_array($status,$order_status)){
+                Db::startTrans();
+                try{
+                    Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$status,'mtime'=>$mtime]);
+                    Db::commit();
+                } catch (\Exception $e) {
+                    // 回滚事务
+                    Db::rollback();
+                    return array('status'=>0,'message'=>'操作失败'.$e->getMessage());
+                }      
+                    return array('status'=>1,'message'=>'操作成功');
+        }else{
+            
+            return array('status'=>0,'message'=>'状态类型错误');
+        }
     }
 }

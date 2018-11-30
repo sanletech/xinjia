@@ -137,8 +137,8 @@ class orderPort extends Model
                         'discount_end'=>['>= time',$nowtime],
                         'status'=>1,
                         'ship_id'=>$list['ship_id'],
-                       ])->field("id,title,type,".$list['container_size']. ' money')->select();
-        
+                       ])->field("id,title,type,".$list['container_size']. ' money')->fetchSql(true)->select();
+//               var_dump($discount);exit;
         $shipperArr= explode(',',$list['shipper']); 
         $consignerArr= explode(',',$list['consigner']); 
        switch ($list['payment_method'])

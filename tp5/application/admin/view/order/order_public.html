@@ -14,13 +14,13 @@
             <div class="layui-inline">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
-                    <input type="text" name="username" placeholder="收货联系人" autocomplete="off" class="layui-input">
+                    <input type="text" name="order_num" placeholder="订单号" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="username" placeholder="装货公司名全称" autocomplete="off" class="layui-input">
+                    <input type="text" name="track_num" placeholder="运单号" autocomplete="off" class="layui-input">
                 </div>
             </div>
 
@@ -34,18 +34,18 @@
 
 
         <!-- 筛选内容 -->
-        <div class="layui-row">
+        <div class="layui-row sou">
             <label class="layui-form-label"></label>
-            <input type="checkbox" name="no_money" value="1" lay-skin="primary" lay-filter="port" title="待订舱" checked="">
-            <input type="checkbox" name="have_money" value="2" lay-skin="primary" lay-filter="port" title="待派车" checked="">
-            <input type="checkbox" name="have_money" value="3" lay-skin="primary" lay-filter="port" title="待装货" checked="">
-            <input type="checkbox" name="have_money" value="4" lay-skin="primary" lay-filter="port" title="待报柜号" checked="">
-            <input type="checkbox" name="have_money" value="5" lay-skin="primary" lay-filter="port" title="待配船" checked="">
-            <input type="checkbox" name="have_money" value="6" lay-skin="primary" lay-filter="port" title="待到港" checked="">
-            <input type="checkbox" name="have_money" value="7" lay-skin="primary" lay-filter="port" title="待卸船" checked="">
-            <input type="checkbox" name="have_money" value="8" lay-skin="primary" lay-filter="port" title="上传水运单" checked="">
-            <input type="checkbox" name="have_money" value="8" lay-skin="primary" lay-filter="port" title="申请放柜" checked="">
-            <input type="checkbox" name="have_money" value="9" lay-skin="primary" lay-filter="port" title="待送货" checked="">
+            <input type="checkbox" name="status" value="booking_note" lay-skin="primary" lay-filter="port" title="待订舱" checked="">
+            <input type="checkbox" name="status" value="send_car" lay-skin="primary" lay-filter="port" title="待派车" checked="">
+            <input type="checkbox" name="status" value="loading" lay-skin="primary" lay-filter="port" title="待装货" checked="">
+            <input type="checkbox" name="status" value="up_container_code" lay-skin="primary" lay-filter="port" title="待报柜号" checked="">
+            <input type="checkbox" name="status" value="load_ship" lay-skin="primary" lay-filter="port" title="待配船" checked="">
+            <input type="checkbox" name="status" value="arrive_port" lay-skin="primary" lay-filter="port" title="待到港" checked="">
+            <input type="checkbox" name="status" value="unload_ship" lay-skin="primary" lay-filter="port" title="待卸船" checked="">
+            <input type="checkbox" name="status" value="sea_waybill" lay-skin="primary" lay-filter="port" title="上传水运单" checked="">
+            <input type="checkbox" name="status" value="container_lock" lay-skin="primary" lay-filter="port" title="申请放柜" checked="">
+            <input type="checkbox" name="status" value="unloading" lay-skin="primary" lay-filter="port" title="待送货" checked="">
         </div>
 
         <table class="layui-hide" id="test1" lay-filter="test1"></table>
@@ -398,7 +398,7 @@
         // 上传订舱单
         upload.render({
             elem: '#scdc' //绑定元素
-            ,url: "<{:url('admin/Order/order_aaa')}>" //上传接口
+            ,url: "<{:url('admin/Order/waybill_upload?type=book_note')}>" //上传接口
             ,accept: 'file' //普通文件
             ,auto:false
             ,bindAction:'#scdc1'
@@ -523,21 +523,21 @@
         //搜索
         $('.cha').click(function () {
             let arry = [];
-            let search,status;
-            $('#cont').serializeArray().forEach(function (item, i) {
-                if (i == 0) {
-                    search = item.value;
-                }else if(i == 1){
-                    status = item.value;
-                } else {
-                    arry.push(item.value);
+            let search={};
+            $('#cont input[type="text"]').each(function(){
+                search[$(this).attr('name')]=$(this).val();
+            })
+            $('#cont .sou input[type="checkbox"]').each(function(){
+                if($(this)[0].checked){
+                    arry.push($(this).val());
                 }
-            });
+            })
+            console.log(search)
+            
             biao.reload({
                 where: {
                     search:search,
-                    status:status,
-                    data: arry
+                    status: arry
                 },
                 page: { curr: 1 }
             })
@@ -577,8 +577,8 @@
                         let contact = fun_obj($('.xinx input'));                                  
                             $.ajax({
                                 type:"post",
-                                url:"<{:url('admin/Order/order_aaa')}>",   //数据传输的控制器方法
-                                data:{car_data:car_data,contact:contact,order_num:$('input[name="order_num"]').val(),track_num:$('input[name="track_num"]').val()},//这里data传递过去的是序列化以后的字符串
+                                url:"<{:url('admin/Order/waybill_upload?type=book_note')}>",   //数据传输的控制器方法
+                                data:$('#car').serialize(),//这里data传递过去的是序列化以后的字符串
                                 success:function(res){
                                     if (res.status) {
                                         layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {

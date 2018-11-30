@@ -44,7 +44,7 @@ class OrderPort extends Base
             $order_name = $this->request->param('order_num');    //下载文件名 
             $type = $this->request->param('type'); //文件类型
             $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
-            var_dump($file);
+           
             //将后缀修改成.
             $file_Extension= strstr(strrev($file),'_',true);
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
