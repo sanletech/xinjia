@@ -61,19 +61,20 @@ class Financial extends Base
     //收款状态修改
     public function orderport_money(){
         $order_num = $this->request->post('order_num');
-        //同时修改订单和账单的扣柜状态
+        //同时修改订单的付款状态
         // 启动事务
+        $mtime =  date('Y-m-d H:is:s');
         Db::startTrans();
         try{
-            $res =Db::name('order_port')->where('order_num',$order_num)->update(['money_status'=>1]);
-          
+            $res =Db::name('order_port')->where('order_num',$order_num)
+                    ->update(['money_status'=>'do','mtime'=>$mtime]);
             Db::commit();    
         } catch (\Exception $e) {
             // 回滚事务
             Db::rollback();
             return array('status'=>0,'message'=>'操作失败');
         }
-        $data = new \app\admin\model\orderPort();
+        $data = new \app\admin\model\OrderProcess();
         $status= $this->order_status['payment_status'];
         $action='确认收款';
         $data->orderUpdate($order_num,$status,$action);
@@ -89,15 +90,21 @@ class Financial extends Base
             $type =$data['type'];
             $order_num =$data['order_num'];
             $comment =$data['comment'];
+            $mtime =  date('Y-m-d H:is:s');
             //$type 的值是pass就放柜，fail 就不放柜
             if($type=='fail'){
                 $status = $this->order_status['container_lock'];
                 $title='申请放柜>驳回';
+                $map= ['container_buckle'=>'lock','mtime'=>$mtime];
             }elseif($type=='pass') {
                 $status = $this->order_status['container_unlock'];
+                $map= ['container_buckle'=>'unlock','mtime'=>$mtime];
                 $title='申请放柜>通过';
             }
-            $data = new \app\admin\model\orderPort();
+            //同时修改订单的扣柜状态
+            $res =Db::name('order_port')
+                ->where('order_num',$order_num)->update($map);
+            $data = new \app\admin\model\OrderProcess();
             $response= $data->orderUpdate($order_num,$status,$title,$comment);
             return $response;
        }
@@ -117,14 +124,13 @@ class Financial extends Base
         $container_buckle = $this->request->param('container_buckle','apply','strval');
         if($container_buckle=='all'){$container_buckle ='not null'; }
         // var_dump($container_buckle);exit;
-        $money_status = $this->request->param('money_status',2,'intval');
-        if($money_status == 2){
+        $money_status = $this->request->param('money_status','nodo','strval');
+//        var_dump($money_status);exit;
+        if($money_status == 'all'){
             $money_status = 'not null';
         }
-       $page =$this->request->param('page',1,'intval');
-       $limit =$this->request->param('limit',10,'intval');
-       $tol = ($page-1)*$limit;
-
+        $page =$this->request->param('page',1,'intval');
+        $limit =$this->request->param('limit',10,'intval');
         $list =Db::name('order_bill')->alias('OB')
                 ->join('hl_member M','M.member_code=OB.member_code','left')
                 ->join('hl_order_port OP','OP.order_num =OB.order_num','left')
@@ -136,9 +142,9 @@ class Financial extends Base
                 ->where('OP.container_buckle',$container_buckle)
                 ->where('OP.money_status',$money_status)->group('OB.order_num')
                 ->order('ctime desc,mtime desc')->buildSql();
-//         var_dump($list);exit;
+//         var_dump($list);exit;;
         $count =  Db::table($list.' a')->count();
-        $list = Db::table($list.' a')->limit($tol,$limit)->select();
+        $list = Db::table($list.' a')->page($page,$limit)->select();
 //        $this->_p($list);exit;
         foreach($list as $key=>$value){
 
@@ -157,10 +163,10 @@ class Financial extends Base
            
            switch($value['money_status'])
            {
-                case '0':
+                case 'nodo':
                 $list[$key]['money_status'] ='未付款';
                 break; 
-                case '1':
+                case 'do':
                 $list[$key]['money_status'] ='已付款';
                 break; 
             }
@@ -190,21 +196,45 @@ class Financial extends Base
 
     public function check_date(){
         $data =$this->request->param();
-//        var_dump($data);exit;
+//        var_dump($data);exit; 
         $order_num_arr =$data['data'];
         $time =$data['time'];
-        //更新账单的对账日期
-        $res = Db::name('order_bill')->where('order_num','in',$order_num_arr)->update(['check_date'=>$time]);
-        //记录操作人员        
-        $submitter= Session::get('user_info','think');
         $mtime =  date('Y-m-d H:i:s');
-        $inser_data=[];
-        foreach ($order_num_arr as $order_num) {
-            $inser_data[] = array('order_num'=>$order_num,'status'=>$this->order_status['check_bill'],'title'=>'对账日期','submitter'=>$submitter,'mtime'=>$mtime);
+        //先查询是否已经订单完成了,在能输入对账日期
+        $status_res  = Db::name('order_bill')->where('order_num','in',$order_num_arr)
+                ->column('status,order_num');
+        $arr =[];
+        foreach ($status_res as $key => $value) {
+            if($value!== $this->order_status['completion']){
+                $arr[]=$key;
+            };
+        }        
+        if($arr){
+            return json(array('status'=>0,'message'=>'订单未完成不可对账'.implode(',', $arr))) ;
         }
-        $res2 =Db ::name('order_port_status')->insertAll($inser_data); //记录操作
         
-        return $res2 ? array('status'=>1,'message'=>'操作成功'):array('status'=>0,'message'=>'操作失败');
+        //更新账单的对账日期
+        $res = Db::name('order_bill')->where('order_num','in',$order_num_arr)
+                ->update(['check_date'=>$time,'mtime'=>$mtime]);
+        if($res){
+            //记录操作人员    
+            $tmp =[];
+            $orderProcessM =new \app\admin\model\OrderProcess();  
+            foreach ($order_num_arr as $order_num) {
+               $tmp[] = $orderProcessM->orderUpdate($order_num,$this->order_status['check_bill'],$title='完成对账');
+            }
+            $status_arr = array_column($tmp, 'status');
+            $message_arr = array_column($tmp, 'message');
+            $bz =array_search('0', $status_arr);
+            if($bz){
+                json(array('status'=>0,'message'=>$message_arr[$bz]));
+            }  else {
+                return  json(['status'=>1,'message'=>'操作成功']);
+            }
+        }  else {
+            return json(array('status'=>0,'message'=>'操作失败'));
+        }
+       
        
     }
 
@@ -213,10 +243,10 @@ class Financial extends Base
         // $data =$this->request->param();
         //        var_dump($data);exit;
         if (request()->isAjax()){
-            $order_num =$this->request->only('order_num');
+            $order_num =$this->request->param('order_num');
             $status = $this->order_status['completion'];
-            $title='申请放柜>通过';
-            $data = new \app\admin\model\orderPort();
+            $title='订单完成';
+            $data = new \app\admin\model\OrderProcess();  
             $response= $data->orderUpdate($order_num,$status,$title);
             return $response;
         

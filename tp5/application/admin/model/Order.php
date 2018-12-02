@@ -2,7 +2,7 @@
 namespace app\admin\model;
 use think\Model;
 use think\Db;
-use think\session;
+use think\Session;
 //订单模块
 class Order extends Model
 {
@@ -16,25 +16,6 @@ class Order extends Model
   
     }   
     
-    
-    //审核客户提交的订单
-    public function order_audit($pages,$state){
-        $list =Db::name('order_port')->alias('OP')
-            ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
-            ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
-            ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
-            ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
-            ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id                                                    //起始港终点港
-            ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
-            ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
-            ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶 
-            ->field('OP.*,HM.company,HM.name,SC.ship_short_name,B.boat_code,B.boat_name,P1.port_name s_port_name ,P2.port_name e_port_name')
-            ->group('OP.id')
-            ->where('OP.status','in',$state)
-            ->where('OP.type','door')
-            ->paginate($pages);
-        return $list;
-    } 
     
       //订单的详细信息
     public function orderData($order_num) {
@@ -68,10 +49,10 @@ class Order extends Model
         }
         switch ($list['money_status'])
        {
-            case '0':
+            case 'nodo':
                 $list['money_status']='未付款';
                 break; 
-            case '1':
+            case 'do':
                 $list['money_status']='已付款';
                 break; 
         }
@@ -154,25 +135,25 @@ class Order extends Model
                     $list[$key]['status']= '审核中';
                     break;
                 case $this->order_status['booking_note']:
-                    $list[$key]['status']= '上传订舱单和运单号';
+                    $list[$key]['status']= '待订舱';
                     break;
                 case $this->order_status['send_car']:
-                    $list[$key]['status']= '派车装货';
+                    $list[$key]['status']= '待派车';
                     break;
                 case $this->order_status['loading']:
-                    $list[$key]['status']= '装货信息录入';
+                    $list[$key]['status']= '待装货';
                     break;
                 case $this->order_status['up_container_code']:
-                    $list[$key]['status']= '提报柜号';
+                    $list[$key]['status']= '待报柜号';
                     break;
                 case $this->order_status['load_ship']:
-                    $list[$key]['status']= '配船';
+                    $list[$key]['status']= '待配船';
                     break;
                 case $this->order_status['arrive_port']:
-                    $list[$key]['status']= '到港';
+                    $list[$key]['status']= '待到港';
                     break;
                 case $this->order_status['unload_ship']:
-                    $list[$key]['status']= '卸船';
+                    $list[$key]['status']= '待卸船';
                     break;
                 case $this->order_status['payment_status']:
                     $list[$key]['status']= '确认收款';
@@ -181,16 +162,16 @@ class Order extends Model
                     $list[$key]['status']= '上传水运单';
                     break;
                 case $this->order_status['container_appley']:
-                    $list[$key]['status']= '申请放柜';
+                    $list[$key]['status']= '申请放柜中';
                     break;
                 case $this->order_status['container_lock']:
-                    $list[$key]['status']= '继续扣柜';
+                    $list[$key]['status']= '申请放柜';
                     break;
                 case $this->order_status['container_unlock']:
                     $list[$key]['status']= '同意放柜';
                     break;
                 case $this->order_status['unloading']:
-                    $list[$key]['status']= '同意放柜';
+                    $list[$key]['status']= '待送货';
                     break;
                 case $this->order_status['completion']:
                     $list[$key]['status']= '订单完成';
@@ -203,105 +184,40 @@ class Order extends Model
         return array('list'=>$list,'count'=>$count);
     }
 
-   //录入运单号码, 如果只有一个运单号码 就是所有的柜子为一个运单号, 反之 有多少个柜子就录入多少个运单号码
-    //订单号 集装箱数量, 运单号, 运单号数量
-    public function waybillNum ($order_num,$container_sum,$track_num,$newTrack_num,$track_sum){
-//         //输入一个订单 就填充集装箱数量个订单号
-//        if($track_sum ==1){
-//            $j= $container_sum;
-//            $track_num = array_fill(0,$container_sum,$track_num);
-//        }else{
-//            $j= $track_sum;
-//        }
-        $response =[];
-        if($track_sum !==1){
-           return $response['fail']='运单号不是一个';
-        }
-      
-        //插入之前先判断是否已经已经存在了运单号
-        $num = Db::name('order_son')->where('order_num',$order_num)->find();
-        if(!(empty($num))){
-            return $response['fail']='运单号已经输入过了';
-        }
-        //修改在下单时录入的运单号
-        $res =Db::name('order_son')->where('order_num',$order_num)
-                ->where('track_sum',$track_sum)
-                ->update(['track_num'=>$newTrack_num,'state'=>200,'action'=>'录入运单号>待订车']);    
-        $res ? $response['success'][]='添加运单号成功' :$response['fail'][]='添加运单号失败';
-       // 修改父订单的状态
-        if(!empty($res)){
-            $res2 =Db::name('order_father')->where('order_num',$order_num)->update(['state'=>200,'action'=>'录入运单号>待订车']);
-            action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>200,'action'=>'录入运单号>待订车'], 'controller');
-            $res2 ? $response['success'][]='修改待订舱状态成功' :$response['fail'][]='修改待订舱状态失败';
-        }
-        return $response;
-    }
+
     
     //录入派车信息
-    public function tosendCar($data) 
+    public function send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type)
     {   
-        $order_num =$data['order_num'];
-        $track_num =$data['track_num'];
-        $container_code = $data['container_code'];  //虚拟的集装箱编码 
-        $container_code = explode('_', $container_code); //转换为数组 
-        $container_id = $data['container_id']; //录入的集装箱编码 
-        $container_sum = $data['container_sum']; //一个订单里的集装箱数量
-        
-        //删除单个的数组的 container_code order_num container_sum  
-        unset($data['container_code'],$data['order_num'],$data['container_sum'],$data['track_num']);
-        //将$data数组由行转成列
-        $arr =[];$arr1 =[]; $arr2=[];
- //     $this->_p($data);exit;
-        $arr= array_keys($data);
-        $mtime = date('Y-m-d H:i:s');
-        $response=[];
-        // 启动事务
-        Db::startTrans();
-        try{
-            
-        for($i=0;$i< $container_sum;$i++){
-            $arr1 = array_column($data, $i);
-            $arr2[$i] = array_combine($arr,$arr1);
-            $arr2[$i]['mtime'] =$mtime;  //添加时间戳
+        $mtime = date('Y-m-d H:i:s');   $response=[];
+        //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
+        $order_car_id = Db::name('order_car')->where(['order_num'=>$order_num,'type'=>$type])->column('id');
+        foreach ($car_data as $key => $value) {
+            $car_data[$key]['mtime'] = $mtime;
+            $car_data[$key]['type'] = $type;
+            $car_data[$key]['order_num'] = $order_num;
         }
-        $res1 = Db::name('car_receive')->insertAll($arr2);
-        $res1 ? $response['success'][]="添加派车信息成功" :$response['fail'][]="添加派车信息成功";
-        
-        if($res1){
-            for($k=0;$k<$container_sum;$k++){
-                // 将container_code 修改为实际的集装箱编码
-                $res3 = Db::name('order_son')->where('order_num',$order_num)
-                        ->where('track_num',$track_num[$k])
-                        ->where('container_code',$container_code[$k])
-                        ->setField('container_code', $container_id[$k]);
-                $res3 ? $response['success'][]="修改$container_code[$k]柜子编码成功" :$response['fail'][]="修改$container_code[$k]柜子编码失败";
-                if($res3){
-                    $id = Db::name('car_receive')->where('track_num',$track_num[$k])->where('container_id',$container_id[$k])->value('id');
-                    // 根据获取的 虚拟的集装箱编码 首先将派车信息id添加到order_son表里
-                    $res2 = Db::name('order_son')->where('track_num',$track_num[$k])->where('container_code',$container_id[$k])->setField('car_receive_id', $id );
-                    $res2 ? $response['success'][]="添加柜子$container_code[$k]:派车id成功" :$response['fail'][]="添加柜子$container_code[$k]:派车id失败";
-                }
-            }    
+        if(empty($order_car_id)){
+            $res2 = Db::name('order_car')->lock(true)->insertAll($car_data);
+            $res2 ?$response['success'][]='录入车队信息成功':$response['fail'][]='录入车队信息失败';
+        }  else {
+            foreach ($car_data as $key => $value) {
+                $res3 = Db::name('order_car')->where('id',$order_car_id[$key])->update($value);
+                $res3 ?$response['success'][]='更新车队信息成功':$response['fail'][]='更新车队信息失败';
+            }
         }
-       
-        if(!array_key_exists('fail',$response)){
-            Db::commit();
-        } 
-        
-        } catch (\Exception $e) {
-           // 回滚事务
-        Db::rollback();
-            $response['fail'][]=$e->getMessage();
+        //将联系人信息插入到order_contact里
+        $order_contact_id = Db::name('order_contact')->where(['order_num'=>$order_num,'type'=>$type])->value('id');
+            $contact['type']= $type;  
+            $contact['order_num']=$order_num;
+            $contact['mtime']= $mtime;    
+        if(empty($order_contact_id)){
+            $res5 = Db::name('order_contact')->lock(true)->insert($contact);
+            $res5 ?$response['success'][]='录入联系人信息成功':$response['fail'][]='录入联系人信息失败';
+        }  else {
+//            $res6 = Db::name('order_car')->where('id',$order_contact_id)->update($contact);
+//            $res6 ?$response['success'][]='更新联系人信息成功':$response['fail'][]='更新联系人信息失败';
         }
-        if(array_key_exists('fail',$response)){
-            return $response ;
-        }else{
-            //修改order_state的状态
-             $res4 = $this->updateState($order_num,$track_num,$container_id,'300','录完派车信息>待装货');
-             $res4?$response['success'][]="修改状态成功" :$response['fail'][]="修改状态失败";
-        }
-        
-        
         return $response;
     }
     
@@ -381,75 +297,7 @@ class Order extends Model
     
     
     
-/** 
-* updateState
-* 在变更father和son订单的状态同时 在order_state 做登记
-* @access public 
-* @param  $father 父订单的 array(订单order_num数组 state  action) $father=['order_num','state','action']
-* @param  $son    子订单的 array(订单order_num container_code数组, state, action) $son=['order_num','container_code','state','action']
-*/  
-        public function updateState($order_num,$track_num,$container_code=array(),$state,$action) 
-    { 
-//            var_dump($order_num,$container_code,$state,$action);exit;
-        // 取值（当前作用域）
-        $loginname= Session::get('user_info','think');
-       // var_dump($loginname);exit;
-        $change_time = date('Y-m-d H:i:s');
-        $response=[];
-    
-        //先查询提交的柜子是不是对订单的全部柜子,不是则提示需要拆掉或者重新确认
-//        $order_num= $son['order_num'];
-//        $container_code = $son['container_code'];
-//        $state = $son['state'];  $action = $son['action'];
-        $sqlContainer = Db::name('order_son')->where('order_num',$order_num)->where('track_num',$track_num)->column('container_code');
-  
-        $miss = array_diff($sqlContainer,$container_code);
-        $more = array_diff($container_code,$sqlContainer);
-//        var_dump($miss,$more);exit;
-        if( $miss||$more){
-            $str1= implode('_', $miss);
-            $str2= implode('_', $more);
-            $miss ? $response['fail'][]= '柜子申报缺失柜号'.$str1 :'';
-            $more ? $response['fail'][]= '柜子申报多报柜号'.$str2 :'';
-            return $response;
-        }
-        //检查同一个订单下的柜子状态是否一样的
-        $stateArr = Db::name('order_son')->where('container_code','in',$container_code)->where('track_num',$track_num)->where('order_num',$order_num)->column('state');
-        $stateCount = array_count_values($stateArr);
-        list($key,$value) = each($stateCount);
-        if($value !== count($stateArr)){
-            $response['fail']= '订单的状态不一致';
-            return $response;
-        }
-        if($key>$state){
-            $response['fail']= '订单的状态已经更新过';
-            return $response;
-        }
-        //同时更新更新状态
-             // 启动事务
-        Db::startTrans();
-        try{
-        $mtime = date('Y-m-d H:i:s');
-        $res  = Db::name('order_son')->where('container_code','in',$container_code)->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action,'mtime'=>$mtime]);
-        //$res2 = Db::name('order_father')->where('order_num',$order_num)->update(['state'=>$state,'action'=>$action,'mtime'=>$mtime]);
-        
-        action('OrderProcess/orderRecord', ['order_num'=>$order_num,'track_num'=>$track_num,'status'=>$state,'action'=>$action], 'controller');
-        
-        $res ? $response['success'][]="登记order_son{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_son{$order_num}的{$state}{$action}失败";
-        $res2 ? $response['success'][]="登记order_fathe{$order_num}的{$state}{$action}成功" :$response['fail'][]= "登记order_fathe{$order_num}的{$state}{$action}失败";
-        //记录是谁何时操作的状态    
-        if(!array_key_exists('fail',$response)){
-            Db::commit();
-        } 
-        
-        } catch (\Exception $e) {
-           // 回滚事务
-        Db::rollback();
-            $response['fail'][]=$e->getMessage();
-        }
-        return $response;
-    }
-    
+
     
       //order_ship表 贮存对应的航线信息$loadPort,$departurePort
     public function orderShip($order_num,$track_num,$portArr,$portCodeArr) {
@@ -563,4 +411,5 @@ class Order extends Model
         return $response;
        
     }
+
 }

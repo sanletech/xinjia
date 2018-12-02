@@ -73,9 +73,9 @@
 
         <div style="margin-right: 130px; display: inline-block;"></div>
         <div class="layui-inline">
-            <input type="radio" lay-filter="money_status" name="money_status" value="2" title="所有订单" checked="">
-            <input type="radio" lay-filter="money_status" name="money_status" value="1" title="已付款">
-            <input type="radio" lay-filter="money_status" name="money_status" value="0" title="未付款">
+            <input type="radio" lay-filter="money_status" name="money_status" value="all" title="所有订单" >
+            <input type="radio" lay-filter="money_status" name="money_status" value="do" title="已付款">
+            <input type="radio" lay-filter="money_status" name="money_status" value="nodo" title="未付款" checked='checked'>
         </div>
     </div>
     
@@ -90,8 +90,8 @@
           <div class="layui-form-item">
             <label class="layui-form-label">付款状态</label>
             <div class="layui-input-block">
-              <input name="money" value="0" title="未付款" checked="" type="radio">
-              <input name="money" value="1" title="已付款" type="radio">
+              <input name="money" value="nodo" title="未付款" checked="" type="radio">
+              <input name="money" value="do" title="已付款" type="radio">
             </div>
           </div>
         </form>
@@ -141,7 +141,7 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
     elem: '#sj'
   });
   var container_buckle = 'apply';//货物状态
-  var money_status = '2';//付款状态
+  var money_status = 'all';//付款状态
   form.on('radio(container_buckle)', function(data){
     container_buckle = data.value;
     $('.cha').click();

@@ -94,7 +94,7 @@
                                     if(!$list['book_note']){
                                         echo'<span>订舱单未上传</span><a class="dcd" href="#">上传</a>';}
                                     else{
-                                        $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
+                                        $url= url('admin/OrderProcess/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
                                         $str ='<a href="'.$url.'">下载</a>';
                                         echo '<span>订舱单已上传</span>'.$str.'</br>';
                                         echo'<span>重新上传</span><a class="dcd" href="#">上传</a>';
@@ -177,7 +177,7 @@
                                         echo'<span>水运单未上传</span><a class="syd" href="#">上传</a>';}
                                     else{
                                         $order_num= $list['order_num'];
-                                        $url= url('admin/OrderPort/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
+                                        $url= url('admin/OrderProcess/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
                                         $str ='<a href="'.$url.'">下载</a>';
                                         echo '<span>水运单已上传</span>'.$str.'</br>';
                                         echo'<span>重新上传</span><a class="syd" href="#">上传</a>';
@@ -249,6 +249,34 @@
                             </div>
 
                         </div>
+                    </div>
+                </div>
+
+                <!-- 订单路线 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>订单路线</strong>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>起港-目港：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                        <{$list.s_port_name}>-<{$list.s_port_name}>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>箱型：</div>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        <{$list.container_type}>
+                                    </div>
+                            </div>
+                        </div>  
                     </div>
                 </div>
 
@@ -539,11 +567,11 @@
     
 
                     <div class="tjiao" style="text-align:center;">
-                        <!-- <{if condition="$list.status!=='completion'"}>
+                        <{if condition="$list['completion']"}>
                         <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
                         <{else /}><a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
-                        <{/if}> -->
-                        <a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
+                        <{/if}>
+                        <!-- <a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a> -->
                     </div> 
                 </div>
         </form>
@@ -611,7 +639,6 @@
             $('.songhuo,.zhuanghuo').show();
             $('input').attr('readonly', true);
             $('input').css('border', '0');
-            
         </script>
     </body>
     </html>

@@ -50,7 +50,7 @@ class Price extends Base
     //航线添加
     public function route_toadd(){
         $data = $this->request->param();
-       $this->_p($data);  exit;
+//      $this->_p($data);  exit;
         $seaprice = new PriceM;
         $res = $seaprice->price_route_add($data); 
         if(!array_key_exists('fail', $res)){
@@ -66,7 +66,7 @@ class Price extends Base
         $seaprice_id = input('get.seaprice_id');
         $seaprice = new PriceM;
         $res = $seaprice-> price_route_list('','','',100,$seaprice_id);
-        $this->_p($res['0']);exit;
+//        $this->_p($res['0']);exit;
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
         $this->assign('data',$res['0']);
@@ -92,14 +92,14 @@ class Price extends Base
     public function route_toedit(){
         $data = $this->request->except('type');
         $type = $this->request->param('type');//修改还是重新发布
-      $this->_p($data);var_dump($type);exit;
+//      $this->_p($data);var_dump($type);exit;
         $seaprice = new PriceM;
         if($type=='edit'){
             $res = $seaprice->price_route_toedit($data);    
         }elseif ($type=='again') {
             $res = $seaprice->price_route_add($data); 
         }
-        var_dump($res);exit;   
+//        var_dump($res);exit;   
         if(!array_key_exists('fail', $res)){
             $response =['status'=>1,'message'=>$res['success']]; 
         }else {

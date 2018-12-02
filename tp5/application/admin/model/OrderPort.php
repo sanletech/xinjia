@@ -3,7 +3,7 @@ namespace app\admin\model;
 use think\Model;
 use think\Db;
 use think\Session;
-class orderPort extends Model
+class OrderPort extends Model
 {
     private $order_status;
     private $page=5;
@@ -34,7 +34,7 @@ class orderPort extends Model
     } 
 
     //订单的状态
-    public function order_status($tol,$limit,$map){
+    public function order_status($page,$limit,$map){
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -51,7 +51,7 @@ class orderPort extends Model
 // $this->_p($map); //exit;
         $count=Db::table($list.' A')->where($map)->count(); 
 //        var_dump( $list =Db::table($list.' A')->where()->limit($tol,$limit)->buildSql());exit;
-        $list =Db::table($list.' A')->where($map)->limit($tol,$limit)->fetchSql(FALSE)->select();       
+        $list =Db::table($list.' A')->where($map)->page($page,$limit)->fetchSql(FALSE)->select();       
 //        $this->_p($list);exit;
         foreach ($list as $key => $value) {
             switch($value['container_buckle'])
@@ -69,19 +69,19 @@ class orderPort extends Model
            
             switch($value['money_status'])
             {
-                case '0':
+                case 'nodo':
                 $list[$key]['money_status'] ='未付款';
                 break; 
-                case '1':
+                case 'do':
                 $list[$key]['money_status'] ='已付款';
                 break; 
             }   
             switch($value['container_status'])
             {
-                case '0':
+                case 'nodo':
                 $list[$key]['container_status'] ='未提交柜号';
                 break; 
-                case '1':
+                case 'do':
                 $list[$key]['container_status'] ='已提交柜号';
                 break; 
             }   
@@ -104,7 +104,7 @@ class orderPort extends Model
                 ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
                 ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
-                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name')
+                ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name,P1.port_name s_port_name,P2.port_name e_port_name')
                 ->where('OP.order_num',$order_num)
                 ->where('OP.type','port')
                 ->group('OP.id')
@@ -130,15 +130,8 @@ class orderPort extends Model
                 ->where('type','s')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
-        //查询对应现金优惠金额 和临时优惠
-        $nowtime = date('y-m-d h:i:s');
-        $discount = Db::name('discount')->where([
-                        'discount_start'=>['<= time',$nowtime],
-                        'discount_end'=>['>= time',$nowtime],
-                        'status'=>1,
-                        'ship_id'=>$list['ship_id'],
-                       ])->field("id,title,type,".$list['container_size']. ' money')->select();
-        
+ 
+
         $shipperArr= explode(',',$list['shipper']); 
         $consignerArr= explode(',',$list['consigner']); 
        switch ($list['payment_method'])
@@ -158,75 +151,22 @@ class orderPort extends Model
         }
         switch ($list['money_status'])
        {
-            case '0':
+            case 'nodo':
                 $list['money_status']='未付款';
                 break; 
-            case '1':
+            case 'do':
                 $list['money_status']='已付款';
                 break; 
         }
         $list['extra_info'] = ltrim($list['extra_info'],','); 
-        return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'discount'=>$discount,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
+        
+        $list['completion']= ($list['status']== $this->order_status['completion'])?true:false;
+
+        return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
         
     }
     
-    //记录订单的更新状态和时间
-    public function orderUpdate($order_num,$status,$title,$comment='',$submitter='') {
-        if(empty($submitter)){
-            $submitter= Session::get('user_info','think');
-        }
-        $mtime =  date('Y-m-d H:i:s');
-        $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'comment'=>$comment,'submitter'=>$submitter,'mtime'=>$mtime);
-//        var_dump($data);exit;
-        $res =Db ::name('order_port_status')->insert($data); //记录操作
-//        var_dump($res);exit;
-        //根据不同的记录是否更新order_port的状态
-        $order_status= $this->order_status;
-       
-        //更改订单状态和对应字段
-        $map1 =array($order_status['payment_status'],$order_status['container_appley'],
-            $order_status['container_lock'],$order_status['container_unlock'],$order_status['up_container_code']);
-         //修改order_bill的状态 ,对应order_port的状态和其字段container_status的更改 
-        $map2 = array_diff($order_status,$map1) ;  
-        if(in_array($status,$order_status)){
-            if(in_array($status,$map1)){
-                switch ($status) {
-                    case $order_status['payment_status']:
-                    $param = ['money_status'=>'1'];
-                    break;
-                    case $order_status['container_appley']:
-                    $param = ['container_buckle'=>'appley'];
-                    break;
-                    case $order_status['container_lock']:
-                    $param = ['container_buckle'=>'lock'];
-                    break;
-                    case $order_status['container_unlock']:
-                    $param = ['container_buckle'=>'unlock'];
-                    break;
-                    case $order_status['up_container_code']:
-                    $param = ['container_status'=>'1','status'=>$order_status['up_container_code']];
-                    break;
-                }
-            }elseif(in_array($status,$map2)) {
-                $param =['status'=>$status];
-            }
-            $param['mtime']=$mtime;
-//            var_dump($param);exit;
-            Db::startTrans();
-            try{
-                $res =Db::name('order_port')->where('order_num',$order_num)->update($param);
-            Db::commit();
-            } catch (\Exception $e) {
-                // 回滚事务
-                Db::rollback();
-                return array('status'=>0,'message'=>'操作失败');
-            }      
-                return array('status'=>1,'message'=>'操作成功');
-        }else{
-            return array('status'=>1,'message'=>'操作成功');
-        }
-    }
-    
+
     //子订单的修改order_truckage 也是送货 装货服务的信息修改
     public function truckage($order_num,$container_sum, $truckageData){
         

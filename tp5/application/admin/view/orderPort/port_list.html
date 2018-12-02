@@ -198,8 +198,6 @@
 <script src="__STATIC__/../index/layui/layui.js"></script>
 <script src="__STATIC__/js/port.js"></script>
 <script src="__STATIC__/js/ship_boat.js"></script> 
-<script src="__STATIC__/js/ship_company.js"></script>
-
 
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
@@ -342,7 +340,7 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
       ,{field:'container_status', title:'补料',width:100}
       ,{field:'sea_waybill', title:'水运单',width:100,event:'shui',templet:function(res){        
         if(res.sea_waybill){
-          return '<a href="<{:url("admin/OrderPort/downs")}>?order_num='+res.order_num+'&type=sea_waybill">下载</a>'
+          return '<a href="<{:url("admin/OrderProcess/downs")}>?order_num='+res.order_num+'&type=sea_waybill">下载</a>'
         }else{
           return '<a class="" href="#">上传</a>';
         }

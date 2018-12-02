@@ -118,6 +118,33 @@
                     </div>
                 </div>
 
+                <!-- 订单路线 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>订单路线</strong>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs5">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">起港-目港</label>
+                                <div class="layui-input-block">
+                                    <{$list.money_status}>　<{$list.payment_method}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs6">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">箱型：</label>
+                                <div class="layui-input-block">
+                                    <span>
+                                        <{$list.ctime}>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 货物 -->
                 <div class="xxtx_dd">
                     <div class="xx">
@@ -413,7 +440,7 @@
         </form>
         <div id="bo"><input type="text"></div>
         <script>
-            var url = "<{:url('OrderPort/order_judgment')}>";//申请
+            var url = "<{:url('admin/OrderProcess/order_judgment')}>";//申请
             var order_num = '<{$list.order_num}>';
             $('.songhuo,.zhuanghuo,#zeng_song,#zeng').show();
             $('.tjiao .yes').click(function () {

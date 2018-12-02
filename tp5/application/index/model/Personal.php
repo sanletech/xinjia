@@ -16,7 +16,7 @@ class Personal extends Model
   
     }    
     
-    public function place_order($member_code,$tol,$limit,$map) {
+    public function place_order($member_code,$page,$limit,$map) {
         $order_status_on=array($this->order_status['stop'] ,$this->order_status['cancel']
                         ,$this->order_status['order_audit'],$this->order_status['booking_note']
                         ,$this->order_status['up_container_code'],$this->order_status['sea_waybill']
@@ -48,7 +48,7 @@ class Personal extends Model
                 ->where('OP.member_code',$member_code)
                 ->group('OP.order_num')->buildSql();
 //var_dump($data);exit;
-        $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->fetchSql(false)->limit($tol,$limit)->select();
+        $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->fetchSql(false)->page($page,$limit)->select();
 //        $this->_p($lists);exit;
         //展示扣柜驳回的理由
         $where = "where status =".$this->order_status['container_lock'];
@@ -77,10 +77,8 @@ class Personal extends Model
                     $lists[$key]['change_comment']='';
                     break;
                     break;
-                case $this->order_status['booking_note']:
-                case $this->order_status['up_container_code']: 
-                case $this->order_status['sea_waybill']:
-                    $lists[$key]['status_title']='进行中';
+                case $this->order_status['check_bill']:
+                    $lists[$key]['status_title']='对账完成';
                     $lists[$key]['change_comment']='';
                     break;
                 case $this->order_status['completion']:
@@ -88,7 +86,7 @@ class Personal extends Model
                     $lists[$key]['change_comment']='';
                     break;
                 default :
-                    $lists[$key]['status_title']='订单未知错误';
+                    $lists[$key]['status_title']='订单进行中';
                     $lists[$key]['change_comment']='';
                     break;
             }

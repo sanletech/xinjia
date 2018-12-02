@@ -76,7 +76,7 @@
       var order_num = $(this).parent().siblings('.tdata').html();
       layer.open({
         type: 2, 
-        content: "<{:url('admin/OrderPort/audit_page')}>?order_num="+order_num, //这里content是一个iframe,
+        content: "<{$audit_page_url}>?order_num="+order_num, //这里content是一个iframe,
         title :'详情信息',
         offset: 't',
         area :['80%','100%'],

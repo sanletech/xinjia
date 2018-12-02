@@ -6,12 +6,38 @@ namespace app\admin\controller;
 use app\admin\common\Base;
 use think\Request;
 use think\Db;
-use app\admin\model\OrderProcess as OrderPM;
+use app\admin\model\OrderProcess as OrderProcessM;
 use think\Validate;
 use think\session;
 class OrderProcess extends Base
 {     
+    private $order_status;
+    private $page=5;
 
+    public function _initialize()
+    {  
+        $this->order_status=config('config.order_status');
+    }
+
+    
+        //审核订单的列表页面
+    public function order_audit() 
+    {
+        $type = $this->request->param('type');
+        if($type=='port'|| $type=='door'){
+           $url= ($type=='port')? url('admin/OrderPort/audit_page'):url('admin/Order/audit_page');
+        }
+        $data = new OrderProcessM;
+        $list = $data->order_audit($this->page,$this->order_status['order_audit'],$type);
+        $page =$list->render();
+        $count =  count($list);
+        $this->view->assign('count',$count);
+        $this->view->assign('list',$list);
+        $this->view->assign('page',$page);
+        $this->view->assign('audit_page_url',$url);
+        return $this->view->fetch('order/order_audit'); 
+    }
+    
     
     public function Upload($order_num,$type,$file)
     {
@@ -37,9 +63,12 @@ class OrderProcess extends Base
     
     public function downs(){    
             $order_name = $this->request->param('order_num');    //下载文件名 
-            $type = $this->request->param('type'); //文件类型
-            $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
-            var_dump($file);
+            $type = trim($this->request->param('type')); //文件类型  
+            if(!($type=='book_note'||$type=='sea_waybill')){
+                echo '类型错误';             
+                return FALSE;
+            }
+            $file = Db::name('order_port')->where('order_num',$order_name)->value($type); 
             //将后缀修改成.
             $file_Extension= strstr(strrev($file),'_',true);
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
@@ -63,8 +92,26 @@ class OrderProcess extends Base
                 fclose ( $file );    
                 exit ();    
             }    
-
+    }
+    
+        //审核页面的 订单通过或取消
+    public function order_judgment() {
+        $order_num = $this->request->param('order_num');
+        $type = $this->request->param('type');
+        $comment = $this->request->param('reject');
+        if($type=='pass'){
+            $title='订单审核pass';
+            $status =  $this->order_status['booking_note'];
+        }elseif ($type=='fail') {
+         
+            $title='订单审核fail';
+            $status =  $this->order_status['cancel'];
         }
+        $data = new OrderProcessM();
+        $response = $data->orderUpdate($order_num,$status,$title,$comment);
+
+        return json($response);
+    }
 
 
     
