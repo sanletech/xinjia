@@ -150,3 +150,16 @@ $hui:#aaa;
 .syd,.yunding,#container{
     display: none;
 }
+
+#container,#dbgh{
+    .ming>div{
+        text-align: center;
+        font-size: 16px;
+    }
+    .gfth{
+        margin: 5px 0;
+        >div{
+            padding: 0 15px;
+        }
+    }
+}

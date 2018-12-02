@@ -88,29 +88,12 @@ class Order extends Base
     }
         
     
-
-    
-    
-    //展示录入运单号的页面信息
-    public function list_booking() 
-    {  
-        $container_sum  = $this->request->param('container_sum');
-        $order_num = $this->request->param('order_num');
-        $track_num = $this->request->param('track_num');
-        $container_code  = $this->request->param('container_code');
-        $this->view->assign('order_num',$order_num);
-        $this->view->assign('container_sum',$container_sum);
-        $this->view->assign('track_num',$track_num);
-        $this->view->assign('container_code',$container_code);
-        return $this->view->fetch('order/order_booking');
-    }
-    
-
     
     //录入派车信息
     public function send_car() 
     {  
         $data =$this->request->param();
+//        $this->_p($data);exit;
         $order_num = $this->request->param('order_num');
         $track_num = $this->request->param('track_num');
         $contact = $data['contact'];
@@ -122,151 +105,119 @@ class Order extends Base
             return json(array('status'=>0,'message'=>'司机信息与柜子数量不符'));
         }
         $OrderM= new OrderM;
-        $response = $OrderM->send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type);
-        if(!array_key_exists('fail', $response)){
+        $res = $OrderM->send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type);
+        if(!array_key_exists('fail', $res)){
             //更新订单状态同时记录操作
             $OrderProcessM = new OrderProcessM();
-            $status = $OrderProcessM->orderUpdate($order_num,$status=$this->order_status['loading'],$title='录入派车信息->待装货');
+            $response = $OrderProcessM->orderUpdate($order_num,$status=$this->order_status['loading'],$title='录入派车信息->待装货');
        
         }else {
-            $status =['msg'=>implode(',', $response['fail']) ,'status'=>0]; 
+            $response =['msg'=>implode(',', $response['fail']) ,'status'=>0]; 
         } 
-        return json($status);
+        return json($response);
     }
     
-    //待装货展示页面
-    public function listLoad() 
-    {    //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        $dataM = new OrderM;
-        $listArr = $dataM->listOrder($tol,$limit,$state='300');
-        //分页数据
-        $list =$listArr[0];
-//        $this->_p($listArr);exit;
-       // 总页数
-        $count = $listArr[1];
-        $this->view->assign('list_book',$list);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
-        $this->view->assign('page_url',url('admin/order/listLoad')); 
-        return $this->view->fetch('listOrder/list_load');
+   //带装货 的 柜号封条 司机 信息获取
+    public function LoadData() 
+    { 
+        $order_num =$this->request->get('order_num');
+        $data = Db::name('order_car')
+                ->where('order_num',$order_num)
+                ->field('id,container_code,seal_No,driver_name')
+                ->find();
+        return json($data);
     }
     
-    //待装货展示页面添加装货时间
+    //带装货 添加装货时间
     public function addLoadTime() 
     {   
-        $order_num =$this->request->get('order_num');
-        $track_num =$this->request->get('track_num');
-        //根据定单号展示柜号
-        $data = Db::name('order_son')->where(['order_num'=>$order_num,'track_num'=>$track_num])
-                ->field('track_num,container_code')->select();
-//        $this->_v($data);exit;
-        $this->assign([
-        'order_num'  => $order_num,
-        'data' => $data
-        ]);
-        return $this->view->fetch('order/load_time');
-    }
-        
-    //添加实际装货时间
-    public function toLoadTime() 
-    {   
-        $order_num = $this->request->post('order_num');
-        $data = $this->request->except('order_num');
-        //var_dump($data);exit;
-        //根据运单号和 柜号 添加对应的实际装货时间
-        $dataM = new OrderM;
-        $response= $dataM->toLoadTime($order_num,$data);
-        if(!array_key_exists('fail', $response)){
-            $status =['msg'=>'录入运单号成功','status'=>1];
-        }else {
-            $status =['msg'=>'录入运单号失败','status'=>0]; 
-        } 
-        return json($status);
-    }
-    
-    
-    
-    //展示需要向船公司提交柜号的list页面
-    public function listBaogui() 
-    {   
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        $dataM = new OrderM;
-        $listArr = $dataM->listOrder($tol,$limit,$state='400');
-        //分页数据
-        $list =$listArr[0];
-     
-        foreach ($list as $key => $value) {
-            $list[$key]['container_code']= explode('_', $value['container_code']);
-            $list[$key]['track_num']=explode('_', $value['track_num']);
+//      $this->_p($this->request->param());exit;
+        $order_num =$this->request->param('order_num');
+        $track_num = $this->request->param('track_num');
+        $modify = $this->request->param('modify');
+        $lists = $this->request->only('list');
+        //更新order_car的时间
+        $arr=[];
+        $mtime = date('Y-m-d H:i:s');
+        foreach ($lists as $value){
+            $value['mtime']=$mtime;
+            $id = $value['id'];
+            if($modify){
+                $map= array('work_time'=>$value['work_time']);
+            }  else {
+                $map=$value;
+            }
+            $res = Db::name('order_car')->where('id',$id)->update($map);
+            $res ? $arr['success'][] = $id :$arr['fail'][] = $id ;
         }
-       // $this->_p($list);exit;
-       // 总页数
-        $count = $listArr[1];
-     
-        $this->view->assign('list_book',$list);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
-        $this->view->assign('page_url',url('admin/order/listBaogui')); 
-        return $this->view->fetch('listOrder/list_baogui');
+        if(array_key_exists('fail', $arr)){
+            return json(array('status'=>0,'message'=> '更新失败'.implode(',', $arr['fail'])));
+        }  else {
+              //更新订单状态同时记录操作
+            $OrderProcessM = new OrderProcessM();
+            $response = $OrderProcessM->orderUpdate($order_num,$status=$this->order_status['up_container_code'],$title='录入装货时间->待报柜号');
+            return json($response);
+        }
+    
+    }
+        
+
+    
+    //待报柜号
+    public function report_container () {
+        $order_num =$this->request->param('order_num');
+        $track_num = $this->request->param('track_num');
+        $modify = $this->request->param('modify');//是否修改
+        $lists = $this->request->only('list');
+        //更新order_car的时间
+        $arr=[];
+        $mtime = date('Y-m-d H:i:s');
+        if($modify){
+            foreach ($lists as $value){
+                $value['mtime']=$mtime;
+                $id = $value['id'];
+                $res = Db::name('order_car')->where('id',$id)->update($value);
+                $res ? $arr['success'][] = $id :$arr['fail'][] = $id ;
+            }
+            if(array_key_exists('fail', $arr)){
+                return json(array('status'=>0,'message'=> '更新失败'.implode(',', $arr['fail'])));
+            }
+        }
+       
+        //更新订单状态同时记录操作
+        $OrderProcessM = new OrderProcessM();
+        $response = $OrderProcessM->orderUpdate($order_num,$status=$this->order_status['load_ship'],$title='报柜号完毕->待配船');
+        return json($response);
+       
     }
     
-    //处理报柜号
-    public function toBaogui() {
-        $data= $this->request->param();
-       
-        $order_num =  array_splice($data, -1);
-        $order_id = $order_num[0]['order_num'];
-        $container_codeArr = array_column($data,'container_code');
-       // $this->_p($order_num);$this->_p($container_code);exit;
-        $dataM = new OrderM;
-        //直接更改状态
-        $response  = $dataM->updateState($order_id,$container_codeArr,'505','录完实际装货时间>待配船');
-       
-        if(!array_key_exists('fail', $response)){
-            $status =['msg'=>'报柜号成功','status'=>1];
-        }else {
-            $status =['msg'=>'报柜号失败','status'=>0]; 
-        } 
-        return json($status);
+    //待配船 的港口信息
+    public function  cargo_plan_data(){
+        $order_num =$this->request->param('order_num');
+        $data = Db::name('order_ship')
+                ->where('order_num',$order_num)
+                ->find();
+        return json($data); 
     }
     
-    //待配船list
-    public function  listCargo(){
-        //获取每页显示的条数
-        $limit= $this->request->param('limit',10,'intval');
-        //获取当前页数
-        $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
-        $dataM = new OrderM;
-        $listArr = $dataM->listOrder($tol,$limit,$state='505,515,525,535');
-        //分页数据
-        $list =$listArr[0];
-//        $this->_p($listArr);exit;
-       // 总页数
-        $count = $listArr[1];
-        $this->view->assign('list_book',$list);
-        $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
-        $this->view->assign('limit',$limit); 
-        $this->view->assign('page_url',url('admin/order/listCargo'));
-        $this->view->assign('ship_status','待配船'); 
-        $this->view->assign('url','admin/order/cargoPlan'); 
-        return $this->view->fetch('listOrder/list_cargo');
+    //待配船 
+    public function  cargo_plan(){
+        $order_num = $this->request->param('order_num');
+        $type = $this->request->param('type');
+        $modify = $this->request->param('modify');//是否修改 true or false
+        $shipment_time = $this->request->param('shipment_time');  //实际开船时间
+        $dispatch_time = $this->request->param('dispatch_time');//离港时间
+        $arrival_time  = $this->request->param('arrival_time'); //到港时间
+        $discharge_time = $this->request->param('discharge_time');//卸货时间
+        // 查找是否存在
+        $id = Db::name('order_ship')->where('order_num',$order_num)->value('id');
+        if($modify){
+            
+            
+        }
         
     }
+    
     ///录入配船信息的页面
     public function cargoPlan() {
         $order_num = $this->request->get('order_num');
@@ -581,6 +532,7 @@ class Order extends Base
             return FALSE;
         }
         $track_num= $this->request->param('track_num');
+//        $this->_p($this->request->param());exit;
         $OrderProcessC =  new OrderProcessC();
         $res =$OrderProcessC->Upload($order_num,$type,$file);
         //上传成功就更改状态

@@ -187,7 +187,7 @@ class Order extends Model
 
     
     //录入派车信息
-    public function send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type)
+    public function  send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type)
     {   
         $mtime = date('Y-m-d H:i:s');   $response=[];
         //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
