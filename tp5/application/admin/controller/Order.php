@@ -153,8 +153,7 @@ class Order extends Base
     public function send_car() 
     {  
         $data =$this->request->param();
-        $this->_p($data);exit
-        ;
+        $this->_p($data);exit ;
         $order_num = $this->request->param('order_num');
         $track_num = $this->request->param('track_num');
         $contact = $this->request->param('contact');
