@@ -231,7 +231,7 @@ class Order extends Base
             $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
             $res = Db::name('order_ship')->insertAll($insert_data);
             foreach ($insert_data as $key=>$value){
-                $insert_data[$key]
+                $insert_data[$key];
             }
             return json( $res ?  $insert_data: FALSE);    
         }
