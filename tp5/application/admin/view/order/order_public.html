@@ -355,8 +355,8 @@
                 , { field: 'company', title: '船公司', width: 200 }
                 , { field: 'track_num', title: '船名/航次', width: 100, event: 'yun' }
                 , {
-                    field: 'container_sum', title: '起运港-目的港', width: 100, templet: function (res) {
-                        return '<div class="">' + res.s_port + '-' + res.e_port + '</div>'
+                    field: 'container_sum', title: '起运港-目的港', width: 130, templet: function (res) {
+                        return '<div class="">' + res.s_port_name + '-' + res.e_port_name + '</div>'
                     }
                 }
                 , { field: 'ship_short_name', title: '货名', width: 100 }
@@ -526,7 +526,7 @@
                         let st = res;
                         for (let i = 0; i < data.container_sum; i++) {
                             $('#dbgh .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs6">'+
-                            '<input type="hidden" name="id" value="'+st[i].id+'" class="layui-input">'+
+                            '<input type="hidden" name="id" value="'+st[i].id+'" class="layui-input in">'+
                             '<input type="text" name="container_code" value="'+st[i].container_code+'" lay-verify="title" autocomplete="off" placeholder="请输入柜号" class="layui-input in" readonly>'+
                             '</div><div class="layui-col-xs6">'+
                             '<input type="text" name="seal_No" value="'+st[i].seal_No+'" lay-verify="title" autocomplete="off" placeholder="请输入封条号" class="layui-input in" readonly>'+
@@ -565,27 +565,36 @@
                         }
                     });
                 } else if (data.status == '待配船') {
+                    // console.log(data);
+                    let arr = [];
+                    arr.push({port_id:data.s_port_code,port_name:data.s_port_name});
+                    let code = data.m_port_code.split(',');
+                    let name = data.m_port_name.split(',');
+                    for (let i = 0; i < code.length; i++) {
+                        arr.push({port_id:code[i],port_name:name[i]});                     
+                    }
+                    arr.push({port_id:data.e_port_code,port_name:data.e_port_name});                    
                     $('#dai_post .dzh').html('');
-                    for (let i = 0; i < 3; i++) {
-                        if (i == 3-1) {
+                    for (let i = 0; i < arr.length-1; i++) {
+                        if (i == arr.length-2) {
                         $('#dai_post .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
-                        '<input type="hidden" name="q_id" value="1" class="layui-input">天津港-北京港<input type="hidden" name="z_id" value="2" class="layui-input">'+
+                        '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input">'+arr[i].port_name+'-'+arr[i+1].port_name+'<input type="hidden" name="e_port_code" value="'+arr[i+1].port_id+'" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="text" name="a" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
+                        '<input type="text" name="ship_name" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="work_time1"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
+                        '<input type="date" name="arrival_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="text" name="work_time" id="date2" lay-verify="date" placeholder="卸船时间" class="layui-input">'+
+                        '<input type="text" name="discharge_time" id="date2" lay-verify="date" placeholder="卸船时间" class="layui-input">'+
                         '</div></div>');
                         }else{
                         $('#dai_post .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
-                            '<input type="hidden" name="q_id" value="1" class="layui-input">天津港-北京港<input type="hidden" name="z_id" value="2" class="layui-input">'+
+                        '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input">'+arr[i].port_name+'-'+arr[i+1].port_name+'<input type="hidden" name="e_port_code" value="'+arr[i+1].port_id+'" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="text" name="a" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
+                        '<input type="text" name="ship_name" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="work_time1"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
+                        '<input type="date" name="arrival_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="work_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
+                        '<input type="date" name="dispatch_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
                         '</div></div>');
                         }
                     }
@@ -602,10 +611,11 @@
                         , btn: ['确认']
                         , content: $('#dai_post')
                         , yes: function (index) {
+                            let list = fun_arr($('#dai_post .dzh .gfth'));                            
                             $.ajax({
                                 type:"post",
                                 url:"<{:url('admin/Order/cargo_plan')}>",   //数据传输的控制器方法
-                                data:$('#dai_post').serialize(),//这里data传递过去的是序列化以后的字符串
+                                data:{list:list,order_num:data.order_num,track_num:data.track_num},//这里data传递过去的是序列化以后的字符串
                                 success:function(res){
                                     if (res.status) {
                                         layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
