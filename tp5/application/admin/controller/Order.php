@@ -196,21 +196,59 @@ class Order extends Base
         $order_num =$this->request->param('order_num');
         $data = Db::name('order_ship')
                 ->where('order_num',$order_num)
-                ->find();
+                ->order('sequence')->select();
+        //如果为空 就生成 对应的数据
+        if($data){
+            $port_arr  = Db::name('order_port')->alias('OP')
+                    ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
+                    ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
+                    ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
+                    ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
+                    ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
+                    ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
+                    ->join('hl_port P3','P3.port_code=SM.sl_middle','left')//中间港口
+                    ->field('P1.port_name s_port_name ,P1.port_code s_port_code,'
+                    . 'P2.port_name e_port_name,P2.port_code e_port_code,'
+                    . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
+                    . 'group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
+                    ->group('OP.id')->where('OP.order_num',$order_num)->find();
+            $insert_data =[];
+            $insert_data[0]['order_num'] = $order_num;
+            $insert_data[0]['sequence'] = 0;
+            $insert_data[0]['port_name'] = $port_arr['s_port_name'];
+            $insert_data[0]['port_code'] = $port_arr['s_port_code'];
+            $m_port_name = explode(',', $port_arr['m_port_name']);
+            $m_port_code = explode(',', $port_arr['m_port_code']);
+            foreach ($m_port_name as $key=>$value){
+                $insert_data[$key+1]['order_num'] = $order_num;
+                $insert_data[$key+1]['sequence'] = $key+1;
+                $insert_data[$key+1]['port_name'] = $m_port_name[$key]['m_port_name'];
+                $insert_data[$key+1]['port_code'] = $m_port_code[$key]['m_port_code'];
+            }
+            $insert_data[$key+2]['order_num'] = $order_num;
+            $insert_data[$key+2]['sequence'] = $key+1;
+            $insert_data[$key+2]['port_name'] = $port_arr['s_port_name'];
+            $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
+            $res = Db::name('order_ship')->insertAll($insert_data);
+            foreach ($insert_data as $key=>$value){
+                $insert_data[$key]
+            }
+            return json( $res ?  $insert_data: FALSE);    
+        }
         return json($data); 
     }
     
     //待配船  判断倒数第二个港口离港时间录完就自动申请放柜
     public function  cargo_plan(){
+        $this->_p( $this->request->param());exit;
         $order_num = $this->request->param('order_num');
-        $type = $this->request->param('type'); // load_ship配船 arrive_port到港 unload_ship卸船
         $modify = $this->request->param('modify');//是否修改 true or false
-        $shipment_time = $this->request->param('shipment_time');  //实际开船时间
+        //判断港口数量是否对应的上
+        
         $dispatch_time = $this->request->param('dispatch_time');//离港时间
         $arrival_time  = $this->request->param('arrival_time'); //到港时间
-        $discharge_time = $this->request->param('discharge_time');//卸货时间
         // 查找是否存在
-        $id = Db::name('order_ship')->where('order_num',$order_num)->value('id');
+        $id = Db::name('order_ship')->where('order_num',$order_num)->column('id');
         if($modify){
             $map = array('shipment_time'=>$shipment_time,'dispatch_time'=>$dispatch_time,'arrival_time'=>$arrival_time,'discharge_time'=>$discharge_time);
         }

@@ -566,41 +566,44 @@
                     });
                 } else if (data.status == '待配船') {
                     // console.log(data);
-                    let arr = [];
+                    let arr = [];//表单数据
+ 
                     arr.push({port_id:data.s_port_code,port_name:data.s_port_name});
                     let code = data.m_port_code.split(',');
                     let name = data.m_port_name.split(',');
                     for (let i = 0; i < code.length; i++) {
                         arr.push({port_id:code[i],port_name:name[i]});                     
                     }
-                    arr.push({port_id:data.e_port_code,port_name:data.e_port_name});                    
+                    arr.push({port_id:data.e_port_code,port_name:data.e_port_name});
+                    $("<{:url('admin/order/cargo_plan_data')}>",{order_num:data.order_num},function(port){                    
                     $('#dai_post .dzh').html('');
                     for (let i = 0; i < arr.length-1; i++) {
                         if (i == arr.length-2) {
                         $('#dai_post .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
                         '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input">'+arr[i].port_name+'-'+arr[i+1].port_name+'<input type="hidden" name="e_port_code" value="'+arr[i+1].port_id+'" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="text" name="ship_name" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
+                        '<input type="text" name="ship_name" value="'+port[i].port_name+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="arrival_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
+                        '<input type="date" name="arrival_time" value="'+port[i].arrival_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="text" name="discharge_time" id="date2" lay-verify="date" placeholder="卸船时间" class="layui-input">'+
+                        '<input type="text" name="discharge_time" value="'+port[i].discharge_time+'" id="date2" lay-verify="date" placeholder="卸船时间" class="layui-input">'+
                         '</div></div>');
                         }else{
                         $('#dai_post .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
                         '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input">'+arr[i].port_name+'-'+arr[i+1].port_name+'<input type="hidden" name="e_port_code" value="'+arr[i+1].port_id+'" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="text" name="ship_name" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
+                        '<input type="text" name="ship_name" value="'+port[i].ship_name+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="arrival_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
+                        '<input type="date" name="arrival_time" value="'+port[i].arrival_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
                         '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="dispatch_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
+                        '<input type="date" name="dispatch_time" value="'+port[i].dispatch_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
                         '</div></div>');
                         }
                     }
 
                     laydate.render({
                         elem: '#date2'
+                    });
                     });
                     
                     layer.open({
