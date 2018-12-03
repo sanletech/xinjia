@@ -99,7 +99,7 @@
   padding-left: 0;
   padding-right: 25px; }
 
-#car, #pei_post, #at_mony, #at_port, #dai_post, #dc {
+#car, #dbgh, #dai_post, #dc {
   display: none;
   padding-right: 50px;
   margin-top: 10px; }
@@ -115,12 +115,16 @@
 .syd, .yunding, #container {
   display: none; }
 
-#container .ming > div, #dbgh .ming > div {
+#container .ming > div, #dbgh .ming > div, #dai_post .ming > div {
   text-align: center;
   font-size: 16px; }
-#container .gfth, #dbgh .gfth {
+#container .gfth, #dbgh .gfth, #dai_post .gfth {
   margin: 5px 0; }
-  #container .gfth > div, #dbgh .gfth > div {
+  #container .gfth > div, #dbgh .gfth > div, #dai_post .gfth > div {
     padding: 0 15px; }
+  #container .gfth .lu, #dbgh .gfth .lu, #dai_post .gfth .lu {
+    text-align: center;
+    line-height: 35px;
+    font-size: 18px; }
 
 /*# sourceMappingURL=order_list.css.map */
