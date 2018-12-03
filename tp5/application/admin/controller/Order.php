@@ -124,7 +124,7 @@ class Order extends Base
         $data = Db::name('order_car')
                 ->where('order_num',$order_num)
                 ->field('id,container_code,seal_No,driver_name')
-                ->find();
+                ->select();
         return json($data);
     }
     
