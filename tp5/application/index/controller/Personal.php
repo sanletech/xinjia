@@ -218,9 +218,9 @@ class Personal extends Base
         //获取当前页数
         $page= $this->request->param('page',1,'intval');  
         //计算出从那条开始查询
-        $tol=($page-1)*$limit;
+       
         $dataM =new dataM;
-        $list = $dataM->place_order($member_code,$tol,$limit,$map);
+        $list = $dataM->place_order($member_code,$page,$limit,$map);
         
 //        $this->_p($list);exit;
         $count =  count($list); 
@@ -252,7 +252,7 @@ class Personal extends Base
         //查询数据库的状态和柜子数量
         $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('container_sum,status,container_status')->find();
 
-        if($sqlData['container_status']==1 ){
+        if($sqlData['container_status']=='do' ){
             return  json(array('status'=>0,'message'=>'不可再录入柜号'));
         }
         $response =[];
@@ -273,7 +273,7 @@ class Personal extends Base
             return $status; 
         } 
         if(array_key_exists('fail', $response)){
-			    $message_code =implode('-',$response['fail']);
+                $message_code =implode('-',$response['fail']);
                 $status = array('status'=>0,'message'=>'报柜号失败'.$message_code);
         }  else {
                 $status = array('status'=>1,'message'=>'报柜号成功'); 
@@ -281,7 +281,8 @@ class Personal extends Base
                 //订单就修改报柜号完毕
                 //修改账单和订单的状态
                 if(count(array_filter($seal))==$sqlData['container_sum']){
-                    $res3 =Db::name('order_port')->where('order_num',$order_num)->update(['status'=>$this->order_status['sea_waybill'],'container_status'=>1]);
+                    $res3 =Db::name('order_port')->where('order_num',$order_num)
+                            ->update(['status'=>$this->order_status['sea_waybill'],'container_status'=>'do']);
                     $res3 ? $status = array('status'=>2,'message'=>'柜号封条号全部录完成功不可修改'):$status = array('status'=>0,'message'=>'录柜号状态修改失败');
                 }
             }

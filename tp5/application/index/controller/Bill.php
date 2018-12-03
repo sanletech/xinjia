@@ -38,15 +38,18 @@ class Bill extends Base
     public function billList() {
         //所用的账单 done 未完成 undone
         $type = $this->request->param('type');
+//        var_dump($type);exit;
         if($type=='done'){
-            $money_status ='not null';
+            $money_status = 'do';
         }elseif($type=='undone'){
-            $money_status = 0;
+            $money_status = 'nodo';
+        }elseif ($type=='all' ) {
+            $money_status ='not null';
         }
       
         $page =$this->request->param('page',1,'intval');
         $limit =$this->request->param('limit',10,'intval');
-        $tol = ($page-1)*$limit;
+    
         $member_code =Session::get('member_code','think');
         $list =Db::name('order_bill')->alias('OB')
                 ->join('hl_order_port OP','OB.order_num=OP.order_num','left')
@@ -55,7 +58,7 @@ class Bill extends Base
                 ->order('OB.ctime desc,OB.mtime desc')->buildSql();
 //var_dump($list);exit;
         $count = Db::table($list.' a')->count();
-        $list = Db::table($list.' a')->limit($tol,$limit)->select();
+        $list = Db::table($list.' a')->page($page,$limit)->select();
         //转换付款状态,账单状态，备注信息  $this->order_status
         foreach ($list as $key => $value) {
             switch ($value['status']) {
@@ -74,10 +77,10 @@ class Bill extends Base
                 break;
             }
             switch ($value['money_status']) {
-                case 0:
+                case 'nodo':
                 $list[$key]['money_status'] ='未付款';
                 break;
-                case 1:            
+                case 'do':            
                 $list[$key]['status'] ='已付款';
                 break;
                 default:

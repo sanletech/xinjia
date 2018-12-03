@@ -127,7 +127,7 @@
                     
                     <td class="tj_gh">
                       <!-- 有改变css('background-color','#00DB00') -->
-                      <{if condition="($vo['container_status']==1)"}>
+                      <{if condition="($vo['container_status']=='do')"}>
                       已补料
                       <{else /}>
                       <a href="javascript:;" onclick="cabinet('<{$vo.order_num}>','<{$vo.container_size}>',this)">提交柜号</a>
@@ -151,7 +151,7 @@
                     ?>
                       <!--<a href="javascript:void(0);">运单</a>-->
                     </td>
-                    <td class="fukuan"><?php if($vo['money_status']==0){echo"未付款";}else{echo"已付款";}?></td>
+                    <td class="fukuan"><?php if($vo['money_status']=='nodo'){echo"未付款";}else{echo"已付款";}?></td>
                     <td class="caozuo">
                       <a title="<{$vo['change_comment']}>"><{$vo.status_title}></a>
                     </td> 

@@ -2,8 +2,10 @@
 namespace app\admin\controller;
 use app\admin\common\Base;
 use think\Request;
-use app\admin\model\orderPort as OrderM;
+use app\admin\model\OrderPort as OrderM;
 use think\Db;
+use app\admin\model\OrderProcess as  OrderProcessM;
+use app\admin\controller\OrderProcess as OrderProcessC;
 use app\index\model\Order as IndexOrderM;
 
 class OrderPort extends Base
@@ -18,74 +20,7 @@ class OrderPort extends Base
     }
 
 
-    public function Upload($order_num,$type,$file)
-    {
-        // 获取表单上传文件,订单号，上传文件的类别 
-        // sea_waybill 水运单  book_note 订舱单
-        $rename = $order_num.'_'.$type;
-         // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->validate(['size'=>2097152,'ext'=>'text,txt,pdf,docx,doc,docm,dotx,dotm'])
-                 ->move(ROOT_PATH . 'public' . DS . 'uploads/files',$rename);
-        if($info){
-            $reFile = str_replace('.','_',$info->getSaveName());
-            $res = Db::name('order_port')->where('order_num',$order_num)
-                    ->update([$type=>$reFile]);    
-            return  array('status'=>1,'mssage'=>'提交成功');
-           // }
-        }else{
-            // 上传失败获取错误信息
-            return array('status'=>0,'mssage'=>$file->getError());
-        }
-
-
-    }
-    
-    public function downs(){    
-            $order_name = $this->request->param('order_num');    //下载文件名 
-            $type = $this->request->param('type'); //文件类型
-            $file = Db::name('order_port')->where('order_num',$order_name)->value($type);
-           
-            //将后缀修改成.
-            $file_Extension= strstr(strrev($file),'_',true);
-            $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
-//              var_dump($file_name);exit;
-            $file_dir = ROOT_PATH . 'public' . DS . 'uploads/files';        //下载文件存放目录    
-            //检查文件是否存在    
-//            var_dump($file_dir .DS. $file_name);exit;
-            if (! file_exists ($file_dir .DS. $file_name)) {    
-                echo "文件找不到";    
-                exit ();    
-            } else {    
-                //打开文件
-//                var_dump($file_dir .DS. $file_name);
-                $file = fopen ($file_dir .DS. $file_name, "r" );    
-                //输入文件标签     
-                Header ( "Content-type: application/octet-stream" );    
-                Header ( "Accept-Ranges: bytes" );    
-                Header ( "Accept-Length: " . filesize ($file_dir .DS. $file_name) );    
-                Header ( "Content-Disposition: attachment; filename=" . $file_name );    
-                //输出文件内容     
-                //读取文件内容并直接输出到浏览器    
-                echo fread ( $file, filesize ($file_dir .DS. $file_name) );    
-                fclose ( $file );    
-                exit ();    
-            }    
-
-        }
-
-    //审核订单的列表页面
-    public function order_audit() 
-    {
-        $data = new OrderM;
-        $list = $data->order_audit($this->page,$this->order_status['order_audit']);
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count',$count);
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        return $this->view->fetch('orderPort/order_audit'); 
-    }
-        //审核详情页
+    //审核详情页
     public function audit_page()
     {   
         $order_num =  $this->request->get('order_num');
@@ -99,44 +34,45 @@ class OrderPort extends Base
             'carData'=> $dataArr['carData'],
             'shipperArr'=>$dataArr['shipperArr'],
             'consignerArr'=>$dataArr['consignerArr'],
-            'discount'=>$dataArr['discount']
         ]);
         return $this->view->fetch('orderPort/audit_page');
     }
-    //审核页面的 订单通过或取消
-    public function order_judgment() {
-        $order_num = $this->request->param('order_num');
-        $type = $this->request->param('type');
-        $comment = $this->request->param('reject');
-        if($type=='pass'){
-            $title='订单审核pass';
-            $status =  $this->order_status['booking_note'];
-        }elseif ($type=='fail') {
-            $title='订单审核fail';
-            $status =  $this->order_status['cancel'];
-        }
-        $data = new OrderM;
-        $response = $data->orderUpdate($order_num,$status,$title,$comment);
-//        var_dump($response);exit;
-        return json($response);
-    }
-    
+
   
     //上传订舱单文件,运单号和 水运单文件
     //参数 type= booking_note或者sea_waybill
     //订单号码
     public function waybill_upload(){
-        $data= $this->request->param();
-        // var_dump($data);exit;
         $file = request()->file('file');
         $order_num = $this->request->param('order_num');
-        $type = $this->request->param('type');
-        $track_num= $this->request->param('track_num');
-        if(!empty(trim($track_num))){
-           $res1= Db::name('order_port')->where('order_num',$order_num)->update(['track_num'=>$track_num]);
+        $type = trim($this->request->param('type'));
+        if(!($type=='book_note'||$type=='sea_waybill')){
+            return FALSE;
         }
-        $res =$this->Upload($order_num,$type,$file);
-        return $res;
+        $track_num= $this->request->param('track_num');
+        $OrderProcessC =  new OrderProcessC;
+        $res =$OrderProcessC->Upload($order_num,$type,$file);
+        //上传成功就更改状态
+        if($res['status']=='1'){
+                $OrderProcessM = new OrderProcessM();
+                if($type=='book_note'){
+                    $status =  $this->order_status['send_car'];
+                    $title ='上传订舱单->待客户提交柜号';
+                    if(!empty(trim($track_num))){
+                        $map =['track_num'=>$track_num,'container_status'=>'do'];
+                        $res= Db::name('order_port')->where('order_num',$order_num)->update($map);
+                    }
+                }elseif ($type=='sea_waybill') {
+                    $status =  $this->order_status['send_car'];
+                    $title ='上传水运单->待通过放柜';
+                }
+                //更改状态
+                $res1 = $OrderProcessM->orderUpdate($order_num,$status,$title);
+                return $res1; 
+        }  else {
+            
+            return $res;
+        }
         
     }
 
@@ -180,18 +116,21 @@ class OrderPort extends Base
             (count($map['A.status'])-1) ? $map['A.status'][]='or':$map['A.status']= $map['A.status']['0'];
         }
         $have_money =$this->request->param('have_money'); //未收款
-        $have_money?$map['A.money_status'][1][]='0':'';
+        $have_money?$map['A.money_status'][1][]='nodo':'';
         $no_money =$this->request->param('no_money');//已经收款
-        $no_money?$map['A.money_status'][1][]='1':'';
+        $no_money?$map['A.money_status'][1][]='do':'';
+
         if(array_key_exists('A.money_status', $map)){
             array_unshift($map['A.money_status'],'in'); //插入条件in
         } 
-        
+//        var_dump($map['A.money_status']);exit;
         $completion = $this->request->param('completion','undone','strval'); //订单完成 默认未完成
         if(!array_key_exists('A.status', $map)){
             if($completion=='undone'){
                 $map['A.status'][]='in';
-                $map['A.status'][]=array($this->order_status['booking_note'],$this->order_status['up_container_code'],$this->order_status['sea_waybill']);
+                $map['A.status'][]=array($this->order_status['booking_note'],
+                    $this->order_status['up_container_code'],
+                    $this->order_status['sea_waybill']);
             }elseif($completion=='done'){
                 $map['A.status']=null;//清空选择的上传订舱和水运单
                 $map['A.status'][]='in';
@@ -225,10 +164,8 @@ class OrderPort extends Base
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数
         $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
         $data = new OrderM;
-        $lists = $data->order_status($tol,$limit,$map);
+        $lists = $data->order_status($page,$limit,$map);
 //        $this->_p($lists);exit;
         return array('code'=>0,'msg'=>'','count'=>$lists['count'],'data'=>$lists['list']);
          
@@ -357,7 +294,9 @@ class OrderPort extends Base
         $sql ="update hl_order_port  set `extra_info` =concat(ifnull(`extra_info`,''),',$extra_info') where order_num= '$order_num'";
 //        var_dump($sql);exit;
         $res = Db::execute($sql);
+        $OrderProcessM = new OrderProcessM();
         if($res!==FALSE){
+            $OrderProcessM->orderUpdate($order_num,$status='0',$title='添加备注');
             return array('status'=>1,'message'=>'执行成功');
         }
         return  array('status'=>0,'message'=>'执行失败');

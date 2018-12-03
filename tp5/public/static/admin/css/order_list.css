@@ -115,4 +115,12 @@
 .syd, .yunding, #container {
   display: none; }
 
+#container .ming > div, #dbgh .ming > div {
+  text-align: center;
+  font-size: 16px; }
+#container .gfth, #dbgh .gfth {
+  margin: 5px 0; }
+  #container .gfth > div, #dbgh .gfth > div {
+    padding: 0 15px; }
+
 /*# sourceMappingURL=order_list.css.map */

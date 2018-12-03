@@ -15,8 +15,8 @@ return [
                     'loading'=>5, //装货信息录入
         'up_container_code'=>7,// 提交柜号
                     'load_ship'=>8, //配船
-                    'arrive_port '=>9, //到港
-                    'unload_ship'=>10, //卸船
+//                    'arrive_port '=>9, //到港
+//                    'unload_ship'=>10, //卸船
         'payment_status'=>11,//更改付款状态,在线支付就不需要
         'sea_waybill'=>12,//上传水运单
             'container_appley'=>13, //发起申请放柜
