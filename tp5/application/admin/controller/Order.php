@@ -161,7 +161,6 @@ class Order extends Base
     
     }
         
-
     
     //待报柜号
     public function report_container () {
@@ -204,9 +203,9 @@ class Order extends Base
                     ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
                     ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
                     ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
-                    ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
-                    ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
-                    ->join('hl_port P3','P3.port_code=SM.sl_middle','left')//中间港口
+                    ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
+                    ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
+                    ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
                     ->field('P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,'
                     . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
@@ -242,9 +241,9 @@ class Order extends Base
     //待配船  判断倒数第二个港口离港时间录完就自动申请放柜
     public function  cargo_plan(){
         $order_num = $this->request->param('order_num');
-        $modify = $this->request->param('modify');//是否修改 true or false
-        $lists  =  $this->request->param('list');
-        $tmp =[];
+        $lists  =  $this->request->only('list');
+        $lists  = $lists['list'];
+        $tmp =[]; $data_tmp=[];
         $mtime =  date('Y-m-d H:i:s');
         //判断港口数量是否对应的上
         $data = Db::name('order_ship')
@@ -260,26 +259,26 @@ class Order extends Base
             $result = array_diff_assoc($lists[$key],$data[$key]);
             //如果为空 说明有未更改的,记录未更改的港口
             if(empty($result)){
-                $tmp['port_code'][]=$value['port_code'];
+                $data_tmp[]=$value['port_code'];
+                continue;
             }
-            $tmp['port_code'] = array_key_exists('port_code', $result)? true :false;
-            $tmp['port_name'] = array_key_exists('port_name', $result)? true :false;
-            $tmp['ship_name'] = array_key_exists('ship_name', $result)? true :false;
-            //不符合数据库的数据
-            if(in_array(true, $tmp)){
-                $illegal_data  = array_intersect_key($value,array_flip(array_keys($tmp,true)) );
-                return json(array('status'=>0,'message'=>'数据冲突'.implode(',', $illegal_data) ));
-            }
+             array_key_exists('port_code', $result)? $tmp[]=$value['port_name'] :FALSE;
+//            $tmp['port_name'] = array_key_exists('port_name', $result)? 1 :0;
+//            $tmp['ship_name'] = array_key_exists('ship_name', $result)? 1 :0;
         } 
-          
-            //数据验证无问题，更新数据库
+        //不符合数据库的数据
+        if(!empty($tmp)){
+            return json(array('status'=>0,'message'=>'数据冲突'.implode(',', $tmp) ));
+        }  
+        
+        //数据验证无问题，更新数据库
         foreach ($lists as $list){
             //过滤空的数据
             if(count(array_filter($list))==1){
                 continue;
             }
             //过滤和数据库里没有变化的数据
-            if(in_array($list['port_code'],$tmp['port_code'])){
+            if(in_array($list['port_code'], $data_tmp)){
                 continue;
             }
             $list['mtime']=$mtime;
@@ -297,9 +296,6 @@ class Order extends Base
         
     }
      
-
-        
-    
     
     //订单处理页面
     public function order_public() {
