@@ -138,8 +138,14 @@ class OrderPort extends Model
                 ->where('type','load')
                 ->field('container_code,seal')->select();
             //派车信息
-      
-            
+            $carData['r']=Db::name('order_car')
+                ->where('order_num',$order_num)
+                ->where('type','load')
+                ->field('id,order_num,car_id,driver_id,mtime,type',TRUE)
+                ->select();
+            //船期动态
+            $shipData = Db::name('order_ship')->where('order_num',$order_num)
+                    ->field('id,order_num,mtime',TRUE);
         }  
 
         $shipperArr= explode(',',$list['shipper']); 
@@ -169,11 +175,12 @@ class OrderPort extends Model
                 break; 
         }
         $list['extra_info'] = ltrim($list['extra_info'],','); 
-        
         $list['completion']= ($list['status']== $this->order_status['completion'])?true:false;
-
-        return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
-        
+        if($oder_type=='P'){
+            return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
+        }  else {
+            return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr,'shipData'=>$shipData); 
+        }
     }
     
 
