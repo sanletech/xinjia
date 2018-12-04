@@ -220,7 +220,7 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
   var container_code ='';//提交柜号
   var sea_waybill = '';//水运单
   var no_money = 'no_money';//未收款
-  var have_money ='';//已收款
+  var have_money ='have_money';//已收款
 
   var d = new Date()//当前时间
   d.setMonth(d.getMonth()-3);//减去三个月
@@ -297,7 +297,7 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
       } else {
         no_money = '';
       }
-    }else if (data.value == 'have_money') {//判断已收款
+    }else if (data.value == 'have_money') {//判断已收款      
       if (data.elem.checked) {
         have_money = 'have_money';
       } else {
@@ -385,7 +385,7 @@ $('.cha').click(function(){
   let start_name = $("#start_add").val();//港口起始名
   let end_id = $("input[name='end_id']").val();//港口结束ID
   let end_name = $("#end_add").val();//港口结束名
-  let ship_id = $('#ship_company').val();//船公司ID
+  let ship_id = $('#ship_company').val();//船公司ID  
   biao.reload({
     where:{
       company:company,
