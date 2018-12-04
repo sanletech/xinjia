@@ -109,12 +109,13 @@ class OrderPort extends Model
                 ->where('OP.type','port')
                 ->group('OP.id')
                 ->find();
-
+        //根据订单号的信息判断是港到港还是门到门
+        $oder_type = substr($order_num, 0,1);
+        if($oder_type=='P'){
         //根据订单号 查询对应柜子的 柜号和封条号码
-        $containerData =Db::name('order_truckage')->alias('OT')
-                ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
-                ->where('OT.order_num',$order_num)->where('OT.type','s')
-                ->field('OT.container_code,OT.seal')->select();
+        $containerData =Db::name('order_truckage')
+            ->where('order_num',$order_num)->where('type','s')
+            ->field('container_code,seal')->select();
         
         //根据订单查询出拖车信息
         $carData['r'] =Db::name('order_truckage')
@@ -130,7 +131,16 @@ class OrderPort extends Model
                 ->where('type','s')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
- 
+        }elseif ($oder_type=='D') {
+            //封条号
+            $containerData = Db::name('order_car')
+                ->where('order_num',$order_num)
+                ->where('type','load')
+                ->field('container_code,seal')->select();
+            //派车信息
+      
+            
+        }  
 
         $shipperArr= explode(',',$list['shipper']); 
         $consignerArr= explode(',',$list['consigner']); 
