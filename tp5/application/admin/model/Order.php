@@ -16,7 +16,6 @@ class Order extends Model
   
     }   
     
-    
       //订单的详细信息
     public function orderData($order_num) {
         $list =Db::name('order_port')->alias('OP')
