@@ -127,14 +127,24 @@
     line-height: 35px;
     font-size: 18px; }
 
-#dai_post .ming > div span {
-  line-height: 45px;
-  font-size: 16px; }
+#dai_post .xian {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #aaa;
+  overflow: hidden; }
+  #dai_post .xian:nth-last-child(1) {
+    border-bottom: 0; }
 #dai_post .dzh .gfth {
   margin: 10px 0; }
   #dai_post .dzh .gfth .lu {
     line-height: 75px; }
-  #dai_post .dzh .gfth .ps {
-    padding-top: 17px; }
+  #dai_post .dzh .gfth .inpt input {
+    width: 40%;
+    float: left; }
+  #dai_post .dzh .gfth .inpt .he {
+    float: left;
+    width: 2%;
+    line-height: 35px;
+    margin: 0 4%; }
 
 /*# sourceMappingURL=order_list.css.map */

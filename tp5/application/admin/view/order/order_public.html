@@ -215,35 +215,80 @@
             <input type="text" name="track_num">
         </div>
 
-        <div class="layui-col-xs12 ming">
-            <div class="layui-col-xs3">
-                <span>航线</span>                
-            </div>
-            <div class="layui-col-xs3">
-                到港时间<br/>离港时间
-            </div>
-            <div class="layui-col-xs3">
-                <span>船名</span>                
-            </div>
+        <div class="dai">
+            <div class="xian">
+                <div class="layui-col-xs12 ming">
+                    <div class="layui-col-xs5">
+                        黄骅港
+                    </div>
+                    <div class="layui-col-xs2">
+                        船名
+                    </div>
             
-            <div class="layui-col-xs3">
-                到港时间<br/>离港时间
+                    <div class="layui-col-xs5">
+                        清远港
+                    </div>
+                </div>
+            
+                <div class="dzh">
+                    <div class="layui-col-xs12 gfth">
+                        <div class="layui-col-xs3 lu">
+                            <input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5 inpt">
+                            <input type="text" name="arrival_time" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item">
+                            <div class="he">-</div>
+                            <input type="text" name="dispatch_time" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item">
+                        </div>
+                        <div class="layui-col-xs2 ps">
+                            <input type="text" name="ship_name" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5 inpt">
+                            <input type="text" name="arrival_time" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item">
+                            <div class="he">-</div>
+                            <input type="text" name="dispatch_time" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="xian">
+                <div class="layui-col-xs12 ming">
+                    <div class="layui-col-xs5">
+                        黄骅港
+                    </div>
+                    <div class="layui-col-xs2">
+                        船名
+                    </div>
+            
+                    <div class="layui-col-xs5">
+                        清远港
+                    </div>
+                </div>
+            
+                <div class="dzh">
+                    <div class="layui-col-xs12 gfth">
+                        <div class="layui-col-xs3 lu">
+                            <input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5 inpt">
+                            <input type="text" name="arrival_time" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item">
+                            <div class="he">-</div>
+                            <input type="text" name="dispatch_time" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item">
+                        </div>
+                        <div class="layui-col-xs2 ps">
+                            <input type="text" name="ship_name" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5 inpt">
+                            <input type="text" name="arrival_time" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item">
+                            <div class="he">-</div>
+                            <input type="text" name="dispatch_time" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="dzh">
-            <div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">
-            <input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input">黄骅港-清远港<input type="hidden" name="e_port_code" value="'+arr[i+1].port_id+'" class="layui-input">
-            </div><div class="layui-col-xs3">
-            <input type="date" name="s_arrival_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-            <input type="date" name="s_dispatch_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-            </div><div class="layui-col-xs3 ps">
-            <input type="text" name="ship_name" value="" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">
-            </div><div class="layui-col-xs3">
-            <input type="date" name="e_arrival_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-            <input type="date" name="e_dispatch_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-            </div></div>
-        </div>
+        
     </form>
 
     <script type="text/html" id="toolbarDemo1">
@@ -585,48 +630,111 @@
                     }
                     arr.push({port_id:data.e_port_code,port_name:data.e_port_name}); 
                     $.get("<{:url('admin/order/cargo_plan_data')}>",{order_num:data.order_num},function(res){         
-                    $('#dai_post .dzh').html('');
+                    $('#dai_post .dai').html('');
                     for (let i = 0; i < arr.length-1; i++) {
-                        if (i == arr.length-2) {
-                        $('#dai_post .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
-                        '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input in">'+arr[i].port_name+'-'+arr[i+1].port_name+'<input type="hidden" name="e_port_code" value="'+arr[i+1].port_id+'" class="layui-input ip">'+
-                        '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="s_arrival_time" value="'+arr[i].s_arrival_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input in">'+
-                        '<input type="date" name="s_dispatch_time" value="'+arr[i].s_dispatch_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input in">'+
-                        '</div><div class="layui-col-xs3 ps">'+
-                        '<input type="text" name="ship_name" value="'+arr[i].ship_name+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input">'+
-                        '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="e_arrival_time" value="'+arr[i].e_arrival_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input ip">'+
-                        '<input type="text" name="e_dispatch_time" value="'+arr[i].e_dispatch_time+'" id="date2" lay-verify="date" placeholder="卸船时间" class="layui-input ip">'+
-                        '</div></div>');
+                        if (i == 0) {
+                            $('#dai_post .dai').append('<div class="xian"><div class="layui-col-xs12 ming">'+
+                            '<div class="layui-col-xs5">'+arr[i].port_name+'</div><div class="layui-col-xs2">'+
+                            '船名</div><div class="layui-col-xs5">'+arr[i+1].port_name+'</div></div>'+
+                            '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
+                            '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input in">'+
+                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="text" name="arrival_time" value="'+arr[i].s_arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in">'+
+                            '<div class="he">-</div>'+
+                            '<input type="text" name="dispatch_time" value="'+arr[i].s_dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in">'+
+                            '</div><div class="layui-col-xs2 ps">'+
+                            '<input type="text" name="ship_name" value="'+arr[i].s_arrival_time+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input in">'+
+                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="text" name="arrival_time" value="'+arr[i].e_arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item" ac ="d'+i+'">'+
+                            '<div class="he">-</div>'+
+                            '<input type="text" name="dispatch_time" value="'+arr[i].e_dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item" ac="l'+i+'">'+
+                            '</div></div></div></div>');
+                        }else if(i == arr.length-2){
+                            $('#dai_post .dai').append('<div class="xian"><div class="layui-col-xs12 ming">'+
+                            '<div class="layui-col-xs5">'+arr[i].port_name+'</div><div class="layui-col-xs2">'+
+                            '船名</div><div class="layui-col-xs5">'+arr[i+1].port_name+'</div></div>'+
+                            '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
+                            '<input type="hidden" name="port_code" value="'+arr[i].port_id+'" class="layui-input in"><input type="hidden" name="port_code" value="'+arr[i+1].port_id+'" class="layui-input ip">'+
+                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="text" name="arrival_time" value="'+arr[i].s_arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i-1]+'">'+
+                            '<div class="he">-</div>'+
+                            '<input type="text" name="dispatch_time" value="'+arr[i].s_dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
+                            '</div><div class="layui-col-xs2 ps">'+
+                            '<input type="text" name="ship_name" value="'+arr[i].s_arrival_time+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input in">'+
+                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="text" name="arrival_time" value="'+arr[i].e_arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item ip">'+
+                            '<div class="he">-</div>'+
+                            '<input type="text" name="dispatch_time" value="'+arr[i].e_dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item ip">'+
+                            '</div></div></div></div>');
                         }else{
-                        $('#dai_post .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
-                        '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input in">'+arr[i].port_name+'-'+arr[i+1].port_name+'<input type="hidden" name="e_port_code" value="'+arr[i+1].port_id+'" class="layui-input">'+
-                        '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="s_arrival_time" value="'+arr[i].s_arrival_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input in">'+
-                        '<input type="date" name="s_dispatch_time" value="'+arr[i].s_dispatch_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input in">'+
-                        '</div><div class="layui-col-xs3 ps">'+
-                        '<input type="text" name="ship_name" value="'+arr[i].s_arrival_time+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input in">'+
-                        '</div><div class="layui-col-xs3">'+
-                        '<input type="date" name="e_arrival_time" value="'+arr[i].e_arrival_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
-                        '<input type="date" name="e_dispatch_time" value="'+arr[i].e_dispatch_time+'" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">'+
-                        '</div></div>');
+                            $('#dai_post .dai').append('<div class="xian"><div class="layui-col-xs12 ming">'+
+                            '<div class="layui-col-xs5">'+arr[i].port_name+'</div><div class="layui-col-xs2">'+
+                            '船名</div><div class="layui-col-xs5">'+arr[i+1].port_name+'</div></div>'+
+                            '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
+                            '<input type="hidden" name="s_port_code" value="'+arr[i].port_id+'" class="layui-input in">'+
+                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="text" name="arrival_time" value="'+arr[i].s_arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i-1]+'">'+
+                            '<div class="he">-</div>'+
+                            '<input type="text" name="dispatch_time" value="'+arr[i].s_dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
+                            '</div><div class="layui-col-xs2 ps">'+
+                            '<input type="text" name="ship_name" value="'+arr[i].s_arrival_time+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input in">'+
+                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="text" name="arrival_time" value="'+arr[i].e_arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item" ac="d'+i+'">'+
+                            '<div class="he">-</div>'+
+                            '<input type="text" name="dispatch_time" value="'+arr[i].e_dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item" ac="l'+i+'">'+
+                            '</div></div></div></div>');
                         }
                     }
-
-                    laydate.render({
-                        elem: '#date2'
+                    //加载JS时间
+                    function sj(){
+                        lay('.test-item').each(function(){
+                        laydate.render({
+                            elem: this
+                            ,trigger: 'click'
+                            ,done: function(value){
+                                let str = $(this.elem).attr('ac');
+                                if (str) {
+                                    $('#dai_post .dai .xian input[ac="'+str+'"]').val(value);
+                                }
+                            }
+                        });
                     });
+                    }
+                    
+                    //获取当前待配船的input
+                    let inp1 = $('#dai_post .dai .xian input');
+                    //当input有值改成只读
+                    inp1.each(function(){
+                        if ($(this).val()) {
+                            $(this).css('border','0');
+                            $(this).attr('readonly','readonly');
+                            $(this).removeClass('test-item');
+                            sj();
+                        }
                     })
+
+
+                    });
                     
                     layer.open({
                         type: 1
                         , title: '待配船,订单号：'+data.order_num+'  运单号：'+data.track_num
                         , shadeClose: true
                         , area: ['800px', '400px']
-                        , btn: ['确认']
+                        , btn: ['修改','确认']
                         , content: $('#dai_post')
-                        , yes: function (index) {
+                        , yes: function(index){
+                            //点击修改的时候改变样式
+                            inp1.each(function(){
+                                $(this).css('border','1px solid #e6e6e6');
+                                $(this).removeAttr('readonly','readonly');
+                                if ($(this).attr('lay-verify') == 'date') {
+                                    $(this).addClass('test-item');
+                                }
+                                sj();
+                            })
+                        }
+                        , btn2: function (index) {
                             let list = fun_inp($('#dai_post .dzh .gfth')); 
                             let obj = {};//最后一次到港时间                    
                             $('#dai_post .dzh .gfth .ip').each(function(index,item){
