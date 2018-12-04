@@ -198,7 +198,7 @@ class Order extends Base
                 ->where('order_num',$order_num)
                 ->order('sequence')->select();
         //如果为空 就生成 对应的数据
-        if($data){
+        if(empty($data)){
             $port_arr  = Db::name('order_port')->alias('OP')
                     ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
                     ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
@@ -222,17 +222,17 @@ class Order extends Base
             foreach ($m_port_name as $key=>$value){
                 $insert_data[$key+1]['order_num'] = $order_num;
                 $insert_data[$key+1]['sequence'] = $key+1;
-                $insert_data[$key+1]['port_name'] = $m_port_name[$key]['m_port_name'];
-                $insert_data[$key+1]['port_code'] = $m_port_code[$key]['m_port_code'];
+                $insert_data[$key+1]['port_name'] = $m_port_name[$key];
+                $insert_data[$key+1]['port_code'] = $m_port_code[$key];
             }
             $insert_data[$key+2]['order_num'] = $order_num;
-            $insert_data[$key+2]['sequence'] = $key+1;
+            $insert_data[$key+2]['sequence'] = $key+2;
             $insert_data[$key+2]['port_name'] = $port_arr['s_port_name'];
             $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
             $res = Db::name('order_ship')->insertAll($insert_data);
-            foreach ($insert_data as $key=>$value){
-                $insert_data[$key]['arrival_time']='';
-                $insert_data[$key]['dispatch_time']='';
+            foreach ($insert_data as $k=>$v){
+                $insert_data[$k]['arrival_time']='';
+                $insert_data[$k]['dispatch_time']='';
             }
             return json( $res ?  $insert_data: FALSE);    
         }
@@ -241,7 +241,7 @@ class Order extends Base
     
     //待配船  判断倒数第二个港口离港时间录完就自动申请放柜
     public function  cargo_plan(){
-        $this->_p( $this->request->param());exit;
+        // $this->_p( $this->request->param());exit;
         $order_num = $this->request->param('order_num');
         $modify = $this->request->param('modify');//是否修改 true or false
         $lists  =  $this->request->param('list');
@@ -274,7 +274,7 @@ class Order extends Base
             //数据验证无问题，更新数据库
             foreach ($lists as $list){
                 //过滤空的数据
-                if(count(array_filter($list))=1){
+                if(count(array_filter($list))==1){
                     continue;
                 }
                 //过滤和数据库里没有变化的数据
@@ -303,7 +303,6 @@ class Order extends Base
     
     //订单处理页面 数据
     public function order_data() {
-        
         $data= $this->request->except('limit,page');   
         $limit= $this->request->param('limit',10,'intval'); //获取每页显示的条数
         $page= $this->request->param('page',1,'intval');   //获取当前页数
