@@ -621,7 +621,8 @@
                     });
                 } else if (data.status == '待配船') {
                     // console.log(data);
-                    let arr = [];
+                    let arr = [];//表单数据
+ 
                     arr.push({port_id:data.s_port_code,port_name:data.s_port_name});
                     let code = data.m_port_code.split(',');
                     let name = data.m_port_name.split(',');

@@ -196,23 +196,102 @@ class Order extends Base
         $order_num =$this->request->param('order_num');
         $data = Db::name('order_ship')
                 ->where('order_num',$order_num)
-                ->find();
+                ->order('sequence')->select();
+        //如果为空 就生成 对应的数据
+        if($data){
+            $port_arr  = Db::name('order_port')->alias('OP')
+                    ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
+                    ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
+                    ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
+                    ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
+                    ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
+                    ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
+                    ->join('hl_port P3','P3.port_code=SM.sl_middle','left')//中间港口
+                    ->field('P1.port_name s_port_name ,P1.port_code s_port_code,'
+                    . 'P2.port_name e_port_name,P2.port_code e_port_code,'
+                    . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
+                    . 'group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
+                    ->group('OP.id')->where('OP.order_num',$order_num)->find();
+            $insert_data =[];
+            $insert_data[0]['order_num'] = $order_num;
+            $insert_data[0]['sequence'] = 0;
+            $insert_data[0]['port_name'] = $port_arr['s_port_name'];
+            $insert_data[0]['port_code'] = $port_arr['s_port_code'];
+            $m_port_name = explode(',', $port_arr['m_port_name']);
+            $m_port_code = explode(',', $port_arr['m_port_code']);
+            foreach ($m_port_name as $key=>$value){
+                $insert_data[$key+1]['order_num'] = $order_num;
+                $insert_data[$key+1]['sequence'] = $key+1;
+                $insert_data[$key+1]['port_name'] = $m_port_name[$key]['m_port_name'];
+                $insert_data[$key+1]['port_code'] = $m_port_code[$key]['m_port_code'];
+            }
+            $insert_data[$key+2]['order_num'] = $order_num;
+            $insert_data[$key+2]['sequence'] = $key+1;
+            $insert_data[$key+2]['port_name'] = $port_arr['s_port_name'];
+            $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
+            $res = Db::name('order_ship')->insertAll($insert_data);
+            foreach ($insert_data as $key=>$value){
+                $insert_data[$key]['arrival_time']='';
+                $insert_data[$key]['dispatch_time']='';
+            }
+            return json( $res ?  $insert_data: FALSE);    
+        }
         return json($data); 
     }
     
     //待配船  判断倒数第二个港口离港时间录完就自动申请放柜
     public function  cargo_plan(){
+        $this->_p( $this->request->param());exit;
         $order_num = $this->request->param('order_num');
-        $type = $this->request->param('type'); // load_ship配船 arrive_port到港 unload_ship卸船
         $modify = $this->request->param('modify');//是否修改 true or false
-        $shipment_time = $this->request->param('shipment_time');  //实际开船时间
-        $dispatch_time = $this->request->param('dispatch_time');//离港时间
-        $arrival_time  = $this->request->param('arrival_time'); //到港时间
-        $discharge_time = $this->request->param('discharge_time');//卸货时间
-        // 查找是否存在
-        $id = Db::name('order_ship')->where('order_num',$order_num)->value('id');
-        if($modify){
-            $map = array('shipment_time'=>$shipment_time,'dispatch_time'=>$dispatch_time,'arrival_time'=>$arrival_time,'discharge_time'=>$discharge_time);
+        $lists  =  $this->request->param('list');
+        $tmp =[];
+        //判断港口数量是否对应的上
+        $data = Db::name('order_ship')
+                ->where('order_num',$order_num)
+                ->field('port_name,port_code,ship_name,arrival_time,dispatch_time')
+                ->order('sequence')->select();
+        if(count($data) !== count($list)){
+            return json(array('status'=>0,'message'=>'参数错误'));
+        }else{
+            foreach ($data as $key => $value) {
+                //对数据和数据库做比对
+                $result = array_diff_assoc($lists[$key],$data[$key]);
+                //如果为空 说明有未更改的,记录未更改的港口
+                if(empty($result)){
+                    $tmp['port_code'][]=$value['port_code'];
+                }
+                $tmp['port_code'] = array_key_exists('port_code', $result)? true :false;
+                $tmp['port_name'] = array_key_exists('port_name', $result)? true :false;
+                $tmp['ship_name'] = array_key_exists('ship_name', $result)? true :false;
+                //不符合数据库的数据
+                if(in_array(true, $tmp)){
+                    $illegal_data  = array_intersect_key($value,array_flip(array_keys($tmp,true)) );
+                    return json(array('status'=>0,'message'=>'数据冲突'.implode(',', $illegal_data) ));
+                }
+            } 
+            $mtime =  date('Y-m-d H:i:s');
+            //数据验证无问题，更新数据库
+            foreach ($lists as $list){
+                //过滤空的数据
+                if(count(array_filter($list))=1){
+                    continue;
+                }
+                //过滤和数据库里没有变化的数据
+                if(in_array($list['port_code'],$tmp['port_code'])){
+                    continue;
+                }
+                $list['mtime']=$mtime;
+                $res = Db::name('order_ship')
+                        ->where(['order_num'=>$order_num,'port_code'=>$list['port_code']])
+                        ->update($list);
+                $res ? $tmp['success'][]=$list['port_name'] :$tmp['fail'][]=$list['port_name'];
+            }
+            if(array_key_exists('fail', $tmp)){
+                return json(array('status'=>0,'message'=>'更新失败.'.implode(',', $tmp['fail'])));
+            }  else {
+                return json(array('status'=>1,'message'=>'更新成功.'.implode(',', $tmp['success'])));
+            }
         }
         
     }
