@@ -231,7 +231,8 @@ class Order extends Base
             $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
             $res = Db::name('order_ship')->insertAll($insert_data);
             foreach ($insert_data as $key=>$value){
-                $insert_data[$key];
+                $insert_data[$key]['arrival_time']='';
+                $insert_data[$key]['dispatch_time']='';
             }
             return json( $res ?  $insert_data: FALSE);    
         }
@@ -243,14 +244,54 @@ class Order extends Base
         $this->_p( $this->request->param());exit;
         $order_num = $this->request->param('order_num');
         $modify = $this->request->param('modify');//是否修改 true or false
+        $lists  =  $this->request->param('list');
+        $tmp =[];
         //判断港口数量是否对应的上
-        
-        $dispatch_time = $this->request->param('dispatch_time');//离港时间
-        $arrival_time  = $this->request->param('arrival_time'); //到港时间
-        // 查找是否存在
-        $id = Db::name('order_ship')->where('order_num',$order_num)->column('id');
-        if($modify){
-            $map = array('shipment_time'=>$shipment_time,'dispatch_time'=>$dispatch_time,'arrival_time'=>$arrival_time,'discharge_time'=>$discharge_time);
+        $data = Db::name('order_ship')
+                ->where('order_num',$order_num)
+                ->field('port_name,port_code,ship_name,arrival_time,dispatch_time')
+                ->order('sequence')->select();
+        if(count($data) !== count($list)){
+            return json(array('status'=>0,'message'=>'参数错误'));
+        }else{
+            foreach ($data as $key => $value) {
+                //对数据和数据库做比对
+                $result = array_diff_assoc($lists[$key],$data[$key]);
+                //如果为空 说明有未更改的,记录未更改的港口
+                if(empty($result)){
+                    $tmp['port_code'][]=$value['port_code'];
+                }
+                $tmp['port_code'] = array_key_exists('port_code', $result)? true :false;
+                $tmp['port_name'] = array_key_exists('port_name', $result)? true :false;
+                $tmp['ship_name'] = array_key_exists('ship_name', $result)? true :false;
+                //不符合数据库的数据
+                if(in_array(true, $tmp)){
+                    $illegal_data  = array_intersect_key($value,array_flip(array_keys($tmp,true)) );
+                    return json(array('status'=>0,'message'=>'数据冲突'.implode(',', $illegal_data) ));
+                }
+            } 
+            $mtime =  date('Y-m-d H:i:s');
+            //数据验证无问题，更新数据库
+            foreach ($lists as $list){
+                //过滤空的数据
+                if(count(array_filter($list))=1){
+                    continue;
+                }
+                //过滤和数据库里没有变化的数据
+                if(in_array($list['port_code'],$tmp['port_code'])){
+                    continue;
+                }
+                $list['mtime']=$mtime;
+                $res = Db::name('order_ship')
+                        ->where(['order_num'=>$order_num,'port_code'=>$list['port_code']])
+                        ->update($list);
+                $res ? $tmp['success'][]=$list['port_name'] :$tmp['fail'][]=$list['port_name'];
+            }
+            if(array_key_exists('fail', $tmp)){
+                return json(array('status'=>0,'message'=>'更新失败.'.implode(',', $tmp['fail'])));
+            }  else {
+                return json(array('status'=>1,'message'=>'更新成功.'.implode(',', $tmp['success'])));
+            }
         }
         
     }
