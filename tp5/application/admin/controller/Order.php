@@ -194,8 +194,8 @@ class Order extends Base
         //如果为空 就生成 对应的数据
         if(empty($data)){
             $port_arr  = Db::name('order_port')->alias('OP')
-                    ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
-                    ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
+                    ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
+                    ->join('hl_ship_route SR',"SR.id=SP.route_id and SR.status='1'",'left')//路线表
                     ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
                     ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
                     ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
@@ -213,20 +213,21 @@ class Order extends Base
             $insert_data[0]['port_code'] = $port_arr['s_port_code'];
             $m_port_name = explode(',', $port_arr['m_port_name']);
             $m_port_code = explode(',', $port_arr['m_port_code']);
-            foreach ($m_port_name as $key=>$value){
-                $insert_data[$key+1]['order_num'] = $order_num;
-                $insert_data[$key+1]['sequence'] = $key+1;
-                $insert_data[$key+1]['port_name'] = $m_port_name[$key];
-                $insert_data[$key+1]['port_code'] = $m_port_code[$key];
+            for($i=0;$i<count($m_port_code);$i++) {
+                $insert_data[$i+1]['order_num'] = $order_num;
+                $insert_data[$i+1]['sequence'] = $i+1;
+                $insert_data[$i+1]['port_name'] = $m_port_name[$i];
+                $insert_data[$i+1]['port_code'] = $m_port_code[$i];
             }
-            $insert_data[$key+2]['order_num'] = $order_num;
-            $insert_data[$key+2]['sequence'] = $key+2;
-            $insert_data[$key+2]['port_name'] = $port_arr['s_port_name'];
-            $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
+            $insert_data[$i+2]['order_num'] = $order_num;
+            $insert_data[$i+2]['sequence'] = $i+2;
+            $insert_data[$i+2]['port_name'] = $port_arr['e_port_name'];
+            $insert_data[$i+2]['port_code'] = $port_arr['e_port_code'];
             $res = Db::name('order_ship')->insertAll($insert_data);
             foreach ($insert_data as $k=>$v){
                 $insert_data[$k]['arrival_time']='';
                 $insert_data[$k]['dispatch_time']='';
+                 $insert_data[$k]['ship_name']='';
             }
             return json( $res ?  $insert_data: FALSE);    
         }
