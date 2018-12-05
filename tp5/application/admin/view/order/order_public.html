@@ -624,20 +624,19 @@
                     });
                 } else if (data.status == '待配船') {
                     // console.log(data);
-                    let arr = [];//表单数据
+                    // let arr = [];//表单数据
  
-                    arr.push({port_id:data.s_port_code,port_name:data.s_port_name});
-                    let code = data.m_port_code.split(',');
-                    let name = data.m_port_name.split(',');
-                    for (let i = 0; i < code.length; i++) {
-                        arr.push({port_id:code[i],port_name:name[i]});                     
-                    }
-                    console.log(data);
+                    // arr.push({port_id:data.s_port_code,port_name:data.s_port_name});
+                    // let code = data.m_port_code.split(',');
+                    // let name = data.m_port_name.split(',');
+                    // for (let i = 0; i < code.length; i++) {
+                    //     arr.push({port_id:code[i],port_name:name[i]});                     
+                    // }
                     
-                    arr.push({port_id:data.e_port_code,port_name:data.e_port_name}); 
+                    // arr.push({port_id:data.e_port_code,port_name:data.e_port_name}); 
                     $.get("<{:url('admin/order/cargo_plan_data')}>",{order_num:data.order_num},function(res){         
                     $('#dai_post .dai').html('');
-                    //获取到之前录入的信息把null修改
+                    //获取到之前录入的信息把null修改                                        
                     for (let i in res) {
                         let obj = res[i];                                                
                         Object.keys(obj).forEach((k)=>{
@@ -647,13 +646,13 @@
                         });              
                     }
 
-                    for (let i = 0; i < arr.length-1; i++) {
+                    for (let i = 0; i < res.length-1; i++) {
                         if (i == 0) {
                             $('#dai_post .dai').append('<div class="xian"><div class="layui-col-xs12 ming">'+
-                            '<div class="layui-col-xs5">'+arr[i].port_name+'</div><div class="layui-col-xs2">'+
-                            '船名</div><div class="layui-col-xs5">'+arr[i+1].port_name+'</div></div>'+
+                            '<div class="layui-col-xs5">'+res[i].port_name+'</div><div class="layui-col-xs2">'+
+                            '船名</div><div class="layui-col-xs5">'+res[i+1].port_name+'</div></div>'+
                             '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
-                            '<input type="hidden" name="port_code" value="'+arr[i].port_id+'" class="layui-input in">'+
+                            '<input type="hidden" name="port_code" value="'+res[i].port_code+'" class="layui-input in">'+
                             '</div><div class="layui-col-xs5 inpt">'+
                             '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in">'+
                             '<div class="he">-</div>'+
@@ -665,13 +664,13 @@
                             '<div class="he">-</div>'+
                             '<input type="text" name="dispatch_time" value="'+res[i+1].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item" ac="l'+i+'">'+
                             '</div></div></div></div>');
-                        }else if(i == arr.length-2){
+                        }else if(i == res.length-2){
                             $('#dai_post .dai').append('<div class="xian"><div class="layui-col-xs12 ming">'+
-                            '<div class="layui-col-xs5">'+arr[i].port_name+'</div><div class="layui-col-xs2">'+
-                            '船名</div><div class="layui-col-xs5">'+arr[i+1].port_name+'</div></div>'+
+                            '<div class="layui-col-xs5">'+res[i].port_name+'</div><div class="layui-col-xs2">'+
+                            '船名</div><div class="layui-col-xs5">'+res[i+1].port_name+'</div></div>'+
                             '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
-                            '<input type="hidden" name="port_code" value="'+arr[i].port_id+'" class="layui-input in"><input type="hidden" name="port_code" value="'+arr[i+1].port_id+'" class="layui-input ip">'+
-                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="hidden" name="port_code" value="'+res[i].port_code+'" class="layui-input in"><input type="hidden" name="port_code" value="'+res[i+1].port_code+'" class="layui-input ip">'+
+                            '<input type="hidden" name="ship_name" value="" class="layui-input ip"></div><div class="layui-col-xs5 inpt">'+
                             '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i-1]+'">'+
                             '<div class="he">-</div>'+
                             '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
@@ -684,10 +683,10 @@
                             '</div></div></div></div>');
                         }else{
                             $('#dai_post .dai').append('<div class="xian"><div class="layui-col-xs12 ming">'+
-                            '<div class="layui-col-xs5">'+arr[i].port_name+'</div><div class="layui-col-xs2">'+
-                            '船名</div><div class="layui-col-xs5">'+arr[i+1].port_name+'</div></div>'+
+                            '<div class="layui-col-xs5">'+res[i].port_name+'</div><div class="layui-col-xs2">'+
+                            '船名</div><div class="layui-col-xs5">'+res[i+1].port_name+'</div></div>'+
                             '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
-                            '<input type="hidden" name="port_code" value="'+arr[i].port_id+'" class="layui-input in">'+
+                            '<input type="hidden" name="port_code" value="'+res[i].port_code+'" class="layui-input in">'+
                             '</div><div class="layui-col-xs5 inpt">'+
                             '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i-1]+'">'+
                             '<div class="he">-</div>'+
@@ -741,7 +740,6 @@
                             $('#dai_post .dzh .gfth .ip').each(function(index,item){
                                 obj[$(item).attr('name')] = $(item).val(); 
                             });
-                            obj.ship_name = '';
                             list.push(obj);                             
                             $.ajax({
                                 type:"post",
