@@ -117,7 +117,8 @@
 
 #container .ming > div, #dbgh .ming > div, #dai_post .ming > div {
   text-align: center;
-  font-size: 16px; }
+  font-size: 16px;
+  padding-right: 35px; }
 #container .gfth, #dbgh .gfth, #dai_post .gfth {
   margin: 5px 0; }
   #container .gfth > div, #dbgh .gfth > div, #dai_post .gfth > div {

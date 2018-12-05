@@ -1,0 +1,616 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <link rel="stylesheet" href="__STATIC__/../index/css/lrdd.css">
+        <link rel="stylesheet" href="__STATIC__/../index/css/xiala.css">
+        <link rel="stylesheet" href="__STATIC__/../index/css/all_order.css">
+        <style>
+            .layui-input-block {
+                line-height: 35px;
+            }
+
+            .layui-input-block a {
+                color: #2e8de5;
+            }
+            .mony{
+                color: red;
+                font-size: 24px;
+            }
+        </style>
+        <form class="" id='order_data_form'>
+            <div class="xxtx">
+                <!-- 是否支付 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>订单状态</strong>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs12">
+                            <div class="layui-form-item" style="float: left;">
+                                <label class="layui-form-label">支付状态：</label>
+                                <div class="layui-input-block mony">
+                                    未付款
+                                </div>
+                            </div>
+                            <div class="ding_status">
+                                <img src="" alt="订单状态图">
+                            </div>
+                        </div>
+                        <div class="layui-col-xs3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">订单号：</label>
+                                <div class="layui-input-block">
+                                    <input name="order_num" lay-verify="title" autocomplete="off" readOnly class="layui-input" type="text" value="12313">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs9">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">下单时间：</label>
+                                <div class="layui-input-block">
+                                    <span>
+                                        1203/5/50
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                                    <!--海运费-->
+                        <div class="layui-col-xs3 dd" style="display:none;">
+                          <div class="zhong">
+                            <span>
+                              sdfsdf
+                            </span>
+                            <p>￥<strong class="carriage">30</strong></p>
+                          </div>
+                          <div class="you">价格说明:<span>好货</span></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 动态一 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>动态一</strong>
+                    </div>
+                    <div class="dd_nei bian">
+                        <div class="layui-col-xs3">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">运单号：</label>
+                                <div class="layui-input-block">
+                                    <input name="track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input" type="text" value="TSD5656556">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs9">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">订舱单</label>
+                                <div class="layui-input-block">
+                                        订舱单已上传             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 动态二 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>动态二</strong>
+                    </div>
+                    <div class="dd_nei bian">
+                        <div class="layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">柜型：</label>
+                                <div class="layui-input-block">
+                                    <input name="container_size" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="20gp"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">货名：</label>
+                                <div class="layui-input-block">
+                                    <input name="cargo" lay-verify="title" autocomplete="off" placeholder="请输入货名" class="layui-input" type="text" value="柜子">
+                                </div>
+                            </div>
+                        </div>
+<!--                        <div class="layui-col-xs4">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">收货人：</label>
+                                <div class="layui-input-block">
+                                    <input name="consigner" lay-verify="title" autocomplete="off" placeholder="请输入收货人信息" class="layui-input" type="text" value="132">
+                                    </div>
+                            </div>
+                        </div> -->
+
+                       
+                         <div class="guix">
+                            <div class="wenzi">柜号-封号：</div>
+                            <div class="ggh">
+                                
+                                <div class="layui-form-item">
+                                    <div class="guinei" style="text-align:right;margin-top: 12px;">
+                                        <input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="50">
+                                    </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="guinei" style="margin-top: 12px;">
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="GA50">
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+
+                <!-- 动态三 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>动态三</strong>
+                    </div>
+                    <div class="dd_nei bian">
+                        <div class="layui-col-xs12">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">水运单：</label>
+                                <div class="layui-input-block">
+                                        水运单未上传
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+                <!-- 船舶动态 -->
+                <div class="xxtx_dd">
+                    <div class="xx">
+                        <strong>船舶动态</strong>
+                        <!-- <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span> -->
+                    </div>
+                    <!-- 司机资料 -->
+                    <div class="layui-col-xs12 er biaoge zhuanghuo" style="background-color: #ffffff;">
+                        <table class="layui-table" lay-size="sm">
+                            <thead>
+                                <tr>
+                                    <th>派车时间</th>
+                                    <th>手机号码</th>
+                                    <th>车队名</th>
+                                    <th>车牌号</th>
+                                    <th>司机姓名</th>
+                                    <th>身份证</th>
+                                    <th>柜号</th>
+                                    <th>封条号</th>
+                                    <th>装货时间</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bge">
+                                <tr>
+                                    <td>
+                                        2018-12-5
+                                    </td>
+                                    <td>13584146568</td>
+                                    <td>
+                                        火箭
+                                    </td>
+                                    <td>
+                                        粤D4669
+                                    </td>
+                                    <td>
+                                        小敏
+                                    </td>
+                                    <td>
+                                        4313216984549866
+                                    </td>
+                                    <td>
+                                        40GP
+                                    </td>
+                                    <td>
+                                        sdf45646
+                                    </td>
+                                    <td>2018-4-6</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- 待配船 -->
+                    <div class="dd_nei">
+                        <div class="layui-col-xs1 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs6">港口：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                        天津港
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs2 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs6">船名：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                        狗不理
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">到港&nbsp;/&nbsp;离港时间：</div>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        2018-12-5&nbsp;/&nbsp;2018-12-20
+                                    </div>
+                            </div>
+                        </div>  
+                    </div>
+                    <!-- 费用 -->
+                    <div class="feiyong dd_nei">
+                        <div class="layui-col-xs12">
+                            <span>装货费：</span>
+                            <pi id="money">
+                                50
+                            </pi>元
+                            <!-- <span class="shuo">已包含：双边</span> -->
+                        </div>
+                        <div class="layui-col-xs12">
+                            <span>送货费：</span>
+                            <pi id="bxje1">
+                                60
+                            </pi>元
+                            <!-- <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span> -->
+                        </div>
+                        <div class="layui-col-xs12">
+                            <span>海头运费：</span>
+                            <strong id="discount">520</strong>元
+                            <!-- <span class="shuo">开票说明：选择在线支付优惠后不开发票</span> -->
+                        </div>
+                        <div class="layui-col-xs12">
+                            <span>海运费：</span>
+                            <strong class="zongfei" id="price_sum">51</strong>元
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- 委托信息 -->
+                <div class="xxtx_dd er">
+                    <div class="xx" style="margin-bottom:0px;">
+                        <strong>委托信息</strong>
+                        <span>提醒：收货联系人需具备与船司办单资质，否则因此造成的一切后果将由客户承担</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-row" style="padding-bottom: 10px;">
+                            <div class="layui-col-xs6 er_le">
+                           
+                                <div class="grid-demo" style="margin-top: 10px;">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>发货单位：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        示范点
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>装货联系人：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        啊撒地方
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>装货联系人电话：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        51546464
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>装货地址：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        发生发射点发的萨芬
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="layui-col-xs6 er_rig">
+                                <div class="grid-demo" style="margin-top: 10px;">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货单位：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        士大夫
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货联系人：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        啊的方式
+                                    </div>
+                                </div>
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货联系人电话：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                        5135456464
+                                    </div>
+                                </div>
+
+                                <div class="grid-demo">
+                                    <div class="layui-col-xs3">
+                                        <span>*&nbsp;</span>收货地址：</div>
+                                    <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
+                                       大法师大法师阿三
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- 订单路线 -->
+                <div class="xxtx_dd er">
+                    <div class="xx">
+                        <strong>订单路线</strong>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>起港-目港：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                        天津港-北京港
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>箱型：</div>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                       40HQ
+                                    </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+
+                <!-- 货物 -->
+                <div class="xxtx_dd">
+                    <div class="xx">
+                        <strong>货物</strong>
+                        <span>危险品禁运说明 若实际货重超过箱型限重，产生的一切后果将由客户自己承担</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>货名：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    阿斯顿
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>包装：</div>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        阿迪斯
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs4 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs3">
+                                    <span>*&nbsp;</span>重量：</div>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                    5
+                                    <span>吨(T)</span>
+                                </div>
+                                <div class="layui-col-xs2" style="text-align: left;">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 费用 -->
+                <div class="xxtx_dd" style="margin-bottom: 0px;">
+                    <div class="xx">
+                        <strong>费用</strong>
+                        <span>发票信息提醒：平台支持开具6%的服务费增值税专用发票，订单完成后联系客服沟通开发票</span>
+                    </div>
+                    <div class="dd_nei">
+                        <div class="layui-col-xs3 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs4">
+                                    <span>*&nbsp;</span>柜量：</div>
+                                    <span id="gl" style="display: none;">45464</span>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        6
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs3 er">
+                            <div class="grid-demo" style="margin-top: 0px;">
+                                <div class="layui-col-xs4">
+                                    <span>*&nbsp;</span>单柜货值：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    40
+                                    <span>万</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs3 er">
+                            <div class="grid-demo" style="margin-top: 0px;">
+                                <div class="layui-col-xs4">
+                                    <span>*&nbsp;</span>单柜保险：</div>
+                                <div class="layui-col-xs6" style="text-align: left">
+                                    120
+                                    <span>元</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-col-xs3 er">
+                            <div class="grid-demo nei">
+                                <div class="layui-col-xs4">
+                                    <span>*&nbsp;</span>结账方式：</div>
+                                    <div class="layui-col-xs6" style="text-align: left">
+                                        到港付
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 发票 -->
+                    <div class="kpf">
+                        <div class="layui-col-xs12 bei">
+                            <div class="grid-demo">
+                                <div class="layui-col-xs1 you">
+                                    备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
+                                </div>
+                                <div class="layui-col-xs10 inp">
+                                    山大发送
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 总运费 -->
+                    <!-- <div class="sun">
+                        <div class="fapiao layui-form-item layui-form">
+                            <div class="fp_tt">
+                                <input type="radio" name="invoice_id" value="2" title="发票抬头" checked="">
+                            </div>
+                        </div>
+                    </div> -->
+
+
+                    <!-- 详细费用 -->
+                    <div class="xxtx_dd er">
+                        <div class="xx">
+                            <strong>详细费用</strong>
+                        </div>
+                        <div class="feiyong">
+                            <div class="layui-col-xs12">
+                                <span>海运费：</span>
+                                <pi id="money">
+                                    50
+                                </pi>元
+                                <span class="shuo">已包含：双边</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>保险费：</span>
+                                <pi id="bxje1">
+                                    60
+                                </pi>元
+                                <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>优惠：</span>
+                                <strong id="discount">520</strong>元
+                                <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+                            </div>
+                            <div class="layui-col-xs12">
+                                <span>总费用：</span>
+                                <strong class="zongfei" id="price_sum">51</strong>元
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="xxtx_dd er">
+                            <div class="xx">
+                                <strong>备注</strong>
+                            </div>
+                            <div class="dd_nei">
+                                <ol>
+                                    <li>啊啊发送发送</li>
+                                </ol>
+                            </div>
+                    </div>
+
+    
+
+                    <div class="tjiao" style="text-align:center;">
+                            <a class="shi" href="javascript:void(0);" onclick="que('131321')">完成订单</a>
+                            <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
+                    </div> 
+                </div>
+        </form>
+        <!-- 填写发票窗口 -->
+        <div id="modal-default">
+            <form class="layui-form" id='invoice_form'>
+                <input type="hidden" name='member_code' value="<{$Think.session.member_code}>">
+                <!--需要贮存客户session_id-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">发票抬头</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="invoice_title" lay-verify="invoice_title" autocomplete="off" placeholder="发票抬头" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">纳税人识别号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="taxpayer_id" lay-verify="title" autocomplete="off" placeholder="纳税人识别号" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">注册地址</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="registered_address" lay-verify="title" autocomplete="off" placeholder="注册地址" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">注册电话</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="registered_phone" lay-verify="title" autocomplete="off" placeholder="注册电话" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">开户银行</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="deposit_bank" lay-verify="title" autocomplete="off" placeholder="开户银行" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">银行账户</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="bank_account" lay-verify="title" autocomplete="off" placeholder="银行账户" class="layui-input">
+                    </div>
+                </div>
+
+<!--                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" onclick='invoice()' lay-filter="demo1">立即保存</button>
+                    </div>
+                </div>-->
+            
+        </div>
+
+
+        <script>
+            var url = "<{:url('admin/orderPort/Upload')}>";
+            var xiu_url = "<{:url('admin/Financial/Order_completion')}>";//已完成订单
+        </script>
+        <script src="__STATIC__/js/port_money.js"></script>
+        <script>
+            $('.songhuo,.zhuanghuo').show();
+            $('input').attr('readonly', true);
+            $('input').css('border', '0');
+        </script>
+    </body>
+    </html>

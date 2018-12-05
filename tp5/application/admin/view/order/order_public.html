@@ -62,7 +62,7 @@
             <div class="layui-input-block">
                     <a class="layui-btn" id="scdc">上传</a>
             </div>
-        </div
+        </div>
 
         <!-- 订舱单 -->
 
@@ -401,14 +401,17 @@
                 , { field: 'id', title: 'ID', unresize: true, width: 60 }
                 , {
                     field: 'order_num', title: '订单号', width: 200, templet: function (res) {
-                        return '<a href="<{:url("admin/orderPort/port_details")}>?order_num=' + res.order_num + '"  target="_blank">' + res.order_num + '</a>'
+                        return '<a href="<{:url("admin/order/port_details")}>?order_num=' + res.order_num + '"  target="_blank">' + res.order_num + '</a>'
                     }
                 }
                 , { field: 'member_code', title: '订舱单号', width: 150 }
                 , { field: 'ctime', title: '提交时间', sort: true, width: 200 }
 
-                , { field: 'company', title: '船公司', width: 200 }
-                , { field: 'track_num', title: '船名/航次', width: 100, event: 'yun' }
+                , { field: 'company', title: '船公司', width: 100 }
+                , { field: 'track_num', title: '船名/航次', width: 150,  templet: function (res) {
+                        return '<div class="">' + res.track_num + '/' + res.track_num + '</div>'
+                    }
+                }
                 , {
                     field: 'container_sum', title: '起运港-目的港', width: 130, templet: function (res) {
                         return '<div class="">' + res.s_port_name + '-' + res.e_port_name + '</div>'
@@ -416,8 +419,8 @@
                 }
                 , { field: 'ship_short_name', title: '货名', width: 100 }
                 , { field: 'boat_name', title: '业务员', width: 100 }
-                , { field: 'boat_code', title: '截单时间', sort: true, width: 100 }
-                , { field: 's_port', title: '船期', width: 200 }
+                , { field: 'boat_code', title: '截单时间', sort: true, width: 150 }
+                , { field: 's_port', title: '船期', width: 100 }
                 , { field: 'quoted_price', title: '海上时效', width: 100 }
                 , {
                     field: 'container_status', title: '箱型*柜量', width: 100, templet: function (res) {
@@ -629,17 +632,19 @@
                     for (let i = 0; i < code.length; i++) {
                         arr.push({port_id:code[i],port_name:name[i]});                     
                     }
+                    console.log(data);
+                    
                     arr.push({port_id:data.e_port_code,port_name:data.e_port_name}); 
                     $.get("<{:url('admin/order/cargo_plan_data')}>",{order_num:data.order_num},function(res){         
                     $('#dai_post .dai').html('');
                     //获取到之前录入的信息把null修改
                     for (let i in res) {
-                        let obj = res[i];
+                        let obj = res[i];                                                
                         Object.keys(obj).forEach((k)=>{
                             if (!obj[k]) {
                                 res[i][k] = '';
                             };
-                        });                        
+                        });              
                     }
 
                     for (let i = 0; i < arr.length-1; i++) {
@@ -709,7 +714,6 @@
                         }
                     })
                     sj();
-
                     });
                     
                     layer.open({
