@@ -367,8 +367,10 @@ class Order extends Base
     }
     
 
-    
-    
+    //门订单详情
+    public function  port_details(){
+        return $this->view->fetch('order/port_details');
+    }
     
     //查看订单
     public function order_aaa()

@@ -155,8 +155,5 @@ class Order extends Model
 //        }
         return $response;
     }
-    
-
-
 
 }
