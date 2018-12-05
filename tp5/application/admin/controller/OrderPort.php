@@ -24,10 +24,8 @@ class OrderPort extends Base
     public function audit_page()
     {   
         $order_num =  $this->request->get('order_num');
-        $data = new OrderM;
-        $dataArr = $data->orderData($order_num);
-//        $this->_p($dataArr);exit;
-
+         $data = new OrderProcessM;
+        $dataArr = $data->order_details($order_num);
         $this->assign([
             'list'  =>$dataArr['list'],
             'containerData' => $dataArr['containerData'],
@@ -172,22 +170,6 @@ class OrderPort extends Base
     }
 
 
-    //详情
-    public function port_details()
-    {   
-        $order_num =  $this->request->get('order_num');
-        $data = new OrderM;
-        $dataArr = $data->orderData($order_num);
-//        $this->_p($dataArr['list']);exit;
-        $this->assign([
-            'list'  =>$dataArr['list'],
-            'containerData' => $dataArr['containerData'],
-            'carData'=> $dataArr['carData'],
-            'shipperArr'=>$dataArr['shipperArr'],
-            'consignerArr'=>$dataArr['consignerArr'],
-        ]);
-        return $this->view->fetch('orderPort/port_details');
-    }
 
     
     //废弃订单
@@ -286,19 +268,5 @@ class OrderPort extends Base
         }
         
     }
-    //添加额外的备注信息
-    public function extra_info() {
-        $extra_info = $this->request->param('extra_info');
-        $order_num = $this->request->param('order_num');
-        $extra_info =  trim($extra_info);
-        $sql ="update hl_order_port  set `extra_info` =concat(ifnull(`extra_info`,''),',$extra_info') where order_num= '$order_num'";
-//        var_dump($sql);exit;
-        $res = Db::execute($sql);
-        $OrderProcessM = new OrderProcessM();
-        if($res!==FALSE){
-            $OrderProcessM->orderUpdate($order_num,$status='0',$title='添加备注');
-            return array('status'=>1,'message'=>'执行成功');
-        }
-        return  array('status'=>0,'message'=>'执行失败');
-    }
+
 }

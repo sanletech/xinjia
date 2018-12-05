@@ -425,7 +425,7 @@ table.on('tool()', function(obj){
         ,btn:['确认']
         ,yes:function(index){
           let beizhu = $('#bz input').val();
-          $.get('<{:url("admin/orderPort/extra_info")}>',{extra_info:beizhu,order_num:data.order_num},function(data){
+          $.get('<{:url("admin/orderProcess/extra_info")}>',{extra_info:beizhu,order_num:data.order_num},function(data){
             if(data.status){
                 // alert('添加成功');
                 layui.layer.msg('添加成功', {icon: 1,time: 500},function(){

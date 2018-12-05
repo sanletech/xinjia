@@ -196,8 +196,8 @@ class OrderPort extends Controller
         
         $order_num =  $this->request->get('order_num');
         //访问后台的 model\orderPort\orderData 方法
-        $data = new \app\admin\model\OrderPort();
-        $dataArr = $data->orderData($order_num);
+        $data = new \app\admin\model\OrderProcess();
+        $dataArr = $data->order_details($order_num);
         $this->assign([
                 'list'  =>$dataArr['list'],
                 'containerData' => $dataArr['containerData'],

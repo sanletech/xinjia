@@ -193,45 +193,7 @@ class OrderPort extends Model
         return $str;
     }
     
-    public function orderData($order_num) {
-        $list =Db::name('order_port')->alias('OP')
-                ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
-                ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
-                ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
-                ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
-                ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id                                                    //起始港终点港
-                ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
-                ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
-                ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
-                ->field('OP.*,HM.company,SC.ship_short_name')
-                ->where('OP.order_num',$order_num)
-                ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')
-                ->find();
-        
-        //根据订单号 查询对应柜子的 柜号和封条号码
-        $containerData =Db::name('order_truckage')->alias('OT')
-                ->join('hl_order_port OP','OP.order_num=OT.order_num','left')
-                ->where('OT.order_num',$order_num)
-                ->field('OT.container_code,OT.seal')->select();
-        
-        //根据订单查询出拖车信息
-        $carData['r'] =Db::name('order_truckage')
-                ->where('order_num',$order_num)
-                ->where('state',0) //收费柜子
-                ->where('type','r')->group('sequence')
-                ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime,link_man,shipper,load_time,link_phone,car,`comment`,seal')
-                ->select();
-       
-        $carData['s'] =Db::name('order_truckage')
-                ->where('order_num',$order_num)
-                ->where('state',0) //收费柜子
-                ->where('type','s')->group('sequence')
-                ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
-                ->select();
-        
-        return array($list ,$containerData,$carData);
-        
-    }
+
 
     
 }
