@@ -29,7 +29,7 @@
                             <div class="layui-form-item" style="float: left;">
                                 <label class="layui-form-label">支付状态：</label>
                                 <div class="layui-input-block mony">
-                                        <?php if($list['money_status']){
+                                        <?php if($list['money_status'] == 'do'){
                                             echo'已付款';
                                         }else{
                                             echo'未付款';
@@ -54,7 +54,7 @@
                                 <label class="layui-form-label">下单时间：</label>
                                 <div class="layui-input-block">
                                     <span>
-                                        1203/5/50
+                                        <{$list.ctime}>
                                     </span>
                                 </div>
                             </div>
@@ -64,11 +64,11 @@
                         <div class="layui-col-xs3 dd" style="display:none;">
                           <div class="zhong">
                             <span>
-                              sdfsdf
+                                <{$list.container_size}>
                             </span>
-                            <p>￥<strong class="carriage">30</strong></p>
+                            <p>￥<strong class="carriage"><{$list.seaprice}></strong></p>
                           </div>
-                          <div class="you">价格说明:<span>好货</span></div>
+                          <div class="you">价格说明:<span><{$list.price_description}></span></div>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">运单号：</label>
                                 <div class="layui-input-block">
-                                    <input name="track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input" type="text" value="TSD5656556">
+                                    <input name="track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input" type="text" value="<{$list.track_num}>">
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,16 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订舱单</label>
                                 <div class="layui-input-block">
-                                        订舱单已上传             
+                                    <?php  
+                                    if(!$list['book_note']){
+                                        echo'<span>订舱单未上传</span><a class="dcd" href="#">上传</a>';}
+                                    else{
+                                        $url= url('admin/OrderProcess/downs',['order_num'=>$list['order_num'],'type'=>'book_note']);
+                                        $str ='<a href="'.$url.'">下载</a>';
+                                        echo '<span>订舱单已上传</span>'.$str.'</br>';
+                                        echo'<span>重新上传</span><a class="dcd" href="#">上传</a>';
+                                        }
+                                    ?>          
                                 </div>
                             </div>
                         </div>
@@ -107,7 +116,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">柜型：</label>
                                 <div class="layui-input-block">
-                                    <input name="container_size" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="20gp"
+                                    <input name="container_size" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="<{$list.container_size}>"
                                         disabled>
                                 </div>
                             </div>
@@ -117,7 +126,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">货名：</label>
                                 <div class="layui-input-block">
-                                    <input name="cargo" lay-verify="title" autocomplete="off" placeholder="请输入货名" class="layui-input" type="text" value="柜子">
+                                    <input name="cargo" lay-verify="title" autocomplete="off" placeholder="请输入货名" class="layui-input" type="text" value="<{$list.cargo}>">
                                 </div>
                             </div>
                         </div>
@@ -131,20 +140,22 @@
                         </div> -->
 
                        
-                         <div class="guix">
+                        <div class="guix">
                             <div class="wenzi">柜号-封号：</div>
                             <div class="ggh">
-                                
+                                <{volist name="containerData" id="container"}>
                                 <div class="layui-form-item">
                                     <div class="guinei" style="text-align:right;margin-top: 12px;">
-                                        <input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="50">
+                                        <!--<input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.container_code}>">-->
+                                        <{$container.container_code}>
                                     </div>
                                     <div class="layui-form-mid">-</div>
                                     <div class="guinei" style="margin-top: 12px;">
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="GA50">
+                                        <!--<input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.seal}>">-->
+                                        <{$container.seal}>
                                     </div>
                                 </div>
-                               
+                                <{/volist}>
                             </div>
                         </div>
                        
@@ -161,7 +172,17 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">水运单：</label>
                                 <div class="layui-input-block">
-                                        水运单未上传
+                                    <?php  
+                                    if(!$list['sea_waybill']){
+                                        echo'<span>水运单未上传</span><a class="syd" href="#">上传</a>';}
+                                    else{
+                                        $order_num= $list['order_num'];
+                                        $url= url('admin/OrderProcess/downs',['order_num'=>$list['order_num'],'type'=>'sea_waybill']);
+                                        $str ='<a href="'.$url.'">下载</a>';
+                                        echo '<span>水运单已上传</span>'.$str.'</br>';
+                                        echo'<span>重新上传</span><a class="syd" href="#">上传</a>';
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -293,28 +314,28 @@
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>发货单位：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        示范点
+                                        <{$shipperArr[0]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        啊撒地方
+                                        <{$shipperArr[1]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        51546464
+                                        <{$shipperArr[2]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货地址：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        发生发射点发的萨芬
+                                        <{$shipperArr[3]}>
                                     </div>
                                 </div>
 
@@ -325,21 +346,21 @@
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货单位：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        士大夫
+                                            <{$consignerArr[0]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        啊的方式
+                                            <{$consignerArr[1]}>
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        5135456464
+                                            <{$consignerArr[2]}>
                                     </div>
                                 </div>
 
@@ -347,7 +368,7 @@
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货地址：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                       大法师大法师阿三
+                                            <{$consignerArr[3]}>
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +390,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>起港-目港：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                        天津港-北京港
+                                        <{$list.s_port_name}>-<{$list.e_port_name}>
                                 </div>
                             </div>
                         </div>
@@ -379,7 +400,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>箱型：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                       40HQ
+                                            <{$list.container_type}>
                                     </div>
                             </div>
                         </div>  
@@ -398,7 +419,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>货名：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                    阿斯顿
+                                    <{$list.cargo}>
                                 </div>
                             </div>
                         </div>
@@ -407,7 +428,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>包装：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                        阿迪斯
+                                        <{$list.container_type}>
                                     </div>
                             </div>
                         </div>
@@ -416,7 +437,7 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>重量：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                    5
+                                            <{$list.weight}>
                                     <span>吨(T)</span>
                                 </div>
                                 <div class="layui-col-xs2" style="text-align: left;">
@@ -438,9 +459,9 @@
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs4">
                                     <span>*&nbsp;</span>柜量：</div>
-                                    <span id="gl" style="display: none;">45464</span>
+                                    <span id="gl" style="display: none;"><{$list.container_sum}></span>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                        6
+                                            <{$list.container_sum}>
                                     </div>
                             </div>
                         </div>
@@ -450,7 +471,7 @@
                                 <div class="layui-col-xs4">
                                     <span>*&nbsp;</span>单柜货值：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                    40
+                                        <{$list.cargo_cost}>
                                     <span>万</span>
                                 </div>
                             </div>
@@ -461,7 +482,7 @@
                                 <div class="layui-col-xs4">
                                     <span>*&nbsp;</span>单柜保险：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                    120
+                                        <{$list.cargo_cost*3}>
                                     <span>元</span>
                                 </div>
                             </div>
@@ -472,7 +493,20 @@
                                 <div class="layui-col-xs4">
                                     <span>*&nbsp;</span>结账方式：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                        到港付
+                                            <?php 
+                                            $payment_method= $list['payment_method'];
+                                            if($payment_method=='installment'){
+                                                 echo'到港付';
+                                            }elseif($payment_method=='month'){
+                                                echo'月结';
+                                            }elseif($payment_method=='cash'){
+                                                foreach($discount as $rows){
+                                                    if($rows['id']== $list['cash_id']){
+                                                        echo $rows['title'];
+                                                    }
+                                                }
+                                            }
+                                        ?>
                                     </div>
                             </div>
                         </div>
@@ -485,7 +519,7 @@
                                     备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
                                 </div>
                                 <div class="layui-col-xs10 inp">
-                                    山大发送
+                                        <{$list.comment}>
                                 </div>
                             </div>
                         </div>
@@ -508,26 +542,24 @@
                         <div class="feiyong">
                             <div class="layui-col-xs12">
                                 <span>海运费：</span>
-                                <pi id="money">
-                                    50
-                                </pi>元
-                                <span class="shuo">已包含：双边</span>
+                                <pi id="money"><{$list.seaprice*$list.container_sum}></pi>元
+                              <span class="shuo"><{$list.price_description}></span>
                             </div>
                             <div class="layui-col-xs12">
                                 <span>保险费：</span>
                                 <pi id="bxje1">
-                                    60
+                                    <{$list.premium}>
                                 </pi>元
                                 <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
                             </div>
                             <div class="layui-col-xs12">
                                 <span>优惠：</span>
-                                <strong id="discount">520</strong>元
+                                <strong id="discount"><{$list['discount']*$list['container_sum']}></strong>元
                                 <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
                             </div>
                             <div class="layui-col-xs12">
                                 <span>总费用：</span>
-                                <strong class="zongfei" id="price_sum">51</strong>元
+                                <strong class="zongfei" id="price_sum"><{$list.quoted_price}></strong>元
                             </div>
                         </div>
                     </div>

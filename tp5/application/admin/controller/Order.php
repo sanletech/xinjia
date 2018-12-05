@@ -221,8 +221,8 @@ class Order extends Base
             }
             $insert_data[$key+2]['order_num'] = $order_num;
             $insert_data[$key+2]['sequence'] = $key+2;
-            $insert_data[$key+2]['port_name'] = $port_arr['s_port_name'];
-            $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
+            $insert_data[$key+2]['port_name'] = $port_arr['e_port_name'];
+            $insert_data[$key+2]['port_code'] = $port_arr['e_port_code'];
             $res = Db::name('order_ship')->insertAll($insert_data);
             foreach ($insert_data as $k=>$v){
                 $insert_data[$k]['arrival_time']='';
