@@ -112,8 +112,53 @@ class OrderProcess extends Base
 
         return json($response);
     }
-
-
+    
+        //添加额外的备注信息
+    public function extra_info() {
+        $extra_info = $this->request->param('extra_info');
+        $order_num = $this->request->param('order_num');
+        $extra_info =  trim($extra_info);
+        $sql ="update hl_order_port  set `extra_info` =concat(ifnull(`extra_info`,''),',$extra_info') where order_num= '$order_num'";
+//        var_dump($sql);exit;
+        $res = Db::execute($sql);
+        $OrderProcessM = new OrderProcessM();
+        if($res!==FALSE){
+            $OrderProcessM->orderUpdate($order_num,$status='0',$title='添加备注');
+            return array('status'=>1,'message'=>'执行成功');
+        }
+        return  array('status'=>0,'message'=>'执行失败');
+    }
+    
+    //详情页面的数据
+    public function order_details (){
+        $order_num = $this->request->param('order_num');
+        //根据订单号的信息判断是港到港还是门到门
+        $oder_type = substr($order_num, 0,1);
+        $data = new OrderProcessM();
+        $response = $data->order_details($order_num,$oder_type);
+        if($oder_type =='P'){
+            $this->assign([
+               'list'  =>$dataArr['list'],
+               'containerData' => $dataArr['containerData'],
+               'carData'=> $dataArr['carData'],
+               'shipperArr'=>$dataArr['shipperArr'],
+               'consignerArr'=>$dataArr['consignerArr'],
+            ]);
+            return $this->view->fetch('orderPort/port_details');
+            
+        }  else {
+            
+            $this->assign([
+                'list'  =>$dataArr['list'],
+                'containerData' => $dataArr['containerData'],
+                'carData'=> $dataArr['carData'],
+                'shipperArr'=>$dataArr['shipperArr'],
+                'consignerArr'=>$dataArr['consignerArr'],
+                'shipData'=> $dataArr['shipData'],
+            ]);
+            return $this->view->fetch('orderPort/port_details');
+        }
+    }
     
 
     

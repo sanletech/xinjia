@@ -25,17 +25,12 @@ class Order extends Base
     public function audit_page()
     {   
         $order_num =  $this->request->get('order_num');
-        $data = new OrderM;
-        $dataArr = $data->orderData($order_num);
-//        $this->_p($dataArr);exit;
-
+        $data = new OrderProcessM;
+        $dataArr = $data->order_details($order_num);
         $this->assign([
             'list'  =>$dataArr['list'],
-            'containerData' => '',
-            'carData'=> '',
             'shipperArr'=>$dataArr['shipperArr'],
             'consignerArr'=>$dataArr['consignerArr'],
-            'discount'=>''
         ]);;
         return $this->view->fetch('order/audit_page');
     }

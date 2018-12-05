@@ -64,7 +64,7 @@ class OrderProcess  extends Model{
     }
     
        //订单的详细信息
-    public function orderData($order_num) {
+    public function order_details($order_num,$order_type='') {
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -80,8 +80,10 @@ class OrderProcess  extends Model{
                 ->group('OP.id')
                 ->find();
         //根据订单号的信息判断是港到港还是门到门
-        $oder_type = substr($order_num, 0,1);
-        if($oder_type=='P'){
+        if($order_type){
+            $oder_type = substr($order_num, 0,1);
+        }
+        if($order_type=='P'){
         //根据订单号 查询对应柜子的 柜号和封条号码
         $containerData =Db::name('order_truckage')
             ->where('order_num',$order_num)->where('type','s')
@@ -101,7 +103,7 @@ class OrderProcess  extends Model{
                 ->where('type','s')->group('id')
                 ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
-        }elseif ($oder_type=='D') {
+        }elseif ($order_type == 'D') {
             //封条号
             $containerData = Db::name('order_car')
                 ->where('order_num',$order_num)
@@ -146,7 +148,7 @@ class OrderProcess  extends Model{
         }
         $list['extra_info'] = ltrim($list['extra_info'],','); 
         $list['completion']= ($list['status']== $this->order_status['completion'])?true:false;
-        if($oder_type=='P'){
+        if($order_type =='P'){
             return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
         }  else {
             return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr,'shipData'=>$shipData); 
