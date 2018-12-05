@@ -401,7 +401,7 @@
                 , { field: 'id', title: 'ID', unresize: true, width: 60 }
                 , {
                     field: 'order_num', title: '订单号', width: 200, templet: function (res) {
-                        return '<a href="<{:url("admin/orderPort/port_details")}>?order_num=' + res.order_num + '"  target="_blank">' + res.order_num + '</a>'
+                        return '<a href="<{:url("admin/OrderProcess/order_details")}>?order_num=' + res.order_num + '"  target="_blank">' + res.order_num + '</a>'
                     }
                 }
                 , { field: 'member_code', title: '订舱单号', width: 150 }

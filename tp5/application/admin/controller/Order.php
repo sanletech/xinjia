@@ -243,7 +243,7 @@ class Order extends Base
         //判断港口数量是否对应的上
         $data = Db::name('order_ship')
                 ->where('order_num',$order_num)
-                ->field('port_name,port_code,ship_name,arrival_time,dispatch_time')
+                ->field('port_name,port_code,ship_name,arrival_time,dispatch_time,sequence')
                 ->order('sequence')->select();
         if(count($data) !== count($lists)){
             return json(array('status'=>0,'message'=>'参数错误'));

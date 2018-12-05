@@ -76,7 +76,6 @@ class OrderProcess  extends Model{
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
                 ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port_name,P2.port_name e_port_name')
                 ->where('OP.order_num',$order_num)
-                ->where('OP.type','port')
                 ->group('OP.id')
                 ->find();
         //根据订单号的信息判断是港到港还是门到门
@@ -147,7 +146,7 @@ class OrderProcess  extends Model{
                 break; 
         }
         $list['extra_info'] = ltrim($list['extra_info'],','); 
-        $list['completion']= ($list['status']== $this->order_status['completion'])?true:false;
+        $list['completion']= ($list['status']== $this->order_status['completion']) ?true:false;
         if($order_type =='P'){
             return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
         }  else {
