@@ -65,6 +65,7 @@ class OrderProcess  extends Model{
     
        //订单的详细信息
     public function order_details($order_num,$order_type='') {
+        
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -76,9 +77,9 @@ class OrderProcess  extends Model{
                 ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
                 ->field('OP.*,HM.company,SC.ship_short_name,P1.port_name s_port_name,P2.port_name e_port_name')
                 ->where('OP.order_num',$order_num)
-                ->where('OP.type','port')
                 ->group('OP.id')
                 ->find();
+                // $this->_p($list);exit;  
         //根据订单号的信息判断是港到港还是门到门
         if($order_type){
             $oder_type = substr($order_num, 0,1);

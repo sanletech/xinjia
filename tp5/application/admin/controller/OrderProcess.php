@@ -135,7 +135,7 @@ class OrderProcess extends Base
         //根据订单号的信息判断是港到港还是门到门
         $oder_type = substr($order_num, 0,1);
         $data = new OrderProcessM();
-        $response = $data->order_details($order_num,$oder_type);
+        $dataArr = $data->order_details($order_num,$oder_type);
         if($oder_type =='P'){
             $this->assign([
                'list'  =>$dataArr['list'],
@@ -156,7 +156,7 @@ class OrderProcess extends Base
                 'consignerArr'=>$dataArr['consignerArr'],
                 'shipData'=> $dataArr['shipData'],
             ]);
-            return $this->view->fetch('orderPort/port_details');
+            return $this->view->fetch('order/port_details');
         }
     }
     
