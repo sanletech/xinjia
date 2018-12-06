@@ -44,7 +44,15 @@ class OrderProcess  extends Model{
         $data=array('order_num'=>$order_num,'status'=>$status,'title'=>$title,'comment'=>$comment,'submitter'=>$submitter,'mtime'=>$mtime);
 
         $res =Db ::name('order_port_status')->insert($data); //记录操作
-        $order_status= $this->order_status;
+        
+        //排除 确认收款,申请放柜,同意放柜,继续扣柜,
+        $map = array('container_appley'=>$this->order_status['container_appley'],
+            'container_lock'=>$this->order_status['container_lock'],
+            'container_unlock'=>$this->order_status['container_unlock'],
+            'payment_status'=>$this->order_status['payment_status'],);
+        
+        $order_status= array_diff_assoc($this->order_status,$map);
+        
         if(in_array($status,$order_status)){
                 Db::startTrans();
                 try{
@@ -57,10 +65,10 @@ class OrderProcess  extends Model{
                     return array('status'=>0,'message'=>'操作失败'.$e->getMessage());
                 }      
                     return array('status'=>1,'message'=>'操作成功');
-        }else{
-            
-            return array('status'=>0,'message'=>'状态类型错误');
         }
+       
+        return  $res ? array('status'=>1,'message'=>'操作成功'): array('status'=>0,'message'=>'操作失败');
+        
     }
     
        //订单的详细信息

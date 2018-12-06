@@ -84,12 +84,6 @@ class Order extends Model
                 case $this->order_status['load_ship']:
                     $list[$key]['status']= '待配船';
                     break;
-                case $this->order_status['arrive_port']:
-                    $list[$key]['status']= '待到港';
-                    break;
-                case $this->order_status['unload_ship']:
-                    $list[$key]['status']= '待卸船';
-                    break;
                 case $this->order_status['payment_status']:
                     $list[$key]['status']= '确认收款';
                     break;
@@ -122,7 +116,7 @@ class Order extends Model
 
     
     //录入派车信息
-    public function  send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type)
+    public function  send_car($order_num,$track_num,$container_sum,$car_data,$type)
     {   
         $mtime = date('Y-m-d H:i:s');   $response=[];
         //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
@@ -141,18 +135,7 @@ class Order extends Model
                 $res3 ?$response['success'][]='更新车队信息成功':$response['fail'][]='更新车队信息失败';
             }
         }
-//        //将联系人信息插入到order_contact里
-//        $order_contact_id = Db::name('order_contact')->where(['order_num'=>$order_num,'type'=>$type])->value('id');
-//            $contact['type']= $type;  
-//            $contact['order_num']=$order_num;
-//            $contact['mtime']= $mtime;    
-//        if(empty($order_contact_id)){
-//            $res5 = Db::name('order_contact')->lock(true)->insert($contact);
-//            $res5 ?$response['success'][]='录入联系人信息成功':$response['fail'][]='录入联系人信息失败';
-//        }  else {
-//            $res6 = Db::name('order_car')->where('id',$order_contact_id)->update($contact);
-//            $res6 ?$response['success'][]='更新联系人信息成功':$response['fail'][]='更新联系人信息失败';
-//        }
+
         return $response;
     }
 

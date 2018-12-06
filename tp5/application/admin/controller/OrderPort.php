@@ -19,7 +19,6 @@ class OrderPort extends Base
         $this->order_status=config('config.order_status');
     }
 
-
     //审核详情页
     public function audit_page()
     {   
@@ -35,7 +34,6 @@ class OrderPort extends Base
         ]);
         return $this->view->fetch('orderPort/audit_page');
     }
-
   
     //上传订舱单文件,运单号和 水运单文件
     //参数 type= booking_note或者sea_waybill
@@ -79,6 +77,7 @@ class OrderPort extends Base
     {   
         return $this->view->fetch('orderPort/port_list');
     }
+    
     //所有订单
     public function portlist_data()
     {    
@@ -169,9 +168,6 @@ class OrderPort extends Base
          
     }
 
-
-
-    
     //废弃订单
     public function order_cancel() {
         
@@ -210,6 +206,7 @@ class OrderPort extends Base
         $this->view->assign('limit',$limit); 
         return $this->view->fetch('orderPort/order_cancel');
     }
+    
     //港到港的订单修改
     public function  orderEdit() {
         $data = $this->request->param();
