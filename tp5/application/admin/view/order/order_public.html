@@ -300,7 +300,9 @@
 
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" lay-event="confirm"  title="">确认</a>
-        <a class="layui-btn layui-btn-xs" lay-event="fk"  title="">申请放柜</a>
+        {{#  if(d.container_buckle == 'lock'){ }}
+        <a class="layui-btn layui-btn-xs fgui" lay-event="fk"  title="">申请放柜</a>
+        {{#  } }}
     </script>
 
     <!-- <script src="__STATIC__/js/jquery-3.2.1.min.js"></script>  -->
@@ -434,6 +436,15 @@
             ]]
             , page: true
             , done: function (res, curr, count) {//数据调用之后
+                console.log(res.data);
+                
+                for (let i = 0; i < count; i++) {
+                    if (res.data[i].container_buckle == 'lock') {
+                        $('.fgui').eq(i).attr('title',res.data[i].container_buckle_comment);                        
+                    }
+                }
+                
+                
                 //如果是异步请求数据方式，res即为你接口返回的信息。
                 //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
                 // console.log(res);
@@ -900,6 +911,7 @@
                     }
                 }
             } else if (obj.event === 'fk') {//单击申请放柜
+                if (data.container_buckle == 'lock') {
                 layer.confirm('是否申请放柜', {icon: 3, title:'提示'}, function(index){
                     $.get("<{:url('admin/Order/order_aaa')}>",{order_num:data.order_num},function(res){
                         if (res.status) {
@@ -911,6 +923,9 @@
                         }
                     })                      
                 });
+                }else{
+                    layui.layer.msg('审核中，或者已通过', { icon: 2, time: 2000 });
+                }
             } else if (obj.event === 'yun') {//单击运单号
 
             }
