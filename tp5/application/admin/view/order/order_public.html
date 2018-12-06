@@ -407,26 +407,26 @@
                         return '<a href="<{:url("admin/OrderProcess/order_details")}>?order_num=' + res.order_num + '"  target="_blank">' + res.order_num + '</a>'
                     }
                 }
-                , { field: 'member_code', title: '订舱单号', width: 150 }
+                , { field: 'track_num', title: '订舱单号', width: 150 }
                 , { field: 'ctime', title: '提交时间', sort: true, width: 200 }
 
                 , { field: 'company', title: '船公司', width: 100 }
-                , { field: 'track_num', title: '船名/航次', width: 150,  templet: function (res) {
-                        return '<div class="">' + res.track_num + '/' + res.track_num + '</div>'
+                , { field: 'boat', title: '船名/航次', width: 150,  templet: function (res) {
+                        return '<div class="">' + res.boat_name + '/' + res.boat_code + '</div>'
                     }
                 }
                 , {
-                    field: 'container_sum', title: '起运港-目的港', width: 130, templet: function (res) {
+                    field: 'port_name', title: '起运港-目的港', width: 130, templet: function (res) {
                         return '<div class="">' + res.s_port_name + '-' + res.e_port_name + '</div>'
                     }
                 }
-                , { field: 'ship_short_name', title: '货名', width: 100 }
-                , { field: 'boat_name', title: '业务员', width: 100 }
-                , { field: 'boat_code', title: '截单时间', sort: true, width: 150 }
-                , { field: 's_port', title: '船期', width: 100 }
-                , { field: 'quoted_price', title: '海上时效', width: 100 }
+                , { field: 'cargo', title: '货名', width: 100 }
+                , { field: 'sales_name', title: '业务员', width: 100 }
+                , { field: 'cutoff_date', title: '截单时间', sort: true, width: 150 }
+                , { field: 'shipping_date', title: '船期', width: 100 }
+                , { field: 'sea_limitation', title: '海上时效', width: 100 }
                 , {
-                    field: 'container_status', title: '箱型*柜量', width: 100, templet: function (res) {
+                    field: 'container', title: '箱型*柜量', width: 100, templet: function (res) {
                         return '<div class="">' + res.container_size + '*' + res.container_sum + '</div>'
                     }
                 }
@@ -890,7 +890,7 @@
                         let contact = fun_obj($('.xinx input'));                                                          
                             $.ajax({
                                 type:"post",
-                                url:"<{:url('admin/Order/send_car')}>",   //数据传输的控制器方法
+                                url:"<{:url('admin/Order/send_car?type=send')}>",   //数据传输的控制器方法
                                 data:{car_data:car_data,contact:contact,order_num:data.order_num,track_num:data.track_num},//这里data传递过去的是序列化以后的字符串
                                 success:function(res){
                                     if (res.status) {
@@ -913,7 +913,7 @@
             } else if (obj.event === 'fk') {//单击申请放柜
                 if (data.container_buckle == 'lock') {
                 layer.confirm('是否申请放柜', {icon: 3, title:'提示'}, function(index){
-                    $.get("<{:url('admin/Order/order_aaa')}>",{order_num:data.order_num},function(res){
+                    $.get("<{:url('admin/Order/apply_cargo')}>",{order_num:data.order_num},function(res){
                         if (res.status) {
                             layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
                                 layer.close(layer.index);

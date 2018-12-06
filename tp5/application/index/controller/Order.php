@@ -14,11 +14,13 @@ class Order extends Base
         $member_code =Session::get('member_code','think');
         $start_add =$this->request->param('start_id');
         if($start_add){ $this->view->assign('start_add',$start_add);   }
+        
         $end_add =$this->request->param('end_id');
         if($end_add){ $this->view->assign('end_add',$end_add);  }
+        
         $load_time =$this->request->param('load_time');
-        if($load_time){ $this->view->assign('load_time',$load_time);  
-        $load_time =strtotime($load_time); }
+        if($load_time){ $this->view->assign('load_time',$load_time);  } 
+        
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数

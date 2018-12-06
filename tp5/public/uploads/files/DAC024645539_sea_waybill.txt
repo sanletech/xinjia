@@ -10,27 +10,32 @@ use app\admin\model\Order as OrderM;
 use app\admin\controller\OrderProcess as OrderProcessC;
 use app\admin\model\OrderProcess as  OrderProcessM;
 use think\Validate;
-use think\Session;
 class Order extends Base
 {       
-    public $order_status;
-    public $page=5;
+    private $order_status;
+    private $page=5;
 
     public function _initialize()
     {  
         $this->order_status=config('config.order_status');
     }
+    
 
-    //审核详情页
+         //审核详情页
     public function audit_page()
     {   
         $order_num =  $this->request->get('order_num');
-        $data = new OrderProcessM;
-        $dataArr = $data->order_details($order_num);
+        $data = new OrderM;
+        $dataArr = $data->orderData($order_num);
+//        $this->_p($dataArr);exit;
+
         $this->assign([
             'list'  =>$dataArr['list'],
+            'containerData' => '',
+            'carData'=> '',
             'shipperArr'=>$dataArr['shipperArr'],
             'consignerArr'=>$dataArr['consignerArr'],
+            'discount'=>''
         ]);;
         return $this->view->fetch('order/audit_page');
     }
@@ -91,7 +96,7 @@ class Order extends Base
 //        $this->_p($data);exit;
         $order_num = $this->request->param('order_num');
         $track_num = $this->request->param('track_num');
-//        $contact = $data['contact'];
+        $contact = $data['contact'];
         $car_data = $data['car_data'];
         $type =$this->request->param('type'); //load装货，send送货
         //查询提交的司机信息个数是否和柜子数量一致
@@ -99,32 +104,13 @@ class Order extends Base
         if($container_sum!== count($car_data)){
             return json(array('status'=>0,'message'=>'司机信息与柜子数量不符'));
         }
-        if(in_array($type, array('load','send') ) ){
-            return json(array('status'=>0,'message'=>'参数不对'));
-        }
-        //判断下装货的柜子和送货的时候是否一样
-        if($type == 'load'){
-            //装货的柜号
-            $container_code =  Db::name('order_car')
-                    ->where(['order_num'=>$order_num,'type'=>'load'])
-                    ->column('container_code');
-            //比对输入的送货柜号是否一致
-            if(array_diff($container_code,array_column($car_data, 'container_code'))){
-                return json(array('status'=>0,'message'=>'柜号不对'));
-            }
-        }
         $OrderM= new OrderM;
-        $res = $OrderM->send_car($order_num,$track_num,$container_sum,$car_data,$type);
+        $res = $OrderM->send_car($order_num,$track_num,$container_sum,$contact,$car_data,$type);
         if(!array_key_exists('fail', $res)){
             //更新订单状态同时记录操作
             $OrderProcessM = new OrderProcessM();
-            if($type == 'load'){
-                $status=$this->order_status['loading'];$title='录入派车信息->待装货';
-            }  else {
-                $status=$this->order_status['completion'];$title='录入送货信息->待完成订单';
-            }
-            $response = $OrderProcessM->orderUpdate($order_num,$status,$title);
-            
+            $response = $OrderProcessM->orderUpdate($order_num,$status=$this->order_status['loading'],$title='录入派车信息->待装货');
+       
         }else {
             $response =['msg'=>implode(',', $response['fail']) ,'status'=>0]; 
         } 
@@ -136,8 +122,8 @@ class Order extends Base
     { 
         $order_num =$this->request->get('order_num');
         $data = Db::name('order_car')
-                ->where(['order_num'=>$order_num,'type'=>'load'])
-                ->field('id,container_code,seal,driver_name')
+                ->where('order_num',$order_num)
+                ->field('id,container_code,seal_No,driver_name')
                 ->select();
         return json($data);
     }
@@ -148,9 +134,8 @@ class Order extends Base
 //      $this->_p($this->request->param());exit;
         $order_num =$this->request->param('order_num');
         $track_num = $this->request->param('track_num');
-        $modify = $this->request->param('modify'); //true 修改 false 不修改
+        $modify = $this->request->param('modify');
         $lists = $this->request->only('list');
-        $lists =$lists['list'];
         //更新order_car的时间
         $arr=[];
         $mtime = date('Y-m-d H:i:s');
@@ -175,6 +160,8 @@ class Order extends Base
         }
     
     }
+        
+
     
     //待报柜号
     public function report_container () {
@@ -211,15 +198,15 @@ class Order extends Base
                 ->where('order_num',$order_num)
                 ->order('sequence')->select();
         //如果为空 就生成 对应的数据
-        if(empty($data)){
+        if($data){
             $port_arr  = Db::name('order_port')->alias('OP')
-                    ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
-                    ->join('hl_ship_route SR',"SR.id=SP.route_id and SR.status='1'",'left')//路线表
+                    ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
+                    ->join('hl_ship_route SR','SR.id=SP.route_id','left')//路线表
                     ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
                     ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
-                    ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
-                    ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
-                    ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
+                    ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
+                    ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
+                    ->join('hl_port P3','P3.port_code=SM.sl_middle','left')//中间港口
                     ->field('P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,'
                     . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
@@ -232,21 +219,20 @@ class Order extends Base
             $insert_data[0]['port_code'] = $port_arr['s_port_code'];
             $m_port_name = explode(',', $port_arr['m_port_name']);
             $m_port_code = explode(',', $port_arr['m_port_code']);
-            for($i=0;$i<count($m_port_code);$i++) {
-                $insert_data[$i+1]['order_num'] = $order_num;
-                $insert_data[$i+1]['sequence'] = $i+1;
-                $insert_data[$i+1]['port_name'] = $m_port_name[$i];
-                $insert_data[$i+1]['port_code'] = $m_port_code[$i];
+            foreach ($m_port_name as $key=>$value){
+                $insert_data[$key+1]['order_num'] = $order_num;
+                $insert_data[$key+1]['sequence'] = $key+1;
+                $insert_data[$key+1]['port_name'] = $m_port_name[$key]['m_port_name'];
+                $insert_data[$key+1]['port_code'] = $m_port_code[$key]['m_port_code'];
             }
-            $insert_data[$i+2]['order_num'] = $order_num;
-            $insert_data[$i+2]['sequence'] = $i+2;
-            $insert_data[$i+2]['port_name'] = $port_arr['e_port_name'];
-            $insert_data[$i+2]['port_code'] = $port_arr['e_port_code'];
+            $insert_data[$key+2]['order_num'] = $order_num;
+            $insert_data[$key+2]['sequence'] = $key+1;
+            $insert_data[$key+2]['port_name'] = $port_arr['s_port_name'];
+            $insert_data[$key+2]['port_code'] = $port_arr['s_port_code'];
             $res = Db::name('order_ship')->insertAll($insert_data);
-            foreach ($insert_data as $k=>$v){
-                $insert_data[$k]['arrival_time']='';
-                $insert_data[$k]['dispatch_time']='';
-                 $insert_data[$k]['ship_name']='';
+            foreach ($insert_data as $key=>$value){
+                $insert_data[$key]['arrival_time']='';
+                $insert_data[$key]['dispatch_time']='';
             }
             return json( $res ?  $insert_data: FALSE);    
         }
@@ -255,79 +241,57 @@ class Order extends Base
     
     //待配船  判断倒数第二个港口离港时间录完就自动申请放柜
     public function  cargo_plan(){
+        $this->_p( $this->request->param());exit;
         $order_num = $this->request->param('order_num');
-        $lists  =  $this->request->only('list');
-        $lists  = $lists['list'];
-        $tmp =[]; $data_tmp=[];
-        $mtime =  date('Y-m-d H:i:s');
+        $modify = $this->request->param('modify');//是否修改 true or false
+        $lists  =  $this->request->param('list');
+        $tmp =[];
         //判断港口数量是否对应的上
         $data = Db::name('order_ship')
                 ->where('order_num',$order_num)
-                ->field('port_code,port_name,ship_name,arrival_time,dispatch_time')
+                ->field('port_name,port_code,ship_name,arrival_time,dispatch_time')
                 ->order('sequence')->select();
-        
-        if(count($data) !== count($lists)){
+        if(count($data) !== count($list)){
             return json(array('status'=>0,'message'=>'参数错误'));
-        }
-        
-        foreach ($data as $key => $value) {
-            //对数据和数据库做比对
-            $result = array_diff_assoc($data[$key],$lists[$key]);
-            
-            array_key_exists('port_code', $result)? $tmp[$key]['port_code'] = $value['port_code'] :FALSE;
-            array_key_exists('port_name', $result)? $tmp['port_name'][$key] = $value['port_name'] :FALSE;
-            array_key_exists('ship_name', $result)? $tmp[$key]['ship_name'] = $value['ship_name'] :FALSE;
-            array_key_exists('arrival_time', $result)? $tmp[$key]['arrival_time'] = $value['arrival_time'] :FALSE;
-            array_key_exists('dispatch_time', $result)? $tmp[$key]['dispatch_time'] = $value['dispatch_time'] :FALSE;
-            
-            //如果存在 说明有更改的,记录更改的港口
-            if(isset($tmp[$key])){
-                $data_tmp[]=$value['port_code'];
-                continue;
+        }else{
+            foreach ($data as $key => $value) {
+                //对数据和数据库做比对
+                $result = array_diff_assoc($lists[$key],$data[$key]);
+                //如果为空 说明有未更改的,记录未更改的港口
+                if(empty($result)){
+                    $tmp['port_code'][]=$value['port_code'];
+                }
+                $tmp['port_code'] = array_key_exists('port_code', $result)? true :false;
+                $tmp['port_name'] = array_key_exists('port_name', $result)? true :false;
+                $tmp['ship_name'] = array_key_exists('ship_name', $result)? true :false;
+                //不符合数据库的数据
+                if(in_array(true, $tmp)){
+                    $illegal_data  = array_intersect_key($value,array_flip(array_keys($tmp,true)) );
+                    return json(array('status'=>0,'message'=>'数据冲突'.implode(',', $illegal_data) ));
+                }
+            } 
+            $mtime =  date('Y-m-d H:i:s');
+            //数据验证无问题，更新数据库
+            foreach ($lists as $list){
+                //过滤空的数据
+                if(count(array_filter($list))=1){
+                    continue;
+                }
+                //过滤和数据库里没有变化的数据
+                if(in_array($list['port_code'],$tmp['port_code'])){
+                    continue;
+                }
+                $list['mtime']=$mtime;
+                $res = Db::name('order_ship')
+                        ->where(['order_num'=>$order_num,'port_code'=>$list['port_code']])
+                        ->update($list);
+                $res ? $tmp['success'][]=$list['port_name'] :$tmp['fail'][]=$list['port_name'];
             }
-        } 
-        //不符合数据库的数据
-        if(array_key_exists('port_code', $tmp)){
-            return json(array('status'=>0,'message'=>'数据冲突'.implode(',', $tmp['port_code']) ));
-        }  
-        $port_code_arr = array_column($data,'port_name','port_code'); //港口_code _name 数组
-//        $this->_p($data_tmp);exit;
-        //数据验证无问题，更新数据库
-        foreach ($lists as $list){
-            //过滤空的数据
-            if(count(array_filter($list))==1){
-                continue;
+            if(array_key_exists('fail', $tmp)){
+                return json(array('status'=>0,'message'=>'更新失败.'.implode(',', $tmp['fail'])));
+            }  else {
+                return json(array('status'=>1,'message'=>'更新成功.'.implode(',', $tmp['success'])));
             }
-            //过滤和数据库里没有变化的数据
-            if(in_array($list['port_code'], $data_tmp)){
-            $list['mtime']=$mtime;
-            $port_code = $list['port_code'];
-            $res = Db::name('order_ship')
-                    ->where(['order_num'=>$order_num,'port_code'=>$port_code])
-                    ->update($list);
-            $res ? $tmp['success'][]=$port_code_arr[$port_code] :$tmp['fail'][]=$port_code_arr[$port_code];
-            }  
-        }
-        
-        if(array_key_exists('fail', $tmp)){
-            return json(array('status'=>0,'message'=>'更新失败'.implode(',', $tmp['fail'])));
-        }  elseif(array_key_exists('success', $tmp)) {
-            //判断是否是倒数第二个港口更新了
-            $num = count($port_code_arr);
-            $map = array_keys($port_code_arr);
-            $penult  = $map[$num-2]; //倒数第二个
-            $tailender =$map[$num-1]; //倒数第一个
-            if(in_array($penult, $data_tmp)){
-                $this->apply_cargo($order_num); //提交扣柜申请
-            }  
-            if(in_array($tailender, $data_tmp)) {
-                //更新订单状态同时记录操作
-                $OrderProcessM = new OrderProcessM();
-                $response = $OrderProcessM->orderUpdate($order_num,$status=$this->order_status['sea_waybill'],$title='船期录入完成->待上传水运单');
-            }
-            return json(array('status'=>1,'message'=>'更新成功'.implode(',', $tmp['success'])));
-        }  else {
-            return json(array('status'=>1,'message'=>'未更改'));
         }
         
     }
@@ -339,6 +303,7 @@ class Order extends Base
     
     //订单处理页面 数据
     public function order_data() {
+        
         $data= $this->request->except('limit,page');   
         $limit= $this->request->param('limit',10,'intval'); //获取每页显示的条数
         $page= $this->request->param('page',1,'intval');   //获取当前页数
@@ -354,7 +319,6 @@ class Order extends Base
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
        
     }
-    
     //上传订舱单 和水运单
     public function waybill_upload(){
         
@@ -379,8 +343,8 @@ class Order extends Base
                         $res= Db::name('order_port')->where('order_num',$order_num)->update($map);
                     }
                 }elseif ($type=='sea_waybill') {
-                    $status =  $this->order_status['unloading'];
-                    $title ='上传水运单->待送货';
+                    $status =  $this->order_status['send_car'];
+                    $title ='上传水运单->待申请放柜';
                 }
                 //更改状态
                 $res1 = $OrderM->orderUpdate($order_num,$status,$title);
@@ -390,26 +354,26 @@ class Order extends Base
             return $res;
         }
     }
-    
     //申请放柜
     public function apply_cargo() {
         $order_num =  $this->request->param('order_num');
         $mtime =  date('Y-m-d H:i:s');
         $res = Db::name('order_port')->where('order_num',$order_num)->update(['container_buckle'=>'apply','mtime'=>$mtime]);
-        //记录提操作者修改的时间
+        //记录客户修改的时间
         if($res){
-            $status = $this->order_status['container_appley'];
-            $OrderM = new OrderProcessM();
-            $res1 = $OrderM->orderUpdate($order_num,$status,$title='申请放柜子');
-            return $res1; 
+            $data=[];
+            $data['submitter'] = Session::get('user_info','think');
+            $data['mtime']=$mtime;
+            $data['order_num']=$order_num;
+            $data['status']=  $this->status['container_appley'];
+            $res2 = Db::name('order_port_status')->insert($data);
         }
         return $res? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');     
     }
+    
 
-    //门订单详情
-    public function  port_details(){
-        return $this->view->fetch('order/port_details');
-    }
+    
+    
     
     //查看订单
     public function order_aaa()
