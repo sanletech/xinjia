@@ -146,13 +146,13 @@
                                 <{volist name="containerData" id="container"}>
                                 <div class="layui-form-item">
                                     <div class="guinei" style="text-align:right;margin-top: 12px;">
-                                        <!--<input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.container_code}>">-->
-                                        <{$container.container_code}>
+                                        <input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.container_code}>">
+                                        <!-- <{$container.container_code}> -->
                                     </div>
                                     <div class="layui-form-mid">-</div>
                                     <div class="guinei" style="margin-top: 12px;">
-                                        <!--<input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.seal}>">-->
-                                        <{$container.seal}>
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.seal}>">
+                                        <!-- <{$container.seal}> -->
                                     </div>
                                 </div>
                                 <{/volist}>
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            
 
                 <!-- 船舶动态 -->
                 <div class="xxtx_dd">
@@ -215,58 +215,68 @@
                             <tbody class="bge">
                                 <tr>
                                     <td>
-                                        2018-12-5
+                                        <input type="text" name="seal" value="2018-12-20" class="layui-input test-item" placeholder="YYYY-MM-dd">
                                     </td>
-                                    <td>13584146568</td>
+                                    <td><input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="13584146568"></td>
                                     <td>
-                                        火箭
-                                    </td>
-                                    <td>
-                                        粤D4669
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="火箭">
                                     </td>
                                     <td>
-                                        小敏
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="粤D4669">
                                     </td>
                                     <td>
-                                        4313216984549866
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="小敏">
                                     </td>
                                     <td>
-                                        40GP
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="4313216984549866">
                                     </td>
                                     <td>
-                                        sdf45646
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="40GP">
                                     </td>
-                                    <td>2018-4-6</td>
+                                    <td>
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="sdf45646">
+                                    </td>
+                                    <td><input type="text" name="seal" value="2018-12-20" class="layui-input test-item" placeholder="YYYY-MM-dd"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <!-- 待配船 -->
                     <div class="dd_nei">
-                        <div class="layui-col-xs1 er">
+                        <div class="layui-col-xs2 er">
                             <div class="grid-demo nei">
-                                <div class="layui-col-xs6">港口：</div>
-                                <div class="layui-col-xs6" style="text-align: left">
-                                        天津港
+                                <div class="layui-col-xs3">港口：</div>
+                                <div class="layui-col-xs9" style="text-align: left">
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="天津港">
                                 </div>
                             </div>
                         </div>
 
                         <div class="layui-col-xs2 er">
                             <div class="grid-demo nei">
-                                <div class="layui-col-xs6">船名：</div>
-                                <div class="layui-col-xs6" style="text-align: left">
-                                        狗不理
+                                <div class="layui-col-xs3">船名：</div>
+                                <div class="layui-col-xs9" style="text-align: left">
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="狗不理">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="layui-col-xs4 er">
+                        <div class="layui-col-xs6 er">
                             <div class="grid-demo nei">
-                                <div class="layui-col-xs3">到港&nbsp;/&nbsp;离港时间：</div>
-                                    <div class="layui-col-xs6" style="text-align: left">
-                                        2018-12-5&nbsp;/&nbsp;2018-12-20
+                                <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">到港-离港时间</label>
+                                    <div class="layui-input-inline" style="width: 150px;margin-right: -15px;">
+                                            <input type="text" name="seal" class="layui-input test-item" value="2018-12-20" placeholder="YYYY-MM-dd">
+                                        <!-- <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input"> -->
                                     </div>
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 150px;">
+                                        <input type="text" name="seal" class="layui-input test-item" value="2018-12-20" placeholder="YYYY-MM-dd">
+                                        <!-- <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input"> -->
+                                    </div>
+                                </div>
+                                </div>
                             </div>
                         </div>  
                     </div>
@@ -287,7 +297,7 @@
                             <!-- <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span> -->
                         </div>
                         <div class="layui-col-xs12">
-                            <span>海头运费：</span>
+                            <span>海头杂费：</span>
                             <strong id="discount">520</strong>元
                             <!-- <span class="shuo">开票说明：选择在线支付优惠后不开发票</span> -->
                         </div>
@@ -297,7 +307,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 <!-- 委托信息 -->
@@ -314,28 +323,32 @@
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>发货单位：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <{$shipperArr[0]}>
+                                        <!-- <{$shipperArr[0]}> -->
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[0]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <{$shipperArr[1]}>
+                                        <!-- <{$shipperArr[1]}> -->
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[1]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <{$shipperArr[2]}>
+                                        <!-- <{$shipperArr[2]}> -->
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[2]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>装货地址：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                        <{$shipperArr[3]}>
+                                        <!-- <{$shipperArr[3]}> -->
+                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[3]}>">
                                     </div>
                                 </div>
 
@@ -346,21 +359,24 @@
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货单位：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                            <{$consignerArr[0]}>
+                                            <!-- <{$consignerArr[0]}> -->
+                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[0]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                            <{$consignerArr[1]}>
+                                            <!-- <{$consignerArr[1]}> -->
+                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[1]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                            <{$consignerArr[2]}>
+                                            <!-- <{$consignerArr[2]}> -->
+                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[2]}>">
                                     </div>
                                 </div>
 
@@ -368,7 +384,8 @@
                                     <div class="layui-col-xs3">
                                         <span>*&nbsp;</span>收货地址：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
-                                            <{$consignerArr[3]}>
+                                            <!-- <{$consignerArr[3]}> -->
+                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[3]}>">
                                     </div>
                                 </div>
                             </div>
@@ -376,8 +393,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <!-- 订单路线 -->
                 <div class="xxtx_dd er">
@@ -400,7 +415,8 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>箱型：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                            <{$list.container_type}>
+                                            <!-- <{$list.container_type}> -->
+                                            <input name="container_type" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_type}>">
                                     </div>
                             </div>
                         </div>  
@@ -419,7 +435,8 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>货名：</div>
                                 <div class="layui-col-xs6" style="text-align: left">
-                                    <{$list.cargo}>
+                                    <!-- <{$list.cargo}> -->
+                                    <input name="cargo" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.cargo}>">
                                 </div>
                             </div>
                         </div>
@@ -428,7 +445,8 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>包装：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                        <{$list.container_type}>
+                                        <!-- <{$list.container_type}> -->
+                                        <input name="container_type" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_type}>">
                                     </div>
                             </div>
                         </div>
@@ -437,11 +455,12 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>重量：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                            <{$list.weight}>
-                                    <span>吨(T)</span>
+                                            <!-- <{$list.weight}> -->
+                                            <input name="weight" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.weight}>">
+                                    
                                 </div>
                                 <div class="layui-col-xs2" style="text-align: left;">
-                                    
+                                    <span>吨(T)</span>
                                 </div>
                             </div>
                         </div>
@@ -571,7 +590,7 @@
                             </div>
                             <div class="dd_nei">
                                 <ol>
-                                    <li>啊啊发送发送</li>
+                                    <li style="width: 40%"><input name="beizhu" placeholder="" autocomplete="off" class="layui-input" type="text" value="5afd"></li>
                                 </ol>
                             </div>
                     </div>
@@ -579,8 +598,11 @@
     
 
                     <div class="tjiao" style="text-align:center;">
-                            <a class="shi" href="javascript:void(0);" onclick="que('131321')">完成订单</a>
+                            <a href="javascript:;" onclick="bao()">保存</a>
+                            <{if condition="$list['completion']"}>
                             <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
+                            <{else /}><a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
+                            <{/if}>
                     </div> 
                 </div>
         </form>
@@ -635,7 +657,7 @@
                         <button class="layui-btn" lay-submit="" onclick='invoice()' lay-filter="demo1">立即保存</button>
                     </div>
                 </div>-->
-            
+            </form>
         </div>
 
 
@@ -646,8 +668,28 @@
         <script src="__STATIC__/js/port_money.js"></script>
         <script>
             $('.songhuo,.zhuanghuo').show();
-            $('input').attr('readonly', true);
-            $('input').css('border', '0');
+            // $('input').attr('readonly', true);
+            // $('input').css('border', '0');
+              //同时绑定多个
+            layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            lay('.test-item').each(function(){
+                laydate.render({
+                elem: this
+                ,trigger: 'click'
+                });
+            });
+            })
+            function bao(){
+                $.ajax({
+                type:'POST',
+                url:"<{:url('admin/order/aaa')}>",   //数据传输的控制器方法
+                data:$('#order_data_form').serialize(),//这里data传递过去的是序列化以后的字符串
+                success:function(res){
+                    console.log(res);
+                }
+            })
+            }
         </script>
     </body>
     </html>

@@ -3,6 +3,7 @@ $b_red:1px solid red;
 $lan:#2e8de5;
 $cheng:#ff9f19;
 $hui:#aaa;
+$di:#BCBCBC;
 .order_list{
     background-color:#dff8faa2;
     padding: 10px;
@@ -130,7 +131,7 @@ $hui:#aaa;
     padding-right: 25px;
 }
 
-#car,#dbgh,#dai_post,#dc{
+#car,#dbgh,#dai_post,#dc,#container{
     display: none;
     padding-right: 50px;
     margin-top: 10px;
@@ -147,7 +148,7 @@ $hui:#aaa;
     }
 }
 
-.syd,.yunding,#container{
+.syd,.yunding{
     display: none;
 }
 
