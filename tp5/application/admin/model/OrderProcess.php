@@ -148,7 +148,7 @@ class OrderProcess  extends Model{
                 break; 
         }
         $list['extra_info'] = ltrim($list['extra_info'],','); 
-        $list['completion']= ($list['status']== $this->order_status['completion'])?true:false;
+        $list['completion']= ($list['status']== $this->order_status['completion']) ?true:false;
         if($order_type =='P'){
             return array('list'=>$list ,'containerData'=>$containerData,'carData'=>$carData,'shipperArr'=>$shipperArr,'consignerArr'=>$consignerArr);
         }  else {

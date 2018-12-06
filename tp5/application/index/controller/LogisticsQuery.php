@@ -10,14 +10,23 @@ class LogisticsQuery extends Base{
         $order_num =  $this->request->param('order_num');
         $track_num =   $this->request->param('track_num');
         $container_code = $this->request->param('container_code');
+        //根据运单号 或者柜号 查询 订单
+        if($track_num){
+            $order_num = Db::name('order_port')->where('track_num',$track_num)->value('order_num');
+        }
+        if($container_code){
+            $order_num = Db::name('order_car')->where('container_code',$container_code)->value('order_num');
+            if(empty($order_num)){
+                $order_num = Db::name('order_truckage')->where('container_code',$container_code)->value('order_num');
+            }
+        }
         if($order_num){
-            $map['order_num'] = $order_num; 
+            $order_num = Db::name('order_port')->where('order_num',$order_num)->value('order_num');
         }
-        if($container_code && $track_num){
-            $order_num =Db::name('order_son')->where('container_code',$container_code)
-                    ->where('track_num',$track_num)->value('order_num');
-            $map['order_num'] = $order_num; 
+        if(empty($order_num)){
+            return false;
         }
+        
         $list=Db::name('order_status')->where($map)->field('submit_man_code',true)->order('change_time ASC')->select();
         return json($list);
     }

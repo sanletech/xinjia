@@ -712,7 +712,7 @@
                             '船名</div><div class="layui-col-xs5">'+res[i+1].port_name+'</div></div>'+
                             '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
                             '<input type="hidden" name="port_code" value="'+res[i].port_code+'" class="layui-input in"><input type="hidden" name="port_code" value="'+res[i+1].port_code+'" class="layui-input ip">'+
-                            '</div><div class="layui-col-xs5 inpt">'+
+                            '<input type="hidden" name="ship_name" value="" class="layui-input ip"></div><div class="layui-col-xs5 inpt">'+
                             '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i-1]+'">'+
                             '<div class="he">-</div>'+
                             '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
