@@ -123,7 +123,7 @@ class Financial extends Base
         $date_end=$date_end ?$date_end :date('y-m-d H:i:s');
         $container_buckle = $this->request->param('container_buckle','apply','strval');
         if($container_buckle=='all'){$container_buckle ='not null'; }
-        // var_dump($container_buckle);exit;
+//         var_dump($container_buckle);exit;
         $money_status = $this->request->param('money_status','nodo','strval');
 //        var_dump($money_status);exit;
         if($money_status == 'all'){
@@ -142,7 +142,7 @@ class Financial extends Base
                 ->where('OP.container_buckle',$container_buckle)
                 ->where('OP.money_status',$money_status)->group('OB.order_num')
                 ->order('ctime desc,mtime desc')->buildSql();
-//         var_dump($list);exit;;
+//         var_dump($list);exit;
         $count =  Db::table($list.' a')->count();
         $list = Db::table($list.' a')->page($page,$limit)->select();
 //        $this->_p($list);exit;

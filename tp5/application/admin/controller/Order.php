@@ -13,16 +13,15 @@ use think\Validate;
 use think\Session;
 class Order extends Base
 {       
-    private $order_status;
-    private $page=5;
+    public $order_status;
+    public $page=5;
 
     public function _initialize()
     {  
         $this->order_status=config('config.order_status');
     }
-    
 
-         //审核详情页
+    //审核详情页
     public function audit_page()
     {   
         $order_num =  $this->request->get('order_num');
@@ -399,7 +398,9 @@ class Order extends Base
         $res = Db::name('order_port')->where('order_num',$order_num)->update(['container_buckle'=>'apply','mtime'=>$mtime]);
         //记录提操作者修改的时间
         if($res){
-            $res1 = $OrderM->orderUpdate($order_num,$this->status['container_appley'],$title='申请放柜子');
+            $status = $this->order_status['container_appley'];
+            $OrderM = new OrderProcessM();
+            $res1 = $OrderM->orderUpdate($order_num,$status,$title='申请放柜子');
             return $res1; 
         }
         return $res? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');     

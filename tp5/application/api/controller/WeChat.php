@@ -92,9 +92,24 @@ class WeChat extends Controller
         $list = $sea_pirce ->orderBook($sea_id ,$container_size,$member_code);
          //创建订单令牌
         action('OrderToken/createToken','', 'controller');
-//        $this->_p($list);exit;
-        $this->view->assign('list',$list);
-        return $this->view->fetch('order/order_book');
+        $TOKEN = Session::get('TOKEN');
+        return json(array('TOKEN'=>$TOKEN,'list'=>$list));
     } 
+    //小程序 //添加收/发货人的信息
+    public function linkmanAdd($data)
+    {
+        $link_name = $data['link_name'];
+        $phone = $data['phone'];
+        $company = $data['company'];
+        $add= $data['add'];
+        $member_code =Session::get('member_code');
+        $time = date("Y-m-d H:i:s"); 
+        $sql= "insert into hl_linkman(name ,phone ,company ,mtime,member_code,address) "
+         . " values('$link_name','$phone','$company','$time','$member_code','$add')";
+        $res =  Db::execute($sql);
+        $res ?  $response['success'][]='添加linkman表': $response['fail'][]='添加linkman表';
+        return  $response;    
+        
+    }
 
 }
