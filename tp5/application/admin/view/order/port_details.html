@@ -687,7 +687,11 @@
                 url:"<{:url('admin/order/aaa')}>",   //数据传输的控制器方法
                 data:$('#order_data_form').serialize(),//这里data传递过去的是序列化以后的字符串
                 success:function(res){
-                    console.log(res);
+                    if (res.status) {
+                        layui.layer.msg('提交成功', { icon: 1, time: 500 });
+                    } else {
+                        layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                    }
                 }
             })
             }

@@ -477,13 +477,12 @@
         //监听行工具事件
         table.on('tool()', function (obj) {
             var data = obj.data;
-//            console.log(data);
             for (let i = 0; i < $('.yunding').length; i++) {
                 $('.yunding').eq(i).find('input').eq(0).val(data.order_num);
                 $('.yunding').eq(i).find('input').eq(1).val(data.track_num); 
             }
             if (obj.event === 'confirm') {//点击备注
-               data.status = '待装货'
+            //    data.status = '待配船'
                 // console.log(data.order_num, data.container_sum, data.status);
                 if (data.status == '待订舱') {
                     order_num = data.order_num;
@@ -574,7 +573,6 @@
                     $('#container .dzh').html('');
                     //获取柜号封条号
                     $.get("<{:url('admin/order/LoadData')}>",{order_num:data.order_num},function(res){
-                        console.log(res);
                         for (let i = 0; i < res.length; i++) {
                             $('#container .dzh').append('<div class="layui-col-xs12 gfth"><div class="layui-col-xs3">'+
                             '<input type="hidden" name="id" value="'+res[i].id+'" class="layui-input">'+
@@ -665,17 +663,6 @@
                         }
                     });
                 } else if (data.status == '待配船') {
-                    // console.log(data);
-                    // let arr = [];//表单数据
- 
-                    // arr.push({port_id:data.s_port_code,port_name:data.s_port_name});
-                    // let code = data.m_port_code.split(',');
-                    // let name = data.m_port_name.split(',');
-                    // for (let i = 0; i < code.length; i++) {
-                    //     arr.push({port_id:code[i],port_name:name[i]});                     
-                    // }
-                    
-                    // arr.push({port_id:data.e_port_code,port_name:data.e_port_name}); 
                     $.get("<{:url('admin/order/cargo_plan_data')}>",{order_num:data.order_num},function(res){         
                     $('#dai_post .dai').html('');
                     //获取到之前录入的信息把null修改                                        
@@ -778,25 +765,45 @@
                         }
                         , btn2: function (index) {
                             let list = fun_inp($('#dai_post .dzh .gfth')); 
-                            let obj = {};//最后一次到港时间                    
+                            let obj = {};//最后一次到港时间  
+                            let boot = true;//判断是否可以提交                  
                             $('#dai_post .dzh .gfth .ip').each(function(index,item){
                                 obj[$(item).attr('name')] = $(item).val(); 
                             });
-                            list.push(obj);                             
-                            $.ajax({
+                            list.push(obj);
+                            
+                            for (let i in list) {
+                                if (list[i].dispatch_time) {
+                                    if (!list[i].arrival_time) {
+                                        boot = false;
+                                        layui.layer.msg('请输入起始时间', { icon: 2, time: 2000 });
+                                        break;
+                                    }
+                                    if (!list[i].ship_name) {
+                                        boot = false;
+                                        layui.layer.msg('离港请务必把船名填上', { icon: 2, time: 2000 });
+                                        break;
+                                    }
+                                }
+                            }
+                                                        
+                            if (boot) {
+                                $.ajax({
                                 type:"post",
                                 url:"<{:url('admin/Order/cargo_plan')}>",   //数据传输的控制器方法
                                 data:{list:list,order_num:data.order_num,track_num:data.track_num},//这里data传递过去的是序列化以后的字符串
                                 success:function(res){
                                     if (res.status) {
+                                        let a = layer.index;
                                         layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                                            layer.close(layer.index);
+                                            layer.close(a);
                                         });
                                     } else {
                                         layui.layer.msg('提交失败', { icon: 2, time: 1000 });
                                     }
                                 }
                             });
+                            }
                             return false;
                         }
                     });
@@ -810,6 +817,8 @@
                         , area: ['200px', '110px']
                     });
                 }else if (data.status == '待送货') {
+                    if (data.container_buckle == 'unlock') {
+                    
                     $('#chedui').html('')
                     $.get("<{:url('admin/order/LoadData')}>",{order_num:data.order_num},function(res){
                         for (let i = 0; i < res.length; i++) {                        
@@ -885,6 +894,10 @@
                             });
                         }
                     });
+                        
+                    }else{
+                        layui.layer.msg('柜未通过审核', { icon: 2, time: 2000 });
+                    }
                 }
             } else if (obj.event === 'fk') {//单击申请放柜
                 layer.confirm('是否申请放柜', {icon: 3, title:'提示'}, function(index){
