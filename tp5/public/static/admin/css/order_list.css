@@ -99,7 +99,7 @@
   padding-left: 0;
   padding-right: 25px; }
 
-#car, #dbgh, #dai_post, #dc {
+#car, #dbgh, #dai_post, #dc, #container {
   display: none;
   padding-right: 50px;
   margin-top: 10px; }
@@ -112,7 +112,7 @@
     width: 250px;
     display: inline-table; }
 
-.syd, .yunding, #container {
+.syd, .yunding {
   display: none; }
 
 #container .ming > div, #dbgh .ming > div, #dai_post .ming > div {

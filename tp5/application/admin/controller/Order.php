@@ -100,6 +100,9 @@ class Order extends Base
         if($container_sum!== count($car_data)){
             return json(array('status'=>0,'message'=>'司机信息与柜子数量不符'));
         }
+        if(in_array($type, array('load','send') ) ){
+            return json(array('status'=>0,'message'=>'参数不对'));
+        }
         //判断下装货的柜子和送货的时候是否一样
         if($type == 'load'){
             //装货的柜号
@@ -119,7 +122,7 @@ class Order extends Base
             if($type == 'load'){
                 $status=$this->order_status['loading'];$title='录入派车信息->待装货';
             }  else {
-                $status=$this->order_status['unloading'];$title='录入送货信息->待完成订单';
+                $status=$this->order_status['completion'];$title='录入送货信息->待完成订单';
             }
             $response = $OrderProcessM->orderUpdate($order_num,$status,$title);
             

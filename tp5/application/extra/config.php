@@ -12,7 +12,7 @@ return [
         'order_audit'=>2,//订单审核
         'booking_note'=>3, //上传订舱单和运单号
                     'send_car'=>4,  //派车信息录入
-                    'loading'=>5, //装货信息录入
+                    'loading'=>5, //装货时间录入
         'up_container_code'=>7,// 提交柜号
                     'load_ship'=>8, //配船
 //                    'arrive_port '=>9, //到港
