@@ -164,6 +164,7 @@ class BulkData extends Base{
                         ->whereTime('mtime','between',[$before_mtime,$after_mtime])
                         ->limit(1)->value('id');
                     if(!$select_res){
+                        $tmp['status']='2';
                         $insert_res = Db::name('seaprice')->insert($tmp);
                         $insert_res ?$sqlLogs[] =['status'=>0,'message'=>'添加成功','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>'']:$sqlLogs[] =['status'=>2,'message'=>'添加失败','row'=>$sheet_title[$key].'sheet'.($k+1).'行','seaprice_id'=>''];
                     }  else {

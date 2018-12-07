@@ -18,13 +18,26 @@ class Price extends Base
         $ship_name =  input('get.ship_name');
         $port_start = input('get.s_port_name');
         $port_over = input('get.e_port_name');
+        $status = input('get.status');
+        $status ? $this->assign('status',$status):''; 
+        switch ($status){
+        case 'normal':
+           $status = 1; 
+        case 'deleted':
+            $status = 0; 
+        case 'judge':
+            $status = 2;
+        default :
+            $status = 1;
+        }
         $port_start? $this->assign('s_port_name',$port_start):''; 
         $ship_name ? $this->assign('ship_name',$ship_name):''; 
         $port_over ? $this->assign('e_port_name',$port_over):''; 
+        $status ? $this->assign('e_port_name',$port_over):''; 
         
         $route = new PriceM;
         $ship_name=trim($ship_name); $port_start=trim($port_start); $port_over=trim($port_over);
-        $list = $route->price_route_list($ship_name,$port_start,$port_over ,5);
+        $list = $route->price_route_list($ship_name,$port_start,$port_over ,$status,10);
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
@@ -110,15 +123,14 @@ class Price extends Base
     //航线运价删除
     public function route_del(){
         //接受price_route_del 的id 数组
-        $data = $this->request->param();
-        $seaprice_id = $data['id'];
+        $seaprice_id = $this->request->param('id');
+        $type = $this->request->param('type');
+        if(!($type=='delete'|| $type=='pass')){
+            return json(array('status'=>0,'message'=>'参数错误'));
+        }
         $seaprice = new PriceM;
-        $res = $seaprice->price_route_del($seaprice_id);
-         if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status;   
+        $res = $seaprice->price_route_del($seaprice_id,$type);
+        return json( $res ? array('status'=>1,'message'=>$type.'success'):array('status'=>0,'message'=>$type.'fail'));
     }
     
     

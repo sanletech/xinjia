@@ -11,7 +11,7 @@ class Price extends Model
     protected $EDD = 'EDD';
   
      //船运航价的展示
-    public function  price_route_list($ship_name,$port_start,$port_over,$pages=5,$seaprice_id=0)
+    public function  price_route_list($ship_name,$port_start,$port_over,$status,$pages=5,$seaprice_id=0)
     {   
         $list =Db::name('seaprice')->alias('SP')
                ->join('hl_ship_route SR','SR.id=SP.route_id','left')
@@ -26,7 +26,8 @@ class Price extends Model
                . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
                . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,"
                . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
-                ->order('SP.mtime DESC')->group('SP.id,SC.id,B.id,SR.id')->buildSql();
+                ->order('SP.mtime DESC')->where('SP.status',$status)
+                ->group('SP.id,SC.id,B.id,SR.id')->buildSql();
                 
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($port_start){
@@ -126,14 +127,11 @@ class Price extends Model
     }
     
      //船运航价的删除
-     public function  price_route_del($seaprice_id)
+     public function  price_route_del($seaprice_id,$type)
     {
-        $res3 = Db::name('seaprice')->where('id','in',$seaprice_id)->delete();
-        if($res3){
-            $response['success'][] = '删除seaprice表';  
-        }else{ $response['fail'][] = '删除seaprice表';   }
-    
-    return  $response;
+        $type=='delete'? $status = 0:$status = 1;
+        $res3 = Db::name('seaprice')->where('id','in',$seaprice_id)->update(['status'=>$status]);
+        return  $res3 ? true : false;
     }
     
     
