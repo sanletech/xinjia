@@ -18,6 +18,9 @@
     <div class="x-body">
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" id="searchform">
+            <input type="radio" name="status" value="normal" title="正常" checked>
+            <input type="radio" name="status" value="deleted" title="已删除">
+            <input type="radio" name="status" value="judge" title="待审核">
             <input type="text" name="ship_name" value="<{$ship_name? $ship_name: '';}>" placeholder="请输入航务公司" autocomplete="off" class="layui-input">
             <input type="text" name="s_port_name" value="<{$s_port_name ? $s_port_name : '';}>" placeholder="请输入始发港口" autocomplete="off" class="layui-input">
             <input type="text" name="e_port_name"  value="<{$e_port_name ? $e_port_name : '';}>" placeholder="请输入目的港口" autocomplete="off" class="layui-input">
@@ -29,8 +32,11 @@
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()">
           <i class="layui-icon"></i>批量删除</button>
+        <button class="layui-btn layui-btn-normal" onclick="addAll()">
+          <i class="layui-icon">&#x1005;</i>批量通过</button>
         <button class="layui-btn" onclick="x_admin_show('添加','<{:url('Price/route_add')}>',700,500)" href="javascript:;">
           <i class="layui-icon"></i>添加</button>
+        
         <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
 
@@ -138,17 +144,27 @@
         layer.confirm('确认要删除吗？' + data, function (index) {
           //捉到所有被选中的，发异步进行删除
           var dataArray = { id: data };
-          toajax(dataArray);
+          toajax(dataArray,'delete');
           layer.msg('删除成功', { icon: 1 });
           $(".layui-form-checked").not('.header').parents('tr').remove();
         });
       }
 
+      function addAll(){
+        var data = tableCheck.getData();
+        layer.confirm('确认要审核吗？' + data, function (index) {
+          //捉到所有被选中的，发发异步进行审核
+          var dataArray = { id: data };
+          toajax(dataArray,'past');
+          layer.msg('审批成功', { icon: 1 });
+        });
+      }
 
-      function toajax(dataArray) {
+
+      function toajax(dataArray,type) {
         $.ajax({
           type: 'POST',
-          url: "<{:url('admin/Price/route_del')}>",
+          url: "<{:url('admin/Price/route_del')}>?type="+type,
           data: dataArray,
           dataType: "json",
           success: function (data) {
