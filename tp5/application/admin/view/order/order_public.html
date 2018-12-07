@@ -301,9 +301,7 @@
 
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" lay-event="confirm"  title="">确认</a>
-        {{#  if(d.container_buckle == 'lock'){ }}
         <a class="layui-btn layui-btn-xs fgui" lay-event="fk"  title="">申请放柜</a>
-        {{#  } }}
     </script>
 
     <!-- <script src="__STATIC__/js/jquery-3.2.1.min.js"></script>  -->
@@ -437,11 +435,16 @@
             ]]
             , page: true
             , done: function (res, curr, count) {//数据调用之后
-                console.log(res.data);
-                
+            console.log(res.data);
+            
                 for (let i = 0; i < count; i++) {
                     if (res.data[i].container_buckle == 'lock') {
-                        $('.fgui').eq(i).attr('title',res.data[i].container_buckle_comment);                        
+                        $('.fgui').eq(i).attr('title',res.data[i].container_buckle_comment); 
+                        $('.fgui').eq(i).html('扣柜');      
+                    }else if(res.data[i].container_buckle == 'unlock'){
+                        $('.fgui').eq(i).html('放货');
+                    }else{
+                        $('.fgui').eq(i).html('申请中');
                     }
                 }
                 
