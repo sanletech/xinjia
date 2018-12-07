@@ -430,13 +430,19 @@
                     }
                 }
                 , { field: 'status', title: '状态', width: 100 }
-                , { field: 'container_buckle', title: '处理天数', width: 100 }
+                , { field: 'ctime', title: '处理天数', width: 100 ,templet: function (res) { 
+                    let date1 = new Date();
+                    let date2 = new Date(res.ctime);
+                    let s1 = date1.getTime(),s2 = date2.getTime();
+                    let total = (s1 - s2)/1000;
+                    let day = parseInt(total / (24*60*60));//计算整数天数               
+                        return `<div class="">${day}天</div>`;
+                    }
+                }
                 , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150 }
             ]]
             , page: true
             , done: function (res, curr, count) {//数据调用之后
-            console.log(res.data);
-            
                 for (let i = 0; i < count; i++) {
                     if (res.data[i].container_buckle == 'lock') {
                         $('.fgui').eq(i).attr('title',res.data[i].container_buckle_comment); 
@@ -915,11 +921,13 @@
                     }
                 }
             } else if (obj.event === 'fk') {//单击申请放柜
+            let item = $(this);
                 if (data.container_buckle == 'lock') {
                 layer.confirm('是否申请放柜', {icon: 3, title:'提示'}, function(index){
                     $.get("<{:url('admin/Order/apply_cargo')}>",{order_num:data.order_num},function(res){
                         if (res.status) {
                             layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
+                                $(item).html('申请中');
                                 layer.close(layer.index);
                             });
                         } else {
