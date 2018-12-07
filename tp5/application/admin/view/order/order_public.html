@@ -11,6 +11,7 @@
     <form class="layui-form" id="cont">
         <!-- 搜索内容 -->
         <div class="layui-form-item">
+            
             <div class="layui-inline">
                 <label class="layui-form-label"></label>
                 <div class="layui-input-inline">
@@ -434,14 +435,16 @@
             ]]
             , page: true
             , done: function (res, curr, count) {//数据调用之后
-                      for (let i = 0; i < count; i++) {
-                    $('.fgui').eq(i).attr('title',res.data[i].container_buckle_comment); 
+            console.log(res.data);
+            
+                for (let i = 0; i < count; i++) {
                     if (res.data[i].container_buckle == 'lock') {
-                    $('.fgui').eq(i).html('扣柜'); 
+                        $('.fgui').eq(i).attr('title',res.data[i].container_buckle_comment); 
+                        $('.fgui').eq(i).html('扣柜');      
                     }else if(res.data[i].container_buckle == 'unlock'){
-                    $('.fgui').eq(i).html('放货');
+                        $('.fgui').eq(i).html('放货');
                     }else{
-                    $('.fgui').eq(i).html('申请中');
+                        $('.fgui').eq(i).html('申请中');
                     }
                     }
 

@@ -348,7 +348,7 @@ class Order extends Base
         $dataM = new OrderM;
         $data = $dataM->order_public($page,$limit,$status_arr);
         $list =$data['list']; //分页数据
-        $this->_p($list);exit;
+//        $this->_p($list);exit;
         $count = $data['count'];// 总页数
         
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
