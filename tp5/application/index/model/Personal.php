@@ -57,11 +57,13 @@ class Personal extends Model
 //        $this->_p($container_buckle);exit;
         foreach ($lists as $key =>$list){  
             foreach ($container_buckle as $k=>$v){
-                if($list['order_num']==$v['order_num']){
-                    $lists[$key]['container_buckle_comment'] = $v['comment'];
-                }  
-            }
-        }       
+                if($list['container_buckle']=='lock'){
+                    if($list['order_num']==$v['order_num']){
+                        $lists[$key]['container_buckle_comment'] = $v['comment'];
+                    }  
+                }
+            }  
+        }     
         foreach ($lists as $key =>$list){  
             if(!array_key_exists('container_buckle_comment', $lists[$key])){
                 $lists[$key]['container_buckle_comment'] ='';

@@ -54,8 +54,10 @@ class Order extends Model
         $status_arr = Db::query($statusSql);
         foreach ($status_arr as $v){
             foreach ($list as $key=>$value){
-                if($v['order_num']==$value['order_num']){
+                if($value['container_buckle']=='lock'){
+                    if($v['order_num']==$value['order_num']){
                     $list[$key]['container_buckle_comment'] = $v['comment'];
+                    }
                 }
             }
         }
