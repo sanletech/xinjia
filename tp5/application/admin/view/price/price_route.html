@@ -160,7 +160,7 @@
           var dataA = new Array()
           dataA[0] = did;
           var dataArray = { id: dataA }
-          toajax(dataArray,'past');
+          toajax(dataArray,'pass');
           layer.msg('申请成功', { icon: 1, time: 1000 });
         });
       }
@@ -170,7 +170,7 @@
         layer.confirm('确认要审核吗？' + data, function (index) {
           //捉到所有被选中的，发发异步进行审核
           var dataArray = { id: data };
-          toajax(dataArray,'past');
+          toajax(dataArray,'pass');
           layer.msg('审批成功', { icon: 1 });
         });
       }

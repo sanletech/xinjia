@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-12-06 18:27:49
+Date: 2018-12-07 17:13:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4890,7 +4890,7 @@ CREATE TABLE `hl_order_port` (
 -- ----------------------------
 INSERT INTO `hl_order_port` VALUES ('1', 'PAC016665863', '猪肉', '20GP', '4', '10', '40', '木架', '猪肉容易坏', null, '2018-12-02 16:49:01', 'zh_A_003', '0', '2018-12-01 20:17:38', 'installment', '0', null, '0', '3', 'AA,送货A公司,55555', '1', 'CC,送货C公司,55555', '1', '2138', '价格双边收费', '160', '0', '700', '750', '10162', '上传水运单->待通过', '4', 'afsdfaasdf', 'PAC016665863_book_note_txt', 'PAC016665863_sea_waybill_txt', 'nodo', 'lock', 'do', 'port');
 INSERT INTO `hl_order_port` VALUES ('2', 'PAC022422618', '猪肉', '20GP', '4', '10', '40', '木架', 'asdfsa ', null, '2018-12-02 17:02:29', 'zh_A_003', '0', '2018-12-02 12:17:06', 'installment', '0', null, '0', '3', 'AA,送货A公司,55555', '1', 'CC,送货C公司,55555', '6', '2138', '价格双边收费', '160', '0', '0', '0', '8712', '完成对账', '18', null, null, null, 'nodo', 'lock', 'do', 'port');
-INSERT INTO `hl_order_port` VALUES ('3', 'DAC024645539', '猪肉', '40HQ', '4', '1', '40', '纸箱', '阿斯顿发顺丰', null, '2018-12-06 17:35:27', 'zh_A_003', '0', '2018-12-02 18:27:35', 'installment', null, null, null, '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '1', null, '价格双边收费', '160', null, null, null, '13060', '录入送货信息->待完', '16', '141654', 'DAC024645539_book_note_txt', 'DAC024645539_sea_waybill_txt', 'nodo', 'apply', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('3', 'DAC024645539', '猪肉', '40HQ', '4', '1', '40', '纸箱', '阿斯顿发顺丰', null, '2018-12-07 14:09:48', 'zh_A_003', '0', '2018-12-02 18:27:35', 'installment', null, null, null, '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '2', 'BB,收货B公司,6666,天津市天津市和平区新兴街道', '1', null, '价格双边收费', '160', null, null, null, '13060', '录入送货信息->待完', '16', '141654', 'DAC024645539_book_note_txt', 'DAC024645539_sea_waybill_txt', 'nodo', 'apply', 'nodo', 'door');
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
@@ -4905,7 +4905,7 @@ CREATE TABLE `hl_order_port_status` (
   `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
   `comment` varchar(100) DEFAULT NULL COMMENT '驳回,删除订单的原因',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
@@ -4930,6 +4930,8 @@ INSERT INTO `hl_order_port_status` VALUES ('17', 'DAC024645539', '4', '上传水
 INSERT INTO `hl_order_port_status` VALUES ('18', 'DAC024645539', '14', '申请放柜>驳回', '2018-12-06 10:39:05', 'sales1', '啊啊啊啊');
 INSERT INTO `hl_order_port_status` VALUES ('19', 'DAC024645539', '16', '录入送货信息->待完成订单', '2018-12-06 16:28:22', 'sales1', '');
 INSERT INTO `hl_order_port_status` VALUES ('20', 'DAC024645539', '13', '申请放柜子', '2018-12-06 17:35:27', 'sales1', '');
+INSERT INTO `hl_order_port_status` VALUES ('21', 'DAC024645539', '14', '申请放柜>驳回', '2018-12-07 10:46:44', 'sales1', '钟颖钟颖钟颖钟颖');
+INSERT INTO `hl_order_port_status` VALUES ('22', 'DAC024645539', '13', '申请放柜子', '2018-12-07 14:09:48', 'sales1', '');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -5411,10 +5413,10 @@ CREATE TABLE `hl_seaprice` (
   `generalize` int(1) unsigned zerofill DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
   `price_description` varchar(25) DEFAULT NULL COMMENT '价格说明',
   `mtime` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(1) DEFAULT '1' COMMENT '1:启用0:禁用',
+  `status` int(1) DEFAULT '1' COMMENT '1正常,0删除，2待审核',
   `stale_date` int(1) DEFAULT '1' COMMENT '过期0正常1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_seaprice
@@ -5429,7 +5431,9 @@ INSERT INTO `hl_seaprice` VALUES ('7', '38', '2', '200.00', '200.00', '2018-11-2
 INSERT INTO `hl_seaprice` VALUES ('9', '40', '2', '200.00', '200.00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '27', '5', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '不收费', '2018-11-30 11:03:11', '1', '1');
 INSERT INTO `hl_seaprice` VALUES ('10', '40', '2', '200.00', '200.00', '1970-01-01 08:00:00', '1970-01-01 08:00:00', '27', '5', '1970-01-01 08:00:00', '1970-01-04 08:00:00', '1', '不收费', '2018-11-30 11:03:24', '1', '1');
 INSERT INTO `hl_seaprice` VALUES ('11', '40', '2', '200.00', '200.00', '2018-11-30 00:00:00', '2018-11-08 00:00:00', '27', '5', '2018-12-05 00:00:00', '2018-12-08 00:00:00', '1', '不收费', '2018-11-30 11:04:01', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('12', '38', '2', '200.00', '200.00', '2018-11-03 00:00:00', '2018-11-15 00:00:00', '27', '5', '2018-11-08 00:00:00', '2018-11-11 00:00:00', '1', '不收费', '2018-11-30 11:04:54', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('13', '7', '2', '1000.00', '2000.00', '2018-12-15 00:00:00', '2018-12-18 00:00:00', '2', '8', '2018-12-23 00:00:00', '2018-12-26 00:00:00', '1', '1', '2018-12-07 10:29:52', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('14', '38', '2', '1000.00', '2000.00', '2018-12-15 00:00:00', '2018-12-19 00:00:00', '2', '5', '2018-12-20 00:00:00', '2018-12-23 00:00:00', '1', '1', '2018-12-07 10:29:52', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('15', '40', '2', '2000.00', '2000.00', '2018-12-15 00:00:00', '2018-12-20 00:00:00', '2', '5', '2018-12-20 00:00:00', '2018-12-23 00:00:00', '1', '1', '2018-12-07 10:29:52', '1', '1');
 
 -- ----------------------------
 -- Table structure for `hl_seaprice-aa`
@@ -5981,7 +5985,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-12-06 10:05:51', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-12-07 10:18:25', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
