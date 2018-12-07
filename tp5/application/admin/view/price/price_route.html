@@ -84,6 +84,9 @@
               <a title="修改"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>?seaprice_id=<{$vo.id}>',700,500)" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
+              <a title="删除" onclick="member_add(this,'<{$vo.id}>')" href="javascript:;">
+                  <i class="layui-icon">&#x1005;</i>
+                </a>
               <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe640;</i>
               </a>
@@ -133,7 +136,7 @@
           var dataA = new Array()
           dataA[0] = did;
           var dataArray = { id: dataA }
-          toajax(dataArray);
+          toajax(dataArray,'delete');
           $(obj).parents("tr").remove();
           layer.msg('已删除!', { icon: 1, time: 1000 });
         });
@@ -147,6 +150,18 @@
           toajax(dataArray,'delete');
           layer.msg('删除成功', { icon: 1 });
           $(".layui-form-checked").not('.header').parents('tr').remove();
+        });
+      }
+
+      /*用户-审核*/
+      function member_add(obj, did) {
+        layer.confirm('确认要审核吗？', function (index) {
+          //转成数组形式
+          var dataA = new Array()
+          dataA[0] = did;
+          var dataArray = { id: dataA }
+          toajax(dataArray,'past');
+          layer.msg('申请成功', { icon: 1, time: 1000 });
         });
       }
 
