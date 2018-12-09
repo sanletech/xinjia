@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50505
+Source Server         : root
+Source Server Version : 50553
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50505
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-12-07 17:13:13
+Date: 2018-12-09 22:27:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4332,27 +4332,28 @@ CREATE TABLE `hl_linkman` (
   `town_code` int(10) DEFAULT NULL COMMENT '地址的镇级code',
   `mtime` datetime DEFAULT NULL,
   `default` enum('r','s') DEFAULT NULL COMMENT 'r是装货地址，s是送货地址',
+  `status` int(1) DEFAULT '1' COMMENT '1正常0禁用',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5347 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_linkman
 -- ----------------------------
-INSERT INTO `hl_linkman` VALUES ('1', 'AA', '55555', '送货A公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 'r');
-INSERT INTO `hl_linkman` VALUES ('2', 'BB', '6666', '收货B公司', '天津市天津市和平区新兴街道', 'zh_A_003', '120101004', null, null);
-INSERT INTO `hl_linkman` VALUES ('3', 'CC', '55555', '送货C公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 's');
-INSERT INTO `hl_linkman` VALUES ('4', 'DD', '55555', '收货D公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, null);
-INSERT INTO `hl_linkman` VALUES ('6', 'FFF', '100085556', '收货F公司', '光啦阿古斯gas的', 'kehu001', null, '0000-00-00 00:00:00', 'r');
-INSERT INTO `hl_linkman` VALUES ('7', '送E', '55555', '送货E公司', '北京市北京市东城区东华门街道', 'kehu002', '110101001', null, null);
-INSERT INTO `hl_linkman` VALUES ('1213', '阿斯蒂芬 ', '阿斯蒂芬', ' 是否 ', '速读法', 'kehu003', null, '0000-00-00 00:00:00', null);
-INSERT INTO `hl_linkman` VALUES ('2131', '阿斯蒂芬 ', '185752880024', '阿里司机公司 ', '广州百老汇商业街', 'kehu004', null, '0000-00-00 00:00:00', null);
-INSERT INTO `hl_linkman` VALUES ('3541', '赵前程', '10086', '火星物流', '广州火车站', 'kehu005', null, '0000-00-00 00:00:00', null);
-INSERT INTO `hl_linkman` VALUES ('5341', 'aaa', '5111152', '似的发射点', '似的发射点', 'taobao6', null, '2018-08-26 21:36:23', null);
-INSERT INTO `hl_linkman` VALUES ('5342', 'bbbb', 'bbbbbbb', 'bbbb', null, 'kehu002', null, '2018-11-07 09:31:32', null);
-INSERT INTO `hl_linkman` VALUES ('5343', '陈老板', '10086', '广州海浪物流', '是点发发色分', 'zh_A_001', null, '2018-11-08 10:29:29', 's');
-INSERT INTO `hl_linkman` VALUES ('5344', '程老板', '12580', '广州兴佳物流', '发射点发as', 'zh_A_001', null, '2018-11-08 10:30:31', null);
-INSERT INTO `hl_linkman` VALUES ('5345', '王老板', '789456', '广州兴佳网络有限公司', '噶的说法啊发生', 'zh_A_001', null, '2018-11-08 10:30:52', null);
-INSERT INTO `hl_linkman` VALUES ('5346', '老王', '123456', '广州海浪网络有限公司', '三大发射点发', 'zh_A_001', null, '2018-11-08 10:31:11', 'r');
+INSERT INTO `hl_linkman` VALUES ('1', 'AA', '55555', '送货A公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 'r', '1');
+INSERT INTO `hl_linkman` VALUES ('2', 'BB', '6666', '收货B公司', '天津市天津市和平区新兴街道', 'zh_A_003', '120101004', null, null, '1');
+INSERT INTO `hl_linkman` VALUES ('3', 'CC', '55555', '送货C公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 's', '1');
+INSERT INTO `hl_linkman` VALUES ('4', 'DD', '55555', '收货D公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, null, '1');
+INSERT INTO `hl_linkman` VALUES ('6', 'FFF', '100085556', '收货F公司', '光啦阿古斯gas的', 'kehu001', null, '0000-00-00 00:00:00', 'r', '1');
+INSERT INTO `hl_linkman` VALUES ('7', '送E', '55555', '送货E公司', '北京市北京市东城区东华门街道', 'kehu002', '110101001', null, null, '1');
+INSERT INTO `hl_linkman` VALUES ('1213', '阿斯蒂芬 ', '阿斯蒂芬', ' 是否 ', '速读法', 'kehu003', null, '0000-00-00 00:00:00', null, '1');
+INSERT INTO `hl_linkman` VALUES ('2131', '阿斯蒂芬 ', '185752880024', '阿里司机公司 ', '广州百老汇商业街', 'kehu004', null, '0000-00-00 00:00:00', null, '1');
+INSERT INTO `hl_linkman` VALUES ('3541', '赵前程', '10086', '火星物流', '广州火车站', 'kehu005', null, '0000-00-00 00:00:00', null, '1');
+INSERT INTO `hl_linkman` VALUES ('5341', 'aaa', '5111152', '似的发射点', '似的发射点', 'taobao6', null, '2018-08-26 21:36:23', null, '1');
+INSERT INTO `hl_linkman` VALUES ('5342', 'bbbb', 'bbbbbbb', 'bbbb', null, 'kehu002', null, '2018-11-07 09:31:32', null, '1');
+INSERT INTO `hl_linkman` VALUES ('5343', '陈老板', '10086', '广州海浪物流', '是点发发色分', 'zh_A_001', null, '2018-11-08 10:29:29', 's', '1');
+INSERT INTO `hl_linkman` VALUES ('5344', '程老板', '12580', '广州兴佳物流', '发射点发as', 'zh_A_001', null, '2018-11-08 10:30:31', null, '1');
+INSERT INTO `hl_linkman` VALUES ('5345', '王老板', '789456', '广州兴佳网络有限公司', '噶的说法啊发生', 'zh_A_001', null, '2018-11-08 10:30:52', null, '1');
+INSERT INTO `hl_linkman` VALUES ('5346', '老王', '123456', '广州海浪网络有限公司', '三大发射点发', 'zh_A_001', null, '2018-11-08 10:31:11', 'r', '1');
 
 -- ----------------------------
 -- Table structure for `hl_logistic`

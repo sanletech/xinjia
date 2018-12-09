@@ -63,11 +63,9 @@ class Order extends Base
     public function linkmanAdd()
     {
         $data =$this->request->param();
-
         $sea_pirce =new OrderM;
         $response = $sea_pirce ->linkmanAdd($data);
-        // var_dump($data); exit;
-       if(!array_key_exists('fail', $response)){
+       if($response){
             $response=['status'=>1,'message'=>'添加联系人成功'];
         }else {
             $response=['status'=>0,'message'=>'添加联系人失败'];
@@ -75,10 +73,14 @@ class Order extends Base
         
         return $response ;
     }
-      //收/发货人的信息的删除
+    
+    //收/发货人的信息的删除
     public function linkmanDel() {
         $id=$this->request->param('id');
-        $res =Db::name('linkman')->where('id',$id)->delete();
+        $member_code =Session::get('member_code');
+        $res =Db::name('linkman')
+                ->where('member_code',$member_code)
+                ->where('id','in',$id)->update(['status'=>0]);
         $res ? $response=['status'=>1,'message'=>'删除联系人成功']: $response=['status'=>0,'message'=>'删除联系人失败'];
         return $response;
     }
@@ -90,7 +92,8 @@ class Order extends Base
         $tem['phone'] = $data['phone'];
         $tem['company'] = $data['company'];
         $tem['address'] = $data['add'];
-        $res =Db::name('linkman')->where('id',$id)->update($tem);
+        $member_code =Session::get('member_code');
+        $res =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$id])->update($tem);
         $res ? $response=['status'=>1,'message'=>'修改联系人成功']: $response=['status'=>0,'message'=>'修改联系人失败'];
         return $response;
     }    

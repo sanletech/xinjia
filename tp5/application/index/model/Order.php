@@ -70,11 +70,10 @@ class Order extends Model
         $add= $data['add'];
         $member_code =Session::get('member_code');
         $time = date("Y-m-d H:i:s"); 
-        $sql= "insert into hl_linkman(name ,phone ,company ,mtime,member_code,address) "
-         . " values('$link_name','$phone','$company','$time','$member_code','$add')";
-        $res =  Db::execute($sql);
-        $res ?  $response['success'][]='添加linkman表': $response['fail'][]='添加linkman表';
-        return  $response;    
+        $data = array('name'=>$link_name ,'phone'=>$phone ,'company'=>$company ,
+            'mtime'=>$time,'member_code'=>$member_code,'address'=>$add);
+        $res =  Db::name('linkman')->insert();
+        return  $res ?TRUE : FALSE;    
         
     }
     

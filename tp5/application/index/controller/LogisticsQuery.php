@@ -28,6 +28,19 @@ class LogisticsQuery extends Base{
         }
         
         $list=Db::name('order_status')->where($map)->field('submit_man_code',true)->order('change_time ASC')->select();
+        //添加配船信息 load_ship
+        $order_status = config('config.order_status');
+        $status_list = array_column($list, 'status');
+        if(array_key_exists($order_status['load_ship'], $status_list)){
+            $ship_list = Db::name('order_ship')->where('order_num',$order_num)
+                    ->field('port_name,ship_name,arrival_time,dispatch_time')
+                    ->where('arrival_time','not null')
+                    ->where('ship_name','not null')
+                    ->order('sequence')->select();
+            
+        }
+        
+        
         return json($list);
     }
     
