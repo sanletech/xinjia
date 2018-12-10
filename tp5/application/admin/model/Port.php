@@ -10,7 +10,7 @@ class Port extends Model
         $list = Db::name('port')->alias('P')
                 ->join('hl_city C','P.city_id = C.city_id','left')
                 ->field('P.id ,P.port_code , P.port_name ,P.city_id ,C.city ,P.mtime')
-                ->order('P.id ,C.id ')
+                ->order('P.id ,C.id ')->where('P.status',1)
                 ->buildSql();
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($port_name){
@@ -52,31 +52,42 @@ class Port extends Model
     //港口添加
     public function port_add($city_id ,$port_array)
     {  
-        $response=[];
-        //先查询是否存在同名的港口
-        $res2 =Db::name('port')->where('city_id',$city_id)->where('port_name','in',$port_array)->column('port_name');
-     ;
-        if($res2){
-            $port_name_list=  implode(',', $res2);
-            $response['fail']= '已存在港口'.$port_name_list;
-            return $response;
-        }
-        $mtime = date('Y-m-d H:i:s');
-        $port_code = Db::name('port')->where('city_id',$city_id)->max('port_code');
-        if($port_code < ($city_id * 1000)){
-            $port_code = $city_id * 1000+1;
-        }else { 
-            $port_code = $port_code + 1; 
-        }
         
-        foreach ($port_array as $port_name){
-            $data[] =['port_code'=>$port_code,'port_name'=>$port_name,'city_id'=>$city_id,'mtime'=>$mtime];
-            ++$port_code;
+        // 启动事务
+        Db::startTrans();
+        try{
+
+            $response=[];
+            //先查询是否存在同名的港口
+            $res2 =Db::name('port')->where('city_id',$city_id)->lock(true)->where('port_name','in',$port_array)->column('port_name');
+            if($res2){
+                $port_name_list=  implode(',', $res2);
+                $response['fail']= '已存在港口'.$port_name_list;
+                return $response;
+            }
+            $mtime = date('Y-m-d H:i:s');
+            $port_code = Db::name('port')->lock(true)->where('city_id',$city_id)->max('port_code');
+            if($port_code < ($city_id * 1000)){
+                $port_code = $city_id * 1000+1;
+            }else { 
+                $port_code = $port_code + 1; 
+            }
+
+            foreach ($port_array as $port_name){
+                $data[] =['port_code'=>$port_code,'port_name'=>$port_name,'city_id'=>$city_id,'mtime'=>$mtime];
+                ++$port_code;
+            }
+    //        $this->_p($data);exit;
+            $res = Db::name('port')->lock(true)->insertAll($data);
+            $res ?  $response['success'] = '添加港口成功':$response['fail'] = '添加港口失败';
+        Db::commit();    
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            $response['fail'] = '添加港口失败';
         }
-//        $this->_p($data);exit;
-        $res = Db::name('port')->insertAll($data);
-        $res ?  $response['success'] = '添加港口成功':$response['fail'] = '添加港口失败';
         $this->port_js();
+        
         return $response ;
     }
     
@@ -89,7 +100,7 @@ class Port extends Model
                     . " from hl_port P  "
                     . "left join hl_city C on C.city_id = P.city_id "
                     . "left join hl_province PR on C.father=PR.province_id  "
-                    . "where $map group by ".$group;
+                    . "where $map and P.status = 1 group by ".$group;
             //var_dump($sql); echo"</br>";
             $data = Db::query($sql);
             return $data;
@@ -150,7 +161,7 @@ class Port extends Model
                      . "P2.port_name e_port,P2.port_code e_port_code, "
                      . "group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port,"
                      . "group_concat(distinct P3.port_code order by SM.sequence separator ',') m_port_code")
-             ->group('SR.id')->order('SR.mtime desc')->buildSql();  
+             ->group('SR.id')->where('SR.status',1)->order('SR.mtime desc')->buildSql();  
 //        var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if(!empty($sl_start) && isset($sl_start)){
@@ -236,7 +247,7 @@ class Port extends Model
                 ->join('hl_shipcompany SC',"SC.id = B.ship_id and SC.status='1'",'left')
                 ->field('B.id ,B.ship_id ,SC.ship_short_name AS ship_name,'
                         . 'B.boat_code ,B.boat_name ,B.mtime')
-                ->order('B.mtime desc')
+                ->order('B.mtime desc')->where('B.status',1)
                 ->buildSql();
             $pageParam  = ['query' =>[]]; //设置分页查询参数
         if($boat_name){
@@ -323,7 +334,7 @@ class Port extends Model
         $list = Db::name('shipcompany')
                ->where('status',1)
                ->field('id,ship_short_name,ship_name,mtime')
-               ->buildSql();
+               ->where('status',1)->buildSql();
        $pageParam  = ['query' =>[]]; //设置分页查询参数
        if($ship_name){
            $list = Db::table($list.' b')->where('b.ship_short_name', 'like', "%{$ship_name}%")->buildSql();

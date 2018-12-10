@@ -192,4 +192,19 @@ class Wechat extends Controller
         
     }
     
+    //船公司 
+    public function ship($id='all') {
+        if (is_int($id)){
+            $map = ['id'=>$id];
+        }else{
+            $map = ['id'=>'not null'];
+        }
+        $data = Db::name('shipcompany')
+                ->where('status',1)
+                ->field('id,shipcompany_short_name')
+                ->where($map)->select();
+        
+    }
+    
+    
 }
