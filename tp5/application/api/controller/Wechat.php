@@ -186,9 +186,18 @@ class Wechat extends Controller
     }
     
     //门到门 订单查询
-    public function orderQuery(){
+    public function orderQuery($type='all',$limit,$page){
         
+        $search = array_key_exists('search', $data)? $data['search']:''; //搜索条件
+        $status = array_key_exists('status', $data)? $data['status']:array(); //状态选择
+        $status_arr = array_intersect_key($this->order_status, array_flip($status));
+        $dataM = new \app\admin\model\Order();
+        $data = $dataM->order_public($page,$limit,$status_arr);
+        $list =$data['list']; //分页数据
+//        $this->_p($list);exit;
+        $count = $data['count'];// 总页数
         
+        return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
         
     }
     
