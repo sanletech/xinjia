@@ -36,7 +36,7 @@ class Price extends Base
         $port_start? $this->assign('s_port_name',$port_start):''; 
         $ship_name ? $this->assign('ship_name',$ship_name):''; 
         $port_over ? $this->assign('e_port_name',$port_over):''; 
-        var_dump($status);
+//        var_dump($status);
         $route = new PriceM;
         $ship_name=trim($ship_name); $port_start=trim($port_start); $port_over=trim($port_over);
         $list = $route->price_route_list($ship_name,$port_start,$port_over ,$status,10);
@@ -94,11 +94,11 @@ class Price extends Base
     public function route_edit(){
         $seaprice_id = input('get.seaprice_id');
         $seaprice = new PriceM;
-        $res = $seaprice-> price_route_list('','','',100,$seaprice_id);
-//        $this->_p($res['0']);exit;
+        $res = $seaprice->route_edit($seaprice_id);
+//        $this->_p($res);exit;
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
-        $this->assign('data',$res['0']);
+        $this->assign('data',$res);
         $this->assign('readOnly','fales'); //是否禁用
         $this->assign('toURL',url('admin/Price/route_toedit','type=edit'));
         return $this->view->fetch("price/route_edit");
