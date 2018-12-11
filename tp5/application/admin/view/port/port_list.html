@@ -21,7 +21,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-        <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url("Port/port_add")}>',750,350)"><i class="layui-icon"></i>添加</button>
+        <button class="layui-btn" onclick="add_ye()"><i class="layui-icon"></i>添加</button>
        <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
       </xblock>
       <table class="layui-table">
@@ -48,7 +48,7 @@
             <td><{$vo.city}></td>
             <td><{$vo.mtime}></td>
             <td class="td-manage">
-              <a title="编辑"  onclick="x_admin_show('修改信息','<{:url('Port/port_edit')}>?id=<{$vo.id}>',750,350)" href="javascript:;">
+              <a title="编辑"  onclick="edit_ye('<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_del(this,'<{$vo.id}>')" href="javascript:;">
@@ -94,9 +94,9 @@
         
         
         
-      layui.use('laydate', function(){
+      layui.use(['laydate','layer'], function(){
         var laydate = layui.laydate;
-        
+        var layer = layui.layer;
         //执行一个laydate实例
         laydate.render({
           elem: '#start' //指定元素
@@ -106,7 +106,26 @@
         laydate.render({
           elem: '#end' //指定元素
         });
+
       });
+
+      function add_ye(){
+        layer.open({
+          type: 2, 
+          title:'添加',
+          content: "<{:url('Port/port_add')}>", //添加
+          area: ['750px','350px'],
+        });
+      }
+
+      function edit_ye(id){
+        layer.open({
+          type: 2, 
+          title:'修改',
+          content: "<{:url('Port/port_edit')}>?id="+id, //修改
+          area: ['750px','350px'],
+        });
+      }
 
 
       /*用户-删除*/
@@ -124,7 +143,9 @@
         layer.confirm('确认要删除吗？'+data,function(index){
             //捉到所有被选中的，发异步进行删除
             var dataArray={id:data};
-            toajax(dataArray);
+            let a = toajax(dataArray);
+            console.log(a);
+            
             layer.msg('删除成功', {icon: 1});
             $(".layui-form-checked").not('.header').parents('tr').remove();
         });
@@ -138,6 +159,9 @@
                 dataType:"json",
                 success:function(data){
                     if(data.status){
+                      //当你在iframe页面关闭自身时
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭 
                       return 1;
                     }else{
                       return 0 ;

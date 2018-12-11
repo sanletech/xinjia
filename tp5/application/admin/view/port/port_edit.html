@@ -141,7 +141,7 @@
                         }else{
                             post_adduser = false;
                             layer.close(loading);
-                            layer.msg("添加失败", { icon: 5 });
+                            layer.msg(res.message, { icon: 5 });
                             }
                             },
                         error: function () {

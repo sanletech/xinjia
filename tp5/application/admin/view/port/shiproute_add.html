@@ -87,9 +87,16 @@
 <script type="text/javascript" src="/static/admin/js/area.js"></script>
 <script type="text/javascript" src="/static/admin/js/port.js"></script>
 <script>
+        $.getScript('/static/admin/js/area.js',function(){
+            newFun('"Checking new script"');//这个函数是在new.js里面的，当点击click后运行这个函数
+        });
+
+        $.getScript('/static/admin/js/port.js',function(){
+            newFun('"Checking new script"');//这个函数是在new.js里面的，当点击click后运行这个函数
+        });
       
         //加载 所有的港口名字和相应的code
-        var url='<{:url('admin/Port/shiproute_toadd')}>';
+        var url="<{:url('admin/Port/shiproute_toadd')}>";
         //初始数据
         var areaData = JS_PORT;
         var $form;

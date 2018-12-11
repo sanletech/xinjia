@@ -34,7 +34,7 @@
           <i class="layui-icon"></i>批量删除</button>
         <button class="layui-btn layui-btn-normal" onclick="addAll()">
           <i class="layui-icon">&#x1005;</i>批量通过</button>
-        <button class="layui-btn" onclick="x_admin_show('添加','<{:url('Price/route_add')}>',700,500)" href="javascript:;">
+        <button class="layui-btn" onclick="add_ye()" href="javascript:;">
           <i class="layui-icon"></i>添加</button>
         
         <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
@@ -78,10 +78,10 @@
             <td><{$vo.ETA}></td>
             <td><{$vo.EDD}></td>
             <td class="td-manage">
-                <a title="重新发布"  onclick="x_admin_show('重新发布','<{:url('Price/route_again')}>?seaprice_id=<{$vo.id}>',700,500)" href="javascript:;">
+                <a title="重新发布"  onclick="addchong_ye('<{$vo.id}>')" href="javascript:;">
                     <i class="layui-icon">&#xe621;</i>
                 </a>
-              <a title="修改"  onclick="x_admin_show('修改','<{:url('Price/route_edit')}>?seaprice_id=<{$vo.id}>',700,500)" href="javascript:;">
+              <a title="修改"  onclick="edit_ye('<{$vo.id}>')" href="javascript:;">
                 <i class="layui-icon">&#xe642;</i>
               </a>
               <a title="删除" onclick="member_add(this,'<{$vo.id}>')" href="javascript:;">
@@ -103,7 +103,49 @@
 
     </div>
     <script>
-            /*执行搜索车队或者港口*/
+
+    layui.use(['laydate','layer'], function(){
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+
+      });
+
+      function add_ye(){
+        layer.open({
+          type: 2, 
+          title:'添加',
+          content: "<{:url('Price/route_add')}>", //添加
+          area: ['700px','500px']
+        })
+      }
+
+      function edit_ye(id){
+        layer.open({
+          type: 2, 
+          title:'修改',
+          content: "<{:url('Price/route_edit')}>?seaprice_id="+id, //修改
+          area: ['700px','500px']
+        })
+      }
+
+      function addchong_ye(id){
+        layer.open({
+          type: 2, 
+          title:'重新发布',
+          content: "<{:url('Price/route_again')}>?seaprice_id="+id, //重新发布
+          area: ['700px','500px']
+        });
+      }
+    /*执行搜索车队或者港口*/
     function search(){
          $.ajax({
                 type:'get',
@@ -112,7 +154,7 @@
                 dataType:"json",
                 async:false,
                 success:function(data){
-                  if(data.status==1){
+                  if(data.status==1){  
                     return 1;
                   }else{
                       return 0 ;
@@ -184,6 +226,7 @@
           dataType: "json",
           success: function (data) {
             if (data.status == 1) {
+              //当你在iframe页面关闭自身时
               return 1;
             } else {
               return 0;
