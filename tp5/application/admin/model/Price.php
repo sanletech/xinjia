@@ -50,6 +50,26 @@ class Price extends Model
 //        $this->_p($list);exit;
         return $list;
     }
+    //航线信息原有的数据
+    public function route_edit($seaprice_id) {
+        $data =Db::name('seaprice')->alias('SP')
+            ->join('hl_ship_route SR','SR.id=SP.route_id','left')
+            ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+            ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
+            ->join('hl_port P1','P1.port_code= SB.sl_start','left')
+            ->join('hl_port P2','P2.port_code= SB.sl_end','left')
+            ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+            ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')
+            ->join('hl_boat B','B.id=SP.boat_id','left')
+            ->field("SP.id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
+            . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
+            . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,"
+            . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
+            ->order('SP.mtime DESC')->where('SP.id',$seaprice_id)
+            ->group('SP.id,SC.id,B.id,SR.id')->find();
+        return $data ;
+    }
+    
     
     //船运航价的添加
      public function  price_route_add($data)

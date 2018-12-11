@@ -94,11 +94,11 @@ class Price extends Base
     public function route_edit(){
         $seaprice_id = input('get.seaprice_id');
         $seaprice = new PriceM;
-        $res = $seaprice-> price_route_list('','','',100,$seaprice_id);
-//        $this->_p($res['0']);exit;
+        $res = $seaprice->route_edit($seaprice_id);
+//        $this->_p($res);exit;
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
-        $this->assign('data',$res['0']);
+        $this->assign('data',$res);
         $this->assign('readOnly','fales'); //是否禁用
         $this->assign('toURL',url('admin/Price/route_toedit','type=edit'));
         return $this->view->fetch("price/route_edit");

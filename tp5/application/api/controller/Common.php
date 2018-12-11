@@ -11,7 +11,7 @@ use think\Controller;
 use think\Db;
 use think\Session;
 
-class commone extends Controller {
+class Common extends Controller {
     //put your code here
     
      //阿里云短信
@@ -36,5 +36,10 @@ class commone extends Controller {
             $res=Db::name('ali_sms')->insert(['phone'=>$phone,'code'=>$code,'ctime'=>$ctime]);
         }
         return json($response);
+    }
+    public function  data() {
+        
+        $data = Db::name('seaprice')->select();
+        return json($data);
     }
 }

@@ -52,6 +52,7 @@ class Port extends Model
     //港口添加
     public function port_add($city_id ,$port_array)
     {  
+
         
         // 启动事务
         Db::startTrans();
@@ -59,7 +60,9 @@ class Port extends Model
 
             $response=[];
             //先查询是否存在同名的港口
-            $res2 =Db::name('port')->where('city_id',$city_id)->lock(true)->where('port_name','in',$port_array)->column('port_name');
+            $res2 =Db::name('port')->where('city_id',$city_id)
+                    ->lock(true)->where('port_name','in',$port_array)
+                    ->where('status',1)->column('port_name');
             if($res2){
                 $port_name_list=  implode(',', $res2);
                 $response['fail']= '已存在港口'.$port_name_list;
@@ -133,10 +136,9 @@ class Port extends Model
                 
             }
         }
-        
 //        $this->_p($province);exit;
-
         $js_port = json_encode($province,true);
+//        var_dump($js_port);exit;
         $js_port = 'var JS_PORT ='.$js_port;
         $filename ="./static/admin/js/port.js"; 
         if(file_exists($filename)){
