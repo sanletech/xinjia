@@ -54,7 +54,9 @@ class Port extends Model
     {  
         $response=[];
         //先查询是否存在同名的港口
-        $res2 =Db::name('port')->where('city_id',$city_id)->where('port_name','in',$port_array)->column('port_name');
+        $res2 =Db::name('port')->where('city_id',$city_id)
+                ->where('port_name','in',$port_array)
+                ->where('status',1)->column('port_name');
      ;
         if($res2){
             $port_name_list=  implode(',', $res2);
