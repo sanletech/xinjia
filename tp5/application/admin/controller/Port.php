@@ -48,7 +48,8 @@ class Port extends Base
         $city_id = strstr($data['city'], '_',true);
         //使用正则分割页面提交过的字符串分隔符号为,，空格 换行
         $port_str = $data['port_name'];
-        $port_str = str_replace(array(',','，',), '', $port_str);  //中英文逗号逗号
+        $port_str = str_replace(array(',','，',), ' ', $port_str);  //中英文逗号逗号
+   
         $port_array = preg_split("/[\s,]+/",$port_str,20,PREG_SPLIT_NO_EMPTY);
         $portadd = new PortM;
         $res = $portadd->port_add($city_id ,$port_array);

@@ -27,7 +27,7 @@
             <xblock>
                 <button class="layui-btn layui-btn-danger" onclick="delAll()">
                     <i class="layui-icon"></i>批量删除</button>
-                <button class="layui-btn" onclick="x_admin_show('添加用户','<{:url("Port/shiproute_add")}>',850,400)">
+                <button class="layui-btn" onclick="add_ye()">
                     <i class="layui-icon"></i>添加</button>
                 <!-- <span class="x-right" style="line-height:40px">总共有<{10*$page}>条记录</span>-->
             </xblock>
@@ -74,6 +74,20 @@
             </div>
         </div>
 <script>
+    layui.use(['laydate','layer'], function(){
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+
+      });
+
+    function add_ye(){
+        layer.open({
+            type: 2, 
+            title:'添加',
+            content: "<{:url('Port/shiproute_add')}>", //添加
+            area: ['850px','400px'],
+        });
+    }
          /*用户-删除*/
     function  del(obj,did){
         layer.confirm('确认要删除吗？',function(index){

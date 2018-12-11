@@ -66,7 +66,7 @@ class Order extends Model
             switch ($value['status']){
                 case $this->order_status['stop']:
                 case $this->order_status['cancel']:
-                    $list[$key]['status']= '中止';
+                    $list[$key]['status'] = '中止';
                     break;
                 case $this->order_status['order_audit']:
                     $list[$key]['status']= '审核中';

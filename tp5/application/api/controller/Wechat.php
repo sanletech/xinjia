@@ -186,21 +186,26 @@ class Wechat extends Controller
     }
     
     //门到门 订单查询
-    public function orderQuery($type='all',$limit,$page){
-        
-        $search = array_key_exists('search', $data)? $data['search']:''; //搜索条件
-        $status = array_key_exists('status', $data)? $data['status']:array(); //状态选择
-        $status_arr = array_intersect_key($this->order_status, array_flip($status));
-        $dataM = new \app\admin\model\Order();
-        $data = $dataM->order_public($page,$limit,$status_arr);
-        $list =$data['list']; //分页数据
-//        $this->_p($list);exit;
-        $count = $data['count'];// 总页数
-        
-        return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);
+    ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
+    //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
+    public function orderQuery($limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port=''){
+     
+        $dataM = new \app\api\model\Wechat();
+        $member_code =  $this->member_code;
+        $data = $dataM->orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port='');
+        return json($data);
         
     }
-    
+    //订单详情
+    public function orderDetail($order_num){
+        
+        $dataM = new \app\api\model\Wechat();
+        $member_code =  $this->member_code;
+        $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
+        return json($data);
+    }
+            
+            
     //船公司 
     public function ship($id='all') {
         if (is_int($id)){

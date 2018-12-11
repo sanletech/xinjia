@@ -84,12 +84,11 @@
             });
 
     </script>-->
-<script type="text/javascript" src="/static/admin/js/area.js"></script>
-<script type="text/javascript" src="/static/admin/js/port.js"></script>
-<script>
-      
+<script type="text/javascript" src="/static/admin/js/area.js?v=1"></script>
+<script type="text/javascript" src="/static/admin/js/port.js?v=1"></script>
+<script>      
         //加载 所有的港口名字和相应的code
-        var url='<{:url('admin/Port/shiproute_toadd')}>';
+        var url="<{:url('admin/Port/shiproute_toadd')}>";
         //初始数据
         var areaData = JS_PORT;
         var $form;
