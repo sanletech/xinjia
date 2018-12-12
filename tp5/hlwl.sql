@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : root
-Source Server Version : 50553
+Source Server         : localhost_3306
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-12-09 22:27:39
+Date: 2018-12-12 11:54:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -4332,28 +4332,27 @@ CREATE TABLE `hl_linkman` (
   `town_code` int(10) DEFAULT NULL COMMENT '地址的镇级code',
   `mtime` datetime DEFAULT NULL,
   `default` enum('r','s') DEFAULT NULL COMMENT 'r是装货地址，s是送货地址',
-  `status` int(1) DEFAULT '1' COMMENT '1正常0禁用',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5347 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_linkman
 -- ----------------------------
-INSERT INTO `hl_linkman` VALUES ('1', 'AA', '55555', '送货A公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 'r', '1');
-INSERT INTO `hl_linkman` VALUES ('2', 'BB', '6666', '收货B公司', '天津市天津市和平区新兴街道', 'zh_A_003', '120101004', null, null, '1');
-INSERT INTO `hl_linkman` VALUES ('3', 'CC', '55555', '送货C公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 's', '1');
-INSERT INTO `hl_linkman` VALUES ('4', 'DD', '55555', '收货D公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, null, '1');
-INSERT INTO `hl_linkman` VALUES ('6', 'FFF', '100085556', '收货F公司', '光啦阿古斯gas的', 'kehu001', null, '0000-00-00 00:00:00', 'r', '1');
-INSERT INTO `hl_linkman` VALUES ('7', '送E', '55555', '送货E公司', '北京市北京市东城区东华门街道', 'kehu002', '110101001', null, null, '1');
-INSERT INTO `hl_linkman` VALUES ('1213', '阿斯蒂芬 ', '阿斯蒂芬', ' 是否 ', '速读法', 'kehu003', null, '0000-00-00 00:00:00', null, '1');
-INSERT INTO `hl_linkman` VALUES ('2131', '阿斯蒂芬 ', '185752880024', '阿里司机公司 ', '广州百老汇商业街', 'kehu004', null, '0000-00-00 00:00:00', null, '1');
-INSERT INTO `hl_linkman` VALUES ('3541', '赵前程', '10086', '火星物流', '广州火车站', 'kehu005', null, '0000-00-00 00:00:00', null, '1');
-INSERT INTO `hl_linkman` VALUES ('5341', 'aaa', '5111152', '似的发射点', '似的发射点', 'taobao6', null, '2018-08-26 21:36:23', null, '1');
-INSERT INTO `hl_linkman` VALUES ('5342', 'bbbb', 'bbbbbbb', 'bbbb', null, 'kehu002', null, '2018-11-07 09:31:32', null, '1');
-INSERT INTO `hl_linkman` VALUES ('5343', '陈老板', '10086', '广州海浪物流', '是点发发色分', 'zh_A_001', null, '2018-11-08 10:29:29', 's', '1');
-INSERT INTO `hl_linkman` VALUES ('5344', '程老板', '12580', '广州兴佳物流', '发射点发as', 'zh_A_001', null, '2018-11-08 10:30:31', null, '1');
-INSERT INTO `hl_linkman` VALUES ('5345', '王老板', '789456', '广州兴佳网络有限公司', '噶的说法啊发生', 'zh_A_001', null, '2018-11-08 10:30:52', null, '1');
-INSERT INTO `hl_linkman` VALUES ('5346', '老王', '123456', '广州海浪网络有限公司', '三大发射点发', 'zh_A_001', null, '2018-11-08 10:31:11', 'r', '1');
+INSERT INTO `hl_linkman` VALUES ('1', 'AA', '55555', '送货A公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 'r');
+INSERT INTO `hl_linkman` VALUES ('2', 'BB', '6666', '收货B公司', '天津市天津市和平区新兴街道', 'zh_A_003', '120101004', null, null);
+INSERT INTO `hl_linkman` VALUES ('3', 'CC', '55555', '送货C公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, 's');
+INSERT INTO `hl_linkman` VALUES ('4', 'DD', '55555', '收货D公司', '北京市北京市东城区东华门街道', 'zh_A_003', '110101001', null, null);
+INSERT INTO `hl_linkman` VALUES ('6', 'FFF', '100085556', '收货F公司', '光啦阿古斯gas的', 'kehu001', null, '0000-00-00 00:00:00', 'r');
+INSERT INTO `hl_linkman` VALUES ('7', '送E', '55555', '送货E公司', '北京市北京市东城区东华门街道', 'kehu002', '110101001', null, null);
+INSERT INTO `hl_linkman` VALUES ('1213', '阿斯蒂芬 ', '阿斯蒂芬', ' 是否 ', '速读法', 'kehu003', null, '0000-00-00 00:00:00', null);
+INSERT INTO `hl_linkman` VALUES ('2131', '阿斯蒂芬 ', '185752880024', '阿里司机公司 ', '广州百老汇商业街', 'kehu004', null, '0000-00-00 00:00:00', null);
+INSERT INTO `hl_linkman` VALUES ('3541', '赵前程', '10086', '火星物流', '广州火车站', 'kehu005', null, '0000-00-00 00:00:00', null);
+INSERT INTO `hl_linkman` VALUES ('5341', 'aaa', '5111152', '似的发射点', '似的发射点', 'taobao6', null, '2018-08-26 21:36:23', null);
+INSERT INTO `hl_linkman` VALUES ('5342', 'bbbb', 'bbbbbbb', 'bbbb', null, 'kehu002', null, '2018-11-07 09:31:32', null);
+INSERT INTO `hl_linkman` VALUES ('5343', '陈老板', '10086', '广州海浪物流', '是点发发色分', 'zh_A_001', null, '2018-11-08 10:29:29', 's');
+INSERT INTO `hl_linkman` VALUES ('5344', '程老板', '12580', '广州兴佳物流', '发射点发as', 'zh_A_001', null, '2018-11-08 10:30:31', null);
+INSERT INTO `hl_linkman` VALUES ('5345', '王老板', '789456', '广州兴佳网络有限公司', '噶的说法啊发生', 'zh_A_001', null, '2018-11-08 10:30:52', null);
+INSERT INTO `hl_linkman` VALUES ('5346', '老王', '123456', '广州海浪网络有限公司', '三大发射点发', 'zh_A_001', null, '2018-11-08 10:31:11', 'r');
 
 -- ----------------------------
 -- Table structure for `hl_logistic`
@@ -4473,7 +4472,7 @@ CREATE TABLE `hl_member` (
 -- ----------------------------
 INSERT INTO `hl_member` VALUES ('1', '广州市兴佳国际货运代理有限公司', 'e10adc3949ba59abbe56e057f20f883e', '2018-11-05 00:00:00', '2018-11-22 18:52:11', '13825001413', '123', '1', '', '0000-00-00', '', '', 'zh_A_001', null, 'company', '2', '5bed1a198a06b.jpg', '123', null);
 INSERT INTO `hl_member` VALUES ('2', '广州市兴佳国际货运代理有限公司', '78a052f37901c7fb43b91ed13c9892a5', '2018-11-05 00:00:00', '0000-00-00 00:00:00', '13825001414', '', '1', '', '0000-00-00', '', '', 'zh_A_002', null, 'person', '1', '', '', null);
-INSERT INTO `hl_member` VALUES ('3', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-11-05 00:00:00', '2018-12-04 17:45:15', '18575280024', '', '1', '', '0000-00-00', '', '', 'zh_A_003', null, 'person', '1', '', '', null);
+INSERT INTO `hl_member` VALUES ('3', '沈浩', 'e10adc3949ba59abbe56e057f20f883e', '2018-11-05 00:00:00', '2018-12-12 10:17:44', '18575280024', '', '1', '', '0000-00-00', '', '', 'zh_A_003', null, 'person', '1', '', '', null);
 INSERT INTO `hl_member` VALUES ('4', '陈老板', '78a052f37901c7fb43b91ed13c9892a5', '2018-11-05 00:00:00', '0000-00-00 00:00:00', '13825001415', '', '1', '', '0000-00-00', '', '', 'zh_A_004', null, 'person', '1', '', '', null);
 INSERT INTO `hl_member` VALUES ('5', '陈老板', '78a052f37901c7fb43b91ed13c9892a5', '2018-11-05 00:00:00', '0000-00-00 00:00:00', '13825001416', '', '1', '', '0000-00-00', '', '', 'zh_A_005', null, 'person', '1', '', '', null);
 INSERT INTO `hl_member` VALUES ('6', 'a123', 'e10adc3949ba59abbe56e057f20f883e', '2018-11-06 00:00:00', '2018-11-13 17:59:41', '17788701375', '', '1', '', '0000-00-00', '', '', 'zh_A_006', null, 'person', '1', '', '', null);
@@ -5128,7 +5127,7 @@ CREATE TABLE `hl_port` (
   `city_id` int(11) DEFAULT NULL COMMENT '市级id',
   `status` int(1) DEFAULT '1' COMMENT '1:正常0：删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_port
@@ -5167,7 +5166,8 @@ INSERT INTO `hl_port` VALUES ('50', '320700002', '连云港', '2018-10-13 05:02:
 INSERT INTO `hl_port` VALUES ('51', '310100002', '上海港', '2018-10-13 05:04:33', '310100', '1');
 INSERT INTO `hl_port` VALUES ('52', '330200002', '宁波港', '2018-10-13 05:04:59', '330200', '1');
 INSERT INTO `hl_port` VALUES ('53', '110100001', '大师法', '2018-10-18 10:55:53', '110100', '1');
-INSERT INTO `hl_port` VALUES ('54', '110100001', '大师法撒旦发射', '2018-10-18 10:57:41', '110100', '1');
+INSERT INTO `hl_port` VALUES ('54', '110100001', '大师法', '2018-12-11 11:05:20', '110100', '1');
+INSERT INTO `hl_port` VALUES ('55', '110100006', '阿德萨阿斯蒂芬爱的爱的', '2018-12-11 14:08:12', '110100', '1');
 
 -- ----------------------------
 -- Table structure for `hl_price_incidental`
@@ -5986,7 +5986,7 @@ CREATE TABLE `hl_user` (
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-12-07 10:18:25', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
+INSERT INTO `hl_user` VALUES ('1', 'sales1', 'yw001', '阿斯达斯', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-12-12 11:06:35', '99999', 'aaa@qq.com', '0', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('2', 'sales2', 'yw002', '李四', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '11111111', 'ssssi@qq.com', '1', '', '2147483647', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('3', 'sales3', 'yw003', '王五', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086123', 'wangwu@qq.com', '1', '', '2018', 'sales', null, null);
 INSERT INTO `hl_user` VALUES ('4', 'sales4', 'yw004', '钱六', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '10086', 'aaa@qq.com', '1', null, '2147483647', 'sales', null, null);
