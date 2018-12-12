@@ -32,7 +32,7 @@ class Order extends Model
                 ->where('MP.member_code',$member_code)
                 ->group('SP.id')
                 ->buildSql();
-//        var_dump($price_list);exit;
+    //    var_dump($price_list);exit;
 //        if($load_time){
 //             $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
 //        }

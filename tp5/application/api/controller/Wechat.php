@@ -17,9 +17,9 @@ class Wechat extends Controller
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
         $this->member_code =Session::get('member_code','think');
-        if(is_null($this->member_code)){
-            $this->notlogin();
-        }
+        // if(is_null($this->member_code)){
+        //     $this->notlogin();
+        // }
     }
    
     //
@@ -104,7 +104,7 @@ class Wechat extends Controller
     // 小程序门到门下单页面
     public function orderList($limit=10,$page=1,$start_add='',$end_add='',$load_time=''){
         $member_code = $this->member_code;
-        
+        // var_dump($member_code);exit;
         //计算出从那条开始查询
         $sea_pirce =new OrderM;
         $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
@@ -123,7 +123,7 @@ class Wechat extends Controller
         $sea_pirce =new OrderM;
         $list = $sea_pirce ->orderBook($sea_id ,$container_size,$member_code);
          //创建订单令牌
-        action('OrderToken/createToken','', 'controller');
+        action('index/OrderToken/createToken','', 'controller');
         $TOKEN = Session::get('TOKEN');
         return json(array('TOKEN'=>$TOKEN,'list'=>$list));
     } 

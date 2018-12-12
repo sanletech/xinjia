@@ -60,7 +60,11 @@ class Login extends Controller
         //查询同一条手机号的发送时间是否超过五分钟
         $ctime = date('y-m-d H:i:s');
         $again_time = date('y-m-d H:i:s',strtotime("$ctime -2min"));
-        $again = Db::name('ali_sms')->where('phone',$phone)->whereTime('ctime','<',$again_time)->find();
+        $again = Db::name('ali_sms')
+        ->where('phone',$phone)
+        ->field('max(ctime)')
+        ->whereTime('ctime','<',$again_time)
+        ->fetchSql(false)->find();
         if($again){
             $response= ['message'=>'2分钟后再发送','status'=>0];
             return json($response);
