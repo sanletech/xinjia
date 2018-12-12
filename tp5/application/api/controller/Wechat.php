@@ -6,12 +6,21 @@ use think\Db;
 use think\Session;
 use app\api\controller\common AS CommonM ;
 use app\index\model\Order as OrderM;
+use think\cache\driver\Redis as RedisM;
+
 class Wechat extends Controller
 {    
     public  $order_status;
     public  $page=5;
     public  $mtime ;
     public  $member_code;
+    
+    protected $beforeActionList = [
+       
+      'second' =>  ['except'=>'hello'],
+        'three'  =>  ['only'=>'hello,data'],
+    ];
+    
     public function _initialize()
     {  
         $this->order_status = config('config.order_status');
@@ -22,8 +31,6 @@ class Wechat extends Controller
         // }
     }
    
-    //
-    
     public function __call($function_name, $arguments) {
         return $function_name.implode(', ', $arguments).'不存在';
     }
@@ -39,20 +46,30 @@ class Wechat extends Controller
     
     
     //登陆
-    public function wechatLogin($account,$password,$wechat_name) {
+    public function wechatLogin($account,$password) {
+        // var_dump($account,$password);exit;
         $password = md5($password);
-        $sql_password =Db::name('member')->where('phone',$account)
-                ->field('password,member_code,name,wechat_name');
-        if(!$sql_password){
+        $member =Db::name('member')->where('phone',$account)
+                ->field('password,member_code,name,wechat_name')
+                ->find();
+        if(!$member){
             return json(array('status'=>0,'message'=>'账号不存在'));   
-        }  else {
-            if($password !== $sql_password){
+        }  
+        if($password !== $member['password']){
             return json(array('status'=>0,'message'=>'密码错误'));     
-            }
-            //验证无误 就写入 session
-            Session::set('member_code',$member['member_code']);
-            Session::set('name',$member['wechat_name']);
         }
+        //验证无误 就写入 session
+        Session::set('member_code',$member['member_code']);
+      
+        if(empty($member['wechat_name'])){
+            Session::set('name',$member['name']); 
+            return json(array('status'=>1,'message'=>'unboundWechat'));     
+        }  else {
+            Session::set('name',$member['wechat_name']); 
+            return json(array('status'=>1,'message'=>'登录成功'));     
+        }
+    
+        
     }
     
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
@@ -104,7 +121,6 @@ class Wechat extends Controller
     // 小程序门到门下单页面
     public function orderList($limit=10,$page=1,$start_add='',$end_add='',$load_time=''){
         $member_code = $this->member_code;
-        // var_dump($member_code);exit;
         //计算出从那条开始查询
         $sea_pirce =new OrderM;
         $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
@@ -122,6 +138,7 @@ class Wechat extends Controller
         $member_code = $this->member_code;
         $sea_pirce =new OrderM;
         $list = $sea_pirce ->orderBook($sea_id ,$container_size,$member_code);
+        
          //创建订单令牌
         action('index/OrderToken/createToken','', 'controller');
         $TOKEN = Session::get('TOKEN');
@@ -220,5 +237,10 @@ class Wechat extends Controller
         
     }
     
-    
+    public function  redis(){
+        $Redis = new RedisM();
+        $Redis->set("test","test");
+
+        echo  $Redis->get("test");
+    }
 }
