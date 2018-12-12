@@ -15,6 +15,18 @@ class Wechat extends Controller
     public  $mtime ;
     public  $member_code;
     
+    protected $_config =[
+        'DATA_CACHE_PREFIX' => 'Redis_',//缓存前缀
+        'DATA_CACHE_TYPE'=>'Redis',//默认动态缓存为Redis
+        'DATA_CACHE_TIMEOUT' => false,
+        'REDIS_RW_SEPARATE' => true, //Redis读写分离 true 开启
+        'REDIS_HOST'=>'127.0.0.1', //redis服务器ip，多台用逗号隔开；读写分离开启时，第一台负责写，其它[随机]负责读；
+        'REDIS_PORT'=>'6379',//端口号
+        'REDIS_TIMEOUT'=>'300',//超时时间
+        'REDIS_PERSISTENT'=>false,//是否长连接 false=短连接
+        'REDIS_AUTH'=>'',//AUTH认证密码
+    ];
+    
     protected $beforeActionList = [
        
       'second' =>  ['except'=>'hello'],
@@ -46,22 +58,22 @@ class Wechat extends Controller
     
     
     //登陆
-    public function wechatLogin($account,$password,$wechat_name) {
+    public function wechatLogin($account,$password) {
         $password = md5($password);
-        $sql_password =Db::name('member')->where('phone',$account)
+        $member =Db::name('member')->where('phone',$account)
                 ->field('password,member_code,name,wechat_name');
-        if(!$sql_password){
+        if(!$member){
             return json(array('status'=>0,'message'=>'账号不存在'));   
         }  
-        if($password !== $sql_password['password']){
+        if($password !== $member['password']){
             return json(array('status'=>0,'message'=>'密码错误'));     
         }
         //验证无误 就写入 session
         Session::set('member_code',$member['member_code']);
       
-        if(empty($sql_password['wechat_name'])){
+        if(empty($member['wechat_name'])){
             Session::set('name',$member['name']); 
-            return json(array('status'=>1,'message'=>'未绑定wechat'));     
+            return json(array('status'=>1,'message'=>'unboundWechat'));     
         }  else {
             Session::set('name',$member['wechat_name']); 
             return json(array('status'=>1,'message'=>'登录成功'));     
@@ -236,9 +248,10 @@ class Wechat extends Controller
     }
     
     public function  redis(){
-        $Redis = new RedisM();
-        $Redis->set("test","test");
+        $redis=new RedisM();
+           $redis->connect($_config("REDIS_HOST"),$_config("REDIS_PORT"));
+        $redis->set("test","test");
 
-        echo  $Redis->get("test");
+        echo  $redis->get("test");
     }
 }

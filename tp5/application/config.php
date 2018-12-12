@@ -219,9 +219,12 @@ return [
         // redis缓存
         'redis'   =>  [
             // 驱动方式
-            'type'   => 'redis',
-            // 服务器地址
-            'host'       => '192.168.1.100',
+            'type'   => '\app\driver\cache\Redis',
+            'path'   => CACHE_PATH,
+            // 缓存前缀
+            'prefix' => '',
+            // 缓存有效期 0表示永久缓存
+            'expire' => 0,
         ],
     ],
     
