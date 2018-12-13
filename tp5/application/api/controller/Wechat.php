@@ -4,11 +4,11 @@ namespace app\api\controller;
 use think\Controller;
 use think\Db;
 use think\Session;
-use app\api\controller\common AS CommonM ;
+use app\api\controller\Common ;
 use app\index\model\Order as OrderM;
 use think\cache\driver\Redis as RedisM;
 
-class Wechat extends Controller
+class Wechat extends Common
 {    
     public  $order_status;
     public  $page=5;
@@ -40,53 +40,21 @@ class Wechat extends Controller
     {  
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
-        $this->member_code =Session::get('member_code','wechat');
-        if(is_null($this->member_code)){
-            $this->notlogin();
-        }
+      
+   
     }
    
 //    public function __call($function_name, $arguments) {
 //        return $function_name.implode(', ', $arguments).'不存在';
 //    }
     
-    //登陆检查
-    public function notlogin()
-    {
-        //如果登录常量为nll，表示没有登录
-        if(is_null($this->member_code)){
-            return json(array('status'=>0,'message'=>'未登录，无权访问'));
-        }   
-        return json(array('status'=>1,'message'=>'success'));
-    }
+
     
     
-    //登陆
-    public function wechatLogin($account,$password) {
-        $password = md5($password);
-        $member =Db::name('member')->where('phone',$account)
-                ->field('password,member_code,name,wechat_openid')
-                ->find();
-        if(!$member){
-            return json(array('status'=>0,'message'=>'账号不存在'));   
-        }  
-        if($password !== $member['password']){
-            return json(array('status'=>0,'message'=>'密码错误'));     
-        }
-        //验证无误 就写入 session
-        Session::set('member_code',$member['member_code'],'wechat');
-        Session::set('name',$member['name'],'wechat'); 
-        if(empty($member['wechat_openid'])){
-            return json(array('status'=>1,'message'=>'unboundWechat'));     
-        }  else {
-            return json(array('status'=>1,'message'=>'登录成功'));     
-        }
-    
-        
-    }
+
     
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
-    public function wechatRegister ($wechat_code,$wechat_name,$phone,$code) {
+    public function wechatRegister ($wechat_code,$phone,$code) {
          //20分钟内有效
         $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
         $res_code = Db::name('ali_sms')->where('phone',$phone)
@@ -95,12 +63,13 @@ class Wechat extends Controller
         if(!in_array($code,$res_code)){
             return json(array('status'=>0,'message'=>'验证码不正确'));
         }
+        //获取微信openId
+        $wechat_openid = $this->wechatOpenid($wechat_code);
         //先查询 是否存在 相同的手机号 存在就绑定,不存在就添加
         $isset_phone = Db::name('member')->where('phone',$phone)->field('id','name')->find();
         if($isset_phone){
             $res_phone = Db::name('member')->where('id',$isset_phone['id'])
-                    ->update(['wechat_code'=>$wechat_code,
-                            'wechat_name'=>$wechat_name]);
+                    ->update(['wechat_openid'=>$wechat_openid]);
             $message = '绑定';
         }  else {
                 $IDCode = new \app\index\controller\IDCode();
@@ -108,24 +77,22 @@ class Wechat extends Controller
                 $id =Db::name('member')->max('id')+1;
                 $member_code = $IDCode->create($id, 'zh');
                 $map['member_code'] = $member_code; //唯一帐号
-                $map['wechat_code'] = $wechat_code; 
+                $map['wechat_openid'] = $wechat_openid; 
                 $map['create_time'] = $this->mtime; 
                 $map['type'] = 'wechat'; 
-                $map['wechat_name'] = $wechat_name;
             $res_phone = Db::name('member')->insert($map);
             $message = '注册';
         }
         //操作成功后，写入session 信息将用户
         if($res_phone){
-            Session::set('member_code',$member['member_code']);
+            Session::set('member_code',$member['member_code'],'wechat');
            
             //设置默认利润
             if($message=='注册'){
-                Session::set('name',$wechat_name);
                 $member_profit =  new \app\index\model\Login();
                 $member_profit->member_profit($member_code);
             }  else {
-                Session::set('name',$isset_phone['name']);
+                Session::set('name',$isset_phone['name'],'wechat');
             }
         }
         return $res_phone ? array('status'=>1,'message'=>$message.'success'): array('status'=>0,'message'=>$message.'fail');
@@ -266,35 +233,15 @@ class Wechat extends Controller
         $info = file_get_contents($url);//发送HTTPs请求并获取返回的数据，推荐使用curl
         $json = json_decode($info);//对json数据解码
         $arr = get_object_vars($json);
-        $this->_v($arr);exit;
+//        $this->_v($arr);exit;
         if(array_key_exists('errcode', $arr)){
             return json(array('status'=>0,'message'=>  implode(',', $arr)));
         }
-        $this->_v($arr);exit;
+//        $this->_v($arr);exit;
         $openid = $arr['openid'];
         $session_key = $arr['session_key'];
-                $sql = "select wechat_id,session_key  from bbm_wechat where wechat_id = '$openid'";
-                $result = $this->dao->query($sql)->fetch();
-                if ($result!=null) {//如果数据库中存在此用户的信息，则不需要重新获取
-                    $result = json_encode($result);
-                    //同时修改访问次数 和时间
-                    $last_time = time();
-                    $sql2 = "update bbm_wechat visit_times ='visit_times+1' ,last_time='$last_time ' where wechat_id ='$openid'";
-                    $result2 = $this->dao->exec($sql1);
-                    if(dao::isError()) {
-                        return $fail[]= '更新失败';
-                    }
-                }
-                else {//没有则将数据存入数据库
-                    $add_time =time();
-                    $sql1 = "insert into bbm_wechat(wechat_id,add_time,session_key)  values('$openid','$add_time','$session_key')";
-//                    var_dump($sql1);
-                    $result1 = $this->dao->exec($sql1);;
-                    if(dao::isError()) {
-                        return $fail[]= dao::getError();
-                    }
-                }
-        return $this->send(array('id' => $openid, 'message' =>$session_key)); ;
+           
+        return $openid ; 
     }
     
     

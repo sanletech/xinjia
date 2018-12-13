@@ -12,8 +12,52 @@ use think\Db;
 use think\Session;
 
 class Common extends Controller {
-    //put your code here
     
+    protected  $member_code;
+    
+    protected function _initialize()
+    {  
+       
+        $this->member_code =Session::get('member_code','wechat');
+        if(is_null($this->member_code)){
+            $this->notlogin();
+        }
+    }
+    
+    //登陆检查
+    protected  function notlogin()
+    {
+        //如果登录常量为nll，表示没有登录
+        if(is_null($this->member_code)){
+            return json(array('status'=>0,'message'=>'未登录，无权访问'));
+        }   
+        return json(array('status'=>1,'message'=>'success'));
+    }
+    
+    //重复登陆检查
+    protected  function alreadylogin()
+    {
+        //如果登录常量为nll，表示没有登录
+        if(!is_null($this->member_code)){
+            return json(array('status'=>0,'message'=>'已登录，不可重复登录'));
+        }   
+       
+    }
+    // 登出
+    protected  function logout()
+    {
+        $name = Session::pull('name','wechat');
+        //清空wechat下的值
+        Session::clear('wechat');
+        if( is_null(Session::get('member_code','wechat')) );
+        {
+            return json(array('status'=>1,'message'=>'logout'.$name));
+        }        
+       
+    
+       
+    }
+
      //阿里云短信
     public function ali_sms($phone){
         //查询同一条手机号的发送时间是否超过五分钟
@@ -37,6 +81,7 @@ class Common extends Controller {
         }
         return json($response);
     }
+    
     public function  data() {
         
         $data = Db::name('seaprice')->select();
