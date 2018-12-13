@@ -101,21 +101,23 @@ class Port extends Base
         }else{
             $city = strstr($data['city'],'_',true);
         }
+        $port_name = trim($data['port_name']);
         
-        $port_name = $data['port_name'];
-        $port_code = Db::name('port')->where('city_id',"'$city'")->max('port_code');
-        if($port_code < $city*1000){
-            $port_code = $city*1000+1;
-        }else { 
-            $port_code = $port_code + 1; 
+        $old_data = Db::name('port')->where('id',$id)->field('city_id,port_code')->find();
+        if($city == $old_data['city_id']){
+            $port_code = $old_data['port_code'];
+        }  else {
+            $max_port_code = Db::name('port')->group('city_id')->where('city_id',$city)->max('port_code');
+            if($max_port_code < $city*1000){
+                $port_code = ($city*1000)+1;
+            }else { 
+                $port_code = $max_port_code + 1; 
+            }
         }
         $porttoedit = new PortM;
         $res = $porttoedit ->port_toedit($id,$city,$port_code,$port_name);
-        if(!array_key_exists('fail', $res)){
-            $status =1; 
-        }else {$status =0;} 
-        json_encode($status);   
-        return $status;    
+       
+        return json( $res ? array('status'=>1,'message'=>'更改成功'):array('status'=>0,'message'=>'更改失败')); 
     }
     
         //船名列表

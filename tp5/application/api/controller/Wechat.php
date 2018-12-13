@@ -6,7 +6,7 @@ use think\Db;
 use think\Session;
 use app\api\controller\Common ;
 use app\index\model\Order as OrderM;
-use think\cache\driver\Redis as RedisM;
+use think\cache\driver\Redis ;
 
 class Wechat extends Common
 {    
@@ -15,7 +15,7 @@ class Wechat extends Common
     public  $mtime ;
     public  $member_code;
     
-    protected $_config =[
+    public $redis_config =[
         'DATA_CACHE_PREFIX' => 'Redis_',//缓存前缀
         'DATA_CACHE_TYPE'=>'Redis',//默认动态缓存为Redis
         'DATA_CACHE_TIMEOUT' => false,
@@ -246,10 +246,10 @@ class Wechat extends Common
     
     
     public function  redis(){
-        $redis=new RedisM();
-           $redis->connect($_config("REDIS_HOST"),$_config("REDIS_PORT"));
-        $redis->set("test","test");
+        $redis=new \Redis();
+        $redis->connect($this->redis_config['REDIS_HOST'],$this->redis_config['REDIS_PORT']);
+         $redis->set("tutorial-name", "Redis 1211351");
 
-        echo  $redis->get("test");
+        echo $redis->get("tutorial-name");
     }
 }

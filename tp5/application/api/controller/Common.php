@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\api\controller;
 use think\Controller;
 use think\Db;
@@ -25,7 +19,7 @@ class Common extends Controller {
     }
     
     //登陆检查
-    protected  function notlogin()
+    public  function notlogin()
     {
         //如果登录常量为nll，表示没有登录
         if(is_null($this->member_code)){
@@ -35,7 +29,7 @@ class Common extends Controller {
     }
     
     //重复登陆检查
-    protected  function alreadylogin()
+    public function alreadylogin()
     {
         //如果登录常量为nll，表示没有登录
         if(!is_null($this->member_code)){
@@ -44,7 +38,7 @@ class Common extends Controller {
        
     }
     // 登出
-    protected  function logout()
+    public  function logout()
     {
         $name = Session::pull('name','wechat');
         //清空wechat下的值
