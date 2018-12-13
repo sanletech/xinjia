@@ -22,7 +22,8 @@ class Login extends Controller
         }
         //验证无误 就写入 session
         Session::set('member_code',$member['member_code'],'wechat');
-        Session::set('name',$member['name'],'wechat'); 
+        Session::set('name',$member['name'],'wechat');
+        // var_dump($_SESSION);echo'111';
         if(empty($member['wechat_openid'])){
             return json(array('status'=>1,'message'=>'unboundWechat'));     
         }  else {

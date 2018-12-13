@@ -51,7 +51,6 @@ class Wechat extends Common
 
     
     
-
     
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
     public function wechatRegister ($wechat_code,$phone,$code) {
