@@ -5,6 +5,8 @@ use app\index\common\Base;
 use app\index\model\Order as OrderM;
 use think\Db;
 use think\Session;
+use app\index\controller\IDCode ;
+use app\index\controller\Bill;
 class Order extends Base 
 {    
     //海运运价
@@ -133,12 +135,15 @@ class Order extends Base
           //添加客户订单所有信息
       public function order_data()
     {
-        $data =$this->request->except('TOKEN');
-//        $this->_p($data);exit;
+        $data =$this->request->param();
+        $data = $data['data'];
         $post_token = $this->request->param('TOKEN');
-        //检查订单令牌是否重复
-        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-            return array('status'=>0,'mssage'=>'不要重复提交订单');
+        $is_wechat = $this->request->param('type');
+        //检查订单令牌是否重复,小程序不用检查
+        if(!is_null($is_wechat)){
+            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+                return array('status'=>0,'mssage'=>'不要重复提交订单');
+            }
         }
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
@@ -165,16 +170,16 @@ class Order extends Base
         $carprice_r = $data_price['r_'.$container_size];
         $carprice_s = $data_price['s_'.$container_size]; 
         $discount  = $data_price['discount_'.$container_size]; 
-        //计算保险费 = 单个柜货值(万元为单位)*4*柜量
+        //计算保险费 = 单个柜货值(万元为单位)*6*柜量
         if(intval($data['premium'])!==intval($data['cargo_value']*4)*$container_sum){
             return array('status'=>0,'mssage'=>'保险费错误');
         }
         //计算下单总共柜子的报价
-//        var_dump(intval($data['price_sum']), intval($carriage*$container_sum));exit;
         if( intval($data['price_sum'])!==  intval($carriage*$container_sum+$data['premium']) ){
             return array('status'=>0,'mssage'=>'总费用错误');
         }
-        $order_num = action('IDCode/order_num',['type'=>'door'], 'controller');   
+        $IDCODE = new IDCode();
+        $order_num = $IDCODE->order_num($type='door');  
         
         $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone'],$data['r_add']));//装货信息
         $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone'],$data['s_add']));//送货信息
@@ -188,7 +193,10 @@ class Order extends Base
             'carprice_r'=>$carprice_r,'carprice_s'=>$carprice_s,'discount'=>$discount,
             'type'=>'door','status'=>2);
         $res =Db::name('order_port')->insert($fatherData);
-        action('Bill/billCreate',['order_num'=>$order_num], 'controller'); //同时创建账单
+        //同时生成账单
+        $Billc =new Bill();
+        $bill_res = $Billc ->billCreate($order_num);
+
         return json($res ? array('status'=>1,'message'=>'下单成功'):array('status'=>0,'message'=>'下单失败') );
     }
     

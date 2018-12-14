@@ -32,8 +32,7 @@ class Order extends Model
                 ->where('MP.member_code',$member_code)
                 ->where('SP.status',1)->where('SP.stale_date',1)
                 ->group('SP.id')->buildSql();
-            
-        var_dump($price_list);exit;
+//        var_dump($price_list);exit;
 //        if($load_time){
 //             $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
 //        }
@@ -44,7 +43,7 @@ class Order extends Model
             $price_list = Db::table($price_list.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
         }
         $list = Db::table($price_list.' H')->page($page,$limit)->select();
-        var_dump($list);exit;
+//        var_dump($list);exit;
         $count = count($list);
         return array('list'=>$list, 'count'=>$count);
              
@@ -107,7 +106,7 @@ class Order extends Model
         $sqldata =['order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$data['container'],
                 'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],
                 'cargo_cost'=>$data['cargo_cost'], 'container_type_id'=>$data['container_type'],
-                'comment'=>$data['comment'],
+                'comment'=>$data['comment'],'type'=>'door',
                 'mtime'=>$mtime,'member_code'=>$member_code,'belong_order'=>0,'state'=>0,'action'=>'下单=>待审核',
                 'ctime'=>$mtime,'payer'=>$payer,'payment_method'=>$data['payment_method'],'message_send'=>$data['message_send'],
                 'sign_receipt'=>$data['sign_receipt'],'tax_rate'=>$tax_rate,'invoice_id'=>$data['invoice_id'],'shipper'=>$shipper,

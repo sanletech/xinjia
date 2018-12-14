@@ -128,7 +128,11 @@
                     data: $("#trailerform").serialize(),
                     dataType:"json",
                     success:function(res){
+<<<<<<< HEAD
+                        if(res.status){
+=======
                         if(res.status>0){
+>>>>>>> bd32f5637dd91ab76b76c222b8dceb1fcb3b4dfb
                             post_adduser = false;
                             layer.close(loading);
                             layer.msg("修改成功", { icon: 6, time: 1000 }, function () {

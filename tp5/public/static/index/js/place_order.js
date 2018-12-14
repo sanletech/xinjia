@@ -193,7 +193,7 @@ function toajax(url, data) {
     $.ajax({
         type: 'POST',
         url: url,
-        data: data,
+        data: {data:data,TOKEN:$('input[name="TOKEN"]').val()},
         dataType: "json",
         success: function (data) {          
             if (data.status) {
