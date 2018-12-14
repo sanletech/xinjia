@@ -48,8 +48,11 @@ class Wechat extends Common
 //        return $function_name.implode(', ', $arguments).'不存在';
 //    }
     
-
-    
+    //阿里云发送短信
+    public function ali_sms($phone){
+        $data = action('index/Login/ali_sms',['phone'=>$phone],'controller');
+        return $data;
+    }
     
     
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
