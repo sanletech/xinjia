@@ -133,9 +133,9 @@ class Order extends Base
           //添加客户订单所有信息
       public function order_data()
     {
-        $data =$this->request->param();
+        $data =$this->request->except('TOKEN');
 //        $this->_p($data);exit;
-        $post_token = $this->request->post('TOKEN');
+        $post_token = $this->request->param('TOKEN');
         //检查订单令牌是否重复
         if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
             return array('status'=>0,'mssage'=>'不要重复提交订单');

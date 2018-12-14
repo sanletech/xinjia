@@ -30,23 +30,24 @@ class Port extends Model
     //港口修改页面获许原数据
     public function  port_edit($port_id)
     {   
-        $sql = "select P.id , P.port_name ,P.city_id ,C.city  from hl_port P "
-                . "left join hl_city C on C.city_id = P.city_id "
-                . "where P.id = '$port_id'";
-        $data = Db::query($sql);
-        return $data['0'];
+        
+        $data = Db::name('port')->alias('P')
+                ->join('hl_city C','C.city_id = P.city_id')
+                ->where( 'P.id', $port_id)
+                ->field('P.id ,P.port_name ,P.city_id ,C.city')
+                ->fetchSql(FALSE)->find();
+//        $this->_p($data);exit;
+        return $data;
     }
       //港口执行修改
     public function  port_toedit($id,$city,$port_code,$port_name)
     {  
         $mtime = date('Y-m-d H:i:s');
-        $sql ="update hl_port set port_code ='$port_code',port_name ='$port_name',"
-                . "city_id ='$city' ,mtime ='$mtime' where id ='$id'";
-//        var_dump($sql);exit;
-        $res = Db::execute($sql);
-        $res ?  $response['success']= '修改port表':$response['fail']= '修改port表';
+
+        $res = Db::name('port')->where('id',$id)->update(['port_code' =>$port_code,
+                'port_name'=>$port_name,'city_id'=>$city ,'mtime' =>$mtime]);
         $this->port_js();
-        return $response ;
+        return  $res ? true :false; ;
         
     }
     
@@ -60,7 +61,6 @@ class Port extends Model
                 sleep(1);
             }
         }
-        
         // 启动事务
         Db::startTrans();
         try{

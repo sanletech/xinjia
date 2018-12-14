@@ -6,7 +6,7 @@ use think\Db;
 use think\Session;
 use app\api\controller\Common ;
 use app\index\model\Order as OrderM;
-use think\cache\driver\Redis as RedisM;
+use think\cache\driver\Redis ;
 
 class Wechat extends Common
 {    
@@ -15,7 +15,7 @@ class Wechat extends Common
     public  $mtime ;
     public  $member_code;
     
-    protected $_config =[
+    public $redis_config =[
         'DATA_CACHE_PREFIX' => 'Redis_',//缓存前缀
         'DATA_CACHE_TYPE'=>'Redis',//默认动态缓存为Redis
         'DATA_CACHE_TIMEOUT' => false,
@@ -109,7 +109,7 @@ class Wechat extends Common
         return json(array('count'=>$count, 'page'=>$page,'limit'=>$limit,'list'=>$list)) ;
     }
     
-    //小程序门到门下单页面 //海运费id
+    //小程序门到门下单页面 //海运费id  ,柜型
     public function orderBook($sea_id,$container_size){
         if(!($container_size=='40HQ' || $container_size=='20GP')){
             return false;
@@ -131,7 +131,47 @@ class Wechat extends Common
         return json($data);
     }
     
-    //小程序 //添加收/发货人的信息
+
+    //小程序 门到门 订单处理
+      public function orderData($data,$TOKEN)
+    {
+//        $result = $this->validate(
+//            $data,
+//            [
+//            'link_name' => 'require|max:25',
+//            'phone' =>'require|number|length:11',
+//            'company'=>'require|length:50',
+//            ]);
+//        if(true !== $result){
+//        // 验证失败 输出错误信息
+//        return json($result);
+//        }
+        $response = action('index/Order/order_data',['data'=>$data,'TOKEN'=>$TOKEN],'controller');
+        return json($response);    
+    }
+    
+    //门到门 订单查询
+    ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
+    //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
+    public function orderQuery($limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port=''){
+     
+        $dataM = new \app\api\model\Wechat();
+        $member_code =  $this->member_code;
+        $data = $dataM->orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port='');
+        return json($data);
+        
+    }
+    //订单详情
+    public function orderDetail($order_num){
+        
+        $dataM = new \app\api\model\Wechat();
+        $member_code =  $this->member_code;
+        $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
+        return json($data);
+    }
+            
+         
+        //小程序 //添加收/发货人的信息
     public function linkmanAdd($data)
     {
         $result = $this->validate(
@@ -163,48 +203,7 @@ class Wechat extends Common
         return json($response);
     }
   
-    //小程序 门到门 订单处理
-      public function orderData($data)
-    {  
-        
-    //     $this->_v($data);exit;
-    //   $this->_v($this->request->param());exit;
-//        $result = $this->validate(
-//            $data,
-//            [
-//            'link_name' => 'require|max:25',
-//            'phone' =>'require|number|length:11',
-//            'company'=>'require|length:50',
-//            ]);
-//        if(true !== $result){
-//        // 验证失败 输出错误信息
-//        return json($result);
-//        }
-        $response = action('index/Order/order_data',['data'=>$data,'post_token'=>$post_token],'controller');
-        return json($response);    
-    }
     
-    //门到门 订单查询
-    ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
-    //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
-    public function orderQuery($limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port=''){
-     
-        $dataM = new \app\api\model\Wechat();
-        $member_code =  $this->member_code;
-        $data = $dataM->orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port='');
-        return json($data);
-        
-    }
-    //订单详情
-    public function orderDetail($order_num){
-        
-        $dataM = new \app\api\model\Wechat();
-        $member_code =  $this->member_code;
-        $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
-        return json($data);
-    }
-            
-            
     //船公司 
     public function ship($id='all') {
           $port_code = Db::name('port')->lock(true)->where('city_id',564564)->max('port_code');
@@ -248,10 +247,10 @@ class Wechat extends Common
     
     
     public function  redis(){
-        $redis=new RedisM();
-           $redis->connect($_config("REDIS_HOST"),$_config("REDIS_PORT"));
-        $redis->set("test","test");
+        $redis=new \Redis();
+        $redis->connect($this->redis_config['REDIS_HOST'],$this->redis_config['REDIS_PORT']);
+         $redis->set("tutorial-name", "Redis 1211351");
 
-        echo  $redis->get("test");
+        echo $redis->get("tutorial-name");
     }
 }
