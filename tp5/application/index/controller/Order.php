@@ -141,9 +141,9 @@ class Order extends Base
         $is_wechat = $this->request->param('type');
         //检查订单令牌是否重复,小程序不用检查
         if(!is_null($is_wechat)){
-            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-                return array('status'=>0,'mssage'=>'不要重复提交订单');
-            }
+//            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+//                return array('status'=>0,'mssage'=>'不要重复提交订单');
+//            }
         }
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id

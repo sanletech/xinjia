@@ -11,7 +11,6 @@ class Common extends Controller {
     
     protected function _initialize()
     {  
-       
         $this->member_code =Session::get('member_code');
         // var_dump($_SESSION);
         if(is_null($this->member_code)){

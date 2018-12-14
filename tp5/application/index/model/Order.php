@@ -60,6 +60,7 @@ class Order extends Model
         } elseif($container_size=='20GP') {
             unset($price['price_sum_40HQ'],$price['price_40HQ'],$price['r_40HQ'],$price['s_40HQ'],$price['discount_40HQ']);
         }
+//        $this->_P($price);exit;
         return $price;            
     }
     //添加收/发货人的信息
