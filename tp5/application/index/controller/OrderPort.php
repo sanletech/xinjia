@@ -89,7 +89,7 @@ class OrderPort extends Controller
     }
     //港到港订单的处理
     public function port_data() {
-        $data =$this->request->param(); 
+        $data =$this->request->param('data'); 
 //         $this->_p($data);exit;
         $post_token = $this->request->post('TOKEN');
         //检查订单令牌是否重复

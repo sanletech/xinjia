@@ -30,9 +30,10 @@ class Order extends Model
                         . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
                         . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
                 ->where('MP.member_code',$member_code)
-                ->group('SP.id')
-                ->buildSql();
-    //    var_dump($price_list);exit;
+                ->where('SP.status',1)->where('SP.stale_date',1)
+                ->group('SP.id')->buildSql();
+            
+        var_dump($price_list);exit;
 //        if($load_time){
 //             $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
 //        }
@@ -43,6 +44,7 @@ class Order extends Model
             $price_list = Db::table($price_list.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
         }
         $list = Db::table($price_list.' H')->page($page,$limit)->select();
+        var_dump($list);exit;
         $count = count($list);
         return array('list'=>$list, 'count'=>$count);
              

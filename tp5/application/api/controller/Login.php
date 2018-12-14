@@ -23,11 +23,10 @@ class Login extends Controller
         //验证无误 就写入 session
         Session::set('member_code',$member['member_code'],'wechat');
         Session::set('name',$member['name'],'wechat');
-        // var_dump($_SESSION);echo'111';
         if(empty($member['wechat_openid'])){
-            return json(array('status'=>1,'message'=>'unboundWechat'));     
+            return json(array('status'=>1,'message'=>'unboundWechat','session_id'=>session_id()));     
         }  else {
-            return json(array('status'=>1,'message'=>'登录成功'));     
+            return json(array('status'=>1,'message'=>'登录成功','session_id'=>session_id()));     
         }
     
         

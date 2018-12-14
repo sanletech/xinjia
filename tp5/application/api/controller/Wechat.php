@@ -40,7 +40,7 @@ class Wechat extends Common
     {  
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
-      
+        $this->member_code='zh_A_004';
    
     }
    
@@ -100,7 +100,7 @@ class Wechat extends Common
         return $res_phone ? array('status'=>1,'message'=>$message.'success'): array('status'=>0,'message'=>$message.'fail');
     }
     
-    // 小程序门到门下单页面
+    // 小程序门到门下单页面 price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit,$sea_id='')
     public function orderList($limit=10,$page=1,$start_add='',$end_add='',$load_time=''){
         $member_code = $this->member_code;
         //计算出从那条开始查询
