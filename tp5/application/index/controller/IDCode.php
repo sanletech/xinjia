@@ -1,6 +1,6 @@
 <?php
-
 namespace app\index\controller;
+use app\index\common\Base;
 
 /**
  * php 根据自增id创建唯一编号类
@@ -10,7 +10,7 @@ namespace app\index\controller;
  *
  * Func
  * Public create 创建编号
- */ class IDCode{ 
+ */ class IDCode extends Base { 
 
     /**  创建编号
      * @param  Int    $id         自增id

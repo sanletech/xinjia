@@ -5,6 +5,7 @@ use app\index\common\Base;
 use app\index\model\Order as OrderM;
 use think\Db;
 use think\Session;
+use app\index\controller\Bill ;
 class Order extends Base 
 {    
     //海运运价
@@ -143,9 +144,9 @@ class Order extends Base
 //        var_dump(session('TOKEN')); var_dump($post_token);exit;
 //        var_dump($is_wechat);exit;
         if(!is_null($is_wechat)){
-            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-                return array('status'=>0,'mssage'=>'不要重复提交订单');
-            }
+//            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+//                return array('status'=>0,'mssage'=>'不要重复提交订单');
+//            }
         }
 //        $this->_p($data);
 //        var_dump($post_token);exit;
@@ -183,8 +184,11 @@ class Order extends Base
         if( intval($data['price_sum'])!==  intval($carriage*$container_sum+$data['premium']) ){
             return array('status'=>0,'mssage'=>'总费用错误');
         }
-        $order_num = action('IDCode/order_num',['type'=>'door'], 'controller');   
-        
+//         $IDCODE = new IDCode();
+//        $order_num = $IDCODE->order_num($type='door');    
+         $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+       
+        $order_num =  $order_num ='door'.$yCode[intval(date('Y')) - 2018].strtoupper(dechex(date('m'))).date('d').substr(time(), -5).sprintf('%02d', rand(0, 99));
         $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone'],$data['r_add']));//装货信息
         $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone'],$data['s_add']));//送货信息
        
@@ -196,8 +200,12 @@ class Order extends Base
             'price_description'=>$data['price_description'],'premium'=>$data['premium'],'quoted_price'=>$data['price_sum'],
             'carprice_r'=>$carprice_r,'carprice_s'=>$carprice_s,'discount'=>$discount,
             'type'=>'door','status'=>2);
-        $res =Db::name('order_port')->insert($fatherData);
-        action('Bill/billCreate',['order_num'=>$order_num], 'controller'); //同时创建账单
+        $res =Db::name('order_port')->insert($fatherData);     
+        $BillC = new Bill();
+        $BillC->billCreate($order_num);
+      var_dump(111);exit; 
+//        action('index/Bill/billCreate',['order_num'=>$order_num], 'controller'); //同时创建账单
+      
         return json($res ? array('status'=>1,'message'=>'下单成功'):array('status'=>0,'message'=>'下单失败') );
     }
     

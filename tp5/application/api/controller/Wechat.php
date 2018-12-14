@@ -40,7 +40,7 @@ class Wechat extends Common
     {  
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
-        $this->member_code='zh_A_004';
+        $this->member_code =Session::get('member_code');
    
     }
    
@@ -74,10 +74,11 @@ class Wechat extends Common
                     ->update(['wechat_openid'=>$wechat_openid]);
             $message = '绑定';
         }  else {
-                $IDCode = new \app\index\controller\IDCode();
+                //$IDCode = new \app\index\controller\IDCode();
                 //查询用户表最大的id 生成零时客户member_code
                 $id =Db::name('member')->max('id')+1;
-                $member_code = $IDCode->create($id, 'zh');
+//                $member_code = $IDCode->create($id, 'zh');
+                $member_code = action('index/IDCode/create',['id'=>'zh'],'controller');
                 $map['member_code'] = $member_code; //唯一帐号
                 $map['wechat_openid'] = $wechat_openid; 
                 $map['create_time'] = $this->mtime; 
