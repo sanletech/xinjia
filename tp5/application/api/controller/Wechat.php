@@ -165,7 +165,10 @@ class Wechat extends Common
   
     //小程序 门到门 订单处理
       public function orderData($data)
-    {
+    {  
+        
+    //     $this->_v($data);exit;
+    //   $this->_v($this->request->param());exit;
 //        $result = $this->validate(
 //            $data,
 //            [
