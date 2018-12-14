@@ -193,6 +193,8 @@ function wtxx() {
       nei = arr[i];
     }
   }
+  $(input[0]).val(0);
+  $(input[4]).val(0);
   if ($(lei).hasClass('song')) {
     $(input[0]).val(nei.id);
     $(input[1]).val(nei.company);
@@ -503,7 +505,7 @@ $('.tjiao').eq(0).find('.shi').click(function(){
     bootble = true;
     if (huo && bootble) {
       if ($('#container_type').val()) {
-        $('.er .in').each(function () {
+        $('.er .in').each(function () {          
           if (!$(this).val()) {
             bootble = false;
             layui.layer.msg('委托信息不完整',{icon: 2,time: 1000});
@@ -559,7 +561,7 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('.tjiao').eq(0).show();
   $('.lche,.fuwu').hide();
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);
-  $('.er .in').attr('readonly',true);
+  $('.er .in').attr('readonly',false);
   $('#bxje').css('border','0').attr('readonly',true);
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();

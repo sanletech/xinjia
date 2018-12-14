@@ -13,7 +13,7 @@ class Common extends Controller {
     {  
        
         $this->member_code =Session::get('member_code','wechat');
-        var_dump($_SESSION);
+        // var_dump($_SESSION);
         if(is_null($this->member_code)){
             $this->notlogin();
         }
