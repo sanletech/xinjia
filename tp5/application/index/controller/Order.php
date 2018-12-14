@@ -133,13 +133,22 @@ class Order extends Base
           //添加客户订单所有信息
       public function order_data()
     {
-        $data =$this->request->except('TOKEN');
+        $data =$this->request->param();
+        $data = $data['data'];
 //        $this->_p($data);exit;
         $post_token = $this->request->param('TOKEN');
+        $is_wechat = $this->request->param('type');
         //检查订单令牌是否重复
-        if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-            return array('status'=>0,'mssage'=>'不要重复提交订单');
+//         $this->_p($data);
+//        var_dump(session('TOKEN')); var_dump($post_token);exit;
+//        var_dump($is_wechat);exit;
+        if(!is_null($is_wechat)){
+            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+                return array('status'=>0,'mssage'=>'不要重复提交订单');
+            }
         }
+//        $this->_p($data);
+//        var_dump($post_token);exit;
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
         $sea_id = $data['sea_id']; //海运路线ID

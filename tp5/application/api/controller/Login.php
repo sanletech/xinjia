@@ -8,8 +8,8 @@ class Login extends Controller
 {
     
     //登陆
-    public function wechatLogin($account,$password) {
-   
+      //登陆
+      public function wechatLogin($account,$password) {
         $password = md5($password);
         $member =Db::name('member')->where('phone',$account)
                 ->field('password,member_code,name,wechat_openid')
@@ -21,16 +21,13 @@ class Login extends Controller
             return json(array('status'=>0,'message'=>'密码错误'));     
         }
         //验证无误 就写入 session
-        Session::set('member_code',$member['member_code'],'wechat');
+        Session::set('member_code',$member['member_code']);
         Session::set('name',$member['name'],'wechat');
-        // var_dump($_SESSION);echo'111';
         if(empty($member['wechat_openid'])){
-            return json(array('status'=>1,'message'=>'unboundWechat'));     
+            return json(array('status'=>1,'message'=>'unboundWechat','session_id'=>session_id()));     
         }  else {
-            return json(array('status'=>1,'message'=>'登录成功'));     
+            return json(array('status'=>1,'message'=>'登录成功','session_id'=>session_id()));     
         }
-    
-        
     }
     
     

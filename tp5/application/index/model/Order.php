@@ -105,7 +105,7 @@ class Order extends Model
         $sqldata =['order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$data['container'],
                 'container_sum'=>$data['container_sum'],'weight'=>$data['weight'],
                 'cargo_cost'=>$data['cargo_cost'], 'container_type_id'=>$data['container_type'],
-                'comment'=>$data['comment'],
+                'comment'=>$data['comment'],'type'=>'door',
                 'mtime'=>$mtime,'member_code'=>$member_code,'belong_order'=>0,'state'=>0,'action'=>'下单=>待审核',
                 'ctime'=>$mtime,'payer'=>$payer,'payment_method'=>$data['payment_method'],'message_send'=>$data['message_send'],
                 'sign_receipt'=>$data['sign_receipt'],'tax_rate'=>$tax_rate,'invoice_id'=>$data['invoice_id'],'shipper'=>$shipper,
