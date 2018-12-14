@@ -127,11 +127,11 @@
                     url:url,    
                     data: $("#trailerform").serialize(),
                     dataType:"json",
-                    success:function(status){
-                        if(status>0){
+                    success:function(res){
+                        if(res.status>0){
                             post_adduser = false;
                             layer.close(loading);
-                            layer.msg("添加成功", { icon: 6, time: 1000 }, function () {
+                            layer.msg("修改成功", { icon: 6, time: 1000 }, function () {
                             // 获得frame索引
                             parent.location.reload();
                             var index = parent.layer.getFrameIndex(window.name);
@@ -147,7 +147,7 @@
                         error: function () {
                                 post_adduser = false; //AJAX失败也需要将标志标记为可提交状态
                                 layer.close(loading);
-                                layer.msg("添加失败", { icon: 5 });
+                                layer.msg("修改失败", { icon: 5 });
                             }
                 });
                 return false;//只此一句
