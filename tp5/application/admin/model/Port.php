@@ -61,7 +61,6 @@ class Port extends Model
                 sleep(1);
             }
         }
-        
         // 启动事务
         Db::startTrans();
         try{

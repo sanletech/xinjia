@@ -109,7 +109,7 @@ class Wechat extends Common
         return json(array('count'=>$count, 'page'=>$page,'limit'=>$limit,'list'=>$list)) ;
     }
     
-    //小程序门到门下单页面 //海运费id
+    //小程序门到门下单页面 //海运费id  ,柜型
     public function orderBook($sea_id,$container_size){
         if(!($container_size=='40HQ' || $container_size=='20GP')){
             return false;
@@ -131,7 +131,47 @@ class Wechat extends Common
         return json($data);
     }
     
-    //小程序 //添加收/发货人的信息
+
+    //小程序 门到门 订单处理
+      public function orderData($data,$TOKEN)
+    {
+//        $result = $this->validate(
+//            $data,
+//            [
+//            'link_name' => 'require|max:25',
+//            'phone' =>'require|number|length:11',
+//            'company'=>'require|length:50',
+//            ]);
+//        if(true !== $result){
+//        // 验证失败 输出错误信息
+//        return json($result);
+//        }
+        $response = action('index/Order/order_data',['data'=>$data,'TOKEN'=>$TOKEN],'controller');
+        return json($response);    
+    }
+    
+    //门到门 订单查询
+    ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
+    //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
+    public function orderQuery($limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port=''){
+     
+        $dataM = new \app\api\model\Wechat();
+        $member_code =  $this->member_code;
+        $data = $dataM->orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port='');
+        return json($data);
+        
+    }
+    //订单详情
+    public function orderDetail($order_num){
+        
+        $dataM = new \app\api\model\Wechat();
+        $member_code =  $this->member_code;
+        $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
+        return json($data);
+    }
+            
+         
+        //小程序 //添加收/发货人的信息
     public function linkmanAdd($data)
     {
         $result = $this->validate(
@@ -163,45 +203,7 @@ class Wechat extends Common
         return json($response);
     }
   
-    //小程序 门到门 订单处理
-      public function orderData($data)
-    {
-//        $result = $this->validate(
-//            $data,
-//            [
-//            'link_name' => 'require|max:25',
-//            'phone' =>'require|number|length:11',
-//            'company'=>'require|length:50',
-//            ]);
-//        if(true !== $result){
-//        // 验证失败 输出错误信息
-//        return json($result);
-//        }
-        $response = action('index/Order/order_data',['data'=>$data,'post_token'=>$post_token],'controller');
-        return json($response);    
-    }
     
-    //门到门 订单查询
-    ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
-    //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
-    public function orderQuery($limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port=''){
-     
-        $dataM = new \app\api\model\Wechat();
-        $member_code =  $this->member_code;
-        $data = $dataM->orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port='');
-        return json($data);
-        
-    }
-    //订单详情
-    public function orderDetail($order_num){
-        
-        $dataM = new \app\api\model\Wechat();
-        $member_code =  $this->member_code;
-        $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
-        return json($data);
-    }
-            
-            
     //船公司 
     public function ship($id='all') {
           $port_code = Db::name('port')->lock(true)->where('city_id',564564)->max('port_code');
