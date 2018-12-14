@@ -110,9 +110,8 @@ class Order extends Base
     //传给前台页面客户所有的联系人
       public function selectlinkman()
     {
-        $member_code =Session::get('member_code');
+        $member_code = Session::get('member_code');
         $res = Db::name('linkman')->where('member_code',$member_code)->order('mtime desc')->select();
-        // $this->_v($res);exit;
         return json_encode($res);
     }
         //添加客户发票的所有信息
@@ -139,65 +138,9 @@ class Order extends Base
         $data = $data['data'];
         $post_token = $this->request->param('TOKEN');
         $is_wechat = $this->request->param('type');
-        //检查订单令牌是否重复,小程序不用检查
-        if(!is_null($is_wechat)){
-//            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-//                return array('status'=>0,'mssage'=>'不要重复提交订单');
-//            }
-        }
-        $member_code =Session::get('member_code');
-       //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
-        $sea_id = $data['sea_id']; //海运路线ID
-        $carprice_rid = $data['rid']; //拖车装货费_id
-        $carprice_sid = $data['sid'];//拖车送货费_id
-        $pir_id = $data['pir_id'];    //起运港口港杂费_id
-        $pis_id = $data['pis_id'];   //目的港口杂费_id
-        $premium = $data['premium']; //总共的保险费
-        $cargo_cost = $data['cargo_value'];
-       
-        //计算出车装货价格 送货价格 船运价格 ,利润 ,港口杂费 是否一致
-        $member_code =Session::get('member_code');
-        $container_size = $data['container_size'];
-        $container_sum = $data['container_sum'];
-        $sea_pirce =new OrderM;
-        $data_price  = $sea_pirce->orderBook($sea_id ,$container_size,$member_code); //一个柜的总价格
-        $carriage = $data_price['price_sum_'.$container_size];
-        //计算门到门的海运费是否一致
-        if(intval($data['carriage']) !== intval($carriage)){
-            return array('status'=>0,'mssage'=>'海运费错误');
-        }
-        //门到门的总装货费,送货费,客户的利润
-        $carprice_r = $data_price['r_'.$container_size];
-        $carprice_s = $data_price['s_'.$container_size]; 
-        $discount  = $data_price['discount_'.$container_size]; 
-        //计算保险费 = 单个柜货值(万元为单位)*6*柜量
-        if(intval($data['premium'])!==intval($data['cargo_value']*4)*$container_sum){
-            return array('status'=>0,'mssage'=>'保险费错误');
-        }
-        //计算下单总共柜子的报价
-        if( intval($data['price_sum'])!==  intval($carriage*$container_sum+$data['premium']) ){
-            return array('status'=>0,'mssage'=>'总费用错误');
-        }
-        $IDCODE = new IDCode();
-        $order_num = $IDCODE->order_num($type='door');  
-        
-        $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone'],$data['r_add']));//装货信息
-        $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone'],$data['s_add']));//送货信息
-       
-        $fatherData =array('order_num'=>$order_num,'cargo'=>$data['cargo'],'container_size'=>$container_size,
-            'container_sum'=>$container_sum,'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
-            'container_type'=>$data['container_type'],'comment'=>$data['comment'],'member_code'=>$member_code,
-            'ctime'=>date('Y-m-d H:i:s'),'payment_method'=>$data['payment_method'],'shipper_id'=>$data['r_id'],
-            'shipper'=>$shipper,'consigner_id'=>$data['s_id'],'consigner'=>$consigner,'seaprice_id'=>$sea_id,
-            'price_description'=>$data['price_description'],'premium'=>$data['premium'],'quoted_price'=>$data['price_sum'],
-            'carprice_r'=>$carprice_r,'carprice_s'=>$carprice_s,'discount'=>$discount,
-            'type'=>'door','status'=>2);
-        $res =Db::name('order_port')->insert($fatherData);
-        //同时生成账单
-        $Billc =new Bill();
-        $bill_res = $Billc ->billCreate($order_num);
-
-        return json($res ? array('status'=>1,'message'=>'下单成功'):array('status'=>0,'message'=>'下单失败') );
+        $order_data =new OrderM;
+        $response = $order_data ->order_data($data ,$post_token,$is_wechat);
+        return json($response) ;
     }
     
     //中间航线详情
