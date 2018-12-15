@@ -145,6 +145,7 @@ class Order extends Base
 //                return array('status'=>0,'mssage'=>'不要重复提交订单');
 //            }
         }
+        
         $member_code =Session::get('member_code');
        //线路价格 海运sea_id 车装货价格r_id 车送货价格s_id
         $sea_id = $data['sea_id']; //海运路线ID
@@ -163,6 +164,7 @@ class Order extends Base
         $data_price  = $sea_pirce->orderBook($sea_id ,$container_size,$member_code); //一个柜的总价格
         $carriage = $data_price['price_sum_'.$container_size];
         //计算门到门的海运费是否一致
+        // var_dump($data['carriage'],intval($carriage));exit;
         if(intval($data['carriage']) !== intval($carriage)){
             return array('status'=>0,'mssage'=>'海运费错误');
         }

@@ -56,7 +56,7 @@ class Wechat extends Common
     
     
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
-    public function wechatRegister ($wechat_code,$phone,$code) {
+    public function wechatRegister ($wechat_code,$phone,$code,$password) {
          //20分钟内有效
         $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
         $res_code = Db::name('ali_sms')->where('phone',$phone)
