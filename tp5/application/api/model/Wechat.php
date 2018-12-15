@@ -20,7 +20,7 @@ class Wechat extends Model
         $map = array();
         switch ($status){
             case 'all':
-            $map =array('A.status'=>'not null');  
+            $map = array('A.status'=>['in',$this->order_status]); 
             break;
             case 'completion':
             $map =array('A.status'=>['in',[$this->order_status['completion'],$this->order_status['check_bill']]]);
