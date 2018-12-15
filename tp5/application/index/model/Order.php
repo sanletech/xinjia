@@ -78,7 +78,6 @@ class Order extends Model
             'mtime'=>$time,'member_code'=>$member_code,'address'=>$add);
         $res =  Db::name('linkman')->insert($data);
         return  $res ?TRUE : FALSE;    
-        
     }
     
     //处理客户提交的订单信息

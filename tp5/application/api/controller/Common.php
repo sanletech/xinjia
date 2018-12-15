@@ -7,12 +7,12 @@ use think\Session;
 
 class Common extends Controller {
     
-    protected  $member_code;
+    protected $member_code;
     
     protected function _initialize()
     {  
-        $this->member_code =Session::get('member_code');
-        // var_dump($_SESSION);
+        $this->member_code = Session::get('member_code');
+//         var_dump( $this->member_code);
         if(is_null($this->member_code)){
             $this->notlogin();
         }

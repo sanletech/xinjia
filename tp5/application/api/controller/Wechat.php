@@ -11,12 +11,11 @@ use think\cache\driver\Redis ;
 
 class Wechat extends Common
 {    
-    public  $order_status;
-    public  $page=5;
-    public  $mtime ;
-    public  $member_code;
+    protected  $order_status;
+    protected  $page=5;
+    protected  $mtime ;
     
-    public $redis_config =[
+    protected $redis_config =[
         'DATA_CACHE_PREFIX' => 'Redis_',//缓存前缀
         'DATA_CACHE_TYPE'=>'Redis',//默认动态缓存为Redis
         'DATA_CACHE_TIMEOUT' => false,
@@ -37,24 +36,18 @@ class Wechat extends Common
 
 
     
-    public function _initialize()
-    {  
+    protected function _initialize()
+    {   
+        $this->member_code =Session::get('member_code');
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
-        $this->member_code =Session::get('member_code');
-   
     }
-   
-//    public function __call($function_name, $arguments) {
-//        return $function_name.implode(', ', $arguments).'不存在';
-//    }
     
     //阿里云发送短信
     public function ali_sms($phone){
         $data = action('index/Login/ali_sms',['phone'=>$phone],'controller');
         return $data;
     }
-    
     
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
     public function wechatRegister ($wechat_code,$phone,$code,$password,$repassword='') {
@@ -120,21 +113,23 @@ class Wechat extends Common
         return $res_phone ? array('status'=>1,'message'=>$message.'success'): array('status'=>0,'message'=>$message.'fail');
     }
     
-    
-    
     // 小程序门到门下单页面 price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit,$sea_id='')
-    public function orderList($limit=10,$page=1,$start_add='',$end_add='',$load_time=''){
+    public function orderList($limit=10,$page=1,$start_add='',$end_add='',$ship_id='',$start_time='',$end_time=''){
         $member_code = $this->member_code;
         // var_dump($member_code);exit;
         //计算出从那条开始查询
         $sea_pirce =new OrderM;
-        $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
+        $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit);
         $list =  $data['list'] ;
         return json(array('page'=>$page,'limit'=>$limit,'list'=>$list)) ;
     }
     
-    
-    
+    //小程序港到港
+    public function orderPortList(){
+        
+    }
+
+
     //小程序门到门下单页面 //海运费id  ,柜型
     public function orderBook($sea_id,$container_size){
         if(!($container_size=='40HQ' || $container_size=='20GP')){
@@ -157,7 +152,6 @@ class Wechat extends Common
         return json($data);
     }
     
-
     //小程序 门到门 订单处理
       public function orderData($data,$TOKEN)
     {
@@ -169,9 +163,9 @@ class Wechat extends Common
     ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
     //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
     public function orderQuery($order_num='',$limit=10,$page=1,$status='all',$s_port='',$e_port=''){
-     
+
         $dataM = new WechatM();
-        $member_code =  $this->member_code;
+        $member_code = $this->member_code;
         $data = $dataM->orderQuery($member_code,$limit,$page,$status,$order_num,$s_port,$e_port);
         return json($data);
         
@@ -181,7 +175,7 @@ class Wechat extends Common
         
         $dataM =  new WechatM();
         $member_code =  $this->member_code;
-        $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
+        $data = $dataM->orderDetail($member_code,$order_num);
         return json($data);
     }
             
@@ -227,16 +221,28 @@ class Wechat extends Common
             $map = ['id'=>['>',0]];
         }
         $data = Db::name('shipcompany')
-                ->where('status',1)
+                ->where('status',1)->fetchSql()
                 ->field('id,ship_short_name')
-                ->where($map)->fetchSql(false)->select();
-                // var_dump($data);exit;
+                ->where($map)->select();
         return json($data);
     }
     
     //港口信息类列表
-    public function functionName($param) {
-        
+    public function portName() {
+        $data = Db::name('port')->alias('p')
+                ->join('hl_city C','C.city_id = P.city_id')
+                ->where('P.status',1)
+                ->field('P.port_code,P.port_name,C.city_id,city')
+                ->order('C.city_id')
+                ->select();
+        //分组
+        $temp = array();
+        foreach ($data as $key=>$value){
+            $temp['city_id']['port_list'][] =array($value['port_code'],$value['port_name']);
+            $temp['city_id']['city'] =$value['city'];
+        }
+        $temp = array_values($temp);
+        return json($temp);
     }
 
     

@@ -20,7 +20,7 @@ class Wechat extends Model
         $map = array();
         switch ($status){
             case 'all':
-            $map = array('A.status'=>['in',$this->order_status ] ) ; 
+            $map = array('A.status'=>['in',$this->order_status]); 
             break;
             case 'completion':
             $map =array('A.status'=>['in',[$this->order_status['completion'],$this->order_status['check_bill']]]);
@@ -70,7 +70,7 @@ class Wechat extends Model
         // $this->_p($map);exit;
         // 查询出当前页数显示的数据
         $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(false)->page($page,$limit)->select();
-    //    var_dump($list);EXIT;
+//        var_dump($list);EXIT;
         //转换状态
         foreach ($list as $key=>$value){
             switch ($value['status']){
@@ -127,8 +127,8 @@ class Wechat extends Model
     }
     
     
-    public function orderDetail($member_code,$order_num,$container_lock){
-        $listSql =Db::name('order_port')->alias('OP')
+    public function orderDetail($member_code,$order_num){
+        $list =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
             ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
             ->join('hl_ship_route SR',"SR.id=SP.route_id and SR.status='1'",'left')//路线表
@@ -147,21 +147,20 @@ class Wechat extends Model
                     . 'SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,'
                     . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
                     . 'group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
-            ->group('OP.id')->where('OP.member_code',$member_code)
-            ->where('OP.order_num',$order_num)->where('OP.type','door')->buildSql();
+            ->where('OP.member_code',$member_code) 
+            ->where('OP.order_num',$order_num)->fetchSql(false)->find();
            
-//     var_dump($listSql);exit;
-        // 查询出当前页数显示的数据
-        $list = Db::table($listSql.' B')->order('B.id ,B.ctime desc')->find();
+  
         //查询对应的申请放柜驳回理由
         $statusSql = "(select b.* from  hl_order_port_status b right join "
                 . " (SELECT order_num , max(mtime) as mtime from hl_order_port_status "
-                . " where status =".$container_lock
+                . " where status =".$this->order_status['container_lock']
                 . " group by order_num) a on a.mtime = b.mtime "
-                . "and a.order_num = b.order_num and a.order_num = '$order_num ) ";
+                . "and a.order_num = b.order_num and a.order_num = '$order_num' ) ";
+
         $status_arr = Db::query($statusSql);
         if($status_arr){
-            if($value['container_buckle']=='lock'){
+            if($list['container_buckle']=='lock'){
                 $list['container_buckle_comment']= $status_arr[0]['comment'];
             }
         }  else {
@@ -219,7 +218,7 @@ class Wechat extends Model
                     break;
             }
             
-            return ;
+            return $list ;
         }
          
          
