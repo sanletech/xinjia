@@ -44,6 +44,7 @@ class Wechat extends Model
             $map =array('A.status'=>$this->order_status['loading']);  
             break;
         }
+        // var_dump($map);exit;
         if($order_num){
             $map = array('A.order_num'=> strtoupper($order_num));
         }
@@ -66,11 +67,10 @@ class Wechat extends Model
                     . 'OP.status,OP.money_status,OP.container_buckle,OP.container_status,OP.type')
             ->group('OP.id')->where('OP.member_code',$member_code)
             ->buildSql();
-          
-//     var_dump($listSql);exit;
+        // $this->_p($map);exit;
         // 查询出当前页数显示的数据
-        $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(FALSE)->page($page,$limit)->select();
-//        var_dump($list);EXIT;
+        $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(false)->page($page,$limit)->select();
+    //    var_dump($list);EXIT;
         //转换状态
         foreach ($list as $key=>$value){
             switch ($value['status']){
