@@ -130,7 +130,7 @@ class Wechat extends Common
         $sea_pirce =new OrderM;
         $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
         $list =  $data['list'] ;
-        return json(array('count'=>$count, 'page'=>$page,'limit'=>$limit,'list'=>$list)) ;
+        return json(array('page'=>$page,'limit'=>$limit,'list'=>$list)) ;
     }
     
     
@@ -168,11 +168,11 @@ class Wechat extends Common
     //门到门 订单查询
     ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
     //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
-    public function orderQuery($limit=0,$page=10,$order_num='',$status='all',$s_port='',$e_port=''){
+    public function orderQuery($order_num='',$limit=10,$page=1,$status='all',$s_port='',$e_port=''){
      
         $dataM = new WechatM();
         $member_code =  $this->member_code;
-        $data = $dataM->orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port='');
+        $data = $dataM->orderQuery($member_code,$limit,$page,$status,$order_num,$s_port,$e_port);
         return json($data);
         
     }

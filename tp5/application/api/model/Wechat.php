@@ -4,10 +4,18 @@ use think\Model;
 use think\Db;
 class Wechat extends Model
 {
+    
+    
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->order_status = config('config.order_status');
+    }   
+    
      //门到门 订单查询
     ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
     //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
-    public function orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port=''){
+    public function orderQuery($member_code,$limit,$page,$status,$order_num,$s_port,$e_port){
            //根据状态来做判断
         $map = array();
         switch ($status){
@@ -36,7 +44,15 @@ class Wechat extends Model
             $map =array('A.status'=>$this->order_status['loading']);  
             break;
         }
-        
+        if($order_num){
+            $map = array('A.order_num'=>$order_num);
+        }
+        if($s_port){
+            $map['A.s_port_code']= $s_port;
+        }
+        if($e_port){
+            $map['A.e_port_code']= $e_port;
+        }
         $listSql =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
             ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
@@ -49,12 +65,12 @@ class Wechat extends Model
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,'
                     . 'OP.status,OP.money_status,OP.container_buckle,OP.container_status,OP.type')
             ->group('OP.id')->where('OP.member_code',$member_code)
-            ->where('OP.type','door')->buildSql();
+            ->buildSql();
           
 //     var_dump($listSql);exit;
         // 查询出当前页数显示的数据
-        $list = Db::table($listSql.' B')->where($map)->order('B.id ,B.ctime desc')->page($page,$limit)->select();
-       
+        $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(FALSE)->page($page,$limit)->select();
+//        var_dump($list);EXIT;
         //转换状态
         foreach ($list as $key=>$value){
             switch ($value['status']){
