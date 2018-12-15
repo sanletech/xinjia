@@ -45,7 +45,7 @@ class Wechat extends Model
             break;
         }
         if($order_num){
-            $map = array('A.order_num'=>$order_num);
+            $map = array('A.order_num'=> strtoupper($order_num));
         }
         if($s_port){
             $map['A.s_port_code']= $s_port;

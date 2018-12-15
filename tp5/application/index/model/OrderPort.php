@@ -8,8 +8,8 @@ use think\Session;
 class OrderPort extends Model
 {
     
-    public function price_port($tol,$limit,$start_add='',$end_add='',$ship_id='',$seaprice_id='') {
-//        var_dump($tol,$limit,$start_add,$end_add,$ship_id,$seaprice_id);exit;
+    public function price_port($tol,$limit,$start_add='',$end_add='',$ship_id='',$seaprice_id='') { 
+        //门到门 设置客户利润，港到港没有利润只有在线优惠
         $nowtime= date('y-m-d h:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id','left')//海运路线表
@@ -72,10 +72,11 @@ class OrderPort extends Model
                         'discount_end'=>['>= time',$nowtime],
                         'status'=>1,  'ship_id'=>$ship_id,])
                       ->field("id,title,type,".$container_size. ' money')->select();
+      
         //查询有没有设置默认地址
-        $default_add= Db::name('linkman')->where('member_code',$member_code)
+        $default_add= Db::name('linkman')
+                ->where(['member_code'=>$member_code,'status'=>1])
                 ->where('default',['=','r'],['=','s'],'or')
-                ->where('status',1)
                 ->field('member_code,town_code,mtime',true)->select();
         $default_addArr=[];
         if($default_add){
@@ -178,9 +179,7 @@ class OrderPort extends Model
         if(!(action('OrderToken/checkToken',['token'=>$post_token], 'controller'))){
             return array('status'=>0,'mssage'=>'不要重复提交订单');
         }
-        
         $order_num = action('IDCode/order_num',['type'=>'port'], 'controller');
-        
         $mtime= date('Y-m-d H:i:s'); //订单时间
         $member_code =Session::get('member_code');//提交账户
         $seaprice_id = $data['seaprice_id']; //海运价格表id

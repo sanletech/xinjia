@@ -111,7 +111,7 @@ class Order extends Base
       public function selectlinkman()
     {
         $member_code = Session::get('member_code');
-        $res = Db::name('linkman')->where('member_code',$member_code)->order('mtime desc')->select();
+        $res = Db::name('linkman')->where(['member_code'=>$member_code,'status'=>1])->order('mtime desc')->select();
         return json_encode($res);
     }
         //添加客户发票的所有信息
