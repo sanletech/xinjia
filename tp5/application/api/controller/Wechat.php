@@ -11,12 +11,11 @@ use think\cache\driver\Redis ;
 
 class Wechat extends Common
 {    
-    public  $order_status;
-    public  $page=5;
-    public  $mtime ;
-    public  $member_code;
+    protected  $order_status;
+    protected  $page=5;
+    protected  $mtime ;
     
-    public $redis_config =[
+    protected $redis_config =[
         'DATA_CACHE_PREFIX' => 'Redis_',//缓存前缀
         'DATA_CACHE_TYPE'=>'Redis',//默认动态缓存为Redis
         'DATA_CACHE_TIMEOUT' => false,
@@ -37,8 +36,9 @@ class Wechat extends Common
 
 
     
-    public function _initialize()
-    {  
+    protected function _initialize()
+    {   
+        $this->member_code =Session::get('member_code');
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
     }
@@ -157,9 +157,9 @@ class Wechat extends Common
     ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
     //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
     public function orderQuery($order_num='',$limit=10,$page=1,$status='all',$s_port='',$e_port=''){
-     
+
         $dataM = new WechatM();
-        $member_code =  $this->member_code;
+        $member_code = $this->member_code;
         $data = $dataM->orderQuery($member_code,$limit,$page,$status,$order_num,$s_port,$e_port);
         return json($data);
         
@@ -169,7 +169,7 @@ class Wechat extends Common
         
         $dataM =  new WechatM();
         $member_code =  $this->member_code;
-        $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
+        $data = $dataM->orderDetail($member_code,$order_num);
         return json($data);
     }
             

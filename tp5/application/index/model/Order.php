@@ -76,9 +76,8 @@ class Order extends Model
         $time = date("Y-m-d H:i:s"); 
         $data = array('name'=>$link_name ,'phone'=>$phone ,'company'=>$company ,
             'mtime'=>$time,'member_code'=>$member_code,'address'=>$add);
-        $res =  Db::name('linkman')->insert();
+        $res =  Db::name('linkman')->insert($data);
         return  $res ?TRUE : FALSE;    
-        
     }
     
     //处理客户提交的订单信息
