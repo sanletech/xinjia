@@ -6,6 +6,7 @@ use think\Db;
 use think\Session;
 use app\api\controller\Common ;
 use app\index\model\Order as OrderM;
+use app\api\model\Wechat as WechatM;
 use think\cache\driver\Redis ;
 
 class Wechat extends Common
@@ -56,7 +57,7 @@ class Wechat extends Common
     
     
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
-    public function wechatRegister ($wechat_code,$phone,$code,$password) {
+    public function wechatRegister ($wechat_code,$phone,$code,$password,$repassword='') {
          //20分钟内有效
         $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
         $res_code = Db::name('ali_sms')->where('phone',$phone)
@@ -67,29 +68,44 @@ class Wechat extends Common
         }
         //获取微信openId
         $wechat_openid = $this->wechatOpenid($wechat_code);
-        //先查询 是否存在 相同的手机号 存在就绑定,不存在就添加
-        $isset_phone = Db::name('member')->where('phone',$phone)->field('id','name')->find();
-        if($isset_phone){
-            $res_phone = Db::name('member')->where('id',$isset_phone['id'])
-                    ->update(['wechat_openid'=>$wechat_openid]);
-            $message = '绑定';
-        }  else {
-                //$IDCode = new \app\index\controller\IDCode();
+        //查询手机号码的信息
+        $member_info  = Db::name('member')->where('phone',$phone)
+                ->field('id','name','password','wechat_openid')->find();
+        //如果为空就是登录
+        if(is_null($repassword)){
+            if($member_info){
+                //存在就比对密码是否正确
+                if(md5($password)!== $member_info['password'] ){
+                    return json(array('status'=>0,'message'=>'密码不正确'));
+                }       
+                $res_phone = Db::name('member')->where('id',$member_info['id'])
+                        ->update(['wechat_openid'=>$wechat_openid]);
+                return json(array('status'=>0,'message'=>'success'));
+            }  else {
+                //不存在说明没有注册过
+                return json(array('status'=>0,'message'=>'Not_registered'));
+            }
+        }
+        //不为空就是注册
+        if($repassword){
+                if($repassword !== $password){
+                    return json(array('status'=>0,'message'=>'两次密码不正确'));
+                }
+                $IDCode = new \app\index\controller\IDCode();
                 //查询用户表最大的id 生成零时客户member_code
                 $id =Db::name('member')->max('id')+1;
-//                $member_code = $IDCode->create($id, 'zh');
-                $member_code = action('index/IDCode/create',['id'=>'zh'],'controller');
+                $member_code = $IDCode->create($id, 'zh');
                 $map['member_code'] = $member_code; //唯一帐号
                 $map['wechat_openid'] = $wechat_openid; 
                 $map['create_time'] = $this->mtime; 
+                $map['password'] = md5($password); 
                 $map['type'] = 'wechat'; 
-            $res_phone = Db::name('member')->insert($map);
-            $message = '注册';
+                $res_phone = Db::name('member')->insert($map);
+                $message = '注册';
         }
         //操作成功后，写入session 信息将用户
         if($res_phone){
-            Session::set('member_code',$member['member_code'],'wechat');
-           
+            Session::set('member_code',$member['member_code']);
             //设置默认利润
             if($message=='注册'){
                 $member_profit =  new \app\index\model\Login();
@@ -108,11 +124,11 @@ class Wechat extends Common
         //计算出从那条开始查询
         $sea_pirce =new OrderM;
         $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
-        //获取总页数
-        $count = $data['count']; 
         $list =  $data['list'] ;
-        return json(array('count'=>$count, 'page'=>$page,'limit'=>$limit,'list'=>$list)) ;
+        return json(array('page'=>$page,'limit'=>$limit,'list'=>$list)) ;
     }
+    
+    
     
     //小程序门到门下单页面 //海运费id  ,柜型
     public function orderBook($sea_id,$container_size){
@@ -147,10 +163,11 @@ class Wechat extends Common
     //门到门 订单查询
     ////状态 已完成completion，待支付payment，已取消cancel，审核中audit_in，审核通过audit_pass，已订舱book，派车中send_car，
     //状态 已完成，待支付，已取消，信息处理中，承运中，已订舱，派车中，
-    public function orderQuery($limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port=''){
-     
-        $dataM = new \app\api\model\Wechat();
+    public function orderQuery($order_num='',$limit=0,$page=10,$status='all',$s_port='',$e_port=''){
+
+        $dataM = new WechatM();
         $member_code =  $this->member_code;
+        var_dump($order_num);exit;
         $data = $dataM->orderQuery($member_code,$limit=0,$page=10,$status='all',$order_num='',$s_port='',$e_port='');
         return json($data);
         
@@ -158,7 +175,7 @@ class Wechat extends Common
     //订单详情
     public function orderDetail($order_num){
         
-        $dataM = new \app\api\model\Wechat();
+        $dataM =  new WechatM();
         $member_code =  $this->member_code;
         $data = $dataM->orderDetail($member_code,$order_num,$this->order_status['container_lock']);
         return json($data);
@@ -198,10 +215,8 @@ class Wechat extends Common
     }
   
     
-    //船公司 
+    //船公司 信息列表查询
     public function ship($id='all') {
-          $port_code = Db::name('port')->lock(true)->where('city_id',564564)->max('port_code');
-          var_dump($port_code);exit;
         if (is_int($id)){
             $map = ['id'=>$id];
         }else{
@@ -211,6 +226,11 @@ class Wechat extends Common
                 ->where('status',1)
                 ->field('id,shipcompany_short_name')
                 ->where($map)->select();
+        return json($data);
+    }
+    
+    //港口信息类列表
+    public function functionName($param) {
         
     }
 
