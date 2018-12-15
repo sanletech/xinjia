@@ -114,16 +114,22 @@ class Wechat extends Common
     }
     
     // 小程序门到门下单页面 price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit,$sea_id='')
-    public function orderList($limit=10,$page=1,$start_add='',$end_add='',$load_time=''){
+    public function orderList($limit=10,$page=1,$start_add='',$end_add='',$ship_id='',$start_time='',$end_time=''){
         $member_code = $this->member_code;
         // var_dump($member_code);exit;
         //计算出从那条开始查询
         $sea_pirce =new OrderM;
-        $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
+        $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit);
         $list =  $data['list'] ;
         return json(array('page'=>$page,'limit'=>$limit,'list'=>$list)) ;
     }
     
+    //小程序港到港
+    public function orderPortList(){
+        
+    }
+
+
     //小程序门到门下单页面 //海运费id  ,柜型
     public function orderBook($sea_id,$container_size){
         if(!($container_size=='40HQ' || $container_size=='20GP')){
