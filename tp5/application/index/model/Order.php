@@ -4,6 +4,8 @@ namespace app\index\model;
 use think\Model;
 use think\Db;
 use think\Session;
+use app\index\controller\IDCode ;
+use app\index\controller\Bill;
 class Order extends Model
 {
     
@@ -94,7 +96,6 @@ class Order extends Model
         $member_code =Session::get('member_code'); //用户帐号
         $container_size = $data['container_size']; //箱型
         $container_sum = $data['container_sum'];  //柜量
-        $sea_pirce =new OrderM;
         $data_price  = $this->orderBook($sea_id ,$container_size,$member_code); //一个柜的价格信息
         $carriage = $data_price['price_sum_'.$container_size]; //一个柜的总运费
         //计算门到门的海运费是否一致
