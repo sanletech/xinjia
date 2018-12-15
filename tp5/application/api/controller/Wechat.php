@@ -70,7 +70,7 @@ class Wechat extends Common
         $wechat_openid = $this->wechatOpenid($wechat_code);
         //查询手机号码的信息
         $member_info  = Db::name('member')->where('phone',$phone)
-                ->field('id','name','password','wechat_openid')->find();
+                ->field('id','name','password','member_code')->find();
         //如果为空就是登录
         if(is_null($repassword)){
             if($member_info){
@@ -78,9 +78,11 @@ class Wechat extends Common
                 if(md5($password)!== $member_info['password'] ){
                     return json(array('status'=>0,'message'=>'密码不正确'));
                 }       
-                $res_phone = Db::name('member')->where('id',$member_info['id'])
-                        ->update(['wechat_openid'=>$wechat_openid]);
-                return json(array('status'=>0,'message'=>'success'));
+                $res_login = Db::name('member')->where('id',$member_info['id'])
+                        ->update(['wechat_openid'=>$wechat_openid,
+                            'logintime'=>$this->mtime]);
+                $member_code = $member_info['member_code'];
+                $res_login ? $message ='success_login':$message ='fail_login';
             }  else {
                 //不存在说明没有注册过
                 return json(array('status'=>0,'message'=>'Not_registered'));
@@ -91,6 +93,9 @@ class Wechat extends Common
                 if($repassword !== $password){
                     return json(array('status'=>0,'message'=>'两次密码不正确'));
                 }
+                if($member_info){
+                    return json(array('status'=>0,'message'=>'已经注册过'));
+                }
                 $IDCode = new \app\index\controller\IDCode();
                 //查询用户表最大的id 生成零时客户member_code
                 $id =Db::name('member')->max('id')+1;
@@ -100,22 +105,22 @@ class Wechat extends Common
                 $map['create_time'] = $this->mtime; 
                 $map['password'] = md5($password); 
                 $map['type'] = 'wechat'; 
-                $res_phone = Db::name('member')->insert($map);
-                $message = '注册';
+                $res_register = Db::name('member')->insert($map);
+                $res_register ? $message = 'success_register':$message = 'fail_register';
         }
         //操作成功后，写入session 信息将用户
-        if($res_phone){
-            Session::set('member_code',$member['member_code']);
-            //设置默认利润
-            if($message=='注册'){
+        if(strstr($message,'_',true)=='success'){ 
+            Session::set('member_code',$member_code);
+            //注册设置默认利润
+            if($message=='success_register'){
                 $member_profit =  new \app\index\model\Login();
                 $member_profit->member_profit($member_code);
-            }  else {
-                Session::set('name',$isset_phone['name'],'wechat');
-            }
+            } 
         }
         return $res_phone ? array('status'=>1,'message'=>$message.'success'): array('status'=>0,'message'=>$message.'fail');
     }
+    
+    
     
     // 小程序门到门下单页面 price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit,$sea_id='')
     public function orderList($limit=10,$page=1,$start_add='',$end_add='',$load_time=''){
