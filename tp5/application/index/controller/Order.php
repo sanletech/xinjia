@@ -89,11 +89,13 @@ class Order extends Base
     //收/发货人的信息的修改
     public function linkmanUpdate() {
         $data=$this->request->param();
+        // var_dump($data);exit;
         $id= $data['id'];
         $tem['name'] = $data['link_name'];
         $tem['phone'] = $data['phone'];
         $tem['company'] = $data['company'];
         $tem['address'] = $data['add'];
+        $tem['mtime']= date('Y-m-d H:i:s');
         $member_code =Session::get('member_code');
         $res =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$id])->update($tem);
         $res ? $response=['status'=>1,'message'=>'修改联系人成功']: $response=['status'=>0,'message'=>'修改联系人失败'];

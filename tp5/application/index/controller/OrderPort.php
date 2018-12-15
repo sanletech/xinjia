@@ -90,6 +90,7 @@ class OrderPort extends Controller
     //港到港订单的处理
     public function port_data() {
         $data =$this->request->param();
+        var_dump($data);exit;
         $data= $data['data'];
         $post_token = $this->request->param('TOKEN');
         $OrderPortM =new OrderM();

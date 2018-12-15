@@ -63,11 +63,11 @@ $('.fp01').change(function () {
 for (let i = 1; i < 31; i++) {
     if ($('#gl').html()) {
     if ($('#gl').html() == i) {
-        $('.guil').append("<option value='" + i + "' selected>" + i + "</option>");
+        $('.guil').append("<option value='"+i+"' selected>"+i+"</option>");
               continue;
         }
     }
-    $('.guil').append("<option value='" + i + "'>" + i + "</option>");
+    $('.guil').append("<option value='"+i+"'>"+i+"</option>");
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -187,16 +187,19 @@ function order_data(zj) {
 //    obj['container_type'] = $('#container_type').val();//包装
 //    obj['mony_fs'] = $('.mony_fs').val();//结账方式
 //    console.log(obj);
-    toajax(OrderUrl, obj);
+    // toajax(OrderUrl, obj);
+    tj(OrderUrl, obj);
 }
 function toajax(url, data) {
+    // data = JSON.stringify(data);
+    console.log(data);
     $.ajax({
-        type: 'POST',
-        url: url,
-        data: {data:data,TOKEN:$('input[name="TOKEN"]').val()},
+        type:'POST',
+        url:url,
+        data:{data:data,TOKEN:$('input[name="TOKEN"]').val()},
         dataType: "json",
-        success: function (data) {          
-            if (data.status) {
+        success: function (res) {     
+            if (res.status) {
                 layui.use('layer', function(){
                     var layer = layui.layer;
                     layer.alert('<div style="text-align: center;">订单提交成功</div>', {icon: 1},function(){
@@ -210,6 +213,18 @@ function toajax(url, data) {
         }
     });
     //return false;//只此一
+}
+
+function tj(url,data){
+    $.ajax({
+        type:'POST',
+        url:url+'?TOKEN$='+$('input[name="TOKEN"]').val(),
+        data:data,
+        dataType: "json",
+        success: function (res) {  
+            console.log(res)
+        }
+    })
 }
 var mony_fs = 0;
 //计算运费
@@ -252,7 +267,6 @@ $('#container_sum').change(function () {//监听柜量
             $('#container_sum').val(fa);
         }
     }
-    
     youhui();
 })
 

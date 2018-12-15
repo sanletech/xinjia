@@ -195,8 +195,6 @@ function wtxx() {
       nei = arr[i];
     }
   }
-  $(input[0]).val(0);
-  $(input[5]).val(0);
   if ($(lei).hasClass('song')) {
     $(input[0]).val(nei.id);
     $(input[1]).val(nei.company);
@@ -512,13 +510,15 @@ $('.tjiao').eq(0).find('.shi').click(function(){
     if (huo && bootble) {
       if ($('#container_type').val()) {
         $('.er .in').each(function (i,item) {
+          if (!((i == 0) || (i == 5))) {
           if (!$(this).val()) {
             bootble = false;
             layui.layer.msg('委托信息不完整',{icon: 2,time: 1000});
             // return false;
           }else{
             bootble = true;        
-          }
+          }            
+        }
         })
       }else{
         layui.layer.msg('请输入包装',{icon: 2,time: 1000});
