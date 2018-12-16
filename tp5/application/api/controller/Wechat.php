@@ -27,11 +27,11 @@ class Wechat extends Controller
         'REDIS_AUTH'=>'',//AUTH认证密码
     ];
     
-    protected $beforeActionList = [
-       
-      'second' =>  ['except'=>'hello'],
-        'three'  =>  ['only'=>'hello,data'],
-    ];
+//    protected $beforeActionList = [
+//       
+//      'second' =>  ['except'=>'hello'],
+//        'three'  =>  ['only'=>'hello,data'],
+//    ];
     
     public function _initialize()
     {  
@@ -48,12 +48,14 @@ class Wechat extends Controller
     }
     
     //登陆检查
-    protected function notlogin()
+    public function notlogin()
     {
         //如果登录常量为nll，表示没有登录
-      if(is_null($this->member_code)){
-          return json(array('status'=>0,'message'=>'未登录，无权访问'));
-      }   
+        if(is_null($this->member_code)){
+            return json(array('status'=>0,'message'=>'未登录，无权访问'));
+        }   
+        
+        return json(array('status'=>1,'message'=>'success'));
     }
     
     
@@ -61,7 +63,8 @@ class Wechat extends Controller
     public function wechatLogin($account,$password) {
         $password = md5($password);
         $member =Db::name('member')->where('phone',$account)
-                ->field('password,member_code,name,wechat_name');
+                ->field('password,member_code,name,wechat_name')
+                ->find();
         if(!$member){
             return json(array('status'=>0,'message'=>'账号不存在'));   
         }  
