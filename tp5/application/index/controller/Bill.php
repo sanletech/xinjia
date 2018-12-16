@@ -4,6 +4,7 @@ namespace app\index\controller;
 use app\index\common\Base;
 use think\Db;
 use think\Session;
+use app\index\controller\IDCode ;
 class Bill extends Base 
 {    
     public $order_status;
@@ -24,8 +25,8 @@ class Bill extends Base
         //插入订单的数据
         $ID =Db::name('order_bill')->insertGetId($data);
         if($ID){
-             //根据返回的自增Id 生成账单编码
-            $IDCode = controller('IDCode');
+            //根据返回的自增Id 生成账单编码
+            $IDCode = new IDCode();
             $bill_num = $IDCode->create($ID,'ZD',3);
             $res= Db::name('order_bill')->where('id',$ID)->update(['bill_num'=>$bill_num]);
             $res?$response['success'] ='账单生成功' :$response['fail'] ='账单生成失败'; 

@@ -26,5 +26,6 @@ return [
         'unloading'=>16,//送货派车信息录入
         'completion'=>17, //港到港订单完成
              'check_bill'=>18, //港到港对账单 单独使用
+        'modify'=>19 // 修改订单
     ]
 ];

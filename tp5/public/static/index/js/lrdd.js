@@ -271,7 +271,7 @@ function zeng_wt(){
         $('.wt1').click();//重新查询并打开窗口
       }else{
         // alert('修改联系人失败');
-        layui.layer.msg('修改联系人失败',{icon: 2,time: 500});
+        layui.layer.msg('添加联系人失败',{icon: 2,time: 500});
       }      
     }
   });  
@@ -294,11 +294,12 @@ $('.wt_xiu').click(function () {
       skin: 'demo-class',
       fixed: false,
       success: function (data) {
-        // 模态框成功调用            
+        // 模态框成功调用 
         $('#wt3 input').eq(0).val(nei.id);      
         $('#wt3 input').eq(1).val(nei.company);
         $('#wt3 input').eq(2).val(nei.name);
         $('#wt3 input').eq(3).val(nei.phone);
+        $('#wt3 input').eq(4).val(nei.address);
       }
     });
   }
@@ -311,6 +312,7 @@ function xiu_wt(){
   data.company = $('#wt3 input').eq(1).val();
   data.link_name = $('#wt3 input').eq(2).val();
   data.phone = $('#wt3 input').eq(3).val();
+  data.add = $('#wt3 input').eq(4).val();
   if (data.company && data.link_name && data.phone) {
     $.ajax({
       type: 'POST',
@@ -455,16 +457,16 @@ var p = $('.bge tr').length - 1;
 function zeng_bge() {
   p++;
   $('.bge').append('<tr>' +
-    '<td><input class="r_price" name="r_car_price[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input class="r_num" name="r_num[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="r_price" name="r_car_price['+p+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="r_num" name="r_num['+p+']" type="text" value="" style="width: 100%"></td>' +
     '<td>柜</td>' +
-    '<td><input name="r_add[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="r_link_man[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="shipper[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="r_load_time[' + p + ']" type="date" value="" style="width: 100%"></td>' +
-    '<td><input name="r_link_phone[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="r_car[' + p + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="r_comment[' + p + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_add['+p+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_link_man['+p+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="shipper['+p+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_load_time['+p+']" type="date" value="" style="width: 100%"></td>' +
+    '<td><input name="r_link_phone['+p+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_car['+p+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="r_comment['+p+']" type="text" value="" style="width: 100%"></td>' +
     '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>' +
     '</tr>');
   input_a();
@@ -476,12 +478,12 @@ var o = $('.bge_song tr').length - 1;
 function zeng_song() {
   o++;
   $('.bge_song').append('<tr>' +
-    '<td><input class="s_price" name="s_car_price[' + o + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input class="s_num" name="s_num[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="s_price" name="s_car_price['+o+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input class="s_num" name="s_num['+o+']" type="text" value="" style="width: 100%"></td>' +
     '<td>柜</td>' +
-    '<td><input name="s_add[' + o + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="s_car[' + o + ']" type="text" value="" style="width: 100%"></td>' +
-    '<td><input name="s_comment[' + o + ']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="s_add['+o+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="s_car['+o+']" type="text" value="" style="width: 100%"></td>' +
+    '<td><input name="s_comment['+o+']" type="text" value="" style="width: 100%"></td>' +
     '<td class="dele"><i class="layui-icon" onclick="dele(this)">&#x1006;</i></td>' +
     '</tr>');
   input_a();
@@ -494,6 +496,7 @@ function dele(zj) {//删除当前装货或者送货
 var bootble = true;
 //第一次 下单
 $('.tjiao').eq(0).find('.shi').click(function(){
+  
   let huo = $.trim($('input[name="cargo"]').val());
   // bootble = huo?true:false;  
   if ($('#cargo_value').val() == 0) {
@@ -503,13 +506,15 @@ $('.tjiao').eq(0).find('.shi').click(function(){
     bootble = true;
     if (huo && bootble) {
       if ($('#container_type').val()) {
-        $('.er .in').each(function () {
-          if (!$(this).val()) {
-            bootble = false;
-            layui.layer.msg('委托信息不完整',{icon: 2,time: 1000});
-            return false;
-          }else{
-            bootble = true;        
+        $('.er .in').each(function (i) {
+          if(!((i == 0) || (i == 4))){//判断ID
+            if (!$(this).val()) {
+              bootble = false;
+              layui.layer.msg('委托信息不完整',{icon: 2,time: 1000});
+              return false;
+            }else{
+              bootble = true;        
+            }
           }
         })
       }else{
@@ -559,7 +564,7 @@ $('.tjiao').eq(1).find('.qu').click(function(){
   $('.tjiao').eq(0).show();
   $('.lche,.fuwu').hide();
   $('input').css('border','1px solid #e5e5e5').attr('readonly',false);
-  $('.er .in').attr('readonly',true);
+  $('.er .in').attr('readonly',false);
   $('#bxje').css('border','0').attr('readonly',true);
   $('.inp input,.bge input,.bge_song input').css({'border':'0','border-bottom':'1px solid #000'});
   $('.er .layui-form-checkbox[lay-skin=primary] i').show();

@@ -137,7 +137,7 @@ class Order extends Base
         $order_num =$this->request->get('order_num');
         $data = Db::name('order_car')
                 ->where(['order_num'=>$order_num,'type'=>'load'])
-                ->field('id,container_code,seal,driver_name')
+                ->field('id,container_code,seal,driver_name,phone')
                 ->select();
         return json($data);
     }

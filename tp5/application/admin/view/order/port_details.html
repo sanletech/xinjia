@@ -201,11 +201,10 @@
                         <table class="layui-table" lay-size="sm">
                             <thead>
                                 <tr>
-                                    <th>派车时间</th>
-                                    <th>手机号码</th>
                                     <th>车队名</th>
                                     <th>车牌号</th>
                                     <th>司机姓名</th>
+                                    <th>手机号码</th>
                                     <th>身份证</th>
                                     <th>柜号</th>
                                     <th>封条号</th>
@@ -215,28 +214,28 @@
                             <tbody class="bge">
                                 <tr>
                                     <td>
-                                        <input type="text" name="seal" value="2018-12-20" class="layui-input test-item" placeholder="YYYY-MM-dd">
+                                        <input name="car_name" value="<{$carData['r']['car_name']}>" class="layui-input" placeholder="车队">
                                     </td>
-                                    <td><input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="13584146568"></td>
+                                    <td><input name="car_code" value="<{$carData['r']['car_code']}>" class="layui-input"  placeholder="车牌"></td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="火箭">
-                                    </td>
-                                    <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="粤D4669">
+                                        <input name="driver_name"  value="<{$carData['r']['driver_name']}>"  class="layui-input"  placeholder="司机" >
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="小敏">
+                                        <input name="phone" value="<{$carData['r']['driver_name']}>"  class="layui-input" placeholder="司机手机号"  >
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="4313216984549866">
+                                        <input name="identity_card" value="<{$carData['r']['identity_card']}>"  placeholder="司机身份证" autocomplete="off" class="layui-input" type="text" >
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="40GP">
+                                        <input name="container_code"  value="<{$carData['r']['container_code']}>"    class="layui-input" placeholder="柜号"type="text">
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="sdf45646">
+                                        <input name="seal" value="<{$carData['r']['seal']}>" class="layui-input" placeholder="封条号" type="text">
                                     </td>
-                                    <td><input type="text" name="seal" value="2018-12-20" class="layui-input test-item" placeholder="YYYY-MM-dd"></td>
+                                    <td>
+                                        <input name="work_time" value="<{$carData['r']['work_time']}>"  class="layui-input text-time" placeholder="装货时间"  >
+                                    </td>
+                                    
                                 </tr>
                             </tbody>
                         </table>

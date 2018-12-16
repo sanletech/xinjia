@@ -160,6 +160,19 @@ class OrderProcess extends Base
         }
     }
     
-
+    //订单修改
+    public function orderModify(){
+        $data = $this->request->param();
+        $order_num = null;
+        $shipper = '';
+        $consigner = '';
+        $res = Db::name('order_port')
+                ->where('order_num',$order_num)
+                ->field('track_num,cargo,container_type,comment')
+                ->update($map);
+        //同时记录操作
+        
+       
+    }
     
 }

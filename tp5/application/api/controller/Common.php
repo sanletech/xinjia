@@ -1,19 +1,55 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\api\controller;
 use think\Controller;
 use think\Db;
 use think\Session;
 
 class Common extends Controller {
-    //put your code here
     
+    protected $member_code;
+    
+    protected function _initialize()
+    {  
+        $this->member_code = Session::get('member_code');
+//         var_dump( $this->member_code);
+        if(is_null($this->member_code)){
+            $this->notlogin();
+        }
+    }
+    
+    //登陆检查
+    public  function notlogin()
+    {
+        //如果登录常量为nll，表示没有登录
+        if(is_null($this->member_code)){
+            return json(array('status'=>0,'message'=>'未登录，无权访问'));
+        }   
+        return json(array('status'=>1,'message'=>'success'));
+    }
+    
+    //重复登陆检查
+    public function alreadylogin()
+    {
+        //如果登录常量为nll，表示没有登录
+        if(!is_null($this->member_code)){
+            return json(array('status'=>0,'message'=>'已登录，不可重复登录'));
+        }   
+       
+    }
+    // 登出
+    public  function logout()
+    {
+        $name = Session::pull('name','wechat');
+        //清空wechat下的值
+        Session::clear('wechat');
+        if( is_null(Session::get('member_code')) );
+        {
+            return json(array('status'=>1,'message'=>'logout'.$name));
+        }        
+       
+    }
+
      //阿里云短信
     public function ali_sms($phone){
         //查询同一条手机号的发送时间是否超过五分钟
@@ -37,6 +73,7 @@ class Common extends Controller {
         }
         return json($response);
     }
+    
     public function  data() {
         
         $data = Db::name('seaprice')->select();

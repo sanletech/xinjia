@@ -2,6 +2,7 @@
 namespace app\admin\model;
 use think\Model;
 use think\Db;
+use think\Session;
 class Port extends Model
 {
  
@@ -29,35 +30,41 @@ class Port extends Model
     //港口修改页面获许原数据
     public function  port_edit($port_id)
     {   
-        $sql = "select P.id , P.port_name ,P.city_id ,C.city  from hl_port P "
-                . "left join hl_city C on C.city_id = P.city_id "
-                . "where P.id = '$port_id'";
-        $data = Db::query($sql);
-        return $data['0'];
+        
+        $data = Db::name('port')->alias('P')
+                ->join('hl_city C','C.city_id = P.city_id')
+                ->where( 'P.id', $port_id)
+                ->field('P.id ,P.port_name ,P.city_id ,C.city')
+                ->fetchSql(FALSE)->find();
+//        $this->_p($data);exit;
+        return $data;
     }
       //港口执行修改
     public function  port_toedit($id,$city,$port_code,$port_name)
     {  
         $mtime = date('Y-m-d H:i:s');
-        $sql ="update hl_port set port_code ='$port_code',port_name ='$port_name',"
-                . "city_id ='$city' ,mtime ='$mtime' where id ='$id'";
-//        var_dump($sql);exit;
-        $res = Db::execute($sql);
-        $res ?  $response['success']= '修改port表':$response['fail']= '修改port表';
+
+        $res = Db::name('port')->where('id',$id)->update(['port_code' =>$port_code,
+                'port_name'=>$port_name,'city_id'=>$city ,'mtime' =>$mtime]);
         $this->port_js();
-        return $response ;
+        return  $res ? true :false; ;
         
     }
     
     //港口添加
     public function port_add($city_id ,$port_array)
     {  
-
-        
+       
+        $port_judge =Session::get('port_add','adminThink');
+        if(!is_null($port_judge)){
+            if($port_judge==1) {
+                sleep(1);
+            }
+        }
         // 启动事务
         Db::startTrans();
         try{
-
+            Session::set('port_add','1','adminThink');
             $response=[];
             //先查询是否存在同名的港口
             $res2 =Db::name('port')->where('city_id',$city_id)
@@ -70,17 +77,16 @@ class Port extends Model
             }
             $mtime = date('Y-m-d H:i:s');
             $port_code = Db::name('port')->lock(true)->where('city_id',$city_id)->max('port_code');
-            if($port_code < ($city_id * 1000)){
-                $port_code = $city_id * 1000+1;
+            
+            if($port_code < (intval($city_id) * 1000)){
+                $port_code = ($city_id * 1000)+1;
             }else { 
-                $port_code = $port_code + 1; 
+                $port_code = intval($port_code) + 1; 
             }
-
             foreach ($port_array as $port_name){
                 $data[] =['port_code'=>$port_code,'port_name'=>$port_name,'city_id'=>$city_id,'mtime'=>$mtime];
                 ++$port_code;
             }
-    //        $this->_p($data);exit;
             $res = Db::name('port')->lock(true)->insertAll($data);
             $res ?  $response['success'] = '添加港口成功':$response['fail'] = '添加港口失败';
         Db::commit();    
@@ -89,8 +95,8 @@ class Port extends Model
             Db::rollback();
             $response['fail'] = '添加港口失败';
         }
+        Session::set('port_add','0','adminThink');
         $this->port_js();
-        
         return $response ;
     }
     

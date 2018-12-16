@@ -342,17 +342,23 @@ class Personal extends Base
         $data =  $this->request->only('id,type'); 
         $member_code =Session::get('member_code','think');
         //先查询有没有设置默认值
-        $default_id =Db::name('linkman')->where(['member_code'=>$member_code,'default'=>'not null'])->value('id');
-        $response=[];
-        if($default_id){
-            $res =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$default_id])->update(['default'=>'null']);
-            $res?$response['success'][]='更新原有数据成功':$response['fail'][]='更新原有数据失败' ;
-        }
-        $res1 =Db::name('linkman')->where(['member_code'=>$member_code,'id'=>$data['id']])->update(['default'=>$data['type']]);
-        $res1?$response['success'][]='设置成功':$response['fail'][]='设置失败' ;
-        if(array_key_exists('fail', $response)){
+        $default_id =Db::name('linkman')->where([
+            'member_code'=>$member_code,'status'=>1,
+            'default'=>$data['type']])
+            ->value('id');
+        $mtime =  date('Y-m-d H:i:s');
+        //存在就更新原有 不存就直接设置
+        $default_id ? $id = $default_id : $id = $data['id']; 
+        
+        $res =Db::name('linkman')
+                ->where(['member_code'=>$member_code,'id'=>$data['id']])
+                ->update(['default'=>$data['type'],'mtime'=>$mtime]);
+        $res ? $response = 'success':$response = 'fail' ;
+      
+        if($response == 'fail' ){
             return json(array('status'=>0,'message'=>'设置失败')) ;
-        }           
-       return json(array('status'=>1,'message'=>'设置成功')) ;
+        }  
+        
+        return json(array('status'=>1,'message'=>'设置成功')) ;
     } 
 }
