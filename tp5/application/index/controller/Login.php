@@ -81,7 +81,7 @@ class Login extends Controller
         }
         // 数据验证
         $result = $this->validate($data,'Login');
-        //  var_dump($result);exit;
+//          var_dump($result);exit;
         if (true !== $result) {
             return array('status'=>0,'message'=>$result);
         }
@@ -89,6 +89,8 @@ class Login extends Controller
         $member = new LoginM;
         // 数据保存
         $res =$member ->register($data);
+//        var_dump($res);exit;
+        
         if($res){
             return array('status'=>1,'message'=>'注册成功');
         } else {
@@ -115,6 +117,7 @@ class Login extends Controller
     //修改密码
     public function new_pwd(){
         $data = $this->request->only('phone,code,newpassword,repassword');
+        
         if (count($data)!==4){
             $response=['status'=>0,'message'=>'少输了参数'];
             return json($response);
