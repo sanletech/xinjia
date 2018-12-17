@@ -3,6 +3,7 @@
 namespace app\index\model;
 use think\Model;
 use think\Db;
+use think\Session;
 class Login extends Model
 {
     public function register($data) {
@@ -77,7 +78,7 @@ class Login extends Model
         if($member['password'] != $passWord){
             $message = '密码不正确';
         }
-        if($member['status']==0){
+        if($member['status']=='0'){
             $message = '账户停止使用';
         }
         if( !isset($message) ){

@@ -144,17 +144,16 @@ class Wechat extends Model
                     . ' OP.weight,OP.cargo_cost, OP.container_type ,OP.comment ,'
                     . ' OP.extra_info,OP.ctime ,OP.shipper , OP.consigner ,'
                     . ' OP.price_description ,OP.premium ,OP.status ,OP.track_num'
-                    . ' ,OP.quoted_price'
-                    . 'SC.ship_short_name,B.boat_code,B.boat_name,'
-                    . 'P1.port_name s_port_name ,P1.port_code s_port_code,'
-                    . 'P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
-                    . 'SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.EDD'
-                    . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
-                    . 'group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
+                    . ' OP.quoted_price,OP.container_buckle,OP.seaprice,'
+                    . ' SC.ship_short_name,B.boat_code,B.boat_name,'
+                    . ' P1.port_name s_port_name ,P1.port_code s_port_code,'
+                    . ' P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
+                    . ' SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.EDD，'
+                    . ' group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
+                    . ' group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
             ->where('OP.member_code',$member_code) 
             ->where('OP.order_num',$order_num)->fetchSql(false)->find();
-           
-  
+                
         //查询对应的申请放柜驳回理由
         $statusSql = "(select b.* from  hl_order_port_status b right join "
                 . " (SELECT order_num , max(mtime) as mtime from hl_order_port_status "
