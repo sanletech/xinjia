@@ -126,7 +126,7 @@ class OrderProcess  extends Model{
                 ->select();
             //船期动态
             $shipData = Db::name('order_ship')->where('order_num',$order_num)
-                    ->field('id,order_num,mtime',TRUE);
+                    ->field('id,order_num,mtime',TRUE)->order('sequence')->select();
         }  
 //      var_dump($containerData);exit;
         $shipperArr= explode(',',$list['shipper']); 

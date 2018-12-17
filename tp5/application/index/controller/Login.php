@@ -22,35 +22,14 @@ class Login extends Controller
         //验证用户登陆
     public function check_login()
     { 
-       //设置status
-        $status=0;
+ 
        // 获取表单提交的数据，并报错在变量中
         $data= $this->request->param();
         $loginName = $data['loginname'];
         $passWord = md5($data['password']);
-        //在member 表中进行查询
-        $member =Db::name('member')->where('member_code|phone',$loginName)->field('password,member_code,name')->find();
-        //将用户名与密码分开验证
-        if(is_null($member)){
-            //设置返回信息
-           $message = '用户名不正确';
-        }elseif($member['password'] != $passWord){
-            //设置密码提示信息
-            $message = '密码不正确';
-        }else {    
-         //用户通过验证 修改返回信息
-            $status = 1;
-            $message = '验证通过请点击确定进入后台';
-            // 更新表中登录的次数与最后登录时间
-            $res =Db::name('member')->where('member_code',$member['member_code'])->update(['logintime'=>date('Y-m-d H:i:s')]);
-          
-            //将用户登录的信息保存到session中,供其他控制器使用
-            Session::set('member_code',$member['member_code']);
-            Session::set('name',$member['name']);
-//            var_dump($_SESSION);exit;
-           // Session::set('user_info',$user['loginname']);
-        }
-        return array('status'=>$status,'message'=>$message);
+        $member = new LoginM;
+        $response = $member->check_login($loginName,$passWord);
+        return json($response);
     }
     
     //阿里云短信

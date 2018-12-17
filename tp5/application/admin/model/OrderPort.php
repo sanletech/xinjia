@@ -47,6 +47,7 @@ class OrderPort extends Model
                 ->field('OP.*,HM.company,SP.ship_id,SC.ship_short_name,SB.sl_start,'
                         . 'P1.port_name s_port,SB.sl_end,P2.port_name e_port,'
                         . 'B.boat_code,B.boat_name,HM.company')
+                ->where('OP.type','port')
                 ->group('OP.id,SP.id,SR.id,SB.id,SC.id,B.id')->buildSql();
 // $this->_p($map); //exit;
         $count=Db::table($list.' A')->where($map)->count(); 

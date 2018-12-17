@@ -232,6 +232,94 @@ class Personal extends Base
         $this->view->assign('order_status',$order_status);
        return $this->view->fetch('personal/place_order_port');
     }
+    
+        //港到港订单
+    public function place_order()
+    {   
+        $map =[];
+        //订单查询
+        $order_num =  $this->request->param('order_num');
+        if($order_num){
+            $this->view->assign('order_num',$order_num);
+            $map['A.order_num']=$order_num;
+        }
+        //港口查询
+        $start_add =$this->request->param('start_id');
+        $start_name =$this->request->param('start_name');
+        if($start_add){
+            $this->view->assign(['start_add'=>$start_add,'start_name'=>$start_name]);
+            $map['A.s_port_code']=$start_add;
+        }
+        $end_name =$this->request->param('end_name');
+        $end_add =$this->request->param('end_id');
+        if($end_add){
+            $this->view->assign(['end_add'=>$end_add,'end_name'=>$end_name]);
+            $map['A.e_port_code']=$end_add;
+        }
+      
+        //下单时间查询
+        $date_start = $this->request->param('date_start');
+        $date_end = $this->request->param('date_end');
+        //设置默认时间
+        $time_statr_default= date('Y-m-d H:i:s', strtotime('-3month'));
+        $time_end_default= date('Y-m-d H:i:s');
+        $date_start? $map['A.ctime'][]=['>=',$date_start]:$map['A.ctime'][]=['>=',$time_statr_default];
+        $this->view->assign(['date_start'=>$date_start]);
+        
+        $date_end ? $map['A.ctime'][]=['<=',$date_end]:$map['A.ctime'][]=['<=',$time_end_default];
+        $this->view->assign(['date_end'=>$date_end]);
+           
+//        var_dump( $map['A.ctime']);exit;
+        //订单状态
+        $order_status = $this->request->param();
+        $order_status=  array_key_exists('order_status', $order_status)?$order_status['order_status']:array();
+//        $this->_p($order_status);exit;
+        if($order_status){
+            foreach ($order_status as $status){
+                switch ($status) {
+                    case 'order_audit':
+                        $map['A.status'][]=['=',  $this->order_status['order_audit']];
+                    break;
+                    case 'cancel':
+                        $map['A.status'][]=['in',  [$this->order_status['cancel'], $this->order_status['stop']]]; 
+                    break;
+                    case 'order_success':
+                        $map['A.status'][]=['in', array_slice($this->order_status, 3, -1)];
+                    break;
+                    case 'completion':
+                        $map['A.status'][]=['=',  $this->order_status['completion']];
+                    break;
+                    default :
+                        die('参数错误');   
+                }
+            }
+            if(count($map['A.status'])>1){
+                $map['A.status'][]='or';
+            }else{
+                $map['A.status']=$map['A.status'][0];
+            }
+        }
+        $member_code =Session::get('member_code','think');
+        //获取每页显示的条数
+        $limit= $this->request->param('limit',10,'intval');
+        //获取当前页数
+        $page= $this->request->param('page',1,'intval');  
+        //计算出从那条开始查询
+       
+        $dataM =new dataM;
+        $list = $dataM->place_order($member_code,$page,$limit,$map,$type='door');
+        
+//        $this->_p($list);exit;
+        $count =  count($list); 
+        $this->view->assign('order_num',$order_num);
+        $this->view->assign('page',$page); 
+        $this->view->assign('count',$count); 
+        $this->view->assign('limit',$limit); 
+        $this->view->assign('list',$list);
+        $this->view->assign('order_status',$order_status);
+       return $this->view->fetch('personal/place_order');
+    }
+    
 
     //提交柜号资料
     public function track_data()

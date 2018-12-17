@@ -16,7 +16,7 @@ class Personal extends Model
   
     }    
     
-    public function place_order($member_code,$page,$limit,$map) {
+    public function place_order($member_code,$page,$limit,$map,$type='port') {
         $order_status_on=array($this->order_status['stop'] ,$this->order_status['cancel']
                         ,$this->order_status['order_audit'],$this->order_status['booking_note']
                         ,$this->order_status['up_container_code'],$this->order_status['sea_waybill']
@@ -45,7 +45,7 @@ class Personal extends Model
                         . 'SC.ship_short_name,B.boat_code,B.boat_name,'
                         . 'P1.port_code s_port_code, P1.port_name s_port,'
                         . 'P2.port_code e_port_code, P2.port_name e_port')
-                ->where('OP.member_code',$member_code)
+                ->where('OP.member_code',$member_code)->where('OP.type',$type)
                 ->group('OP.order_num')->buildSql();
 //var_dump($data);exit;
         $lists =Db::table($data.' A')->where($map)->order('A.ctime DESC')->fetchSql(false)->page($page,$limit)->select();

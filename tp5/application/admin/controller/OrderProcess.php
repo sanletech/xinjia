@@ -130,12 +130,13 @@ class OrderProcess extends Base
     }
     
     //详情页面的数据
-    public function order_details (){
+    public function order_port_detail (){
         $order_num = $this->request->param('order_num');
         //根据订单号的信息判断是港到港还是门到门
         $oder_type = substr($order_num, 0,1);
         $data = new OrderProcessM();
         $dataArr = $data->order_details($order_num,$oder_type);
+//        $this->_p($dataArr);exit;
         if($oder_type =='P'){
             $this->assign([
                'list'  =>$dataArr['list'],
@@ -144,7 +145,7 @@ class OrderProcess extends Base
                'shipperArr'=>$dataArr['shipperArr'],
                'consignerArr'=>$dataArr['consignerArr'],
             ]);
-            return $this->view->fetch('orderPort/port_details');
+            return $this->view->fetch('orderPort/port_detail');
             
         }  else {
             
@@ -156,13 +157,14 @@ class OrderProcess extends Base
                 'consignerArr'=>$dataArr['consignerArr'],
                 'shipData'=> $dataArr['shipData'],
             ]);
-            return $this->view->fetch('order/port_details');
+            return $this->view->fetch('order/order_detail');
         }
     }
     
     //订单修改
     public function orderModify(){
         $data = $this->request->param();
+        $this->_p($data);exit;
         $order_num = null;
         $shipper = '';
         $consigner = '';

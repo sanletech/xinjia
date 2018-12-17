@@ -164,7 +164,7 @@ layui.use(['jquery', 'layer','table','laydate','form'], function(){
       ,{field:'bill_num', title:'对账单号' ,width:150}
       ,{field:'check_date', title:'对账日期',sort: true ,width:200}
       ,{field:'order_num', title:'订单号', width:200,templet:function(res){
-        return '<a style="color:blue;" href="<{:url("admin/OrderProcess/order_details")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>';
+        return '<a style="color:blue;" href="<{:url("admin/OrderProcess/order_port_detail")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>';
       }}
       ,{field:'container_size', title:'柜型' ,width:100}
       ,{field:'container_sum', title:'箱量' ,width:100}

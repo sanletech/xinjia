@@ -122,15 +122,31 @@ class OrderPort extends Controller
         //访问后台的 model\orderPort\orderData 方法
         $data = new \app\admin\model\OrderProcess();
         $dataArr = $data->order_details($order_num);
-        $this->assign([
+        $oder_type = substr($order_num, 0,1);
+        if($oder_type =='P'){
+            $this->assign([
+               'list'  =>$dataArr['list'],
+               'containerData' => $dataArr['containerData'],
+               'carData'=> $dataArr['carData'],
+               'shipperArr'=>$dataArr['shipperArr'],
+               'consignerArr'=>$dataArr['consignerArr'],
+            ]);
+            return $this->view->fetch('orderPort/order_port_detail');
+            
+        }  else {
+            
+            $this->assign([
                 'list'  =>$dataArr['list'],
                 'containerData' => $dataArr['containerData'],
                 'carData'=> $dataArr['carData'],
                 'shipperArr'=>$dataArr['shipperArr'],
                 'consignerArr'=>$dataArr['consignerArr'],
-        ]);
+                'shipData'=> $dataArr['shipData'],
+            ]);
+            return $this->view->fetch('order/order_detail');
+        }
         //渲染后台的详情页面
-        return $this->view->fetch('orderPort/order_port_detail');
+        return $this->view->fetch('order/order_details');
     }
     
     //中间航线详情
