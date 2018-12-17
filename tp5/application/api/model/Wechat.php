@@ -140,8 +140,7 @@ class Wechat extends Model
             ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
             ->join('hl_sales_member SMB','SMB.member_code=OP.member_code','left') //业务员
-            ->field('OP.id,OP.order_num,OP.track_num,OP.ctime,OP.container_size,OP.container_sum,'
-                    . 'OP.cargo,OP.consigner,OP.container_buckle,SC.ship_short_name,B.boat_code,B.boat_name,'
+            ->field('OP.*,SC.ship_short_name,B.boat_code,B.boat_name,'
                     . 'P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
                     . 'SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,'
@@ -168,58 +167,56 @@ class Wechat extends Model
         }
     
         //转换状态
-        foreach ($list as $key=>$value){
-            switch ($value['status']){
-                case $this->order_status['stop']:
-                case $this->order_status['cancel']:
-                    $list[$key]['status'] = '中止';
-                    break;
-                case $this->order_status['order_audit']:
-                    $list[$key]['status']= '审核中';
-                    break;
-                case $this->order_status['booking_note']:
-                    $list[$key]['status']= '待订舱';
-                    break;
-                case $this->order_status['send_car']:
-                    $list[$key]['status']= '待派车';
-                    break;
-                case $this->order_status['loading']:
-                    $list[$key]['status']= '待装货';
-                    break;
-                case $this->order_status['up_container_code']:
-                    $list[$key]['status']= '待报柜号';
-                    break;
-                case $this->order_status['load_ship']:
-                    $list[$key]['status']= '待配船';
-                    break;
-                case $this->order_status['payment_status']:
-                    $list[$key]['status']= '确认收款';
-                    break;
-                case $this->order_status['sea_waybill']:
-                    $list[$key]['status']= '上传水运单';
-                    break;
-                case $this->order_status['container_appley']:
-                    $list[$key]['status']= '申请放柜中';
-                    break;
-                case $this->order_status['container_lock']:
-                    $list[$key]['status']= '申请放柜';
-                    break;
-                case $this->order_status['container_unlock']:
-                    $list[$key]['status']= '同意放柜';
-                    break;
-                case $this->order_status['unloading']:
-                    $list[$key]['status']= '待送货';
-                    break;
-                case $this->order_status['completion']:
-                    $list[$key]['status']= '订单完成';
-                    break;
-                case $this->order_status['check_bill']:
-                    $list[$key]['status']= '对账完成';
-                    break;
-            }
-            
-            return $list ;
+        switch ($list['status']){
+            case $this->order_status['stop']:
+            case $this->order_status['cancel']:
+                $list['status'] = '中止';
+                break;
+            case $this->order_status['order_audit']:
+                 $list['status'] = '审核中';
+                break;
+            case $this->order_status['booking_note']:
+                 $list['status'] = '待订舱';
+                break;
+            case $this->order_status['send_car']:
+                 $list['status'] = '待派车';
+                break;
+            case $this->order_status['loading']:
+                 $list['status'] = '待装货';
+                break;
+            case $this->order_status['up_container_code']:
+                 $list['status'] = '待报柜号';
+                break;
+            case $this->order_status['load_ship']:
+                 $list['status'] = '待配船';
+                break;
+            case $this->order_status['payment_status']:
+                 $list['status'] = '确认收款';
+                break;
+            case $this->order_status['sea_waybill']:
+                 $list['status'] = '上传水运单';
+                break;
+            case $this->order_status['container_appley']:
+                 $list['status'] = '申请放柜中';
+                break;
+            case $this->order_status['container_lock']:
+                 $list['status'] = '申请放柜';
+                break;
+            case $this->order_status['container_unlock']:
+                 $list['status'] = '同意放柜';
+                break;
+            case $this->order_status['unloading']:
+                 $list['status'] = '待送货';
+                break;
+            case $this->order_status['completion']:
+                 $list['status'] = '订单完成';
+                break;
+            case $this->order_status['check_bill']:
+                 $list['status'] = '对账完成';
+                break;
         }
+
+        return $list ;
          
          
     }

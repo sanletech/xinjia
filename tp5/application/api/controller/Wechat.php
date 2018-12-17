@@ -232,17 +232,19 @@ class Wechat extends Common
         $data = Db::name('port')->alias('p')
                 ->join('hl_city C','C.city_id = P.city_id')
                 ->where('P.status',1)
-                ->field('P.port_code,P.port_name,C.city_id,city')
+                ->field('P.port_code value,P.port_name name')
+                // ->field('P.port_code,P.port_name,C.city_id,city')
                 ->order('C.city_id')
+                ->group('P.port_code')
                 ->select();
         //分组
-        $temp = array();
-        foreach ($data as $key=>$value){
-            $temp['city_id']['port_list'][] =array($value['port_code'],$value['port_name']);
-            $temp['city_id']['city'] =$value['city'];
-        }
-        $temp = array_values($temp);
-        return json($temp);
+        // $temp = array();
+        // foreach ($data as $key=>$value){
+        //     $temp['city_id']['port_list'][] =array($value['port_code'],$value['port_name']);
+        //     $temp['city_id']['city'] =$value['city'];
+        // }
+        // $temp = array_values($temp);
+        return json($data);
     }
 
     
