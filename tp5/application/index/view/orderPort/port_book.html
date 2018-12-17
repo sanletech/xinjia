@@ -5,19 +5,23 @@
     <link rel="stylesheet" href="__STATIC__/css/xiala.css">
     <link rel="stylesheet" href="__STATIC__/css/all_order.css">
     <style>
-      .er .layui-col-xs3 a{
+      .er .layui-col-xs3 a {
         color: blue;
       }
-      .xxtx{
+
+      .xxtx {
         margin-top: 50px;
       }
-      .xxtx .lc{
+
+      .xxtx .lc {
         padding: 22px 0;
       }
-      #bxje{
+
+      #bxje {
         border: 0;
       }
-      .layui-layer-title{
+
+      .layui-layer-title {
         background-color: blue;
         color: #fff;
       }
@@ -70,9 +74,7 @@
             <div class="layui-col-xs3 dd">
               <div class="zhong">
                 <div>
-                  <h2>
-                    <{$list.ship_short_name}>
-                  </h2>
+                  <h2><{$list.ship_short_name}></h2>
                 </div>
               </div>
             </div>
@@ -80,12 +82,8 @@
               <div class="zhong">
                 <div class="layui-col-xs5">
 
-                  <h3>
-                    <{$list.r_port_name}>
-                  </h3>
-                  <span>
-                    <{$list.shipping_date}>
-                  </span>
+                  <h3><{$list.r_port_name}></h3>
+                  <span><{$list.shipping_date}></span>
                 </div>
 
                 <div class="layui-col-xs2 jitian">
@@ -96,31 +94,25 @@
                   <div class="jian">
                     <div class="j"></div>
                   </div>
-                  <div class="hui">
-                    <{$list.boat_name}>/
-                      <{$list.boat_code}>
-                  </div>
+                  <div class="hui"><{$list.boat_name}>/<{$list.boat_code}></div>
                 </div>
 
                 <div class="layui-col-xs5">
-
-                  <h3>
-                    <{$list.s_port_name}>
-                  </h3>
-                  <span>
-                    <{$list.ETA}>
-                  </span>
+                  <h3><{$list.s_port_name}></h3>
+                  <span><{$list.ETA}></span>
                 </div>
               </div>
             </div>
             <div class="layui-col-xs3 dd">
               <div class="zhong">
-                <span>
-                  <{$list.container_size}>
-                </span>
-                <p>￥<strong class="carriage"><{$list.price}></strong></p>
+                <span><{$list.container_size}></span>
+                <p>￥
+                  <strong class="carriage"><{$list.price}></strong>
+                </p>
               </div>
-              <div class="you">价格说明:<span><{$list.price_description}></span></div>
+              <div class="you">价格说明:
+                <span><{$list.price_description}></span>
+              </div>
             </div>
           </div>
         </div>
@@ -140,52 +132,64 @@
           <div class="dd_nei">
             <div class="layui-row" style="padding-bottom: 10px;">
               <div class="layui-col-xs6 er_le">
-                <div style="display: none;"><input type="text" name="r_id" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['id'] ;} ?>" readonly='readonly' class="in"></div>
+                <div style="display: none;">
+                  <input type="text" name="r_id" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['id'];}?>"
+                    readonly='readonly' class="in">
+                </div>
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>发货单位：</div>
                   <div class="layui-col-xs8">
-                      <input type="text" name="r_company" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['company'] ;} ?>" readonly='readonly' class="in">
+                    <input type="text" name="r_company" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['company'];}?>"
+                      readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>发货联系人：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="r_name" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['name'] ;} ?>" readonly='readonly' class="in">
+                    <input type="text" name="r_name" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['name'];}?>" readonly='readonly'
+                      class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>发货联系电话：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="r_phone" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['phone'] ;} ?>" readonly='readonly' class="in">
+                    <input type="text" name="r_phone" value="<?php if(!empty($default_addArr['r'])){echo$default_addArr['r']['phone'];}?>" readonly='readonly'
+                      class="in">
                   </div>
                 </div>
 
               </div>
 
               <div class="layui-col-xs6 er_rig">
-                  <div style="display: none;"><input type="text" name="s_id" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['id'] ;} ?>" readonly='readonly' class="in"></div>
+                <div style="display: none;">
+                  <input type="text" name="s_id" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['id'];}?>"
+                    readonly='readonly' class="in">
+                </div>
                 <div class="grid-demo" style="margin-top: 10px;">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>收货单位：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="s_company" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['company'] ;} ?>" readonly='readonly' class="in">
+                    <input type="text" name="s_company" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['company'];}?>"
+                      readonly='readonly' class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>收货联系人：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="s_name" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['name'] ;} ?>" readonly='readonly' class="in">
+                    <input type="text" name="s_name" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['name'];}?>" readonly='readonly'
+                      class="in">
                   </div>
                 </div>
                 <div class="grid-demo">
                   <div class="layui-col-xs4">
                     <span>*&nbsp;</span>收货联系人电话：</div>
                   <div class="layui-col-xs8">
-                    <input type="text" name="s_phone" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['phone'] ;} ?>" readonly='readonly' class="in">
+                    <input type="text" name="s_phone" value="<?php if(!empty($default_addArr['s'])){echo$default_addArr['s']['phone'];}?>" readonly='readonly'
+                      class="in">
                   </div>
                 </div>
               </div>
@@ -216,8 +220,8 @@
                   <div class="layui-col-xs3">
                     <span>*&nbsp;</span>包装：</div>
                   <div class="layui-col-xs6 bao">
-                      <input type="text" name='container_type' id="container_type" value="" placeholder="">
-                      <!-- <div class="select">
+                    <input type="text" name='container_type' id="container_type" value="" placeholder="">
+                    <!-- <div class="select">
                           <select name='container_type' id="container_type">
                             <option value='1'>铁桶</option>
                             <option value='2'>木架</option>
@@ -247,7 +251,7 @@
             <li>木架</li>
             <li>纸箱</li>
             <li>编制袋</li>
-          </ul>                 
+          </ul>
         </div>
 
         <!-- 费用 -->
@@ -284,7 +288,9 @@
             <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span><a href="javascript:;">每柜货值</a></div>
+                  <span>*&nbsp;</span>
+                  <a href="javascript:;">每柜货值</a>
+                </div>
                 <div class="layui-col-xs6">
                   <input id="cargo_value" type="text" name="cargo_value" value="0" placeholder="">
                 </div>
@@ -298,7 +304,9 @@
             <div class="layui-col-xs3 er">
               <div class="grid-demo" style="margin-top: 0px;">
                 <div class="layui-col-xs3">
-                  <span>*&nbsp;</span><a href="javascript:;" title="平台将根据货值购买保险">每柜保费</a></div>
+                  <span>*&nbsp;</span>
+                  <a href="javascript:;" title="平台将根据货值购买保险">每柜保费</a>
+                </div>
                 <div class="layui-col-xs6">
                   <input id="bxje" type="text" name="cargo_cost" value="0" placeholder="" readonly>
                 </div>
@@ -316,10 +324,12 @@
                 <div class="layui-col-xs6">
                   <div class="select">
                     <select name="payment_method" class='mony_fs'>
-                        <option value='installment'>到港付</option>
-                        <option value='month'>月结付</option>
-                        <{volist name="discount" id="rows"}>
-                        <option title="<{$rows.money}>" value='<{$rows.id}>' ><{$rows.title}></option>"
+                      <option value='installment'>到港付</option>
+                      <option value='month'>月结付</option>
+                      <{volist name="discount" id="rows" }>
+                        <option title="<{$rows.money}>" value='<{$rows.id}>'>
+                          <{$rows.title}>
+                        </option>"
                         <{/volist}>
                     </select>
                   </div>
@@ -385,195 +395,189 @@
             </div>
           </div>
         </div>
-      
-    
-      <!-- 拖车服务 -->
-      <div class="xxtx_dd">
-        <div class="xx">
-          <strong>拖车服务</strong>
+
+
+        <!-- 拖车服务 -->
+        <div class="xxtx_dd">
+          <div class="xx">
+            <strong>拖车服务</strong>
+          </div>
+
+          <div class="dd_nei">
+            <div class="fuwu">装货服务</div>
+            <div class="layui-col-xs12 layui-form er">
+              <input class="xua" type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
+              <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
+            </div>
+            <div class="layui-col-xs12 er biaoge zhuanghuo">
+              <table class="layui-table" lay-size="sm">
+                <thead>
+                  <tr>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>单位</th>
+                    <th>装货地址</th>
+                    <th>联系人姓名</th>
+                    <th>货主名称</th>
+                    <th>装货时间</th>
+                    <th>联系电话</th>
+                    <th>指定车队</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody class="bge">
+                  <tr>
+                    <td><input class="r_price" name="r_car_price[0]" type="text" value=""></td>
+                    <td><input class="r_num" name="r_num[0]" type="text" value=""></td>
+                    <td>柜</td>
+                    <td>
+                      <input name="r_add[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input name="r_link_man[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input name="shipper[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input name="r_load_time[0]" type="date" value="">
+                    </td>
+                    <td>
+                      <input name="r_link_phone[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input name="r_car[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input name="r_comment[0]" type="text" value="">
+                    </td>
+                    <td class="dele">
+                      <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="dd_nei">
+            <div class="fuwu">送货服务</div>
+            <div class="layui-col-xs12 layui-form er">
+              <input class="xua" type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
+              <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
+            </div>
+            <div class="layui-col-xs12 er biaoge songhuo">
+              <table class="layui-table" lay-size="sm">
+                <thead>
+                  <tr>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>单位</th>
+                    <th>送货地址</th>
+                    <th>指定车队</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody class="bge_song">
+                  <tr>
+                    <td>
+                      <input class="s_price" name="s_car_price[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input class="s_num" name="s_num[0]" type="text" value="">
+                    </td>
+                    <td>柜</td>
+                    <td>
+                      <input name="s_add[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input name="s_car[0]" type="text" value="">
+                    </td>
+                    <td>
+                      <input name="s_comment[0]" type="text" value="">
+                    </td>
+                    <td class="dele">
+                      <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        <div class="dd_nei">
-          <div class="fuwu">装货服务</div>
-          <div class="layui-col-xs12 layui-form er">
-            <input class="xua" type="checkbox" name="" title="装货服务" lay-skin="primary" lay-filter="zhuang" value="">
-            <a id="zeng" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_bge()">增加</a>
+        <!-- 详细费用 -->
+        <div class="xxtx_dd er">
+          <div class="xx">
+            <strong>详细费用</strong>
           </div>
-          <div class="layui-col-xs12 er biaoge zhuanghuo">
-            <table class="layui-table" lay-size="sm">
-              <thead>
-                <tr>
-                  <th>单价</th>
-                  <th>数量</th>
-                  <th>单位</th>
-                  <th>装货地址</th>
-                  <th>联系人姓名</th>
-                  <th>货主名称</th>
-                  <th>装货时间</th>
-                  <th>联系电话</th>
-                  <th>指定车队</th>
-                  <th>备注</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody class="bge">
-                <tr>
-                  <td>
-                    <input class="r_price" name="r_car_price[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input class="r_num" name="r_num[0]" type="text" value="">
-                  </td>
-                  <td>柜</td>
-                  <td>
-                    <input name="r_add[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input name="r_link_man[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input name="shipper[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input name="r_load_time[0]" type="date" value="">
-                  </td>
-                  <td>
-                    <input name="r_link_phone[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input name="r_car[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input name="r_comment[0]" type="text" value="">
-                  </td>
-                  <td class="dele">
-                    <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="dd_nei">
-          <div class="fuwu">送货服务</div>
-          <div class="layui-col-xs12 layui-form er">
-            <input class="xua" type="checkbox" name="" title="送货服务" lay-skin="primary" lay-filter="song" value="">
-            <a id="zeng_song" class="layui-btn layui-btn-sm layui-btn-warm" onclick="zeng_song()">增加</a>
-          </div>
-          <div class="layui-col-xs12 er biaoge songhuo">
-            <table class="layui-table" lay-size="sm">
-              <thead>
-                <tr>
-                  <th>单价</th>
-                  <th>数量</th>
-                  <th>单位</th>
-                  <th>送货地址</th>
-                  <th>指定车队</th>
-                  <th>备注</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody class="bge_song">
-                <tr>
-                  <td>
-                    <input class="s_price" name="s_car_price[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input class="s_num" name="s_num[0]" type="text" value="">
-                  </td>
-                  <td>柜</td>
-                  <td>
-                    <input name="s_add[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input name="s_car[0]" type="text" value="">
-                  </td>
-                  <td>
-                    <input name="s_comment[0]" type="text" value="">
-                  </td>
-                  <td class="dele">
-                    <i class="layui-icon" onclick="dele(this)">&#x1006;</i>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- 详细费用 -->
-      <div class="xxtx_dd er">
-        <div class="xx">
-          <strong>详细费用</strong>
-        </div>
-        <div class="feiyong">
-          <div class="layui-col-xs12">
-            <span>海运费：</span>
-            <pi id="money"><{$list.price}></pi>元
+          <div class="feiyong">
+            <div class="layui-col-xs12">
+              <span>海运费：</span>
+              <pi id="money"><{$list.price}></pi>元
               <span class="shuo">已包含：双边</span>
-          </div>
-          <div class="layui-col-xs12">
-            <span>保险费：</span>
-            <pi id="bxje1">0</pi>元
-            <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
-          </div>
-          <div class="layui-col-xs12">
-            <span>装货费用：</span>
-            <pi id="zhuang">0</pi>元
-          </div>
-          <div class="layui-col-xs12">
-            <span>送货费用：</span>
-            <pi id="song">0</pi>元
-          </div>
-          <div class="layui-col-xs12">
-            <span>优惠：</span>
-            <strong id="discount">0</strong>元
-            <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
-          </div>
-          <div class="layui-col-xs12">
-            <span>总费用：</span>
-            <strong class="zongfei" id="price_sum">0</strong>元
+            </div>
+            <div class="layui-col-xs12">
+              <span>保险费：</span>
+              <pi id="bxje1">0</pi>元
+              <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span>
+            </div>
+            <div class="layui-col-xs12">
+              <span>装货费用：</span>
+              <pi id="zhuang">0</pi>元
+            </div>
+            <div class="layui-col-xs12">
+              <span>送货费用：</span>
+              <pi id="song">0</pi>元
+            </div>
+            <div class="layui-col-xs12">
+              <span>优惠：</span>
+              <strong id="discount">0</strong>元
+              <span class="shuo">开票说明：选择在线支付优惠后不开发票</span>
+            </div>
+            <div class="layui-col-xs12">
+              <span>总费用：</span>
+              <strong class="zongfei" id="price_sum">0</strong>元
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 条款声明 -->
-      <div class="xxtx_dd er">
-        <div class="xx">
-          <strong>条款声明</strong>
+        <!-- 条款声明 -->
+        <div class="xxtx_dd er">
+          <div class="xx">
+            <strong>条款声明</strong>
+          </div>
+          <!-- 条款内容 -->
+          <div class="hx">
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+            <p>sdfsdf</p>
+          </div>
         </div>
-        <!-- 条款内容 -->
-        <div class="hx">
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
-          <p>sdfsdf</p>
+
+        <div class="tjiao">
+          <a class="shi" href="javascript:;">确认订单</a>
+          <a class="qu" href="<{:url('index/order_port/orderport')}>">取消</a>
+        </div>
+
+        <div class="tjiao tj">
+          <a class="qu" href="javascript:;">返回修改</a>
+          <a class="shi" href="javascript:;" onclick="order_data(this)">确认订单</a>
         </div>
       </div>
-
-      <div class="tjiao">
-        <a class="shi" href="javascript:;">确认订单</a>
-        <a class="qu" href="<{:url('index/order_port/orderport')}>">取消</a>
-      </div>
-
-      <div class="tjiao tj">
-        <a class="qu" href="javascript:;" >返回修改</a>
-        <a class="shi" href="javascript:;" onclick="order_data(this)">确认订单</a>
-      </div>
-
-
-    </div>
     </form>
-  
+
 
 
     <!-- 填写发票窗口 -->
@@ -654,13 +658,13 @@
 
         <!-- 表格 -->
         <div class="biao">
-            <div class="biao_an">
-              <!-- <a href="javascript:;" onclick="wtxx()" 	class="layui-btn layui-btn-sm">确定</a>  -->
-              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_zeng">增加</a>
-              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_xiu">修改</a>
-              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_del">删除</a>
-              <a href="javascript:;" 	class="layui-btn layui-btn-sm wt_default">设置默认</a>
-            </div>
+          <div class="biao_an">
+            <!-- <a href="javascript:;" onclick="wtxx()" 	class="layui-btn layui-btn-sm">确定</a>  -->
+            <a href="javascript:;" class="layui-btn layui-btn-sm wt_zeng">增加</a>
+            <a href="javascript:;" class="layui-btn layui-btn-sm wt_xiu">修改</a>
+            <a href="javascript:;" class="layui-btn layui-btn-sm wt_del">删除</a>
+            <a href="javascript:;" class="layui-btn layui-btn-sm wt_default">设置默认</a>
+          </div>
           <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
               <li class="layui-this">发货人信息</li>
@@ -731,78 +735,79 @@
     </div>
 
     <!-- 修改模态框 -->
-    <div id="wt3" >
+    <div id="wt3">
       <div class="layui-row">
-          <input type="text" name="id" lay-verify="title" value="" class="layui-input">
-          <div class="layui-form-item">
-            <label class="layui-form-label">公司名：</label>
-            <div class="layui-input-block">
-              <input type="text" name="company" lay-verify="title" value="" autocomplete="off" placeholder="请输入公司名" class="layui-input">
-            </div>
+        <input type="text" name="id" lay-verify="title" value="" class="layui-input">
+        <div class="layui-form-item">
+          <label class="layui-form-label">公司名：</label>
+          <div class="layui-input-block">
+            <input type="text" name="company" lay-verify="title" value="" autocomplete="off" placeholder="请输入公司名" class="layui-input">
           </div>
+        </div>
 
-          <div class="layui-form-item">
-            <label class="layui-form-label">姓名：</label>
-            <div class="layui-input-block">
-              <input type="text" name="link_name" lay-verify="title" value="" autocomplete="off" placeholder="请输入姓名" class="layui-input">
-            </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">姓名：</label>
+          <div class="layui-input-block">
+            <input type="text" name="link_name" lay-verify="title" value="" autocomplete="off" placeholder="请输入姓名" class="layui-input">
           </div>
+        </div>
 
-          <div class="layui-form-item">
-            <label class="layui-form-label">手机号码：</label>
-            <div class="layui-input-block">
-              <input type="text" name="phone" lay-verify="title" value="" autocomplete="off" placeholder="请输入手机" class="layui-input">
-            </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">手机号码：</label>
+          <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="title" value="" autocomplete="off" placeholder="请输入手机" class="layui-input">
           </div>
+        </div>
 
-          <div class="layui-form-item">
-            <label class="layui-form-label">详细地址：</label>
-            <div class="layui-input-block">
-              <input type="text" name="add" lay-verify="title" value="" autocomplete="off" placeholder="请输入地址" class="layui-input">
-            </div>
+        <div class="layui-form-item">
+          <label class="layui-form-label">详细地址：</label>
+          <div class="layui-input-block">
+            <input type="text" name="add" lay-verify="title" value="" autocomplete="off" placeholder="请输入地址" class="layui-input">
           </div>
+        </div>
 
-          <div class="layui-form-item">
-            <div class="layui-input-block">
-              <a class="layui-btn"  onclick="xiu_wt()">确认修改</a>
-              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <a class="layui-btn" onclick="xiu_wt()">确认修改</a>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
           </div>
+        </div>
       </div>
     </div>
     <{include file='./public/foot' /}>
-    <script>
-      //首页
-      var index_url = "<{:url('index/index/personal')}>";
-      //详情页
-      var xiangqing = "<{:url('index/order_port/orderportdetail')}>"
-      // 获取session 的客户的code
-      var member_code = '<{$Think.session.member_code}>';
-      //客户的收货人,发货人选择
-      var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
-      //收货/发货人的添加 
-      var linkmanAddURL = "<{:url('index/order/linkmanAdd')}>";
+      <script>
+        //首页
+        var index_url = "<{:url('index/index/personal')}>";
+        //详情页
+        var xiangqing = "<{:url('index/order_port/orderportdetail')}>"
+        // 获取session 的客户的code
+        var member_code = '<{$Think.session.member_code}>';
+        //客户的收货人,发货人选择
+        var selectlinkUrl = "<{:url('index/order/selectlinkman')}>"
+        //收货/发货人的添加 
+        var linkmanAddURL = "<{:url('index/order/linkmanAdd')}>";
         //收货/发货人的删除
-      var linkmanDelURL = "<{:url('index/order/linkmanDel')}>";
+        var linkmanDelURL = "<{:url('index/order/linkmanDel')}>";
         //收货/发货人的修改 
-      var linkmanUpdateURL = "<{:url('index/order/linkmanUpdate')}>";
-      //设置默认
-      var linkman_default = "<{:url('index/personal/default_address')}>";
-      // 发票的信息提交 
-      var invoiceUrl = "<{:url('index/order/invoice')}>";
-      //订单信息的提交
-      var OrderUrl = "<{:url('index/orderPort/port_data')}>";
-      var loading = false;//装货状态
-      var delivery = false;//送货状态
-    </script>
-    <script src="__STATIC__/js/lrdd.js"></script>
-    <script src="__STATIC__/js/place_order.js"></script>
-    <script>
-      $('#top ul li').eq(0).addClass('hang').siblings('li').removeClass('hang');
-      $('.in').css('border', '1px solid #e6e6e6'); 
-      // $('.in').removeAttr('readonly');
-      // input_null();
-      $('input[type="date"]').css('width','110px');
-    </script>
+        var linkmanUpdateURL = "<{:url('index/order/linkmanUpdate')}>";
+        //设置默认
+        var linkman_default = "<{:url('index/personal/default_address')}>";
+        // 发票的信息提交 
+        var invoiceUrl = "<{:url('index/order/invoice')}>";
+        //订单信息的提交
+        var OrderUrl = "<{:url('index/orderPort/port_data')}>";
+        var loading = false;//装货状态
+        var delivery = false;//送货状态
+      </script>
+      <script src="__STATIC__/js/lrdd.js"></script>
+      <script src="__STATIC__/js/place_order.js"></script>
+      <script>
+        $('#top ul li').eq(0).addClass('hang').siblings('li').removeClass('hang');
+        $('.in').css('border', '1px solid #e6e6e6');
+        $('.in').removeAttr('readonly');
+        // input_null();
+        $('input[type="date"]').css('width', '110px');
+      </script>
   </body>
+
   </html>

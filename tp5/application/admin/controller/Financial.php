@@ -240,19 +240,25 @@ class Financial extends Base
 
     //确认完成订单
     public function  Order_completion() {
-        // $data =$this->request->param();
-        //        var_dump($data);exit;
-        if (request()->isAjax()){
+    
             $order_num =$this->request->param('order_num');
             $status = $this->order_status['completion'];
+            //先判断是否已经付款了,和对过帐了
+            $data = Db::name('order_port')->alias('OP')
+                    ->join('hl_order_bill OB','OP.order_num = OB.order_num')
+                    ->field('OP.money_status,OB.check_date')
+                    ->where('OP.order_num',$order_num)->find();
+            if($data['money_status']=='nodo'){
+                return json(array('status'=>0,'message'=>'还未付款') );
+            }
+            if(empty($data['check_date'])){
+                return json(array('status'=>0,'message'=>'还未对账') );
+            }
             $title='订单完成';
             $data = new \app\admin\model\OrderProcess();  
             $response= $data->orderUpdate($order_num,$status,$title);
+            
             return $response;
-        
-         }else{
-             return FALSE;
-        }
     }
     
 } 

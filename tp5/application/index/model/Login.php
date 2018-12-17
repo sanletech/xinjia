@@ -62,4 +62,36 @@ class Login extends Model
             //var_dump($res);exit;
     }
     
+    //登录验证
+    public function check_login($loginName,$passWord) {
+        $status=0; //设置status
+       
+        //在member 表中进行查询
+        $member =Db::name('member')->where('member_code|phone',$loginName)
+                ->field('password,member_code,name,status')->find();
+        
+        //将用户名与密码分开验证
+        if(is_null($member)){
+           $message = '用户名不正确';
+        }
+        if($member['password'] != $passWord){
+            $message = '密码不正确';
+        }
+        if($member['status']==0){
+            $message = '账户停止使用';
+        }
+        if( !isset($message) ){
+            //用户通过验证 修改返回信息
+            $status = 1; $message = '登录成功';
+            // 更新表中登录的次数与最后登录时间
+            $res =Db::name('member')->where('member_code',$member['member_code'])->update(['logintime'=>date('Y-m-d H:i:s')]);
+            //将用户登录的信息保存到session中,供其他控制器使用
+            Session::set('member_code',$member['member_code']);
+            Session::set('name',$member['name']);
+        }
+      
+        return array('status'=>$status,'message'=>$message) ;
+        
+    }
+    
 }

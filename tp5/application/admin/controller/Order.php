@@ -46,7 +46,7 @@ class Order extends Base
     public function order_waste() 
     {  
         $data = new OrderM;
-        $list = $data->order_audit($pages=5,$state=404040);
+        $list = $data->order_audit($pages=5,$state=404);
 //        var_dump($list);exit;
         $page =$list->render();
         $count =  count($list);
@@ -137,7 +137,7 @@ class Order extends Base
         $order_num =$this->request->get('order_num');
         $data = Db::name('order_car')
                 ->where(['order_num'=>$order_num,'type'=>'load'])
-                ->field('id,container_code,seal,driver_name')
+                ->field('id,container_code,seal,driver_name,phone')
                 ->select();
         return json($data);
     }
@@ -224,7 +224,7 @@ class Order extends Base
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,'
                     . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
                     . 'group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
-                    ->group('OP.id')->where('OP.order_num',$order_num)->find();
+                    ->group('OP.id')->where('OP.type','door')->where('OP.order_num',$order_num)->find();
             $insert_data =[];
             $insert_data[0]['order_num'] = $order_num;
             $insert_data[0]['sequence'] = 0;
@@ -406,16 +406,7 @@ class Order extends Base
         return $res? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');     
     }
 
-    //门订单详情
-    public function  port_details(){
-        return $this->view->fetch('order/port_details');
-    }
-    
-    //查看订单
-    public function order_aaa()
-    {
-        $data= $this->request->param();
-        $this->_p($data);exit;
-    }
+
+
  
 } 

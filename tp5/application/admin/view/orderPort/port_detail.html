@@ -635,7 +635,7 @@
 
 
         <script>
-            var url = "<{:url('admin/orderPort/Upload')}>";
+            var url = "<{:url('admin/orderPort/waybill_upload')}>";
             var xiu_url = "<{:url('admin/Financial/Order_completion')}>";//已完成订单
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
@@ -658,7 +658,7 @@
             function bao(){
                 $.ajax({
                 type:'POST',
-                url:"<{:url('admin/order/aaa')}>",   //数据传输的控制器方法
+                url:"<{:url('admin/OrderProcess/orderModify')}>",   //数据传输的控制器方法
                 data:$('#order_data_form').serialize(),//这里data传递过去的是序列化以后的字符串
                 success:function(res){
                     if (res.status) {

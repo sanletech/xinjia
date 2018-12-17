@@ -88,9 +88,9 @@ class OrderProcess  extends Model{
                 ->group('OP.id')
                 ->find();
                 // $this->_p($list);exit;  
-        //根据订单号的信息判断是港到港还是门到门
-        if($order_type){
-            $oder_type = substr($order_num, 0,1);
+        //根据订单号的信息判断是港到港还是门到门  
+        if(empty($order_type) ){
+            $order_type = substr($order_num,0,1);
         }
         if($order_type=='P'){
         //根据订单号 查询对应柜子的 柜号和封条号码
@@ -126,9 +126,9 @@ class OrderProcess  extends Model{
                 ->select();
             //船期动态
             $shipData = Db::name('order_ship')->where('order_num',$order_num)
-                    ->field('id,order_num,mtime',TRUE);
+                    ->field('id,order_num,mtime',TRUE)->order('sequence')->select();
         }  
-
+//      var_dump($containerData);exit;
         $shipperArr= explode(',',$list['shipper']); 
         $consignerArr= explode(',',$list['consigner']); 
        switch ($list['payment_method'])

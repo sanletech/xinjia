@@ -97,7 +97,7 @@ class Wechat extends Common
                 $map['wechat_openid'] = $wechat_openid; 
                 $map['create_time'] = $this->mtime; 
                 $map['password'] = md5($password); 
-                $map['type'] = 'wechat'; 
+                $map['type'] = 'person'; 
                 $res_register = Db::name('member')->insert($map);
                 $res_register ? $message = 'success_register':$message = 'fail_register';
         }

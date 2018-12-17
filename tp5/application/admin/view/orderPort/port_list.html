@@ -316,7 +316,7 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
       {type: 'checkbox', fixed: 'left'}
       ,{field:'id', title:'ID', unresize: true,width:60}
       ,{field:'order_num', title:'订单号' ,width:200,templet:function(res){
-        return '<a href="<{:url("admin/orderPort/port_details")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>'
+        return '<a href="<{:url("admin/OrderProcess/order_port_detail")}>?order_num='+res.order_num+'"  target="_blank">'+res.order_num+'</a>'
       }}
       ,{field:'ctime', title:'提交时间',sort: true,width:200}
       ,{field:'member_code', title:'客户账号',width:150}

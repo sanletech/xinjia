@@ -201,11 +201,10 @@
                         <table class="layui-table" lay-size="sm">
                             <thead>
                                 <tr>
-                                    <th>派车时间</th>
-                                    <th>手机号码</th>
                                     <th>车队名</th>
                                     <th>车牌号</th>
                                     <th>司机姓名</th>
+                                    <th>手机号码</th>
                                     <th>身份证</th>
                                     <th>柜号</th>
                                     <th>封条号</th>
@@ -213,41 +212,44 @@
                                 </tr>
                             </thead>
                             <tbody class="bge">
+                                <{volist name = "carData['r']" id ="car_data"}>
                                 <tr>
                                     <td>
-                                        <input type="text" name="seal" value="2018-12-20" class="layui-input test-item" placeholder="YYYY-MM-dd">
+                                        <input name="car_name" value="<{$car_data.car_name}>" class="layui-input" placeholder="车队">
                                     </td>
-                                    <td><input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="13584146568"></td>
+                                    <td><input name="car_code" value="<{$car_data['car_code']}>" class="layui-input"  placeholder="车牌"></td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="火箭">
-                                    </td>
-                                    <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="粤D4669">
+                                        <input name="driver_name"  value="<{$car_data['driver_name']}>"  class="layui-input"  placeholder="司机" >
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="小敏">
+                                        <input name="phone" value="<{$car_data['driver_name']}>"  class="layui-input" placeholder="司机手机号"  >
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="4313216984549866">
+                                        <input name="identity_card" value="<{$car_data['identity_card']}>"  placeholder="司机身份证" autocomplete="off" class="layui-input" type="text" >
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="40GP">
+                                        <input name="container_code"  value="<{$car_data['container_code']}>"    class="layui-input" placeholder="柜号"type="text">
                                     </td>
                                     <td>
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="sdf45646">
+                                        <input name="seal" value="<{$car_data['seal']}>" class="layui-input" placeholder="封条号" type="text">
                                     </td>
-                                    <td><input type="text" name="seal" value="2018-12-20" class="layui-input test-item" placeholder="YYYY-MM-dd"></td>
+                                    <td>
+                                        <input name="work_time" value="<{$car_data['work_time']}>"  class="layui-input test-item" placeholder="装货时间"  >
+                                    </td>
                                 </tr>
+                                <{/volist}>
                             </tbody>
                         </table>
                     </div>
                     <!-- 待配船 -->
                     <div class="dd_nei">
+                        <{volist name="shipData" id ="ship_data"}>
                         <div class="layui-col-xs2 er">
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">港口：</div>
                                 <div class="layui-col-xs9" style="text-align: left">
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="天津港">
+                                    <!--<input name="port_code" type="text" class="layui-input hidden" type="text" value="<{$ship_data.port_code}>">-->
+                                    <input name="port_name" title ="<{$ship_data.port_code}>" class="layui-input" type="text" value="<{$ship_data.port_name}>">
                                 </div>
                             </div>
                         </div>
@@ -256,7 +258,7 @@
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">船名：</div>
                                 <div class="layui-col-xs9" style="text-align: left">
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="狗不理">
+                                        <input name="ship_name" class="layui-input" type="text" value="<{$ship_data.ship_name}>">
                                 </div>
                             </div>
                         </div>
@@ -267,46 +269,47 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">到港-离港时间</label>
                                     <div class="layui-input-inline" style="width: 150px;margin-right: -15px;">
-                                            <input type="text" name="seal" class="layui-input test-item" value="2018-12-20" placeholder="YYYY-MM-dd">
+                                        <input type="text" name="arrival_time" class="layui-input test-item" value="<{$ship_data.arrival_time}>" placeholder="YYYY-MM-dd">
                                         <!-- <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input"> -->
                                     </div>
                                     <div class="layui-form-mid">-</div>
                                     <div class="layui-input-inline" style="width: 150px;">
-                                        <input type="text" name="seal" class="layui-input test-item" value="2018-12-20" placeholder="YYYY-MM-dd">
+                                        <input type="text" name="dispatch_time" class="layui-input test-item" value="<{$ship_data.dispatch_time}>" placeholder="YYYY-MM-dd">
                                         <!-- <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input"> -->
                                     </div>
                                 </div>
                                 </div>
                             </div>
                         </div>  
+                        <{/volist}>
                     </div>
                     <!-- 费用 -->
-                    <div class="feiyong dd_nei">
+<!--                    <div class="feiyong dd_nei">
                         <div class="layui-col-xs12">
                             <span>装货费：</span>
                             <pi id="money">
                                 50
                             </pi>元
-                            <!-- <span class="shuo">已包含：双边</span> -->
+                             <span class="shuo">已包含：双边</span> 
                         </div>
                         <div class="layui-col-xs12">
                             <span>送货费：</span>
                             <pi id="bxje1">
                                 60
                             </pi>元
-                            <!-- <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span> -->
+                             <span class="shuo"> 平台接单后，保险服务均由承运方提供与购买</span> 
                         </div>
                         <div class="layui-col-xs12">
                             <span>海头杂费：</span>
                             <strong id="discount">520</strong>元
-                            <!-- <span class="shuo">开票说明：选择在线支付优惠后不开发票</span> -->
+                             <span class="shuo">开票说明：选择在线支付优惠后不开发票</span> 
                         </div>
                         <div class="layui-col-xs12">
                             <span>海运费：</span>
                             <strong class="zongfei" id="price_sum">51</strong>元
                         </div>
                     </div>
-                </div>
+                </div>-->
 
 
                 <!-- 委托信息 -->
@@ -324,7 +327,7 @@
                                         <span>*&nbsp;</span>发货单位：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                         <!-- <{$shipperArr[0]}> -->
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[0]}>">
+                                        <input name="r_company" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[0]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
@@ -332,7 +335,7 @@
                                         <span>*&nbsp;</span>装货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                         <!-- <{$shipperArr[1]}> -->
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[1]}>">
+                                        <input name="r_name" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[1]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
@@ -340,7 +343,7 @@
                                         <span>*&nbsp;</span>装货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                         <!-- <{$shipperArr[2]}> -->
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[2]}>">
+                                        <input name="r_phone" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[2]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
@@ -348,7 +351,7 @@
                                         <span>*&nbsp;</span>装货地址：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                         <!-- <{$shipperArr[3]}> -->
-                                        <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[3]}>">
+                                        <input name="r_add" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[3]}>">
                                     </div>
                                 </div>
 
@@ -360,7 +363,7 @@
                                         <span>*&nbsp;</span>收货单位：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                             <!-- <{$consignerArr[0]}> -->
-                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[0]}>">
+                                            <input name="s_company" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[0]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
@@ -368,7 +371,7 @@
                                         <span>*&nbsp;</span>收货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                             <!-- <{$consignerArr[1]}> -->
-                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[1]}>">
+                                            <input name="s_name" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[1]}>">
                                     </div>
                                 </div>
                                 <div class="grid-demo">
@@ -376,7 +379,7 @@
                                         <span>*&nbsp;</span>收货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                             <!-- <{$consignerArr[2]}> -->
-                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[2]}>">
+                                            <input name="s_phone" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[2]}>">
                                     </div>
                                 </div>
 
@@ -385,7 +388,7 @@
                                         <span>*&nbsp;</span>收货地址：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                             <!-- <{$consignerArr[3]}> -->
-                                            <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[3]}>">
+                                            <input name="s_add" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$consignerArr[3]}>">
                                     </div>
                                 </div>
                             </div>
@@ -416,7 +419,7 @@
                                     <span>*&nbsp;</span>箱型：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
                                             <!-- <{$list.container_type}> -->
-                                            <input name="container_type" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_type}>">
+                                            <input name="container_size" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_size}>">
                                     </div>
                             </div>
                         </div>  
@@ -662,7 +665,7 @@
 
 
         <script>
-            var url = "<{:url('admin/orderPort/Upload')}>";
+            var url = "<{:url('admin/order/waybill_upload')}>";
             var xiu_url = "<{:url('admin/Financial/Order_completion')}>";//已完成订单
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
@@ -684,7 +687,7 @@
             function bao(){
                 $.ajax({
                 type:'POST',
-                url:"<{:url('admin/order/aaa')}>",   //数据传输的控制器方法
+                url:"<{:url('admin/orderProcess/orderModify')}>",   //数据传输的控制器方法
                 data:$('#order_data_form').serialize(),//这里data传递过去的是序列化以后的字符串
                 success:function(res){
                     if (res.status) {

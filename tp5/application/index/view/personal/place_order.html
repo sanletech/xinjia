@@ -1,0 +1,275 @@
+<!-- 港到港订单 -->
+<{include file='./public/head' /}>
+  <body>
+    <link rel="stylesheet" href="__STATIC__/css/place_details.css">
+    <style>
+      #te .ddh a{
+        background-color:transparent;
+        color: blue;
+      }
+      #te .ddh a:hover{
+        text-decoration:underline;
+      }
+      #te .ddh a:visited{
+        color: red;
+      }
+      .goods a{
+        display: inline-block;
+        width: 45px;
+        text-align: center;
+      }
+      #te .caozuo a{
+        color: #666;
+        font-size: 12px;
+      }
+      #te .xiaz a{
+        background-color:#00DB00;
+      }
+    </style>
+    <div class="x-nav">
+             <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    </div>
+    <div class="invalid">
+      <form class="layui-form" id="btn_select">
+        <div class="layui-row">
+          <div class="layui-col-xs12">
+            <div class="grid-demo sousuo">
+              <div class="layui-form-item">
+                  <div class="yinc">
+                      <input type="text" id="start_id" name="start_id" value="<{$start_add ? $start_add: '';}>">
+                      <input type="text" id="end_id" name="end_id" value="<{$end_add ? $end_add: '';}>">
+                    </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="order_num" value='<{$order_num}>' placeholder="运单号" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text"  value='' placeholder="起始时间" autocomplete="off" class="layui-input" name="date_start" id="date">
+                </div>
+                <div class="layui-input-inline">
+                  <input type="text" value='' placeholder="结束时间" autocomplete="off" class="layui-input" name="date_end" id="date1">
+                </div>
+                <button class="layui-btn btn_select">查询</button>
+              </div>
+
+              <div id="address">
+                  <ul>
+                    <li>省份</li>
+                    <li>城市</li>
+                    <li>港口</li>
+                  </ul>
+                  <div id="dizhi"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-col-xs12">
+              <input type="checkbox" name="order_status[]" value="order_audit" lay-skin="primary" title="审核中" <?php echo(in_array('order_audit',$order_status)?'checked':''); ?> >
+              <input type="checkbox" name="order_status[]" value="cancel" lay-skin="primary" title="已取消" <?php echo(in_array('cancel',$order_status)?'checked':''); ?> >
+              <input type="checkbox" name="order_status[]" value="order_success" lay-skin="primary" title="进行中" <?php echo(in_array('order_success',$order_status)?'checked':''); ?> >
+              <input type="checkbox" name="order_status[]" value='completion'  lay-skin="primary" title="已完成" <?php echo(in_array('completion',$order_status)?'checked':''); ?> >
+          </div>
+        </div>
+
+        
+      </form>
+      <!-- 表格 -->
+      <div class="biao">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+          <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show">
+              <table class="layui-table layui-table-item" id="te">
+                <thead>
+                  <tr>
+                    <th>订单号</th>
+                    <th>运单号</th>
+                    <th>提交时间</th>
+                    <th>船公司</th>
+                    <th>船名航次</th>
+                    <th>起运港-目的港</th>
+                    <th>总运费</th>
+                    <th>订舱单</th>
+                    <th>补料</th>
+                    <td>货物状态</td>
+                    <th>水运单</th>
+                    <th>付款状态</th>
+                    <th>订单状态</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <{volist name="list" id="vo"}>
+                  <tr>
+                    <td class="ddh">
+                      <a href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>" title="订单详情" target="_blank" ><{$vo.order_num}></a>
+                    </td>
+                    <td><{$vo.track_num}></td>
+                    <td><{$vo.ctime}></td>
+                    <td><{$vo.ship_short_name}></td>
+                    <!--<td>否</td>-->
+                    <td><{$vo.boat_name}>-<{$vo.boat_code}></td>
+                    <td><{$vo.s_port}>-<{$vo.e_port}></td>
+                    <td><{$vo.quoted_price}></td>
+                    <td class="xiaz">
+                      <!-- 有改变css('background-color','#00DB00') -->
+                    <?php                                    
+                    $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'book_note']);
+                    if($vo['book_note']){
+                        echo '<a href="'.$url.'">放纸箱</a>';
+                    }
+                    ?>
+                    </td>
+                    
+                    <td class="tj_gh">
+                      <!-- 有改变css('background-color','#00DB00') -->
+                      <{if condition="($vo['container_status']=='do')"}>
+                      已补料
+                      <{else /}>
+                      待提交柜号
+                      <{/if}>
+                    </td>
+                    <!-- 驳回提示  title -->
+                    <td class="goods"><a href="javascript:void(0);" title="<{$vo.container_buckle_comment}>"><{$vo.container_buckle}></a></td>
+                    <td class="xiaz">
+                      <!-- 有改变css('background-color','#00DB00') -->
+                    <?php                                    
+                    $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'sea_waybill']);
+                    if($vo['container_buckle']=='unlock'){
+                        if($vo['sea_waybill']){
+                            echo '<a href="'.$url.'">运单</a>';
+                        }
+                    }elseif($vo['container_buckle']=='lock'){
+                      echo '申请放货中';
+                    }elseif($vo['container_buckle']=='apply'){
+                      echo '待申请放货通过';
+                    }
+                    ?>
+                      <!--<a href="javascript:void(0);">运单</a>-->
+                    </td>
+                    <td class="fukuan"><?php if($vo['money_status']=='nodo'){echo"未付款";}else{echo"已付款";}?></td>
+                    <td class="caozuo">
+                      <a title="<{$vo['change_comment']}>"><{$vo.status_title}></a>
+                    </td> 
+                  </tr>
+                  <{/volist}>
+                </tbody>
+              </table>
+               <div class="text-center" id="pages"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="cabinet">
+      <form class="layui-form">
+          <div class="guiding" style="margin: 10px 0;overflow: hidden;">
+              <div class="layui-col-xs6">
+                <label class="layui-form-label">柜型:</label>
+                <div class="layui-input-block">
+                    <input id="gui"  name="title" lay-verify="title" autocomplete="off"  class="layui-input layui-disabled" type="text" value="" disabled>
+                </div>
+              </div>
+          
+            <div class="layui-col-xs6">
+             <label class="layui-form-label">订单号:</label>
+             <div class="layui-input-block">
+                 <input id="order_number" name="order_num" lay-verify="title" autocomplete="off" class="layui-input layui-disabled" type="text" readonly="true">
+             </div>
+           </div>
+          </div>
+
+        <div class="guix">
+            <div class="wenzi">柜号-封号:</div>
+            <div class="ggh">
+
+            </div>
+        </div>
+      </form>
+    </div>
+
+    <div id="state_goods">是否申请放货</div>
+    <script>
+      var xiangqing = "<{:url('index/Order/place_details')}>";//订单详情页
+      var apply_cargo_url = "<{:url('OrderPort/apply_cargo')}>";//申请发货URL
+      var url="<{:url('index/personal/place_order_port')}>";//显示港订单
+      var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号
+      var track_num = "<{:url('index/Personal/track_num')}>";//提交柜号
+    </script>
+    <!-- <script src="__STATIC__/js/personal/page.js"></script> -->
+    <script src="__STATIC__/../admin/js/port.js"></script>
+    <script src="__STATIC__/js/personal/cabinet_number.js"></script>
+    <script>
+        var page ='<{$page}>';
+        var count='<{$count}>';
+        var limit='<{$limit}>';
+
+      $('.btn_select').click(function(){//查询
+        let data = $('#btn_select').serialize();        
+        $.post(url,{data:data},function(res){
+          
+        })
+      })
+
+
+
+      layui.use('table', function(){
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+        });
+      });
+
+      //分页
+      layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+        ,layer = layui.layer;
+
+        laypage.render({
+                  elem: 'pages',
+                  limit: limit,
+                  limits: [5, 10, 15],
+                  count: count,
+                  layout: ['count', 'prev', 'page', 'next', 'limit', 'skip'],
+                  curr: page,
+                  theme: '#c00',
+                  jump: function (obj, first) {
+                    //obj包含了当前分页的所有参数，比如：
+                    //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+                    //console.log(obj.limit); //得到每页显示的条数                    
+                    //首次不执行
+                    if (!first) {
+                      //do something
+                      let data = $('#btn_select').serializeArray();
+                      let list = $.param(data);
+                      window.location.href = url+"?page=" + obj.curr + '&limit=' + obj.limit+'&'+list;
+                    }
+              }
+          });
+        });
+
+    layui.use(['form', 'layedit', 'laydate'], function(){
+      var form = layui.form
+      ,layer = layui.layer
+      ,layedit = layui.layedit
+      ,laydate = layui.laydate;
+
+      //日期
+      laydate.render({
+        elem: '#date'
+      });
+      laydate.render({
+        elem: '#date1'
+      });
+    });
+    </script>
+  </body>
+
+  </html>
