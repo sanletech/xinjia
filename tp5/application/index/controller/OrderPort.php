@@ -57,7 +57,7 @@ class OrderPort extends Controller
         
         $count=$listArr[1];  //获取总页数
         $list = $listArr[0];  //分页数据
-//        $this->_p($list);exit;
+        $this->_p($list);exit;
         $this->view->assign([
             'page'=>$page,
             'count'=>$count,

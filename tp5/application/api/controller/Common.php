@@ -47,7 +47,6 @@ class Common extends Controller {
         {
             return json(array('status'=>1,'message'=>'logout'.$name));
         }        
-       
     }
 
      //阿里云短信
@@ -74,9 +73,5 @@ class Common extends Controller {
         return json($response);
     }
     
-    public function  data() {
-        
-        $data = Db::name('seaprice')->select();
-        return json($data);
-    }
+
 }

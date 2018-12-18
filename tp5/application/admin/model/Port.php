@@ -107,9 +107,9 @@ class Port extends Model
         function  query($str ,$group ,$map='P.id>0'){
             $sql = "select " .$str
                     . " from hl_port P  "
-                    . "left join hl_city C on C.city_id = P.city_id "
+                    . " left join hl_city C on C.city_id = P.city_id "
                     . "left join hl_province PR on C.father=PR.province_id  "
-                    . "where $map and P.status = 1 group by ".$group;
+                    . "where $map and P.status = '1' group by ".$group;
             //var_dump($sql); echo"</br>";
             $data = Db::query($sql);
             return $data;

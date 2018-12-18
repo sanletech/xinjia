@@ -6,6 +6,7 @@ use think\Db;
 use think\Session;
 class Login extends Model
 {
+    
     public function register($data) {
         $map['name']=$data['name'];
      //   $map['company'] =$data['company'];
@@ -23,11 +24,8 @@ class Login extends Model
             $type ='person';
         }        
         $res =Db::name('member')->insert($map);
-       
         $this->memberProfit($member_code);
-    //     $this->memberDiscount($member_code);
-    //    var_dump($res);exit;
-        return $res?true:false;;
+        return $res ? true:false;;
     }
     //设置客户的利润,提成点
     public function memberProfit($member_code) {

@@ -29,8 +29,8 @@ class Wechat extends Common
     
     protected $wechat_config = [
     //微信的接口配置
-    'appid' =>'wx00e2fa705cc5a3fc'
-    ,'AppSecret'=>'ee123d5edeab39f44ecca894cc9eb984'
+    'appid' =>'wx158584120ea9ec49'
+    ,'AppSecret'=>'9ff909df785e6b3977d80c12e375c4ab'
 
     ];
 
@@ -249,7 +249,7 @@ class Wechat extends Common
     }
 
     
-    public function wechatOpenid($code='033tggLd05OcTs1TsSId0rJ5Ld0tggLj',$phone='')
+    public function wechatOpenID($code='033tggLd05OcTs1TsSId0rJ5Ld0tggLj',$phone='')
     {
         $appid = $this->wechat_config['appid'];  $AppSecret = $this->wechat_config['AppSecret'];
 
@@ -262,15 +262,13 @@ class Wechat extends Common
         $info = file_get_contents($url);//发送HTTPs请求并获取返回的数据，推荐使用curl
         $json = json_decode($info);//对json数据解码
         $arr = get_object_vars($json);
-//        $this->_v($arr);exit;
         if(array_key_exists('errcode', $arr)){
-            return json(array('status'=>0,'message'=>  implode(',', $arr)));
+            return array('error'=>  implode(',', $arr));
         }
-//        $this->_v($arr);exit;
-        $openid = $arr['openid'];
+        $openID = $arr['openid'];
         $session_key = $arr['session_key'];
            
-        return $openid ; 
+        return  array('openID'=>$openID) ; 
     }
     
     

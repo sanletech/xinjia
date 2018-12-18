@@ -6,10 +6,9 @@ use think\Session;
 
 class Login extends Controller
 {
-    
-    //登陆
+      
       //登陆
-      public function wechatLogin($account,$password) {
+    public function wechatLogin($account,$password) {
         $password = md5($password);
         $member =Db::name('member')->where('phone',$account)
                 ->field('password,member_code,name,wechat_openid')
@@ -20,14 +19,43 @@ class Login extends Controller
         if($password !== $member['password']){
             return json(array('status'=>0,'message'=>'密码错误'));     
         }
-        //验证无误 就写入 session
+        //验证无误 就写入 session 更新登录时间
         Session::set('member_code',$member['member_code']);
-        Session::set('name',$member['name'],'wechat');
+        Session::set('name',$member['name']);
+        $mtime =  date('Y-m-d H:i:s');
+        $res = Db::name('member')->where('phone',$account)
+               ->update(['logintime'=>$mtime]);
         if(empty($member['wechat_openid'])){
             return json(array('status'=>1,'message'=>'unboundWechat','session_id'=>session_id()));     
         }  else {
             return json(array('status'=>1,'message'=>'登录成功','session_id'=>session_id()));     
         }
+    }
+    
+    public function  checkWechat($code) {
+        //接受到随机code 验证 oppenID 是否存在
+        $wechat = new \app\api\controller\Wechat();
+        $openID =$wechat->wechatOpenid($code);
+        if(!array_key_exists('openID', $openID)){
+            return array('status'=>0,'message'=>$openID['error']); //错误信息
+        }
+        //验证数据存在
+        $member_data = Db::name('member')
+                ->where('wechat_openid',$openID['openID'])
+                ->order('logintime','ASC')->limit(1)
+                ->field('member_code,name')->find();
+        if($member_data){
+              //验证无误 就写入 session 更新登录时间
+            Session::set('member_code',$member_data['member_code']);
+            Session::set('name',$member_data['name']);
+            $mtime =  date('Y-m-d H:i:s');
+            $res = Db::name('member')->where('phone',$account)
+                    ->update(['logintime'=>$mtime]);
+            return json(array('status'=>1,'message'=>'登录成功','session_id'=>session_id()));     
+        }  else {
+            return json(array('status'=>1,'message'=>'no_account_exists','session_id'=>'')); 
+        }
+        
     }
     
     
