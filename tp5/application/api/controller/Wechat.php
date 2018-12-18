@@ -221,9 +221,10 @@ class Wechat extends Common
             $map = ['id'=>['>',0]];
         }
         $data = Db::name('shipcompany')
-                ->where('status',1)->fetchSql()
-                ->field('id,ship_short_name')
+                ->where('status',1)->fetchSql(false)
+                ->field('id,ship_short_name ship_name')
                 ->where($map)->select();
+            // $this->_p($data);exit;
         return json($data);
     }
     

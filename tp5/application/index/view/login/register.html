@@ -177,8 +177,10 @@
             dataType:"json",
             success:function(res){
               if (res.status) {
-                layer.msg(res.message,{icon: 1,time:1000});
-                window.location.href = "<{:url('index/login/login')}>";
+                layer.msg(res.message,{icon: 1,time:1000},function(){
+                  window.location.href = "<{:url('index/login/login')}>";
+                });
+                
               }else{
                 layer.msg(res.message,{icon: 2,time:1000});
               }
