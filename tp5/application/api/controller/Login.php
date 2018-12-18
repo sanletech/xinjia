@@ -6,7 +6,87 @@ use think\Session;
 
 class Login extends Controller
 {
+    private $wechat_config = [
+        //微信的接口配置
+        'appid' =>'wx158584120ea9ec49'
+        ,'AppSecret'=>'9ff909df785e6b3977d80c12e375c4ab'
+    
+        ];
       
+     //用户注册 或者手机号码绑定 与 weixin_code 绑定
+     public function wechatRegister ($wechat_code,$phone,$code,$password,$repassword='') {
+        //20分钟内有效
+       $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
+       $res_code = Db::name('ali_sms')->where('phone',$phone)
+               ->where('ctime','between time',$valid_time)
+               ->order('ctime desc')->column('code');
+       if(!in_array($code,$res_code)){
+          return json(array('status'=>0,'message'=>'验证码不正确'));
+       }
+       //获取微信openId
+       $wechat_openid = $this->wechatOpenid($wechat_code);
+    
+       if(!array_key_exists('openID', $wechat_openid)){
+            return array('status'=>0,'message'=>$wechat_openid['error']); //错误信息
+        }
+       //查询手机号码的信息
+       $member_info  = Db::name('member')->where('phone',$phone)
+               ->field('id,name,password,member_code')->find();
+        $message ='';
+       //如果为空就是登录
+       if(empty($repassword)){
+           
+           if($member_info){
+               //存在就比对密码是否正确
+               if(md5($password)!== $member_info['password'] ){
+                   return json(array('status'=>0,'message'=>'密码不正确'));
+               }       
+               $map = ['wechat_openid'=>$wechat_openid['openID'],
+               'logintime'=>date('Y-m-d H:i:s')];
+               $res_login = Db::name('member')
+               ->where('id',$member_info['id']) ->update($map);
+
+               $member_code = $member_info['member_code'];
+               $res_login ? $message ='success_login':$message ='fail_login';
+              
+           }  else {
+               //不存在说明没有注册过
+               return json(array('status'=>0,'message'=>'Not_registered'));
+           }
+       }
+       //不为空就是注册
+       if($repassword){
+               if($repassword !== $password){
+                   return json(array('status'=>0,'message'=>'两次密码不正确'));
+               }
+               if($member_info){
+                   return json(array('status'=>0,'message'=>'已经注册过'));
+               }
+               $IDCode = new \app\index\controller\IDCode();
+               //查询用户表最大的id 生成零时客户member_code
+               $id =Db::name('member')->max('id')+1;
+               $member_code = $IDCode->create($id, 'zh');
+               $map['member_code'] = $member_code; //唯一帐号
+               $map['wechat_openid'] = $wechat_openid; 
+               $map['create_time'] = $this->mtime; 
+               $map['password'] = md5($password); 
+               $map['type'] = 'person'; 
+               $res_register = Db::name('member')->insert($map);
+               $res_register ? $message = 'success_register':$message = 'fail_register';
+       }
+       $res_phone = false;
+       //操作成功后，写入session 信息将用户
+       if(strstr($message,'_',true)=='success'){ 
+           Session::set('member_code',$member_code);
+           //注册设置默认利润
+           if($message=='success_register'){
+               $member_profit =  new \app\index\model\Login();
+               $member_profit->member_profit($member_code);
+           }
+           $res_phone = true ; 
+       }
+       return json($res_phone ? array('status'=>1,'message'=>$message.'success','session_id'=>session_id()): array('status'=>0,'message'=>$message.'fail'));
+   }
       //登陆
     public function wechatLogin($account,$password) {
         $password = md5($password);
@@ -43,17 +123,18 @@ class Login extends Controller
         $member_data = Db::name('member')
                 ->where('wechat_openid',$openID['openID'])
                 ->order('logintime','ASC')->limit(1)
-                ->field('member_code,name')->find();
+                ->field('member_code,name')->fetchSql(false)->find();
+                // var_dump($member_data);exit;
         if($member_data){
               //验证无误 就写入 session 更新登录时间
             Session::set('member_code',$member_data['member_code']);
             Session::set('name',$member_data['name']);
             $mtime =  date('Y-m-d H:i:s');
-            $res = Db::name('member')->where('phone',$account)
+            $res = Db::name('member')->where('member_code',$member_data['member_code'])
                     ->update(['logintime'=>$mtime]);
             return json(array('status'=>1,'message'=>'登录成功','session_id'=>session_id()));     
         }  else {
-            return json(array('status'=>1,'message'=>'no_account_exists','session_id'=>'')); 
+            return json(array('status'=>0,'message'=>'no_account_exists','session_id'=>'')); 
         }
         
     }
@@ -83,5 +164,26 @@ class Login extends Controller
         return json($response);
     }
     
+    private function wechatOpenID($code='033tggLd05OcTs1TsSId0rJ5Ld0tggLj',$phone='')
+    {
+        $appid = $this->wechat_config['appid'];  $AppSecret = $this->wechat_config['AppSecret'];
+
+        $url ='https://api.weixin.qq.com/sns/jscode2session?appid='
+                ."$appid"         
+                . '&secret='
+                ."$AppSecret"             
+                . '&js_code='.$code.'&grant_type=authorization_code';
+        
+        $info = file_get_contents($url);//发送HTTPs请求并获取返回的数据，推荐使用curl
+        $json = json_decode($info);//对json数据解码
+        $arr = get_object_vars($json);
+        if(array_key_exists('errcode', $arr)){
+            return array('error'=>  implode(',', $arr));
+        }
+        $openID = $arr['openid'];
+        $session_key = $arr['session_key'];
+           
+        return  array('openID'=>$openID) ; 
+    }
   
 }

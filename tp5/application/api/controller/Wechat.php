@@ -49,69 +49,7 @@ class Wechat extends Common
         return $data;
     }
     
-     //用户注册 或者手机号码绑定 与 weixin_code 绑定
-    public function wechatRegister ($wechat_code,$phone,$code,$password,$repassword='') {
-         //20分钟内有效
-        $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
-        $res_code = Db::name('ali_sms')->where('phone',$phone)
-                ->where('ctime','between time',$valid_time)
-                ->order('ctime desc')->column('code');
-        if(!in_array($code,$res_code)){
-            return json(array('status'=>0,'message'=>'验证码不正确'));
-        }
-        //获取微信openId
-        $wechat_openid = $this->wechatOpenid($wechat_code);
-        //查询手机号码的信息
-        $member_info  = Db::name('member')->where('phone',$phone)
-                ->field('id','name','password','member_code')->find();
-        //如果为空就是登录
-        if(is_null($repassword)){
-            if($member_info){
-                //存在就比对密码是否正确
-                if(md5($password)!== $member_info['password'] ){
-                    return json(array('status'=>0,'message'=>'密码不正确'));
-                }       
-                $res_login = Db::name('member')->where('id',$member_info['id'])
-                        ->update(['wechat_openid'=>$wechat_openid,
-                            'logintime'=>$this->mtime]);
-                $member_code = $member_info['member_code'];
-                $res_login ? $message ='success_login':$message ='fail_login';
-            }  else {
-                //不存在说明没有注册过
-                return json(array('status'=>0,'message'=>'Not_registered'));
-            }
-        }
-        //不为空就是注册
-        if($repassword){
-                if($repassword !== $password){
-                    return json(array('status'=>0,'message'=>'两次密码不正确'));
-                }
-                if($member_info){
-                    return json(array('status'=>0,'message'=>'已经注册过'));
-                }
-                $IDCode = new \app\index\controller\IDCode();
-                //查询用户表最大的id 生成零时客户member_code
-                $id =Db::name('member')->max('id')+1;
-                $member_code = $IDCode->create($id, 'zh');
-                $map['member_code'] = $member_code; //唯一帐号
-                $map['wechat_openid'] = $wechat_openid; 
-                $map['create_time'] = $this->mtime; 
-                $map['password'] = md5($password); 
-                $map['type'] = 'person'; 
-                $res_register = Db::name('member')->insert($map);
-                $res_register ? $message = 'success_register':$message = 'fail_register';
-        }
-        //操作成功后，写入session 信息将用户
-        if(strstr($message,'_',true)=='success'){ 
-            Session::set('member_code',$member_code);
-            //注册设置默认利润
-            if($message=='success_register'){
-                $member_profit =  new \app\index\model\Login();
-                $member_profit->member_profit($member_code);
-            } 
-        }
-        return $res_phone ? array('status'=>1,'message'=>$message.'success'): array('status'=>0,'message'=>$message.'fail');
-    }
+    
     
     // 小程序门到门下单页面 price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit,$sea_id='')
     public function orderList($limit=10,$page=1,$start_add='',$end_add='',$ship_id='',$start_time='',$end_time=''){
