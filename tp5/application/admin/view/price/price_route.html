@@ -71,12 +71,12 @@
             <td><{$vo.s_port}> >>>  <{$vo.m_port}> >>> <{$vo.e_port}></td>
             <td>￥<{$vo.price_20GP}></td>
             <td>￥<{$vo.price_40HQ}></td> 
-            <td><{$vo.shipping_date}></td>
-            <td><{$vo.cutoff_date}></td>
+            <td><{$vo.shipping_date|substr=0,-8}></td>
+            <td><{$vo.cutoff_date|substr=0,-8}></td>
             <td><{$vo.boat_name}></td>
             <td><{$vo.sea_limitation}>&nbsp;Day</td>
-            <td><{$vo.ETA}></td>
-            <td><{$vo.EDD}></td>
+            <td><{$vo.ETA|substr=0,-8}></td>
+            <td><{$vo.EDD|substr=0,-8}></td>
             <td class="td-manage">
                 <a title="重新发布"  onclick="addchong_ye('<{$vo.id}>')" href="javascript:;">
                     <i class="layui-icon">&#xe621;</i>

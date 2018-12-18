@@ -138,7 +138,8 @@ class Login extends Controller
         }
         
     }
-    
+
+   
     
        //阿里云短信
     public function ali_sms($phone){
