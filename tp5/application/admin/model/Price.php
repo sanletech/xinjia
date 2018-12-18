@@ -67,6 +67,11 @@ class Price extends Model
             . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
             ->order('SP.mtime DESC')->where('SP.id',$seaprice_id)
             ->group('SP.id,SC.id,B.id,SR.id')->find();
+        $data['shipping_date'] = substr($data['shipping_date'], 0,-8);
+        $data['cutoff_date'] = substr($data['cutoff_date'], 0,-8);
+        $data['ETA'] = substr($data['ETA'], 0,-8);
+        $data['EDD'] = substr($data['EDD'], 0,-8);
+//        $this->_p($data);exit;
         return $data ;
     }
     
@@ -79,22 +84,17 @@ class Price extends Model
         $pricedata['ship_id'] = strstr($data['ship'],'_', true);
         $pricedata['price_20GP'] = $data['price_20GP'];
         $pricedata['price_40HQ'] = $data['price_40HQ'];
-        $pricedata['shipping_date'] = date('Y-m-d H:i:s',strtotime($data['shipping_date']));
-        $pricedata['cutoff_date'] = date('Y-m-d H:i:s',strtotime($data['cutoff_date']));
+        $pricedata['shipping_date'] = $data['shipping_date'];
+        $pricedata['cutoff_date'] = $data['cutoff_date'];
         $pricedata['boat_id'] = $data['boat'];
         $pricedata['sea_limitation'] = $data['sea_limitation'];
-        $pricedata['ETA'] = date('Y-m-d H:i:s',strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day'));
-        $pricedata['EDD'] = date('Y-m-d H:i:s',strtotime("+3day",strtotime($pricedata['ETA'])));
+        $pricedata['ETA'] = date('Y-m-d H:i:s',strtotime($data['shipping_date'].'+'.$data['sea_limitation'].'day'));
+        $pricedata['EDD'] = date('Y-m-d H:i:s',strtotime($pricedata['ETA']."+3day"));
         $pricedata['generalize'] = $data['generalize'];
         $pricedata['mtime'] = date('Y-m-d H:i:s');
         $pricedata['route_id'] =$data['route_id'];  
         //判断是否存在同一个船公司 船舶id  航线  船期同样的 
-        $res =Db::name('seaprice')->where([
-            'ship_id'=>$pricedata['ship_id'],
-            'boat_id'=>$pricedata['boat_id'],
-            'route_id'=>$pricedata['route_id'],
-            'shipping_date'=> $pricedata['shipping_date']
-            ])->find();
+        $res = $this->route_repeat($pricedata['ship_id'], $pricedata['boat_id'], $pricedata['route_id'], $pricedata['shipping_date']);
         if($res){
             $response['fail'] = '航线运价重复';
             return  $response;
@@ -104,7 +104,7 @@ class Price extends Model
         return  $response;
     }
     
-          //航线详情list
+    //航线详情list
     public function  route_select($sl_start,$sl_end)
     {      
         $list =Db::name('ship_route')->alias('SR')
@@ -122,26 +122,44 @@ class Price extends Model
         return $list;
     }
     
+    //检查航线详情是否重复 船期在同一天的
+    public function  route_repeat($ship_id,$boat_id,$route_id,$shipping_date) {
+        $min_time = date('Y-m-d H:i:s',strtotime("$shipping_date-12hour"));
+        $max_time = date('Y-m-d H:i:s',strtotime("$shipping_date+12hour"));
+        $vaild_time = array($min_time,$max_time);
+        $res =Db::name('seaprice')->where([ 'ship_id'=>$ship_id,
+            'boat_id'=>$boat_id,'route_id'=>$route_id,'status'=>1 ])
+            ->where('shipping_date','between time',[$min_time,$max_time])
+            ->field('id')->select();
+      
+        return count($res)<2 ? true : false ;   
+    }
+    
 
       //航运价格的修改更新
       public function  price_route_toedit($data)
     {          
 
-        $pricedata['id'] = $data['id'];
+        $id = $data['id'];
         $pricedata['ship_id'] = strstr($data['ship'],'_', true);
         $pricedata['price_20GP'] = $data['price_20GP'];
         $pricedata['price_40HQ'] = $data['price_40HQ'];
-        $pricedata['shipping_date'] = strtotime($data['shipping_date']);
-        $pricedata['cutoff_date'] = strtotime($data['cutoff_date']);
+        $pricedata['shipping_date'] = $data['shipping_date'];
+        $pricedata['cutoff_date'] =$data['cutoff_date'];
         $pricedata['boat_id'] = $data['boat'];
         $pricedata['sea_limitation'] = $data['sea_limitation'];
-        $pricedata['ETA'] = strtotime($data['shipping_date'].'+ '.$data['sea_limitation'].'day');
-        $pricedata['EDD'] = strtotime("+3day",$pricedata['ETA']);
+        $pricedata['ETA'] = date('Y-m-d H:i:s',strtotime('+'.$data['sea_limitation'].'day',strtotime($data['shipping_date'])));
+        $pricedata['EDD'] = date('Y-m-d H:i:s',strtotime("+3day",strtotime($pricedata['ETA'])));
         $pricedata['generalize'] = $data['generalize'];
         $pricedata['mtime'] = date('Y-m-d H:i:s');
         $pricedata['route_id'] =$data['route_id'];  
-        $res3 = Db::name('seaprice')->update($pricedata);
-      // echo Db::getLastSql();exit;
+        //判断是否存在同一个船公司 船舶id  航线  船期同样的 
+        $res = $this->route_repeat($pricedata['ship_id'], $pricedata['boat_id'], $pricedata['route_id'], $pricedata['shipping_date']);
+        if($res){
+            $response['fail'] = '航线运价重复';
+            return  $response;
+        }
+        $res3 = Db::name('seaprice')->where('id',$id)->update($pricedata);
         $res3 ? $response['success'] = '修改seaprice表成功':$response['fail'] = '修改seaprice表失败';
         return  $response;
     }
