@@ -137,11 +137,12 @@ class Order extends Base
       public function order_data()
     {
         $data =$this->request->param();
-//        $data = $data['data'];
+        // $this->_p($data);exit;
+        // $data = $data['data'];
         $post_token = $this->request->param('TOKEN');
-        $is_wechat = $this->request->param('type');
+        // $is_wechat = $this->request->param('type');
         $order_data =new OrderM;
-        $response = $order_data ->order_data($data ,$post_token,$is_wechat);
+        $response = $order_data ->order_data($data ,$post_token);
         return json($response) ;
     }
     

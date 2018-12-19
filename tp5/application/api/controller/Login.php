@@ -14,7 +14,7 @@ class Login extends Controller
         ];
       
      //用户注册 或者手机号码绑定 与 weixin_code 绑定
-     public function wechatRegister ($wechat_code,$phone,$code,$password,$repassword='') {
+     public function wechatRegister ($wechat_code,$phone,$code,$password,$name='',$repassword='') {
         //20分钟内有效
        $valid_time  = array(date('Y-m-d H:i:s',strtotime('-20min')),date('Y-m-d H:i:s'));
        $res_code = Db::name('ali_sms')->where('phone',$phone)
@@ -63,15 +63,16 @@ class Login extends Controller
                    return json(array('status'=>0,'message'=>'已经注册过'));
                }
                $IDCode = new \app\index\controller\IDCode();
-               //查询用户表最大的id 生成零时客户member_code
                $id =Db::name('member')->max('id')+1;
                $member_code = $IDCode->create($id, 'zh');
                $map['member_code'] = $member_code; //唯一帐号
-               $map['wechat_openid'] = $wechat_openid; 
-               $map['create_time'] = $this->mtime; 
-               $map['password'] = md5($password); 
+               $map['wechat_openid'] = $wechat_openid['openID']; 
+               $map['create_time'] = date('Y-m-d H:i:s');
+               $map['password'] = md5($password);
+               $map['phone'] = $phone;  
                $map['type'] = 'person'; 
-               $res_register = Db::name('member')->insert($map);
+               $name ?  $map['name'] = $name : $map['name'] = $phone; 
+               $res_register = Db::name('member')->field(true)->insert($map);
                $res_register ? $message = 'success_register':$message = 'fail_register';
        }
        $res_phone = false;
@@ -81,7 +82,7 @@ class Login extends Controller
            //注册设置默认利润
            if($message=='success_register'){
                $member_profit =  new \app\index\model\Login();
-               $member_profit->member_profit($member_code);
+               $member_profit->memberProfit($member_code);
            }
            $res_phone = true ; 
        }
