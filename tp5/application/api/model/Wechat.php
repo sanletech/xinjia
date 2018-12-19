@@ -56,21 +56,21 @@ class Wechat extends Model
         }
         $listSql =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
-            ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and `SP`.`status`='1'",'left') //海运价格表
-            ->join('hl_ship_route SR',"SR.id=SP.route_id and `SR`.`status`='1'",'left')//路线表
-            ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
-            ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
-            ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
+            ->join('hl_seaprice SP',"`SP`.`id`= `OP`.`seaprice_id` and `SP`.`status`='1'",'left') //海运价格表
+            ->join('hl_ship_route SR',"`SR`.`id`=`SP`.`route_id` and `SR`.`status`='1'",'left')//路线表
+            ->join('hl_sea_bothend SB','`SB`.`sealine_id`=`SR`.`bothend_id`','left')//起始港 终点港 
+            ->join('hl_port P1','`P1`.`port_code`=`SB`.`sl_start` and `P1`.`status`=1','left')//起始港口
+            ->join('hl_port P2','`P2`.`port_code`=`SB`.`sl_end` and `P2`.`status`=1','left')//目的港口
             ->field('OP.id,OP.order_num,OP.track_num,OP.ctime,OP.member_code,'
                     . 'P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,'
                     . 'OP.status,OP.money_status,OP.container_buckle,OP.container_status,OP.type')
-            ->group('OP.id')->where('OP.member_code',$member_code)
+            ->where('OP.member_code',$member_code)
             ->buildSql();
         // $this->_p($map);exit;
         // 查询出当前页数显示的数据
-        $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(false)->page($page,$limit)->select();
-    //    var_dump($list);EXIT;
+        $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(true)->page($page,$limit)->select();
+       var_dump($list);EXIT;
         //转换状态
         foreach ($list as $key=>$value){
             switch ($value['status']){

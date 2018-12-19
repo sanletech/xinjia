@@ -82,14 +82,15 @@ class Order extends Model
     
     //处理客户提交的订单信息
     public function order_data($data ,$post_token) {
-        
+        // $this->_p($data);$this->_p($post_token);exit;
        //检查订单令牌是否重复,小程序不用检查
-    
+    //    $this->_v($post_token);
+    //    var_dump(Session::get('TOKEN')) ;exit;
         if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
             return array('status'=>0,'mssage'=>'不要重复提交订单');
         }
+      
         
-        // $this->_p($data);exit;
         $sea_id = $data['sea_id']; //海运路线ID
         $member_code =Session::get('member_code'); //用户帐号
         $container_size = $data['container_size']; //箱型
