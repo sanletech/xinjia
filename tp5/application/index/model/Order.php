@@ -35,21 +35,12 @@ class Order extends Model
                 ->where('SP.status',1)->where('SP.stale_date',1)
                 ->group('SP.id')->buildSql();
         $map =[];
-        if($start_time){
-            $map[] = "A.shipping_date >= '$start_time' or A.cutoff_date >=  '$start_time'" ;
-        }  
-        if($end_time){
-            $map[] = "A.shipping_date  <=  '$end_time' and A.cutoff_date  <=  '$end_time' " ;
-        }
-        if($start_add){
-            $map[]= "A.r_add like '%$start_add%' ";
-        }
-        if($end_add){
-            $map[]= "A.s_add like '%$end_add%' ";
-        }
+        $start_time ? $map[] = "A.shipping_date >= '$start_time' or A.cutoff_date >=  '$start_time'" :'';
+        $end_time ? $map[] = "A.shipping_date  <=  '$end_time' and A.cutoff_date  <=  '$end_time' " :'';
+        $start_add ? $map[]= "A.r_add like '%$start_add%' ":'';
+        $end_add ? $map[]= "A.s_add like '%$end_add%' ":'';
         $sql = implode(' and ', $map);
         $sql = trim($sql,' and ');
-        
         $count = Db::table($price_list.' A')->where($sql)->count();
         $list =  Db::table($price_list.' A')->where($sql)->fetchSql(false)
                 ->page($page,$limit)->select();
