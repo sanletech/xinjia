@@ -39,6 +39,7 @@ class Wechat extends Common
     protected function _initialize()
     {   
         $this->member_code =Session::get('member_code');
+        // var_dump( $this->member_code);
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
     }
@@ -63,7 +64,12 @@ class Wechat extends Common
     }
     
     //小程序港到港
-    public function orderPortList(){
+    public function orderPortList($page,$limit,$start_add,$end_add,$ship_id){
+    
+        $sea_pirce =new OrderM;
+        $data = $sea_pirce ->price_port($page,$limit,$start_add,$end_add,$ship_id);
+        $list =  $data['list'] ;
+        return json(array('page'=>$page,'limit'=>$limit,'list'=>$list)) ;
         
     }
 
@@ -91,9 +97,12 @@ class Wechat extends Common
     }
     
     //小程序 门到门 订单处理
-      public function orderData($data,$TOKEN)
+      public function orderData()
     {
-        $response = action('index/Order/order_data',['data'=>$data,'type'=>'wechat'],'controller');
+        $data =$this->request->param();
+        // $this->_p($data);exit;
+        // $response = action('index/Order/order_data',['data'=>$data,'type'=>'wechat'],'controller');
+        $response = action('index/Order/order_data',['data'=>$data],'controller');
         return $response;    
     }
     

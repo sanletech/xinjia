@@ -68,8 +68,10 @@ class Login extends Controller
                $map['member_code'] = $member_code; //唯一帐号
                $map['wechat_openid'] = $wechat_openid['openID']; 
                $map['create_time'] = date('Y-m-d H:i:s');
-               $map['password'] = md5($password); 
+               $map['password'] = md5($password);
+               $map['phone'] = $phone;  
                $map['type'] = 'person'; 
+               $map['name'] = $phone; 
                $res_register = Db::name('member')->field(true)->insert($map);
                $res_register ? $message = 'success_register':$message = 'fail_register';
        }
@@ -122,7 +124,7 @@ class Login extends Controller
         $member_data = Db::name('member')
                 ->where('wechat_openid',$openID['openID'])
                 ->order('logintime','ASC')->limit(1)
-                ->field('member_code,name')->fetchSql(false)->find();
+                ->field('member_code,name,phone')->fetchSql(false)->find();
                 // var_dump($member_data);exit;
         if($member_data){
               //验证无误 就写入 session 更新登录时间
@@ -131,7 +133,7 @@ class Login extends Controller
             $mtime =  date('Y-m-d H:i:s');
             $res = Db::name('member')->where('member_code',$member_data['member_code'])
                     ->update(['logintime'=>$mtime]);
-            return json(array('status'=>1,'message'=>'登录成功','session_id'=>session_id()));     
+            return json(array('status'=>1,'message'=>'登录成功','phone'=>$member_data['phone'],'session_id'=>session_id()));     
         }  else {
             return json(array('status'=>0,'message'=>'no_account_exists','session_id'=>'')); 
         }
