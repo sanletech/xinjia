@@ -99,7 +99,7 @@ class Order extends Base
         if($container_sum!== count($car_data)){
             return json(array('status'=>0,'message'=>'司机信息与柜子数量不符'));
         }
-        if(in_array($type, array('load','send') ) ){
+        if(!in_array($type, array('load','send') ) ){
             return json(array('status'=>0,'message'=>'参数不对'));
         }
         //判断下装货的柜子和送货的时候是否一样
@@ -139,19 +139,31 @@ class Order extends Base
         $type ?$type :$type='load';
         $data = Db::name('order_car')
                 ->where(['order_num'=>$order_num,'type'=>$type])
-                ->field('id,container_code,seal,driver_name,phone')
+                ->field('id,container_code,seal,driver_name,phone,type')
                 ->select();
         //如果为空就生成数据
         if(empty($data)){
             $container_sum = Db::name('order_port')
                     ->where('order_num',$order_num)
-                    -value('container_sum');
+                    ->value('container_sum');
             if($container_sum>0){
                 $insert_data =[];
-                for($i=0;$i<$container_suml;$i++){
-                    $insert_data[] = array(
+                //如果是送货，就从装货里获取相应的封条号码
+                if($type=='send'){
+                    $insert_data = Db::name('order_car')
+                    ->where(['order_num'=>$order_num,'type'=>'load'])
+                    ->field('order_num,container_code,seal')->select();
+                    foreach ($insert_data as $key => $value) {
+                        $insert_data[$key]['type']='send';
+                    }
+                }elseif ($type=='load') {
+                    for($i=0;$i<$container_sum;$i++){
+                        $insert_data[] = array(
                         'order_num'=>$order_num,'type'=>$type); 
+                    }
+                
                 }
+                
             }  else {
                 return array('status'=>0,'message'=>'订单不存在');
             }
@@ -160,7 +172,7 @@ class Order extends Base
             if($res){
                 $data = Db::name('order_car')
                     ->where(['order_num'=>$order_num,'type'=>$type])
-                    ->field('id,container_code,seal,driver_name,phone')
+                    ->field('id,container_code,seal,driver_name,phone,type')
                     ->select();
             }
            
@@ -175,7 +187,7 @@ class Order extends Base
 //      $this->_p($this->request->param());exit;
         $order_num =$this->request->param('order_num');
         $track_num = $this->request->param('track_num');
-        $modify = $this->request->param('modify'); //true 修改 false 不修改
+        $modify = $this->request->param('modify'); //true修改  false不修改
         $lists = $this->request->only('list');
         $lists =$lists['list'];
         //更新order_car的时间
@@ -184,7 +196,7 @@ class Order extends Base
         foreach ($lists as $value){
             $value['mtime']=$mtime;
             $id = $value['id'];
-            if($modify){
+            if(!$modify){
                 $map= array('work_time'=>$value['work_time']);
             }  else {
                 $map=$value;
@@ -243,15 +255,17 @@ class Order extends Base
                     ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
                     ->join('hl_ship_route SR',"SR.id=SP.route_id and SR.status='1'",'left')//路线表
                     ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
-                    ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
-                    ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
-                    ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
-                    ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
+                    ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left') //中间港口表    
+                    ->join('hl_port P1','P1.port_code=SB.sl_start and P1.status=1','left')//起始港口
+                    ->join('hl_port P2','P2.port_code=SB.sl_end and P2.status=1','left')//目的港口
+                    ->join('hl_port P3','P3.port_code=SM.sl_middle and P3.status=1','left')//中间港口
                     ->field('P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,'
                     . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
                     . 'group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
-                    ->group('OP.id')->where('OP.type','door')->where('OP.order_num',$order_num)->find();
+                    ->group('OP.id')->where('OP.type','door')->where('OP.order_num',$order_num)
+                    ->fetchSql(false)->find();
+
             $insert_data =[];
             $insert_data[0]['order_num'] = $order_num;
             $insert_data[0]['sequence'] = 0;
@@ -259,16 +273,24 @@ class Order extends Base
             $insert_data[0]['port_code'] = $port_arr['s_port_code'];
             $m_port_name = explode(',', $port_arr['m_port_name']);
             $m_port_code = explode(',', $port_arr['m_port_code']);
-            for($i=0;$i<count($m_port_code);$i++) {
-                $insert_data[$i+1]['order_num'] = $order_num;
-                $insert_data[$i+1]['sequence'] = $i+1;
-                $insert_data[$i+1]['port_name'] = $m_port_name[$i];
-                $insert_data[$i+1]['port_code'] = $m_port_code[$i];
+            //中间港口不为空
+            $i=0;
+            if($port_arr['m_port_code']){
+                for($i=0;$i<count($m_port_code);$i++) {
+                    $insert_data[$i+1]['order_num'] = $order_num;
+                    $insert_data[$i+1]['sequence'] = $i+1;
+                    $insert_data[$i+1]['port_name'] = $m_port_name[$i];
+                    $insert_data[$i+1]['port_code'] = $m_port_code[$i];
+                }  
             }
+      
             $insert_data[$i+2]['order_num'] = $order_num;
             $insert_data[$i+2]['sequence'] = $i+2;
             $insert_data[$i+2]['port_name'] = $port_arr['e_port_name'];
             $insert_data[$i+2]['port_code'] = $port_arr['e_port_code'];
+           
+            $insert_data = array_values($insert_data);
+          
             $res = Db::name('order_ship')->insertAll($insert_data);
             foreach ($insert_data as $k=>$v){
                 $insert_data[$k]['arrival_time']='';

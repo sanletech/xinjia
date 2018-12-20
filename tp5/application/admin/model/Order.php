@@ -121,22 +121,22 @@ class Order extends Model
     public function  send_car($order_num,$track_num,$container_sum,$car_data,$type)
     {   
         $mtime = date('Y-m-d H:i:s');   $response=[];
-        //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
-        $order_car_id = Db::name('order_car')->where(['order_num'=>$order_num,'type'=>$type])->column('id');
+//        //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
+   //     $order_car_id = Db::name('order_car')->where(['order_num'=>$order_num,'type'=>$type])->column('id');
         foreach ($car_data as $key => $value) {
             $car_data[$key]['mtime'] = $mtime;
             $car_data[$key]['type'] = $type;
             $car_data[$key]['order_num'] = $order_num;
         }
-        if(empty($order_car_id)){
-            $res2 = Db::name('order_car')->lock(true)->insertAll($car_data);
-            $res2 ?$response['success'][]='录入车队信息成功':$response['fail'][]='录入车队信息失败';
-        }  else {
-            foreach ($car_data as $key => $value) {
-                $res3 = Db::name('order_car')->where('id',$order_car_id[$key])->update($value);
+//        if(empty($order_car_id)){
+//            $res2 = Db::name('order_car')->lock(true)->insertAll($car_data);
+//            $res2 ?$response['success'][]='录入车队信息成功':$response['fail'][]='录入车队信息失败';
+////        }  else {
+            foreach ($car_data as  $value) {
+                $res3 = Db::name('order_car')->where('id',$value['id'])->update($value);
                 $res3 ?$response['success'][]='更新车队信息成功':$response['fail'][]='更新车队信息失败';
             }
-        }
+//        }
 
         return $response;
     }
