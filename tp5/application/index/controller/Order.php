@@ -32,9 +32,10 @@ class Order extends Base
         $ship_id= '';
         $start_time = date('Y-m-d H:00:00');
         $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit);
- 
+        $list = $data['list']; 
+        $count = $data['count'];
         $this->view->assign('page',$page); 
-        $this->view->assign('count',$data[]); 
+        $this->view->assign('count',$count); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
 //      $this->_p($list);exit;
@@ -45,14 +46,14 @@ class Order extends Base
     public function orderBook()
     {
         $data =$this->request->param();
-        $sea_id = $data['sea_id'];//海运费id
+        $seaprcie_id = $data['sea_id'];//海运费id
         $container_size = $data['container_size'];
         if(!($container_size=='40HQ' || $container_size=='20GP')){
             return false;
         }
         $member_code =Session::get('member_code','think');
         $sea_pirce =new OrderM;
-        $list = $sea_pirce ->orderBook($sea_id ,$container_size,$member_code);
+        $list = $sea_pirce ->orderBook($seaprcie_id ,$container_size,$member_code);
          //创建订单令牌
         action('OrderToken/createToken','', 'controller');
 //        $this->_p($list);exit;

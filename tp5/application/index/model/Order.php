@@ -11,7 +11,7 @@ class Order extends Model
     
    
     //前台页面展示门到门的价格表
-    public function  price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit,$sea_id=''){
+    public function  price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit,$seaprcie_id=''){
         $nowtime= date('y-m-d h:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id and SR.status=1')//中间港口
@@ -22,10 +22,10 @@ class Order extends Model
                 ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.port_code = SB.sl_end   and PIS.status='1'",'left') //目的港口杂费
                 ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ,'left') //不同客户对应不同船公司的利润
                 ->join('hl_shipcompany SC','SC.id = SP.ship_id','left') //船公司
-                ->join('hl_boat BA','BA.id =SP.boat_id BA.status=1','left') //船舶
-                ->join('hl_port PR','PR.port_code = SB.sl_start PR.status=1')//起始港口
-                ->join('hl_port PS','PS.port_code = SB.sl_end PS.status=1')//目的港口
-                ->field('SP.*, CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,SC.ship_short_name,'
+                ->join('hl_boat BA','BA.id =SP.boat_id and BA.status=1','left') //船舶
+                ->join('hl_port PR','PR.port_code = SB.sl_start and PR.status=1')//起始港口
+                ->join('hl_port PS','PS.port_code = SB.sl_end and PS.status=1')//目的港口 CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,
+                ->field('SP.*,SC.ship_short_name,'
                         . ' BA.boat_code,BA.boat_name,SB.sl_start,SB.sl_end,'
                         . ' PR.port_name r_port_name,PS.port_name s_port_name,CPR.address_name r_add,CPS.address_name s_add,'
                         . '  CPR.r_20GP,CPR.r_40HQ,CPS.s_20GP,CPR.s_40HQ,MP.20GP discount_20GP,MP.40HQ discount_40HQ,'
@@ -39,19 +39,22 @@ class Order extends Model
         $end_time ? $map[] = "A.shipping_date  <=  '$end_time' and A.cutoff_date  <=  '$end_time' " :'';
         $start_add ? $map[]= "A.r_add like '%$start_add%' ":'';
         $end_add ? $map[]= "A.s_add like '%$end_add%' ":'';
+        $ship_id ? $map[]= "A.ship_id  ='$ship_id' ":'';
+        $seaprcie_id ? $map[]= "A.id  ='$seaprcie_id' ":'';
         $sql = implode(' and ', $map);
         $sql = trim($sql,' and ');
+//        var_dump($sql);exit;
         $count = Db::table($price_list.' A')->where($sql)->count();
-        $list =  Db::table($price_list.' A')->where($sql)->fetchSql(false)
+        $list =  Db::table($price_list.' A')->where($sql)->fetchSql(FALSE)
                 ->page($page,$limit)->select();
 
         return array('list'=>$list, 'count'=>$count);
              
     }
     //展示已经选择好的价格信息
-    public function orderBook($sea_id ,$container_size,$member_code) {
-        //航线信息
-        $price= $this-> price_sum($member_code,$start_add='',$end_add='',$load_time='',$page=1,$limit=100,$sea_id);
+    public function orderBook($seaprcie_id ,$container_size,$member_code) {
+        //航线信息     
+        $price= $this-> price_sum($member_code,$start_add='',$end_add='',$ship_id='',$start_time='',$end_time='',$page=1,$limit=100,$seaprcie_id);
         $price =$price['list'][0]; 
         // 将集装箱字的尺寸添加到数组中
         $price['container_size']=$container_size;
