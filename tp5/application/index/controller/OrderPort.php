@@ -47,17 +47,13 @@ class OrderPort extends Controller
         $limit= $this->request->param('limit',10,'intval');
         //获取当前页数
         $page= $this->request->param('page',1,'intval');  
-        //计算出从那条开始查询
-        $tol=($page-1)*$limit;
         
         $sea_pirce =new OrderM;
         // 查询出当前页数显示的数据
-        // var_dump($tol,$limit,$start_add,$end_add,$ship_id);exit; 
-        $listArr = $sea_pirce ->price_port($tol,$limit,$start_add,$end_add,$ship_id);
+        $listArr = $sea_pirce ->price_port($page,$limit,$start_add,$end_add,$ship_id);
         
-        $count=$listArr[1];  //获取总页数
-        $list = $listArr[0];  //分页数据
-        $this->_p($list);exit;
+        $list = $listArr['list'];  //获取总页数
+        $count = $listArr['count'];  //分页数据
         $this->view->assign([
             'page'=>$page,
             'count'=>$count,

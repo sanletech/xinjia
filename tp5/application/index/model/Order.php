@@ -11,10 +11,10 @@ class Order extends Model
     
    
     //前台页面展示门到门的价格表
-    public function  price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit,$sea_id=''){
+    public function  price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit,$sea_id=''){
         $nowtime= date('y-m-d h:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
-                ->join('hl_ship_route SR','SR.id =SP.route_id')//中间港口
+                ->join('hl_ship_route SR','SR.id =SP.route_id and SR.status=1')//中间港口
                 ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
                 ->join('hl_carprice CPR',"CPR.port_id = SB.sl_start and CPR.status='1'",'left') //拖车装货费
                 ->join('hl_carprice CPS',"CPS.port_id = SB.sl_end and CPS.status='1'",'left') //拖车送货货费
@@ -22,9 +22,9 @@ class Order extends Model
                 ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.port_code = SB.sl_end   and PIS.status='1'",'left') //目的港口杂费
                 ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ,'left') //不同客户对应不同船公司的利润
                 ->join('hl_shipcompany SC','SC.id = SP.ship_id','left') //船公司
-                ->join('hl_boat BA','BA.id =SP.boat_id','left') //船舶
-                ->join('hl_port PR','PR.port_code = SB.sl_start')//起始港口
-                ->join('hl_port PS','PS.port_code = SB.sl_end')//目的港口
+                ->join('hl_boat BA','BA.id =SP.boat_id BA.status=1','left') //船舶
+                ->join('hl_port PR','PR.port_code = SB.sl_start PR.status=1')//起始港口
+                ->join('hl_port PS','PS.port_code = SB.sl_end PS.status=1')//目的港口
                 ->field('SP.*, CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,SC.ship_short_name,'
                         . ' BA.boat_code,BA.boat_name,SB.sl_start,SB.sl_end,'
                         . ' PR.port_name r_port_name,PS.port_name s_port_name,CPR.address_name r_add,CPS.address_name s_add,'
@@ -34,19 +34,17 @@ class Order extends Model
                 ->where('MP.member_code',$member_code)
                 ->where('SP.status',1)->where('SP.stale_date',1)
                 ->group('SP.id')->buildSql();
-//        var_dump($price_list);exit;
-//        if($load_time){
-//             $price_list = Db::table($price_list.' E')->where('E.cutoff_date','>',$load_time)->buildSql();
-//        }
-        if($start_add){
-            $price_list = Db::table($price_list.' F')->where('F.r_add','like',"%$start_add%")->buildSql();
-        }
-        if($end_add){
-            $price_list = Db::table($price_list.' G')->where('G.s_add','like',"%$end_add%")->buildSql();
-        }
-        $list = Db::table($price_list.' H')->page($page,$limit)->select();
-//        var_dump($list);exit;
-        $count = count($list);
+        $map =[];
+        $start_time ? $map[] = "A.shipping_date >= '$start_time' or A.cutoff_date >=  '$start_time'" :'';
+        $end_time ? $map[] = "A.shipping_date  <=  '$end_time' and A.cutoff_date  <=  '$end_time' " :'';
+        $start_add ? $map[]= "A.r_add like '%$start_add%' ":'';
+        $end_add ? $map[]= "A.s_add like '%$end_add%' ":'';
+        $sql = implode(' and ', $map);
+        $sql = trim($sql,' and ');
+        $count = Db::table($price_list.' A')->where($sql)->count();
+        $list =  Db::table($price_list.' A')->where($sql)->fetchSql(false)
+                ->page($page,$limit)->select();
+
         return array('list'=>$list, 'count'=>$count);
              
     }
@@ -81,16 +79,15 @@ class Order extends Model
     }
     
     //处理客户提交的订单信息
-    public function order_data($data ,$post_token,$is_wechat) {
+    public function order_data($data ,$post_token) {
         
        //检查订单令牌是否重复,小程序不用检查
-        if(!is_null($is_wechat)){
-            if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
-                return array('status'=>0,'mssage'=>'不要重复提交订单');
-            }
+    
+        if(!(action('index/OrderToken/checkToken',['token'=>$post_token], 'controller'))){
+            return array('status'=>0,'mssage'=>'不要重复提交订单');
         }
-        $member_code =Session::get('member_code');
         
+        // $this->_p($data);exit;
         $sea_id = $data['sea_id']; //海运路线ID
         $member_code =Session::get('member_code'); //用户帐号
         $container_size = $data['container_size']; //箱型

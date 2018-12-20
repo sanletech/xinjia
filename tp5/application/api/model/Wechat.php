@@ -49,28 +49,28 @@ class Wechat extends Model
             $map = array('A.order_num'=> strtoupper($order_num));
         }
         if($s_port){
-            $map['A.s_port_code']= $s_port;
+            $map['A.s_port_code']= $s_add;
         }
         if($e_port){
-            $map['A.e_port_code']= $e_port;
+            $map['A.e_port_code']= $e_add;
         }
         $listSql =Db::name('order_port')->alias('OP')
-            ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
+            ->join('hl_member HM','HM.member_code = OP.member_code and HM.status=1','left')//客户信息表
             ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
             ->join('hl_ship_route SR',"SR.id=SP.route_id and SR.status='1'",'left')//路线表
             ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
-            ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
-            ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
-            ->field('OP.id,OP.order_num,OP.track_num,OP.ctime,'
-                    . 'P1.port_name s_port_name ,P1.port_code s_port_code,'
-                    . 'P2.port_name e_port_name,P2.port_code e_port_code,'
+            ->join('hl_port P1','P1.port_code=SB.sl_start and P1.status=1')//起始港口
+            ->join('hl_port P2','P2.port_code=SB.sl_end and P2.status=1')//目的港口
+            ->field('OP.id,OP.order_num,OP.track_num,OP.ctime,OP.member_code,'
+                    . 'P1.port_name s_port_name ,P1.port_code s_port_code,P1.city_id s_city_id,'
+                    . 'P2.port_name e_port_name,P2.port_code e_port_code,P2.city_id e_city_id,'
                     . 'OP.status,OP.money_status,OP.container_buckle,OP.container_status,OP.type')
             ->group('OP.id')->where('OP.member_code',$member_code)
             ->buildSql();
         // $this->_p($map);exit;
         // 查询出当前页数显示的数据
         $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(false)->page($page,$limit)->select();
-//        var_dump($list);EXIT;
+    //    var_dump($list);EXIT;
         //转换状态
         foreach ($list as $key=>$value){
             switch ($value['status']){
@@ -137,20 +137,18 @@ class Wechat extends Model
             ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id   
             ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
             ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
-            ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
+            // ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
             ->join('hl_sales_member SMB','SMB.member_code=OP.member_code','left') //业务员
             ->field('OP.id ,OP.order_num ,OP.cargo ,OP.container_size ,OP.container_sum ,'
                     . ' OP.weight,OP.cargo_cost, OP.container_type ,OP.comment ,'
                     . ' OP.extra_info,OP.ctime ,OP.shipper , OP.consigner ,'
-                    . ' OP.price_description ,OP.premium ,OP.status ,OP.track_num'
+                    . ' OP.price_description ,OP.premium ,OP.status ,OP.track_num,'
                     . ' OP.quoted_price,OP.container_buckle,OP.seaprice,'
                     . ' SC.ship_short_name,B.boat_code,B.boat_name,'
                     . ' P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . ' P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
-                    . ' SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.EDD，'
-                    . ' group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
-                    . ' group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
+                    . ' SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.EDD' )
             ->where('OP.member_code',$member_code) 
             ->where('OP.order_num',$order_num)->fetchSql(false)->find();
                 
