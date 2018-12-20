@@ -149,14 +149,21 @@ class Order extends Base
             if($container_sum>0){
                 $insert_data =[];
                 for($i=0;$i<$container_suml;$i++){
-                    $insert_data[] = array('order_num'=>$order_num,'type'=>$type); 
+                    $insert_data[] = array(
+                        'order_num'=>$order_num,'type'=>$type); 
                 }
             }  else {
                 return array('status'=>0,'message'=>'订单不存在');
             }
             $res = Db::name('order_car')
                     ->insertAll($insert_data);
-            return $res ? $insert_data : array('status'=>0,'message'=>'数据错误');
+            if($res){
+                $data = Db::name('order_car')
+                    ->where(['order_num'=>$order_num,'type'=>$type])
+                    ->field('id,container_code,seal,driver_name,phone')
+                    ->select();
+            }
+           
         }
         
         return json($data);
