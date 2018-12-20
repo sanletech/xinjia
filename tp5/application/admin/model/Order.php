@@ -26,9 +26,9 @@ class Order extends Model
             ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
             ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
             ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id   
-            ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
-            ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
-            ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
+            ->join('hl_port P1','P1.port_code=SB.sl_start and P1.status=1','left')//起始港口
+            ->join('hl_port P2','P2.port_code=SB.sl_end and P2.status=1','left')//目的港口
+            ->join('hl_port P3','P3.port_code=SM.sl_middle and P3.status=1','left')//中间港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
             ->join('hl_sales_member SMB','SMB.member_code=OP.member_code','left') //业务员
             ->field('OP.id,OP.order_num,OP.track_num,OP.ctime,OP.container_size,OP.container_sum,'
