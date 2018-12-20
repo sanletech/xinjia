@@ -66,7 +66,8 @@ class Price extends Model
             . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,"
             . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
             ->order('SP.mtime DESC')->where('SP.id',$seaprice_id)
-            ->group('SP.id,SC.id,B.id,SR.id')->find();
+            ->group('SP.id')->find();
+//$this->_p($data);exit;
         $data['shipping_date'] = substr($data['shipping_date'], 0,-8);
         $data['cutoff_date'] = substr($data['cutoff_date'], 0,-8);
         $data['ETA'] = substr($data['ETA'], 0,-8);

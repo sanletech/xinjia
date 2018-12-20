@@ -31,7 +31,6 @@ class Wechat extends Common
     //微信的接口配置
     'appid' =>'wx158584120ea9ec49'
     ,'AppSecret'=>'9ff909df785e6b3977d80c12e375c4ab'
-
     ];
 
 
@@ -221,7 +220,7 @@ class Wechat extends Common
     
     
     public function  redis(){
-        $redis=new \Redis();
+        $redis=new Redis();
         $redis->connect($this->redis_config['REDIS_HOST'],$this->redis_config['REDIS_PORT']);
          $redis->set("tutorial-name", "Redis 1211351");
 
