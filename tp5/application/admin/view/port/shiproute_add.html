@@ -211,8 +211,8 @@
                     success:function(data){
                      if(data.status==1){
                         layui.layer.msg('添加成功', {icon: 1,time: 500},function(){
-                            // parent.location.reload();
-                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.location.reload();//刷新父页面
+                            var index = parent.layer.getFrameIndex(window.name);//获取子窗口
                             //关闭当前frame
                             parent.layer.close(index);
                         });
