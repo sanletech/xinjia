@@ -112,6 +112,7 @@ class Wechat extends Common
 
         $dataM = new WechatM();
         $member_code = $this->member_code;
+        // var_dump($member_code);exit;
         $data = $dataM->orderQuery($member_code,$limit,$page,$status,$order_num,$s_port,$e_port);
         return json($data);
         

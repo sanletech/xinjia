@@ -65,7 +65,7 @@ class Wechat extends Model
                     . 'P1.port_name s_port_name ,P1.port_code s_port_code,P1.city_id s_city_id,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,P2.city_id e_city_id,'
                     . 'OP.status,OP.money_status,OP.container_buckle,OP.container_status,OP.type')
-            ->group('OP.id')->where('OP.member_code',$member_code)
+            ->where('OP.member_code',$member_code)
             ->buildSql();
         // $this->_p($map);exit;
         // 查询出当前页数显示的数据

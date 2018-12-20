@@ -44,10 +44,10 @@
                     <input type="text" name="order_num" value='<{$order_num}>' placeholder="运单号" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-input-inline">
-                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
+                  <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发点" class="layui-input">
                 </div>
                 <div class="layui-input-inline">
-                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
+                  <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的点" class="layui-input">
                 </div>
                 <div class="layui-input-inline">
                   <input type="text"  value='' placeholder="起始时间" autocomplete="off" class="layui-input" name="date_start" id="date">
@@ -62,7 +62,8 @@
                   <ul>
                     <li>省份</li>
                     <li>城市</li>
-                    <li>港口</li>
+                    <li>区县</li>
+                    <li>街道</li>
                   </ul>
                   <div id="dizhi"></div>
               </div>
@@ -106,7 +107,7 @@
                 <{volist name="list" id="vo"}>
                   <tr>
                     <td class="ddh">
-                      <a href="<{:url('index/OrderPort/orderPortDetail')}>?order_num=<{$vo.order_num}>" title="订单详情" target="_blank" ><{$vo.order_num}></a>
+                      <a href="<{:url('index/order/order_detail')}>?order_num=<{$vo.order_num}>" title="订单详情" target="_blank" ><{$vo.order_num}></a>
                     </td>
                     <td><{$vo.track_num}></td>
                     <td><{$vo.ctime}></td>
@@ -134,7 +135,19 @@
                       <{/if}>
                     </td>
                     <!-- 驳回提示  title -->
-                    <td class="goods"><a href="javascript:void(0);" title="<{$vo.container_buckle_comment}>"><{$vo.container_buckle}></a></td>
+                    <!-- <a href="javascript:void(0);" title="<{$vo.container_buckle_comment}>"><{$vo.container_buckle}></a> -->
+                    <td class="goods">
+                      <?php                                    
+                      $url= url('index/Personal/downs',['order_num'=>$vo['order_num'],'type'=>'sea_waybill']);
+                      if($vo['container_buckle']=='unlock'){
+                        echo '订单进行中';
+                      }elseif($vo['container_buckle']=='lock'){
+                        echo '申请放货中';
+                      }elseif($vo['container_buckle']=='apply'){
+                        echo '待申请放货通过';
+                      }
+                      ?>
+                    </td>
                     <td class="xiaz">
                       <!-- 有改变css('background-color','#00DB00') -->
                     <?php                                    
@@ -201,10 +214,13 @@
       var url="<{:url('index/personal/place_order_port')}>";//显示港订单
       var track_data = "<{:url('index/Personal/track_data')}>";//获取柜号
       var track_num = "<{:url('index/Personal/track_num')}>";//提交柜号
+      var addressURL = "<{:url('admin.php/address/town')}>";//查询街道
+      var add = { start_id: '', end_id: '', load_time: '' };
     </script>
     <!-- <script src="__STATIC__/js/personal/page.js"></script> -->
-    <script src="__STATIC__/../admin/js/port.js"></script>
-    <script src="__STATIC__/js/personal/cabinet_number.js"></script>
+    <!-- <script src="__STATIC__/../admin/js/port.js"></script> -->
+    <script src="__STATIC__/js/area.js"></script>
+    <script src="__STATIC__/js/personal/place_order.js"></script>
     <script>
         var page ='<{$page}>';
         var count='<{$count}>';
