@@ -334,7 +334,7 @@
             //上传完毕回调
             if (res.status) {
                 layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                    layer.close(index);
+                    layui.layer.close(layer.index);
                 });
             } else {
                 layui.layer.msg('提交失败', { icon: 2, time: 1000 });
@@ -357,7 +357,7 @@
             //上传完毕回调
             if (res.status) {
                 layui.layer.msg('提交成功', { icon: 1, time: 500 }, function () {
-                    layer.close(index);
+                    layui.layer.close(layer.index);
                 });
             } else {
                 layui.layer.msg('提交失败', { icon: 2, time: 1000 });
@@ -514,10 +514,11 @@
                         , content: $('#dc')
                     });
                 } else if (data.status == '待派车') {
-                    let shu = $('#chedui .hang')[0].outerHTML;
+                    let shu = $('#chedui .hang').eq(0).html();
                     $('#chedui').html('')
                     
                     $.get("<{:url('admin/order/LoadData')}>",{order_num:data.order_num},function(res){
+                        console.log(res)
                         for (let i = 0; i < res.length; i++) {                        
                             $('#chedui').append(`<div class="hang">
                         <div class="layui-form-item">

@@ -45,7 +45,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订单号：</label>
                                 <div class="layui-input-block">
-                                    <input name="order_num" lay-verify="title" autocomplete="off" readOnly class="layui-input" type="text" value="<{$list.order_num}>">
+                                        <{$list.order_num}>
+                                    <input name="order_num" class="layui-input" type="hidden" value="<{$list.order_num}>">
                                 </div>
                             </div>
                         </div>
