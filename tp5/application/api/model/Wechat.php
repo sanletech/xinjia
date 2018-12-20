@@ -70,7 +70,7 @@ class Wechat extends Model
         // $this->_p($map);exit;
         // 查询出当前页数显示的数据
         $list = Db::table($listSql.' A')->where($map)->order('A.id ,A.ctime desc')->fetchSql(false)->page($page,$limit)->select();
-    //    var_dump($list);EXIT;
+//        var_dump($list);EXIT;
         //转换状态
         foreach ($list as $key=>$value){
             switch ($value['status']){
