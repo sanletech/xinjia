@@ -40,12 +40,11 @@ class Common extends Controller {
     // 登出
     public  function logout()
     {
-        $name = Session::pull('name','wechat');
         //清空wechat下的值
-        Session::clear('wechat');
+        Session::clear('think');
         if( is_null(Session::get('member_code')) );
         {
-            return json(array('status'=>1,'message'=>'logout'.$name));
+            return json(array('status'=>1,'message'=>'logout'));
         }        
     }
 

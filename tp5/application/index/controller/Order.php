@@ -20,8 +20,8 @@ class Order extends Base
         $end_add =$this->request->param('end_id');
         if($end_add){ $this->view->assign('end_add',$end_add);  }
         
-        $load_time =$this->request->param('load_time');
-        if($load_time){ $this->view->assign('load_time',$load_time);  } 
+        $end_time =$this->request->param('load_time');
+        if($end_time){ $this->view->assign('load_time',$load_time);  } 
         
         //获取每页显示的条数
         $limit= $this->request->param('limit',10,'intval');
@@ -29,12 +29,12 @@ class Order extends Base
         $page= $this->request->param('page',1,'intval');  
         //计算出从那条开始查询
         $sea_pirce =new OrderM;
-        $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$load_time,$page,$limit);
-        //获取总页数
-        $count =  $data['count']; 
-        $list = $data['list'] ;
+        $ship_id= '';
+        $start_time = date('Y-m-d H:00:00');
+        $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit);
+ 
         $this->view->assign('page',$page); 
-        $this->view->assign('count',$count); 
+        $this->view->assign('count',$data[]); 
         $this->view->assign('limit',$limit); 
         $this->view->assign('list',$list);
 //      $this->_p($list);exit;

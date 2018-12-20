@@ -8,7 +8,7 @@ use think\Session;
 class OrderPort extends Model
 {
     
-    public function price_port($tol,$limit,$start_add='',$end_add='',$ship_id='',$seaprice_id='') { 
+    public function price_port($page,$limit,$start_add='',$end_add='',$ship_id='',$seaprice_id='') { 
         //门到门 设置客户利润，港到港没有利润只有在线优惠
         $nowtime= date('y-m-d h:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
@@ -24,23 +24,16 @@ class OrderPort extends Model
                         . 'SR.middle_id')
                 ->group('SP.id,SR.id')
                 ->buildSql();
-        if($ship_id){
-            $price_list = Db::table($price_list.' E')->where('E.ship_id',$ship_id)->buildSql();
-        }
-        if($start_add){
-            $price_list = Db::table($price_list.' F')->where('F.r_port_code',$start_add)->buildSql();
-        }
-        if($end_add){
-            $price_list = Db::table($price_list.' G')->where('G.s_port_code', $end_add)->buildSql();
-        }
-        if($seaprice_id){
-            $price_list = Db::table($price_list.' H')->where('H.id', $seaprice_id)->buildSql();
-        }
-//        var_dump($price_list);exit;
-        $count = Db::table($price_list.' K')->count();
-        $list =Db::table($price_list.' J')->order('J.mtime ASC')->limit($tol,$limit)->select();
-//        $this->_p($list);exit;
-        return array($list,$count);
+        $map =[];
+        $ship_id ? $map['A.ship_id'] = $ship_id : '';
+        $start_add ? $map['A.r_port_code'] = $start_add:'';
+        $end_add?$map['A.s_port_code'] = $end_add:'';
+        $seaprice_id?$map['A.id'] = $seaprice_id:'';
+        
+        $count = Db::table($price_list.' K')->where($map)->count();
+        $list =Db::table($price_list.' J')->where($map)->order('J.mtime ASC')->page($page,$limit)->select();
+
+        return array('list'=>$list,'count'=>$count);
     }
     
     public function portBook($member_code,$seaprice_id,$container_size){
@@ -53,7 +46,7 @@ class OrderPort extends Model
             return '参数错误';
         }
         //根据航线信息的船公司 来查询在线支付的优惠
-        $res=$res[0][0];
+        $res=$res['list'][0];
 //        $this->_p($res);exit;
         $ship_id =$res['ship_id'];
         // 将集装箱字的尺寸添加到数组中 删除不符合的尺寸价格
