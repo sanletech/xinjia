@@ -9,6 +9,11 @@ use think\Db;
 class Keeper extends Base
 {
 
-    //部门
+    //部门添加
+    protected function addTeam(){
+        
+        
+    }
+    
     
 } 
