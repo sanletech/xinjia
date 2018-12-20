@@ -30,8 +30,8 @@ class OrderPort extends Model
         $end_add?$map['A.s_port_code'] = $end_add:'';
         $seaprice_id?$map['A.id'] = $seaprice_id:'';
         
-        $count = Db::table($price_list.' K')->where($map)->count();
-        $list =Db::table($price_list.' J')->where($map)->order('J.mtime ASC')->page($page,$limit)->select();
+        $count = Db::table($price_list.' A')->where($map)->count();
+        $list =Db::table($price_list.' A')->where($map)->order('A.mtime ASC')->page($page,$limit)->select();
 
         return array('list'=>$list,'count'=>$count);
     }
@@ -40,8 +40,8 @@ class OrderPort extends Model
         if(!($container_size =='20GP'||$container_size =='40HQ')){
             return '参数错误';
         } 
-        //航线信息
-        $res = $this->price_port(0,100,0,0,0,$seaprice_id);
+        //航线信息   
+        $res = $this->price_port(1,100,0,0,0,$seaprice_id);
         if(empty($res)){
             return '参数错误';
         }
