@@ -455,7 +455,7 @@
                             // layer.close(loading);
                             layer.msg("添加成功", { icon: 6, time: 1000 }, function () {
                             // 获得frame索引
-                            // parent.location.reload();
+                            parent.location.reload();
                             var index = parent.layer.getFrameIndex(window.name);
                             //关闭当前frame
                             parent.layer.close(index);
