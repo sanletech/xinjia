@@ -117,8 +117,9 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">柜型：</label>
                                 <div class="layui-input-block">
-                                    <input name="container_size" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="<{$list.container_size}>"
-                                        disabled>
+                                    <!-- <input name="container_size" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" type="text" value="<{$list.container_size}>"
+                                        disabled> -->
+                                        <{$list.container_size}>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +128,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">货名：</label>
                                 <div class="layui-input-block">
-                                    <input name="cargo" lay-verify="title" autocomplete="off" placeholder="请输入货名" class="layui-input" type="text" value="<{$list.cargo}>">
+                                    <!-- <input name="cargo" lay-verify="title" autocomplete="off" placeholder="请输入货名" class="layui-input" type="text" value="<{$list.cargo}>"> -->
+                                    <{$list.cargo}>
                                 </div>
                             </div>
                         </div>
@@ -141,24 +143,24 @@
                         </div> -->
 
                        
-                        <div class="guix">
+                        <!-- <div class="guix">
                             <div class="wenzi">柜号-封号：</div>
                             <div class="ggh">
                                 <{volist name="containerData" id="container"}>
                                 <div class="layui-form-item">
                                     <div class="guinei" style="text-align:right;margin-top: 12px;">
                                         <input name="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.container_code}>">
-                                        <!-- <{$container.container_code}> -->
+                                        <{$container.container_code}>
                                     </div>
                                     <div class="layui-form-mid">-</div>
                                     <div class="guinei" style="margin-top: 12px;">
                                         <input name="seal" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.seal}>">
-                                        <!-- <{$container.seal}> -->
+                                        <{$container.seal}>
                                     </div>
                                 </div>
                                 <{/volist}>
                             </div>
-                        </div>
+                        </div> -->
                        
                     </div>
                 </div>
@@ -216,26 +218,26 @@
                                 <{volist name = "carData['r']" id ="car_data"}>
                                 <tr>
                                     <td>
-                                        <input name="car_name" value="<{$car_data.car_name}>" class="layui-input" placeholder="车队">
+                                        <input name="car_name[]" value="<{$car_data.car_name}>" class="layui-input" placeholder="车队">
                                     </td>
-                                    <td><input name="car_code" value="<{$car_data['car_code']}>" class="layui-input"  placeholder="车牌"></td>
+                                    <td><input name="car_code[]" value="<{$car_data['car_code']}>" class="layui-input"  placeholder="车牌"></td>
                                     <td>
-                                        <input name="driver_name"  value="<{$car_data['driver_name']}>"  class="layui-input"  placeholder="司机" >
-                                    </td>
-                                    <td>
-                                        <input name="phone" value="<{$car_data['driver_name']}>"  class="layui-input" placeholder="司机手机号"  >
+                                        <input name="driver_name[]"  value="<{$car_data['driver_name']}>"  class="layui-input"  placeholder="司机" >
                                     </td>
                                     <td>
-                                        <input name="identity_card" value="<{$car_data['identity_card']}>"  placeholder="司机身份证" autocomplete="off" class="layui-input" type="text" >
+                                        <input name="phone[]" value="<{$car_data['driver_name']}>"  class="layui-input" placeholder="司机手机号"  >
                                     </td>
                                     <td>
-                                        <input name="container_code"  value="<{$car_data['container_code']}>"    class="layui-input" placeholder="柜号"type="text">
+                                        <input name="identity_card[]" value="<{$car_data['identity_card']}>"  placeholder="司机身份证" autocomplete="off" class="layui-input" type="text" >
                                     </td>
                                     <td>
-                                        <input name="seal" value="<{$car_data['seal']}>" class="layui-input" placeholder="封条号" type="text">
+                                        <input name="container_code[]"  value="<{$car_data['container_code']}>"    class="layui-input" placeholder="柜号"type="text">
                                     </td>
                                     <td>
-                                        <input name="work_time" value="<{$car_data['work_time']}>"  class="layui-input test-item" placeholder="装货时间"  >
+                                        <input name="seal[]" value="<{$car_data['seal']}>" class="layui-input" placeholder="封条号" type="text">
+                                    </td>
+                                    <td>
+                                        <input name="work_time[]" value="<{$car_data['work_time']}>"  class="layui-input test-item" placeholder="装货时间"  >
                                     </td>
                                 </tr>
                                 <{/volist}>
@@ -243,14 +245,15 @@
                         </table>
                     </div>
                     <!-- 待配船 -->
+                    &nbsp;
+                    <{volist name="shipData" id ="ship_data"}>
                     <div class="dd_nei">
-                        <{volist name="shipData" id ="ship_data"}>
                         <div class="layui-col-xs2 er">
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">港口：</div>
                                 <div class="layui-col-xs9" style="text-align: left">
                                     <!--<input name="port_code" type="text" class="layui-input hidden" type="text" value="<{$ship_data.port_code}>">-->
-                                    <input name="port_name" title ="<{$ship_data.port_code}>" class="layui-input" type="text" value="<{$ship_data.port_name}>">
+                                    <input name="port_name[]" title ="<{$ship_data.port_code}>" class="layui-input" type="text" value="<{$ship_data.port_name}>">
                                 </div>
                             </div>
                         </div>
@@ -259,7 +262,7 @@
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">船名：</div>
                                 <div class="layui-col-xs9" style="text-align: left">
-                                        <input name="ship_name" class="layui-input" type="text" value="<{$ship_data.ship_name}>">
+                                        <input name="ship_name[]" class="layui-input" type="text" value="<{$ship_data.ship_name}>">
                                 </div>
                             </div>
                         </div>
@@ -270,20 +273,21 @@
                                 <div class="layui-inline">
                                     <label class="layui-form-label">到港-离港时间</label>
                                     <div class="layui-input-inline" style="width: 150px;margin-right: -15px;">
-                                        <input type="text" name="arrival_time" class="layui-input test-item" value="<{$ship_data.arrival_time}>" placeholder="YYYY-MM-dd">
+                                        <input type="text" name="arrival_time[]" class="layui-input test-item" value="<{$ship_data.arrival_time}>" placeholder="YYYY-MM-dd">
                                         <!-- <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input"> -->
                                     </div>
                                     <div class="layui-form-mid">-</div>
                                     <div class="layui-input-inline" style="width: 150px;">
-                                        <input type="text" name="dispatch_time" class="layui-input test-item" value="<{$ship_data.dispatch_time}>" placeholder="YYYY-MM-dd">
+                                        <input type="text" name="dispatch_time[]" class="layui-input test-item" value="<{$ship_data.dispatch_time}>" placeholder="YYYY-MM-dd">
                                         <!-- <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input"> -->
                                     </div>
                                 </div>
                                 </div>
                             </div>
                         </div>  
-                        <{/volist}>
+                       
                     </div>
+                    <{/volist}>
                     <!-- 费用 -->
 <!--                    <div class="feiyong dd_nei">
                         <div class="layui-col-xs12">
@@ -419,8 +423,8 @@
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>箱型：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
-                                            <!-- <{$list.container_type}> -->
-                                            <input name="container_size" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_size}>">
+                                            <{$list.container_size}>
+                                            <!-- <input name="container_size" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_size}>"> -->
                                     </div>
                             </div>
                         </div>  
@@ -542,7 +546,7 @@
                                     备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：
                                 </div>
                                 <div class="layui-col-xs10 inp">
-                                        <{$list.comment}>
+                                        <input type="text" name="comment" value="<{$list.comment}>" placeholder="填写备注信息" class="layui-input">
                                 </div>
                             </div>
                         </div>
