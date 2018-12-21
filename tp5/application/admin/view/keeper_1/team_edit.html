@@ -1,0 +1,138 @@
+<{include file='./public/header' /}>
+
+
+  <body>
+    <style>
+      .x-nav .an {
+        float: right;
+        line-height: 30px;
+        height: 30px;
+        margin-top: 3px;
+        margin-right: 5px;
+      }
+
+      .bumen {
+        border-right: 1px solid #000;
+      }
+
+      .layui-input-inline {
+        margin: 5px;
+      }
+
+      .tij {
+        text-align: right;
+      }
+
+      .zi {
+        padding: 5px 0 0 10px;
+
+      }
+
+      .zi .xian {
+        border: 0;
+      }
+    </style>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite>
+        </a>
+      </span>
+      <a class="layui-btn layui-btn-small an" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon">ဂ</i>
+      </a>
+      <a class="layui-btn layui-btn-warm an" title="增加">增加部门</a>
+    </div>
+    <div class="x-body layui-row">
+      <!--无限极部门分类-->
+      <div class="layui-col-xs2 bumen">
+        <{$tree}>
+      </div>
+
+      <!--编辑子类目-->
+      <div class="layui-col-xs9 zi">
+        <span>现有部门：</span>
+        <form id="eide_team">
+          <{volist name='list' id='item' }>
+            <div class="layui-input-inline you">
+              <input name="old_job_team" class="layui-input" value="<{$item.title}>" type="text">
+            </div>
+            <{/volist}>
+        </form>
+        <!-- 新增部门 -->
+        <div class="layui-col-xs12 xin">
+          <span>新增部门：</span>
+          <form id="new_team">
+
+          </form>
+        </div>
+        <div class="tij">
+          <a class="layui-btn" lay-submit="" lay-filter="demo1">提交</a>
+        </div>
+      </div>
+    </div>
+
+
+    <script>
+      layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+      });
+
+
+      $('.xin').hide();
+      var boot = false;
+      $('.x-nav .an').click(function () {
+        $('#new_team').append('<div class="layui-input-inline">' +
+          '<input name="cutoff_date" class="layui-input" value="" type="text">' +
+          '</div>');
+        $('.you').children('input').addClass('xian').attr('readonly', true);
+        $('.xin').show();
+        boot = true;
+      });
+
+      $('.tij a').click(function () {
+        if (boot) {//增加
+          let list = $('#new_team').serialize();
+          console.log(list);
+        } else {//修改
+          let list = $('#eide_team').serialize();
+          console.log(list);
+        }
+        
+      });
+
+      function toajax(id, status) {
+        $.ajax({
+          type: 'post',
+          url: "<{:url('')}>",
+          dataType: "json",
+          success: function (data) {
+            console.log(data);
+            if (data == 1) {
+              // alert("提交成功");
+              layui.layer.msg('提交成功', {icon: 1,time: 1000});
+            } else {
+              // alert("提交失败");
+              layui.layer.msg('提交失败', {icon: 2,time: 1000});
+            }
+          }
+        })
+      }
+
+    </script>
+    <script type="text/javascript" src="__STATIC__/js/team.js"></script>
+  </body>
+
+  </html>

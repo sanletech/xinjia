@@ -227,7 +227,7 @@
       $('#day').append('<option value="' + i + '">' + i + '天</option>');
     }
     //默认第五天
-    $("#day").val(5);
+    $("#day").val(<{$data['sea_limitation']}>);
 
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form
@@ -259,8 +259,8 @@
     
     //加载 所有的船公司名字简称和相应boat的id
     var js_ship_boat = JS_SHIP_BOAT;
-    var ship_name = '<{$data.ship_short_name}>';//船公司
-    var boat_name = '<{$data.boat_name}>';//船名
+    var ship_name = '<{$data.ship_id}>';//船公司
+    var boat_name = '<{$data.boat_id}>';//船名
     var url="<{$toURL}>";
     //加载船公司
     function loadship(){
@@ -268,7 +268,7 @@
         var ship_length =js_ship_boat.length;
         var shipHtml = '';
         for(var i=0;i<ship_length;i++){
-            if (js_ship_boat[i].ship_name == ship_name) {
+            if (js_ship_boat[i].ship_id == ship_name) {
                 shipHtml += '<option  value="' + js_ship_boat[i].ship_id  +'_'+ js_ship_boat[i].boat_list.length+ '_' + i + '" selected>' + js_ship_boat[i].ship_name + '</option>';
                 loadBoat(js_ship_boat[i].boat_list); 
             }else{
@@ -297,7 +297,7 @@
         if(typeof(boat) !== 'undefined' && boat!=0){
             var boat_length =boat.length;
             for(var i=0;i<boat_length;i++){
-                if (boat[i].boat_name == boat_name) {
+                if (boat[i].id == boat_name) {
                     areaHtml += '<option  value="' + boat[i].id+ '"> selected' + boat[i].boat_name + '</option>';
                 }else{
                     areaHtml += '<option  value="' + boat[i].id+ '">' + boat[i].boat_name + '</option>';
