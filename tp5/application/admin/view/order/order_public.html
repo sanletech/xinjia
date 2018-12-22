@@ -44,6 +44,8 @@
             <input type="checkbox" name="status" value="load_ship" lay-skin="primary" lay-filter="port" title="待配船" checked="">
             <input type="checkbox" name="status" value="sea_waybill" lay-skin="primary" lay-filter="port" title="上传水运单" checked="">
             <input type="checkbox" name="status" value="unloading" lay-skin="primary" lay-filter="port" title="待送货" checked="">
+            <input type="checkbox" name="status" value="completion" lay-skin="primary" lay-filter="port" title="已完成" checked="">
+            <input type="checkbox" name="status" value="stop" lay-skin="primary" lay-filter="port" title="已终止" checked="">
         </div>
 
         <table class="layui-hide" id="test1" lay-filter="test1"></table>
@@ -54,7 +56,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">运单号</label>
             <div class="layui-input-block">
-                    <input type="text" name="track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input">
+                    <input type="text" name="track_num" lay-verify="title" autocomplete="off" placeholder="请输入运单号" class="layui-input" id="dan_num">
             </div>
         </div>
 
@@ -331,7 +333,7 @@
             ,auto:false
             ,bindAction:'#scdc1'
             ,before: function(obj){
-                this.data ={order_num:order_num,track_num:$('input[name="track_num"]').val()};
+                this.data ={order_num:order_num,track_num:$('#dan_num').val()};
             }
             ,done: function(res){
             //上传完毕回调
@@ -507,6 +509,7 @@
                 $('.yunding').eq(i).find('input').eq(0).val(data.order_num);
                 $('.yunding').eq(i).find('input').eq(1).val(data.track_num); 
             }
+
             if (obj.event === 'confirm') {//点击备注
             //    data.status = '待配船'
                 // console.log(data.order_num, data.container_sum, data.status);
@@ -620,11 +623,20 @@
                             '</div><div class="layui-col-xs2">'+
                             '<input type="text" name="seal" value="'+res[i].seal+'" lay-verify="title" autocomplete="off" placeholder="请输入封条号" class="layui-input in" readonly>'+
                             '</div><div class="layui-col-xs3">'+
-                            '<input type="text" name="work_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input test-date in" readonly>'+
+                            '<input type="text" name="work_time"  lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input test-date in">'+
                             '</div></div>'); 
                         }
+
+                        lay('.test-date').each(function(){
+                            laydate.render({
+                            elem: this
+                            ,trigger: 'click'
+                            });
+                        });  
                         
-                    });                          
+                    });   
+
+                     
                     
                     layer.open({
                         type: 1
@@ -636,13 +648,6 @@
                         , yes: function (index) {
                             fun_in($('#container .dzh .in'));
                             layer.msg('可以修改柜号-封条号', { icon: 6, time: 1500 });
-
-                            lay('.test-date').each(function(){
-                                laydate.render({
-                                elem: this
-                                ,trigger: 'click'
-                                });
-                            });
                         }
                         ,btn2:function(index){
                             let list = fun_arr($('#container .dzh .gfth'));  
@@ -702,7 +707,8 @@
                                     if (res.status) {
                                         layer.msg('提交成功', { icon: 1, time: 500 }, function () {
                                             layer.close(a_indexs);
-                                            window.location.reload();
+                                            // window.location.reload();
+                                            $('.layui-btn-small').click();
                                         });
                                     } else {
                                         layer.msg('提交失败', { icon: 2, time: 1000 });
@@ -724,8 +730,6 @@
                         });              
                     }
 
-                    console.log(res)
-
                     for (let i = 0; i < res.length-1; i++) {
                         if (i == 0) {
                             $('#dai_post .dai').append('<div class="xian"><div class="layui-col-xs12 ming">'+
@@ -736,7 +740,7 @@
                             '</div><div class="layui-col-xs5 inpt">'+
                             '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in">'+
                             '<div class="he">-</div>'+
-                            '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac ="d'+i+'">'+
+                            '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in">'+
                             '</div><div class="layui-col-xs2 ps">'+
                             '<input type="text" name="ship_name" value="'+res[i].ship_name+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input in">'+
                             '</div><div class="layui-col-xs5 inpt">'+
@@ -751,13 +755,13 @@
                             '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
                             '<input type="hidden" name="port_code" value="'+res[i].port_code+'" class="layui-input in"><input type="hidden" name="port_code" value="'+res[i+1].port_code+'" class="layui-input ip">'+
                             '<input type="hidden" name="ship_name" value="" class="layui-input ip"></div><div class="layui-col-xs5 inpt">'+
-                            '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
+                            '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i-1]+'">'+
                             '<div class="he">-</div>'+
-                            '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i]+'">'+
+                            '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
                             '</div><div class="layui-col-xs2 ps">'+
                             '<input type="text" name="ship_name" value="'+res[i].ship_name+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input in">'+
                             '</div><div class="layui-col-xs5 inpt">'+
-                            '<input type="text" name="arrival_time" value="'+res[i+1].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i]+'">'+
+                            '<input type="text" name="arrival_time" value="'+res[i+1].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in">'+
                             '<div class="he">-</div>'+
                             '<input type="text" name="dispatch_time" value="'+res[i+1].dispatch_time+'" lay-verify="date" placeholder="卸港时间" autocomplete="off" class="layui-input test-item ip">'+
                             '</div></div></div></div>');
@@ -768,9 +772,9 @@
                             '<div class="dzh"><div class="layui-col-xs12 gfth"><div class="layui-col-xs3 lu">'+
                             '<input type="hidden" name="port_code" value="'+res[i].port_code+'" class="layui-input in">'+
                             '</div><div class="layui-col-xs5 inpt">'+
-                            '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
+                            '<input type="text" name="arrival_time" value="'+res[i].arrival_time+'" lay-verify="date" placeholder="到港时间" autocomplete="off" class="layui-input test-item in" ac="d'+[i-1]+'">'+
                             '<div class="he">-</div>'+
-                            '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="d'+i+'">'+
+                            '<input type="text" name="dispatch_time" value="'+res[i].dispatch_time+'" lay-verify="date" placeholder="离港时间" autocomplete="off" class="layui-input test-item in" ac="l'+[i-1]+'">'+
                             '</div><div class="layui-col-xs2 ps">'+
                             '<input type="text" name="ship_name" value="'+res[i].ship_name+'" lay-verify="title" autocomplete="off" placeholder="船名" class="layui-input in">'+
                             '</div><div class="layui-col-xs5 inpt">'+
@@ -917,7 +921,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">柜号</label>
                             <div class="layui-input-block">
-                                <input type="text" name="container_code" value="${res[i].container_code?res[i].container_code:''}" lay-verify="title" autocomplete="off" placeholder="请输入柜号" class="layui-input">
+                                <input type="text" name="container_code" value="${res[i].container_code?res[i].container_code:''}" lay-verify="title" autocomplete="off" placeholder="请输入柜号" class="layui-input" readonly>
                             </div>
                         </div>
 

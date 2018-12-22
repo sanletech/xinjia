@@ -16,6 +16,10 @@
                 color: red;
                 font-size: 24px;
             }
+            td  
+            {  
+            white-space: nowrap;  
+            }  
         </style>
         <form class="" id='order_data_form'>
             <div class="xxtx">
@@ -140,7 +144,7 @@
                         </div>-->
 
                        
-                         <div class="guix">
+                         <div class="guix layui-col-xs12">
                             <div class="wenzi">柜号-封号：</div>
                             <div class="ggh">
                                 <{volist name="containerData" id="container"}>
@@ -449,25 +453,31 @@
                                         </td>
                                         <td>柜</td>
                                         <td>
-                                            <{$carR.add}>
+                                            <input name="r_add[]" type="text" value="<{$carR.add}>">
+                                            
                                         </td>
                                         <td>
-                                            <{$carR.link_man}>
+                                            
+                                            <input name="r_link_man[]" type="text" value="<{$carR.link_man}>">
                                         </td>
                                         <td>
-                                            <{$carR.shipper}>
+                                            
+                                            <input name="shipper[]" type="text" value="<{$carR.shipper}>">
                                         </td>
                                         <td>
-                                            <{$carR.load_time}>
+                                            
+                                            <input name="r_load_time[]" type="date" value="<{$carR.load_time}>">
                                         </td>
                                         <td>
-                                            <{$carR.link_phone}>
+                                            
+                                            <input name="r_link_phone[]" type="text" value="<{$carR.link_phone}>">
                                         </td>
                                         <td>
-                                            <{$carR.car}>
+                                            
+                                            <input name="r_car[]" type="text" value="<{$carR.car}>">
                                         </td>
                                         <td>
-                                            <{$carR.comment}>
+                                            <input name="r_comment[]" type="text" value="<{$carR.comment}>">
                                         </td>
                                     </tr> 
                                        <{/volist}>
@@ -505,13 +515,13 @@
                                             </td>
                                             <td>柜</td>
                                             <td>
-                                                <{$carS.add}>
+                                                <input name="s_add[]" type="text" value="<{$carS.add}>">
                                             </td>
                                             <td>
-                                                <{$carS.car}>
+                                                <input name="s_car[]" type="text" value="<{$carS.car}>">
                                             </td>
                                             <td>
-                                                <{$carS.comment}>
+                                                <input name="s_comment[]" type="text" value="<{$carS.comment}>">
                                             </td>
                                         </tr>
                                         <{/volist}>
@@ -639,6 +649,7 @@
             var xiu_url = "<{:url('admin/Financial/Order_completion')}>";//已完成订单
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
+        <script src="__STATIC__/js/lrdd.js"></script>
         <script>
             $('.songhuo,.zhuanghuo').show();
             // $('input').attr('readonly', true);

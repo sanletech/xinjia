@@ -103,7 +103,7 @@ class Order extends Base
             return json(array('status'=>0,'message'=>'参数不对'));
         }
         //判断下装货的柜子和送货的时候是否一样
-        if($type == 'load'){
+        if($type == 'send'){
             //装货的柜号
             $container_code =  Db::name('order_car')
                     ->where(['order_num'=>$order_num,'type'=>'load'])
@@ -410,11 +410,12 @@ class Order extends Base
         $file = request()->file('file');
         $order_num = $this->request->param('order_num');
         $type = trim($this->request->param('type'));
+
         if(!($type=='book_note'||$type=='sea_waybill')){
             return FALSE;
         }
         $track_num= $this->request->param('track_num');
-//        $this->_p($this->request->param());exit;
+    //    $this->_p($this->request->param());exit;
         $OrderProcessC =  new OrderProcessC();
         $res =$OrderProcessC->Upload($order_num,$type,$file);
         //上传成功就更改状态

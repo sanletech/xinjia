@@ -142,8 +142,8 @@ class OrderProcess extends Base
                'list'  =>$dataArr['list'],
                'containerData' => $dataArr['containerData'],
                'carData'=> $dataArr['carData'],
-               'shipperArr'=>$dataArr['shipperArr'],
-               'consignerArr'=>$dataArr['consignerArr'],
+               'shipperArr'=>$dataArr['shipperArr'],//收货
+               'consignerArr'=>$dataArr['consignerArr'],//发货
             ]);
             return $this->view->fetch('orderPort/port_detail');
             
@@ -173,8 +173,6 @@ class OrderProcess extends Base
                 ->field('track_num,cargo,container_type,comment')
                 ->update($map);
         //同时记录操作
-        
-       
     }
     
 }
