@@ -394,6 +394,14 @@ class Order extends Base
         $search = array_key_exists('search', $data)? $data['search']:''; //搜索条件
         $status = array_key_exists('status', $data)? $data['status']:array(); //状态选择
         $status_arr = array_intersect_key($this->order_status, array_flip($status));
+        //订单取消增加一种
+        if(array_key_exists('stop', $status_arr)){
+            $status_arr['cancel']= $this->order_status['cancel'];
+        } 
+        //订单完成增加一种
+        if(array_key_exists('completion', $status_arr)){
+            $status_arr['check_bill']= $this->order_status['check_bill'];
+        }
         $dataM = new OrderM;
         $data = $dataM->order_public($page,$limit,$search,$status_arr);
         $list =$data['list']; //分页数据

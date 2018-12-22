@@ -82,11 +82,11 @@ class Price extends Base
     public function route_again() {
         $seaprice_id = input('get.seaprice_id');
         $seaprice = new PriceM;
-        $res = $seaprice-> price_route_list('','','',100,$seaprice_id);
-//        $this->_p($res['0']);exit;
+        $res = $seaprice->route_edit($seaprice_id);
+//        $this->_p($res);exit;
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
-        $this->assign('data',$res['0']);
+        $this->assign('data',$res);
         $this->assign('readOnly','true');//是否禁用
         $this->assign('toURL',url('admin/Price/route_toedit','type=again'));
         return $this->view->fetch("price/route_edit");
@@ -138,8 +138,7 @@ class Price extends Base
         return json( $res ? array('status'=>1,'message'=>$type.'_success'):array('status'=>0,'message'=>$type.'_fail'));
     }
     
-    
-        //拖车运价
+    //拖车运价
     public function price_trailer() 
     {      
         $port_name = input('get.port_name');
@@ -157,7 +156,6 @@ class Price extends Base
         return $this->view->fetch('price/price_trailer'); 
     }
 
-    
     //拖车添加展示页面
     public function trailer_add(){
         
