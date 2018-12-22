@@ -102,7 +102,11 @@ class Order extends Base
         if(!in_array($type, array('load','send') ) ){
             return json(array('status'=>0,'message'=>'参数不对'));
         }
+<<<<<<< HEAD
         //判断下装货的柜子和送货的时候是否一样
+=======
+        //判断下送货的柜子和的装货时候是否一样
+>>>>>>> 409a6bd160ca9b3a2c36dd015ebee83f0297931b
         if($type == 'send'){
             //装货的柜号
             $container_code =  Db::name('order_car')
@@ -139,7 +143,7 @@ class Order extends Base
         $type ?$type :$type='load';
         $data = Db::name('order_car')
                 ->where(['order_num'=>$order_num,'type'=>$type])
-                ->field('id,container_code,seal,driver_name,phone')
+                ->field('id,container_code,seal,driver_name,phone,type')
                 ->select();
         //如果为空就生成数据
         if(empty($data)){
@@ -383,7 +387,7 @@ class Order extends Base
     
     //订单处理页面
     public function order_public() {
-        return $this->view->fetch('Order/order_public');
+        return $this->view->fetch('order/order_public');
     }
     
     //订单处理页面 数据
@@ -395,9 +399,9 @@ class Order extends Base
         $status = array_key_exists('status', $data)? $data['status']:array(); //状态选择
         $status_arr = array_intersect_key($this->order_status, array_flip($status));
         $dataM = new OrderM;
-        $data = $dataM->order_public($page,$limit,$status_arr);
+        $data = $dataM->order_public($page,$limit,$search,$status_arr);
         $list =$data['list']; //分页数据
-//        $this->_p($list);exit;
+
         $count = $data['count'];// 总页数
         
         return array('code'=>0,'msg'=>'','count'=>$count,'data'=>$list);

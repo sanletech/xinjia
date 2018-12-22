@@ -263,10 +263,12 @@ class Order extends Base
             $m_port_code = explode(',', $port_arr['m_port_code']);
             for($i=0;$i<count($m_port_code);$i++) {
                 $insert_data[$i+1]['order_num'] = $order_num;
-                $inser
-    
+//                $inser
+        }
+        
+    }}
     //待配船  判断倒数第二个港口离港时间录完就自动申请放柜
-    public function  cargo_plan(){
+    public function  cargo_plan (){
         $order_num = $this->request->param('order_num');
         $lists  =  $this->request->only('list');
         $this->_p($order_num);
@@ -343,7 +345,7 @@ class Order extends Base
             return json(array('status'=>1,'message'=>'未更改'));
         }
         
-    }
+        }
     
     //订单处理页面
     public function order_public() {

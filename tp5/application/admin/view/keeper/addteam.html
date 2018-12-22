@@ -1,0 +1,96 @@
+<{include file='./public/header' /}>
+
+
+  <body>
+    <style>
+      .you {
+        text-align: right;
+      }
+      .yin{
+        display: inline-block;
+        visibility: hidden;
+      }
+      .xin{
+        margin: 5px 0;
+      }
+      .zilei i {
+        font-size: 26px;
+        line-height: 26px;
+        cursor: pointer;
+      }
+    </style>
+    <div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">演示</a>
+        <a>
+          <cite>导航元素</cite>
+        </a>
+      </span>
+      <a class="layui-btn layui-btn-small an" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon">ဂ</i>
+      </a>
+    </div>
+    <div class="x-body layui-row">
+      <!--无限极部门分类-->
+      <div class="layui-col-xs2 bumen">
+        <{$tree}>
+      </div>
+
+      <!--编辑子类目-->
+      <div class="layui-col-xs9 zi">
+        <span>
+          <{volist name="list" id="volist" }>
+            <{$volist.title}>&nbsp;
+              <{/volist}>
+        </span>
+        <form id="add_son_team">
+          <intpu type="hidden" name="father_id" value="<{$id}>">
+            <div class="zilei layui-inline">
+              <div class="layui-col-xs12">
+                <div class="layui-input-inline">
+                  <input type="text" placeholder="中文名" name="son_title[]" class="layui-input" value="">
+                </div>
+                
+                <div class="layui-input-inline">
+                  <input type="text" placeholder="英文名" name="son_job[]" class="layui-input" value="">
+                </div>
+                <div class="layui-input-inline icon">
+                  <i class="layui-icon" onclick="zeng()">&#xe654;</i>
+                </div>
+              </div>
+            </div>
+            <div class="layui-form-item you">
+              <a class="layui-btn an" href="javastript:viod(0);" title="增加">确定</a>
+            </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      function zeng() {
+        $('.zilei').append('<div class="layui-col-xs12 xin">' +
+          '<div class="layui-input-inline">' +
+          '<input type="text" placeholder="中文名" name="son_title[]" class="layui-input" value="">' +
+          '</div>' +
+          '<div class="yin">-</div>'+
+          '<div class="layui-input-inline">' +
+          '<input type="text" placeholder="英文名" name="son_job[]" class="layui-input" value="">' +
+          '</div>' +
+          '<div class="layui-input-inline icon">' +
+          '<i class="layui-icon" onclick="zeng()">&#xe654;</i>' +
+          '<i class="layui-icon" onclick="del(this)">&#x1006;</i>' +
+          '</div>' +
+          '</div>');
+      }
+      function del(zj) {
+        $(zj).parents('.xin').remove();
+      }
+      $('.you .an').click(function(){
+        let data = $('#add_son_team').serialize();
+        console.log(data);
+      });
+    </script>
+
+  </body>
+
+  </html>

@@ -17,30 +17,26 @@ class Order extends Model
     }   
     
 
-    public function order_public($page,$limit,$state='3') {
-        
+    public function order_public($page,$limit,$search,$state='3') {
+        $map = [];
+        $search['order_num']? $map['OP.order_num']=$search['order_num'] :'';
+        $search['track_num']? $map['OP.track_num']=$search['track_num'] :'';
         $listSql =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
             ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
             ->join('hl_ship_route SR',"SR.id=SP.route_id and SR.status='1'",'left')//路线表
             ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
-            ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
             ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id   
             ->join('hl_port P1','P1.port_code=SB.sl_start and P1.status=1','left')//起始港口
             ->join('hl_port P2','P2.port_code=SB.sl_end and P2.status=1','left')//目的港口
-            ->join('hl_port P3','P3.port_code=SM.sl_middle and P3.status=1','left')//中间港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
             ->join('hl_sales_member SMB','SMB.member_code=OP.member_code','left') //业务员
             ->field('OP.id,OP.order_num,OP.track_num,OP.ctime,OP.container_size,OP.container_sum,'
                     . 'OP.cargo,OP.consigner,OP.container_buckle,SC.ship_short_name,B.boat_code,B.boat_name,'
                     . 'P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
-                    . 'SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,'
-                    . 'group_concat(distinct P3.port_name order by SM.sequence) m_port_name,'
-                    . 'group_concat(distinct P3.port_code order by SM.sequence) m_port_code')
-            ->group('OP.id')
-            ->where('OP.status','in',$state)
-            ->where('OP.type','door')
+                    . 'SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation, SB.id as SB_id' )
+            ->group('OP.id')->where($map) ->where('OP.status','in',$state)->where('OP.type','door')
             ->buildSql();
 //     var_dump($listSql);exit;
         $count =  Db::table($listSql.' A')->count();  //获取总页数
@@ -121,22 +117,22 @@ class Order extends Model
     public function  send_car($order_num,$track_num,$container_sum,$car_data,$type)
     {   
         $mtime = date('Y-m-d H:i:s');   $response=[];
-        //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
-        $order_car_id = Db::name('order_car')->where(['order_num'=>$order_num,'type'=>$type])->column('id');
+//        //将派车信息插入到 order_car 里 查询是否存已经存在了对应的数据
+   //     $order_car_id = Db::name('order_car')->where(['order_num'=>$order_num,'type'=>$type])->column('id');
         foreach ($car_data as $key => $value) {
             $car_data[$key]['mtime'] = $mtime;
             $car_data[$key]['type'] = $type;
             $car_data[$key]['order_num'] = $order_num;
         }
-        if(empty($order_car_id)){
-            $res2 = Db::name('order_car')->lock(true)->insertAll($car_data);
-            $res2 ?$response['success'][]='录入车队信息成功':$response['fail'][]='录入车队信息失败';
-        }  else {
-            foreach ($car_data as $key => $value) {
-                $res3 = Db::name('order_car')->where('id',$order_car_id[$key])->update($value);
+//        if(empty($order_car_id)){
+//            $res2 = Db::name('order_car')->lock(true)->insertAll($car_data);
+//            $res2 ?$response['success'][]='录入车队信息成功':$response['fail'][]='录入车队信息失败';
+////        }  else {
+            foreach ($car_data as  $value) {
+                $res3 = Db::name('order_car')->where('id',$value['id'])->update($value);
                 $res3 ?$response['success'][]='更新车队信息成功':$response['fail'][]='更新车队信息失败';
             }
-        }
+//        }
 
         return $response;
     }

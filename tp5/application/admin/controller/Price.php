@@ -18,6 +18,7 @@ class Price extends Base
         $ship_name =  input('get.ship_name');
         $port_start = input('get.s_port_name');
         $port_over = input('get.e_port_name');
+        $seaprice_id = input('get.seaprice_id');
         $status = input('get.status');
         $status ? $this->assign('status',$status): $this->assign('status','normal'); 
         switch ($status){
@@ -36,10 +37,11 @@ class Price extends Base
         $port_start? $this->assign('s_port_name',$port_start):''; 
         $ship_name ? $this->assign('ship_name',$ship_name):''; 
         $port_over ? $this->assign('e_port_name',$port_over):''; 
+        $seaprice_id ? $this->assign('seaprice_id',$seaprice_id):''; 
 //        var_dump($status);
         $route = new PriceM;
         $ship_name=trim($ship_name); $port_start=trim($port_start); $port_over=trim($port_over);
-        $list = $route->price_route_list($ship_name,$port_start,$port_over ,$status,10);
+        $list = $route->price_route_list($ship_name,$port_start,$port_over ,$status,10,$seaprice_id);
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);

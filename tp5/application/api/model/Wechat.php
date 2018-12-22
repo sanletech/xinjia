@@ -133,10 +133,10 @@ class Wechat extends Model
             ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
             ->join('hl_ship_route SR',"SR.id=SP.route_id and SR.status='1'",'left')//路线表
             ->join('hl_sea_bothend SB','SB.sealine_id=SR.bothend_id','left')//起始港 终点港 
-            ->join('hl_sea_middle SM','SB.sealine_id=SM.sealine_id','left') //中间港口表    
+            ->join('hl_sea_middle SM','SM.sealine_id=SR.middle_id','left') //中间港口表    
             ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')//船公司id   
-            ->join('hl_port P1','P1.port_code=SB.sl_start')//起始港口
-            ->join('hl_port P2','P2.port_code=SB.sl_end')//目的港口
+            ->join('hl_port P1','P1.port_code=SB.sl_start and P1.status=1')//起始港口
+            ->join('hl_port P2','P2.port_code=SB.sl_end and P2.status=1')//目的港口
             // ->join('hl_port P3','P3.port_code=SM.sl_middle')//中间港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶
             ->join('hl_sales_member SMB','SMB.member_code=OP.member_code','left') //业务员
@@ -150,8 +150,8 @@ class Wechat extends Model
                     . ' P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
                     . ' SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.EDD' )
             ->where('OP.member_code',$member_code) 
-            ->where('OP.order_num',$order_num)->fetchSql(false)->find();
-                
+            ->where('OP.order_num',$order_num)->fetchSql(FALSE)->find();
+//var_dump($list);exit;
         //查询对应的申请放柜驳回理由
         $statusSql = "(select b.* from  hl_order_port_status b right join "
                 . " (SELECT order_num , max(mtime) as mtime from hl_order_port_status "
