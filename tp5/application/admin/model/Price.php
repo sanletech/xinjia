@@ -61,10 +61,10 @@ class Price extends Model
             ->join('hl_port P3','P3.port_code= SM.sl_middle and P3.status=1','left')
             ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')
             ->join('hl_boat B','B.id=SP.boat_id','left')
-            ->field("SP.id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
+            ->field("SP.id,SC.id ship_id,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
             . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
             . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,"
-            . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
+            . " B.id boat_id,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
             ->order('SP.mtime DESC')->where('SP.id',$seaprice_id)
             ->group('SP.id')->find();
 //$this->_p($data);exit;
@@ -97,7 +97,7 @@ class Price extends Model
         //判断是否存在同一个船公司 船舶id  航线  船期同样的 
         $res = $this->route_repeat($pricedata['ship_id'], $pricedata['boat_id'], $pricedata['route_id'], $pricedata['shipping_date']);
         if($res){
-            $response['fail'] = '航线运价重复';
+            $response['fail'] = '航线运价存在重复ID:'.$res;
             return  $response;
         }
         $res3 = Db::name('seaprice')->insert($pricedata);
@@ -131,9 +131,9 @@ class Price extends Model
         $res =Db::name('seaprice')->where([ 'ship_id'=>$ship_id,
             'boat_id'=>$boat_id,'route_id'=>$route_id,'status'=>1 ])
             ->where('shipping_date','between time',[$min_time,$max_time])
-            ->field('id')->select();
+            ->value('id');
       
-        return count($res)<2 ? true : false ;   
+        return $res ;   
     }
     
 
@@ -157,7 +157,7 @@ class Price extends Model
         //判断是否存在同一个船公司 船舶id  航线  船期同样的 
         $res = $this->route_repeat($pricedata['ship_id'], $pricedata['boat_id'], $pricedata['route_id'], $pricedata['shipping_date']);
         if($res){
-            $response['fail'] = '航线运价重复';
+            $response['fail'] = '航线运价存在重复ID:'.$res;
             return  $response;
         }
         $res3 = Db::name('seaprice')->where('id',$id)->update($pricedata);

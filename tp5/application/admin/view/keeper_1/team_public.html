@@ -1,0 +1,107 @@
+<{include file='./public/header' /}>
+
+<body>
+
+<style>
+        #navBarId .layui-nav-child dd{
+          background-color: gray;
+        }
+        </style>
+<div class="layui-layout layui-layout-admin"> 
+    <div class="layui-header">
+        <div class="layui-logo">部门管理</div> 
+        <!-- 头部区域（可配合layui已有的水平导航） --> 
+        <ul class="layui-nav layui-layout-left"> 
+            <li class="layui-nav-item"><a href="<{:url('admin/keeper/areaList')}>">区域划分</a></li>
+            <li class="layui-nav-item"><a href="<{:url('admin/keeper/teamList')}>">部门调整</a></li>
+            <li class="layui-nav-item"><a href="<{:url('admin/keeper/power')}>">权限调整</a></li> 
+<!--            <li class="layui-nav-item"> <a href="javascript:;">其它功能</a>
+                <dl class="layui-nav-child"> 
+                    <dd><a href="#">邮件管理</a></dd> 
+                    <dd><a href="#">消息管理</a></dd> 
+                    <dd><a href="#">授权管理</a></dd> 
+                </dl> 
+            </li> -->
+        </ul>
+        <ul class="layui-nav layui-layout-right"> 
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:15px;float:right" href="javascript:location.replace(location.href);">
+            <i class="layui-icon" style="line-height:30px">刷新</i></a>
+        </ul>
+    </div>
+
+ <!-- 导航菜单栏 -->
+ <div id="navBarId" class="layui-side layui-bg-black"> </div> 
+ <div class="layui-body"> 
+     <!-- 内容主体区域 --> 
+     <div style="padding: 15px;"> 
+         <table class="layui-hide layui-col-md12" id="test"></table>
+     </div> 
+ </div>
+ 
+ <div class="layui-body"> 
+    <!-- 中心固定区域 --> 
+     {__CONTENT__}
+ </div> 
+</div>
+
+
+<script> 
+    // 导航菜单的间隔像素 
+    var menuCell = 5; 
+    layui.use('element', function(){ 
+        var element = layui.element;
+        var $ = layui.jquery; 
+        $.ajax({ 
+            url:"<{:url('admin/keeper/teamdata')}>",
+            type:"get",
+            dataType:"json",
+            data:{}, 
+            success:function(data){ 
+                data =JSON.parse(data);
+                var liStr= ""; 
+                // 遍历生成主菜单 
+                for( var i = 0; i <data.length; i++){ 
+                 // console.log("--> "+JSON.stringify(data[i])); 
+                   // 判断是否存在子菜单 
+                   if(data[i].childMenus!=null&&data[i].childMenus.length>0){ 
+                       // console.log("--> "+JSON.stringify(data[i].childMenus));
+                
+                        liStr+="<li class=\"layui-nav-item\"><a class=\"\" href=\"javascript:;\">"+data[i].title+
+                                "</a>\n"+ "<dl class=\"layui-nav-child\">\n"; 
+                        // 遍历获取子菜单 
+                        for( var k = 0; k <data[i].childMenus.length; k++){ 
+                            liStr+=getChildMenu(data[i].childMenus[k],2); 
+                        } 
+                        liStr+="</dl></li>"; 
+                    }else{
+                        liStr+="<li class=\"layui-nav-item\"><a class=\"\" href=\""+data[i].url+"\">"+data[i].title+'---'+data[i].user_name+"</a></li>"; 
+                    } 
+                }; 
+                //console.log(">>>> "+liStr); 
+                $("#navBarId").html("<ul class=\"layui-nav layui-nav-tree\" lay-filter=\"test\">\n" +liStr+"</ul>"); 
+            element.init(); 
+            } 
+        });
+   });
+   // 递归生成子菜单 
+   function getChildMenu(subMenu,num) { 
+      // console.log("num: "+num);
+       num++; 
+       var subStr = "";
+       if(subMenu.childMenus!=null&&subMenu.childMenus.length>0){
+           subStr+="<dd><ul><li class=\"layui-nav-item\" ><a style=\"margin-Left:"
+                   +num*menuCell+"px\" class=\"\" href=\"javascript:;\">"
+                   +subMenu.title+'-'+subMenu.user_name+"</a>" + "<dl class=\"layui-nav-child\">\n"; 
+           for( var j = 0; j <subMenu.childMenus.length; j++){ 
+               subStr+=getChildMenu(subMenu.childMenus[j],num); 
+           } 
+           subStr+="</dl></li></ul></dd>";
+       }else{ 
+           subStr+="<dd><a style=\"margin-Left:"+num*menuCell+"px\" href=\"<{:url('keeper/userData')}>?uid="+subMenu.uid+"\">" +subMenu.title+'-'+subMenu.user_name+"</a></dd>"; 
+       } 
+       return subStr;
+   
+    } </script>
+    </body>
+
+    </html>

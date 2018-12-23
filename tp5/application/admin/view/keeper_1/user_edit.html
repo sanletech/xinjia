@@ -1,0 +1,244 @@
+<{include file='./public/header' /}>
+
+    <body>
+        <form class="layui-form"  id ="userEdit_form">
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                <legend>姓名<input class=" layui-show-sm-block" type="text" name="user_name" value="<{$data.user_name}>" readOnly="readOnly">
+                        工号<input class=" layui-show-sm-block"  type="text" name="user_code" value="<{$data.user_code}>" readOnly="readOnly">
+                </legend>
+            </fieldset>
+            <div class="route layui-row">
+                <!-- 职位 -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">职务：</label>
+                    <div class="layui-input-block">
+               <select name="job">
+                    <option value="">请选择</option>
+                <{volist name="jobList" id="vo"}>
+                <optgroup label="<{$vo.title}>">
+                     <{volist name="$vo.childMenus" id ='v1'}>
+                     <option value="<{$v1.id}>" <?php if($v1['id']==$data['jobID']){echo'selected'; } ?> ><{$v1.title}></option>
+                            <{volist name="$v1.childMenus" id ='v2'}>
+                            <option value="<{$v2.id}>" <?php if($v2['id']==$data['jobID']){echo'selected'; } ?>  ><{$v2.title}></option>
+                            <{/volist}>
+                        <{/volist}>
+                    </optgroup>
+              <{/volist}>
+              </select>
+                    </div>
+                </div>
+                <!--区域 -->
+                <div class="layui-form-item">
+                    <div class="layui-show-sm-inline">
+                        <label class="layui-form-label">港口航线选择</label>
+                        <div class="layui-input-inline" style="width: 80px">
+                             <select name="province" lay-filter="province" >
+                                <option value="">请选择省</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" id ='citydiv' style="display: none;">
+                            <select name="city" lay-filter="city"  style="width: 40px">
+                                <option value="">请选择市</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline" style="display: none;width: 40px">
+                            <select name="area"  lay-filter="area">
+                                <option value="">请选择港口</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <label class="layui-form-label">港口</label>
+                <div class="layui-input-inline">
+                    <div class="layui-form-item" id ="search_port">
+                    </div> 
+                </div>
+                <div class="layui">
+                <ul>
+                 <{volist name='areaArr'  id='area'}>    
+                 <li><{$area.port_name}></li> 
+                 <{/volist}>
+                 </ul>
+                </div>
+                <!-- 按钮 -->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn"  type="button" onclick="toajax()">确定</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <script type="text/javascript">
+            $('.cancel').click(function () {
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            });
+
+
+            layui.use(['form', 'layedit', 'laydate'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
+
+                //日期
+                laydate.render({
+                    elem: '#date'
+                });
+                laydate.render({
+                    elem: '#date1'
+                });
+
+            });
+        </script>
+<script type="text/javascript" src="/static/admin/js/area.js"></script>
+<script type="text/javascript" src="/static/admin/js/port.js?v=1"></script>
+<script>
+      
+        //加载 所有的港口名字和相应的code
+        var js_port = JS_PORT;
+        var url='<{:url('admin/Port/shiproute_toadd')}>';
+       
+        //初始数据
+        var areaData = JS_PORT;
+        var $form;
+        var form;
+        var $;
+        layui.use(['jquery', 'form'], function() {
+            $ = layui.jquery;
+            form = layui.form;
+            $form = $('form');
+            loadProvince();  //选择港口
+          
+        });   
+        
+  
+    //加载省数据
+        function loadProvince() {
+            var proHtml = '';
+            for (var i = 0; i < areaData.length; i++) {
+                proHtml += '<option  style="width: 40px"  value="' + areaData[i].provinceCode + '_' + areaData[i].mallCityList.length + '_' + i + '">' + areaData[i].provinceName + '</option>';
+            }
+            //初始化省数据
+            $form.find('select[name=province]').append(proHtml);
+            form.render();
+            form.on('select(province)', function(data) {
+                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    loadCity(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city]').parent().hide();
+                }
+            });
+        }
+        
+    //加载市数据
+        function loadCity(citys) {
+            var cityHtml = '';
+            for (var i = 0; i < citys.length; i++) {
+                cityHtml += '<option  style="width: 40px" value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+            }
+            $form.find('select[name=city]').html(cityHtml).parent().show();
+            form.render();
+            form.on('select(city)', function(data) {
+                var value = data.value;
+                var d = value.split('_');
+                var code = d[0];
+                var count = d[1];
+                var index = d[2];
+                if (count > 0) {
+                    //将城市Id 传给港口loadPort()
+                    loadPort(citys[index].mallPortList);
+                } else {
+                    $form.find('select[name=area]').parent().hide();
+                }
+            });
+        }
+     
+        //加载对应城市的港口，
+        function loadPort(ports){
+            //console.log(ports);
+            var areaHtml = '';
+            for(var i=0;i<ports.length;i++){
+                areaHtml += '<option  value="' + ports[i].portCode +'_'+ ports[i].portName + '">' + ports[i].portName + '</option>';  
+            }
+            $form.find('select[name=area]').html(areaHtml).parent().show();
+            form.render();
+            form.on('select(area)', function(data) {
+                 var port =data.value.split('_');
+                 var port_id =port['0'];
+                 var port_name=port['1'];
+                var mark = document.getElementById('search_port');
+                 //已经存的港口就不执行
+                if(! document.getElementById(port_id+'_'+port_name)  ){
+                    selectPortShip(port_id,port_name,mark);
+                } 
+            } ) 
+        
+        }
+        
+        function  selectPortShip(port_id,port_name,mark){
+            var btn =document.createElement('button');
+                btn.className="layui-btn layui-btn-normal";
+                btn.style="display: inline\;" ;
+                btn.innerHTML=port_name;
+                btn.setAttribute('id',(port_id+'_'+port_name))
+                btn.addEventListener("click",function() {
+                        del(this);
+                        return false;
+                });
+            var ipt= document.createElement('input');
+                ipt.type="hidden";
+                ipt.name='port_code[]';
+                ipt.value=port_id;
+            var  i_tag=document.createElement('i');
+                 i_tag.className="layui-icon";
+                 i_tag.innerHTML="&#xe640\;";
+            btn.appendChild(ipt);   
+            btn.appendChild(i_tag);
+            mark.appendChild(btn);
+         }
+        
+         function del(obj){
+            obj.setAttribute('style','display: none;');
+           // 删除button的子节点
+            var childs = obj.childNodes; 
+                for(var i = childs.length - 1; i >= 0; i--) { 
+                    obj.removeChild(childs[i]); 
+                }
+                //删除本身button
+                obj.parentNode.removeChild(obj);
+         }
+         
+        function toajax (){
+                var loading = layer.load(1);
+                post_adduser = true;    
+                $.ajax({
+                    type:'POST',
+                    url:"<{:url('admin/keeper/userToEdit')}>",
+                    data:$("#userEdit_form").serialize(),
+                    dataType:"json",
+                    success:function(status){
+                     if(status==1){
+                        //  alert('添加成功')
+                         layui.layer.msg('添加成功', {icon: 1,time: 1000});
+                     }else{
+                        //  alert('添加失败')
+                         layui.layer.msg('添加失败', {icon: 2,time: 1000});
+                     }
+                    }
+                });
+                return false;//只此一句
+            }           
+         
+ </script>
+    </body>
+</html>
