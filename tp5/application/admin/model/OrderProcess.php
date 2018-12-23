@@ -103,14 +103,14 @@ class OrderProcess  extends Model{
                 ->where('order_num',$order_num)
                 ->where('state','charge') //收费柜子
                 ->where('type','r')->group('id')
-                ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime,link_man,shipper,load_time,link_phone,car,`comment`,seal')
+                ->field('id,order_num,car_price,container_code,count(id) num ,`add`,mtime,link_man,shipper,load_time,link_phone,car,`comment`,seal')
                 ->select();
        
         $carData['s'] =Db::name('order_truckage')
                 ->where('order_num',$order_num)
                 ->where('state','charge') //收费柜子
                 ->where('type','s')->group('id')
-                ->field('order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
+                ->field('id,order_num,car_price,container_code,count(id) num ,`add`,mtime ,car,`comment`,seal')
                 ->select();
         }elseif ($order_type == 'D') {
             //封条号
@@ -126,7 +126,7 @@ class OrderProcess  extends Model{
                 ->select();
             //船期动态
             $shipData = Db::name('order_ship')->where('order_num',$order_num)
-                    ->field('id,order_num,mtime',TRUE)->order('sequence')->select();
+                    ->field('order_num,mtime',TRUE)->order('sequence')->select();
         }  
 //      var_dump($containerData);exit;
         $shipperArr= explode(',',$list['shipper']); 
