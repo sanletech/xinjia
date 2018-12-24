@@ -12,7 +12,7 @@ class OrderPort extends Controller
         'login'=> ['except'=>'orderport,routedetail'],
     ];
     protected $member_code;
-    private $order_status;
+    protected $order_status;
     private $page=5;
 
     public function _initialize()
@@ -104,7 +104,7 @@ class OrderPort extends Controller
             $data['submitter'] = $this->member_code;
             $data['mtime']=$mtime;
             $data['order_num']=$order_num;
-            $data['status']=  $this->status['container_appley'];
+            $data['status']=  $this->order_status['container_appley'];
             $res2 = Db::name('order_port_status')->insert($data);
         }
         return $res? array('status'=>1,'mssage'=>'提交成功'):array('status'=>0,'mssage'=>'提交失败');       

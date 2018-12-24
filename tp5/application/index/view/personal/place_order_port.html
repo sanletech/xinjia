@@ -153,7 +153,7 @@
                     </td>
                     <td class="fukuan"><?php if($vo['money_status']=='nodo'){echo"未付款";}else{echo"已付款";}?></td>
                     <td class="caozuo">
-                      <a title="<{$vo['change_comment']}>"><{$vo.status_title}></a>
+                      <a name="<{$vo.container_status}>" title="<{$vo['change_comment']}>"><{$vo.status_title}></a>
                     </td> 
                   </tr>
                   <{/volist}>

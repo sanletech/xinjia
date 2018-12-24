@@ -435,7 +435,7 @@ class Order extends Base
                     $status =  $this->order_status['send_car'];
                     $title ='上传订舱单->待派车';
                     if(!empty(trim($track_num))){
-                        $map =['track_num'=>$track_num,'container_status'=>'do'];
+                        $map =['track_num'=>$track_num];
                         $res= Db::name('order_port')->where('order_num',$order_num)->update($map);
                     }
                 }elseif ($type=='sea_waybill') {

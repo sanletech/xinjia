@@ -163,7 +163,15 @@ class OrderProcess extends Base
     //订单修改
     public function orderModify(){
         $data = $this->request->param();
+        
         $this->_p($data);exit;
+        $list = $data['list'];
+        $carData = $data['carData'];
+        $shipData = $data['shipData'];
+        $shipperArr = $data['shipperArr'];
+        $consignerArr = $data['consignerArr'];
+        $containerData = $data['containerData'];
+        $carData = $data['carData'];
         $order_num = null;
         $shipper = '';
         $consigner = '';

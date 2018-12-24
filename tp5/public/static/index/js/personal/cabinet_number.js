@@ -61,20 +61,20 @@ var tj = $('.tj_gh');//提交柜号
 for (let i = 0; i < huo.length; i++) {
     if(huo.eq(i).html() == 'lock'){
         huo.eq(i).html('扣货');
-        if (st.eq(i).html() == '进行中') {
+        if (st.eq(i).html() == '订单进行中') {
             huo.eq(i).css('background-color','#FF2400');
         }
     }else if(huo.eq(i).html() == 'unlock'){
         huo.eq(i).html('放货');
-        if (st.eq(i).html() == '进行中') {
+        if (st.eq(i).html() == '订单进行中') {
             huo.eq(i).css('background-color','#00DB00');
         }
     }else if(huo.eq(i).html() == 'apply'){
-        huo.eq(i).html('申请中');
+        huo.eq(i).html('审核中');
         // huo.eq(i).css('background-color','#C9C9C9');
     }
     
-    if (st.eq(i).html() == '进行中') {        
+    if (st.eq(i).html() == '订单进行中') {        
         tj.eq(i).find('a').css('background-color','#FF2400');        
     }else if(st.eq(i).html() == '已取消'){
         st.eq(i).parent('td').siblings('.fukuan').css('color','#C9C9C9');
@@ -91,7 +91,7 @@ for (let i = 0; i < huo.length; i++) {
 $('.goods a').click(function(){
     let order_num = $(this).parent().siblings('.ddh').find('a').html();
     let stast = $(this).parent().siblings('.caozuo').find('a').html();
-    if ($(this).html() == '扣货' && stast == '进行中') {
+    if ($(this).html() == '扣货' && stast == '订单进行中') {
         layer.open({
             type:1
             ,title: '货物状态'
