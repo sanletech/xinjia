@@ -573,7 +573,7 @@
                             </div>
                             <div class="dd_nei">
                                 <ol>
-                                    <li><{$list.extra_info}></li>
+                                    <li style="width: 40%"><input name="extra_info[]" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.extra_info}>"></li>
                                 </ol>
                             </div>
                     </div>
@@ -670,22 +670,21 @@
             function bao(){
                 let list = fun_arr($('#order_data_form').serializeArray());
                 let containerData = fun_name($('.cont input'),'name_cont',2);//柜号封条号
-                // let carData = fun_name($('.bge_car input'),'name_car',8);//司机信息
                 let car_r = fun_name($('.zh input'),'name_car_r',8);//装货服务
                 let car_s = fun_name($('.so input'),'name_car_s',4);//发货服务
                 let shipperArr = fun_name($('.er_le input'),'name_r',3);//发货
                 let consignerArr = fun_name($('.er_rig input'),'name_s',3)//收货
-                let carData = [];
-                carData.push({car_r:car_r});
-                carData.push({car_s:car_s});
+                let carData = {};
+                carData.car_r = car_r;
+                carData.car_s = car_s;
                 $.ajax({
                 type:'POST',
                 url:"<{:url('admin/OrderProcess/orderModify')}>",   //数据传输的控制器方法
                 data:{
                     list:list,
                     containerData:containerData,
-                    shipperArr:shipperArr,
-                    consignerArr:consignerArr,
+                    shipperArr:shipperArr[0],
+                    consignerArr:consignerArr[0],
                     carData:carData
                 },//这里data传递过去的是序列化以后的字符串
                 success:function(res){
@@ -702,30 +701,26 @@
              //获取name和value
              function fun_name(it,ming,sun){
                 let data = [];
-                let list = [];
+                let obj = {};
+                j = 1;
                 it.each(function(i){
-                    let name = $(this).attr(ming);
-                    if (name) {
-                        let obj = {[$(this).attr(ming)]:$(this).val()} ;
-                        if (data.length / sun == 1) {
-                            list.push(data);
-                            data = [];
+                    obj[$(this).attr(ming)] = $(this).val();
+                        if (j == sun && j != 0) {
+                            data.push(obj);
+                            j = 0;
+                            obj = {};
                         }
-                        data.push(obj);
-                    }
+                        j++;
                 })
-                list.push(data);
-
-                return list;
+                data.push(obj);
+                return data;
             }
 
-            //将form转换成数组
+            //将form转换成对象
             function fun_arr(it){
-                let car_data = [];
+                let car_data = {};
                 for (let i in it) {
-                    let obj = {};
-                    obj[it[i].name] = it[i].value; 
-                    car_data.push(obj);
+                    car_data[it[i].name] = it[i].value; 
                 }
                 return car_data;
             }

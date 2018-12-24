@@ -148,7 +148,6 @@ class OrderProcess extends Base
             return $this->view->fetch('orderPort/port_detail');
             
         }  else {
-            
             $this->assign([
                 'list'  =>$dataArr['list'],
                 'containerData' => $dataArr['containerData'],
