@@ -221,6 +221,8 @@ class Order extends Base
         $track_num = $this->request->param('track_num');
         $modify = $this->request->param('modify');//是否修改
         $lists = $this->request->only('list');
+        $lists = $lists['list'];
+        // $this->_p($lists);exit;
         //更新order_car的时间
         $arr=[];
         $mtime = date('Y-m-d H:i:s');
