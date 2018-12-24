@@ -250,12 +250,15 @@
                     <?php $last_key = count($shipData);?>
                     <{volist name="shipData" id ="ship_data" key="k"}>
                     <div class="dd_nei shipData">
+                            
                         <div class="layui-col-xs2 er">
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">港口：</div>
                                 <div class="layui-col-xs9" style="text-align: left">
-                                    <!--<input name="port_code" type="text" class="layui-input hidden" type="text" value="<{$ship_data.port_code}>">-->
-                                    <input name_ship="port_name" title ="<{$ship_data.port_code}>" class="layui-input" type="text" value="<{$ship_data.port_name}>">
+                                    <!-- <{$ship_data.port_name}> -->
+                                    
+                                    <input name_ship="id" class="layui-input" type="hidden" value="<{$ship_data.id}>" style="border: 0" readonly >
+                                    <input name_ship="port_name" class="layui-input" type="text" value="<{$ship_data.port_name}>" style="border: 0" readonly >
                                 </div>
                             </div>
                         </div>
@@ -607,7 +610,7 @@
                             </div>
                             <div class="dd_nei">
                                 <ol>
-                                    <li style="width: 40%"><input name="beizhu" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.extra_info}>"></li>
+                                    <li style="width: 40%"><input name="extra_info" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.extra_info}>"></li>
                                 </ol>
                             </div>
                     </div>
@@ -700,11 +703,11 @@
             //详情修改
             function bao(){
 
-                let list = fun_arr($('#order_data_form').serializeArray());
-                let carData = fun_name($('.bge_car input'),'name_car',8);//司机信息
-                let shipData = fun_name($('.shipData input'),'name_ship',4);//船舶信息
-                let shipperArr = fun_name($('.er_le input'),'name_r',4);//发货
-                let consignerArr = fun_name($('.er_rig input'),'name_s',4)//收货
+                let list = fun_obj($('#order_data_form').serializeArray());
+               let carData = fun_name($('.bge_car input'),'name_car',8);//司机信息
+                let shipData = fun_name($('.shipData input'),'name_ship',5);//船舶信息
+               let shipperArr = fun_name($('.er_le input'),'name_r',4);//发货
+               let consignerArr = fun_name($('.er_rig input'),'name_s',4);//收货
                 
                 $.ajax({
                 type:'POST',
@@ -713,8 +716,8 @@
                     list:list,
                     carData:carData,
                     shipData:shipData,
-                    shipperArr:shipperArr,
-                    consignerArr:consignerArr
+                    shipperArr:shipperArr[0],
+                    consignerArr:consignerArr[0]
                 },//这里data传递过去的是序列化以后的字符串
                 success:function(res){
                     if (res.status) {
@@ -729,30 +732,27 @@
             //获取name和value
             function fun_name(it,ming,sun){
                 let data = [];
-                let list = [];
+                let obj = {};
+                j = 1;
                 it.each(function(i){
-                    let name = $(this).attr(ming);
-                    if (name) {
-                        let obj = {[$(this).attr(ming)]:$(this).val()} ;
-                        if (data.length / sun == 1) {
-                            list.push(data);
-                            data = [];
+                    obj[$(this).attr(ming)] = $(this).val();
+                        if (j == sun && j != 0) {
+                            data.push(obj);
+                            j = 0;
+                            obj = {};
                         }
-                        data.push(obj);
-                    }
+                        j++;
+                    
                 })
-                list.push(data);
-
-                return list;
+                data.push(obj);
+                return data;
             }
 
-            //将form转换成数组
-            function fun_arr(it){
-                let car_data = [];
+            //将form转换成对象
+            function fun_obj(it){
+                let car_data = {};
                 for (let i in it) {
-                    let obj = {};
-                    obj[it[i].name] = it[i].value; 
-                    car_data.push(obj);
+                    car_data[it[i].name] = it[i].value; 
                 }
                 return car_data;
             }
