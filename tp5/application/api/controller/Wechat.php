@@ -38,7 +38,7 @@ class Wechat extends Common
     protected function _initialize()
     {   
         $this->member_code =Session::get('member_code');
-        // var_dump( $this->member_code);
+         var_dump( $this->member_code);
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
     }
@@ -220,7 +220,7 @@ class Wechat extends Common
     
     
     public function  redis(){
-        $redis=new Redis();
+        $redis=new \Redis();
         $redis->connect($this->redis_config['REDIS_HOST'],$this->redis_config['REDIS_PORT']);
          $redis->set("tutorial-name", "Redis 1211351");
 

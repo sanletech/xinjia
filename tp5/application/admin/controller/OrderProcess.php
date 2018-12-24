@@ -141,9 +141,9 @@ class OrderProcess extends Base
             $this->assign([
                'list'  =>$dataArr['list'],
                'containerData' => $dataArr['containerData'],
-               'carData'=> $dataArr['carData'],
-               'shipperArr'=>$dataArr['shipperArr'],//收货
-               'consignerArr'=>$dataArr['consignerArr'],//发货
+               'carData'=> $dataArr['carData'],//车队
+               'shipperArr'=>$dataArr['shipperArr'],//发货
+               'consignerArr'=>$dataArr['consignerArr'],//收货
             ]);
             return $this->view->fetch('orderPort/port_detail');
             

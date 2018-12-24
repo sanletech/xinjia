@@ -17,10 +17,12 @@ class Order extends Model
     }   
     
 
-    public function order_public($page,$limit,$search,$state='3') {
+    public function order_public($page,$limit,$search,$status='3') {
         $map = [];
-        $search['order_num']? $map['OP.order_num']=$search['order_num'] :'';
-        $search['track_num']? $map['OP.track_num']=$search['track_num'] :'';
+        if($search){
+            $search['order_num']? $map['OP.order_num']=$search['order_num'] :'';
+            $search['track_num']? $map['OP.track_num']=$search['track_num'] :'';
+        }
         $listSql =Db::name('order_port')->alias('OP')
             ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
             ->join('hl_seaprice SP',"SP.id= OP.seaprice_id and SP.status='1'",'left') //海运价格表
@@ -36,7 +38,7 @@ class Order extends Model
                     . 'P1.port_name s_port_name ,P1.port_code s_port_code,'
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
                     . 'SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation, SB.id as SB_id' )
-            ->group('OP.id')->where($map) ->where('OP.status','in',$state)->where('OP.type','door')
+            ->group('OP.id')->where($map) ->where('OP.status','in',$status)->where('OP.type','door')
             ->buildSql();
 //     var_dump($listSql);exit;
         $count =  Db::table($listSql.' A')->count();  //获取总页数

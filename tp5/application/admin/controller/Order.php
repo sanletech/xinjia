@@ -102,8 +102,7 @@ class Order extends Base
         if(!in_array($type, array('load','send') ) ){
             return json(array('status'=>0,'message'=>'参数不对'));
         }
-
-        //判断下装货的柜子和送货的时候是否一样
+        //判断下送货的柜子和的装货时候是否一样
         if($type == 'send'){
             //装货的柜号
             $container_code =  Db::name('order_car')

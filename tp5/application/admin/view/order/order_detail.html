@@ -216,7 +216,7 @@
                             </thead>
                             <tbody class="bge">
                                 <{volist name = "carData['r']" id ="car_data"}>
-                                <tr>
+                                <tr class="bge_car">
                                     <td>
                                         <input name_car="car_name" value="<{$car_data.car_name}>" class="layui-input" placeholder="车队">
                                     </td>
@@ -346,7 +346,7 @@
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
-                                        <span>*&nbsp;</span>装货联系人：</div>
+                                        <span>*&nbsp;</span>发货联系人：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                         <!-- <{$shipperArr[1]}> -->
                                         <input name_r="r_name" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[1]}>">
@@ -354,7 +354,7 @@
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
-                                        <span>*&nbsp;</span>装货联系人电话：</div>
+                                        <span>*&nbsp;</span>发货联系人电话：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                         <!-- <{$shipperArr[2]}> -->
                                         <input name_r="r_phone" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[2]}>">
@@ -362,7 +362,7 @@
                                 </div>
                                 <div class="grid-demo">
                                     <div class="layui-col-xs3">
-                                        <span>*&nbsp;</span>装货地址：</div>
+                                        <span>*&nbsp;</span>发货地址：</div>
                                     <div class="layui-col-xs9" style="height: 40px;line-height: 40px;">
                                         <!-- <{$shipperArr[3]}> -->
                                         <input name_r="r_add" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[3]}>">
@@ -427,16 +427,16 @@
                             </div>
                         </div>
 
-                        <div class="layui-col-xs4 er">
+                        <!-- <div class="layui-col-xs4 er">
                             <div class="grid-demo nei">
                                 <div class="layui-col-xs3">
                                     <span>*&nbsp;</span>箱型：</div>
                                     <div class="layui-col-xs6" style="text-align: left">
                                             <{$list.container_size}>
-                                            <!-- <input name="container_size" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_size}>"> -->
+                                            <input name="container_size" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.container_size}>">
                                     </div>
                             </div>
-                        </div>  
+                        </div>   -->
                     </div>
                 </div>
 
@@ -607,7 +607,7 @@
                             </div>
                             <div class="dd_nei">
                                 <ol>
-                                    <li style="width: 40%"><input name="beizhu" placeholder="" autocomplete="off" class="layui-input" type="text" value="5afd"></li>
+                                    <li style="width: 40%"><input name="beizhu" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$list.extra_info}>"></li>
                                 </ol>
                             </div>
                     </div>
@@ -701,15 +701,21 @@
             function bao(){
 
                 let list = fun_arr($('#order_data_form').serializeArray());
-                let carData = fun_name($('.bge input'),'name_car');
-                let shipData = fun_name($('.shipData input'),'name_ship');
-                console.log(shipData);
-                
+                let carData = fun_name($('.bge_car input'),'name_car',8);//司机信息
+                let shipData = fun_name($('.shipData input'),'name_ship',4);//船舶信息
+                let shipperArr = fun_name($('.er_le input'),'name_r',4);//发货
+                let consignerArr = fun_name($('.er_rig input'),'name_s',4)//收货
                 
                 $.ajax({
                 type:'POST',
                 url:"<{:url('admin/orderProcess/orderModify')}>",   //数据传输的控制器方法
-                data:$('#order_data_form').serialize(),//这里data传递过去的是序列化以后的字符串
+                data:{
+                    list:list,
+                    carData:carData,
+                    shipData:shipData,
+                    shipperArr:shipperArr,
+                    consignerArr:consignerArr
+                },//这里data传递过去的是序列化以后的字符串
                 success:function(res){
                     if (res.status) {
                         layui.layer.msg('提交成功', { icon: 1, time: 500 });
@@ -721,20 +727,23 @@
             }
 
             //获取name和value
-            function fun_name(it,ming){
-                
+            function fun_name(it,ming,sun){
                 let data = [];
+                let list = [];
                 it.each(function(i){
-                    // console.log(this)
-
                     let name = $(this).attr(ming);
                     if (name) {
-                        let obj = {};                     
-                        obj[name] = $('input['+ming+'="'+name+'"]').val(); 
-                        data[i].push(obj);
+                        let obj = {[$(this).attr(ming)]:$(this).val()} ;
+                        if (data.length / sun == 1) {
+                            list.push(data);
+                            data = [];
+                        }
+                        data.push(obj);
                     }
                 })
-                return data;
+                list.push(data);
+
+                return list;
             }
 
             //将form转换成数组
