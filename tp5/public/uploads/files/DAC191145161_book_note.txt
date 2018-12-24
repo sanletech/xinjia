@@ -1,17 +1,41 @@
-电脑概览
+http://114.67.248.3/sladmin.php?m=block&f=edit&block=236
 
-电脑型号  技嘉 Z270-HD3
-操作系统  Microsoft Windows 10 教育版 (64位)
-CPU  (英特尔)Intel(R) Core(TM) i7-7700K CPU @ 4.20GHz(4201 MHz)
-主板  技嘉 Z270-HD3-CF
-内存  8.00 GB (   2133 MHz)
-主硬盘  1000 GB (希捷 ST1000DM010-2EP102 已使用时间: 866小时)
-显卡  Intel(R) HD Graphics 630 (1024 MB)
-显示器  冠捷 2477W1M 32位真彩色 59Hz
-声卡  Realtek High Definition Audio
-网卡  Intel(R) Ethernet Connection (2) I219-V
+网站帐号sanle 
+密码sanle@2017
+
+服务器帐号root
+端口 114.67.248.3:22
+密码  Sanle=36
+
+企业邮箱
+https://exmail.qq.com/cgi-bin/loginpage
+shenhao@sanletech.com
+Sanle工号
 
 
-.rm -f *
 
-chmod -R  777  /home/wwwroot/hailang/
+/帮卖优品
+ssh root@193.112.13.241
+新网站：  Bbm@2018
+mysql :  root /   Bbm@mysql
+mysql -uroot -pBbm@mysql
+
+
+海浪物流
+120.78.235.101
+hailang@2018
+mysql -uroot -phailang@2018
+阿里云
+海浪集团
+hailang@2018
+
+
+https://lnmp.org/install.html
+
+rm -rf *  在某个目录 下删除该目录下所有文件 
+
+cd /home/wwwroot/hailang
+
+chmod -R 777 /home/wwwroot/hailang/
+ 
+ 数据库密码
