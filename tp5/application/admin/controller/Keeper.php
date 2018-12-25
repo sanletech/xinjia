@@ -11,7 +11,7 @@ class Keeper extends Base
 
     //管理员列表
     public function adminList() 
-    {
+    {  
         return $this->view->fetch('keeper/admin_list'); 
     }
     //添加员工
