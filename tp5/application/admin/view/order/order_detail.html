@@ -218,6 +218,7 @@
                                 <{volist name = "carData['r']" id ="car_data"}>
                                 <tr class="bge_car">
                                     <td>
+                                        <input name_car="id" value="<{$car_data.id}>" class="layui-input" type="hidden" placeholder="id">
                                         <input name_car="car_name" value="<{$car_data.car_name}>" class="layui-input" placeholder="车队">
                                     </td>
                                     <td><input name_car="car_code" value="<{$car_data['car_code']}>" class="layui-input"  placeholder="车牌"></td>
@@ -618,7 +619,8 @@
     
 
                     <div class="tjiao" style="text-align:center;">
-                            <a href="javascript:;" onclick="bao()">保存</a>
+                            <a href="javascript:;" onclick="bao()" style="display: none;">保存</a>
+                            <a href="javascript:;" onclick="edit()">修改</a>
                             <{if condition="$list['completion']"}>
                             <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
                             <{else /}><a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
@@ -687,6 +689,16 @@
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
         <script>
+            $('input').attr('readonly',true);
+            function edit(){
+                layui.layer.msg('已解除锁定状态，可以修改', { icon: 1, time: 500 },function(){
+                    $('.tjiao a').eq(1).hide();
+                    $('.tjiao a').eq(0).show();
+                    $('input').attr('readonly',false);
+                });
+                
+            }
+
             $('.songhuo,.zhuanghuo').show();
             // $('input').attr('readonly', true);
             // $('input').css('border', '0');
@@ -704,7 +716,7 @@
             function bao(){
 
                 let list = fun_obj($('#order_data_form').serializeArray());
-               let carData = fun_name($('.bge_car input'),'name_car',8);//司机信息
+               let carData = fun_name($('.bge_car input'),'name_car',9);//司机信息
                 let shipData = fun_name($('.shipData input'),'name_ship',5);//船舶信息
                let shipperArr = fun_name($('.er_le input'),'name_r',4);//发货
                let consignerArr = fun_name($('.er_rig input'),'name_s',4);//收货
