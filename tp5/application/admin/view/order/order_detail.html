@@ -618,7 +618,8 @@
     
 
                     <div class="tjiao" style="text-align:center;">
-                            <a href="javascript:;" onclick="bao()">保存</a>
+                            <a href="javascript:;" onclick="bao()" style="display: none;">保存</a>
+                            <a href="javascript:;" onclick="edit()">修改</a>
                             <{if condition="$list['completion']"}>
                             <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
                             <{else /}><a class="shi" href="javascript:void(0);" onclick="que('<{$list.order_num}>')">完成订单</a>
@@ -687,6 +688,16 @@
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
         <script>
+            $('input').attr('readonly',true);
+            function edit(){
+                layui.layer.msg('已解除锁定状态，可以修改', { icon: 1, time: 500 },function(){
+                    $('.tjiao a').eq(1).hide();
+                    $('.tjiao a').eq(0).show();
+                    $('input').attr('readonly',false);
+                });
+                
+            }
+
             $('.songhuo,.zhuanghuo').show();
             // $('input').attr('readonly', true);
             // $('input').css('border', '0');
