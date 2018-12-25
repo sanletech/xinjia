@@ -149,9 +149,9 @@
                             <div class="wenzi">柜号-封号：</div>
                             <div class="ggh">
                                 <{volist name="containerData" id="container"}>
-                                <input name_cont="id"  class="layui-input" type="text" value="<{$container.id}>">
                                 <div class="layui-form-item cont">
                                     <div class="guinei" style="text-align:right;margin-top: 12px;">
+                                            <input name_cont="id"  class="layui-input" type="hidden" value="<{$container.id}>">
                                         <input name_cont="container_code" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$container.container_code}>">
                                         <!-- <{$container.container_code}> -->
                                     </div>
@@ -226,7 +226,6 @@
                                             <input name_r="r_phone" placeholder="" autocomplete="off" class="layui-input" type="text" value="<{$shipperArr[2]}>">
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="layui-col-xs6 er_rig">
@@ -447,6 +446,7 @@
                                        <{volist name="$carData.r" id="carR"}>
                                        <tr class="zh">
                                         <td>
+                                            <input type="hidden" name_car_r="r_id" value="<{$carR.id}>">
                                             <input type="hidden" name_car_r="r_container_code" value="<{$carR.container_code}>">
                                             <{$carR.car_price}>
                                         </td>
@@ -509,6 +509,7 @@
                                         <{volist name="$carData.s" id="carS" }>
                                         <tr class="so">
                                             <td>
+                                                <input type="hidden" name_car_s="s_id" value="<{$carS.id}>">
                                                 <input type="hidden" name_car_s="s_container_code" value="<{$carS.container_code}>">
                                                 <{$carS.car_price}>
                                             </td>
@@ -582,7 +583,7 @@
     
 
                     <div class="tjiao" style="text-align:center;">
-                        <a href="javascript:;" onclick="bao()">保存</a>
+                        <a href="javascript:;" onclick="bao()" style="display: none;">保存</a>
                         <a href="javascript:;" onclick="edit()">修改</a>
                         <{if condition="$list['completion']"}>
                         <a href="javascript:;" class="yi"  disabled="disabled" style="cursor: not-allowed;background-color: #dddddd;">已完成</a>
@@ -681,9 +682,9 @@
             //详情修改
             function bao(){
                 let list = fun_arr($('#order_data_form').serializeArray());
-                let containerData = fun_name($('.cont input'),'name_cont',2);//柜号封条号
-                let car_r = fun_name($('.zh input'),'name_car_r',8);//装货服务
-                let car_s = fun_name($('.so input'),'name_car_s',4);//发货服务
+                let containerData = fun_name($('.cont input'),'name_cont',3);//柜号封条号
+                let car_r = fun_name($('.zh input'),'name_car_r',9);//装货服务
+                let car_s = fun_name($('.so input'),'name_car_s',5);//发货服务
                 let shipperArr = fun_name($('.er_le input'),'name_r',3);//发货
                 let consignerArr = fun_name($('.er_rig input'),'name_s',3)//收货
                 let carData = {};
