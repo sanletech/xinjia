@@ -163,23 +163,31 @@ class OrderProcess extends Base
     //订单修改
     public function orderModify(){
         $data = $this->request->param();
-        
         $this->_p($data);exit;
+        
         $list = $data['list'];
-        $carData = $data['carData'];
-        $shipData = $data['shipData'];
-        $shipperArr = $data['shipperArr'];
-        $consignerArr = $data['consignerArr'];
-        $containerData = $data['containerData'];
-        $carData = $data['carData'];
-        $order_num = null;
-        $shipper = '';
-        $consigner = '';
-        $res = Db::name('order_port')
-                ->where('order_num',$order_num)
-                ->field('track_num,cargo,container_type,comment')
-                ->update($map);
-        //同时记录操作
+        $list['shipper'] = implode(',', $data['shipperArr']);
+        $list['consigner'] = implode(',', $data['consignerArr']);
+        $carData = $data['carData'];    //两个不一样
+        
+        $order_num = $list['order_num'];
+        $oder_type = substr($order_num, 0, 1);
+        $shipData = '';   //门到门
+        $containerData = '';//港到港
+        if($oder_type=='P'){
+            $containerData = $data['containerData'];//港到港
+        }
+        if($oder_type=='D'){
+            $shipData = $data['shipData'];   //门到门
+        } 
+      
+        $dataM = new OrderProcessM();
+        $dataArr = $dataM->orderModify($order_num,$oder_type,$list,$carData,$shipData,$containerData);
+        if($dataArr!=='success'){
+            return json(array('status'=>0,'message'=>json_encode($dataArr)));
+        }
+        return json(array('status'=>0,'message'=>'更新成功'));
+ 
     }
     
 }

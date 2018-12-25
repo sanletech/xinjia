@@ -73,7 +73,6 @@ class OrderProcess  extends Model{
     
        //订单的详细信息
     public function order_details($order_num,$order_type='') {
-        
         $list =Db::name('order_port')->alias('OP')
                 ->join('hl_member HM','HM.member_code = OP.member_code','left')//客户信息表
                 ->join('hl_seaprice SP','SP.id= OP.seaprice_id','left') //海运价格表
@@ -96,7 +95,7 @@ class OrderProcess  extends Model{
         //根据订单号 查询对应柜子的 柜号和封条号码
         $containerData =Db::name('order_truckage')
             ->where('order_num',$order_num)->where('type','s')
-            ->field('container_code,seal')->select();
+            ->field('id,container_code,seal')->select();
         
         //根据订单查询出拖车信息
         $carData['r'] =Db::name('order_truckage')
@@ -117,12 +116,12 @@ class OrderProcess  extends Model{
             $containerData = Db::name('order_car')
                 ->where('order_num',$order_num)
                 ->where('type','load')
-                ->field('container_code,seal')->select();
+                ->field('id,container_code,seal')->select();
             //派车信息
             $carData['r']=Db::name('order_car')
                 ->where('order_num',$order_num)
                 ->where('type','load')
-                ->field('id,order_num,car_id,driver_id,mtime,type',TRUE)
+                ->field('order_num,car_id,driver_id,mtime,type',TRUE)
                 ->select();
             //船期动态
             $shipData = Db::name('order_ship')->where('order_num',$order_num)
@@ -164,4 +163,72 @@ class OrderProcess  extends Model{
         }
     }
     
+    public function  orderModify($order_num,$oder_type,$list,$carData,$shipData,$containerData){
+        
+     
+                
+        Db::startTrans();
+        try{
+            //更新订单信息
+            $order_port = Db::name('order_port')->where('order_num',$order_num)->update($list);
+            //更新派车的信息
+            if($oder_type=='P'){
+                $map =[];
+                foreach ($carData['car_r'] as $value){
+                    $map[]['id'] = $value['r_id'];
+                    $map[]['container_code'] = $value['r_container_code'];
+                    $map[]['add'] = $value['r_add'];
+                    $map[]['link_man'] = $value['r_link_man'];
+                    $map[]['shipper'] = $value['shipper'];
+                    $map[]['load_time'] = $value['r_load_time'];
+                    $map[]['link_phone'] = $value['r_link_phone'];
+                    $map[]['car'] = $value['r_car'];
+                    $map[]['comment'] = $value['r_comment'];
+                }
+                foreach ($carData['car_s'] as $value){
+                    $map[]['id'] = $value['s_id'];
+                    $map[]['container_code'] = $value['s_container_code'];
+                    $map[]['add'] = $value['s_add'];
+                    $map[]['car'] = $value['s_car'];
+                    $map[]['comment'] = $value['s_comment'];
+                }
+                foreach ($map as $value){
+                    $truckage = Db::name('order_truckage')
+                            ->where(['order_num'=>$order_num,'id'=>$value['id']])
+                            ->update($value);
+                }
+
+            } elseif ($oder_type=='D') {
+                $map =[];
+                foreach ($map as $value){
+                    $car = Db::name('order_car')
+                            ->where(['order_num'=>$order_num,'id'=>$value['id']])
+                            ->update($value);
+                }
+
+            }
+            if($oder_type=='P'){
+                //更新配船信息
+                foreach ($shipData  as  $value) {
+                    $ship = Db::name('order_ship')
+                            ->where(['order_num'=>$order_num,'id'=>$value['id']])
+                            ->update($value);
+                }
+            }  else {
+                  //更新柜号和封条号
+                foreach ($containerData  as  $value) {
+                $ship = Db::name('order_ship')
+                        ->where(['order_num'=>$order_num,'id'=>$value['id']])
+                        ->update($value);
+            }
+            }
+            
+            Db::commit();    
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return $error = getMessage();
+            }   
+            return TRUE;
+    }
 }
