@@ -1,12 +1,23 @@
 #cont {
   margin-top: 20px; }
 
-#admin_user {
+#admin_user, #occupation, #jurisdiction {
   display: none;
   padding: 20px 80px 0 0; }
 
 #search_port {
   position: relative;
   top: 15px; }
+
+.zhiwei, .quanxian {
+  padding-left: 70px; }
+  .zhiwei li, .quanxian li {
+    height: 30px;
+    line-height: 30px;
+    margin: 0px 15px 15px 0; }
+    .zhiwei li i, .quanxian li i {
+      cursor: pointer; }
+  .zhiwei .se, .quanxian .se {
+    border: 1px solid red; }
 
 /*# sourceMappingURL=control.css.map */
