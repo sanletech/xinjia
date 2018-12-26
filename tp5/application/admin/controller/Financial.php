@@ -179,7 +179,7 @@ class Financial extends Base
                 $list[$key]['status'] ='订单审核中';
                 break;
                 case $this->order_status['completion']:
-                $list[$key]['status'] ='订单审已经完成';
+                $list[$key]['status'] ='订单已完成';
                 break;  
                 default:
                 $list[$key]['status'] ='订单进行中';  

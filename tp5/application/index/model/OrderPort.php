@@ -23,6 +23,7 @@ class OrderPort extends Model
                         . 'PR.port_code r_port_code,PS.port_code s_port_code,'
                         . 'SR.middle_id')
                 ->group('SP.id,SR.id')
+                ->where('SP.shipping_date','>=',$nowtime)->whereOr('SP.shipping_date','>=',$nowtime)
                 ->buildSql();
         $map =[];
         $ship_id ? $map['A.ship_id'] = $ship_id : '';

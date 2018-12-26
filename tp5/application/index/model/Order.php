@@ -29,9 +29,11 @@ class Order extends Model
                         . ' BA.boat_code,BA.boat_name,SB.sl_start,SB.sl_end,'
                         . ' PR.port_name r_port_name,PS.port_name s_port_name,CPR.address_name r_add,CPS.address_name s_add,'
                         . '  CPR.r_20GP,CPR.r_40HQ,CPS.s_20GP,CPR.s_40HQ,MP.20GP discount_20GP,MP.40HQ discount_40HQ,'
-                        . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
-                        . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
-                ->where('MP.member_code',$member_code)
+                         . ' (select SP.price_20GP + PIR.r_20GP + CPR.r_20GP + PIS.s_20GP  + CPS.s_20GP + MP.20GP ) as price_sum_20GP,'
+                        . ' (select SP.price_40HQ + PIR.r_40HQ + CPR.r_40HQ + PIS.s_40HQ + CPS.s_40HQ + MP.40HQ ) as price_sum_40HQ')
+//                        . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
+//                        . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
+                ->where('MP.member_code',$member_code)->where('SP.shipping_date','>=',$nowtime)->whereOr('SP.shipping_date','>=',$nowtime)
                 ->where('SP.status',1)->where('SP.stale_date',1)
                 ->group('SP.id')->buildSql();
         $map =[];

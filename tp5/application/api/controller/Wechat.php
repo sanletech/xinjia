@@ -38,7 +38,7 @@ class Wechat extends Common
     protected function _initialize()
     {   
         $this->member_code =Session::get('member_code');
-         var_dump( $this->member_code);
+//         var_dump( $this->member_code);
         $this->order_status = config('config.order_status');
         $this->mtime =  date('Y-m-d H:i:s');
     }

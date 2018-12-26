@@ -6,7 +6,7 @@ use think\paginator;
 class Member extends Model
 {
     public function  getJoinDateAttr($value)
-    {
+    {      
         return date('Y-m-d ',$value);
     }
     
