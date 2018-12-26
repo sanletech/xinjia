@@ -131,24 +131,77 @@
         </form>
 
         <!-- 管理权限 -->
-        <form class="layui-form" id="jurisdiction">
+        <div class="layui-form" id="jurisdiction">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">权限</label>
+                        <div class="layui-input-inline">
+                            <input type="text"  autocomplete="off" class="layui-input add_jurisdiction">
+                        </div>
+                    </div>
+    
+                    <div class="layui-inline">
+                        <a class="layui-btn add_qx">添加权限</a>
+                    </div>
+                </div>
+
+                <ul class="quanxian">
+                    <li class="layui-badge layui-bg-blue">是否<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue">刘嘉玲<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue">撒地方方式<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue">阿斯蒂芬士大夫<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue">阿德代理费阿道夫<i class="layui-icon layui-icon-close"></i></li>
+                </ul>
+
+                <form>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">修改权限名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name"  class="layui-input">
+                                <input type="text" name="id"  class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <a class="layui-btn edit_qx">修改权限</a>
+                        </div>
+                    </div>
+                </form>
+        </div>
+
+        <!-- 管理职位 -->
+        <form class="layui-form" id="occupation">
+            
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">职位</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  autocomplete="off" class="layui-input add_occupation">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <a class="layui-btn add_zw">添加职位</a>
+                </div>
+            </div>
+
             <div class="layui-form-item">
                 <label class="layui-form-label">部门</label>
                 <div class="layui-input-block">
-                    <select name="bumen" lay-verify="required">
+                    <select name="bumen" lay-filter="required">
                         <option value="1">财务部</option>
                         <option value="2">业务部</option>
                         <option value="3">客服部</option>
                     </select>
                 </div>
             </div>
-
-            
-        </form>
-
-        <!-- 管理职位 -->
-        <form class="layui-form" id="occupation">
-
+            <ul class="zhiwei">
+                <li class="layui-badge layui-bg-blue">是否<i class="layui-icon layui-icon-close"></i></li>
+                <li class="layui-badge layui-bg-blue">刘嘉玲<i class="layui-icon layui-icon-close"></i></li>
+                <li class="layui-badge layui-bg-blue">撒地方方式<i class="layui-icon layui-icon-close"></i></li>
+                <li class="layui-badge layui-bg-blue">阿斯蒂芬士大夫<i class="layui-icon layui-icon-close"></i></li>
+                <li class="layui-badge layui-bg-blue">阿德代理费阿道夫<i class="layui-icon layui-icon-close"></i></li>
+            </ul>
         </form>
 
         <table id="demo" lay-filter="test"></table>
@@ -178,6 +231,8 @@
                 $ = layui.jquery,
                 form = layui.form,
                 $form = $('form');
+                //部门的ID
+                var bumen_id = '1';
                 //第一个实例
                 table.render({
                     elem: '#demo'
@@ -205,6 +260,7 @@
                     ]]
                     , page: true //开启分页
                 });
+
                 
                 //搜索
                 $('.cha').click(function(){
@@ -236,12 +292,26 @@
                                 content: $('#admin_user'),
                                 area: '1000px',
                                 offset: 't',
-                            }); 
+                            });
                             loadProvince();
                             break;
                         case 'eidt_jurisdiction'://管理权限
+                            layer.open({
+                                type: 1, 
+                                title: '管理权限',
+                                content: $('#jurisdiction'),
+                                area: '600px',
+                                offset: 't',
+                            });
                             break;
                         case 'eidt_occupation'://管理职位
+                            layer.open({
+                                type: 1, 
+                                title: '管理职位',
+                                content: $('#occupation'),
+                                area: ['700px','450px'],
+                                offset: 't',
+                            });
                             break;
                         case 'getCheckData':
                             var data = checkStatus.data;
@@ -274,13 +344,17 @@
                                 content: $('#admin_user'),
                                 area: '1000px',
                                 offset: 't',
-                            }); 
+                            });
                             loadProvince();
+                    }else if(obj.event === 'eidt_jurisdiction'){
+                        
+                    }else if(obj.event === 'eidt_occupation'){
+                        
                     }
                 });
 
 
-                  //监听提交
+                //监听提交
                 form.on('submit(demo1)', function(data){  
                     console.log(data.field)                 
                     $.post("<{:url('admin/jurisdiction/aaa')}>",{data:data.field},function(res){
@@ -288,6 +362,61 @@
                     })                    
                     
                     return true;
+                });
+                
+                
+                //监听部门
+                form.on('select(required)', function(data) {
+                    bumen_id = data.value;
+                });
+
+                //添加权限
+                $('.add_qx').click(function(){
+                    let name = $('.add_jurisdiction').val();
+                    // $.get('',{name:name},function(res){
+                    // })
+                    layer.msg('添加成功',{icon: 1,time: 1000},function(){
+                        $('.quanxian').append(`<li class="layui-badge layui-bg-blue">${name}<i class="layui-icon layui-icon-close"></i></li>`);
+                    })
+                });
+
+                //删除权限
+                $('.quanxian').on('click','li i',function(){
+                    let that = $(this);
+                    layer.confirm('是否删除', { icon: 3, title: '提示' }, function () {
+                        layer.msg('删除成功',{icon: 1,time: 1000},function(){
+                            that.parent('li').remove();
+                        })
+                    });
+                });
+
+                //修改权限
+                $('.quanxian').on('click','li',function(){
+                    $(this).addClass('se');
+                });
+                
+
+                //添加职位
+                $('.add_zw').click(function(){
+                    let name = $('.add_occupation').val();
+                    console.log(bumen_id)
+                    // $.get('',{name:name},function(res){
+                    // })
+                    layer.msg('添加成功',{icon: 1,time: 1000},function(){
+                        $('.zhiwei').append(`<li class="layui-badge layui-bg-blue">${name}<i class="layui-icon layui-icon-close"></i></li>`);
+                    })
+                });
+                
+                //删除职位
+                $('.zhiwei').on('click','li i',function(){
+                    let that = $(this);
+                    console.log(bumen_id)
+                    layer.confirm('是否删除', { icon: 3, title: '提示' }, function () {
+                        layer.msg('删除成功',{icon: 1,time: 1000},function(){
+                            that.parent('li').remove();
+                        })
+                    });
+                    
                 });
 
 
