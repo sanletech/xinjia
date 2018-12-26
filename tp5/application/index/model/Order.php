@@ -33,7 +33,7 @@ class Order extends Model
                         . ' (select SP.price_40HQ + PIR.r_40HQ + CPR.r_40HQ + PIS.s_40HQ + CPS.s_40HQ + MP.40HQ ) as price_sum_40HQ')
 //                        . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
 //                        . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
-                ->where('MP.member_code',$member_code)->where('OP.shipping_date','>=',$nowtime)->whereOr('OP.shipping_date','>=',$nowtime)
+                ->where('MP.member_code',$member_code)->where('SP.shipping_date','>=',$nowtime)->whereOr('SP.shipping_date','>=',$nowtime)
                 ->where('SP.status',1)->where('SP.stale_date',1)
                 ->group('SP.id')->buildSql();
         $map =[];
