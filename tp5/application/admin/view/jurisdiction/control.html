@@ -1,0 +1,373 @@
+<{include file='./public/header' /}>
+    <link rel="stylesheet" href="__STATIC__/../index/layui/css/layui.css">
+    <link rel="stylesheet" href="__STATIC__/css/control.css">
+
+    <body>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">演示</a>
+                <a>
+                    <cite>权限分配</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+                title="刷新">
+                <i class="layui-icon" style="line-height:30px">ဂ</i>
+            </a>
+        </div>
+        <!-- 搜索内容 -->
+        <form class="layui-form" id="cont">
+            
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="order_num" placeholder="姓名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+        
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" name="order_num" placeholder="账号" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+        
+        
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <a class="layui-btn cha">搜索</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- 添加账号 -->
+        <form class="layui-form" id="admin_user">
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">账号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="user" required lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input user">
+                </div>
+            </div>
+            
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="pwd" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">部门</label>
+                <div class="layui-input-block">
+                    <select name="bumen" lay-verify="required">
+                        <option value="1">财务部</option>
+                        <option value="2">业务部</option>
+                        <option value="3">客服部</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">权限</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="quan1" value="1" lay-skin="primary" title="写作" checked="">
+                    <input type="checkbox" name="quan2" value="2" lay-skin="primary" title="阅读">
+                </div>
+            </div>
+            
+            <div class="layui-form-item" pane="">
+                <label class="layui-form-label">职位</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="zhi1" value="1" lay-skin="primary" title="写作" checked="">
+                    <input type="checkbox" name="zhi2" value="2" lay-skin="primary" title="阅读">
+                </div>
+            </div>
+
+
+              <!-- 港口航线 -->
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">管理港口</label>
+                <div class="layui-input-inline">
+                    <select name="province" lay-filter="province">
+                        <option value="">请选择省</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" id='citydiv' style="display: none;">
+                    <select name="city" lay-filter="city">
+                        <option value="">请选择市</option>
+                    </select>
+                </div>
+                <div class="layui-input-inline" style="display: none;">
+                    <select name="port" lay-filter="port">
+                        <option value="">请选择起点/终点港口</option>
+                    </select>
+                </div>
+
+                <div class="layui-form-item">
+                        <div class="layui-input-block" id="search_port"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+            
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <a class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</a>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+
+        <table id="demo" lay-filter="test"></table>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="add_user">创建账号</button>
+                <!-- <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
+            </div>
+        </script>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">分配权限</a>
+            <!-- <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">禁用</a> -->
+        </script>
+        <script src="__STATIC__/../index/layui/layui.js"></script>
+        <script type="text/javascript" src="/static/admin/js/port.js?v=1"></script>
+        
+        <script>
+            layui.use(['jquery', 'form','table','layer'], function () {
+                var table = layui.table,
+                layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form,
+                $form = $('form');
+                //第一个实例
+                table.render({
+                    elem: '#demo'
+                    , toolbar: '#toolbarDemo' //显示表单元素
+                    , title: '权限分配'  //标题
+                    , size: 'lg' //表格大小
+                    ,id: 'testReload' //表格ID
+                    // , height: 300
+                    // , url: '/demo/table/user/' //数据接口
+                    , data: [
+                        { id: 1, name: '小明', user: '13246987', bumen: '财务部', quan: '管理员', zhi: '业务', ship: '黄埔港' },
+                        { id: 2, name: '小黑', user: '2354497', bumen: '业务部', quan: '普通', zhi: '财务', ship: '天津港' },
+                        { id: 3, name: '小白', user: '897945616', bumen: '客服部', quan: '普通', zhi: '客服', ship: '虎门' }
+                    ]
+                    , cols: [[ //表头
+                        { type: 'checkbox', fixed: 'left' }
+                        , { field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left' }
+                        , { field: 'name', title: '姓名' }
+                        , { field: 'user', title: '账号' }
+                        , { field: 'bumen', title: '部门', sort: true, }
+                        , { field: 'quan', title: '权限' }
+                        , { field: 'zhi', title: '职位' }
+                        , { field: 'ship', title: '港口' }
+                        , { fixed: 'right', title: '操作', toolbar: '#barDemo' }
+                    ]]
+                    , page: true //开启分页
+                });
+                
+                //搜索
+                $('.cha').click(function(){
+                    let arrt = $('#cont').serializeArray();
+                    console.log(arrt[0].value);
+                    //执行重载
+                    table.reload('testReload', {
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        , where: {
+                            key: {
+                                id: arrt[0].value
+                            }
+                        }
+                    });
+                });
+
+
+                //头工具栏事件
+                table.on('toolbar(test)', function (obj) {
+                    var checkStatus = table.checkStatus(obj.config.id);
+                    switch (obj.event) {
+                        case 'add_user':
+                            $('.user').attr('readonly',false);
+                            layer.open({
+                                type: 1, 
+                                title: '创建账号',
+                                content: $('#admin_user'),
+                                area: '1000px',
+                                offset: 't',
+                            }); 
+                            loadProvince();
+                            break;
+                        case 'getCheckData':
+                            var data = checkStatus.data;
+                            layer.alert(JSON.stringify(data));
+                            break;
+                        case 'getCheckLength':
+                            var data = checkStatus.data;
+                            layer.msg('选中了：' + data.length + ' 个');
+                            break;
+                        case 'isAll':
+                            layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                            break;
+                    };
+                });
+
+                //监听行工具事件
+                table.on('tool(test)', function (obj) {
+                    var data = obj.data;
+                    //console.log(obj)
+                    if (obj.event === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del();
+                            layer.close(index);
+                        });
+                    } else if (obj.event === 'edit') {
+                        $('.user').attr('readonly',true);
+                            layer.open({
+                                type: 1, 
+                                title: '创建账号',
+                                content: $('#admin_user'),
+                                area: '1000px',
+                                offset: 't',
+                            }); 
+                            loadProvince();
+                    }
+                });
+
+
+                  //监听提交
+                form.on('submit(demo1)', function(data){  
+                    console.log(data.field)                 
+                    $.post("<{:url('admin/jurisdiction/aaa')}>",{data:data.field},function(res){
+                        console.log(res)
+                    })                    
+                    
+                    return true;
+                });
+
+
+
+
+
+
+
+        var areaData = JS_PORT;
+                    //加载省数据
+        function loadProvince() {
+            var proHtml = '';
+            for (var i = 0; i < areaData.length; i++) {
+                proHtml += '<option title="'+ i +'"  style="width: 40px" value="' + areaData[i].provinceCode + '">' + areaData[i].provinceName + '</option>';
+            }
+            
+            // 初始化省数据
+            $form.find('select[name=province]').append(proHtml);
+            form.render();
+            form.on('select(province)', function(data) {
+                $form.find('select[name=port]').html('<option value="">请选择县/区</option>').parent().hide();
+                var value = data.value,
+                index = $(data.elem).find("option:selected").attr('title');
+                if (value) {
+                    loadCity(areaData[index].mallCityList);
+                } else {
+                    $form.find('select[name=city]').parent().hide();
+                }
+            });
+        }
+        
+    //加载市数据
+        function loadCity(citys) {
+            var cityHtml = '';
+            for (var i = 0; i < citys.length; i++) {
+                cityHtml += '<option title="'+ i +'" style="width: 40px" value="' + citys[i].cityCode + '">' + citys[i].cityName + '</option>';
+            }
+            $form.find('select[name=city]').html(cityHtml).parent().show();
+            form.render();
+            form.on('select(city)', function(data) {
+                var value = data.value,
+                index = $(data.elem).find("option:selected").attr('title');
+                if (value) {
+                    //将城市Id 传给港口loadPort()
+                    loadPort(citys[index].mallPortList);
+                } else {
+                    $form.find('select[name=area]').parent().hide();
+                }
+            });
+        }
+    
+        //加载对应城市的港口，
+        function loadPort(ports){            
+            var areaHtml = '';
+            for(var i=0;i<ports.length;i++){
+                areaHtml += '<option  value="' + ports[i].portCode +'">' + ports[i].portName + '</option>';  
+                selectPortShip(ports[i].portCode,ports[i].portName,document.getElementById('search_port'));
+            }
+            $form.find('select[name=port]').html(areaHtml).parent().show();
+            form.render();
+            form.on('select(port)', function(data) {
+                var mark = document.getElementById('search_port'),
+                name = $(data.elem).find("option:selected").text();
+                 //已经存的港口就不执行
+                if(! document.getElementById(data.value)  ){
+                    selectPortShip(data.value,name,mark);
+                } 
+            } ) 
+        }
+        
+
+        function  selectPortShip(port_id,port_name,mark){                      
+            var btn =document.createElement('button');
+                btn.className="layui-btn layui-btn-normal";
+                btn.style="display: inline\;" ;
+                btn.innerHTML=port_name;
+                btn.setAttribute('id',(port_id))
+                btn.addEventListener("click",function() {
+                        del(this);
+                        return false;
+                });
+            var ipt= document.createElement('input');
+                ipt.type="hidden";
+                ipt.name='port_code[]';
+                ipt.value=port_id;
+            var  i_tag=document.createElement('i');
+                 i_tag.className="layui-icon";
+                 i_tag.innerHTML="&#xe640\;";
+            btn.appendChild(ipt);   
+            btn.appendChild(i_tag);
+            mark.appendChild(btn);
+           
+         }
+         
+        function del(obj){
+            obj.setAttribute('style','display: none;');
+           // 删除button的子节点
+            var childs = obj.childNodes; 
+                for(var i = childs.length - 1; i >= 0; i--) { 
+                    obj.removeChild(childs[i]); 
+                }
+                //删除本身button
+                obj.parentNode.removeChild(obj);
+         }
+
+            });
+        </script>
+    </body>
+
+    </html>
