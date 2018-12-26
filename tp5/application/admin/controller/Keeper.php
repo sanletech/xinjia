@@ -8,6 +8,10 @@ use think\Request;
 use think\Db;
 class Keeper extends Base
 {
+    public function control() 
+    {
+        return $this->view->fetch('keeper/control'); 
+    }
 
     //管理员列表
     public function adminList() 
