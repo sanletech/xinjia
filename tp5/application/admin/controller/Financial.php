@@ -179,7 +179,7 @@ class Financial extends Base
                 $list[$key]['status'] ='订单审核中';
                 break;
                 case $this->order_status['completion']:
-                $list[$key]['status'] ='订单审已经完成';
+                $list[$key]['status'] ='订单已完成';
                 break;  
                 default:
                 $list[$key]['status'] ='订单进行中';  
@@ -205,9 +205,10 @@ class Financial extends Base
                 ->join('hl_order_port OP','OB.order_num = OP.order_num','left')
                 ->where('OP.order_num','in',$order_num_arr)
                 ->column('OP.order_num,OP.status');
+            
         $arr =[];
         foreach ($status_res as $key => $value) {
-            if($value!== $this->order_status['completion']){
+            if($value!= $this->order_status['completion']){
                 $arr[]=$key;
             };
         }        
@@ -253,9 +254,9 @@ class Financial extends Base
             if($data['money_status']=='nodo'){
                 return json(array('status'=>0,'message'=>'还未付款') );
             }
-//            if(empty($data['check_date'])){
-//                return json(array('status'=>0,'message'=>'还未对账') );
-//            }
+            // if(empty($data['check_date'])){
+            //     return json(array('status'=>0,'message'=>'还未对账') );
+            // }
             $title='订单完成';
             $data = new \app\admin\model\OrderProcess();  
             $response= $data->orderUpdate($order_num,$status,$title);

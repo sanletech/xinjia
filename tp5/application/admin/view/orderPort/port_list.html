@@ -498,16 +498,18 @@ table.on('tool()', function(obj){
     ,choose:function(obj){
       // console.log(obj);
     }
-    , done: function (res) {                  
+    , done: function (res) {               
       // 上传完毕回调
       if (res.status) {
         layer.msg('上传成功', {icon: 1,time: 1000},function(res){
-          location.replace(location.href);
+         
         });
       } else {
-        // alert(res.msg)
-        layer.msg('上传失败', {icon: 2,time: 1000});
+        layer.msg('上传失败', {icon: 2,time: 1000},function(res){
+          // location.replace(location.href);
+        });
       }
+      $('.cha').click();
     }
   });
   }

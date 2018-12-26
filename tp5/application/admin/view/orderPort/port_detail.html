@@ -33,12 +33,7 @@
                             <div class="layui-form-item" style="float: left;">
                                 <label class="layui-form-label">支付状态：</label>
                                 <div class="layui-input-block mony">
-                                      <?php if($list['money_status'] == 'do'){
-                                            echo'已付款';
-                                        }else{
-                                            echo'未付款';
-                                        }
-                                        ?>
+                                     <{$list.money_status}>
                                 </div>
                             </div>
                             <div class="ding_status">
@@ -49,7 +44,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">订单号：</label>
                                 <div class="layui-input-block">
-                                    <input name="order_num" lay-verify="title" autocomplete="off" class="layui-input" type="text" value="<{$list.order_num}>">
+                                        <{$list.order_num}>
+                                    <input name="order_num" lay-verify="title" autocomplete="off" class="layui-input" type="hidden" value="<{$list.order_num}>">
                                 </div>
                             </div>
                         </div>
@@ -653,7 +649,6 @@
             var xiu_url = "<{:url('admin/Financial/Order_completion')}>";//已完成订单
         </script>
         <script src="__STATIC__/js/port_money.js"></script>
-        <script src="__STATIC__/js/lrdd.js"></script>
         <script>
             $('input').attr('readonly',true);
             function edit(){

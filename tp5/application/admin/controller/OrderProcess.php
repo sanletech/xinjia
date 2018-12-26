@@ -70,7 +70,7 @@ class OrderProcess extends Base
             }
             $file = Db::name('order_port')->where('order_num',$order_name)->value($type); 
             //将后缀修改成.
-            $file_Extension= strstr(strrev($file),'_',true);
+            $file_Extension= strrev(strstr(strrev($file),'_',true));
             $file_name = substr($file,0,strrpos($file, '_')).'.'.$file_Extension;     
             $file_dir = ROOT_PATH . 'public' . DS . 'uploads/files';        //下载文件存放目录    
             //检查文件是否存在    

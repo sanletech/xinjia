@@ -1,51 +1,28 @@
-        $order_num = $this->request->param('order_num');
-        $modify = $this->request->param('modify');//是否修改 true or false
-        $lists  =  $this->request->param('list');
-        $tmp =[];
-        //判断港口数量是否对应的上
-        $data = Db::name('order_ship')
-                ->where('order_num',$order_num)
-                ->field('port_name,port_code,ship_name,arrival_time,dispatch_time')
-                ->order('sequence')->select();
-        if(count($data) !== count($lists)){
-            return json(array('status'=>0,'message'=>'参数错误'));
-        }else{
-            foreach ($data as $key => $value) {
-                //对数据和数据库做比对
-                $result = array_diff_assoc($lists[$key],$data[$key]);
-                //如果为空 说明有未更改的,记录未更改的港口
-                if(empty($result)){
-                    $tmp['port_code'][]=$value['port_code'];
-                }
-                $tmp['port_code'] = array_key_exists('port_code', $result)? true :false;
-                $tmp['port_name'] = array_key_exists('port_name', $result)? true :false;
-                $tmp['ship_name'] = array_key_exists('ship_name', $result)? true :false;
-                //不符合数据库的数据
-                if(in_array(true, $tmp)){
-                    $illegal_data  = array_intersect_key($value,array_flip(array_keys($tmp,true)) );
-                    return json(array('status'=>0,'message'=>'数据冲突'.implode(',', $illegal_data) ));
-                }
-            } 
-            $mtime =  date('Y-m-d H:i:s');
-            //数据验证无问题，更新数据库
-            foreach ($lists as $list){
-                //过滤空的数据
-                if(count(array_filter($list))=1){
-                    continue;
-                }
-                //过滤和数据库里没有变化的数据
-                if(in_array($list['port_code'],$tmp['port_code'])){
-                    continue;
-                }
-                $list['mtime']=$mtime;
-                $res = Db::name('order_ship')
-                        ->where(['order_num'=>$order_num,'port_code'=>$list['port_code']])
-                        ->update($list);
-                $res ? $tmp['success'][]=$list['port_name'] :$tmp['fail'][]=$list['port_name'];
-            }
-            if(array_key_exists('fail', $tmp)){
-                return json(array('status'=>0,'message'=>'更新失败.'.implode(',', $tmp['fail'])));
-            }  else {
-                return json(array('status'=>1,'message'=>'更新成功.'.implode(',', $tmp['success'])));
-            }
-        }
+���ֿƼ�
+http://www.sanletech.com/sladmin.php  sanle  sanle@207
+ip: 114.67.248.3   ssh  root@114.67.248.3  Sanle=36
+
+������
+https://ecs.console.aliyun.com/?spm=5176.2020520101.aliyun_sidebar.1.69854df5pcW59o#/server/region/cn-shenzhen
+ssh  root@47.106.207.121 
+password :  Cxzhd207 
+mysql :  root / cxzhd207
+������ע������������
+ ���룺qzl123
+�����䣺13392118535@189.cn
+
+http://47.106.207.121/qzladmin.php
+
+
+bangbangmai.cn   2658640197@qq.com       bangbangmai88
+http://wx.bangbangmai.cn/admin.php  ��̨
+
+
+2658640197@qq.com ban bangbangmai88 ��Ʒ   3237398823@qq.com ban bangbangmai88  ũ�
+
+
+�������� С���� 
+2200802672@qq.com  xingjia56.com
+
+
+

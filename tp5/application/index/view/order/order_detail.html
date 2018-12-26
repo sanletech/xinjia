@@ -28,12 +28,7 @@
                             <div class="layui-form-item" style="float: left;">
                                 <label class="layui-form-label">支付状态：</label>
                                 <div class="layui-input-block mony">
-                                        <?php if($list['money_status'] == 'do'){
-                                            echo'已付款';
-                                        }else{
-                                            echo'未付款';
-                                        }
-                                        ?>
+                                <{$list.money_status}>
                                 </div>
                             </div>
                             <div class="ding_status">

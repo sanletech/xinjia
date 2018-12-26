@@ -130,11 +130,34 @@
             </div>
         </form>
 
+        <!-- 管理权限 -->
+        <form class="layui-form" id="jurisdiction">
+            <div class="layui-form-item">
+                <label class="layui-form-label">部门</label>
+                <div class="layui-input-block">
+                    <select name="bumen" lay-verify="required">
+                        <option value="1">财务部</option>
+                        <option value="2">业务部</option>
+                        <option value="3">客服部</option>
+                    </select>
+                </div>
+            </div>
+
+            
+        </form>
+
+        <!-- 管理职位 -->
+        <form class="layui-form" id="occupation">
+
+        </form>
+
         <table id="demo" lay-filter="test"></table>
 
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" lay-event="add_user">创建账号</button>
+                <button class="layui-btn layui-btn-sm" lay-event="eidt_jurisdiction">管理权限</button>
+                <button class="layui-btn layui-btn-sm" lay-event="eidt_occupation">管理职位</button>
                 <!-- <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
                 <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
                 <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
@@ -205,7 +228,7 @@
                 table.on('toolbar(test)', function (obj) {
                     var checkStatus = table.checkStatus(obj.config.id);
                     switch (obj.event) {
-                        case 'add_user':
+                        case 'add_user'://创建账号
                             $('.user').attr('readonly',false);
                             layer.open({
                                 type: 1, 
@@ -215,6 +238,10 @@
                                 offset: 't',
                             }); 
                             loadProvince();
+                            break;
+                        case 'eidt_jurisdiction'://管理权限
+                            break;
+                        case 'eidt_occupation'://管理职位
                             break;
                         case 'getCheckData':
                             var data = checkStatus.data;
@@ -317,7 +344,7 @@
             var areaHtml = '';
             for(var i=0;i<ports.length;i++){
                 areaHtml += '<option  value="' + ports[i].portCode +'">' + ports[i].portName + '</option>';  
-                selectPortShip(ports[i].portCode,ports[i].portName,document.getElementById('search_port'));
+                // selectPortShip(ports[i].portCode,ports[i].portName,document.getElementById('search_port'));
             }
             $form.find('select[name=port]').html(areaHtml).parent().show();
             form.render();
