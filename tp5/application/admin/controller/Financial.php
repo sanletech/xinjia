@@ -201,11 +201,14 @@ class Financial extends Base
         $time =$data['time'];
         $mtime =  date('Y-m-d H:i:s');
         //先查询是否已经订单完成了,在能输入对账日期
-        $status_res  = Db::name('order_bill')->where('order_num','in',$order_num_arr)
-                ->column('status,order_num');
+        $status_res  = Db::name('order_bill')->alias('OB')
+                ->join('hl_order_port OP','OB.order_num = OP.order_num','left')
+                ->where('OP.order_num','in',$order_num_arr)
+                ->column('OP.order_num,OP.status');
+            
         $arr =[];
         foreach ($status_res as $key => $value) {
-            if($value!== $this->order_status['completion']){
+            if($value!= $this->order_status['completion']){
                 $arr[]=$key;
             };
         }        
@@ -251,9 +254,9 @@ class Financial extends Base
             if($data['money_status']=='nodo'){
                 return json(array('status'=>0,'message'=>'还未付款') );
             }
-            if(empty($data['check_date'])){
-                return json(array('status'=>0,'message'=>'还未对账') );
-            }
+            // if(empty($data['check_date'])){
+            //     return json(array('status'=>0,'message'=>'还未对账') );
+            // }
             $title='订单完成';
             $data = new \app\admin\model\OrderProcess();  
             $response= $data->orderUpdate($order_num,$status,$title);

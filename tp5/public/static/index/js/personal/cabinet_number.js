@@ -21,7 +21,7 @@ function cabinet(od_num,gui,zj) {
 //弹出报柜号
 function order_num(zj){
     let stast = $(zj).parent().siblings('.caozuo').find('a').html();       
-    if (stast == '进行中') {
+    if (stast == '订单进行中') {
     layer.open({
         type: 1,
         title: '报柜号',
@@ -59,6 +59,7 @@ var st = $('.caozuo a');//订单状态
 var tj = $('.tj_gh');//提交柜号
 
 for (let i = 0; i < huo.length; i++) {
+    console.log(huo.eq(i).html())
     if(huo.eq(i).html() == 'lock'){
         huo.eq(i).html('扣货');
         if (st.eq(i).html() == '订单进行中') {
@@ -99,18 +100,17 @@ $('.goods a').click(function(){
             ,btn:['申请放货','取消']
             ,content: $('#state_goods')
             ,yes:function (index, layero) {
-                $.get(apply_cargo_url,{'order_num':order_num},function(res){
-                    console.log(res);
-                    
+                $.get(apply_cargo_url,{'order_num':order_num},function(res){  
+                    console.log(res)                  
                     if(res.status){
                         // alert('申请成功');
-                        layui.layer.msg('申请成功',{icon: 2,time: 500},function(){
+                        layer.msg('申请成功',{icon: 1,time: 500},function(){
                             layer.close(index);
                         });
                         location.reload();
                     }else{
                         // alert('申请失败');
-                        layui.layer.msg('申请失败',{icon: 2,time: 1000});
+                        layer.msg('申请失败',{icon: 2,time: 1000});
                     }
                     
                 });
