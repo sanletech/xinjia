@@ -241,21 +241,19 @@
                     , size: 'lg' //表格大小
                     ,id: 'testReload' //表格ID
                     // , height: 300
-                    // , url: '/demo/table/user/' //数据接口
-                    , data: [
-                        { id: 1, name: '小明', user: '13246987', bumen: '财务部', quan: '管理员', zhi: '业务', ship: '黄埔港' },
-                        { id: 2, name: '小黑', user: '2354497', bumen: '业务部', quan: '普通', zhi: '财务', ship: '天津港' },
-                        { id: 3, name: '小白', user: '897945616', bumen: '客服部', quan: '普通', zhi: '客服', ship: '虎门' }
-                    ]
+                     , url: "<{:url('admin/Jurisdiction/userData')}>" //数据接口
+             
                     , cols: [[ //表头
                         { type: 'checkbox', fixed: 'left' }
                         , { field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left' }
                         , { field: 'user_name', title: '姓名' }
                         , { field: 'user_code', title: '账号' }
-                        , { field: 'title', title: '部门', sort: true, }
+                        , { field: 'department', title: '部门', sort: true, }
                         , { field: 'power', title: '权限' }
-                        , { field: 'zhi', title: '职位' }
-                        , { field: 'ship', title: '港口' }
+                        , { field: 'title', title: '职位' }
+                       ,{ field: 'ship', title: '港口',templet:function(data){
+                            return `${data.port_name}--${data.city_name}` 
+                        }}
                         , { fixed: 'right', title: '操作', toolbar: '#barDemo' }
                     ]]
                     , page: true //开启分页
