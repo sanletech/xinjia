@@ -100,7 +100,7 @@ class Jurisdiction extends Base
             $items[$i] = $value;
             $i++;
         }
-//        $this->_p($items);exit;
+        $this->_p($items);exit;
         //第二部 遍历数据 生成树状结构
         $tree = array();
         foreach($items as $key => $item){

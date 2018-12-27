@@ -359,8 +359,14 @@
                         });
                     } else if (obj.event === 'edit') {
                         $('.user').attr('readonly',true);
+<<<<<<< HEAD
                         $('#admin_user .pwd').remove();
                         $.get("<{:url('admin/jurisdiction/userData')}>",{uid:obj.data.id},function(res){
+=======
+                        $.get("<{:url('admin/jurisdiction/userData')}>",{id:obj.data.id},function(res){
+
+                        });
+>>>>>>> 617a11113e5e03a253537b3b75cd9442519a488d
                             layer.open({
                                 type: 1, 
                                 title: '分配权限',
