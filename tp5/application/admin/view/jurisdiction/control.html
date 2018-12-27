@@ -100,17 +100,21 @@
             <div class="layui-inline">
                 <label class="layui-form-label">管理港口</label>
                 <div class="layui-input-inline">
-                    <select name="province" lay-filter="province">
+                    <select class="province" lay-filter="province">
                         <option value="">请选择省</option>
                     </select>
                 </div>
                 <div class="layui-input-inline" id='citydiv' style="display: none;">
-                    <select name="city" lay-filter="city">
+                    <select class="city" lay-filter="city">
                         <option value="">请选择市</option>
                     </select>
                 </div>
+
+                <div class="layui-input-inline gkou" style="display: none;">
+                    <a class="layui-btn layui-btn-normal">选择港口</a>
+                </div>
                 <div class="layui-input-inline" style="display: none;">
-                    <select name="port" lay-filter="port">
+                    <select class="port" lay-filter="port">
                         <option value="">请选择起点/终点港口</option>
                     </select>
                 </div>
@@ -146,24 +150,24 @@
                 </div>
 
                 <ul class="quanxian">
-                    <li class="layui-badge layui-bg-blue">是否<i class="layui-icon layui-icon-close"></i></li>
-                    <li class="layui-badge layui-bg-blue">刘嘉玲<i class="layui-icon layui-icon-close"></i></li>
-                    <li class="layui-badge layui-bg-blue">撒地方方式<i class="layui-icon layui-icon-close"></i></li>
-                    <li class="layui-badge layui-bg-blue">阿斯蒂芬士大夫<i class="layui-icon layui-icon-close"></i></li>
-                    <li class="layui-badge layui-bg-blue">阿德代理费阿道夫<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue" title="1">是否<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue" title="2">刘嘉玲<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue" title="3">撒地方方式<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue" title="4">阿斯蒂芬士大夫<i class="layui-icon layui-icon-close"></i></li>
+                    <li class="layui-badge layui-bg-blue" title="5">阿德代理费阿道夫<i class="layui-icon layui-icon-close"></i></li>
                 </ul>
 
                 <form>
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">修改权限名</label>
+                            <label class="layui-form-label">权限名</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="name"  class="layui-input">
-                                <input type="text" name="id"  class="layui-input">
+                                <input type="hidden" name="id"  class="layui-input quan_id">
+                                <input type="text" name="name"  class="layui-input quan_name">
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <a class="layui-btn edit_qx">修改权限</a>
+                            <a class="layui-btn" lay-submit="" lay-filter="edit_quan">修改权限</a>
                         </div>
                     </div>
                 </form>
@@ -336,9 +340,12 @@
                         });
                     } else if (obj.event === 'edit') {
                         $('.user').attr('readonly',true);
+                        $.get("<{:url('admin/jurisdiction/aaa')}>",{id:obj.data.id},function(res){
+
+                        });
                             layer.open({
                                 type: 1, 
-                                title: '创建账号',
+                                title: '分配权限',
                                 content: $('#admin_user'),
                                 area: '1000px',
                                 offset: 't',
@@ -352,11 +359,16 @@
                 });
 
 
-                //监听提交
+                //添加账号
                 form.on('submit(demo1)', function(data){  
                     console.log(data.field)                 
                     $.post("<{:url('admin/jurisdiction/aaa')}>",{data:data.field},function(res){
-                        console.log(res)
+                        if (res.status) {
+                            layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
+                            })
+                        } else {
+                            layer.msg('添加失败', { icon: 2, time: 1000 });
+                        }
                     })                    
                     
                     return true;
@@ -369,52 +381,93 @@
                 });
 
                 //添加权限
-                $('.add_qx').click(function(){
+                $('.add_qx').click(function () {
                     let name = $('.add_jurisdiction').val();
-                    // $.get('',{name:name},function(res){
-                    // })
-                    layer.msg('添加成功',{icon: 1,time: 1000},function(){
-                        $('.quanxian').append(`<li class="layui-badge layui-bg-blue">${name}<i class="layui-icon layui-icon-close"></i></li>`);
+                    $.post("<{:url('admin/jurisdiction/aaa')}>", { name: name }, function (res) {
+                        if (res.status) {
+                            layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
+                                $('.quanxian').append(`<li class="layui-badge layui-bg-blue">${name}<i class="layui-icon layui-icon-close"></i></li>`);
+                            })
+                        } else {
+                            layer.msg('删除失败', { icon: 2, time: 1000 });
+                        }
                     })
+
                 });
 
                 //删除权限
-                $('.quanxian').on('click','li i',function(){
+                $('.quanxian').on('click', 'li i', function () {
                     let that = $(this);
-                    layer.confirm('是否删除', { icon: 3, title: '提示' }, function () {
-                        layer.msg('删除成功',{icon: 1,time: 1000},function(){
-                            that.parent('li').remove();
-                        })
-                    });
+                    $.get("<{:url('admin/jurisdiction/aaa')}>", {id:1}, function (res) {
+                        if (res.status) {
+                            layer.confirm('是否删除', { icon: 3, title: '提示' }, function () {
+                                layer.msg('删除成功', { icon: 1, time: 1000 }, function () {
+                                    that.parent('li').remove();
+                                })
+                            });
+                        } else {
+                            layer.msg('删除失败', { icon: 2, time: 1000 });
+                        }
+                    })
                 });
 
-                //修改权限
+                //选中修改权限
                 $('.quanxian').on('click','li',function(){
-                    $(this).addClass('se');
+                    $(this).addClass('se').siblings().removeClass('se');
+                    $('.quan_name').val($(this).text())
+                    $('.quan_id').val($(this).attr('title'));
                 });
-                
+
+                // 修改权限
+                form.on('submit(edit_quan)', function (data) {
+                    $.post("<{:url('admin/jurisdiction/aaa')}>", data.field, function (res) {
+                        if (res.status) {
+                            layer.msg('修改成功', { icon: 1, time: 1000 }, function () {
+                                $('.quanxian li').each(function () {
+                                    if ($(this).is('.se')) {
+                                        $(this).text(data.field.name);
+                                    }
+                                })
+                            })
+                        } else {
+                            layer.msg('修改失败', { icon: 2, time: 1000 });
+                        }
+                    })                    
+                    return true;
+                });
 
                 //添加职位
                 $('.add_zw').click(function(){
                     let name = $('.add_occupation').val();
                     console.log(bumen_id)
-                    // $.get('',{name:name},function(res){
-                    // })
-                    layer.msg('添加成功',{icon: 1,time: 1000},function(){
-                        $('.zhiwei').append(`<li class="layui-badge layui-bg-blue">${name}<i class="layui-icon layui-icon-close"></i></li>`);
+                    $.post("<{:url('admin/jurisdiction/aaa')}>", { name: name, id: bumen_id }, function (res) {
+                        if (res.status) {
+                            layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
+                                $('.zhiwei').append(`<li class="layui-badge layui-bg-blue">${name}<i class="layui-icon layui-icon-close"></i></li>`);
+                            })
+                        } else {
+                            layer.msg('添加失败', { icon: 2, time: 1000 });
+                        }
+
                     })
+                    
                 });
                 
                 //删除职位
-                $('.zhiwei').on('click','li i',function(){
+                $('.zhiwei').on('click', 'li i', function () {
                     let that = $(this);
                     console.log(bumen_id)
-                    layer.confirm('是否删除', { icon: 3, title: '提示' }, function () {
-                        layer.msg('删除成功',{icon: 1,time: 1000},function(){
-                            that.parent('li').remove();
-                        })
+                    $.get("<{:url('admin/jurisdiction/aaa')}>", { id: bumen_id }, function (res) {
+                        if (res.status) {
+                            layer.confirm('是否删除', { icon: 3, title: '提示' }, function () {
+                                layer.msg('删除成功', { icon: 1, time: 1000 }, function () {
+                                    that.parent('li').remove();
+                                })
+                            });
+                        } else {
+                            layer.msg('删除失败', { icon: 2, time: 1000 });
+                        }
                     });
-                    
                 });
 
 
@@ -424,7 +477,8 @@
 
 
         var areaData = JS_PORT;
-                    //加载省数据
+        var city_boot = false;
+        //加载省数据
         function loadProvince() {
             var proHtml = '';
             for (var i = 0; i < areaData.length; i++) {
@@ -432,7 +486,7 @@
             }
             
             // 初始化省数据
-            $form.find('select[name=province]').append(proHtml);
+            $form.find('.province').append(proHtml);
             form.render();
             form.on('select(province)', function(data) {
                 $form.find('select[name=port]').html('<option value="">请选择县/区</option>').parent().hide();
@@ -441,7 +495,7 @@
                 if (value) {
                     loadCity(areaData[index].mallCityList);
                 } else {
-                    $form.find('select[name=city]').parent().hide();
+                    $form.find('.city').parent().hide();
                 }
             });
         }
@@ -452,17 +506,20 @@
             for (var i = 0; i < citys.length; i++) {
                 cityHtml += '<option title="'+ i +'" style="width: 40px" value="' + citys[i].cityCode + '">' + citys[i].cityName + '</option>';
             }
-            $form.find('select[name=city]').html(cityHtml).parent().show();
+            $form.find('.city').html(cityHtml).parent().show();
             form.render();
             form.on('select(city)', function(data) {
                 var value = data.value,
-                index = $(data.elem).find("option:selected").attr('title');
-                if (value) {
-                    //将城市Id 传给港口loadPort()
-                    loadPort(citys[index].mallPortList);
-                } else {
-                    $form.find('select[name=area]').parent().hide();
+                mark = document.getElementById('search_port'),
+                index = $(data.elem).find("option:selected").attr('title'),
+                name = $(data.elem).find("option:selected").text();
+                if (!city_boot) {
+                    if(! document.getElementById(value)  ){
+                        selectPortShip(value,name,mark,'city_code[]');
+                    } 
                 }
+                //将城市Id 传给港口loadPort()
+                loadPort(citys[index].mallPortList);
             });
         }
     
@@ -473,20 +530,32 @@
                 areaHtml += '<option  value="' + ports[i].portCode +'">' + ports[i].portName + '</option>';  
                 // selectPortShip(ports[i].portCode,ports[i].portName,document.getElementById('search_port'));
             }
-            $form.find('select[name=port]').html(areaHtml).parent().show();
+            if(city_boot){
+                $form.find('.port').html(areaHtml).parent().show();
+            }else{
+                $form.find('.port').html(areaHtml);
+                $('.gkou').show();
+            }
+            
             form.render();
             form.on('select(port)', function(data) {
                 var mark = document.getElementById('search_port'),
                 name = $(data.elem).find("option:selected").text();
                  //已经存的港口就不执行
                 if(! document.getElementById(data.value)  ){
-                    selectPortShip(data.value,name,mark);
+                    selectPortShip(data.value,name,mark,'port_code[]');
                 } 
-            } ) 
+            }) 
         }
-        
 
-        function  selectPortShip(port_id,port_name,mark){                      
+        $('.gkou').click(function(){
+            $(this).hide();
+            $form.find('.port').parent().show();
+            $('#search_port').html('');
+            city_boot = true;
+        })
+
+        function  selectPortShip(port_id,port_name,mark,code){                      
             var btn =document.createElement('button');
                 btn.className="layui-btn layui-btn-normal";
                 btn.style="display: inline\;" ;
@@ -498,7 +567,7 @@
                 });
             var ipt= document.createElement('input');
                 ipt.type="hidden";
-                ipt.name='port_code[]';
+                ipt.name= code;
                 ipt.value=port_id;
             var  i_tag=document.createElement('i');
                  i_tag.className="layui-icon";
