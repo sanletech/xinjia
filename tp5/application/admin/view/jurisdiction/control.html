@@ -44,10 +44,11 @@
 
         <!-- 添加账号 -->
         <form class="layui-form" id="admin_user">
+        <input type="hidden" name="id" value="" class="user_id">
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    <input type="text" name="user_name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
                 </div>
             </div>
             
@@ -55,42 +56,40 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">账号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="user" required lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input user">
+                    <input type="text" name="user_code" required lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input user">
                 </div>
             </div>
             
             
-            <div class="layui-form-item">
+            <div class="layui-form-item pwd">
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="pwd" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input type="text" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             
             <div class="layui-form-item">
                 <label class="layui-form-label">部门</label>
                 <div class="layui-input-block">
-                    <select name="bumen" lay-verify="required">
-                        <option value="1">财务部</option>
-                        <option value="2">业务部</option>
-                        <option value="3">客服部</option>
+                    <select name="department_id" lay-filter="required_add">
+                        <option value="1">业务部</option>
+                        <option value="2">客服部</option>
+                        <option value="3">财务部</option>
                     </select>
                 </div>
             </div>
 
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">权限</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="quan1" value="1" lay-skin="primary" title="写作" checked="">
-                    <input type="checkbox" name="quan2" value="2" lay-skin="primary" title="阅读">
+                <div class="layui-input-block team">
+
                 </div>
             </div>
             
             <div class="layui-form-item" pane="">
                 <label class="layui-form-label">职位</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="zhi1" value="1" lay-skin="primary" title="写作" checked="">
-                    <input type="checkbox" name="zhi2" value="2" lay-skin="primary" title="阅读">
+                <div class="layui-input-block auth">
+
                 </div>
             </div>
 
@@ -129,7 +128,7 @@
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <a class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</a>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    <button type="reset" class="layui-btn layui-btn-primary chong">重置</button>
                 </div>
             </div>
         </form>
@@ -237,6 +236,7 @@
                 $form = $('form');
                 //部门的ID
                 var bumen_id = '1';
+                var city_boot = false;//是否可以选择港口
                 //第一个实例
                 table.render({
                     elem: '#demo'
@@ -255,8 +255,18 @@
                         , { field: 'department', title: '部门', sort: true, }
                         , { field: 'power', title: '权限' }
                         , { field: 'title', title: '职位' }
-                       ,{ field: 'ship', title: '港口',templet:function(data){
-                            return `${data.port_name}--${data.city_name}` 
+                       ,{ field: 'ship', title: '港口',templet:function(data,value){
+                           let name = '';
+                           if(data.city_code[0]){
+                            for (let i = 0; i < data.city_code.length; i++) {
+                                name += data.city_name[i] + ',';
+                            }
+                           }else{
+                            for (let i = 0; i < data.port_code.length; i++) {
+                                name += data.port_name[i] +','
+                            }
+                           }
+                           return `${name}`
                         }}
                         , { fixed: 'right', title: '操作', toolbar: '#barDemo' }
                     ]]
@@ -288,12 +298,17 @@
                     switch (obj.event) {
                         case 'add_user'://创建账号
                             $('.user').attr('readonly',false);
+                            $('#admin_user .user_id').remove();
                             layer.open({
                                 type: 1, 
                                 title: '创建账号',
                                 content: $('#admin_user'),
                                 area: '1000px',
                                 offset: 't',
+                                success: function (layero, index) {
+                                    teamList($('#admin_user .team'),1);
+                                    authGroup($('#admin_user .auth'));
+                                }
                             });
                             loadProvince();
                             break;
@@ -313,6 +328,10 @@
                                 content: $('#occupation'),
                                 area: ['700px','450px'],
                                 offset: 't',
+                                success: function (layero, index) {
+                                    teamList($('#admin_user .team'));
+                                    authGroup($('#admin_user .auth'));
+                                }
                             });
                             break;
                         case 'getCheckData':
@@ -340,23 +359,117 @@
                         });
                     } else if (obj.event === 'edit') {
                         $('.user').attr('readonly',true);
-                        $.get("<{:url('admin/jurisdiction/aaa')}>",{id:obj.data.id},function(res){
-
-                        });
+                        $('#admin_user .pwd').remove();
+                        $.get("<{:url('admin/jurisdiction/userData')}>",{uid:obj.data.id},function(res){
                             layer.open({
                                 type: 1, 
                                 title: '分配权限',
                                 content: $('#admin_user'),
                                 area: '1000px',
                                 offset: 't',
+                                success: function (layero, index) {
+                                    loadProvince();
+                                    let data = res.data;
+                                    $('.chong').click();
+                                    console.log(data)
+                                    $('#admin_user').append(`<input type="hidden" name="id" class="user_id" value="${data.id}"> `)
+                                    $('#admin_user input[name="user_name"]').val(data.user_name);
+                                    $('#admin_user input[name="user_code"]').val(data.user_code);
+                                    $('#admin_user select[name="department_id"]').val(data.department_id);
+                                    teamList($('#admin_user .team'),data.department_id);
+                                    authGroup($('#admin_user .auth'),data.power_id);
+                                    form.render();
+                                    $('#search_port').html('');
+                                    var mark = document.getElementById('search_port');
+                                    if (data.city_code[0]) {
+                                        sh();   
+                                        for (let i = 0; i < data.city_code.length; i++) {
+                                            if (data.city_code[i]) {
+                                                selectPortShip(data.city_code[i], data.city_name[i], mark, 'city_code[]');
+                                            }
+                                        }
+                                    }else{
+                                        hi();
+                                        for (let i = 0; i < data.port_code.length; i++) {
+                                            if (data.port_code[i]) {
+                                                selectPortShip(data.port_code[i], data.port_name[i], mark, 'port_code[]');
+                                            }
+                                        }
+                                    }
+                                    
+
+                                }
                             });
-                            loadProvince();
+                            
+                        });                            
                     }else if(obj.event === 'eidt_jurisdiction'){
                         
                     }else if(obj.event === 'eidt_occupation'){
                         
                     }
                 });
+                
+                var list = [];
+                //部门列表
+                function teamList(it,sum){
+                    it.html('');
+                    $.get("<{:url('admin/jurisdiction/teamList')}>",function(res){
+                        for (let i in res) {
+                            if (res[i].id == sum) {
+                                team(res[i].childMenus);
+                            }
+                        }
+                        for (let i in list) {
+                            if (list[i].id == '2') {
+                                it.append(`<input type="checkbox" name="title[]" value="${list[i].id}" lay-skin="primary" title="${list[i].title}" checked>`);
+                            }else{
+                                it.append(`<input type="checkbox" name="title[]" value="${list[i].id}" lay-skin="primary" title="${list[i].title}">`);
+                            }
+                            
+                        }
+                        list = [];
+                        form.render();
+                    })
+                }
+                
+                function team(data){
+                    let obj = {};
+                    for (let i in data) {
+                        obj = {id:data[i].id,title:data[i].title};
+                        list.push(obj);
+                        let data1 = data[i].childMenus;
+                        for (let j in data1) {
+                            obj = {id:data1[i].id,title:data1[i].title};
+                            list.push(obj);
+                        }
+                    }
+                }
+
+                //权限列表
+                function authGroup(it,shu){
+
+                    it.html('');
+                    $.get("<{:url('admin/jurisdiction/authGroup')}>",function(res){
+                        if (shu) {
+                            for (let i in res) {
+                                for (let j = 0; j < shu.length; j++) {
+                                    if (res[i].id == shu[j]) {
+                                        it.append(`<input type="checkbox" name="power[]" value="${res[i].id}" lay-skin="primary" title="${res[i].title}" checked>`);
+                                    } else {
+                                        it.append(`<input type="checkbox" name="power[]" value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
+                                    }
+                                }
+                            }
+                        }else{
+                            for (let i in res) {
+                                it.append(`<input type="checkbox" name="power[]" value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
+                            }
+                        }
+
+                        
+                        form.render();
+                    })
+                }
 
 
                 //添加账号
@@ -378,6 +491,12 @@
                 //监听部门
                 form.on('select(required)', function(data) {
                     bumen_id = data.value;
+                    console.log(bumen_id)
+                });
+
+                //监听add部门
+                form.on('select(required_add)', function(data) {
+                    teamList($('#admin_user .team'),data.value);
                 });
 
                 //添加权限
@@ -477,7 +596,6 @@
 
 
         var areaData = JS_PORT;
-        var city_boot = false;
         //加载省数据
         function loadProvince() {
             var proHtml = '';
@@ -528,7 +646,6 @@
             var areaHtml = '';
             for(var i=0;i<ports.length;i++){
                 areaHtml += '<option  value="' + ports[i].portCode +'">' + ports[i].portName + '</option>';  
-                // selectPortShip(ports[i].portCode,ports[i].portName,document.getElementById('search_port'));
             }
             if(city_boot){
                 $form.find('.port').html(areaHtml).parent().show();
@@ -554,6 +671,19 @@
             $('#search_port').html('');
             city_boot = true;
         })
+        
+        //显示港口
+        function hi(){
+            $('.gkou').hide();
+            city_boot = true;
+        }
+
+        //显示港口
+        function sh(){
+            $('.gkou').show();
+            $form.find('.port').parent().hide();
+            city_boot = false;
+        }
 
         function  selectPortShip(port_id,port_name,mark,code){                      
             var btn =document.createElement('button');
