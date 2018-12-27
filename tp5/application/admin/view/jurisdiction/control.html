@@ -340,7 +340,7 @@
                         });
                     } else if (obj.event === 'edit') {
                         $('.user').attr('readonly',true);
-                        $.get("<{:url('admin/jurisdiction/aaa')}>",{id:obj.data.id},function(res){
+                        $.get("<{:url('admin/jurisdiction/userData')}>",{id:obj.data.id},function(res){
 
                         });
                             layer.open({
