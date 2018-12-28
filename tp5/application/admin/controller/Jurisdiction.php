@@ -25,7 +25,7 @@ class Jurisdiction extends Base
                 ->join('hl_user_area UA','UA.user_id =U.id','left')
                 ->join('hl_port P',"FIND_IN_SET(P.port_code ,UA.area_code) and P.status = 1 and UA.type = 'port'",'left')
                 ->join('hl_city C',"FIND_IN_SET(C.city_id ,UA.area_code) and  UA.type = 'city'",'left')
-                ->field('U.id,U.user_name,U.user_code,T.title,T.job,T.pid,'
+                ->field('U.id,U.user_name,U.user_code,T.title,T.job,T.id as job_id,T.pid,'
                         . "group_concat(distinct AG.title order by AG.id ) as power,"
                         . "group_concat(distinct AG.id order by AG.id ) as power_id,"
                         . "group_concat(distinct P.port_name order by P.id) as port_name,"
@@ -100,7 +100,7 @@ class Jurisdiction extends Base
             $items[$i] = $value;
             $i++;
         }
-        $this->_p($items);exit;
+//        $this->_p($items);exit;
         //第二部 遍历数据 生成树状结构
         $tree = array();
         foreach($items as $key => $item){
