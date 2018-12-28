@@ -11,37 +11,62 @@ use think\Db;
 
 class Price extends Base
 {   
+    public  $pages =10;
 
-     //航线运价
+    //航线运价
     public function price_route() 
     {   
-        $ship_name =  input('get.ship_name');
-        $port_start = input('get.s_port_name');
-        $port_over = input('get.e_port_name');
-        $seaprice_id = input('get.seaprice_id');
-        $status = input('get.status');
+        $search = $this->request->param();
+        $ship_name = array_key_exists('ship_name',$search)? trim($search['ship_name']):'';
+        $port_start = array_key_exists('s_port_name',$search)?trim($search['s_port_name']):'';
+        $port_over =  array_key_exists('e_port_name',$search)?trim($search['e_port_name']):'';
+        $seaprice_id =  array_key_exists('seaprice_id',$search)?trim($search['seaprice_id']):'';
+        $status =  array_key_exists('status',$search)?trim($search['status']):'';
         $status ? $this->assign('status',$status): $this->assign('status','normal'); 
+        $pageParam  = ['query' =>[]]; //设置分页查询参数
+        $map  = []; //查询条件
         switch ($status){
-        case 'normal':
-           $status = 1; 
-            break; 
-        case 'deleted':
-            $status = 0; 
-            break; 
-        case 'judge':
-            $status = 2;
-            break; 
-        default :
-            $status = 1;
+            case 'normal':
+                $status = 1; 
+                $pageParam['query']['status'] = 'normal';
+                break; 
+            case 'deleted':
+                $status = 0; 
+                $pageParam['query']['status'] = 'deleted';
+                break; 
+            case 'judge':
+                $status = 2;
+                $pageParam['query']['status'] = 'judge';
+                break; 
+            default :
+                $status = 1;
+                $pageParam['query']['status'] = 'normal';
         }
-        $port_start? $this->assign('s_port_name',$port_start):''; 
-        $ship_name ? $this->assign('ship_name',$ship_name):''; 
-        $port_over ? $this->assign('e_port_name',$port_over):''; 
-        $seaprice_id ? $this->assign('seaprice_id',$seaprice_id):''; 
-//        var_dump($status);
+        $map['a.status'] = $status;
+        if($port_start){
+            $map['a.s_port'] = ['like', "%{$port_start}%"];
+            $pageParam['query']['s_port_name'] = $port_start;
+            $this->assign('s_port_name',$port_start);
+        }
+        if($port_over){
+            $map['a.e_port'] = ['like', "%{$port_over}%"];
+            $pageParam['query']['e_port_name'] = $port_over;
+            $this->assign('e_port_name',$port_over);
+        }
+        if($ship_name){
+            $map['a.ship_short_name'] = ['like', "%{$ship_name}%"];
+            $pageParam['query']['ship_name'] = $ship_name;
+            $this->assign('ship_name',$ship_name);
+        }
+        if($seaprice_id){
+            $map['a.id'] = ['like', $seaprice_id];
+            $pageParam['query']['seaprice_id'] = $seaprice_id;
+            $this->assign('seaprice_id',$seaprice_id);
+        }
+      
+        
         $route = new PriceM;
-        $ship_name=trim($ship_name); $port_start=trim($port_start); $port_over=trim($port_over);
-        $list = $route->price_route_list($ship_name,$port_start,$port_over ,$status,10,$seaprice_id);
+        $list = $route->price_route_list($map,$pageParam,$this->pages);
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);

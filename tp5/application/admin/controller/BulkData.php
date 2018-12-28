@@ -273,7 +273,7 @@ class BulkData extends Base{
                ->join('hl_port P2','P2.port_code= SB.sl_end','left')
                ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
                ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')
-               ->join('hl_boat B','B.id=SP.boat_id','left')
+               ->join('hl_boat B','B.id=SP.boat_id and B.stuts=1','left')
                ->field("SP.id,SP.ship_id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
                . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
              . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,"
@@ -305,7 +305,7 @@ class BulkData extends Base{
     //船舶导出excl
     public function boat_outExcel () {
         $boat_arr=[];   //船舶分组
-        $boat_lists= Db::name('boat')->field('id,boat_name,boat_code,ship_id')->where('status',1)->select();
+        $boat_lists= Db::name('boat')->field('id,boat_name,boat_code,ship_id')->order('ship_id,id')->where('status',1)->select();
         foreach ($boat_lists as $boat_list) {
             $key =$boat_list['ship_id'];
             $boat_arr[$key][] =$boat_list;
@@ -315,7 +315,7 @@ class BulkData extends Base{
         $boat_expCellName =array('id','boat_name','boat_code','ship_id');
         $boat_expTableData = array_values($boat_arr);//每行的键数组
         $boat_head =array('ID','船名','航次','船公司ID');//表头
-        $boat_sheetName = Db::name('shipcompany')->where('id','in',$boat_ship_id_arr)->order('id')->column('ship_short_name') ;
+        $boat_sheetName = Db::name('shipcompany')->where('id','in',$boat_ship_id_arr)->where('status',1)->order('id')->column('ship_short_name') ;
 //        $this->_p($boat_expTableData);$this->_p($boat_sheetName);exit;
         $this->exportExcel('船公司对应船舶明细', $boat_expCellName,$boat_expTableData,$boat_sheetName,$boat_head); 
 

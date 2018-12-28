@@ -11,7 +11,7 @@ class Price extends Model
     protected $EDD = 'EDD';
   
      //船运航价的展示
-    public function  price_route_list($ship_name,$port_start,$port_over,$status,$pages=5,$seaprice_id=0)
+    public function  price_route_list ($map,$pageParam,$pages=20)
     {   
         $list =Db::name('seaprice')->alias('SP')
             ->join('hl_ship_route SR','SR.id=SP.route_id and SR.status=1','left')
@@ -26,28 +26,10 @@ class Price extends Model
             . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
             . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,"
             . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
-            ->order('SP.mtime DESC')->where('SP.status',$status)
+            ->order('SP.mtime DESC')
             ->group('SP.id,SC.id,B.id,SR.id')->buildSql();
-                
-        $pageParam  = ['query' =>[]]; //设置分页查询参数
-        if($port_start){
-            $list = Db::table($list.' a')->where('a.s_port', 'like', "%{$port_start}%")->buildSql();
-            $pageParam['query']['s_port_name'] = $port_start;
-        }
-        if($port_over){
-            $list = Db::table($list.' b')->where('b.e_port', 'like', "%{$port_over}%")->buildSql();
-            $pageParam['query']['e_port_name'] = $port_over;
-        }
-        if($ship_name){
-            $list = Db::table($list.' c')->where('c.ship_short_name', 'like', "%{$ship_name}%")->buildSql();
-            $pageParam['query']['ship_name'] = $ship_name;
-        }
-        if($seaprice_id){
-            $list = Db::table($list.' d')->where('d.id',"$seaprice_id")->buildSql();
-        }
-//     $this->_p($list);exit;
-        $list =Db::table($list.' e')->paginate($pages,false,$pageParam);  
-//        $this->_p($list);exit;
+        
+        $list =Db::table($list.' a')->where($map)->paginate($pages,false,$pageParam);  
         return $list;
     }
     //航线信息原有的数据

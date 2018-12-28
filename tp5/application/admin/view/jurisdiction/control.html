@@ -79,15 +79,15 @@
                 </div>
             </div>
 
-            <div class="layui-form-item" pane="">
-                <label class="layui-form-label">权限</label>
+            <div class="layui-form-item">
+                <label class="layui-form-label">职位</label>
                 <div class="layui-input-block team">
 
                 </div>
             </div>
             
             <div class="layui-form-item" pane="">
-                <label class="layui-form-label">职位</label>
+                <label class="layui-form-label">权限</label>
                 <div class="layui-input-block auth">
 
                 </div>
@@ -212,8 +212,8 @@
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
                 <button class="layui-btn layui-btn-sm" lay-event="add_user">创建账号</button>
-                <button class="layui-btn layui-btn-sm" lay-event="eidt_jurisdiction">管理权限</button>
-                <button class="layui-btn layui-btn-sm" lay-event="eidt_occupation">管理职位</button>
+                <!-- <button class="layui-btn layui-btn-sm" lay-event="eidt_jurisdiction">管理职位</button>
+                <button class="layui-btn layui-btn-sm" lay-event="eidt_occupation">管理权限</button> -->
                 <!-- <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
                 <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
                 <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button> -->
@@ -306,6 +306,8 @@
                                 area: '1000px',
                                 offset: 't',
                                 success: function (layero, index) {
+                                    $('.chong').click();
+                                    $('#search_port').html('');
                                     teamList($('#admin_user .team'),1);
                                     authGroup($('#admin_user .auth'));
                                 }
@@ -371,12 +373,11 @@
                                     loadProvince();
                                     let data = res.data;
                                     $('.chong').click();
-                                    console.log(data)
                                     $('#admin_user').append(`<input type="hidden" name="id" class="user_id" value="${data.id}"> `)
                                     $('#admin_user input[name="user_name"]').val(data.user_name);
                                     $('#admin_user input[name="user_code"]').val(data.user_code);
                                     $('#admin_user select[name="department_id"]').val(data.department_id);
-                                    teamList($('#admin_user .team'),data.department_id);
+                                    teamList($('#admin_user .team'),data.department_id,data.job_id);
                                     authGroup($('#admin_user .auth'),data.power_id);
                                     form.render();
                                     $('#search_port').html('');
@@ -411,7 +412,7 @@
                 
                 var list = [];
                 //部门列表
-                function teamList(it,sum){
+                function teamList(it,sum,job_id){
                     it.html('');
                     $.get("<{:url('admin/jurisdiction/teamList')}>",function(res){
                         console.log(res)
@@ -423,12 +424,11 @@
                             }
                         }
                         for (let i in list) {
-                            if (list[i].id == '2') {
-                                it.append(`<input type="checkbox" name="title[]" value="${list[i].id}" lay-skin="primary" title="${list[i].title}" checked>`);
+                            if (list[i].id == job_id) {
+                                it.append(`<input type="radio" name="title" value="${list[i].id}" title="${list[i].title}" checked="">`);
                             }else{
-                                it.append(`<input type="checkbox" name="title[]" value="${list[i].id}" lay-skin="primary" title="${list[i].title}">`);
+                                it.append(`<input type="radio" name="title" value="${list[i].id}" title="${list[i].title}">`);
                             }
-                            
                         }
                         list = [];
                         form.render();
@@ -457,15 +457,15 @@
                             for (let i in res) {
                                 for (let j = 0; j < shu.length; j++) {
                                     if (res[i].id == shu[j]) {
-                                        it.append(`<input type="checkbox" name="power[]" value="${res[i].id}" lay-skin="primary" title="${res[i].title}" checked>`);
+                                        it.append(`<input type="checkbox" name='power[]' value="${res[i].id}" lay-skin="primary" title="${res[i].title}" checked>`);
                                     } else {
-                                        it.append(`<input type="checkbox" name="power[]" value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
+                                        it.append(`<input type="checkbox" name='power[]' value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
                                     }
                                 }
                             }
                         }else{
                             for (let i in res) {
-                                it.append(`<input type="checkbox" name="power[]" value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
+                                it.append(`<input type="checkbox" name='power[]' value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
                             }
                         }
 
@@ -478,7 +478,7 @@
                 //添加账号
                 form.on('submit(demo1)', function(data){  
                     console.log(data.field)                 
-                    $.post("<{:url('admin/jurisdiction/aaa')}>",{data:data.field},function(res){
+                    $.post("<{:url('admin/jurisdiction/userAdd')}>",data.field,function(res){
                         if (res.status) {
                             layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
                             })

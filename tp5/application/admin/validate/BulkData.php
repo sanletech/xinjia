@@ -11,8 +11,8 @@ class BulkData extends Validate
         'ship_id'  => 'require|number',
         'route_id' => 'require|number',
         'boat_id' => 'require|number',
-        'price_20GP' => 'require|number|egt:100|elt:6000',
-        'price_40HQ' => 'require|number|egt:100|elt:6000',
+        'price_20GP' => 'require|number|egt:0|elt:6000',
+        'price_40HQ' => 'require|number|egt:0|elt:6000',
         'shipping_date' => 'require|date|checkDate',
         'cutoff_date' => 'date',
         'sea_limitation' => 'number',
@@ -24,7 +24,7 @@ class BulkData extends Validate
     
     protected function checkDate($value,$rule,$data)
     {
-        $data= time();
+        $data= date('Y-m-d H:i:s');
         $value = strtotime($value);
         return $value>$data? true : '船期不能晚于'.$data;
     }

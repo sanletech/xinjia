@@ -70,8 +70,81 @@ class Jurisdiction extends Base
     
     //个人信息重新分配
     public function userEdit() {
+        $data = $this->request->param();
+        $uid = $data['id'];
+        //修改个人信息 和职位
+        $map['user'] = array('user_name'=>$data['user_name'],'team_id'=>$data['title']);
+   
+        //权限
+        foreach ($data['power'] as  $value) {
+            $map['power'][] = array('uid'=>$uid,'group_id'=>$value);
+        }
+ 
+        //修改管理区域
+          if(array_key_exists('port_code', $data)){
+                $map['area']['area_code'] = implode(',', $data['port_code']);
+                $map['area']['type'] = 'port';
+          }elseif (array_key_exists('city', $data)) {
+               $map['area']['area_code'] = implode(',', $data['city']);
+               $map['area']['type'] = 'city';
+          }
+        //修改权限
+        Db::startTrans();
+        try{
+            Db::name('user')->where('id',$data['id'])->update($map['user']);  //修改个人信息 和职位
+            Db::name('auth_group_access')->where('uid',$uid)->delete(); //删除原有的
+            Db::name('auth_group_access')->insert($map['power']); //再新增
+            Db::name('user_area')->where('user_id',$uid)->update($map['area']);//更新区域
+            
+            Db::commit();    
+        } catch (\Exception $e) {
+                // 回滚事务
+               Db::rollback();
+               return array('status'=>0,'message'=>  json_encode($e->getMessage()));
+        }
+        return json(array('status'=>1,'message'=>'修改成功'));
+      
+    }
+    
+    //添加账户
+    public function userAdd() {
+        $data = $this->request->param();
+        $this->_p($data);exit;
+        $uid = $data['id'];
+        //修改个人信息 和职位
+        $map['user'] = array('user_name'=>$data['user_name'],'team_id'=>$data['title']);
+   
+        //权限
+        foreach ($data['power'] as  $value) {
+            $map['power'][] = array('uid'=>$uid,'group_id'=>$value);
+        }
+ 
+        //修改管理区域
+          if(array_key_exists('port_code', $data)){
+                $map['area']['area_code'] = implode(',', $data['port_code']);
+                $map['area']['type'] = 'port';
+          }elseif (array_key_exists('city', $data)) {
+               $map['area']['area_code'] = implode(',', $data['city']);
+               $map['area']['type'] = 'city';
+          }
+        //修改权限
+        Db::startTrans();
+        try{
+            Db::name('user')->where('id',$data['id'])->update($map['user']);  //修改个人信息 和职位
+            Db::name('auth_group_access')->where('uid',$uid)->delete(); //删除原有的
+            Db::name('auth_group_access')->insert($map['power']); //再新增
+            Db::name('user_area')->where('user_id',$uid)->update($map['area']);//更新区域
+            
+            Db::commit();    
+        } catch (\Exception $e) {
+                // 回滚事务
+               Db::rollback();
+               return array('status'=>0,'message'=>  json_encode($e->getMessage()));
+        }
+        return json(array('status'=>1,'message'=>'修改成功'));
         
     }
+    
     
     //部门列表
     public function teamList() {
@@ -100,7 +173,7 @@ class Jurisdiction extends Base
             $items[$i] = $value;
             $i++;
         }
-//        $this->_p($items);exit;
+        // $this->_p($items);exit;
         //第二部 遍历数据 生成树状结构
         $tree = array();
         foreach($items as $key => $item){
