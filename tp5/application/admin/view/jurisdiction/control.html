@@ -3,6 +3,12 @@
     <link rel="stylesheet" href="__STATIC__/css/control.css">
 
     <body>
+        <style>
+           .layui-form-item .gkou{
+                float:right;
+                width: 100px;
+            }    
+        </style>
         <div class="x-nav">
             <span class="layui-breadcrumb">
                 <a href="">首页</a>
@@ -48,7 +54,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="user_name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    <input type="text" name="user_name"  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
                 </div>
             </div>
             
@@ -56,15 +62,35 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">账号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="user_code" required lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input user">
+                    <input type="text" name="user_code" lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input user">
                 </div>
             </div>
             
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机</label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input user">
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input user">
+                </div>
+            </div>
+            
+            <div class="layui-form-item">
+                <label class="layui-form-label">昵称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="loginname" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input user">
+                </div>
+            </div>
             
             <div class="layui-form-item pwd">
                 <label class="layui-form-label">密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    <input type="text" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             
@@ -109,13 +135,15 @@
                     </select>
                 </div>
 
-                <div class="layui-input-inline gkou" style="display: none;">
-                    <a class="layui-btn layui-btn-normal">选择港口</a>
-                </div>
+                
                 <div class="layui-input-inline" style="display: none;">
                     <select class="port" lay-filter="port">
                         <option value="">请选择起点/终点港口</option>
                     </select>
+                </div>
+
+                <div class="layui-input-inline gkou">
+                    <a class="layui-btn layui-btn-normal">选择港口</a>
                 </div>
 
                 <div class="layui-form-item">
@@ -277,16 +305,14 @@
                 //搜索
                 $('.cha').click(function(){
                     let arrt = $('#cont').serializeArray();
-                    console.log(arrt[0].value);
                     //执行重载
                     table.reload('testReload', {
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
                         , where: {
-                            key: {
-                                id: arrt[0].value
-                            }
+                            user_name: arrt[0].value,
+                            user_code: arrt[1].value
                         }
                     });
                 });
@@ -303,11 +329,10 @@
                                 type: 1, 
                                 title: '创建账号',
                                 content: $('#admin_user'),
-                                area: '1000px',
+                                area: ['1000px','550px'],
                                 offset: 't',
                                 success: function (layero, index) {
                                     $('.chong').click();
-                                    $('#search_port').html('');
                                     teamList($('#admin_user .team'),1);
                                     authGroup($('#admin_user .auth'));
                                 }
@@ -367,20 +392,23 @@
                                 type: 1, 
                                 title: '分配权限',
                                 content: $('#admin_user'),
-                                area: '1000px',
+                                area: ['1000px','550px'],
                                 offset: 't',
                                 success: function (layero, index) {
                                     loadProvince();
                                     let data = res.data;
                                     $('.chong').click();
                                     $('#admin_user').append(`<input type="hidden" name="id" class="user_id" value="${data.id}"> `)
-                                    $('#admin_user input[name="user_name"]').val(data.user_name);
-                                    $('#admin_user input[name="user_code"]').val(data.user_code);
-                                    $('#admin_user select[name="department_id"]').val(data.department_id);
+                                    $('#admin_user input[name="user_name"]').val(data.user_name);//姓名
+                                    $('#admin_user input[name="user_code"]').val(data.user_code);//账号
+                                    $('#admin_user select[name="department_id"]').val(data.department_id);//部门
+                                    $('#admin_user select[name="phone"]').val(data.phone);//电话
+                                    $('#admin_user select[name="email"]').val(data.email);//邮箱
+                                    $('#admin_user select[name="loginname"]').val(data.loginname);//昵称
+                                    $('#admin_user select[name="password"]').val(data.password);//密码
                                     teamList($('#admin_user .team'),data.department_id,data.job_id);
                                     authGroup($('#admin_user .auth'),data.power_id);
                                     form.render();
-                                    $('#search_port').html('');
                                     var mark = document.getElementById('search_port');
                                     if (data.city_code[0]) {
                                         sh();   
@@ -474,10 +502,13 @@
                     })
                 }
 
+                $('.chong').click(function(){
+                    $('#search_port').html('');
+                })
+
 
                 //添加账号
-                form.on('submit(demo1)', function(data){  
-                    console.log(data.field)                 
+                form.on('submit(demo1)', function(data){                  
                     $.post("<{:url('admin/jurisdiction/userAdd')}>",data.field,function(res){
                         if (res.status) {
                             layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
@@ -669,10 +700,18 @@
         }
 
         $('.gkou').click(function(){
-            $(this).hide();
-            $form.find('.port').parent().show();
-            $('#search_port').html('');
-            city_boot = true;
+            if ($(this).find('a').html() == '选择港口') {
+                $(this).find('a').html('选择城市');
+                $form.find('.port').parent().show();
+                $('#search_port').html('');
+                city_boot = true;
+            }else{
+                $(this).find('a').html('选择港口');
+                $form.find('.port').parent().hide();
+                $('#search_port').html('');
+                city_boot = false;
+            }
+            
         })
         
         //显示港口

@@ -72,6 +72,7 @@ class Jurisdiction extends Base
     public function userEdit() {
         $data = $this->request->param();
         $uid = $data['id'];
+        $map =[];
         //修改个人信息 和职位
         $map['user'] = array('user_name'=>$data['user_name'],'team_id'=>$data['title']);
    
@@ -81,13 +82,13 @@ class Jurisdiction extends Base
         }
  
         //修改管理区域
-          if(array_key_exists('port_code', $data)){
-                $map['area']['area_code'] = implode(',', $data['port_code']);
-                $map['area']['type'] = 'port';
-          }elseif (array_key_exists('city', $data)) {
-               $map['area']['area_code'] = implode(',', $data['city']);
-               $map['area']['type'] = 'city';
-          }
+        if(array_key_exists('port_code', $data)){
+            $map['area']['area_code'] = implode(',', $data['port_code']);
+            $map['area']['type'] = 'port';
+        }elseif (array_key_exists('city', $data)) {
+            $map['area']['area_code'] = implode(',', $data['city']);
+            $map['area']['type'] = 'city';
+        }
         //修改权限
         Db::startTrans();
         try{
@@ -109,31 +110,34 @@ class Jurisdiction extends Base
     //添加账户
     public function userAdd() {
         $data = $this->request->param();
-        $this->_p($data);exit;
-        $uid = $data['id'];
+        $map =[];
         //修改个人信息 和职位
-        $map['user'] = array('user_name'=>$data['user_name'],'team_id'=>$data['title']);
-   
-        //权限
-        foreach ($data['power'] as  $value) {
-            $map['power'][] = array('uid'=>$uid,'group_id'=>$value);
-        }
+        $map['user'] = array(
+            'user_name'=>$data['user_name'],'create_time'=>date('Y-m-d H:i:s'),
+            'team_id'=>$data['title'], 'user_code'=>$data['user_code'],
+            'phone'=>$data['phone'],'email'=>$data['email'],
+            'loginname'=>$data['loginname'], 'password'=>$data['password'] );
  
-        //修改管理区域
-          if(array_key_exists('port_code', $data)){
-                $map['area']['area_code'] = implode(',', $data['port_code']);
-                $map['area']['type'] = 'port';
-          }elseif (array_key_exists('city', $data)) {
-               $map['area']['area_code'] = implode(',', $data['city']);
-               $map['area']['type'] = 'city';
-          }
-        //修改权限
+        //管理区域
+        if(array_key_exists('port_code', $data)){
+            $map['area']['area_code'] = implode(',', $data['port_code']);
+            $map['area']['type'] = 'port';
+        }elseif (array_key_exists('city', $data)) {
+            $map['area']['area_code'] = implode(',', $data['city']);
+            $map['area']['type'] = 'city';
+        }
+    
         Db::startTrans();
         try{
-            Db::name('user')->where('id',$data['id'])->update($map['user']);  //修改个人信息 和职位
+            $uid = Db::name('user')->insertGetId($map['user']);  //添加个人信息 和职位
+            //权限
+            foreach ($data['power'] as  $value) {
+                $map['power'][] = array('uid'=>$uid,'group_id'=>$value);
+            }
             Db::name('auth_group_access')->where('uid',$uid)->delete(); //删除原有的
             Db::name('auth_group_access')->insert($map['power']); //再新增
-            Db::name('user_area')->where('user_id',$uid)->update($map['area']);//更新区域
+            $map['area']['user_id'] = $uid;
+            Db::name('user_area')->insert($map['area']);//更新区域
             
             Db::commit();    
         } catch (\Exception $e) {
@@ -141,7 +145,7 @@ class Jurisdiction extends Base
                Db::rollback();
                return array('status'=>0,'message'=>  json_encode($e->getMessage()));
         }
-        return json(array('status'=>1,'message'=>'修改成功'));
+        return json(array('status'=>1,'message'=>'天价成功'));
         
     }
     
