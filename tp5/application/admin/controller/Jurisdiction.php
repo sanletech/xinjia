@@ -15,6 +15,10 @@ class Jurisdiction extends Base
     
     //信息列表
     public function userData($uid='') {
+        $page=  input();
+        $limit=10,;
+        $user_name=;
+         $user_code=dcasd;
         //区域表
         $map =[];
         $uid ?  $map['U.id']=['=',$uid] :$map['U.id']=['>',0];
@@ -71,11 +75,18 @@ class Jurisdiction extends Base
     //个人信息重新分配
     public function userEdit() {
         $data = $this->request->param();
+//        $this->_p($data);exit;
         $uid = $data['id'];
         $map =[];
         //修改个人信息 和职位
-        $map['user'] = array('user_name'=>$data['user_name'],'team_id'=>$data['title']);
-   
+        $map['user'] = array(
+            'user_name'=>$data['user_name'],'create_time'=>date('Y-m-d H:i:s'),
+            'team_id'=>$data['title'], 'user_code'=>$data['user_code'],
+            'phone'=>$data['phone'],'email'=>$data['email'],
+            'loginname'=>$data['loginname'] );
+        if(!empty($data['password'])){
+            $map['user']['password'] =  md5($data['password']);
+        }
         //权限
         foreach ($data['power'] as  $value) {
             $map['power'][] = array('uid'=>$uid,'group_id'=>$value);
@@ -85,8 +96,8 @@ class Jurisdiction extends Base
         if(array_key_exists('port_code', $data)){
             $map['area']['area_code'] = implode(',', $data['port_code']);
             $map['area']['type'] = 'port';
-        }elseif (array_key_exists('city', $data)) {
-            $map['area']['area_code'] = implode(',', $data['city']);
+        }elseif (array_key_exists('city_code', $data)) {
+            $map['area']['area_code'] = implode(',', $data['city_code']);
             $map['area']['type'] = 'city';
         }
         //修改权限
@@ -94,7 +105,7 @@ class Jurisdiction extends Base
         try{
             Db::name('user')->where('id',$data['id'])->update($map['user']);  //修改个人信息 和职位
             Db::name('auth_group_access')->where('uid',$uid)->delete(); //删除原有的
-            Db::name('auth_group_access')->insert($map['power']); //再新增
+            Db::name('auth_group_access')->insertAll($map['power']); //再新增
             Db::name('user_area')->where('user_id',$uid)->update($map['area']);//更新区域
             
             Db::commit();    
@@ -135,7 +146,7 @@ class Jurisdiction extends Base
                 $map['power'][] = array('uid'=>$uid,'group_id'=>$value);
             }
             Db::name('auth_group_access')->where('uid',$uid)->delete(); //删除原有的
-            Db::name('auth_group_access')->insert($map['power']); //再新增
+            Db::name('auth_group_access')->insertAll($map['power']); //再新增
             $map['area']['user_id'] = $uid;
             Db::name('user_area')->insert($map['area']);//更新区域
             
