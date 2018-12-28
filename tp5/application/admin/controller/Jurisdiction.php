@@ -15,13 +15,17 @@ class Jurisdiction extends Base
     
     //信息列表
     public function userData($uid='') {
-        $page=  input();
-        $limit=10,;
-        $user_name=;
-         $user_code=dcasd;
+        $page = $this->request->input('get','page',1,'integer');
+        $limit = $this->request->input('get','limit',10,'integer');
+        $user_name = $this->request->input('get','user_name','','strval');
+        $user_code = $this->request->input('get','user_code','','strval');
+        var_dump($page,$limit,$user_name,$user_code);exit;
         //区域表
         $map =[];
+        $user_name?$map['U.user_name']=['like',"%$user_name%"] :'';
+        $user_code?$map['U.user_code']=['like',"%$user_code%"] :'';
         $uid ?  $map['U.id']=['=',$uid] :$map['U.id']=['>',0];
+        
         $data = Db::name('user')->alias('U')
                 ->join('hl_team T','T.id = U.team_id','left')
                 ->join('hl_auth_group_access AGA','U.id=AGA.uid','left')
@@ -36,7 +40,7 @@ class Jurisdiction extends Base
                         . "group_concat(distinct P.port_code order by P.id) as port_code,"
                         . "group_concat(distinct C.city order by C.id) as city_name ,"
                         . "group_concat(distinct C.city_id order by C.id) as city_code ")
-                ->group('U.id')->where($map)->select();
+                ->group('U.id')->where($map)->page($page,$limit)->select();
 
         foreach ($data as $key=> $value){
 //                       $this->_p($value);exit;
