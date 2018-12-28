@@ -7,7 +7,17 @@
            .layui-form-item .gkou{
                 float:right;
                 width: 100px;
-            }    
+            } 
+            .layui-form-checkbox[lay-skin="primary"]{
+                padding-left:0;
+            }
+            .layui-form-checkbox[lay-skin="primary"]{
+                width: 25%;
+            }
+            .layui-form-checkbox[lay-skin="primary"] span{
+                display: inline-block;
+                width: 75%;
+            }  
         </style>
         <div class="x-nav">
             <span class="layui-breadcrumb">
@@ -52,45 +62,48 @@
         <form class="layui-form" id="admin_user">
         <input type="hidden" name="id" value="" class="user_id">
             <div class="layui-form-item">
-                <label class="layui-form-label">姓名</label>
-                <div class="layui-input-block">
-                    <input type="text" name="user_name"  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                <div class="layui-inline">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="user_name" lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
-            </div>
             
-            
-            <div class="layui-form-item">
-                <label class="layui-form-label">账号</label>
-                <div class="layui-input-block">
-                    <input type="text" name="user_code" lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input user">
+                <div class="layui-inline">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="user_code" lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input user">
+                    </div>
                 </div>
-            </div>
             
-            <div class="layui-form-item">
-                <label class="layui-form-label">手机</label>
-                <div class="layui-input-block">
-                    <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input user">
-                </div>
-            </div>
-            
-            <div class="layui-form-item">
-                <label class="layui-form-label">邮箱</label>
-                <div class="layui-input-block">
-                    <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input user">
+                <div class="layui-inline">
+                    <label class="layui-form-label">手机</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input user">
+                    </div>
                 </div>
             </div>
             
             <div class="layui-form-item">
-                <label class="layui-form-label">昵称</label>
-                <div class="layui-input-block">
-                    <input type="text" name="loginname" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input user">
+                <div class="layui-inline">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input user">
+                    </div>
                 </div>
-            </div>
             
-            <div class="layui-form-item pwd">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-block">
-                    <input type="text" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <div class="layui-inline">
+                    <label class="layui-form-label">昵称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="loginname" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input user">
+                    </div>
+                </div>
+            
+                <div class="layui-inline pwd">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                    </div>
                 </div>
             </div>
             
@@ -129,14 +142,14 @@
                         <option value="">请选择省</option>
                     </select>
                 </div>
-                <div class="layui-input-inline" id='citydiv' style="display: none;">
+                <div class="layui-input-inline yin" id='citydiv' style="display: none;">
                     <select class="city" lay-filter="city">
                         <option value="">请选择市</option>
                     </select>
                 </div>
 
                 
-                <div class="layui-input-inline" style="display: none;">
+                <div class="layui-input-inline yin" style="display: none;">
                     <select class="port" lay-filter="port">
                         <option value="">请选择起点/终点港口</option>
                     </select>
@@ -264,6 +277,7 @@
                 $form = $('form');
                 //部门的ID
                 var bumen_id = '1';
+                var bumen = [];
                 var city_boot = false;//是否可以选择港口
                 //第一个实例
                 table.render({
@@ -333,7 +347,7 @@
                                 offset: 't',
                                 success: function (layero, index) {
                                     $('.chong').click();
-                                    teamList($('#admin_user .team'),1);
+                                    teamList($('#admin_user .team'),1,0,bumen);
                                     authGroup($('#admin_user .auth'));
                                 }
                             });
@@ -356,8 +370,8 @@
                                 area: ['700px','450px'],
                                 offset: 't',
                                 success: function (layero, index) {
-                                    teamList($('#admin_user .team'));
-                                    authGroup($('#admin_user .auth'));
+                                    // teamList($('#admin_user .team'));
+                                    // authGroup($('#admin_user .auth'));
                                 }
                             });
                             break;
@@ -386,7 +400,6 @@
                         });
                     } else if (obj.event === 'edit') {
                         $('.user').attr('readonly',true);
-                        $('#admin_user .pwd').remove();
                         $.get("<{:url('admin/jurisdiction/userData')}>",{uid:obj.data.id},function(res){
                             layer.open({
                                 type: 1, 
@@ -406,7 +419,7 @@
                                     $('#admin_user select[name="email"]').val(data.email);//邮箱
                                     $('#admin_user select[name="loginname"]').val(data.loginname);//昵称
                                     $('#admin_user select[name="password"]').val(data.password);//密码
-                                    teamList($('#admin_user .team'),data.department_id,data.job_id);
+                                    teamList($('#admin_user .team'),data.department_id,data.job_id,bumen);
                                     authGroup($('#admin_user .auth'),data.power_id);
                                     form.render();
                                     var mark = document.getElementById('search_port');
@@ -439,10 +452,12 @@
                 });
                 
                 var list = [];
+                $.get("<{:url('admin/jurisdiction/teamList')}>",function(res){
+                    bumen = res;
+                })
                 //部门列表
-                function teamList(it,sum,job_id){
+                function teamList(it,sum,job_id,res){
                     it.html('');
-                    $.get("<{:url('admin/jurisdiction/teamList')}>",function(res){
                         for (let i in res) {
                             if (res[i].id == sum) {
                                 team(res[i].childMenus);
@@ -457,7 +472,7 @@
                         }
                         list = [];
                         form.render();
-                    })
+                    
                 }
                 
                 function team(data){
@@ -501,6 +516,7 @@
 
                 $('.chong').click(function(){
                     $('#search_port').html('');
+                    $('.yin').hide();
                 })
 
 
@@ -527,7 +543,7 @@
 
                 //监听add部门
                 form.on('select(required_add)', function(data) {
-                    teamList($('#admin_user .team'),data.value);
+                    teamList($('#admin_user .team'),data.value,0,bumen);
                 });
 
                 //添加权限
