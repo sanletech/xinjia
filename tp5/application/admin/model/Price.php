@@ -24,12 +24,13 @@ class Price extends Model
             ->join('hl_boat B','B.id=SP.boat_id and B.status=1','left')
             ->field("SP.id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
             . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
-            . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,"
+            . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,SP.stale_date,"
             . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
             ->order('SP.mtime DESC')
             ->group('SP.id,SC.id,B.id,SR.id')->buildSql();
-        
-        $list =Db::table($list.' a')->where($map)->paginate($pages,false,$pageParam);  
+$this->_p($map);exit;
+        $list =Db::table($list.' a')->where($map)->paginate($pages,false,$pageParam); 
+       
         return $list;
     }
     //航线信息原有的数据

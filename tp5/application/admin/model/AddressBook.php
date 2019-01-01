@@ -140,7 +140,7 @@ class AddressBook extends Model
     }
 
     //车队的人员信息展示
-    public function car_address_book ($type='car',$pages='10',$id='') {
+    public function carAddressBook ($type='car',$pages='10',$id='') {
         //设置id查询
         $id ? $map =$id : $map = "not null";
         $lists =Db::name('staff_list')->alias('SL')

@@ -63,9 +63,9 @@ class Wechat extends Common
     }
     
     //小程序港到港
-    public function orderPortList($page,$limit,$start_add,$end_add,$ship_id){
+    public function orderPortList($page=1,$limit=10,$start_add='',$end_add='',$ship_id=''){
     
-        $sea_pirce =new OrderM;
+        $sea_pirce =new \app\index\model\OrderPort();
         $data = $sea_pirce ->price_port($page,$limit,$start_add,$end_add,$ship_id);
         $list =  $data['list'] ;
         return json(array('page'=>$page,'limit'=>$limit,'list'=>$list)) ;

@@ -16,17 +16,22 @@ class Order extends Base
     public $order_status;
     public $page=5;
 
-    public function _initialize()
-    {  
-        $this->order_status=config('config.order_status');
-    }
+//    public function _initialize()
+//    {   parent::_initialize();
+//        $this->order_status=config('config.order_status');
+//    }
 
     //审核详情页
     public function audit_page()
     {   
+      
         $order_num =  $this->request->get('order_num');
         $data = new OrderProcessM;
         $dataArr = $data->order_details($order_num);
+        
+        if(!in_array($dataArr['list']['s_port_name'], $this->area_code)){
+            echo "<script>alert('不是你归于的区域')</script>";
+        }
         $this->assign([
             'list'  =>$dataArr['list'],
             'shipperArr'=>$dataArr['shipperArr'],
@@ -35,54 +40,7 @@ class Order extends Base
         return $this->view->fetch('order/audit_page');
     }
     
-
         
-    //查看订单
-    public function order_edit() 
-    {
-        return $this->view->fetch('order/order_edit'); 
-    }
-    //废弃订单
-    public function order_waste() 
-    {  
-        $data = new OrderM;
-        $list = $data->order_audit($pages=5,$state=404);
-//        var_dump($list);exit;
-        $page =$list->render();
-        $count =  count($list);
-        $this->view->assign('count',$count);
-        $this->view->assign('list',$list);
-        $this->view->assign('page',$page);
-        return $this->view->fetch('order/order_waste'); 
-    }
-     //废弃订单的恢复
-    public function order_waste_pass() 
-    { 
-       if (request()->isAjax()){
-            $idArr =$this->request->param();
-            $res =Db::name('order_father')->where('id','in',$idArr['id'])->update(['state'=>0,'action'=>'通过恢复>待审核']);
-            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
-            foreach ($order_numArr as $order_num) {
-               action('OrderProcess/orderRecord', ['order_num'=>$order_num,'status'=>0,'action'=>'通过恢复>待审核'], 'controller');
-            }
-           return json($res ? 1 : 0) ;
-       }
-    }
-    
-      //废弃订单 的删除
-    public function order_waste_del() 
-    {
-         if (request()->isAjax()){
-            $idArr =$this->request->param();
-            $res =Db::name('order_father')->where('id','in',$idArr)->delete();
-            $order_numArr = Db::name('order_father')->where('id','in',$idArr['id'])->column('order_num');
-     
-           return json($res ? 1 : 0) ;
-       }
-        
-    }
-        
-    
     
     //录入派车信息 装货 和送货 
     public function send_car() 

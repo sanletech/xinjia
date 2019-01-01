@@ -11,7 +11,7 @@ use think\Db;
 class AddressBook  extends Base
 {   
     //车队列表
-    public function car_list()
+    public function carList()
     {   
         $map =[]; //设置查询条件
         $port= $this->request->param('port');
@@ -26,16 +26,16 @@ class AddressBook  extends Base
         }
         
         $car = new AddressBookM;
-        $carlist= $car->carlist($map);
+        $carlist= $car->carlist($map,$this->page);
         $page = $carlist->render();  // 获取分 页显示
        // $this->_p($carlist); 
         $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);
-        return $this->view->fetch('AddressBook/car/car_list'); 
+        return $this->view->fetch('AddressBook/car/carList'); 
     }
     
     //执行车队的添加
-    public function car_toAdd() {
+    public function carToAdd() {
         $data= array_filter($this->request->param());
         //$this->_p($data);
         //需要添加的car_data信息表
@@ -57,9 +57,9 @@ class AddressBook  extends Base
     
 
     //车队人员资料list
-    public function car_address_book(){
+    public function carAddressBook(){
         $car_man = new AddressBookM;
-        $list= $car_man->car_address_book($type='car',$pages='10');
+        $list= $car_man->carAddressBook($type='car',$this->page);
         $page = $list->render();  // 获取分 页显示
        // $this->_p($carlist); 
         $this->view->assign('list',$list);

@@ -46,7 +46,7 @@ class Order extends Base
     public function order_waste() 
     {  
         $data = new OrderM;
-        $list = $data->order_audit($pages=5,$state=404);
+        $list = $data->order_audit( $this->page,$state=404);
 //        var_dump($list);exit;
         $page =$list->render();
         $count =  count($list);

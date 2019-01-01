@@ -418,10 +418,10 @@
                                     $('#admin_user input[name="user_name"]').val(data.user_name);//姓名
                                     $('#admin_user input[name="user_code"]').val(data.user_code);//账号
                                     $('#admin_user select[name="department_id"]').val(data.department_id);//部门
-                                    $('#admin_user select[name="phone"]').val(data.phone);//电话
-                                    $('#admin_user select[name="email"]').val(data.email);//邮箱
-                                    $('#admin_user select[name="loginname"]').val(data.loginname);//昵称
-                                    $('#admin_user select[name="password"]').val(data.password);//密码
+                                    $('#admin_user input[name="phone"]').val(data.phone);//电话
+                                    $('#admin_user input[name="email"]').val(data.email);//邮箱
+                                    $('#admin_user input[name="loginname"]').val(data.loginname);//昵称
+                                    $('#admin_user input[name="password"]').val(data.password);//密码
                                     teamList($('#admin_user .team'),data.department_id,data.job_id,bumen);
                                     authGroup($('#admin_user .auth'),data.power_id);
                                     form.render();

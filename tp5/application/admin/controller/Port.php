@@ -28,7 +28,7 @@ class Port extends Base
             $this->assign('city_name',$city_name); 
         }
         $port_list = new PortM;
-        $list = $port_list->port_list($city_name,$port_name ,5);
+        $list = $port_list->port_list($city_name,$port_name , $this->page);
    //  $this->_p($list);exit;
         $page = $list->render();
         $this->assign('list',$list);
@@ -132,7 +132,7 @@ class Port extends Base
         }
         
         $boat_list = new PortM;
-        $list = $boat_list->boat_list($ship_name, $boat_name,5);
+        $list = $boat_list->boat_list($ship_name, $boat_name, $this->page);
 //        $this->_v($list);exit;
         $page = $list->render();
         $this->assign('boatlist',$list);
@@ -189,7 +189,7 @@ class Port extends Base
             $this->assign('sl_end',$sl_end); 
         }
         $shiproute =new PortM;
-        $list = $shiproute->shiproute_list($sl_start,$sl_end ,5);
+        $list = $shiproute->shiproute_list($sl_start,$sl_end , $this->page);
 //        $this->_p($list);exit;
         $page =$list->render();
         $this->view->assign('page',$page);
@@ -240,7 +240,7 @@ class Port extends Base
             $this->assign('searchship', $ship_name);
         }
         $shiplist = new PortM;
-        $list  = $shiplist->shiplist($ship_name); 
+        $list  = $shiplist->shiplist($ship_name,$this->page); 
        // $this->_v($list); exit;
         $count = count($list); 
         $page = $list->render();

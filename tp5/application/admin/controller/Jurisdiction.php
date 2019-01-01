@@ -15,11 +15,11 @@ class Jurisdiction extends Base
     
     //信息列表
     public function userData($uid='') {
-        $page = $this->request->input('get','page',1,'integer');
-        $limit = $this->request->input('get','limit',10,'integer');
-        $user_name = $this->request->input('get','user_name','','strval');
-        $user_code = $this->request->input('get','user_code','','strval');
-        var_dump($page,$limit,$user_name,$user_code);exit;
+        $page = $this->request->param('page',1,'integer');
+        $limit = $this->request->param('limit',10,'integer');
+        $user_name = $this->request->param('user_name','','strval');
+        $user_code = $this->request->param('user_code','','strval');
+//        var_dump($page,$limit,$user_name,$user_code);exit;
         //区域表
         $map =[];
         $user_name?$map['U.user_name']=['like',"%$user_name%"] :'';
@@ -33,7 +33,8 @@ class Jurisdiction extends Base
                 ->join('hl_user_area UA','UA.user_id =U.id','left')
                 ->join('hl_port P',"FIND_IN_SET(P.port_code ,UA.area_code) and P.status = 1 and UA.type = 'port'",'left')
                 ->join('hl_city C',"FIND_IN_SET(C.city_id ,UA.area_code) and  UA.type = 'city'",'left')
-                ->field('U.id,U.user_name,U.user_code,T.title,T.job,T.id as job_id,T.pid,'
+                ->field('U.id,U.user_name,U.user_code,U.loginname,U.phone,U.email,'
+                        . 'T.title,T.job,T.id as job_id,T.pid,'
                         . "group_concat(distinct AG.title order by AG.id ) as power,"
                         . "group_concat(distinct AG.id order by AG.id ) as power_id,"
                         . "group_concat(distinct P.port_name order by P.id) as port_name,"

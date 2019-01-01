@@ -9,14 +9,7 @@ use think\Db;
 use think\Session;
 class Financial extends Base
 {
-    private $order_status;
-    private $page=5;
 
-    public function _initialize()
-    {  
-        $this->order_status=config('config.order_status');
-  
-    }
     
     //账单列表
     public function financial_list() 

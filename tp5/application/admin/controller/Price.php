@@ -11,7 +11,7 @@ use think\Db;
 
 class Price extends Base
 {   
-    public  $pages =10;
+    
 
     //航线运价
     public function price_route() 
@@ -25,7 +25,7 @@ class Price extends Base
         $status ? $this->assign('status',$status): $this->assign('status','normal'); 
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         $map  = []; //查询条件
-        switch ($status){
+        switch ($status){ 
             case 'normal':
                 $status = 1; 
                 $pageParam['query']['status'] = 'normal';
@@ -37,6 +37,10 @@ class Price extends Base
             case 'judge':
                 $status = 2;
                 $pageParam['query']['status'] = 'judge';
+                break; 
+            case 'overdue':
+                $status = 3; 
+                $pageParam['query']['status'] = 'overdue';
                 break; 
             default :
                 $status = 1;
@@ -63,21 +67,21 @@ class Price extends Base
             $pageParam['query']['seaprice_id'] = $seaprice_id;
             $this->assign('seaprice_id',$seaprice_id);
         }
-      
-        
         $route = new PriceM;
-        $list = $route->price_route_list($map,$pageParam,$this->pages);
+        $list = $route->price_route_list($map,$pageParam,$this->page);
         $page = $list->render();
         $this->assign('list',$list);
         $this->assign('page',$page);
         return $this->view->fetch('price/price_route'); 
     }
+    
     //航线详情添加展示页面
     public function route_add(){
         $message =$this->quickMessage();
         $this->view->assign('message',$message);
         return $this->view->fetch('price/route_add');
     }
+    
     //传递根据前面选择的起点和终点的中间线路行情
     public function route_select(){
         $data = $this->request->param();
@@ -89,6 +93,7 @@ class Price extends Base
         $list =$ship_route->route_select($sl_start,$sl_end);
         return json($list);    
     }
+    
     //航线添加
     public function route_toadd(){
         $data = $this->request->param();
@@ -103,6 +108,7 @@ class Price extends Base
       
         return $response; 
     }
+    
     //航线运价重新发布
     public function route_again() {
         $seaprice_id = input('get.seaprice_id');
@@ -130,6 +136,7 @@ class Price extends Base
         $this->assign('toURL',url('admin/Price/route_toedit','type=edit'));
         return $this->view->fetch("price/route_edit");
     }
+    
     //航线执行修改
     public function route_toedit(){
         $data = $this->request->except('type');
@@ -149,6 +156,7 @@ class Price extends Base
         } 
         return $response; 
     }
+    
     //航线运价删除
     public function route_del(){
         //接受price_route_del 的id 数组
@@ -173,7 +181,7 @@ class Price extends Base
         }
     
         $route = new PriceM;
-        $list = $route->price_trailer_list($port_name ,15);
+        $list = $route->price_trailer_list($port_name , $this->page);
 //        $this->_p($list);exit;
         $page = $list->render();
         $this->assign('list',$list);
@@ -186,6 +194,7 @@ class Price extends Base
         
         return $this->view->fetch("price/trailer_add");
     }
+    
     //拖车添加执行页面
     public function trailer_toadd(){
         $data = $this->request->param();
@@ -210,6 +219,7 @@ class Price extends Base
         $this->view->assign('data',$data);
         return $this->view->fetch("price/trailer_edit");
     }
+    
         //拖车运价执行修改
     public function trailer_toedit(){
         $data = $this->request->param();
@@ -244,6 +254,7 @@ class Price extends Base
         $res =Db::name('carprice')->where('id',$id)->update($up_data);
         return json($res ? array('status'=>1,'message'=>'修改成功'): array('status'=>0,'message'=>'修改失败')); 
     }
+    
         //拖车运价执行删除
     public function traile_del(){
         //接受price_route_del 的id 数组
@@ -252,6 +263,7 @@ class Price extends Base
         $res =Db::name('carprice')->where('id','in',$carprice_id)->update(['status'=>0]);
         return json($res ? array('status'=>1,'message'=>'删除成功'): array('status'=>0,'message'=>'删除失败'));    
     }
+    
     //港口杂费
     public function priceIncidental(){
         //获取每页显示的条数
@@ -317,10 +329,12 @@ class Price extends Base
         $res =Db::name('price_incidental')->where('id','in',$idArr)->update(['status'=>0]);
         return  $res ?$response=['status'=>1,'mssage'=>'删除成功']:$response=['status'=>0,'message'=>'删除失败'];
     }
+    
         //添加港口杂费
     public function incidentalAdd(){
         return $this->view->fetch('price/price_incidentaladd'); 
     }
+    
     public function incidentalToAdd(){
         $data =  $this->request->only(['ship','port_code','end_20GP_fee','end_40HQ_fee','start_20GP_fee','start_40HQ_fee'],'post');
         $mtime = date('Y-m-d H:i:s');
@@ -352,6 +366,7 @@ class Price extends Base
         $id = Db::name('quick_message')->insertGetId(['message'=>$data]);
         return $id;
     }
+    
     public function delMessage() {
         $id = $this->request->param('id');
         $list =Db::name('quick_message')->where('id',$id)->delete();

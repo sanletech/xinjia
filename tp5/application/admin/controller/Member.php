@@ -27,7 +27,7 @@ class Member extends Base
         $identification= isset($identification)?$identification:'2';
         $this->view->assign('identification',$identification); 
         $user = new MemberM ;
-        $list = $user->memberList($account,$type,1,'10',$identification);
+        $list = $user->memberList($account,$type,1, $this->page,$identification);
     //    $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('image_path',ROOT_PATH . 'public' . DS . 'uploads/images');
@@ -140,7 +140,7 @@ class Member extends Base
         $this->view->assign('status',$status); 
         
         $user = new MemberM ;
-        $list = $user->discount($type,$account,$status,5);
+        $list = $user->discount($type,$account,$status,$this->page);
 //        $this->_p($list);exit;
         $page = $list->render();
         $this->view->assign('list',$list);
@@ -184,7 +184,7 @@ class Member extends Base
             $type='company';
         }
         $user = new MemberM ;
-        $list = $user->memberList($account,$type,0,'5');
+        $list = $user->memberList($account,$type,0,$this->page);
         $page = $list->render();
         $this->view->assign('list',$list);
         $this->view->assign('page',$page);

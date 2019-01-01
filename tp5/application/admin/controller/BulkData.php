@@ -13,11 +13,15 @@ use app\admin\model\ExportExcelDroplist;
 
 class BulkData extends Base{
  
-
+    protected function _initialize() {
+      parent::_initialize();
+      $this->overdue();  //自动处理过期的
+      
+    }
     
     
     //港到港批量导入页面
-    public function price_route_excel(){
+    public function priceRouteExcel(){
         return $this->view->fetch('excel/price_route_excel');
     }
     //查看日志页面
@@ -64,8 +68,8 @@ class BulkData extends Base{
             }      
     }
     
-    
-    function import_excel(){
+    //批量导入
+    function importExcel(){
         $file = request()->file('excel');
         $info = $file->validate(['size'=>15678,'ext'=>'xlsx,xls'])
                ->move(ROOT_PATH . 'public' . DS . 'uploads'. DS .'excel');
@@ -120,6 +124,21 @@ class BulkData extends Base{
          
 
     }
+
+    //将运价设置处理数据过期
+    protected  function  overdue(){
+        $nowtime = date('Y-m-d H:i:s');
+        $list =Db::name('seaprice')
+            ->where('shipping_date','>=',$nowtime)
+            ->whereOr('cutoff_date','not null',['>=',$nowtime],['<>','1970-01-01 08:00:00'])
+                ->column('id');
+        $res = Db::name('seaprice')->where('id','in',$list)
+                ->update(['stale_date'=>0,'status'=>3]);
+                
+    }
+
+
+
 
     //处理excel的数据到数据里
     public function seaprice_excel($rowData) {

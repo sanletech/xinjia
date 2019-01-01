@@ -2,7 +2,7 @@
 
 namespace app\admin\common;
 use think\Controller;
-
+use think\db;
 /**
  * Description of Auth
  *
@@ -17,7 +17,8 @@ class Auth{
         'AUTH_GROUP' => 'hl_auth_group', //用户组数据表名
         'AUTH_GROUP_ACCESS' => 'hl_auth_group_access', //用户组明细表
         'AUTH_RULE' => 'hl_auth_rule', //权限规则表
-        'AUTH_USER' => 'hl_members'//用户信息表
+        'AUTH_USER' => 'hl_user',//用户信息表
+        'AUTH_AREA' => 'hl_user_area'//用户负责区域
     );
 //    public function __construct() {
 //        if (C('AUTH_CONFIG')) {
@@ -56,7 +57,10 @@ class Auth{
         static $groups = array();
         if (isset($groups[$uid]))
             return $groups[$uid];
-        $user_groups = M()->table($this->_config['AUTH_GROUP_ACCESS'] . ' a')->where("a.uid='$uid' and g.status='1'")->join($this->_config['AUTH_GROUP']." g on a.group_id=g.id")->select();
+        $user_groups = Db::table($this->_config['AUTH_GROUP_ACCESS'] . ' a')
+                ->where("a.uid='$uid' and g.status='1'")
+                ->join($this->_config['AUTH_GROUP'].' g', "a.group_id=g.id")
+                ->select();
         $groups[$uid]=$user_groups?$user_groups:array();
         return $groups[$uid];
     }
@@ -85,7 +89,7 @@ class Auth{
             'id'=>array('in',$ids),
             'status'=>1
         );
-        $rules = M()->table($this->_config['AUTH_RULE'])->where($map)->select();
+        $rules = Db::table($this->_config['AUTH_RULE'])->where($map)->select();
         //循环规则，判断结果。
         $authList = array();
         foreach ($rules as $r) {
@@ -96,11 +100,11 @@ class Auth{
                 //dump($command);//debug
                 @(eval('$condition=(' . $command . ');'));
                 if ($condition) {
-                    $authList[] = $r['name'];
+                    $authList[] = strtolower($r['name']);
                 }
             } else {
                 //存在就通过
-                $authList[] = $r['name'];
+                $authList[] = strtolower($r['name']);
             }
         }
         $_authList[$uid] = $authList;

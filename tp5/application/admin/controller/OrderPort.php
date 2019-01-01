@@ -11,13 +11,6 @@ use app\index\model\Order as IndexOrderM;
 class OrderPort extends Base
 {   
     
-    private $order_status;
-    private $page=5;
-
-    public function _initialize()
-    {  
-        $this->order_status=config('config.order_status');
-    }
 
     //审核详情页
     public function audit_page()
@@ -207,63 +200,5 @@ class OrderPort extends Base
         return $this->view->fetch('orderPort/order_cancel');
     }
     
-    //港到港的订单修改
-    public function  orderEdit() {
-        $data = $this->request->param();
-//        $this->_p($data);exit;
-        $order_num =$data['order_num'];  
-//        //根据订单号查询
-        $sqlData =Db::name('order_port')->where('order_num',$order_num)->field('member_code,seaprice_id,container_size')->find();
-        $mtime= date('Y-m-d H:i:s');
-        //对支付方式做判断
-        $payment_method= $data['payment_method'];
-        if(intval($payment_method)){
-            $special= $payment_method;
-            $payment_method='special';
-        }  else {
-            $special= 0;
-        }
-        $Pirce =new IndexOrderM;
-        //计算单个柜优惠的金额
-        $discount = $Pirce->dicountPrice($sqlData['member_code'],$sqlData['seaprice_id'],$sqlData['container_size'], $payment_method, $special);
-        //计算装货费用和送货费用
-        $truckageData = array('r'=>['container_code'=>$data['r_container_code'],'car_price'=>$data['r_car_price'],'num'=>$data['r_num'],'add'=>$data['r_add'],'link_man'=>$data['r_link_man'],'shipper'=>$data['shipper'],
-                    'load_time'=>$data['r_load_time'],'link_phone'=>$data['r_link_phone'],'car'=>$data['r_car'],'comment'=>$data['r_comment']], 
-                    's'=>['container_code'=>$data['s_container_code'],'car_price'=>$data['s_car_price'],'num'=>$data['s_num'],'add'=>$data['s_add'],'car'=>$data['s_car'], 'comment'=>$data['s_comment']] );
-        $dataM  =  new OrderM;
-        $truckagePrice = $dataM->truckage($order_num,$data['container_sum'], $truckageData);
-        //计算出对应的海运费
-        $seaPrice = Db::name('seaprice')->where('id',$sqlData['seaprice_id'])->value('price_'.$sqlData['container_size']);
-  
-        //计算总共的成本 (海运费 -优惠)*柜子数量 + 保险金额*6 + 装货费 +送货费;
-        $quoted_price= ($seaPrice-$discount)*$data['container_sum'] + ($data['cargo_cost']*6) +$truckagePrice['carprice_r']+$truckagePrice['carprice_s'];
-//        var_dump($seaPrice,$discount,$truckagePrice['carprice_r'],$truckagePrice['carprice_s']);exit;
-     
-        if(!(abs($quoted_price- $data['price_sum'])<0.00001)){
-            return array('status'=>0,'mssage'=>'报价错误');
-        } 
-        if(!array_key_exists('invoice_if',$data)){
-            $data['invoice_if']=0;
-        }
-        
-        $shipper = implode(',',array($data['r_name'],$data['r_company'],$data['r_phone']));
-        $consigner = implode(',',array($data['s_name'],$data['s_company'],$data['s_phone']));
-        $fatherData= array('cargo'=>$data['cargo'],'track_num'=>$data['track_num'],
-        'weight'=>$data['weight'],'cargo_cost'=>$data['cargo_cost'],
-        'container_type_id'=>$data['container_type'],'comment'=>$data['comment'],'mtime'=>$mtime,
-        'payment_method'=>$payment_method,'special_id'=>$special,'invoice_id'=>$data['invoice_if'],
-        'shipper'=>$shipper,'consigner'=>$consigner,'seaprice'=>$data['money'],'premium'=>$data['premium'],'discount'=>$discount,
-        'carprice_r'=>$truckagePrice['carprice_r'],'carprice_s'=>$truckagePrice['carprice_s'],'quoted_price'=>$quoted_price);
-        //查询是否已经有了同样的订单了 判断依据是金额相同,创建时间相差90S内
-        $starttime=date("Y-m-d H:i:s", strtotime("-90 seconds", time()));
-        $res = Db::name('order_port')->where('order_num',$order_num)->where('mtime','between',[$starttime,$mtime])->find();
-        if(empty($res)){
-            $res1 = Db::name('order_port')->where('order_num',$order_num)->update($fatherData); 
-            return $res1 ? array('status'=>1,'mssage'=>'修改成功'):array('status'=>0,'mssage'=>'修改失败');
-        } else {
-            return array('status'=>0,'mssage'=>'订单重复修改');
-        }
-        
-    }
 
 }
