@@ -11,7 +11,7 @@ use think\Db;
 class AddressBook  extends Base
 {   
     //车队列表
-    public function carList()
+    public function car_list()
     {   
         $map =[]; //设置查询条件
         $port= $this->request->param('port');
@@ -31,7 +31,13 @@ class AddressBook  extends Base
        // $this->_p($carlist); 
         $this->view->assign('carlist',$carlist);
         $this->assign('page', $page);
-        return $this->view->fetch('AddressBook/car/carList'); 
+        return $this->view->fetch('AddressBook/car/car_list'); 
+    }
+    
+    public function car_add(){
+        
+        return $this->view->fetch('AddressBook/car/car_add'); 
+         
     }
     
     //执行车队的添加

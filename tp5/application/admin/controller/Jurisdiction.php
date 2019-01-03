@@ -96,7 +96,7 @@ class Jurisdiction extends Base
         foreach ($data['power'] as  $value) {
             $map['power'][] = array('uid'=>$uid,'group_id'=>$value);
         }
- 
+        $map['power'] = array_unique($map['power'],SORT_REGULAR);
         //修改管理区域
         if(array_key_exists('port_code', $data)){
             $map['area']['area_code'] = implode(',', $data['port_code']);

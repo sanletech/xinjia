@@ -18,7 +18,7 @@
                     </select>
                 </div>
                 <div class="layui-input-inline" style="display: none;">
-                    <select name="area"  lay-filter="area">
+                    <select name="port"  lay-filter="port">
                         <option value="">请选择港口</option>
                     </select>
                 </div>
@@ -109,23 +109,24 @@
                         <input type="button" value="确 认" class="layui-btn" id="editbtn"  onclick="toajax()"> 
                     </div>
              </form>
-    </div>
+    </div>  
  <script type="text/javascript" src="/static/admin/js/area.js"></script>
+<script type="text/javascript" src="/static/admin/js/ship_boat.js"></script>
+<script type="text/javascript" src="/static/admin/js/port.js"></script>
  <script>
 
     //加载 所有的船公司名字简称和相应的id
-        var js_ship = '<?php echo $js_ship; ?>';
-        js_ship=JSON.parse(js_ship);
+        var js_ship = JS_SHIP_BOAT ;
+   
        //加载 所有的港口名字和相应的城市code
-        var js_port = '<?php echo $js_port; ?>';
-            js_port=JSON.parse(js_port);    
+        var js_port = JS_PORT;
         //ajax url生成
        var url="<{:url('admin/Car/toAdd')}>";
       //修改的车队ID 港口车队cp_id
        var carID='';
        var cpID ='';
   //初始数据
-        var areaData = Area;
+        var areaData = js_port;
         var $form;
         var form;
         var $;

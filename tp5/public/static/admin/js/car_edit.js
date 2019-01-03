@@ -10,7 +10,7 @@
             $form.find('select[name=province]').append(proHtml);
             form.render();
             form.on('select(province)', function(data) {
-                $form.find('select[name=area]').html('<option value="">请选择县/区</option>').parent().hide();
+                $form.find('select[name=port]').html('<option value="">请选择县/区</option>').parent().hide();
                 var value = data.value;
                 var d = value.split('_');
                 var code = d[0];
@@ -29,7 +29,7 @@
         function loadCity(citys) {
             var cityHtml = '';
             for (var i = 0; i < citys.length; i++) {
-                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallAreaList.length + '_' + i + '">' + citys[i].cityName + '</option>';
+                cityHtml += '<option value="' + citys[i].cityCode + '_' + citys[i].mallPortList.length + '_' + i + '">' + citys[i].cityName + '</option>';
             }
            
             $form.find('select[name=city]').html(cityHtml).parent().show();
@@ -43,10 +43,10 @@
                 if (count > 0) {
                     //将城市Id 传给港口loadPort()
                     //console.log(citys[index].cityCode);
-                    loadPort(citys[index].cityCode);
+                    loadPort(citys[index].mallPortList);
                   // loadArea(citys[index].mallAreaList);
                 } else {
-                    $form.find('select[name=area]').parent().hide();
+                    $form.find('select[name=port]').parent().hide();
                 }
             });
         }
@@ -119,6 +119,7 @@
          
         //加载对应城市的港口，并显示已经选中了
         function loadPort(CityCode){
+            console.log(CityCode)
 //            //加载 所有的港口名字和相应的城市code
 //        var js_port = '<?php echo $js_port; ?>';
 //            js_port=JSON.parse(js_port);
@@ -127,10 +128,10 @@
             var areaHtml = '';
             for(var i=0;i<port_length;i++){
                 if(CityCode == js_port[i].city_id ){
-                 areaHtml += '<option  value="' + js_port[i].id +'_'+ js_port[i].port_name + '">' + js_port[i].port_name + '</option>';  
+                 areaHtml += '<option  value="' + js_port[i].portCode +'_'+ js_port[i].portName + '">' + js_port[i].portName + '</option>';  
                 }
             }
-            $form.find('select[name=area]').html(areaHtml).parent().show();
+            $form.find('select[name=port]').html(areaHtml).parent().show();
             form.render();
             
             form.on('select(area)', function(data) {
@@ -166,7 +167,7 @@
             var shipHtml = '';
             for(var i=0;i<ship_length;i++){
                 
-                shipHtml += '<option  value="' + js_ship[i].id  +'_'+ js_ship[i].ship_short_name +'">' + js_ship[i].ship_short_name + '</option>';  
+                shipHtml += '<option  value="' + js_ship[i].ship_id  +'_'+ js_ship[i].ship_name +'">' + js_ship[i].ship_name + '</option>';  
             }
             $form.find('select[name=ship]').append(shipHtml);
             form.render();

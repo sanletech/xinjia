@@ -20,7 +20,7 @@ class Base extends Controller
             $this->notlogin();
         }
         $this->order_status=config('config.order_status');
-      
+         //区域限制
         $this->area_code = $this->portLimit();    
         import('app.admin.common.Auth');//加载类库
      //  $auth=new AuthC;
@@ -33,9 +33,11 @@ class Base extends Controller
         $ACTION_NAME= $request->action();//方法名
      
         $auth=new Auth();
-        if(!$auth->check($MODULE_NAME.'-'.$ACTION_NAME,session('uid'))){
-          //  echo "<script>alert('你没有权限')</script>";
-//            $this->error('你没有权限');
+        $is_rigth =$auth->check($MODULE_NAME.'-'.$ACTION_NAME,session('uid'));
+    
+        if(!$is_rigth){
+//            return $this->view->fetch('/view/auth.html');
+          //  return $this->view->fetch(APP_PATH.request()->module().'/view/auth/auth.html');
         }
   
         

@@ -28,7 +28,7 @@ class Price extends Model
             . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
             ->order('SP.mtime DESC')
             ->group('SP.id,SC.id,B.id,SR.id')->buildSql();
-$this->_p($map);exit;
+
         $list =Db::table($list.' a')->where($map)->paginate($pages,false,$pageParam); 
        
         return $list;
