@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
-Source Server Version : 50505
+Source Server         : 海浪服务器
+Source Server Version : 50560
 Source Host           : localhost:3306
 Source Database       : hlwl
 
 Target Server Type    : MYSQL
-Target Server Version : 50505
+Target Server Version : 50560
 File Encoding         : 65001
 
-Date: 2018-12-27 14:24:42
+Date: 2018-12-31 15:27:30
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `hl_ali_sms` (
   `code` int(10) DEFAULT NULL COMMENT '验证码',
   `ctime` datetime DEFAULT NULL COMMENT '发送时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_ali_sms
@@ -42,6 +42,26 @@ INSERT INTO `hl_ali_sms` VALUES ('9', '18926140750', '4137', '2018-12-12 11:58:4
 INSERT INTO `hl_ali_sms` VALUES ('10', '17788701375', '3366', '2018-12-17 16:25:39');
 INSERT INTO `hl_ali_sms` VALUES ('11', '18575280024', '1919', '2018-12-17 16:47:50');
 INSERT INTO `hl_ali_sms` VALUES ('12', '17788701375', '8368', '2018-12-18 23:28:57');
+INSERT INTO `hl_ali_sms` VALUES ('13', '17788701375', '3206', '2018-12-19 10:35:59');
+INSERT INTO `hl_ali_sms` VALUES ('14', '18575280024', '8819', '2018-12-19 10:40:51');
+INSERT INTO `hl_ali_sms` VALUES ('15', '13825001413', '7119', '2018-12-19 10:41:33');
+INSERT INTO `hl_ali_sms` VALUES ('16', '17788701375', '5343', '2018-12-19 10:43:09');
+INSERT INTO `hl_ali_sms` VALUES ('17', '17788701375', '4575', '2018-12-19 11:09:16');
+INSERT INTO `hl_ali_sms` VALUES ('18', '17788701375', '8635', '2018-12-19 11:15:08');
+INSERT INTO `hl_ali_sms` VALUES ('19', '17788701375', '9442', '2018-12-19 11:44:28');
+INSERT INTO `hl_ali_sms` VALUES ('20', '17700801375', '9015', '2018-12-19 11:45:25');
+INSERT INTO `hl_ali_sms` VALUES ('21', '17788701375', '3293', '2018-12-19 11:47:51');
+INSERT INTO `hl_ali_sms` VALUES ('22', '17788701375', '2792', '2018-12-19 12:49:46');
+INSERT INTO `hl_ali_sms` VALUES ('23', '18926140750', '7361', '2018-12-19 15:40:54');
+INSERT INTO `hl_ali_sms` VALUES ('24', '13600025294', '7703', '2018-12-19 15:49:46');
+INSERT INTO `hl_ali_sms` VALUES ('25', '18926140750', '9960', '2018-12-19 15:50:23');
+INSERT INTO `hl_ali_sms` VALUES ('26', '18575280024', '7861', '2018-12-21 11:31:41');
+INSERT INTO `hl_ali_sms` VALUES ('27', '13825001413', '2370', '2018-12-23 11:49:41');
+INSERT INTO `hl_ali_sms` VALUES ('28', '18302038184', '3580', '2018-12-23 11:51:52');
+INSERT INTO `hl_ali_sms` VALUES ('29', '13570290144', '5410', '2018-12-23 11:51:54');
+INSERT INTO `hl_ali_sms` VALUES ('30', '18302038187', '1326', '2018-12-23 11:55:09');
+INSERT INTO `hl_ali_sms` VALUES ('31', '18302038184', '1820', '2018-12-23 11:55:40');
+INSERT INTO `hl_ali_sms` VALUES ('32', '18575280024', '6034', '2018-12-26 11:12:30');
 
 -- ----------------------------
 -- Table structure for `hl_area`
@@ -3347,7 +3367,7 @@ CREATE TABLE `hl_boat` (
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   `status` int(1) DEFAULT '1' COMMENT '1:正常0：删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_boat
@@ -3358,12 +3378,10 @@ INSERT INTO `hl_boat` VALUES ('3', '1', '', '仁建9', '2018-12-10 14:49:50', '1
 INSERT INTO `hl_boat` VALUES ('4', '1', '', '仁建26', '2018-12-10 14:50:00', '1');
 INSERT INTO `hl_boat` VALUES ('5', '1', '', '仁建宁波', '2018-12-10 14:51:30', '1');
 INSERT INTO `hl_boat` VALUES ('6', '1', '', '仁建青岛', '2018-12-10 14:51:49', '1');
-INSERT INTO `hl_boat` VALUES ('7', '0', '', '仁建广州', '2018-12-10 14:52:34', '1');
 INSERT INTO `hl_boat` VALUES ('8', '1', '', '仁建上海', '2018-12-10 14:52:47', '1');
 INSERT INTO `hl_boat` VALUES ('9', '1', '', '仁建25', '2018-12-10 14:53:08', '1');
 INSERT INTO `hl_boat` VALUES ('10', '1', '', '仁建8', '2018-12-10 14:53:18', '1');
 INSERT INTO `hl_boat` VALUES ('11', '1', '', '仁建23', '2018-12-10 14:53:27', '1');
-INSERT INTO `hl_boat` VALUES ('12', '0', '', '东润3', '2018-12-10 14:53:45', '0');
 INSERT INTO `hl_boat` VALUES ('13', '1', '', '东润3', '2018-12-10 14:54:04', '1');
 INSERT INTO `hl_boat` VALUES ('14', '1', '', '仁建15', '2018-12-10 14:54:34', '1');
 INSERT INTO `hl_boat` VALUES ('15', '1', '', '仁建16', '2018-12-10 14:54:51', '1');
@@ -3391,7 +3409,8 @@ INSERT INTO `hl_boat` VALUES ('36', '1', '', '昌兴388', '2018-12-10 15:11:31',
 INSERT INTO `hl_boat` VALUES ('37', '1', '', '携船轮', '2018-12-10 15:11:43', '1');
 INSERT INTO `hl_boat` VALUES ('38', '1', '', '昌兴608', '2018-12-10 15:11:54', '1');
 INSERT INTO `hl_boat` VALUES ('39', '1', '', '长荣11', '2018-12-10 15:12:09', '1');
-INSERT INTO `hl_boat` VALUES ('40', '1', '10086', '中国网络', '2018-12-21 14:42:20', '1');
+INSERT INTO `hl_boat` VALUES ('40', '1', '', '无敌168', '2018-12-21 14:36:36', '0');
+INSERT INTO `hl_boat` VALUES ('41', '1', '', '46345', '2018-12-21 14:47:27', '0');
 
 -- ----------------------------
 -- Table structure for `hl_book_line`
@@ -3452,33 +3471,6 @@ INSERT INTO `hl_book_line_444` VALUES ('9', null, null, '9', '6', '中良', '152
 INSERT INTO `hl_book_line_444` VALUES ('10', null, null, '10', '7', ' 河北远洋', '1529683200', '1529683200', 'aaah', '搀扶', '5', '1530115200', '1530374400', '1', '1527218220', '110100010', '110100009', null, null);
 INSERT INTO `hl_book_line_444` VALUES ('11', '32', null, '11', '8', 'aaa', '1529683200', '1529683200', 'aaai', '推拉', '5', '1530115200', '1530374400', '1', '1527218244', '120100002', '110100010', null, null);
 INSERT INTO `hl_book_line_444` VALUES ('16', null, null, '26', '2', '中海', '1529510400', '1529942400', 'bbbc', '艾弗森', '5', '1529942400', '1530201600', '0', '1529565619', '110100004', '120100009', null, null);
-
--- ----------------------------
--- Table structure for `hl_carprice`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_carprice`;
-CREATE TABLE `hl_carprice` (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `r_20GP` int(10) DEFAULT NULL COMMENT '20GP的集装箱子车运 装货价格',
-  `r_40HQ` int(10) DEFAULT NULL COMMENT '40HQ的集装箱子车运 装货价格',
-  `s_40HQ` int(10) DEFAULT NULL COMMENT '40HQ的集装箱子车运 送货价格',
-  `s_20GP` int(10) DEFAULT NULL COMMENT '20GP的集装箱子车运 送货价格',
-  `last_order_time` datetime DEFAULT NULL COMMENT '最新的合作订单时间',
-  `status` enum('1','0') DEFAULT '1' COMMENT '1为正常 0为删除',
-  `mtime` datetime DEFAULT NULL COMMENT '修改时间',
-  `address_name` varchar(80) DEFAULT NULL,
-  `address_id` int(11) DEFAULT NULL COMMENT 'id',
-  `port_id` int(11) DEFAULT NULL COMMENT '港口的port_code',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_carprice
--- ----------------------------
-INSERT INTO `hl_carprice` VALUES ('1', '500', '200', '500', '200', null, '0', '2018-11-20 16:52:36', '北京市北京市东城区景山街道', '110101002', '110100004');
-INSERT INTO `hl_carprice` VALUES ('2', '500', '200', '500', '100', null, '0', '2018-11-20 16:52:53', '北京市北京市东城区交道口街道', '110101003', '110100004');
-INSERT INTO `hl_carprice` VALUES ('3', '100', '200', null, '250', null, '0', '2018-11-22 11:44:23', '北京市北京市东城区沙面街道', '440103001', '330200002');
-INSERT INTO `hl_carprice` VALUES ('4', '100', '200', null, '150', null, '0', '2018-11-22 14:08:06', '北京市北京市东城区景山街道', '110101002', '110100001');
 
 -- ----------------------------
 -- Table structure for `hl_car_book`
@@ -3713,6 +3705,33 @@ INSERT INTO `hl_car_ship` VALUES ('109', '1', '4');
 INSERT INTO `hl_car_ship` VALUES ('110', '1', '1');
 INSERT INTO `hl_car_ship` VALUES ('111', '4', '1');
 INSERT INTO `hl_car_ship` VALUES ('112', '1', '20');
+
+-- ----------------------------
+-- Table structure for `hl_carprice`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_carprice`;
+CREATE TABLE `hl_carprice` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `r_20GP` int(10) DEFAULT NULL COMMENT '20GP的集装箱子车运 装货价格',
+  `r_40HQ` int(10) DEFAULT NULL COMMENT '40HQ的集装箱子车运 装货价格',
+  `s_40HQ` int(10) DEFAULT NULL COMMENT '40HQ的集装箱子车运 送货价格',
+  `s_20GP` int(10) DEFAULT NULL COMMENT '20GP的集装箱子车运 送货价格',
+  `last_order_time` datetime DEFAULT NULL COMMENT '最新的合作订单时间',
+  `status` enum('1','0') DEFAULT '1' COMMENT '1为正常 0为删除',
+  `mtime` datetime DEFAULT NULL COMMENT '修改时间',
+  `address_name` varchar(80) DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL COMMENT 'id',
+  `port_id` int(11) DEFAULT NULL COMMENT '港口的port_code',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_carprice
+-- ----------------------------
+INSERT INTO `hl_carprice` VALUES ('1', '500', '200', '500', '200', null, '0', '2018-11-20 16:52:36', '北京市北京市东城区景山街道', '110101002', '110100004');
+INSERT INTO `hl_carprice` VALUES ('2', '500', '200', '500', '100', null, '0', '2018-11-20 16:52:53', '北京市北京市东城区交道口街道', '110101003', '110100004');
+INSERT INTO `hl_carprice` VALUES ('3', '100', '200', null, '250', null, '0', '2018-11-22 11:44:23', '北京市北京市东城区沙面街道', '440103001', '330200002');
+INSERT INTO `hl_carprice` VALUES ('4', '100', '200', null, '150', null, '0', '2018-11-22 14:08:06', '北京市北京市东城区景山街道', '110101002', '110100001');
 
 -- ----------------------------
 -- Table structure for `hl_city`
@@ -4324,17 +4343,15 @@ CREATE TABLE `hl_linkman` (
   `default` enum('r','s') DEFAULT NULL COMMENT 'r是装货地址，s是送货地址',
   `status` int(1) DEFAULT '1' COMMENT '1正常0删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_linkman
 -- ----------------------------
 INSERT INTO `hl_linkman` VALUES ('1', '林风', '13888888888', '广州创世电子科技有限公司', '广州市天河区石牌西路天晟明苑208', 'zh_A_001', null, '2018-12-17 18:00:25', null, '1');
 INSERT INTO `hl_linkman` VALUES ('2', '陈雨', '13999999999', '广州兴佳物流有限公司', '广州市黄浦区港湾路中交国际大厦2018', 'zh_A_001', null, '2018-12-17 18:01:53', null, '1');
-INSERT INTO `hl_linkman` VALUES ('3', 'aaa', '4546', 'aaa', 'afasafa', 'zh_A_002', null, '2018-12-24 16:54:06', null, '1');
-INSERT INTO `hl_linkman` VALUES ('4', 'aaa', '4546', 'bbbb', 'afasafa', 'zh_A_002', null, '2018-12-24 16:54:30', null, '1');
-INSERT INTO `hl_linkman` VALUES ('5', 'aaa', '4546', 'cccc', 'afasafa', 'zh_A_002', null, '2018-12-24 16:54:36', null, '1');
-INSERT INTO `hl_linkman` VALUES ('6', 'aaa', '4546', 'dddd', 'afasafa', 'zh_A_002', null, '2018-12-24 16:54:41', null, '1');
+INSERT INTO `hl_linkman` VALUES ('3', 'bb', '18575280024', 'aaa', 'aaaaaa', 'zh_A_002', null, '2018-12-31 12:36:38', 's', '1');
+INSERT INTO `hl_linkman` VALUES ('4', 'ccc', '18575280024', 'cccc', 'aaaaaa', 'zh_A_002', null, '2018-12-31 12:36:27', null, '1');
 
 -- ----------------------------
 -- Table structure for `hl_logistic`
@@ -4446,13 +4463,17 @@ CREATE TABLE `hl_member` (
   `add` varchar(255) DEFAULT NULL COMMENT '地址',
   `wechat_openid` varchar(100) DEFAULT NULL COMMENT '微信oppenid',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_member
 -- ----------------------------
-INSERT INTO `hl_member` VALUES ('1', '13600025294', 'e10adc3949ba59abbe56e057f20f883e', '2018-12-12 00:00:00', '2018-12-15 15:13:32', '18926140750', '', '1', null, null, null, null, 'zh_A_001', 'person', '1', null, null, null);
-INSERT INTO `hl_member` VALUES ('2', 'shenhao', 'e10adc3949ba59abbe56e057f20f883e', '2018-12-17 00:00:00', '2018-12-24 16:13:28', '18575280024', '', '1', null, null, null, null, 'zh_A_002', 'person', '1', null, null, null);
+INSERT INTO `hl_member` VALUES ('1', 'linrufeng', 'e10adc3949ba59abbe56e057f20f883e', '2018-12-12 00:00:00', '2018-12-31 13:15:30', '18926140750', '', '1', null, null, null, null, 'zh_A_001', 'person', '1', null, null, 'oSjB45N5iR-zRxGnsV1E-iR0aL9I');
+INSERT INTO `hl_member` VALUES ('2', 'shenhao', 'e10adc3949ba59abbe56e057f20f883e', '2018-12-17 00:00:00', '2018-12-31 12:35:02', '18575280024', '', '1', null, null, null, null, 'zh_A_002', 'person', '1', null, null, 'oSjB45MiIIv81tOj4WxQXkF7m0tc');
+INSERT INTO `hl_member` VALUES ('3', '', 'e10adc3949ba59abbe56e057f20f883e', '2018-12-19 11:51:19', '2018-12-31 15:05:02', '', '', '1', null, null, null, null, 'zh_A_003', 'person', '1', null, null, 'oSjB45JnkiPN-EEj6tUyD55V2DEQ');
+INSERT INTO `hl_member` VALUES ('4', '13825001413', 'e10adc3949ba59abbe56e057f20f883e', '2018-12-23 11:50:18', '2018-12-25 11:15:23', '13825001413', '', '1', null, null, null, null, 'zh_A_004', 'person', '1', null, null, 'oSjB45ApBpSOVA1UfVCc9lZqo07E');
+INSERT INTO `hl_member` VALUES ('5', '13570290144', 'b90175880eade7e5a4efc3f9d80d529d', '2018-12-23 11:52:21', '2018-12-23 11:54:46', '13570290144', '', '1', null, null, null, null, 'zh_A_005', 'person', '1', null, null, 'oSjB45Hrr-k7xzr05oWlUPVqc7E4');
+INSERT INTO `hl_member` VALUES ('6', '18302038184', 'e10adc3949ba59abbe56e057f20f883e', '2018-12-23 11:54:14', '2018-12-23 11:56:59', '18302038184', '', '1', null, null, null, null, 'zh_A_006', 'person', '1', null, null, 'oSjB45IRyUkP80UI8opvlr65oDIo');
 
 -- ----------------------------
 -- Table structure for `hl_member_add`
@@ -4509,13 +4530,17 @@ CREATE TABLE `hl_member_profit` (
   `20GP` int(5) DEFAULT NULL COMMENT '20GP的临时优惠',
   `mtime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_member_profit
 -- ----------------------------
 INSERT INTO `hl_member_profit` VALUES ('1', 'zh_A_001', '1', '200', '100', '2018-12-12 11:59:19');
 INSERT INTO `hl_member_profit` VALUES ('2', 'zh_A_002', '1', '200', '100', '2018-12-17 04:47:58');
+INSERT INTO `hl_member_profit` VALUES ('3', 'zh_A_003', '1', '200', '100', '2018-12-19 11:51:19');
+INSERT INTO `hl_member_profit` VALUES ('4', 'zh_A_004', '1', '200', '100', '2018-12-23 11:50:18');
+INSERT INTO `hl_member_profit` VALUES ('5', 'zh_A_005', '1', '200', '100', '2018-12-23 11:52:21');
+INSERT INTO `hl_member_profit` VALUES ('6', 'zh_A_006', '1', '200', '100', '2018-12-23 11:54:14');
 
 -- ----------------------------
 -- Table structure for `hl_node`
@@ -4555,15 +4580,31 @@ CREATE TABLE `hl_order_bill` (
   `type` enum('port','door') DEFAULT 'port' COMMENT '是港到港还是门到门',
   `comment` varchar(250) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_bill
 -- ----------------------------
 INSERT INTO `hl_order_bill` VALUES ('1', 'PAC174100517', 'ZD_A_001', '2044', '2', '20GP', '2018-12-17 18:03:25', null, null, 'zh_A_001', 'port', '');
-INSERT INTO `hl_order_bill` VALUES ('2', 'DAC215943387', 'ZD_A_002', '3846', '3', '20GP', '2018-12-21 10:30:34', null, null, 'zh_A_002', 'door', '阿萨德发送到');
-INSERT INTO `hl_order_bill` VALUES ('3', 'PAC243931648', 'ZD_A_003', '9712', '4', '20GP', '2018-12-24 16:15:16', null, null, 'zh_A_002', 'port', '啊是短发');
-INSERT INTO `hl_order_bill` VALUES ('4', 'PAC244198165', 'ZD_A_004', '7284', '3', '20GP', '2018-12-24 16:59:41', null, null, 'zh_A_002', 'port', 'adfafdsafa');
+INSERT INTO `hl_order_bill` VALUES ('2', 'DAC190570271', 'ZD_A_002', '862', '1', '20GP', '2018-12-19 15:48:22', null, null, 'zh_A_001', 'door', '');
+INSERT INTO `hl_order_bill` VALUES ('3', 'DAC190622550', 'ZD_A_003', '862', '1', '20GP', '2018-12-19 15:57:05', null, null, 'zh_A_001', 'door', '搜');
+INSERT INTO `hl_order_bill` VALUES ('4', 'DAC190728828', 'ZD_A_004', '1628', '1', '40HQ', '2018-12-19 16:14:48', null, null, 'zh_A_002', 'door', '');
+INSERT INTO `hl_order_bill` VALUES ('5', 'DAC190806490', 'ZD_A_005', '1046', '1', '20GP', '2018-12-19 16:27:44', null, null, 'zh_A_002', 'door', '');
+INSERT INTO `hl_order_bill` VALUES ('6', 'DAC190816930', 'ZD_A_006', '1628', '1', '40HQ', '2018-12-19 16:29:29', null, null, 'zh_A_002', 'door', '');
+INSERT INTO `hl_order_bill` VALUES ('7', 'DAC190889807', 'ZD_A_007', '1808', '1', '40HQ', '2018-12-19 16:41:38', null, null, 'zh_A_003', 'door', '');
+INSERT INTO `hl_order_bill` VALUES ('8', 'DAC190919896', 'ZD_A_008', '1808', '1', '40HQ', '2018-12-19 16:46:38', null, null, 'zh_A_003', 'door', '');
+INSERT INTO `hl_order_bill` VALUES ('9', 'DAC191016613', 'ZD_A_009', '1808', '1', '40HQ', '2018-12-19 17:02:46', null, null, 'zh_A_003', 'door', '');
+INSERT INTO `hl_order_bill` VALUES ('10', 'DAC216376486', 'ZD_A_010', '1008', '1', '20GP', '2018-12-21 11:42:44', null, null, 'zh_A_002', 'door', '将计就计看看');
+INSERT INTO `hl_order_bill` VALUES ('11', 'PAC217321104', 'ZD_A_011', '14694', '3', '40HQ', '2018-12-21 14:20:11', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('12', 'PAC217341895', 'ZD_A_012', '1705', '1', '40HQ', '2018-12-21 14:23:38', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('13', 'PAC241953855', 'ZD_A_013', '5250', '2', '40HQ', '2018-12-24 10:45:38', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('14', 'PAC252244201', 'ZD_A_014', '9064', '2', '40HQ', '2018-12-25 15:20:42', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('15', 'PAC260478840', 'ZD_A_015', '5176', '2', '40HQ', '2018-12-26 14:13:08', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('16', 'PAC260490402', 'ZD_A_016', '3134', '1', '20GP', '2018-12-26 14:15:04', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('17', 'PAC279989464', 'ZD_A_017', '3172', '1', '40HQ', '2018-12-27 16:38:16', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('18', 'PAC288100876', 'ZD_A_018', '2388', '1', '40HQ', '2018-12-28 15:10:09', null, null, 'zh_A_001', 'port', '你好。');
+INSERT INTO `hl_order_bill` VALUES ('19', 'PAC313064927', 'ZD_A_019', '1672', '1', '20GP', '2018-12-31 12:30:50', null, null, 'zh_A_001', 'port', '');
+INSERT INTO `hl_order_bill` VALUES ('20', 'PAC313103121', 'ZD_A_020', '4128', '4', '20GP', '2018-12-31 12:37:12', null, null, 'zh_A_002', 'port', '');
 
 -- ----------------------------
 -- Table structure for `hl_order_bill_copy`
@@ -4611,23 +4652,15 @@ CREATE TABLE `hl_order_car` (
   `driver_id` int(5) DEFAULT '0' COMMENT '司机id',
   `driver_name` varchar(8) DEFAULT NULL COMMENT '司机姓名',
   `identity_card` varchar(18) DEFAULT NULL COMMENT '身份证号码',
-  `phone` varchar(12) DEFAULT NULL,
   `mtime` datetime DEFAULT NULL,
   `type` enum('load','send') DEFAULT 'send' COMMENT 'load装货，send送货',
   `work_time` datetime DEFAULT NULL COMMENT '实际装货时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_car
 -- ----------------------------
-INSERT INTO `hl_order_car` VALUES ('1', 'DAC215943387', 'ASDFA564', 'ASDF', null, null, 'ASDSA', 'ASDA', '0', '64654', 'ASDFA654', '6464', '2018-12-21 10:50:49', 'load', '2018-12-19 00:00:00');
-INSERT INTO `hl_order_car` VALUES ('2', 'DAC215943387', '56A4DSF', 'ASDFA', null, null, '5464', '654ASDF', '0', '6A4SDF66', '64654', '6A4DF', '2018-12-21 10:50:49', 'load', '2018-12-19 00:00:00');
-INSERT INTO `hl_order_car` VALUES ('3', 'DAC215943387', 'ADSAF', 'ADFAF', null, null, 'ADFA', 'AFDA', '0', 'ADFA', 'ASDFA', 'ASDFA', '2018-12-21 10:50:49', 'load', '2018-12-19 00:00:00');
-INSERT INTO `hl_order_car` VALUES ('4', 'DAC215943387', 'ASDFA564', 'adsaf', null, null, 'asdf', 'asdf', '0', 'asdf', 'asdf', 'asdf', '2018-12-21 11:11:25', 'send', null);
-INSERT INTO `hl_order_car` VALUES ('5', 'DAC215943387', '56A4DSF', 'ASDFA', null, null, 'asdf', 'asdf', '0', 'asf', 'asdfa', 'fasdf', '2018-12-21 11:11:25', 'send', null);
-INSERT INTO `hl_order_car` VALUES ('6', 'DAC215943387', 'ADSAF', 'ADFAF', null, null, 'asdfa', 'sadf', '0', 'asdf', 'asdf', 'asdf', '2018-12-21 11:11:25', 'send', null);
-INSERT INTO `hl_order_car` VALUES ('7', 'DAC191145161', '13132131', '45641313', null, null, '啊啊', 'ASD45', '0', '大大大', '654313131', '1552245131', '2018-12-24 14:10:48', 'load', '2018-12-18 00:00:00');
 
 -- ----------------------------
 -- Table structure for `hl_order_comment`
@@ -4776,17 +4809,31 @@ CREATE TABLE `hl_order_port` (
   `container_status` enum('do','nodo') DEFAULT 'nodo' COMMENT '客户是否提交柜号了nodo未提交do已经提交',
   `type` enum('port','door') DEFAULT 'port' COMMENT '港到港的订单port, 门到门的door',
   PRIMARY KEY (`id`,`money_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port
 -- ----------------------------
-INSERT INTO `hl_order_port` VALUES ('2', 'DAC191145161', 'dfas', '20GP', '1', '1', '20', '包装', '', null, '2018-12-24 14:13:23', 'zh_A_003', '0', '2018-12-19 17:24:11', 'installment', null, null, null, '0', 'afasf,无,21321312313,内蒙古自治区通辽市库伦旗额勒顺镇sadf', '0', 'asfd,无,14123412342,天津市市辖区和平区劝业场街道sdf', '11', null, '价格双边收费', '20', '100', null, null, '862', '报柜号完毕->待配船', '8', 'YUNDANHAO123', 'DAC191145161_book_note_txt', null, 'nodo', 'lock', 'do', 'door');
-INSERT INTO `hl_order_port` VALUES ('3', 'DAC191161192', 'asdfas', '40HQ', '1', '1', '20', '包装', '', null, null, 'zh_A_003', '0', '2018-12-19 17:26:51', 'installment', null, null, null, '0', 'dfadf,无,42423423423,河北省秦皇岛市北戴河区海滨镇safas', '0', 'asdfas,无,23412431234,北京市市辖区朝阳区建外街道fsadf', '11', null, '价格双边收费', '20', '200', null, null, '1628', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
-INSERT INTO `hl_order_port` VALUES ('4', 'DAC191372352', '3153', '20GP', '4', '1', '200', '包装', '', null, null, 'zh_A_003', '0', '2018-12-19 18:02:03', 'installment', null, null, null, '0', 'sdfs,无,13213123123,天津市市辖区和平区劝业场街道sadf', '0', 'safs,无,13545646465,天津市市辖区和平区劝业场街道3516546', '2', null, '价格双边收费', '800', '100', null, null, '4168', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
-INSERT INTO `hl_order_port` VALUES ('5', 'DAC191436069', '2RQEF', '20GP', '5', '1', '200', '包装', 'Asdsa', null, null, 'zh_A_003', '0', '2018-12-19 18:12:40', 'installment', null, null, null, '0', 'asdjf,无,22222222222,天津市市辖区和平区劝业场街道afsafd', '0', 'sadfsa,无,12222222222,河北省石家庄市长安区建北街道cadaS', '3', null, '价格双边收费', '1000', '100', null, null, '5210', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
-INSERT INTO `hl_order_port` VALUES ('6', 'DAC215943387', '撒', '20GP', '3', '1', '40', '铁桶', '阿萨德发送到', null, '2018-12-21 11:11:26', 'zh_A_002', '0', '2018-12-21 10:30:33', 'installment', null, null, null, '0', '阿斯蒂芬,阿德法,465464,撒旦法发', '0', '阿斯蒂芬,啊是短发,阿斯蒂芬 ,阿斯蒂芬', '30', null, '报价含双边THC，目的换单费：小柜200/大柜40', '120', '100', null, null, '3846', '录入送货信息->待完', '17', null, 'DAC215943387_book_note_txt', 'DAC215943387_sea_waybill_txt', 'nodo', 'unlock', 'nodo', 'door');
-INSERT INTO `hl_order_port` VALUES ('8', 'PAC244198165', '阿斯蒂芬', '20GP', '3', '1', '40', '木架', 'adfafdsafa', null, '2018-12-24 17:45:55', 'zh_A_002', '0', '2018-12-24 16:59:41', 'installment', '0', null, '0', '5', 'aaa,dddd,4546', '6', 'aaa,cccc,4546', '1', '2188', '3289', '120', '0', '400', '200', '7284', '上传水运单->待通过', '4', 'dsafdf', 'PAC244198165_book_note_txt', 'PAC244198165_sea_waybill_txt', 'nodo', 'apply', 'do', 'port');
+INSERT INTO `hl_order_port` VALUES ('1', 'PAC174100517', '青铜', '20GP', '2', '25', '80', '纸箱', '', null, '2018-12-26 14:24:57', 'zh_A_001', '0', '2018-12-17 18:03:25', 'installment', '0', null, '0', '2', '林风,广州创世电子科技有限公司,13888888888', '1', '陈雨,广州兴佳物流有限公司,13999999999', '11', '942', '已含箱体附加费、港建费、双边THC、燃油附加费', '160', '0', '0', '0', '2044', '上传订舱单->待客户', '4', 'sdfsdf', 'PAC174100517_book_note_docx', null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('2', 'DAC190570271', '萨芬', '20GP', '1', '1', '20', '包装', '', null, '2018-12-21 15:04:24', 'zh_A_001', '0', '2018-12-19 15:48:22', 'installment', null, null, null, '0', 'adf,无,13554444565,天津市市辖区和平区小白楼街道士大夫', '0', '阿道夫,无,11325345345,天津市市辖区河东区大王庄街道士大夫', '2', null, '价格双边收费', '20', '100', null, null, '862', '订单审核pass', '3', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('3', 'DAC190622550', '如今', '20GP', '1', '1', '20', '包装', '搜', null, '2018-12-21 15:04:29', 'zh_A_001', '0', '2018-12-19 15:57:05', 'installment', null, null, null, '0', '李敏,无,15421587616,河北省保定市涞水县石亭镇宿舍', '0', '搜狗,无,12134546154,内蒙古自治区赤峰市阿鲁科尔沁旗双胜镇随你挑', '2', null, '价格双边收费', '20', '100', null, null, '862', '订单审核pass', '3', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('4', 'DAC190728828', 'asdf', '40HQ', '1', '1', '20', '包装', '', null, null, 'zh_A_002', '0', '2018-12-19 16:14:48', 'installment', null, null, null, '0', 'asdf,无,12312312312,河北省唐山市路南区广场街道sadf', '0', 'sdfas,无,23214124324,内蒙古自治区赤峰市松山区向阳街道dfasd', '2', null, '价格双边收费', '20', '200', null, null, '1628', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('5', 'DAC190806490', 'asdf', '20GP', '1', '12', '204', '包装', '', null, null, 'zh_A_002', '0', '2018-12-19 16:27:44', 'installment', null, null, null, '0', 'sadf,无,32131313131,河北省唐山市路北区文化路街道2131', '0', '214,无,55416566565,山西省阳泉市郊区义井镇464', '2', null, '价格双边收费', '204', '100', null, null, '1046', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('6', 'DAC190816930', 'safd', '40HQ', '1', '1', '20', '包装', '', null, null, 'zh_A_002', '0', '2018-12-19 16:29:29', 'installment', null, null, null, '0', '123131,无,12313131313,天津市市辖区和平区劝业场街道dasd', '0', 'afa,无,12313151656,河北省唐山市路南区学院南路街道145', '2', null, '价格双边收费', '20', '200', null, null, '1628', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('7', 'DAC190889807', 'adf', '40HQ', '1', '10', '200', '包装', '', null, null, 'zh_A_003', '0', '2018-12-19 16:41:38', 'installment', null, null, null, '0', 'sdfa,无,21313132131,山西省阳泉市矿区蔡洼街道231', '0', 'safd231,无,23131321313,山西省阳泉市矿区平潭街街道asdf', '2', null, '价格双边收费', '200', '200', null, null, '1808', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('8', 'DAC190919896', 'dadf', '40HQ', '1', '1', '200', '包装', '', null, null, 'zh_A_003', '0', '2018-12-19 16:46:38', 'installment', null, null, null, '0', 'zsdf,无,23412431243,河北省唐山市路北区钓鱼台街道add', '0', 'sadfas,无,21121122112,河北省秦皇岛市北戴河区海滨镇sadf', '2', null, '价格双边收费', '200', '200', null, null, '1808', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('9', 'DAC191016613', 'asdf', '40HQ', '1', '5', '200', '包装', '', null, null, 'zh_A_003', '0', '2018-12-19 17:02:46', 'installment', null, null, null, '0', '2131323113121,无,23123131313,河北省唐山市路北区文化路街道sadf', '0', 'a3sdf,无,13213213131,河北省唐山市路北区钓鱼台街道sdf', '2', null, '价格双边收费', '200', '200', null, null, '1808', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('10', 'DAC216376486', '肉末', '20GP', '1', '1', '20', '包装', '将计就计看看', null, null, 'zh_A_002', '0', '2018-12-21 11:42:44', 'installment', null, null, null, '0', '哈哈哈,无,11222222222,吉林省白山市抚松县露水河镇明末姑姑', '0', '国际经济,无,21222558888,江苏省盐城市阜宁县郭墅镇（澳洋工业园）社费红', '3', null, '价格双边收费', '20', '100', null, null, '1008', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'door');
+INSERT INTO `hl_order_port` VALUES ('11', 'PAC217321104', '白金', '40HQ', '3', '26', '200', '纸箱', '', null, '2018-12-26 14:25:39', 'zh_A_001', '0', '2018-12-21 14:20:11', 'installment', '0', null, '0', '1', '陈雨,广州兴佳物流有限公司,13999999999', '2', '林风,广州创世电子科技有限公司,13888888888', '33', '3898', '报价含双边THC，目的换单费：小柜50/大柜70', '600', '0', '1500', '900', '14694', '上传订舱单->待客户', '4', '564654jhkjhn', 'PAC217321104_book_note_docx', null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('12', 'PAC217341895', '砖石', '40HQ', '1', '20', '80', '纸箱', '', null, null, 'zh_A_001', '0', '2018-12-21 14:23:38', 'installment', '0', null, '0', '1', '陈雨,广州兴佳物流有限公司,13999999999', '2', '林风,广州创世电子科技有限公司,13888888888', '3', '1625', '已含箱体附加费、港建费、双边THC、燃油附加费', '80', '0', '0', '0', '1705', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('13', 'PAC241953855', '铂金', '40HQ', '2', '18', '92', '纸箱', '', null, '2018-12-26 18:02:14', 'zh_A_001', '0', '2018-12-24 10:45:38', 'installment', '0', null, '0', '1', '陈雨,广州兴佳物流有限公司,13999999999', '2', '林风,广州创世电子科技有限公司,13888888888', '4', '1633', '已含箱体附加费、港建费、双边THC、燃油附加费', '184', '0', '800', '1000', '5250', '上传订舱单->待客户', '4', '112233', 'PAC241953855_book_note_docx', null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('14', 'PAC252244201', '废铁', '40HQ', '2', '20', '144', '纸箱', '', null, null, 'zh_A_001', '0', '2018-12-25 15:20:42', 'installment', '0', null, '0', '2', '林风,广州创世电子科技有限公司,13888888888', '1', '陈雨,广州兴佳物流有限公司,13999999999', '1', '3488', '3289', '288', '0', '800', '1000', '9064', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('15', 'PAC260478840', '黄金', '40HQ', '2', '18', '80', '纸箱', '', null, '2018-12-26 14:17:17', 'zh_A_001', '0', '2018-12-26 14:13:08', 'installment', '0', null, '0', '1', '陈雨,广州兴佳物流有限公司,13999999999', '2', '林风,广州创世电子科技有限公司,13888888888', '34', '2508', '报价含双边THC，目的换单费：小柜100/大柜20', '160', '0', '0', '0', '5176', '订单审核fail', '404', null, null, null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('16', 'PAC260490402', '铂金', '20GP', '1', '15', '92', '木架', '', null, '2018-12-26 18:45:38', 'zh_A_001', '0', '2018-12-26 14:15:04', 'installment', '0', null, '0', '2', '林风,广州创世电子科技有限公司,13888888888', '1', '陈雨,广州兴佳物流有限公司,13999999999', '33', '2242', '报价含双边THC，目的换单费：小柜50/大柜70', '92', '0', '300', '500', '3134', '订单完成', '17', '112233', 'PAC260490402_book_note_docx', 'PAC260490402_sea_waybill_docx', 'do', 'unlock', 'do', 'port');
+INSERT INTO `hl_order_port` VALUES ('17', 'PAC279989464', '锡', '40HQ', '1', '15', '64', '纸箱', '', null, '2018-12-27 17:03:32', 'zh_A_001', '0', '2018-12-27 16:38:14', 'installment', '0', null, '0', '1', '林风,广州创世电子科技有限公司,13888888888', '1', '林风,广州创世电子科技有限公司,13888888888', '30', '2408', '报价含双边THC，目的换单费：小柜200/大柜40', '64', '0', '300', '400', '3172', '订单审核pass', '3', null, null, null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('18', 'PAC288100876', 'AI', '40HQ', '1', '15', '80', '铁桶', '你好。', null, null, 'zh_A_001', '0', '2018-12-28 15:10:08', 'installment', '0', null, '0', '1', '陈雨,广州兴佳物流有限公司,13999999999', '2', '林风,广州创世电子科技有限公司,13888888888', '70', '2308', '报价含双边THC，目的换单费：小柜100/大柜20', '80', '0', '0', '0', '2388', null, '2', null, null, null, 'nodo', 'lock', 'nodo', 'port');
+INSERT INTO `hl_order_port` VALUES ('19', 'PAC313064927', 'xinxin', '20GP', '1', '25', '80', '纸箱', '', ',很好。,很好。,很好。', '0000-00-00 00:00:00', 'zh_A_001', '0', '2018-12-31 12:30:49', 'installment', '0', null, '0', '1', '陈雨,广州兴佳物流有限公司,13999999999', '2', '林风,广州创世电子科技有限公司,13888888888', '55', '892', '0', '80', '0', '400', '300', '1672', '上传水运单->待通过', '4', '11111', 'PAC313064927_book_note_docx', 'PAC313064927_sea_waybill_docx', 'nodo', 'unlock', 'do', 'port');
+INSERT INTO `hl_order_port` VALUES ('20', 'PAC313103121', '猪肉', '20GP', '4', '1', '40', '木架', '', null, '2018-12-31 12:49:02', 'zh_A_002', '0', '2018-12-31 12:37:11', 'installment', '0', null, '0', '3', 'ccc,cccc,18575280024', '4', 'bb,aaa,18575280024', '47', '992', '0', '160', '0', '0', '0', '4128', '订单审核pass', '3', null, null, null, 'nodo', 'lock', 'nodo', 'port');
 
 -- ----------------------------
 -- Table structure for `hl_order_port_status`
@@ -4801,35 +4848,44 @@ CREATE TABLE `hl_order_port_status` (
   `submitter` varchar(12) DEFAULT NULL COMMENT '提交人',
   `comment` varchar(100) DEFAULT NULL COMMENT '驳回,删除订单的原因',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_port_status
 -- ----------------------------
-INSERT INTO `hl_order_port_status` VALUES ('1', 'DAC215943387', '3', '订单审核pass', '2018-12-21 10:35:37', 'admin', null);
-INSERT INTO `hl_order_port_status` VALUES ('2', 'DAC215943387', '4', '上传订舱单->待派车', '2018-12-21 10:35:52', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('3', 'DAC215943387', '5', '录入派车信息->待装货', '2018-12-21 10:50:49', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('4', 'DAC215943387', '7', '录入装货时间->待报柜号', '2018-12-21 10:53:55', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('5', 'DAC215943387', '8', '报柜号完毕->待配船', '2018-12-21 10:54:04', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('6', 'DAC215943387', '13', '申请放柜子', '2018-12-21 11:09:41', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('7', 'DAC215943387', '12', '船期录入完成->待上传水运单', '2018-12-21 11:09:41', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('8', 'DAC215943387', '16', '上传水运单->待送货', '2018-12-21 11:09:57', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('9', 'DAC215943387', '15', '申请放柜>通过', '2018-12-21 11:10:38', 'admin', 'aaa');
-INSERT INTO `hl_order_port_status` VALUES ('10', 'DAC215943387', '17', '录入送货信息->待完成订单', '2018-12-21 11:11:26', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('11', 'PAC174100517', '3', '订单审核pass', '2018-12-21 15:07:57', 'admin', null);
-INSERT INTO `hl_order_port_status` VALUES ('12', 'DAC191145161', '3', '订单审核pass', '2018-12-21 16:22:42', 'admin', null);
-INSERT INTO `hl_order_port_status` VALUES ('13', 'DAC191145161', '4', '上传订舱单->待派车', '2018-12-24 14:09:45', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('14', 'DAC191145161', '5', '录入派车信息->待装货', '2018-12-24 14:10:48', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('15', 'DAC191145161', '7', '录入装货时间->待报柜号', '2018-12-24 14:11:43', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('16', 'DAC191145161', '8', '报柜号完毕->待配船', '2018-12-24 14:12:13', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('17', 'DAC191145161', '8', '报柜号完毕->待配船', '2018-12-24 14:13:23', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('18', 'PAC243931648', '3', '订单审核pass', '2018-12-24 16:16:01', 'admin', null);
-INSERT INTO `hl_order_port_status` VALUES ('19', 'PAC174100517', '4', '上传订舱单->待客户提交柜号', '2018-12-24 16:16:32', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('20', 'PAC243931648', '4', '上传订舱单->待客户提交柜号', '2018-12-24 16:18:50', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('21', 'PAC244198165', '3', '订单审核pass', '2018-12-24 17:00:31', 'admin', null);
-INSERT INTO `hl_order_port_status` VALUES ('22', 'PAC244198165', '4', '上传订舱单->待客户提交柜号', '2018-12-24 17:00:49', 'admin', '');
-INSERT INTO `hl_order_port_status` VALUES ('23', 'PAC244198165', '13', null, '2018-12-24 17:45:05', 'zh_A_002', null);
-INSERT INTO `hl_order_port_status` VALUES ('24', 'PAC244198165', '4', '上传水运单->待通过放柜', '2018-12-24 17:45:55', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('1', 'PAC174100517', '3', '订单审核pass', '2018-12-21 14:26:05', null, null);
+INSERT INTO `hl_order_port_status` VALUES ('2', 'PAC217321104', '3', '订单审核pass', '2018-12-21 14:27:30', null, null);
+INSERT INTO `hl_order_port_status` VALUES ('3', 'DAC190570271', '3', '订单审核pass', '2018-12-21 15:04:24', 'admin', null);
+INSERT INTO `hl_order_port_status` VALUES ('4', 'DAC190622550', '3', '订单审核pass', '2018-12-21 15:04:29', 'admin', null);
+INSERT INTO `hl_order_port_status` VALUES ('5', 'PAC241953855', '3', '订单审核pass', '2018-12-24 10:48:19', null, null);
+INSERT INTO `hl_order_port_status` VALUES ('6', 'PAC260490402', '3', '订单审核pass', '2018-12-26 14:16:57', 'admin', null);
+INSERT INTO `hl_order_port_status` VALUES ('7', 'PAC260478840', '404', '订单审核fail', '2018-12-26 14:17:17', 'admin', '信息有误');
+INSERT INTO `hl_order_port_status` VALUES ('8', 'PAC260490402', '4', '上传订舱单->待客户提交柜号', '2018-12-26 14:19:05', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('9', 'PAC260490402', '4', '上传订舱单->待客户提交柜号', '2018-12-26 14:19:40', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('10', 'PAC174100517', '4', '上传订舱单->待客户提交柜号', '2018-12-26 14:24:57', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('11', 'PAC217321104', '4', '上传订舱单->待客户提交柜号', '2018-12-26 14:25:39', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('12', 'PAC260490402', '13', null, '2018-12-26 17:00:04', 'zh_A_001', null);
+INSERT INTO `hl_order_port_status` VALUES ('13', 'PAC241953855', '4', '上传订舱单->待客户提交柜号', '2018-12-26 18:02:14', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('14', 'PAC260490402', '4', '上传订舱单->待客户提交柜号', '2018-12-26 18:30:09', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('15', 'PAC260490402', '4', '上传水运单->待通过放柜', '2018-12-26 18:31:45', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('16', 'PAC260490402', '11', '确认收款', '2018-12-26 18:43:12', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('17', 'PAC260490402', '15', '申请放柜>通过', '2018-12-26 18:43:36', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('18', 'PAC260490402', '17', '订单完成', '2018-12-26 18:45:38', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('19', 'PAC279989464', '3', '订单审核pass', '2018-12-27 17:03:32', 'admin', null);
+INSERT INTO `hl_order_port_status` VALUES ('20', 'PAC313064927', '3', '订单审核pass', '2018-12-31 12:33:12', 'admin', null);
+INSERT INTO `hl_order_port_status` VALUES ('21', 'PAC313064927', '4', '上传订舱单->待客户提交柜号', '2018-12-31 12:42:47', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('22', 'PAC313103121', '3', '订单审核pass', '2018-12-31 12:49:02', 'admin', null);
+INSERT INTO `hl_order_port_status` VALUES ('23', 'PAC313064927', '13', null, '2018-12-31 12:50:42', 'zh_A_001', null);
+INSERT INTO `hl_order_port_status` VALUES ('24', 'PAC313064927', '13', null, '2018-12-31 12:50:45', 'zh_A_001', null);
+INSERT INTO `hl_order_port_status` VALUES ('25', 'PAC313064927', '13', null, '2018-12-31 12:50:46', 'zh_A_001', null);
+INSERT INTO `hl_order_port_status` VALUES ('26', 'PAC313064927', '13', null, '2018-12-31 12:50:48', 'zh_A_001', null);
+INSERT INTO `hl_order_port_status` VALUES ('27', 'PAC313064927', '13', null, '2018-12-31 12:50:51', 'zh_A_001', null);
+INSERT INTO `hl_order_port_status` VALUES ('28', 'PAC313064927', '13', null, '2018-12-31 12:50:52', 'zh_A_001', null);
+INSERT INTO `hl_order_port_status` VALUES ('29', 'PAC313064927', '0', '添加备注', '2018-12-31 12:51:46', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('30', 'PAC313064927', '0', '添加备注', '2018-12-31 12:51:49', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('31', 'PAC313064927', '0', '添加备注', '2018-12-31 12:51:51', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('32', 'PAC313064927', '4', '上传水运单->待通过放柜', '2018-12-31 12:53:08', 'admin', '');
+INSERT INTO `hl_order_port_status` VALUES ('33', 'PAC313064927', '15', '申请放柜>通过', '2018-12-31 12:57:47', 'admin', '你好。');
 
 -- ----------------------------
 -- Table structure for `hl_order_price`
@@ -4871,18 +4927,11 @@ CREATE TABLE `hl_order_ship` (
   `mtime` datetime DEFAULT NULL COMMENT '最后一次修改时间',
   `sequence` int(4) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_ship
 -- ----------------------------
-INSERT INTO `hl_order_ship` VALUES ('1', 'DAC215943387', '乐平', '440600017', 'adsfa', '2018-11-27', '2018-12-12', '2018-12-21 11:09:40', '0');
-INSERT INTO `hl_order_ship` VALUES ('2', 'DAC215943387', '黄埔老港', '440100001', 'adfa', '2018-12-18', '2018-12-27', '2018-12-21 11:09:40', '1');
-INSERT INTO `hl_order_ship` VALUES ('3', 'DAC215943387', '上海港', '310100001', 'adsaf', '2018-12-27', '2018-12-27', '2018-12-21 11:09:40', '2');
-INSERT INTO `hl_order_ship` VALUES ('4', 'DAC215943387', '常州', '320400001', '', '2018-12-27', '2018-12-27', '2018-12-21 11:09:40', '4');
-INSERT INTO `hl_order_ship` VALUES ('5', 'DAC191145161', '高明', '440600008', '阿萨德', '2018-12-11', '2018-12-04', '2018-12-24 14:14:38', '0');
-INSERT INTO `hl_order_ship` VALUES ('6', 'DAC191145161', '南沙港', '440100010', null, null, null, null, '1');
-INSERT INTO `hl_order_ship` VALUES ('7', 'DAC191145161', '天津港', '120100001', null, null, null, null, '3');
 
 -- ----------------------------
 -- Table structure for `hl_order_ship_copy`
@@ -4986,7 +5035,7 @@ CREATE TABLE `hl_order_truckage` (
   `num` int(2) DEFAULT '0' COMMENT '同一个装货送货地址的柜子数量',
   `mtime` datetime DEFAULT NULL COMMENT '提交柜号的时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_order_truckage
@@ -4995,20 +5044,42 @@ INSERT INTO `hl_order_truckage` VALUES ('1', 'PAC174100517', null, 'free', null,
 INSERT INTO `hl_order_truckage` VALUES ('2', 'PAC174100517', null, 'free', null, '0', '1', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '2', '2018-12-17 18:03:25');
 INSERT INTO `hl_order_truckage` VALUES ('3', 'PAC174100517', null, 'free', null, '0', '0', '', null, null, null, null, '', '', 's', null, '2', '2018-12-17 18:03:25');
 INSERT INTO `hl_order_truckage` VALUES ('4', 'PAC174100517', null, 'free', null, '0', '1', '', null, null, null, null, '', '', 's', null, '2', '2018-12-17 18:03:25');
-INSERT INTO `hl_order_truckage` VALUES ('5', 'PAC243931648', null, 'charge', null, '200', '0', '阿迪沙发', '啊是短发', '阿斯蒂芬', '0000-00-00 00:00:00', '465464', '阿斯蒂芬', '阿斯蒂芬', 'r', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('6', 'PAC243931648', null, 'charge', null, '200', '1', '阿迪沙发', '啊是短发', '阿斯蒂芬', '0000-00-00 00:00:00', '465464', '阿斯蒂芬', '阿斯蒂芬', 'r', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('7', 'PAC243931648', null, 'free', null, '0', '2', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('8', 'PAC243931648', null, 'free', null, '0', '3', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('9', 'PAC243931648', null, 'charge', null, '200', '0', '啊是短发', null, null, null, null, '阿斯蒂芬啊', '舍得噶', 's', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('10', 'PAC243931648', null, 'charge', null, '200', '1', '啊是短发', null, null, null, null, '阿斯蒂芬啊', '舍得噶', 's', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('11', 'PAC243931648', null, 'free', null, '0', '2', '', null, null, null, null, '', '', 's', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('12', 'PAC243931648', null, 'free', null, '0', '3', '', null, null, null, null, '', '', 's', null, '2', '2018-12-24 16:15:16');
-INSERT INTO `hl_order_truckage` VALUES ('13', 'PAC244198165', null, 'charge', null, '200', '0', '啊是短发', '啊是短发', '爱的色放', '2018-12-04 00:00:00', '454645', '啊是短发', '啊是短发', 'r', null, '1', '2018-12-24 16:59:41');
-INSERT INTO `hl_order_truckage` VALUES ('14', 'PAC244198165', null, 'charge', null, '100', '1', '啊是短发', '阿斯蒂芬', '阿斯蒂芬', '2018-12-18 00:00:00', '4654351', '撒旦法', '阿斯蒂芬', 'r', null, '2', '2018-12-24 16:59:41');
-INSERT INTO `hl_order_truckage` VALUES ('15', 'PAC244198165', null, 'charge', null, '100', '2', '啊是短发', '阿斯蒂芬', '阿斯蒂芬', '2018-12-18 00:00:00', '4654351', '撒旦法', '阿斯蒂芬', 'r', null, '2', '2018-12-24 16:59:41');
-INSERT INTO `hl_order_truckage` VALUES ('16', 'PAC244198165', 'asdf', 'charge', null, '200', '0', '阿斯蒂芬', null, null, null, null, '阿斯蒂芬', '阿斯蒂芬', 's', 'asdfasd', '1', '2018-12-24 17:27:16');
-INSERT INTO `hl_order_truckage` VALUES ('17', 'PAC244198165', 'fasdfsa', 'free', null, '0', '1', '', null, null, null, null, '', '', 's', 'asdfsa', '2', '2018-12-24 17:27:16');
-INSERT INTO `hl_order_truckage` VALUES ('18', 'PAC244198165', 'asdfa', 'free', null, '0', '2', '', null, null, null, null, '', '', 's', 'fasdf', '2', '2018-12-24 17:27:16');
+INSERT INTO `hl_order_truckage` VALUES ('5', 'PAC217321104', null, 'charge', null, '500', '0', '广州莱为电子科技有限公司', '陈', '林', '2018-12-23 00:00:00', '13888888888', '大出血', '松岛枫 ', 'r', null, '3', '2018-12-21 14:20:11');
+INSERT INTO `hl_order_truckage` VALUES ('6', 'PAC217321104', null, 'charge', null, '500', '1', '广州莱为电子科技有限公司', '陈', '林', '2018-12-23 00:00:00', '13888888888', '大出血', '松岛枫 ', 'r', null, '3', '2018-12-21 14:20:11');
+INSERT INTO `hl_order_truckage` VALUES ('7', 'PAC217321104', null, 'charge', null, '500', '2', '广州莱为电子科技有限公司', '陈', '林', '2018-12-23 00:00:00', '13888888888', '大出血', '松岛枫 ', 'r', null, '3', '2018-12-21 14:20:11');
+INSERT INTO `hl_order_truckage` VALUES ('8', 'PAC217321104', null, 'charge', null, '300', '0', '广东佛山电饭锅风电风扇个', null, null, null, null, '大丰 大柜', '啊道森股份', 's', null, '3', '2018-12-21 14:20:11');
+INSERT INTO `hl_order_truckage` VALUES ('9', 'PAC217321104', null, 'charge', null, '300', '1', '广东佛山电饭锅风电风扇个', null, null, null, null, '大丰 大柜', '啊道森股份', 's', null, '3', '2018-12-21 14:20:11');
+INSERT INTO `hl_order_truckage` VALUES ('10', 'PAC217321104', null, 'charge', null, '300', '2', '广东佛山电饭锅风电风扇个', null, null, null, null, '大丰 大柜', '啊道森股份', 's', null, '3', '2018-12-21 14:20:11');
+INSERT INTO `hl_order_truckage` VALUES ('11', 'PAC217341895', null, 'free', null, '0', '0', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '1', '2018-12-21 14:23:38');
+INSERT INTO `hl_order_truckage` VALUES ('12', 'PAC217341895', null, 'free', null, '0', '0', '', null, null, null, null, '', '', 's', null, '1', '2018-12-21 14:23:38');
+INSERT INTO `hl_order_truckage` VALUES ('13', 'PAC241953855', null, 'charge', null, '400', '0', '45252452452', '452452', '452452', '2018-12-25 00:00:00', '452452', '452452', '452452', 'r', null, '2', '2018-12-24 10:45:38');
+INSERT INTO `hl_order_truckage` VALUES ('14', 'PAC241953855', null, 'charge', null, '400', '1', '45252452452', '452452', '452452', '2018-12-25 00:00:00', '452452', '452452', '452452', 'r', null, '2', '2018-12-24 10:45:38');
+INSERT INTO `hl_order_truckage` VALUES ('15', 'PAC241953855', null, 'charge', null, '500', '0', '452452452', null, null, null, null, '452425452', '2452452', 's', null, '2', '2018-12-24 10:45:38');
+INSERT INTO `hl_order_truckage` VALUES ('16', 'PAC241953855', null, 'charge', null, '500', '1', '452452452', null, null, null, null, '452425452', '2452452', 's', null, '2', '2018-12-24 10:45:38');
+INSERT INTO `hl_order_truckage` VALUES ('17', 'PAC252244201', null, 'charge', null, '400', '0', '哈佛得好看交电话费卡就会收到反馈家还是卡号 ', '第三方', '风', '2018-12-25 00:00:00', '65465464', '额安抚', '而非', 'r', null, '2', '2018-12-25 15:20:42');
+INSERT INTO `hl_order_truckage` VALUES ('18', 'PAC252244201', null, 'charge', null, '400', '1', '哈佛得好看交电话费卡就会收到反馈家还是卡号 ', '第三方', '风', '2018-12-25 00:00:00', '65465464', '额安抚', '而非', 'r', null, '2', '2018-12-25 15:20:42');
+INSERT INTO `hl_order_truckage` VALUES ('19', 'PAC252244201', null, 'charge', null, '500', '0', '松岛枫个傻瓜而我国', null, null, null, null, '交互规划', '是个', 's', null, '2', '2018-12-25 15:20:42');
+INSERT INTO `hl_order_truckage` VALUES ('20', 'PAC252244201', null, 'charge', null, '500', '1', '松岛枫个傻瓜而我国', null, null, null, null, '交互规划', '是个', 's', null, '2', '2018-12-25 15:20:42');
+INSERT INTO `hl_order_truckage` VALUES ('21', 'PAC260478840', null, 'free', null, '0', '0', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '2', '2018-12-26 14:13:08');
+INSERT INTO `hl_order_truckage` VALUES ('22', 'PAC260478840', null, 'free', null, '0', '1', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '2', '2018-12-26 14:13:08');
+INSERT INTO `hl_order_truckage` VALUES ('23', 'PAC260478840', null, 'free', null, '0', '0', '', null, null, null, null, '', '', 's', null, '2', '2018-12-26 14:13:08');
+INSERT INTO `hl_order_truckage` VALUES ('24', 'PAC260478840', null, 'free', null, '0', '1', '', null, null, null, null, '', '', 's', null, '2', '2018-12-26 14:13:08');
+INSERT INTO `hl_order_truckage` VALUES ('25', 'PAC260490402', null, 'charge', null, '300', '0', '11', '22', '33', '2018-12-27 00:00:00', '44', '55', '66', 'r', null, '1', '2018-12-26 14:15:04');
+INSERT INTO `hl_order_truckage` VALUES ('26', 'PAC260490402', '221212', 'charge', null, '500', '0', '99', null, null, null, null, '88', '77', 's', '212122', '1', '2018-12-26 18:30:52');
+INSERT INTO `hl_order_truckage` VALUES ('27', 'PAC279989464', null, 'charge', null, '300', '0', '88', '77', '66', '2018-12-27 00:00:00', '55', '44', '33', 'r', null, '1', '2018-12-27 16:38:14');
+INSERT INTO `hl_order_truckage` VALUES ('28', 'PAC279989464', null, 'charge', null, '400', '0', '99', null, null, null, null, '22', '11', 's', null, '1', '2018-12-27 16:38:15');
+INSERT INTO `hl_order_truckage` VALUES ('29', 'PAC288100876', null, 'free', null, '0', '0', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '1', '2018-12-28 15:10:08');
+INSERT INTO `hl_order_truckage` VALUES ('30', 'PAC288100876', null, 'free', null, '0', '0', '', null, null, null, null, '', '', 's', null, '1', '2018-12-28 15:10:08');
+INSERT INTO `hl_order_truckage` VALUES ('31', 'PAC313064927', null, 'charge', null, '400', '0', '23234234234', '234234234', '234234', '2018-12-31 00:00:00', '23423', '234234', '234', 'r', null, '1', '2018-12-31 12:30:49');
+INSERT INTO `hl_order_truckage` VALUES ('32', 'PAC313064927', '22323', 'charge', null, '300', '0', '2342', null, null, null, null, '46456', '4545', 's', '23233', '1', '2018-12-31 12:50:04');
+INSERT INTO `hl_order_truckage` VALUES ('33', 'PAC313103121', null, 'free', null, '0', '0', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '4', '2018-12-31 12:37:11');
+INSERT INTO `hl_order_truckage` VALUES ('34', 'PAC313103121', null, 'free', null, '0', '1', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '4', '2018-12-31 12:37:11');
+INSERT INTO `hl_order_truckage` VALUES ('35', 'PAC313103121', null, 'free', null, '0', '2', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '4', '2018-12-31 12:37:11');
+INSERT INTO `hl_order_truckage` VALUES ('36', 'PAC313103121', null, 'free', null, '0', '3', '', '', '', '0000-00-00 00:00:00', '', '', '', 'r', null, '4', '2018-12-31 12:37:11');
+INSERT INTO `hl_order_truckage` VALUES ('37', 'PAC313103121', null, 'free', null, '0', '0', '', null, null, null, null, '', '', 's', null, '4', '2018-12-31 12:37:11');
+INSERT INTO `hl_order_truckage` VALUES ('38', 'PAC313103121', null, 'free', null, '0', '1', '', null, null, null, null, '', '', 's', null, '4', '2018-12-31 12:37:11');
+INSERT INTO `hl_order_truckage` VALUES ('39', 'PAC313103121', null, 'free', null, '0', '2', '', null, null, null, null, '', '', 's', null, '4', '2018-12-31 12:37:11');
+INSERT INTO `hl_order_truckage` VALUES ('40', 'PAC313103121', null, 'free', null, '0', '3', '', null, null, null, null, '', '', 's', null, '4', '2018-12-31 12:37:11');
 
 -- ----------------------------
 -- Table structure for `hl_port`
@@ -5022,7 +5093,7 @@ CREATE TABLE `hl_port` (
   `city_id` int(11) DEFAULT NULL COMMENT '市级id',
   `status` int(1) DEFAULT '1' COMMENT '1:正常0：删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_port
@@ -5137,7 +5208,8 @@ INSERT INTO `hl_port` VALUES ('131', '330500002', '长兴', '2018-12-18 10:44:39
 INSERT INTO `hl_port` VALUES ('132', '320600001', '南通', '2018-12-18 10:44:47', '320600', '1');
 INSERT INTO `hl_port` VALUES ('133', '321100001', '镇江', '2018-12-18 10:45:10', '321100', '1');
 INSERT INTO `hl_port` VALUES ('134', '320100003', '七坝', '2018-12-18 11:03:40', '320100', '1');
-INSERT INTO `hl_port` VALUES ('135', '440600017', '乐平', '2018-12-18 11:09:52', '440600', '1');
+INSERT INTO `hl_port` VALUES ('135', '440600017', '乐平', '2018-12-19 16:03:57', '440600', '1');
+INSERT INTO `hl_port` VALUES ('136', '630100001', '青海湖', '2018-12-21 14:36:04', '630100', '0');
 
 -- ----------------------------
 -- Table structure for `hl_price_incidental`
@@ -5295,6 +5367,25 @@ INSERT INTO `hl_role_user` VALUES ('25', '25', '0');
 INSERT INTO `hl_role_user` VALUES ('26', '0', '4');
 
 -- ----------------------------
+-- Table structure for `hl_sales_member`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_sales_member`;
+CREATE TABLE `hl_sales_member` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sales_code` varchar(10) DEFAULT NULL COMMENT '业务的工号',
+  `member_code` varchar(10) DEFAULT NULL COMMENT '客户id',
+  `mtime` int(12) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
+  `sales_name` varchar(10) DEFAULT NULL,
+  `member_name` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_sales_member
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `hl_salesman`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_salesman`;
@@ -5321,110 +5412,6 @@ CREATE TABLE `hl_salesman` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `hl_sales_member`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_sales_member`;
-CREATE TABLE `hl_sales_member` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sales_code` varchar(10) DEFAULT NULL COMMENT '业务的工号',
-  `member_code` varchar(10) DEFAULT NULL COMMENT '客户id',
-  `mtime` int(12) DEFAULT NULL,
-  `comment` varchar(255) DEFAULT NULL,
-  `sales_name` varchar(10) DEFAULT NULL,
-  `member_name` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_sales_member
--- ----------------------------
-
--- ----------------------------
--- Table structure for `hl_seaprice`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_seaprice`;
-CREATE TABLE `hl_seaprice` (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `route_id` int(20) DEFAULT NULL COMMENT '船起始港口和终点港口sealine运线路ID',
-  `ship_id` int(20) DEFAULT NULL COMMENT '船公司id',
-  `price_20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子船运价格',
-  `price_40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子船运价格',
-  `shipping_date` datetime DEFAULT NULL COMMENT '船期',
-  `cutoff_date` datetime DEFAULT NULL COMMENT '截单日期',
-  `boat_id` varchar(12) DEFAULT NULL COMMENT '运输船id',
-  `sea_limitation` int(10) DEFAULT NULL COMMENT '海上时效',
-  `ETA` datetime DEFAULT NULL COMMENT '预计到港时间',
-  `EDD` datetime DEFAULT NULL COMMENT 'Expected delivery date预计送货日期',
-  `generalize` int(1) unsigned zerofill DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
-  `price_description` varchar(50) DEFAULT NULL COMMENT '价格说明',
-  `mtime` datetime DEFAULT NULL COMMENT '修改时间',
-  `status` int(1) DEFAULT '1' COMMENT '1正常,0删除，2待审核',
-  `stale_date` int(1) DEFAULT '1' COMMENT '过期0正常1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_seaprice
--- ----------------------------
-INSERT INTO `hl_seaprice` VALUES ('1', '1', '1', '2188.00', '3488.00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '8', '6', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '3289', '2018-12-12 15:10:10', '0', '1');
-INSERT INTO `hl_seaprice` VALUES ('2', '1', '1', '742.00', '1408.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:18:46', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('3', '25', '1', '888.00', '1625.00', '2018-12-14 00:00:00', '1970-01-01 08:00:00', '9', '6', '2018-12-20 00:00:00', '2018-12-23 00:00:00', '1', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:24:14', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('4', '5', '1', '892.00', '1633.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:26:15', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('5', '6', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:27:30', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('6', '7', '1', '942.00', '0.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:28:49', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('7', '8', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:30:12', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('8', '11', '1', '942.00', '0.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:32:21', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('9', '12', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:33:42', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('10', '15', '1', '952.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:39:34', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('11', '16', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:41:47', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('12', '17', '1', '952.00', '1618.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:45:07', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('13', '18', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:46:08', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('14', '21', '1', '992.00', '1688.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:47:37', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('15', '26', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 12:58:47', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('16', '27', '1', '950.00', '1624.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:05:35', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('17', '28', '1', '950.00', '1624.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:12:10', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('18', '29', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:12:48', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('19', '30', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '2018-12-18 00:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:15:47', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('20', '32', '1', '950.00', '1624.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:28:56', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('21', '34', '1', '892.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:29:59', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('22', '35', '1', '892.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:30:53', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('23', '36', '1', '892.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:32:39', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('24', '40', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:35:09', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('25', '43', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:36:13', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('26', '41', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:37:16', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('27', '42', '1', '942.00', '0.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:38:18', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('28', '47', '1', '1292.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜50/大柜100', '2018-12-18 14:13:10', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('29', '48', '1', '1292.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜50/大柜700', '2018-12-18 14:20:19', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('30', '49', '1', '1142.00', '2408.00', '2018-12-28 00:00:00', '2018-12-21 00:00:00', '8', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜200/大柜400', '2018-12-21 14:45:02', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('31', '50', '1', '1742.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜200/大柜400', '2018-12-18 14:31:14', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('32', '51', '1', '1712.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜200/大柜40', '2018-12-18 14:32:27', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('33', '81', '1', '2242.00', '3898.00', '2018-12-28 00:00:00', '2018-12-05 00:00:00', '8', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜50/大柜70', '2018-12-21 14:44:26', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('34', '53', '1', '1342.00', '2508.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜100/大柜200', '2018-12-18 14:39:38', '1', '1');
-INSERT INTO `hl_seaprice` VALUES ('35', '55', '1', '1242.00', '0.00', '2018-12-28 00:00:00', '0000-00-00 00:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜100/大柜200', '2018-12-18 18:02:24', '1', '1');
-
--- ----------------------------
--- Table structure for `hl_seaprice-aa`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_seaprice-aa`;
-CREATE TABLE `hl_seaprice-aa` (
-  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `sl_id` int(20) DEFAULT NULL COMMENT '船运线路ID',
-  `container` int(10) DEFAULT NULL COMMENT '集装箱种类',
-  `sea_fare` double(10,0) DEFAULT NULL COMMENT '海运费',
-  `start_fare` double(10,0) DEFAULT NULL COMMENT '始发港口码头杂费',
-  `start_incidental` double(10,0) DEFAULT NULL COMMENT '始发港杂费',
-  `start_thc` double(10,0) DEFAULT NULL COMMENT '始发港THC',
-  `over_fare` double(10,0) DEFAULT NULL COMMENT '目的港码头杂费',
-  `over_thc` double(10,0) DEFAULT NULL COMMENT '目的港THC',
-  `baf` double(10,0) DEFAULT NULL COMMENT '燃油附加费',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_seaprice-aa
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `hl_sea_bothend`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_sea_bothend`;
@@ -5435,7 +5422,7 @@ CREATE TABLE `hl_sea_bothend` (
   `sealine_id` int(11) DEFAULT NULL COMMENT '航线的编号',
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_sea_bothend
@@ -5521,6 +5508,7 @@ INSERT INTO `hl_sea_bothend` VALUES ('78', '440600017', '320500002', '78', '2018
 INSERT INTO `hl_sea_bothend` VALUES ('79', '440600017', '330500002', '79', '2018-12-18 11:44:14');
 INSERT INTO `hl_sea_bothend` VALUES ('80', '440600017', '321100001', '80', '2018-12-18 11:45:11');
 INSERT INTO `hl_sea_bothend` VALUES ('81', '440600017', '330500001', '81', '2018-12-18 14:36:51');
+INSERT INTO `hl_sea_bothend` VALUES ('82', '120100001', '440100013', '82', '2018-12-21 14:37:15');
 
 -- ----------------------------
 -- Table structure for `hl_sea_bothend_copy1`
@@ -5599,6 +5587,126 @@ INSERT INTO `hl_sea_middle` VALUES ('9', '5', '370200002', '2', '2018-12-18 11:3
 INSERT INTO `hl_sea_middle` VALUES ('10', '6', '440100001', '0', '2018-12-18 11:33:56');
 INSERT INTO `hl_sea_middle` VALUES ('11', '7', '440100010', '0', '2018-12-18 11:38:32');
 INSERT INTO `hl_sea_middle` VALUES ('12', '7', '210700001', '1', '2018-12-18 11:38:32');
+
+-- ----------------------------
+-- Table structure for `hl_seaprice`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_seaprice`;
+CREATE TABLE `hl_seaprice` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `route_id` int(20) DEFAULT NULL COMMENT '船起始港口和终点港口sealine运线路ID',
+  `ship_id` int(20) DEFAULT NULL COMMENT '船公司id',
+  `price_20GP` float(20,2) DEFAULT NULL COMMENT '20GP的集装箱子船运价格',
+  `price_40HQ` float(20,2) DEFAULT NULL COMMENT '40HQ的集装箱子船运价格',
+  `shipping_date` datetime DEFAULT NULL COMMENT '船期',
+  `cutoff_date` datetime DEFAULT NULL COMMENT '截单日期',
+  `boat_id` varchar(12) DEFAULT NULL COMMENT '运输船id',
+  `sea_limitation` int(10) DEFAULT NULL COMMENT '海上时效',
+  `ETA` datetime DEFAULT NULL COMMENT '预计到港时间',
+  `EDD` datetime DEFAULT NULL COMMENT 'Expected delivery date预计送货日期',
+  `generalize` int(1) unsigned zerofill DEFAULT '0' COMMENT '推荐级别默认0不推荐1~10推荐优先级',
+  `price_description` varchar(50) DEFAULT NULL COMMENT '价格说明',
+  `mtime` datetime DEFAULT NULL COMMENT '修改时间',
+  `status` int(1) DEFAULT '1' COMMENT '1正常,0删除，2待审核',
+  `stale_date` int(1) DEFAULT '1' COMMENT '过期0正常1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_seaprice
+-- ----------------------------
+INSERT INTO `hl_seaprice` VALUES ('1', '1', '1', '2188.00', '3488.00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '8', '6', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '1', '3289', '2018-12-12 15:10:10', '0', '1');
+INSERT INTO `hl_seaprice` VALUES ('2', '1', '1', '742.00', '1408.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:18:46', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('3', '25', '1', '888.00', '1625.00', '2018-12-14 00:00:00', '1970-01-01 08:00:00', '9', '6', '2018-12-20 00:00:00', '2018-12-23 00:00:00', '1', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:24:14', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('4', '5', '1', '892.00', '1633.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:26:15', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('5', '6', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:27:30', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('6', '7', '1', '942.00', '0.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:28:49', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('7', '8', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:30:12', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('8', '11', '1', '942.00', '0.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:32:21', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('9', '12', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '8', '2018-12-26 00:00:00', '2018-12-29 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:33:42', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('10', '15', '1', '952.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:39:34', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('11', '16', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:41:47', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('12', '17', '1', '952.00', '1618.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:45:07', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('13', '18', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:46:08', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('14', '21', '1', '992.00', '1688.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 11:47:37', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('15', '26', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 12:58:47', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('16', '27', '1', '950.00', '1624.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:05:35', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('17', '28', '1', '950.00', '1624.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:12:10', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('18', '29', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:12:48', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('19', '30', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '2018-12-18 00:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:15:47', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('20', '32', '1', '950.00', '1624.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:28:56', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('21', '34', '1', '892.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:29:59', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('22', '35', '1', '892.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:30:53', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('23', '36', '1', '892.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:32:39', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('24', '40', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:35:09', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('25', '43', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:36:13', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('26', '41', '1', '942.00', '1608.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:37:16', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('27', '42', '1', '942.00', '0.00', '2018-12-18 00:00:00', '1970-01-01 08:00:00', '10', '6', '2018-12-24 00:00:00', '2018-12-27 00:00:00', '0', '已含箱体附加费、港建费、双边THC、燃油附加费', '2018-12-14 14:38:18', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('28', '47', '1', '1292.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜50/大柜100', '2018-12-18 14:13:10', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('29', '48', '1', '1292.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜50/大柜700', '2018-12-18 14:20:19', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('30', '49', '1', '1142.00', '2408.00', '2018-12-28 00:00:00', '0000-00-00 00:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜200/大柜400', '2018-12-18 18:05:31', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('31', '50', '1', '1742.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜200/大柜400', '2018-12-18 14:31:14', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('32', '51', '1', '1712.00', '0.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜200/大柜40', '2018-12-18 14:32:27', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('33', '81', '1', '2242.00', '3898.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜50/大柜70', '2018-12-18 14:37:30', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('34', '53', '1', '1342.00', '2508.00', '2018-12-28 00:00:00', '1970-01-01 08:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜100/大柜200', '2018-12-18 14:39:38', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('35', '55', '1', '1242.00', '0.00', '2018-12-28 00:00:00', '0000-00-00 00:00:00', '22', '6', '2019-01-03 00:00:00', '2019-01-06 00:00:00', '0', '报价含双边THC，目的换单费：小柜100/大柜200', '2018-12-18 18:02:24', '1', '1');
+INSERT INTO `hl_seaprice` VALUES ('36', '1', '1', '742.00', '1408.00', '2018-12-30 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-05 00:00:00', '2019-01-08 00:00:00', '0', '0', '2018-12-28 14:38:40', '0', '1');
+INSERT INTO `hl_seaprice` VALUES ('37', '5', '1', '892.00', '1633.00', '2018-12-31 00:00:00', '1899-12-30 00:00:00', '10', '8', '2019-01-08 00:00:00', '2019-01-11 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('38', '6', '1', '942.00', '1608.00', '2019-01-01 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-07 00:00:00', '2019-01-10 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('39', '7', '1', '942.00', '1893.00', '2019-01-02 00:00:00', '1899-12-30 00:00:00', '10', '8', '2019-01-10 00:00:00', '2019-01-13 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('40', '8', '1', '942.00', '1608.00', '2019-01-03 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-09 00:00:00', '2019-01-12 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('41', '11', '1', '942.00', '1608.00', '2019-01-04 00:00:00', '1899-12-30 00:00:00', '10', '8', '2019-01-12 00:00:00', '2019-01-15 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('42', '12', '1', '942.00', '1608.00', '2019-01-05 00:00:00', '1899-12-30 00:00:00', '10', '8', '2019-01-13 00:00:00', '2019-01-16 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('43', '15', '1', '952.00', '1608.00', '2019-01-06 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-12 00:00:00', '2019-01-15 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('44', '16', '1', '942.00', '1608.00', '2019-01-07 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-13 00:00:00', '2019-01-16 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('45', '17', '1', '952.00', '1618.00', '2019-01-08 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-14 00:00:00', '2019-01-17 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('46', '18', '1', '942.00', '1608.00', '2019-01-09 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-15 00:00:00', '2019-01-18 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('47', '21', '1', '992.00', '1688.00', '2019-01-10 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-16 00:00:00', '2019-01-19 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('48', '25', '1', '888.00', '1625.00', '2019-01-11 00:00:00', '1899-12-30 00:00:00', '9', '6', '2019-01-17 00:00:00', '2019-01-20 00:00:00', '1', '1', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('49', '26', '1', '942.00', '1608.00', '2019-01-12 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-18 00:00:00', '2019-01-21 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('50', '27', '1', '950.00', '1624.00', '2019-01-13 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-19 00:00:00', '2019-01-22 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('51', '28', '1', '950.00', '1624.00', '2019-01-14 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-20 00:00:00', '2019-01-23 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('52', '29', '1', '942.00', '1608.00', '2019-01-15 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-21 00:00:00', '2019-01-24 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('53', '30', '1', '942.00', '1608.00', '2019-01-16 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-22 00:00:00', '2019-01-25 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('54', '32', '1', '950.00', '1624.00', '2019-01-17 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-23 00:00:00', '2019-01-26 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('55', '34', '1', '892.00', '1608.00', '2019-01-18 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-24 00:00:00', '2019-01-27 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('56', '35', '1', '892.00', '1608.00', '2019-01-19 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-25 00:00:00', '2019-01-28 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('57', '36', '1', '892.00', '1608.00', '2019-01-20 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-26 00:00:00', '2019-01-29 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('58', '40', '1', '942.00', '1608.00', '2019-01-21 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-27 00:00:00', '2019-01-30 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('59', '41', '1', '942.00', '1608.00', '2019-01-22 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-28 00:00:00', '2019-01-31 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('60', '42', '1', '942.00', '1988.00', '2019-01-23 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-29 00:00:00', '2019-02-01 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('61', '43', '1', '942.00', '1608.00', '2019-01-24 00:00:00', '1899-12-30 00:00:00', '10', '6', '2019-01-30 00:00:00', '2019-02-02 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('62', '47', '1', '1292.00', '1898.00', '2019-01-25 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-01-31 00:00:00', '2019-02-03 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('63', '48', '1', '1292.00', '1889.00', '2019-01-26 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-02-01 00:00:00', '2019-02-04 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('64', '49', '1', '1142.00', '2408.00', '2019-01-27 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-02-02 00:00:00', '2019-02-05 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('65', '50', '1', '1742.00', '2588.00', '2019-01-28 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-02-03 00:00:00', '2019-02-06 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('66', '51', '1', '1712.00', '2850.00', '2019-01-29 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-02-04 00:00:00', '2019-02-07 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('67', '53', '1', '1342.00', '2508.00', '2019-01-30 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-02-05 00:00:00', '2019-02-08 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('68', '55', '1', '1242.00', '2868.00', '2019-01-31 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-02-06 00:00:00', '2019-02-09 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('69', '81', '1', '2242.00', '3898.00', '2019-02-01 00:00:00', '1899-12-30 00:00:00', '22', '6', '2019-02-07 00:00:00', '2019-02-10 00:00:00', '0', '0', '2018-12-28 14:38:40', '2', '1');
+INSERT INTO `hl_seaprice` VALUES ('70', '59', '1', '1392.00', '2308.00', '2019-01-02 00:00:00', '0000-00-00 00:00:00', '22', '6', '2019-01-08 00:00:00', '2019-01-11 00:00:00', '0', '报价含双边THC，目的换单费：小柜100/大柜200', '2018-12-28 14:57:18', '1', '1');
+
+-- ----------------------------
+-- Table structure for `hl_seaprice-aa`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_seaprice-aa`;
+CREATE TABLE `hl_seaprice-aa` (
+  `id` int(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `sl_id` int(20) DEFAULT NULL COMMENT '船运线路ID',
+  `container` int(10) DEFAULT NULL COMMENT '集装箱种类',
+  `sea_fare` double(10,0) DEFAULT NULL COMMENT '海运费',
+  `start_fare` double(10,0) DEFAULT NULL COMMENT '始发港口码头杂费',
+  `start_incidental` double(10,0) DEFAULT NULL COMMENT '始发港杂费',
+  `start_thc` double(10,0) DEFAULT NULL COMMENT '始发港THC',
+  `over_fare` double(10,0) DEFAULT NULL COMMENT '目的港码头杂费',
+  `over_thc` double(10,0) DEFAULT NULL COMMENT '目的港THC',
+  `baf` double(10,0) DEFAULT NULL COMMENT '燃油附加费',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_seaprice-aa
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `hl_sequence`
@@ -5713,48 +5821,6 @@ INSERT INTO `hl_sequence` VALUES ('99');
 INSERT INTO `hl_sequence` VALUES ('0');
 
 -- ----------------------------
--- Table structure for `hl_shipcompany`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_shipcompany`;
-CREATE TABLE `hl_shipcompany` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `ship_name` varchar(20) DEFAULT NULL COMMENT '船公司全称eq中国远洋海运集团有限公司',
-  `ship_short_name` varchar(5) DEFAULT NULL COMMENT '船公司简称不可超过四个字eq中远 1为空白选择',
-  `ship_address` varchar(200) DEFAULT NULL COMMENT '船务公司地址',
-  `mtime` datetime DEFAULT NULL,
-  `status` int(1) unsigned DEFAULT '1' COMMENT '1正常0禁用',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_shipcompany
--- ----------------------------
-INSERT INTO `hl_shipcompany` VALUES ('1', '泉州安通物流有限公司', '泉州安通', null, '2018-12-10 11:27:55', '1');
-
--- ----------------------------
--- Table structure for `hl_shipman`
--- ----------------------------
-DROP TABLE IF EXISTS `hl_shipman`;
-CREATE TABLE `hl_shipman` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `ship_id` int(8) DEFAULT NULL COMMENT '船公司shipcompany表的Id',
-  `port_id` int(9) DEFAULT NULL,
-  `name` varchar(8) DEFAULT NULL COMMENT '姓名',
-  `position` varchar(8) DEFAULT NULL COMMENT '职务',
-  `position_level` int(8) DEFAULT NULL COMMENT '职位编码 老板是1掌柜2小二3帐房4跑堂5',
-  `duty_line` varchar(50) DEFAULT NULL COMMENT '负责的线路',
-  `sn_tel` varchar(20) DEFAULT NULL COMMENT '船务公司联系人的座机区号+12345678+xxx',
-  `sn_mobile` int(12) DEFAULT NULL,
-  `sn_qq` int(14) DEFAULT NULL,
-  `sn_fax` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of hl_shipman
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `hl_ship_port`
 -- ----------------------------
 DROP TABLE IF EXISTS `hl_ship_port`;
@@ -5781,7 +5847,7 @@ CREATE TABLE `hl_ship_route` (
   `mtime` datetime DEFAULT NULL COMMENT '修改创建时间',
   `status` int(1) DEFAULT '1' COMMENT '1:启用0:禁用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_ship_route
@@ -5867,6 +5933,49 @@ INSERT INTO `hl_ship_route` VALUES ('78', '78', '3', '2018-12-18 11:43:16', '1')
 INSERT INTO `hl_ship_route` VALUES ('79', '79', '3', '2018-12-18 11:44:14', '1');
 INSERT INTO `hl_ship_route` VALUES ('80', '80', '3', '2018-12-18 11:45:11', '1');
 INSERT INTO `hl_ship_route` VALUES ('81', '81', '3', '2018-12-18 14:36:51', '1');
+INSERT INTO `hl_ship_route` VALUES ('82', '82', '2', '2018-12-21 14:37:15', '0');
+
+-- ----------------------------
+-- Table structure for `hl_shipcompany`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_shipcompany`;
+CREATE TABLE `hl_shipcompany` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `ship_name` varchar(20) DEFAULT NULL COMMENT '船公司全称eq中国远洋海运集团有限公司',
+  `ship_short_name` varchar(5) DEFAULT NULL COMMENT '船公司简称不可超过四个字eq中远 1为空白选择',
+  `ship_address` varchar(200) DEFAULT NULL COMMENT '船务公司地址',
+  `mtime` datetime DEFAULT NULL,
+  `status` int(1) unsigned DEFAULT '1' COMMENT '1正常0禁用',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_shipcompany
+-- ----------------------------
+INSERT INTO `hl_shipcompany` VALUES ('1', '泉州安通物流有限公司', '泉州安通', null, '2018-12-10 11:27:55', '1');
+
+-- ----------------------------
+-- Table structure for `hl_shipman`
+-- ----------------------------
+DROP TABLE IF EXISTS `hl_shipman`;
+CREATE TABLE `hl_shipman` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `ship_id` int(8) DEFAULT NULL COMMENT '船公司shipcompany表的Id',
+  `port_id` int(9) DEFAULT NULL,
+  `name` varchar(8) DEFAULT NULL COMMENT '姓名',
+  `position` varchar(8) DEFAULT NULL COMMENT '职务',
+  `position_level` int(8) DEFAULT NULL COMMENT '职位编码 老板是1掌柜2小二3帐房4跑堂5',
+  `duty_line` varchar(50) DEFAULT NULL COMMENT '负责的线路',
+  `sn_tel` varchar(20) DEFAULT NULL COMMENT '船务公司联系人的座机区号+12345678+xxx',
+  `sn_mobile` int(12) DEFAULT NULL,
+  `sn_qq` int(14) DEFAULT NULL,
+  `sn_fax` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of hl_shipman
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `hl_staff_list`
@@ -5937,15 +6046,13 @@ CREATE TABLE `hl_user` (
   `type` varchar(10) DEFAULT NULL COMMENT '操作员,业务,管理员,老板',
   `area_code` varchar(15) DEFAULT NULL COMMENT '港口的code 或者city_code',
   `area_type` varchar(10) DEFAULT NULL COMMENT '判断是存储的是city 还是port的id',
-  `team_id` int(5) DEFAULT NULL COMMENT '职务ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user
 -- ----------------------------
-INSERT INTO `hl_user` VALUES ('1', 'admin', 'admin', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-12-27 10:35:14', '', '', '0', null, '2018', null, null, null, '1');
-INSERT INTO `hl_user` VALUES ('2', 'admin', 'admin', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-12-25 14:36:46', '', '', '0', '', '2018', '', '', '', '3');
+INSERT INTO `hl_user` VALUES ('1', 'admin', 'admin', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '2018-12-31 12:46:52', '', '', '0', null, '2018', null, null, null);
 
 -- ----------------------------
 -- Table structure for `hl_user_area`
@@ -5954,24 +6061,35 @@ DROP TABLE IF EXISTS `hl_user_area`;
 CREATE TABLE `hl_user_area` (
   `id` int(5) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(15) DEFAULT NULL,
-  `area_code` varchar(255) DEFAULT NULL COMMENT '港口的code 或者city_code',
+  `area_code` varchar(15) DEFAULT NULL COMMENT '港口的code 或者city_code',
   `type` enum('port','city','province') DEFAULT 'port' COMMENT '对应省，市 港口code',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hl_user_area
 -- ----------------------------
-INSERT INTO `hl_user_area` VALUES ('1', '1', '440100', 'city');
-INSERT INTO `hl_user_area` VALUES ('2', '2', '440100014,440100015,440100014,440100015', 'port');
-INSERT INTO `hl_user_area` VALUES ('3', '3', '110100002,110100003,110100004,110100005,110100006', 'port');
-INSERT INTO `hl_user_area` VALUES ('26', '4', '110100002,110100003,110100004,110100005,110100006', 'port');
-INSERT INTO `hl_user_area` VALUES ('27', '5', '110100002,110100003,110100004,110100005,110100006', 'port');
-INSERT INTO `hl_user_area` VALUES ('28', '6', '110100', 'city');
-INSERT INTO `hl_user_area` VALUES ('29', '7', '110100002,110100003,110100004,110100005,110100006', 'port');
-INSERT INTO `hl_user_area` VALUES ('30', '8', '110100002,110100003,110100004,110100005,110100006', 'port');
-INSERT INTO `hl_user_area` VALUES ('31', '9', '110100002,110100003,110100004,110100005,110100006', 'port');
-INSERT INTO `hl_user_area` VALUES ('32', '10', '110100002,110100003,110100004,110100005,110100006', 'port');
+INSERT INTO `hl_user_area` VALUES ('1', '1', '110100002', 'port');
+INSERT INTO `hl_user_area` VALUES ('2', '2', '110100003', 'port');
+INSERT INTO `hl_user_area` VALUES ('3', '1', '110100004', 'port');
+INSERT INTO `hl_user_area` VALUES ('26', '1', '110100005', 'port');
+INSERT INTO `hl_user_area` VALUES ('27', '2', '110100006', 'port');
+INSERT INTO `hl_user_area` VALUES ('28', '2', '110100007', 'port');
+INSERT INTO `hl_user_area` VALUES ('29', '3', '110100008', 'port');
+INSERT INTO `hl_user_area` VALUES ('30', '3', '110100009', 'port');
+INSERT INTO `hl_user_area` VALUES ('31', '3', '110100010', 'port');
+INSERT INTO `hl_user_area` VALUES ('32', '4', '120100002', 'port');
+INSERT INTO `hl_user_area` VALUES ('33', '4', '120100003', 'port');
+INSERT INTO `hl_user_area` VALUES ('34', '4', '120100004', 'port');
+INSERT INTO `hl_user_area` VALUES ('35', '4', '120100005', 'port');
+INSERT INTO `hl_user_area` VALUES ('36', '4', '120100006', 'port');
+INSERT INTO `hl_user_area` VALUES ('37', '5', '120100007', 'port');
+INSERT INTO `hl_user_area` VALUES ('38', '6', '120100008', 'port');
+INSERT INTO `hl_user_area` VALUES ('39', '7', '120100009', 'port');
+INSERT INTO `hl_user_area` VALUES ('40', '8', '110100002', 'port');
+INSERT INTO `hl_user_area` VALUES ('41', '9', '110100003', 'port');
+INSERT INTO `hl_user_area` VALUES ('42', '10', '110100004', 'port');
+INSERT INTO `hl_user_area` VALUES ('43', '11', '440400002', 'port');
 
 -- ----------------------------
 -- Table structure for `hl_user_team`

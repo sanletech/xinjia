@@ -322,10 +322,11 @@ layui.use(['jquery', 'layer','table','laydate','form','upload'], function(){
       ,{field:'member_code', title:'客户账号',width:150}
       ,{field:'company', title:'客户单位', width:200}
       ,{field:'track_num', title:'运单号' ,width:100,event:'yun',templet:function(res){
-        if (res.track_num == null) {
-          res.track_num = '上传';
+        if (res.track_num) {
+          return '<a href="<{:url("admin/OrderProcess/downs")}>?order_num='+res.order_num+'&type=book_note">下载</a>'
+        }else{
+          return '<div class="track_num1"><a>上传</a></div>'
         }
-        return '<div class="track_num1"><a>'+ res.track_num +'</a></div>'
       }}
       ,{field:'container_sum', title:'柜量/柜型' ,width:100,templet:function(res){
         return '<div class="">'+ res.container_sum +'/'+ res.container_size+'</div>'
@@ -437,9 +438,13 @@ table.on('tool()', function(obj){
         }
       });   
     }else if(obj.event === 'yun'){//单击运单号
+    
       let order_num = $(this).siblings('td[data-field="order_num"]').find('a').html();
-      let zj = $(this).find('a');      
+      
+      let zj = $(this).find('a');  
       $('.num1').html('订单号：<span>'+order_num+'</span>');
+      if (zj.html() == '上传') {
+      
       layer.open({
         type:1
         ,title: '提交订舱单'
@@ -455,6 +460,8 @@ table.on('tool()', function(obj){
           }
         }
       });
+        
+    }
     }else if(obj.event === 'shui'){
       $('#shui .num2').html($(this).siblings('td[data-field="order_num"]').find('a').html());
       shuiyun($('#shui .num2').html());  

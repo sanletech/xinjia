@@ -79,7 +79,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">手机</label>
                     <div class="layui-input-block">
-                        <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input user">
+                        <input type="text" name="phone" lay-verify="required|phone" placeholder="请输入手机号码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -88,14 +88,14 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">邮箱</label>
                     <div class="layui-input-block">
-                        <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input user">
+                        <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             
                 <div class="layui-inline">
                     <label class="layui-form-label">昵称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="loginname" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input user">
+                        <input type="text" name="loginname" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
             
@@ -277,8 +277,9 @@
                 $form = $('form');
                 //部门的ID
                 var bumen_id = '1';
-                var bumen = [];
+                var bumen = [];//部门数据
                 var city_boot = false;//是否可以选择港口
+                var add_edit = false;
                 //第一个实例
                 table.render({
                     elem: '#demo'
@@ -337,6 +338,7 @@
                     var checkStatus = table.checkStatus(obj.config.id);
                     switch (obj.event) {
                         case 'add_user'://创建账号
+                            add_edit = true;
                             $('.user').attr('readonly',false);
                             $('#admin_user .user_id').remove();
                             layer.open({
@@ -399,6 +401,7 @@
                             layer.close(index);
                         });
                     } else if (obj.event === 'edit') {
+                        add_edit = false;
                         $('.user').attr('readonly',true);
                         $.get("<{:url('admin/jurisdiction/userData')}>",{uid:obj.data.id},function(res){
                             layer.open({
@@ -520,17 +523,29 @@
                 })
 
 
-                //添加账号
-                form.on('submit(demo1)', function(data){                  
-                    $.post("<{:url('admin/jurisdiction/aaa')}>",data.field,function(res){
-                        if (res.status) {
-                            layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
-                            })
-                        } else {
-                            layer.msg('添加失败', { icon: 2, time: 1000 });
-                        }
-                    })                    
-                    
+                //添加账号/修改信息
+                form.on('submit(demo1)', function (data) {
+                    if (add_edit) {//判断是添加还是修改
+                        $.post("<{:url('admin/jurisdiction/aaa')}>", data.field, function (res) {
+                            if (res.status) {
+                                layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
+                                    window.location.reload();
+                                })
+                            } else {
+                                layer.msg('添加失败', { icon: 2, time: 1000 });
+                            }
+                        });
+                    } else {
+                        $.post("<{:url('admin/jurisdiction/bbb')}>", data.field, function (res) {
+                            if (res.status) {
+                                layer.msg('修改成功', { icon: 1, time: 1000 }, function () {
+                                    window.location.reload()
+                                })
+                            } else {
+                                layer.msg('修改失败', { icon: 2, time: 1000 });
+                            }
+                        });
+                    }
                     return true;
                 });
                 
