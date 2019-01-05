@@ -13,13 +13,21 @@ use app\admin\model\ExportExcelDroplist;
 
 class BulkData extends Base{
  
+    protected function _initialize() {
+      parent::_initialize();
+      $this->overdue();  //自动处理过期的
+      
+    }
+    
+    public function aaa(){
+        var_dump($this->request->param());exit;
+    }
 
-    
-    
     //港到港批量导入页面
-    public function price_route_excel(){
+    public function priceRouteExcel(){
         return $this->view->fetch('excel/price_route_excel');
     }
+
     //查看日志页面
     public function logs () {
         $dir =  ROOT_PATH . 'public' . DS . 'uploads'. DS . 'logs'. DS ;  //要获取的目录
@@ -64,8 +72,8 @@ class BulkData extends Base{
             }      
     }
     
-    
-    function import_excel(){
+    //批量导入
+    function importExcel(){
         $file = request()->file('excel');
         $info = $file->validate(['size'=>15678,'ext'=>'xlsx,xls'])
                ->move(ROOT_PATH . 'public' . DS . 'uploads'. DS .'excel');
@@ -120,6 +128,21 @@ class BulkData extends Base{
          
 
     }
+
+    //将运价设置处理数据过期
+    protected  function  overdue(){
+        $nowtime = date('Y-m-d H:i:s');
+        $list =Db::name('seaprice')
+            ->where('shipping_date','>=',$nowtime)
+            ->whereOr('cutoff_date','not null',['>=',$nowtime],['<>','1970-01-01 08:00:00'])
+                ->column('id');
+        $res = Db::name('seaprice')->where('id','in',$list)
+                ->update(['stale_date'=>0,'status'=>3]);
+                
+    }
+
+
+
 
     //处理excel的数据到数据里
     public function seaprice_excel($rowData) {
@@ -273,7 +296,7 @@ class BulkData extends Base{
                ->join('hl_port P2','P2.port_code= SB.sl_end','left')
                ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
                ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')
-               ->join('hl_boat B','B.id=SP.boat_id','left')
+               ->join('hl_boat B','B.id=SP.boat_id and B.stuts=1','left')
                ->field("SP.id,SP.ship_id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
                . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
              . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,"
@@ -305,7 +328,7 @@ class BulkData extends Base{
     //船舶导出excl
     public function boat_outExcel () {
         $boat_arr=[];   //船舶分组
-        $boat_lists= Db::name('boat')->field('id,boat_name,boat_code,ship_id')->where('status',1)->select();
+        $boat_lists= Db::name('boat')->field('id,boat_name,boat_code,ship_id')->order('ship_id,id')->where('status',1)->select();
         foreach ($boat_lists as $boat_list) {
             $key =$boat_list['ship_id'];
             $boat_arr[$key][] =$boat_list;
@@ -315,7 +338,7 @@ class BulkData extends Base{
         $boat_expCellName =array('id','boat_name','boat_code','ship_id');
         $boat_expTableData = array_values($boat_arr);//每行的键数组
         $boat_head =array('ID','船名','航次','船公司ID');//表头
-        $boat_sheetName = Db::name('shipcompany')->where('id','in',$boat_ship_id_arr)->order('id')->column('ship_short_name') ;
+        $boat_sheetName = Db::name('shipcompany')->where('id','in',$boat_ship_id_arr)->where('status',1)->order('id')->column('ship_short_name') ;
 //        $this->_p($boat_expTableData);$this->_p($boat_sheetName);exit;
         $this->exportExcel('船公司对应船舶明细', $boat_expCellName,$boat_expTableData,$boat_sheetName,$boat_head); 
 

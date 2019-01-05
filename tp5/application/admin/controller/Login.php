@@ -25,7 +25,7 @@ class Login extends Controller
         $loginName = $data['loginname'];
         $passWord = md5($data['password']);
         //在user 表中进行查询
-        $map = array('loginname'=> $loginName);
+        $map = array('user_code'=> $loginName);
         $user = User::get($map);
         //将用户名与密码分开验证
         //如果没有查询到该用户

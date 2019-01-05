@@ -49,7 +49,7 @@ class CarShipMan extends Model
    
    
        //展示车队人员资料的信息
-    public function car_list($searchdata = array(),$page = 5) { 
+    public function carList($searchdata = array(),$page = 5) { 
          $list = Db::name('carinfo')->alias('CI')
                  ->join('hl_cardata CD','CD.id = CI.car_data_id','left' )
                  ->field('CI.*,CD.car_name')

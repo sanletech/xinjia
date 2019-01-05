@@ -8,15 +8,18 @@ class Order extends Model
 {
     private $order_status;
     private $page=5;
-
+    private $area_code;
+    
     protected function initialize()
     {
         parent::initialize();
         $this->order_status = config('config.order_status');
-  
+        $this->area_code =  Session::get('area_code'); 
+
     }   
     
 
+                
     public function order_public($page,$limit,$search,$status='3') {
         $map = [];
         if($search){
@@ -39,7 +42,8 @@ class Order extends Model
                     . 'P2.port_name e_port_name,P2.port_code e_port_code,OP.status,'
                     . 'SMB.sales_name,SP.shipping_date,SP.cutoff_date,SP.sea_limitation, SB.id as SB_id' )
             ->group('OP.id')->where($map) ->where('OP.status','in',$status)->where('OP.type','door')
-            ->buildSql();
+            ->where('SB.sl_start','in', $this->area_code)->buildSql();
+            
 //     var_dump($listSql);exit;
         $count =  Db::table($listSql.' A')->count();  //获取总页数
         // 查询出当前页数显示的数据

@@ -11,13 +11,6 @@ use think\Validate;
 use think\session;
 class OrderProcess extends Base
 {     
-    private $order_status;
-    private $page=5;
-
-    public function _initialize()
-    {  
-        $this->order_status=config('config.order_status');
-    }
 
     
         //审核订单的列表页面

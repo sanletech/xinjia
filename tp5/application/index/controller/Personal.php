@@ -323,7 +323,7 @@ class Personal extends Base
 
     //提交柜号资料
     public function track_data()
-    { 
+    {       
         $order_num = $this->request->param('order_num');
         $data = Db::name('order_truckage') ->where(['order_num'=>$order_num,'type'=>'s'])->field('id,container_code,seal')->select();
         return json($data);

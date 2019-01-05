@@ -24,6 +24,7 @@
       <div class="layui-row">
         <form class="layui-form layui-col-md12 x-so" id="searchform">
             <input type="radio" name="status" value="normal" title="正常" <?php echo ($status =='normal'?'checked':'');  ?> >
+            <input type="radio" name="status" value="overdue" title="过期" <?php echo ($status =='overdue'?'checked':'');  ?> >
             <input type="radio" name="status" value="deleted" title="已删除" <?php echo ($status =='deleted'?'checked':'');  ?> >
             <input type="radio" name="status" value="judge" title="待审核" <?php echo ($status =='judge'?'checked':'');  ?> >
             <input type="text"  name ="seaprice_id"  value ="<{$seaprice_id? $seaprice_id: '';}>" placeholder="请输入航线ID"  class="layui-input">

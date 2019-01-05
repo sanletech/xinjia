@@ -1,16 +1,236 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<{include file='./public/header' /}>
 <body>
-    <form action="<{:url('admin/BulkData/import_excel')}>" enctype="multipart/form-data" method="post">
-    <input type="file" name="excel" />
-    <input type="submit" value="导入">
-</form>
-    <a  href="<{:url('admin/BulkData/seaprcie_outExcel')}>">海运价表格导出</a>
-     <a  href="<{:url('admin/BulkData/boat_outExcel')}>">船舶表导出</a>
-     <a  href="<{:url('admin/BulkData/logs')}>">查看日志</a>
+    <link rel="stylesheet" href="__STATIC__/../index/css/place_details.css">
+    <style>
+        body{
+            padding-left: 15px;
+        }
+        .dao{
+            margin:10px 0;
+            font-size: 20px;
+        }
+    </style>
+    <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">演示</a>
+                <a>
+                    <cite>批量导入</cite>
+                </a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-right: 20px;float:right" href="javascript:location.replace(location.href);"
+                title="刷新">
+                <i class="layui-icon" style="line-height:30px">ဂ</i>
+            </a>
+        </div>
+    <form class="layui-form" id="screen">
+            <div class="layui-row">
+              <div class="layui-col-xs12">
+                <div class="grid-demo sousuo">
+                  <div class="layui-form-item">
+                      <div class="yinc">
+                          <input type="text" id="start_id" name="start_id" value="<{$start_add ? $start_add: '';}>">
+                          <input type="text" id="end_id" name="end_id" value="<{$end_add ? $end_add: '';}>">
+                        </div>
+                    <div class="layui-input-inline">
+                      <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                      <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                      <input type="text"  value='' placeholder="起始时间" autocomplete="off" class="layui-input" name="date_start" id="date">
+                    </div>
+                    <div class="layui-input-inline">
+                      <input type="text" value='' placeholder="结束时间" autocomplete="off" class="layui-input" name="date_end" id="date1">
+                    </div>
+                    <div class="layui-input-inline">
+                        <select id="ship_company" name="ship_id" lay-filter="ship" lay-search>
+                            <option value="">请选择船公司</option>
+                        </select>
+                    </div>
+                    
+                    <div class="layui-input-inline">
+                    <a class="layui-btn" lay-submit="" lay-filter="demo1">立即导出</a>
+                    </div>
+                  </div>
+    
+                  <div id="address">
+                      <ul>
+                        <li>省份</li>
+                        <li>城市</li>
+                        <li>港口</li>
+                      </ul>
+                      <div id="dizhi"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            
+          </form>
+
+    <div class="layui-upload">
+        <div class="dao">导入文件</div>
+        <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+        <button type="button" class="layui-btn" id="test9">开始上传</button>
+    </div>
+    <!-- <form action="<{:url('admin/BulkData/importExcel')}>" enctype="multipart/form-data" method="post">
+        <input type="file" name="excel" />
+        <input class="layui-btn" type="submit" value="导入">
+    </form> -->
+    <div>
+        <div class="dao">导出文件</div>
+        <a class="layui-btn layui-btn-normal" href="<{:url('admin/BulkData/seaprcie_outExcel')}>">海运价表格导出</a>
+        <a class="layui-btn layui-btn-normal" href="<{:url('admin/BulkData/boat_outExcel')}>">船舶表导出</a>
+        <a class="layui-btn layui-btn-normal" href="<{:url('admin/BulkData/logs')}>">查看日志</a>
+    </div>
+    <script src="__STATIC__/../admin/js/ship_boat.js?v=1"></script>
+    <script src="__STATIC__/js/port.js?v=1"></script>
+    <script>
+        layui.use(['form', 'layedit', 'laydate', 'upload'], function () {
+            var $ = layui.jquery
+                , upload = layui.upload
+                , form = layui.form
+                , layer = layui.layer
+                , layedit = layui.layedit
+                , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+
+            //监听提交
+            form.on('submit(demo1)', function(data){
+                console.log(data.field);
+                $.post("<{:url('admin/BulkData/aaa')}>",data.field,function(res){
+                    
+                })
+                return false;
+            });
+
+            //选完文件后不自动上传
+            upload.render({
+                elem: '#test8'
+                , url: "<{:url('admin/BulkData/importExcel')}>"
+                , auto: false
+                //,multiple: true //是否多个文件上传
+                , accept: 'file'
+                , bindAction: '#test9'
+                , done: function (res) {
+                    if (res.status) {
+                        layer.msg('上传成功', { icon: 1, time: 1000 });
+                    } else {
+                        layer.msg('上传失败', { icon: 2, time: 1000 });
+                    }
+                }
+            });
+        });
+
+       var shipData =JS_SHIP_BOAT;//船公司
+       for (let i = 0; i < shipData.length; i++) {
+        $('#ship_company').append("<option value='" + shipData[i].ship_id + "'>" + shipData[i].ship_name + "</option>");
+       }
+
+
+        //初始数据
+        var areaData = JS_PORT;//获取所有地区
+        var inp;//选择文本框并赋值区县
+        var boot;//判断地址是否是起点还是终点
+
+
+        $('#start_add').focus(function () {//选择地址
+            inp = $('#start_add');
+            boot = true;
+            $('#address').css('left', '0px');
+            $('#address').show();
+            loadProvince();  //默认展示省份
+        })
+        $('#end_add').focus(function () {//选择地址
+            boot = false;
+            inp = $('#end_add');
+            $('#address').css('left', '200px');
+            $('#address').show();
+            loadProvince();  //默认展示省份
+        })
+
+        var cli = true;//判断是否点击
+        $('.sousuo').click(function () {
+            cli = false;
+        })
+        $(document).click(function () {//判断是否点击地址元素 否则隐藏
+            if (cli) {
+                $('#address').hide();
+            } else {
+                cli = true;
+            }
+        })
+
+        //单击省份
+        $('#address li').eq(0).click(function () {
+            loadProvince();
+            $('#address li').removeClass('lanse').eq(0).addClass('lanse');
+        });
+
+
+        //加载省数据
+        function loadProvince() {
+            $('#dizhi').html('');
+            for (let i in areaData) {
+                $('#dizhi').append('<a onclick=loadCity(' + areaData[i].provinceCode + ')>' + areaData[i].provinceName + '</a>');
+            }
+            $('#address li').removeClass('lanse').eq(0).addClass('lanse');
+        }
+
+        //加载港口
+        function loadCity(citys_id) {
+            $.each(areaData, function (i, data) {
+                if (data.provinceCode == citys_id) {
+                    let arry = data.mallCityList;
+                    $('#dizhi').html('');
+                    for (let i in arry) {
+                        $('#dizhi').append('<a href="javascript:void(0)" onclick="loadPort(' + arry[i].cityCode + ')">' + arry[i].cityName + '</a>');
+                    }
+                    if (arry == false) {
+                        $('#address').hide();
+                    }
+                    $('#address li').removeClass('lanse').eq(1).addClass('lanse');//选中城市
+                }
+            })
+        }
+
+        // 加载港口
+        function loadPort(areas_id) {
+            $.each(areaData, function (j, data) {
+                let arry = data.mallCityList;
+                for (let i in arry) {
+                    if (arry[i].cityCode == areas_id) {
+                        $('#dizhi').html('');
+                        for (let h in arry[i].mallPortList) {
+                            $('#dizhi').append('<a href="javascript:void(0)" onclick="jie_dao(' + arry[i].mallPortList[h].portCode + ',this)">' + arry[i].mallPortList[h].portName + '</a>');
+                        }
+                        if (arry[i] == false) {//当后面没有数据的时候
+                            $('#address').hide();
+                        }
+                        $('#address li').removeClass('lanse').eq(2).addClass('lanse');
+                    }
+                }
+            })
+        }
+
+        function jie_dao(dao_id, zj) {
+            if (boot) {
+                $('#start_id').val(dao_id);//赋值港口ID
+            } else {
+                $('#end_id').val(dao_id);//赋值港口ID
+            }
+            inp.val($(zj).html());//当前选中的值
+            $('#address').hide();
+        }
+    </script>
 </body>
 </html>

@@ -8,12 +8,14 @@ class OrderProcess  extends Model{
     
     private $order_status;
     private $page=5;
+    private $area_code;
 
     protected function initialize()
     {
         parent::initialize();
         $this->order_status = config('config.order_status');
-  
+        $this->area_code =  Session::get('area_code'); 
+
     }   
 
     //审核客户提交的订单
@@ -27,9 +29,10 @@ class OrderProcess  extends Model{
             ->join('hl_port P1','P1.port_code=SB.sl_start','left')//起始港口
             ->join('hl_port P2','P2.port_code=SB.sl_end','left')//目的港口
             ->join('hl_boat B','B.id =SP.boat_id','left')//船公司合作的船舶 
-            ->field('OP.*,HM.company,HM.name,SC.ship_short_name,B.boat_code,B.boat_name,P1.port_name s_port_name ,P2.port_name e_port_name')
+            ->field('OP.*,HM.company,HM.name,SC.ship_short_name,B.boat_code,B.boat_name,P1.port_code s_port,P1.port_name s_port_name ,P2.port_name e_port_name')
             ->group('OP.id')
-            ->where('OP.status','in',$state)
+            ->where('SB.sl_start','in',$this->area_code)
+            ->where('OP.status',$state)
             ->where('OP.type',$type)
             ->paginate($pages);
         return $list;
@@ -86,6 +89,7 @@ class OrderProcess  extends Model{
                 ->where('OP.order_num',$order_num)
                 ->group('OP.id')
                 ->find();
+            
                 // $this->_p($list);exit;  
         //根据订单号的信息判断是港到港还是门到门  
         if(empty($order_type) ){

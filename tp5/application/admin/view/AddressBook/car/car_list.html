@@ -22,7 +22,7 @@
       </div>
       <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('admin/car/car_add')}>',800,726)"><i class="layui-icon"></i>添加</button>
+     <button class="layui-btn" onclick="x_admin_show('添加车队','<{:url('admin/addressBook/car_add')}>',800,726)"><i class="layui-icon"></i>添加</button>
       </xblock>
       <table class="layui-table">
         <thead>
@@ -92,7 +92,7 @@
       function search() {
         $.ajax({
           type: 'get',
-          url: "<{:url('admin/Car/car_list')}>",
+          url: "<{:url('admin/Car/carList')}>",
           data: $("#searchform").serialize(),
           //  data:{"success":true,"id":"1"} ,
           dataType: "json",

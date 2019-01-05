@@ -102,7 +102,7 @@
                 <div class="layui-inline pwd">
                     <label class="layui-form-label">密码</label>
                     <div class="layui-input-block">
-                        <input type="text" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                        <input type="text" name="password"  placeholder="请输入密码" class="layui-input">
                     </div>
                 </div>
             </div>
@@ -418,10 +418,10 @@
                                     $('#admin_user input[name="user_name"]').val(data.user_name);//姓名
                                     $('#admin_user input[name="user_code"]').val(data.user_code);//账号
                                     $('#admin_user select[name="department_id"]').val(data.department_id);//部门
-                                    $('#admin_user select[name="phone"]').val(data.phone);//电话
-                                    $('#admin_user select[name="email"]').val(data.email);//邮箱
-                                    $('#admin_user select[name="loginname"]').val(data.loginname);//昵称
-                                    $('#admin_user select[name="password"]').val(data.password);//密码
+                                    $('#admin_user input[name="phone"]').val(data.phone);//电话
+                                    $('#admin_user input[name="email"]').val(data.email);//邮箱
+                                    $('#admin_user input[name="loginname"]').val(data.loginname);//昵称
+                                    $('#admin_user input[name="password"]').val(data.password);//密码
                                     teamList($('#admin_user .team'),data.department_id,data.job_id,bumen);
                                     authGroup($('#admin_user .auth'),data.power_id);
                                     form.render();
@@ -526,7 +526,7 @@
                 //添加账号/修改信息
                 form.on('submit(demo1)', function (data) {
                     if (add_edit) {//判断是添加还是修改
-                        $.post("<{:url('admin/jurisdiction/aaa')}>", data.field, function (res) {
+                        $.post("<{:url('admin/jurisdiction/userAdd')}>", data.field, function (res) {
                             if (res.status) {
                                 layer.msg('添加成功', { icon: 1, time: 1000 }, function () {
                                     window.location.reload();
@@ -536,10 +536,10 @@
                             }
                         });
                     } else {
-                        $.post("<{:url('admin/jurisdiction/bbb')}>", data.field, function (res) {
+                        $.post("<{:url('admin/jurisdiction/userEdit')}>", data.field, function (res) {
                             if (res.status) {
                                 layer.msg('修改成功', { icon: 1, time: 1000 }, function () {
-                                    window.location.reload()
+                                    window.location.reload();
                                 })
                             } else {
                                 layer.msg('修改失败', { icon: 2, time: 1000 });
