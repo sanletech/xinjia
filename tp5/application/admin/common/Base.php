@@ -36,8 +36,9 @@ class Base extends Controller
         $is_rigth =$auth->check($MODULE_NAME.'-'.$ACTION_NAME,session('uid'));
     
         if(!$is_rigth){
-//            return $this->view->fetch('/view/auth.html');
-          //  return $this->view->fetch(APP_PATH.request()->module().'/view/auth/auth.html');
+//            return $this->view->fetch(in);
+//            return $this->view->fetch('view/auth/auth.html');
+//            return $this->view->fetch(APP_PATH.request()->module().'/view/auth/auth.html');
         }
   
         

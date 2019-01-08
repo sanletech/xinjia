@@ -29,14 +29,14 @@
                 <div class="grid-demo sousuo">
                   <div class="layui-form-item">
                       <div class="yinc">
-                          <input type="text" id="start_id" name="start_id" value="<{$start_add ? $start_add: '';}>">
-                          <input type="text" id="end_id" name="end_id" value="<{$end_add ? $end_add: '';}>">
+                          <input type="text" id="start_id" name="start_id" value="<{$data['start_id']? $data['start_id']:'';}>">
+                          <input type="text" id="end_id" name="end_id" value="<{$data['end_id'] ? $data['end_id'] : '';}>">
                         </div>
                     <div class="layui-input-inline">
-                      <input type="text" name="start_name" id="start_add"   value="<{$start_name ? $start_name: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
+                      <input type="text" name="start_name" id="start_add"   value="<{$data['start_name']  ? $data['start_name']: '';}>" lay-verify="title" autocomplete="off" placeholder="始发港" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
-                      <input type="text" name="end_name" id="end_add"  value="<{$end_name ? $end_name : '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
+                      <input type="text" name="end_name" id="end_add"  value="<{$data['end_name']? $data['end_name']: '';}>" lay-verify="title" autocomplete="off" placeholder="目的港" class="layui-input">
                     </div>
                     <div class="layui-input-inline">
                       <input type="text"  value='' placeholder="起始时间" autocomplete="off" class="layui-input" name="date_start" id="date">
@@ -51,6 +51,7 @@
                     </div>
                     
                     <div class="layui-input-inline">
+                           <!--<button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>-->
                     <a class="layui-btn" lay-submit="" lay-filter="demo1">立即导出</a>
                     </div>
                   </div>
@@ -105,13 +106,30 @@
             });
 
             //监听提交
-            form.on('submit(demo1)', function(data){
-                console.log(data.field);
-                $.post("<{:url('admin/BulkData/aaa')}>",data.field,function(res){
-                    
+//            form.on('submit(demo1)', function(data){
+//                console.log(data.field);
+//                $.get("<{:url('admin/BulkData/seaprcie_outExcel')}>",data.field,function(res){
+//                    
+//                })
+//                return false;
+//            });
+       form.on('submit(demo1)', function(data){
+                $.ajax({
+                type:'post',
+                url:"<{:url('admin/BulkData/seaprcie_outExcel')}>",
+                data:data.field,
+                datatype:'json',
+                success:function(data){
+                    console.log(data);
+                    if (data.success) {
+                        window.location.href=data.url;
+                    } else{
+                        layer.msg('无数据', { icon: 2, time: 1000 });
+                    }
+                    }
                 })
-                return false;
-            });
+        })
+
 
             //选完文件后不自动上传
             upload.render({
