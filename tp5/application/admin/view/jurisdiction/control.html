@@ -289,7 +289,6 @@
                     ,id: 'testReload' //表格ID
                     // , height: 300
                      , url: "<{:url('admin/Jurisdiction/userData')}>" //数据接口
-             
                     , cols: [[ //表头
                         { type: 'checkbox', fixed: 'left' }
                         , { field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left' }
@@ -493,26 +492,28 @@
 
                 //权限列表
                 function authGroup(it,shu){
-
+                    
                     it.html('');
                     $.get("<{:url('admin/jurisdiction/authGroup')}>",function(res){
-                        if (shu) {
+                        let bot = true;
+                        if (JSON.stringify(shu) !== '[]') {
                             for (let i in res) {
                                 for (let j = 0; j < shu.length; j++) {
                                     if (res[i].id == shu[j]) {
+                                        bot = false;
                                         it.append(`<input type="checkbox" name='power[]' value="${res[i].id}" lay-skin="primary" title="${res[i].title}" checked>`);
-                                    } else {
-                                        it.append(`<input type="checkbox" name='power[]' value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
                                     }
                                 }
+                                if (bot) {
+                                    it.append(`<input type="checkbox" name='power[]' value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
+                                }
+                                bot = true;
                             }
                         }else{
                             for (let i in res) {
                                 it.append(`<input type="checkbox" name='power[]' value="${res[i].id}" lay-skin="primary" title="${res[i].title}">`);
                             }
                         }
-
-                        
                         form.render();
                     })
                 }
