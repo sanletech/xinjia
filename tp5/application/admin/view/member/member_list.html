@@ -147,27 +147,27 @@
               ,btn:['确定','驳回']
               ,btnAlign: 'c'
               ,yes:function(index){
-                $.get(identification_url,{id:id,audit:'yes'},function(res){//确定
-                  if (res) {
+                $.post(identification_url,{id:id,audit:'yes'},function(data){//确定
+                  if (data.status) {
                     // alert('提交成功');
                     layui.layer.msg('提交成功', {icon: 1,time: 1000},function(){
                       layer.close(layer.index);//关闭窗口
                     });
                   }else{
                     // alert('提交失败');
-                    layui.layer.msg("提交失败", {icon: 2,time: 1000});
+                    layui.layer.msg(data.message, {icon: 2,time: 1000});
                   }
                 });
               },btn2:function(index){//驳回
-                $.get(identification_url,{id:id,audit:'no'},function(res){
-                  if (res) {
+                $.post(identification_url,{id:id,audit:'no'},function(data){
+                  if (data.status) {
                     // alert('提交成功');
                     layui.layer.msg('提交成功', {icon: 1,time: 1000},function(){
                       layer.close(layer.index);//关闭窗口
                     });
                   }else{
                     // alert('提交失败');
-                    layui.layer.msg("提交失败", {icon: 2,time: 1000});
+                    layui.layer.msg(data.message, {icon: 2,time: 1000});
                   }
                 });
               }
@@ -188,11 +188,11 @@
                 type:'GET',
                 url:"<{:url('admin/member/memberStop')}>?id="+id,    
                 success:function(data){
-                    if(data==true){
+                    if(data.status){
                       $('#'+id).parent("tr").hide();
                     }else{
                         // alert('失败') ;
-                        layui.layer.msg("提交失败", {icon: 2,time: 1000});
+                        layui.layer.msg(data.message, {icon: 2,time: 1000});
                   }
                 }
             })

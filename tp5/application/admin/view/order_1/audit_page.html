@@ -319,7 +319,7 @@
                         layui.layer.msg('申请成功', {icon: 1,time: 500});
                     } else {
                         // alert('申请失败');
-                        layui.layer.msg('申请失败', {icon: 2,time: 1000});
+                        layui.layer.msg(data.message, {icon: 2,time: 1000});
                     }
                 });
             });
@@ -343,7 +343,7 @@
                                 });
                             } else {
                                 // alert('驳回失败');
-                                layui.layer.msg('驳回失败', {icon: 2,time: 1000});
+                                layui.layer.msg(data.message, {icon: 2,time: 1000});
                             }
                         });
                     },function(index){

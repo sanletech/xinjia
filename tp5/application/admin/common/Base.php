@@ -16,6 +16,7 @@ class Base extends Controller
         //在公共控制器的初始化方法中，创建一个常量用来判断用户是否登录或已经登录
         $this->user_id =  Session::get('user_id');
         //$user_id 为空则没有登录
+       
         if(is_null($this->user_id)){
             $this->notlogin();
         }
@@ -33,9 +34,16 @@ class Base extends Controller
         $ACTION_NAME= $request->action();//方法名
      
         $auth=new Auth();
-        $is_rigth =$auth->check($MODULE_NAME.'-'.$ACTION_NAME,session('uid'));
+        $is_rigth =$auth->check($MODULE_NAME.'-'.$ACTION_NAME,$this->user_id);
     
         if(!$is_rigth){
+            $url_method = $this->request->method();
+            //$this->right($url_method);
+             if($url_method !=='GET'){
+                json(array('status'=>0,'message'=>'无限权限'))->send();;
+                exit();
+            }
+            $this->error('权限不足','','',1);
 //            return $this->view->fetch(in);
 //            return $this->view->fetch('view/auth/auth.html');
 //            return $this->view->fetch(APP_PATH.request()->module().'/view/auth/auth.html');
@@ -43,7 +51,13 @@ class Base extends Controller
   
         
     }
-    
+      //判断权限
+        protected function right($url_method)
+    {
+        //如果为post
+           
+     
+    }
 
 
         protected function notlogin()

@@ -46,20 +46,20 @@ class Member extends Base
         }
 
         $res =Db::name('member')->where('id','in',$id)->update(['identification'=>$identification]);
-        return $res ?TRUE:FALSE;
+        return $res ? array('status'=>1,'message'=>'success'): array('status'=>0,'message'=>'fail');
     }
     
     //禁止使用帐号
     public function memberStop() {
         $id = $this->request->param();
         $res =Db::name('member')->where('id','in',$id)->update(['status'=>'0']);
-        return $res ?TRUE:FALSE;
+          return $res ? array('status'=>1,'message'=>'success'): array('status'=>0,'message'=>'fail');
     }
     //恢复帐号的使用
     public function memberEnabled() {
         $id = $this->request->param();
         $res =Db::name('member')->where('id','in',$id)->update(['status'=>'1']);
-        return $res ?TRUE:FALSE;
+        return $res ? array('status'=>1,'message'=>'success'): array('status'=>0,'message'=>'fail');
     }
     //帐号的删除
     public function memberDel() {
@@ -67,7 +67,7 @@ class Member extends Base
         $id =$idArr['id'];
         $res =Db::name('member')->where('id','in',$id)->delete();
         //var_dump(Db::getLastSql());exit;
-        return $res ?TRUE:FALSE;  
+        return $res ? array('status'=>1,'message'=>'success'): array('status'=>0,'message'=>'fail');
     }
     
     //业务对应客户的提成管理

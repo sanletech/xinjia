@@ -117,11 +117,11 @@
                 type:'GET',
                 url:"<{:url('admin/member/memberStop')}>?id="+id,    
                 success:function(data){
-                    if(data==true){
+                    if(data.status==1){
                       $('#'+id).parent("tr").hide();
                     }else{
                         // alert('失败') ;
-                        layui.layer.msg('失败', {icon: 2,time: 1000});
+                        layui.layer.msg(data.message, {icon: 2,time: 1000});
                   }
                 }
             })
@@ -162,12 +162,12 @@
                 dataType:"JSON",
                 contentType: "application/json",
                 success:function(data){
-                    if(data==1){
+                     if(data.status==1){{
                         // alert('修改成功');
                         layui.layer.msg('修改成功', {icon: 1,time: 1000});
                         location.assign(location);
                     }else{
-                      layui.layer.msg('修改失败', {icon: 2,time: 1000});
+                      layui.layer.msg(data.message, {icon: 2,time: 1000});
                       location.assign(location);
                   }
                 }

@@ -90,10 +90,10 @@
                 type:'GET',
                 url:"<{:url('admin/member/memberEnabled')}>?id="+id,    
                 success:function(data){
-                    if(data==true){
+                    if(data.status){
                       $('#'+id).parent("tr").hide();
                     }else{
-                      layui.layer.msg('提交失败', {icon: 2,time: 1000});
+                      layui.layer.msg(data.message, {icon: 2,time: 1000});
                         // alert('失败') ;
                   }
                 }

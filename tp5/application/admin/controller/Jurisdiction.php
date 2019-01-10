@@ -10,7 +10,7 @@ class Jurisdiction extends Base
 {
     public function control() 
     {
-        return $this->view->fetch('Jurisdiction/control');
+        return $this->view->fetch('jurisdiction/control');
     }
     
     //信息列表
@@ -105,14 +105,17 @@ class Jurisdiction extends Base
             $map['area']['area_code'] = implode(',', $data['city_code']);
             $map['area']['type'] = 'city';
         }
+//        $this->_p($map);exit;
         //修改权限
         Db::startTrans();
         try{
             Db::name('user')->where('id',$data['id'])->update($map['user']);  //修改个人信息 和职位
             Db::name('auth_group_access')->where('uid',$uid)->delete(); //删除原有的
             Db::name('auth_group_access')->insertAll($map['power']); //再新增
-            Db::name('user_area')->where('user_id',$uid)->update($map['area']);//更新区域
-            
+            if(array_key_exists('area',$map)){
+                Db::name('user_area')->where('user_id',$uid)->update($map['area']);//更新区域
+            }
+          
             Db::commit();    
         } catch (\Exception $e) {
                 // 回滚事务

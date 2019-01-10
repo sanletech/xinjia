@@ -3,13 +3,14 @@
 namespace app\admin\common;
 use think\Controller;
 use think\db;
+use think\Session;
 /**
  * Description of Auth
  *
  * @author Administrator
  */
 //http://www.thinkphp.cn/topic/4029.html
-class Auth{
+class Auth extends Controller{
     //默认配置
     protected $_config = array(
         'AUTH_ON' => true, //认证开关
@@ -30,8 +31,10 @@ class Auth{
     public function check($name, $uid, $relation='or') {
         if (!$this->_config['AUTH_ON'])
             return true;
+//        var_dump($name, $uid); exit;
         $authList = $this->getAuthList($uid);
         if (is_string($name)) {
+            $name = strtolower($name);
             if (strpos($name, ',') !== false) {
                 $name = explode(',', $name);
             } else {
@@ -39,10 +42,12 @@ class Auth{
             }
         }
         $list = array(); //有权限的name
+  
         foreach ($authList as $val) {
             if (in_array($val, $name))
                 $list[] = $val;
         }
+       
         if ($relation=='or' and !empty($list)) {
             return true;
         }
@@ -70,11 +75,13 @@ class Auth{
         if (isset($_authList[$uid])) {
             return $_authList[$uid];
         }
-        if(isset($_SESSION['_AUTH_LIST_'.$uid])){
-            return $_SESSION['_AUTH_LIST_'.$uid];
-        }
+       
+//        if(Session::has('_AUTH_LIST_'.$uid)){
+//            return Session::get('_AUTH_LIST_'.$uid);
+//        }
         //读取用户所属用户组
         $groups = $this->getGroups($uid);
+
         $ids = array();
         foreach ($groups as $g) {
             $ids = array_merge($ids, explode(',', trim($g['rules'], ',')));
@@ -84,6 +91,7 @@ class Auth{
             $_authList[$uid] = array();
             return array();
         }
+       
         //读取用户组所有权限规则
         $map=array(
             'id'=>array('in',$ids),
@@ -108,9 +116,10 @@ class Auth{
             }
         }
         $_authList[$uid] = $authList;
+          
         if($this->_config['AUTH_TYPE']==2){
             //session结果
-            $_SESSION['_AUTH_LIST_'.$uid]=$authList;
+            Session::set('_AUTH_LIST_'.$uid,$authList);
         }
         return $authList;
     }

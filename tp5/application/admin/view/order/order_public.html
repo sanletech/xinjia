@@ -343,7 +343,7 @@
                     window.location.reload();
                 });
             } else {
-                layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                layui.layer.msg(res.message, { icon: 2, time: 1000 });
             }
             }
             ,error: function(){
@@ -367,7 +367,7 @@
                     window.location.reload();
                 });
             } else {
-                layui.layer.msg('提交失败', { icon: 2, time: 1000 });
+                layui.layer.msg(res.message, { icon: 2, time: 1000 });
             }
             }
             ,error: function(){
