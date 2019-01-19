@@ -10,7 +10,7 @@ class OrderPort extends Model
     
     public function price_port($page,$limit,$start_add='',$end_add='',$ship_id='',$seaprice_id='') { 
         //门到门 设置客户利润，港到港没有利润只有在线优惠
-        $nowtime= date('y-m-d h:i:s');//要设置船期
+        $nowtime= date('Y-m-d H:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id','left')//海运路线表
                 ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')//起始,目的港口
@@ -22,8 +22,8 @@ class OrderPort extends Model
                         . 'PR.port_name r_port_name,PS.port_name s_port_name,'
                         . 'PR.port_code r_port_code,PS.port_code s_port_code,'
                         . 'SR.middle_id')
-                ->group('SP.id,SR.id') ->where('SP.status',1)
-                ->where('SP.shipping_date','>=',$nowtime)->whereOr('SP.shipping_date','>=',$nowtime)
+                ->group('SP.id') ->where('SP.status',1)
+                ->where('SP.shipping_date','>=',$nowtime)->whereOr('SP.cutoff_date','>=',$nowtime)
                 ->buildSql();
         $map =[];
         $ship_id ? $map['A.ship_id'] = $ship_id : '';
@@ -32,8 +32,7 @@ class OrderPort extends Model
         $seaprice_id?$map['A.id'] = $seaprice_id:'';
         
         $count = Db::table($price_list.' A')->where($map)->count();
-        $list =Db::table($price_list.' A')->where($map)->order('A.mtime ASC')->page($page,$limit)->select();
-
+        $list =Db::table($price_list.' A')->where($map)->order('A.mtime DESC,A.shipping_date')->fetchSql(false)->page($page,$limit)->select();
         return array('list'=>$list,'count'=>$count);
     }
     

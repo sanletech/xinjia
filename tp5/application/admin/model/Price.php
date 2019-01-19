@@ -24,12 +24,12 @@ class Price extends Model
             ->join('hl_boat B','B.id=SP.boat_id and B.status=1','left')
             ->field("SP.id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
             . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
-            . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,SP.stale_date,"
+            . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.status,"
             . " B.boat_name,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,SP.generalize,SP.ship_id,SP.boat_id,price_description")
             ->order('SP.mtime DESC')
             ->group('SP.id,SC.id,B.id,SR.id')->buildSql();
 
-        $list =Db::table($list.' a')->where($map)->paginate($pages,false,$pageParam); 
+        $list =Db::table($list.' a')->where($map)->fetchSql(false)->paginate($pages,false,$pageParam); 
        
         return $list;
     }
@@ -102,8 +102,8 @@ class Price extends Model
                      . "P1.port_name s_port,P1.port_code s_port_code,"
                      . "P2.port_name e_port,P2.port_code e_port_code, "
                      . "group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port")
-             ->group('SR.id')->where(['P1.port_code'=>$sl_start,'P2.port_code'=>$sl_end])->select();  
-
+            ->where(['P1.port_code'=>$sl_start,'P2.port_code'=>$sl_end])
+            ->group('SR.id')->where('SR.status',1)->select();  
         return $list;
     }
     

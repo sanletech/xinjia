@@ -19,9 +19,9 @@ class BulkData extends Base{
       
     }
     
-    public function aaa(){
-        var_dump($this->request->param());exit;
-    }
+//    public function aaa(){
+//        var_dump($this->request->param());exit;
+//    }
 
     //港到港批量导入页面
     public function priceRouteExcel(){
@@ -136,11 +136,13 @@ class BulkData extends Base{
     protected  function  overdue(){
         $nowtime = date('Y-m-d H:i:s');
         $list =Db::name('seaprice')
-            ->where('shipping_date','>=',$nowtime)
-            ->whereOr('cutoff_date','not null',['>=',$nowtime],['<>','1970-01-01 08:00:00'])
-                ->column('id');
+            ->where('status',1)
+            ->where('shipping_date','<=',$nowtime)
+            ->whereOr('cutoff_date',['<=',$nowtime],['>=','2018-01-01 00:00:00'],'and')
+                ->fetchSql(FALSE)->column('id');
+
         $res = Db::name('seaprice')->where('id','in',$list)
-                ->update(['stale_date'=>0,'status'=>3]);
+                ->update(['status'=>3]);
                 
     }
 
@@ -239,7 +241,7 @@ class BulkData extends Base{
         /**文件名称*/
       
 //        $fileName = $expTitle.date('_Ymd');
-         $fileName = $expTitle.date('Y-m-d-His');
+         $fileName = $expTitle.'_'.date('YmdHis');
         $cellNum = count($expCellName);
 
         /** 实例化 */
@@ -280,20 +282,20 @@ class BulkData extends Base{
 
         /** 设置第一个工作表为活动工作表 */
         $objPHPExcel->setactivesheetindex(0);
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        ob_end_clean();//清除缓冲区,避免乱码
-        @header('pragma:public');
-        @header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        @header("Content-Disposition:attachment;filename=$fileName.xlsx");//attachment新窗口打印inline本窗口打印
-        @header('Cache-Control: max-age=0');
-//        $objWriter->save('php://output');
-//        unset($objPHPExcel);exit;
+      
         $file_dir = ROOT_PATH . 'public' . DS . 'uploads'. DS . 'excel';   //文件存放目录  
         $filePath = $file_dir. DS . $fileName.'.xlsx';
+      //  ob_end_clean();//清除缓冲区,避免乱码
+        $fileDir =  '/uploads/excel/'.$fileName.'.xlsx';
+    
+      //  @header('pragma:public');
+        @header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); 
+        @header('Content-Disposition:attachment;filename='.$fileName.'.xlsx');//attachment新窗口打印inline本窗口打印
+        @header('Cache-Control: max-age=0'); 
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel , 'Excel2007');
         $objWriter->save($filePath);
-        $request = Request::instance();//$request->domain().
-        $filePath =  '/uploads/excel/'.$fileName.'.xlsx';
-        return $response = array('success' => true,'url' =>$filePath);
+   
+        return $response = array('success' => true,'url' =>$fileDir);
 
     }
    
@@ -301,31 +303,34 @@ class BulkData extends Base{
    
     //海运价格导出excel
     public function seaprcie_outExcel () {
-        $data = $this->request->param();
-        $this->view->assign('data', $data);
         $map =[];
-        if(array_filter($data)){
-            // 
-        $data['start_id']? $map['SB.sl_start'] = $data['start_id'] :'';//起始港口
-        $data['end_id']? $map['SB.sl_end'] = $data['end_id']:''; //终点港口
-        $data['date_start']? $map['SP.cutoff_date|SP.shipping_date'] =['>=',$data['date_start']]:'' ; //起始时间
-        $data['date_end']? $map['SP.cutoff_date|SP.shipping_date'] =['<=',$data['date_end']]:'' ;//截至时间
+        
+        if($this->request->isAjax()){
+            $data = $this->request->param();
+            $this->view->assign('data', $data);
+            if(array_filter($data)){
+                $data['start_id']? $map['SB.sl_start'] = $data['start_id'] :'';//起始港口
+                $data['end_id']? $map['SB.sl_end'] = $data['end_id']:''; //终点港口
+                $data['date_start']? $map['SP.shipping_date'] =['>=',$data['date_start']]:'' ; //起始时间
+                $data['date_end']? $map['SP.shipping_date'] =['<=',$data['date_end']]:'' ;//截至时间
+            }
         }
+
         $sea_price_lists =Db::name('seaprice')->alias('SP')
-               ->join('hl_ship_route SR','SR.id=SP.route_id','left')
+               ->join('hl_ship_route SR','SR.id=SP.route_id and SR.status=1','left')
                ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
                ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
-               ->join('hl_port P1','P1.port_code= SB.sl_start','left')
-               ->join('hl_port P2','P2.port_code= SB.sl_end','left')
-               ->join('hl_port P3','P3.port_code= SM.sl_middle','left')
+               ->join('hl_port P1','P1.port_code= SB.sl_start and P1.status=1','left')
+               ->join('hl_port P2','P2.port_code= SB.sl_end and P2.status=1','left')
+               ->join('hl_port P3','P3.port_code= SM.sl_middle and P3.status=1','left')
                ->join('hl_shipcompany SC',"SC.id=SP.ship_id and SC.status='1'",'left')
                ->join('hl_boat B','B.id=SP.boat_id and B.status=1','left')
                ->field("SP.id,SP.ship_id,SC.ship_short_name,SP.route_id,P1.port_name s_port,P2.port_name e_port,"
                . " group_concat(distinct P3.port_name order by SM.sequence separator '-') m_port,"
              . " SP.price_20GP,SP.price_40HQ,SP.shipping_date,SP.cutoff_date,SP.sea_limitation,SP.ETA,SP.EDD,SP.mtime,"
                . " SP.boat_id,B.boat_name,B.boat_code,SP.generalize,price_description")
-                ->order('SP.ship_id')->where($map)->group('SP.route_id,SP.ship_id')->fetchSql(FALSE)->select();
-
+                ->order('SP.ship_id,SP.shipping_date ASC')->where($map)->group('SP.id')->fetchSql(FALSE)->select();
+//var_dump($sea_price_lists);exit;
         $sea_price_arr = []; //海运价格分组
         $sea_price_head =array('ID','船公司ID','船公司','航线ID','起运港','目的港',
             '中间港口','20GP海运费','40HQ海运费','船期','截单时间','海上时效',
@@ -343,7 +348,7 @@ class BulkData extends Base{
         $expTitle ='Shipping_list'; 
         $expTableData = array_values($sea_price_arr);
         if(empty($expTableData)){
-            return json(array('success'=>FALSE,'message'=>'无数据'));
+            return json(array('success'=>false,'message'=>'无数据'));
         }
         $expCellName = $expTableData ? array_keys($expTableData['0']['0']):['0'=>'无数据'];
         $tableHeader= $sea_price_head;
@@ -353,9 +358,10 @@ class BulkData extends Base{
 //        $this->_p($expTableData);
 //        $this->_p($sheetName);
 //        $this->_p($tableHeader);exit;
-        
+//        var_dump($is_return);
         $res = $this->exportExcel($expTitle, $expCellName, $expTableData, $sheetName,$tableHeader) ;
-        return json($res);
+
+        return json($res) ;
     }
     
     //船舶导出excl
@@ -377,7 +383,7 @@ class BulkData extends Base{
         $boat_sheetName = Db::name('shipcompany')->where('id','in',$boat_ship_id_arr)->where('status',1)->order('id')->column('ship_short_name') ;
         
 //        $this->_p($boat_expTableData);$this->_p($boat_sheetName);exit;
-        $this->exportExcel('船公司对应船舶明细', $boat_expCellName,$boat_expTableData,$boat_sheetName,$boat_head); 
-
+        $res = $this->exportExcel('boat_list', $boat_expCellName,$boat_expTableData,$boat_sheetName,$boat_head,$is_return=false); 
+//        return json($res) ;
     }
  }

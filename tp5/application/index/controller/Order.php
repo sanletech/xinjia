@@ -30,7 +30,7 @@ class Order extends Base
         //计算出从那条开始查询
         $sea_pirce =new OrderM;
         $ship_id= '';
-        $start_time = date('Y-m-d H:00:00');
+        $start_time = date('Y-m-d');
         $data = $sea_pirce ->price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit);
         $list = $data['list']; 
         $count = $data['count'];

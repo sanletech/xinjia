@@ -22,7 +22,7 @@ class Port extends Model
             $list = Db::table($list.' a')->where('a.city', 'like', "%{$city_name}%")->buildSql();
             $pageParam['query']['city_name'] = $city_name;
         }
-        $list =Db::table($list.' a')->order('a.mtime DESC')->paginate($pages,false,$pageParam);  
+        $list =Db::table($list.' a')->order('a.mtime DESC,a.id')->paginate($pages,false,$pageParam);  
         return $list;
     }
     
@@ -159,7 +159,7 @@ class Port extends Model
     public function  shiproute_list($sl_start,$sl_end,$pages)
     {      
         $list =Db::name('ship_route')->alias('SR')
-             ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id','left')
+             ->join('hl_sea_bothend SB','SR.bothend_id=SB.sealine_id ','left')
              ->join('hl_sea_middle SM','SR.middle_id=SM.sealine_id','left')
              ->join('hl_port P1','P1.port_code= SB.sl_start','left')
              ->join('hl_port P2','P2.port_code= SB.sl_end','left')
@@ -169,7 +169,7 @@ class Port extends Model
                      . "P2.port_name e_port,P2.port_code e_port_code, "
                      . "group_concat(distinct P3.port_name order by SM.sequence separator ',') m_port,"
                      . "group_concat(distinct P3.port_code order by SM.sequence separator ',') m_port_code")
-             ->group('SR.id')->where('SR.status',1)->order('SR.mtime desc')->buildSql();  
+             ->group('SR.id')->where('SR.status',1)->buildSql();  
 //        var_dump($list);exit;
         $pageParam  = ['query' =>[]]; //设置分页查询参数
         if(!empty($sl_start) && isset($sl_start)){
@@ -180,7 +180,8 @@ class Port extends Model
             $list = Db::table($list.' b')->where('b.e_port','like',"%$sl_end%")->buildSql();
             $pageParam['query']['sl_end'] = $sl_end;
         }
-        $list =Db::table($list.' C')->paginate($pages,false,$pageParam);   
+//        var_dump($list);exit;
+        $list =Db::table($list.' C')->order('C.mtime desc,C.id')->paginate($pages,false,$pageParam);   
         return $list;
     }
     
@@ -198,7 +199,11 @@ class Port extends Model
         }
         $mtime = date('Y-m-d H:i:s');
         
-        $res = Db::name('ship_route')->where(['bothend_id'=>$bothend_id,'middle_id'=>$middle_id])->value('id');
+        $res = Db::name('ship_route')
+                ->where(['bothend_id'=>$bothend_id,
+                    'middle_id'=>$middle_id,
+                        'status'=>1])
+                ->value('id');
         if(empty($res)){
         $insertData = ['bothend_id'=>$bothend_id,'middle_id'=>$middle_id,'mtime'=>$mtime];
         $res1 = Db::name('ship_route')->insert($insertData);

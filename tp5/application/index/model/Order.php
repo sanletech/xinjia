@@ -12,20 +12,21 @@ class Order extends Model
    
     //前台页面展示门到门的价格表
     public function  price_sum($member_code,$start_add,$end_add,$ship_id,$start_time,$end_time,$page,$limit,$seaprcie_id=''){
-        $nowtime= date('y-m-d h:i:s');//要设置船期
+        $nowtime= date('Y-m-d H:i:s');//要设置船期
         $price_list = Db::name('seaprice')->alias('SP')
                 ->join('hl_ship_route SR','SR.id =SP.route_id and SR.status=1')//中间港口
                 ->join('hl_sea_bothend SB','SB.sealine_id =SR.bothend_id')//起始,目的港口
                 ->join('hl_carprice CPR',"CPR.port_id = SB.sl_start and CPR.status='1'",'left') //拖车装货费
                 ->join('hl_carprice CPS',"CPS.port_id = SB.sl_end and CPS.status='1'",'left') //拖车送货货费
                 ->join('hl_price_incidental PIR',"PIR.ship_id=SP.ship_id and PIR.port_code = SB.sl_start and PIR.status='1' ",'left') //起运港口杂费
-                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.port_code = SB.sl_end   and PIS.status='1'",'left') //目的港口杂费
+                ->join('hl_price_incidental PIS',"PIS.ship_id=SP.ship_id and PIS.port_code = SB.sl_end  and PIS.status='1'",'left') //目的港口杂费
                 ->join('hl_member_profit MP',"MP.ship_id=SP.ship_id" ,'left') //不同客户对应不同船公司的利润
                 ->join('hl_shipcompany SC','SC.id = SP.ship_id','left') //船公司
                 ->join('hl_boat BA','BA.id =SP.boat_id and BA.status=1','left') //船舶
                 ->join('hl_port PR','PR.port_code = SB.sl_start and PR.status=1')//起始港口
                 ->join('hl_port PS','PS.port_code = SB.sl_end and PS.status=1')//目的港口 CPR.id rid,CPS.id sid,PIR.id pir_id,PIS.id pis_id,
-                ->field('SP.*,SC.ship_short_name,'
+                ->field('SP.id,SP.shipping_date,SP.cutoff_date,SP.generalize,SP.sea_limitation,'
+                        . ' SP.price_description,SP.mtime,SP.price_20GP,SP.price_40HQ,SC.ship_short_name,'
                         . ' BA.boat_code,BA.boat_name,SB.sl_start,SB.sl_end,'
                         . ' PR.port_name r_port_name,PS.port_name s_port_name,CPR.address_name r_add,CPS.address_name s_add,'
                         . '  CPR.r_20GP,CPR.r_40HQ,CPS.s_20GP,CPR.s_40HQ,MP.20GP discount_20GP,MP.40HQ discount_40HQ,'
@@ -33,23 +34,25 @@ class Order extends Model
                         . ' (select SP.price_40HQ + PIR.r_40HQ + CPR.r_40HQ + PIS.s_40HQ + CPS.s_40HQ + MP.40HQ ) as price_sum_40HQ')
 //                        . ' (select SP.price_20GP + IFNULL(PIR.r_20GP,0) + IFNULL(CPR.r_20GP,0) + IFNULL(PIS.s_20GP,0)  + IFNULL(CPS.s_20GP,0) + IFNULL(MP.20GP,0) ) as price_sum_20GP,'
 //                        . ' (select SP.price_40HQ + IFNULL(PIR.r_40HQ,0) + IFNULL(CPR.r_40HQ,0) + IFNULL(PIS.s_40HQ,0) + IFNULL(CPS.s_40HQ,0) + IFNULL(MP.40HQ,0) ) as price_sum_40HQ')
-                ->where('MP.member_code',$member_code)->where('SP.shipping_date','>=',$nowtime)->whereOr('SP.shipping_date','>=',$nowtime)
-                ->where('SP.status',1)->where('SP.stale_date',1)
+                ->where('SP.status',1)
+                ->where('MP.member_code',$member_code)->where('SP.shipping_date','>=',$nowtime)
+                ->whereOr('SP.cutoff_date','>=',$nowtime)
                 ->group('SP.id')->buildSql();
         $map =[];
+        
         $start_time ? $map[] = "A.shipping_date >= '$start_time' or A.cutoff_date >=  '$start_time'" :'';
         $end_time ? $map[] = "A.shipping_date  <=  '$end_time' and A.cutoff_date  <=  '$end_time' " :'';
-        $start_add ? $map[]= "A.r_add like '%$start_add%' ":'';
-        $end_add ? $map[]= "A.s_add like '%$end_add%' ":'';
+        $start_add ? $map[]= "A.r_add like '$start_add%' ":'';
+        $end_add ? $map[]= "A.s_add like '$end_add%' ":'';
         $ship_id ? $map[]= "A.ship_id  ='$ship_id' ":'';
         $seaprcie_id ? $map[]= "A.id  ='$seaprcie_id' ":'';
         $sql = implode(' and ', $map);
         $sql = trim($sql,' and ');
 //        var_dump($sql);exit;
-        $count = Db::table($price_list.' A')->where($sql)->count();
-        $list =  Db::table($price_list.' A')->where($sql)->fetchSql(FALSE)
+        $count = Db::table($price_list.' A')->where($sql)->count();  
+        $list =  Db::table($price_list.' A')->where($sql)->order('A.mtime DESC,A.shipping_date')->fetchSql(true)
                 ->page($page,$limit)->select();
-
+//$this->_p($list); echo date('Y-m-d H:i:s');exit;
         return array('list'=>$list, 'count'=>$count);
              
     }

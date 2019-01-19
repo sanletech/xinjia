@@ -16,6 +16,9 @@ class Price extends Base
     //航线运价
     public function price_route() 
     {   
+       //查询前先设置 过期
+        $this->overdue();
+         
         $search = $this->request->param();
         $ship_name = array_key_exists('ship_name',$search)? trim($search['ship_name']):'';
         $port_start = array_key_exists('s_port_name',$search)?trim($search['s_port_name']):'';
@@ -73,6 +76,21 @@ class Price extends Base
         $this->assign('list',$list);
         $this->assign('page',$page);
         return $this->view->fetch('price/price_route'); 
+    }
+    
+    
+    //将运价设置处理数据过期
+    protected  function  overdue(){
+        $nowtime = date('Y-m-d H:i:s');
+        $list =Db::name('seaprice')
+            ->where('status',1)
+            ->where('shipping_date','<=',$nowtime)
+            ->whereOr('cutoff_date',['<=',$nowtime],['>=','2018-01-01 00:00:00'],'and')
+                ->fetchSql(FALSE)->column('id');
+
+        $res = Db::name('seaprice')->where('id','in',$list)
+                ->update(['status'=>3]);
+                
     }
     
     //航线详情添加展示页面
@@ -372,3 +390,5 @@ class Price extends Base
         $list =Db::name('quick_message')->where('id',$id)->delete();
     }
 }
+
+?>
