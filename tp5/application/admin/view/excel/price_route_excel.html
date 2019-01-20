@@ -82,8 +82,8 @@
     </form> -->
     <div>
         <div class="dao">导出文件</div>
-        <a class="layui-btn layui-btn-normal" onclick ="urlajx("<{:url('admin/BulkData/seaprcie_outExcel')}>")" >海运价表格导出</a>
-        <a class="layui-btn layui-btn-normal" onclick ="urlajx("<{:url('admin/BulkData/boat_outExcel')}>")" >船舶表导出</a>
+        <a class="layui-btn layui-btn-normal" onclick ="urlajx('<{:url('admin/BulkData/seaprcie_outExcel')}>')" >海运价表格导出</a>
+        <a class="layui-btn layui-btn-normal" onclick ="urlajx('<{:url('admin/BulkData/boat_outExcel')}>')" >船舶表导出</a>
         <a class="layui-btn layui-btn-normal"  href="<{:url('admin/BulkData/logs')}>">查看日志</a>
     </div>
     <script src="__STATIC__/../admin/js/ship_boat.js?v=1"></script>
@@ -106,43 +106,31 @@
             });
 
             //监听提交
-//            form.on('submit(demo1)', function(data){
-//                console.log(data.field);
-//                $.get("<{:url('admin/BulkData/seaprcie_outExcel')}>",data.field,function(res){
-//                    
-//                })
-//                return false;
-//            });
-       form.on('submit(demo1)', function(data){
+            //            form.on('submit(demo1)', function(data){
+            //                console.log(data.field);
+            //                $.get("<{:url('admin/BulkData/seaprcie_outExcel')}>",data.field,function(res){
+            //                    
+            //                })
+            //                return false;
+            //            });
+            form.on('submit(demo1)', function (data) {
                 $.ajax({
-                type:'post',
-                url:"<{:url('admin/BulkData/seaprcie_outExcel')}>",
-                data:data.field,
-                datatype:'json',
-                success:function(data){
-               console.log(data.url);
-                    if (data.success) {
-                        window.location.href = data.url;
-                    } else{
-                        layer.msg('无数据', { icon: 2, time: 1000 });
-                    }
+                    type: 'post',
+                    url: "<{:url('admin/BulkData/seaprcie_outExcel')}>",
+                    data: data.field,
+                    datatype: 'json',
+                    success: function (data) {
+                        console.log(data.url);
+                        if (data.success) {
+                            window.location.href = data.url;
+                        } else {
+                            layer.msg('无数据', { icon: 2, time: 1000 });
+                        }
                     }
                 })
-        });
-        
-            function urlajx(url){
-                alert('11111111');
-//            $.post(url,function(data){
-//            console.log(data);//输出返回结果
-////                if (data.success) {
-////                        window.location.href = data.url;
-////                    } else{
-////                        layer.msg('无数据', { icon: 2, time: 1000 });
-////                    }
-     //       });
-                };
+            });
 
-  
+
 
             //选完文件后不自动上传
             upload.render({
@@ -160,7 +148,20 @@
                     }
                 }
             });
-        } );
+        });
+
+        function urlajx(url) {
+            $.post(url, function (data) {
+                console.log(data);//输出返回结果
+                if (data.success) {
+                    window.location.href = data.url;
+                } else {
+                    layer.msg('无数据', { icon: 2, time: 1000 });
+                }
+            });
+        };
+
+            
         
 
 
